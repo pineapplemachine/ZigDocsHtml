@@ -1,0 +1,851 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.net.html" class="">net</a></li><li><a href="std.net.Address.html" class="active">Address</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.net.Address" class="declHeader"><span class="declHeaderCategory">extern union</span><span class="declHeaderIdentifier">std.net.Address</span><a href="#src.zig-std.net.Address">[src]</a></h1><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.net.Address.ListenOptions.html">std.net.Address.ListenOptions</a></li></ul></div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>any: <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sockaddr">sockaddr</a></code></pre></div><div><pre><code>in: <a href="std.net.Ip4Address.html">Ip4Address</a></code></pre></div><div><pre><code>in6: <a href="std.net.Ip6Address.html">Ip6Address</a></code></pre></div><div><pre><code>un: <span class="tok-kw">if</span> (<a href="std.net.html#std.net.has_unix_sockets">has_unix_sockets</a>) <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sockaddr">sockaddr</a>.<a href="#">un</a> <span class="tok-kw">else</span> <span class="tok-type">void</span></code></pre></div></div></div><div class="sectErrSets"><h2 class="sectionHeader">Error Sets</h2><div class="listErrSets"><div class="decl"><h2 id="std.net.Address.ListenError" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">ListenError</span><a href="#src.zig-std.net.Address.ListenError">[src]</a></h2><div class="sectFnErrors"><h3 class="sectionHeader">Errors</h3><div class="fnErrorsAnyError"><p><span class="tok-type">anyerror</span> means the error set is known only at runtime.</p></div><div class="tableFnErrors"><dl class="listFnErrors"><div><dt>AccessDenied <a href="std.posix.html#std.posix.BindError">BindError</a></dt><dd><p>The address is protected, and the user is not the superuser.
+For UNIX domain sockets: Search permission is denied on  a  component
+of  the  path  prefix.</p>
+</dd></div><div><dt>AddressFamilyNotSupported <a href="std.posix.html#std.posix.SocketError">SocketError</a></dt><dd><p>The implementation does not support the specified address family.</p>
+</dd></div><div><dt>AddressInUse <a href="std.posix.html#std.posix.BindError">BindError</a></dt><dd><p>The given address is already in use, or in the case of Internet domain sockets,
+The  port number was specified as zero in the socket
+address structure, but, upon attempting to bind to  an  ephemeral  port,  it  was
+determined  that  all  port  numbers in the ephemeral port range are currently in
+use.  See the discussion of /proc/sys/net/ipv4/ip_local_port_range ip(7).</p>
+</dd></div><div><dt>AddressNotAvailable <a href="std.posix.html#std.posix.BindError">BindError</a></dt><dd><p>A nonexistent interface was requested or the requested address was not local.</p>
+</dd></div><div><dt>AlreadyBound <a href="std.posix.html#std.posix.BindError">BindError</a></dt></div><div><dt>AlreadyConnected <a href="std.posix.html#std.posix.ListenError">ListenError</a></dt><dd><p>Already connected</p>
+</dd></div><div><dt>FileDescriptorNotASocket <a href="std.posix.html#std.posix.ListenError">ListenError</a></dt><dd><p>The file descriptor sockfd does not refer to a socket.</p>
+</dd></div><div><dt>FileNotFound <a href="std.posix.html#std.posix.BindError">BindError</a></dt><dd><p>A component in the directory prefix of the socket pathname does not exist.</p>
+</dd></div><div><dt>InvalidProtocolOption <a href="std.posix.html#std.posix.SetSockOptError">SetSockOptError</a></dt><dd><p>The option is not supported by the protocol.</p>
+</dd></div><div><dt>NameTooLong <a href="std.posix.html#std.posix.BindError">BindError</a></dt><dd><p>addr is too long.</p>
+</dd></div><div><dt>NetworkSubsystemFailed <a href="std.posix.html#std.posix.BindError">BindError</a></dt><dd><p>The network subsystem has failed.</p>
+</dd></div><div><dt>NoDevice <a href="std.posix.html#std.posix.SetSockOptError">SetSockOptError</a></dt></div><div><dt>NotDir <a href="std.posix.html#std.posix.BindError">BindError</a></dt><dd><p>A component of the path prefix is not a directory.</p>
+</dd></div><div><dt>OperationNotSupported <a href="std.posix.html#std.posix.ListenError">ListenError</a></dt><dd><p>The socket is not of a type that supports the listen() operation.</p>
+</dd></div><div><dt>PermissionDenied <a href="std.posix.html#std.posix.SocketError">SocketError</a></dt><dd><p>Permission to create a socket of the specified type and/or
+pro‐tocol is denied.</p>
+</dd></div><div><dt>ProcessFdQuotaExceeded <a href="std.posix.html#std.posix.SocketError">SocketError</a></dt><dd><p>The per-process limit on the number of open file descriptors has been reached.</p>
+</dd></div><div><dt>ProtocolFamilyNotAvailable <a href="std.posix.html#std.posix.SocketError">SocketError</a></dt><dd><p>Unknown protocol, or protocol family not available.</p>
+</dd></div><div><dt>ProtocolNotSupported <a href="std.posix.html#std.posix.SocketError">SocketError</a></dt><dd><p>The protocol type or the specified protocol is not supported within this domain.</p>
+</dd></div><div><dt>ReadOnlyFileSystem <a href="std.posix.html#std.posix.BindError">BindError</a></dt><dd><p>The socket inode would reside on a read-only filesystem.</p>
+</dd></div><div><dt>SocketNotBound <a href="std.posix.html#std.posix.ListenError">ListenError</a></dt><dd><p>Socket has not been bound yet</p>
+</dd></div><div><dt>SocketTypeNotSupported <a href="std.posix.html#std.posix.SocketError">SocketError</a></dt><dd><p>The socket type is not supported by the protocol.</p>
+</dd></div><div><dt>SymLinkLoop <a href="std.posix.html#std.posix.BindError">BindError</a></dt><dd><p>Too many symbolic links were encountered in resolving addr.</p>
+</dd></div><div><dt>SystemFdQuotaExceeded <a href="std.posix.html#std.posix.SocketError">SocketError</a></dt><dd><p>The system-wide limit on the total number of open files has been reached.</p>
+</dd></div><div><dt>SystemResources <a href="std.posix.html#std.posix.SocketError">SocketError</a></dt><dd><p>Insufficient memory is available. The socket cannot be created until sufficient
+resources are freed.</p>
+</dd></div><div><dt>TimeoutTooBig <a href="std.posix.html#std.posix.SetSockOptError">SetSockOptError</a></dt><dd><p>The send and receive timeout values are too big to fit into the timeout fields in the socket structure.</p>
+</dd></div><div><dt>Unexpected <a href="std.posix.html#std.posix.UnexpectedError">UnexpectedError</a></dt><dd><p>The Operating System returned an undocumented error code.</p>
+<p>This error is in theory not possible, but it would be better
+to handle this error than to invoke undefined behavior.</p>
+<p>When this error code is observed, it usually means the Zig Standard
+Library needs a small patch to add the error code to the error set for
+the respective function.</p>
+</dd></div></dl></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.net.Address.ListenError">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ListenError = <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SocketError">SocketError</a> || <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.BindError">BindError</a> || <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.ListenError">ListenError</a> ||
+    <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SetSockOptError">SetSockOptError</a> || <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.GetSockNameError">GetSockNameError</a></code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.net.Address.parseIp" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">parseIp</span><a href="#src.zig-std.net.Address.parseIp">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseIp</span>(name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>) !<a href="std.net.Address.html">Address</a></code></pre></div><div class="tldDocs"><p>Parse the given IP address string into an Address value.
+It is recommended to use <code>resolveIp</code> instead, to handle
+IPv6 link-local unix addresses.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>port: <span class="tok-type">u16</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.net.Address.parseIp">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseIp</span>(name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>) !<a href="std.net.Address.html">Address</a> {
+    <span class="tok-kw">if</span> (<a href="std.net.Address.html#std.net.Address.parseIp4">parseIp4</a>(name, port)) |ip4| <span class="tok-kw">return</span> ip4 <span class="tok-kw">else</span> |err| <span class="tok-kw">switch</span> (err) {
+        <span class="tok-kw">error</span>.Overflow,
+        <span class="tok-kw">error</span>.InvalidEnd,
+        <span class="tok-kw">error</span>.InvalidCharacter,
+        <span class="tok-kw">error</span>.Incomplete,
+        <span class="tok-kw">error</span>.NonCanonical,
+        =&gt; {},
+    }
+
+    <span class="tok-kw">if</span> (<a href="std.net.Address.html#std.net.Address.parseIp6">parseIp6</a>(name, port)) |ip6| <span class="tok-kw">return</span> ip6 <span class="tok-kw">else</span> |err| <span class="tok-kw">switch</span> (err) {
+        <span class="tok-kw">error</span>.Overflow,
+        <span class="tok-kw">error</span>.InvalidEnd,
+        <span class="tok-kw">error</span>.InvalidCharacter,
+        <span class="tok-kw">error</span>.Incomplete,
+        <span class="tok-kw">error</span>.InvalidIpv4Mapping,
+        =&gt; {},
+    }
+
+    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidIPAddressFormat;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.net.Address.resolveIp" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">resolveIp</span><a href="#src.zig-std.net.Address.resolveIp">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">resolveIp</span>(name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>) !<a href="std.net.Address.html">Address</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>port: <span class="tok-type">u16</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.net.Address.resolveIp">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">resolveIp</span>(name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>) !<a href="std.net.Address.html">Address</a> {
+    <span class="tok-kw">if</span> (<a href="std.net.Address.html#std.net.Address.parseIp4">parseIp4</a>(name, port)) |ip4| <span class="tok-kw">return</span> ip4 <span class="tok-kw">else</span> |err| <span class="tok-kw">switch</span> (err) {
+        <span class="tok-kw">error</span>.Overflow,
+        <span class="tok-kw">error</span>.InvalidEnd,
+        <span class="tok-kw">error</span>.InvalidCharacter,
+        <span class="tok-kw">error</span>.Incomplete,
+        <span class="tok-kw">error</span>.NonCanonical,
+        =&gt; {},
+    }
+
+    <span class="tok-kw">if</span> (<a href="std.net.Address.html#std.net.Address.resolveIp6">resolveIp6</a>(name, port)) |ip6| <span class="tok-kw">return</span> ip6 <span class="tok-kw">else</span> |err| <span class="tok-kw">switch</span> (err) {
+        <span class="tok-kw">error</span>.Overflow,
+        <span class="tok-kw">error</span>.InvalidEnd,
+        <span class="tok-kw">error</span>.InvalidCharacter,
+        <span class="tok-kw">error</span>.Incomplete,
+        <span class="tok-kw">error</span>.InvalidIpv4Mapping,
+        =&gt; {},
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> err,
+    }
+
+    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidIPAddressFormat;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.net.Address.parseExpectingFamily" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">parseExpectingFamily</span><a href="#src.zig-std.net.Address.parseExpectingFamily">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseExpectingFamily</span>(name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, family: <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sa_family_t">sa_family_t</a>, port: <span class="tok-type">u16</span>) !<a href="std.net.Address.html">Address</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>family: <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sa_family_t">sa_family_t</a></code></pre></div><div><pre><code>port: <span class="tok-type">u16</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.net.Address.parseExpectingFamily">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseExpectingFamily</span>(name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, family: <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sa_family_t">sa_family_t</a>, port: <span class="tok-type">u16</span>) !<a href="std.net.Address.html">Address</a> {
+    <span class="tok-kw">switch</span> (family) {
+        <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET</a> =&gt; <span class="tok-kw">return</span> <a href="std.net.Address.html#std.net.Address.parseIp4">parseIp4</a>(name, port),
+        <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET6</a> =&gt; <span class="tok-kw">return</span> <a href="std.net.Address.html#std.net.Address.parseIp6">parseIp6</a>(name, port),
+        <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">UNSPEC</a> =&gt; <span class="tok-kw">return</span> <a href="std.net.Address.html#std.net.Address.parseIp">parseIp</a>(name, port),
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.net.Address.parseIp6" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">parseIp6</span><a href="#src.zig-std.net.Address.parseIp6">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseIp6</span>(buf: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>) <a href="std.net.html#std.net.IPv6ParseError">IPv6ParseError</a>!<a href="std.net.Address.html">Address</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>buf: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>port: <span class="tok-type">u16</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.net.Address.parseIp6">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseIp6</span>(buf: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>) <a href="std.net.html#std.net.IPv6ParseError">IPv6ParseError</a>!<a href="std.net.Address.html">Address</a> {
+    <span class="tok-kw">return</span> .{ .in6 = <span class="tok-kw">try</span> <a href="std.net.Ip6Address.html">Ip6Address</a>.<a href="std.net.Ip6Address.html#std.net.Ip6Address.parse">parse</a>(buf, port) };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.net.Address.resolveIp6" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">resolveIp6</span><a href="#src.zig-std.net.Address.resolveIp6">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">resolveIp6</span>(buf: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>) <a href="std.net.html#std.net.IPv6ResolveError">IPv6ResolveError</a>!<a href="std.net.Address.html">Address</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>buf: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>port: <span class="tok-type">u16</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.net.Address.resolveIp6">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">resolveIp6</span>(buf: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>) <a href="std.net.html#std.net.IPv6ResolveError">IPv6ResolveError</a>!<a href="std.net.Address.html">Address</a> {
+    <span class="tok-kw">return</span> .{ .in6 = <span class="tok-kw">try</span> <a href="std.net.Ip6Address.html">Ip6Address</a>.<a href="std.net.Ip6Address.html#std.net.Ip6Address.resolve">resolve</a>(buf, port) };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.net.Address.parseIp4" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">parseIp4</span><a href="#src.zig-std.net.Address.parseIp4">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseIp4</span>(buf: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>) <a href="std.net.html#std.net.IPv4ParseError">IPv4ParseError</a>!<a href="std.net.Address.html">Address</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>buf: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>port: <span class="tok-type">u16</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.net.Address.parseIp4">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseIp4</span>(buf: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>) <a href="std.net.html#std.net.IPv4ParseError">IPv4ParseError</a>!<a href="std.net.Address.html">Address</a> {
+    <span class="tok-kw">return</span> .{ .in = <span class="tok-kw">try</span> <a href="std.net.Ip4Address.html">Ip4Address</a>.<a href="std.net.Ip4Address.html#std.net.Ip4Address.parse">parse</a>(buf, port) };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.net.Address.initIp4" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">initIp4</span><a href="#src.zig-std.net.Address.initIp4">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initIp4</span>(addr: [<span class="tok-number">4</span>]<span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>) <a href="std.net.Address.html">Address</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>addr: [<span class="tok-number">4</span>]<span class="tok-type">u8</span></code></pre></div><div><pre><code>port: <span class="tok-type">u16</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.net.Address.initIp4">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initIp4</span>(addr: [<span class="tok-number">4</span>]<span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>) <a href="std.net.Address.html">Address</a> {
+    <span class="tok-kw">return</span> .{ .in = <a href="std.net.Ip4Address.html">Ip4Address</a>.<a href="std.net.Ip4Address.html#std.net.Ip4Address.init">init</a>(addr, port) };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.net.Address.initIp6" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">initIp6</span><a href="#src.zig-std.net.Address.initIp6">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initIp6</span>(addr: [<span class="tok-number">16</span>]<span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>, flowinfo: <span class="tok-type">u32</span>, scope_id: <span class="tok-type">u32</span>) <a href="std.net.Address.html">Address</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>addr: [<span class="tok-number">16</span>]<span class="tok-type">u8</span></code></pre></div><div><pre><code>port: <span class="tok-type">u16</span></code></pre></div><div><pre><code>flowinfo: <span class="tok-type">u32</span></code></pre></div><div><pre><code>scope_id: <span class="tok-type">u32</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.net.Address.initIp6">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initIp6</span>(addr: [<span class="tok-number">16</span>]<span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>, flowinfo: <span class="tok-type">u32</span>, scope_id: <span class="tok-type">u32</span>) <a href="std.net.Address.html">Address</a> {
+    <span class="tok-kw">return</span> .{ .in6 = <a href="std.net.Ip6Address.html">Ip6Address</a>.<a href="std.net.Ip6Address.html#std.net.Ip6Address.init">init</a>(addr, port, flowinfo, scope_id) };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.net.Address.initUnix" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">initUnix</span><a href="#src.zig-std.net.Address.initUnix">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initUnix</span>(path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<a href="std.net.Address.html">Address</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.net.Address.initUnix">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initUnix</span>(path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<a href="std.net.Address.html">Address</a> {
+    <span class="tok-kw">var</span> sock_addr = <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sockaddr">sockaddr</a>.<a href="#">un</a>{
+        .family = <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">UNIX</a>,
+        .path = <span class="tok-null">undefined</span>,
+    };<span class="tok-comment">
+
+    // Add 1 to ensure a terminating 0 is present in the path array for maximum portability.
+    </span><span class="tok-kw">if</span> (path.len + <span class="tok-number">1</span> &gt; sock_addr.path.len) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NameTooLong;
+
+    <span class="tok-builtin">@memset</span>(&amp;sock_addr.path, <span class="tok-number">0</span>);
+    <span class="tok-builtin">@memcpy</span>(sock_addr.path[<span class="tok-number">0</span>..path.len], path);
+
+    <span class="tok-kw">return</span> .{ .un = sock_addr };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.net.Address.getPort" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getPort</span><a href="#src.zig-std.net.Address.getPort">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPort</span>(self: <a href="std.net.Address.html">Address</a>) <span class="tok-type">u16</span></code></pre></div><div class="tldDocs"><p>Returns the port in native endian.
+Asserts that the address is ip4 or ip6.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.net.Address.html">Address</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.net.Address.getPort">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPort</span>(self: <a href="std.net.Address.html">Address</a>) <span class="tok-type">u16</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (self.any.family) {
+        <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET</a> =&gt; self.in.getPort(),
+        <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET6</a> =&gt; self.in6.getPort(),
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.net.Address.setPort" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">setPort</span><a href="#src.zig-std.net.Address.setPort">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setPort</span>(self: *<a href="std.net.Address.html">Address</a>, port: <span class="tok-type">u16</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p><code>port</code> is native-endian.
+Asserts that the address is ip4 or ip6.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.net.Address.html">Address</a></code></pre></div><div><pre><code>port: <span class="tok-type">u16</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.net.Address.setPort">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setPort</span>(self: *<a href="std.net.Address.html">Address</a>, port: <span class="tok-type">u16</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">switch</span> (self.any.family) {
+        <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET</a> =&gt; self.in.setPort(port),
+        <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET6</a> =&gt; self.in6.setPort(port),
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.net.Address.initPosix" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">initPosix</span><a href="#src.zig-std.net.Address.initPosix">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initPosix</span>(addr: *<span class="tok-kw">align</span>(<span class="tok-number">4</span>) <span class="tok-kw">const</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sockaddr">sockaddr</a>) <a href="std.net.Address.html">Address</a></code></pre></div><div class="tldDocs"><p>Asserts that <code>addr</code> is an IP address.
+This function will read past the end of the pointer, with a size depending
+on the address family.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>addr: *<span class="tok-kw">align</span>(<span class="tok-number">4</span>) <span class="tok-kw">const</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sockaddr">sockaddr</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.net.Address.initPosix">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initPosix</span>(addr: *<span class="tok-kw">align</span>(<span class="tok-number">4</span>) <span class="tok-kw">const</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sockaddr">sockaddr</a>) <a href="std.net.Address.html">Address</a> {
+    <span class="tok-kw">switch</span> (addr.family) {
+        <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET</a> =&gt; <span class="tok-kw">return</span> <a href="std.net.Address.html">Address</a>{ .in = <a href="std.net.Ip4Address.html">Ip4Address</a>{ .sa = <span class="tok-builtin">@as</span>(*<span class="tok-kw">const</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sockaddr">sockaddr</a>.<a href="#">in</a>, <span class="tok-builtin">@ptrCast</span>(addr)).* } },
+        <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET6</a> =&gt; <span class="tok-kw">return</span> <a href="std.net.Address.html">Address</a>{ .in6 = <a href="std.net.Ip6Address.html">Ip6Address</a>{ .sa = <span class="tok-builtin">@as</span>(*<span class="tok-kw">const</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sockaddr">sockaddr</a>.<a href="#">in6</a>, <span class="tok-builtin">@ptrCast</span>(addr)).* } },
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.net.Address.format" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">format</span><a href="#src.zig-std.net.Address.format">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">format</span>( self: <a href="std.net.Address.html">Address</a>, <span class="tok-kw">comptime</span> fmt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, options: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.FormatOptions.html">FormatOptions</a>, out_stream: <span class="tok-kw">anytype</span>, ) !<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.net.Address.html">Address</a></code></pre></div><div><pre><code>fmt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>options: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.FormatOptions.html">FormatOptions</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.net.Address.format">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">format</span>(
+    self: <a href="std.net.Address.html">Address</a>,
+    <span class="tok-kw">comptime</span> fmt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    options: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.FormatOptions.html">FormatOptions</a>,
+    out_stream: <span class="tok-kw">anytype</span>,
+) !<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (fmt.len != <span class="tok-number">0</span>) <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.invalidFmtError">invalidFmtError</a>(fmt, self);
+    <span class="tok-kw">switch</span> (self.any.family) {
+        <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET</a> =&gt; <span class="tok-kw">try</span> self.in.format(fmt, options, out_stream),
+        <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET6</a> =&gt; <span class="tok-kw">try</span> self.in6.format(fmt, options, out_stream),
+        <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">UNIX</a> =&gt; {
+            <span class="tok-kw">if</span> (!<a href="std.net.html#std.net.has_unix_sockets">has_unix_sockets</a>) {
+                <span class="tok-kw">unreachable</span>;
+            }
+
+            <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.format">format</a>(out_stream, <span class="tok-str">&quot;{s}&quot;</span>, .{<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.sliceTo">sliceTo</a>(&amp;self.un.path, <span class="tok-number">0</span>)});
+        },
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.net.Address.eql" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">eql</span><a href="#src.zig-std.net.Address.eql">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eql</span>(a: <a href="std.net.Address.html">Address</a>, b: <a href="std.net.Address.html">Address</a>) <span class="tok-type">bool</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>a: <a href="std.net.Address.html">Address</a></code></pre></div><div><pre><code>b: <a href="std.net.Address.html">Address</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.net.Address.eql">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eql</span>(a: <a href="std.net.Address.html">Address</a>, b: <a href="std.net.Address.html">Address</a>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">const</span> a_bytes = <span class="tok-builtin">@as</span>([*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;a.any))[<span class="tok-number">0</span>..a.getOsSockLen()];
+    <span class="tok-kw">const</span> b_bytes = <span class="tok-builtin">@as</span>([*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;b.any))[<span class="tok-number">0</span>..b.getOsSockLen()];
+    <span class="tok-kw">return</span> <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, a_bytes, b_bytes);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.net.Address.getOsSockLen" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getOsSockLen</span><a href="#src.zig-std.net.Address.getOsSockLen">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getOsSockLen</span>(self: <a href="std.net.Address.html">Address</a>) <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.socklen_t">socklen_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.net.Address.html">Address</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.net.Address.getOsSockLen">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getOsSockLen</span>(self: <a href="std.net.Address.html">Address</a>) <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.socklen_t">socklen_t</a> {
+    <span class="tok-kw">switch</span> (self.any.family) {
+        <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET</a> =&gt; <span class="tok-kw">return</span> self.in.getOsSockLen(),
+        <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET6</a> =&gt; <span class="tok-kw">return</span> self.in6.getOsSockLen(),
+        <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">UNIX</a> =&gt; {
+            <span class="tok-kw">if</span> (!<a href="std.net.html#std.net.has_unix_sockets">has_unix_sockets</a>) {
+                <span class="tok-kw">unreachable</span>;
+            }<span class="tok-comment">
+
+            // Using the full length of the structure here is more portable than returning
+            // the number of bytes actually used by the currently stored path.
+            // This also is correct regardless if we are passing a socket address to the kernel
+            // (e.g. in bind, connect, sendto) since we ensure the path is 0 terminated in
+            // initUnix() or if we are receiving a socket address from the kernel and must
+            // provide the full buffer size (e.g. getsockname, getpeername, recvfrom, accept).
+            //
+            // To access the path, std.mem.sliceTo(&amp;address.un.path, 0) should be used.
+            </span><span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.socklen_t">socklen_t</a>, <span class="tok-builtin">@intCast</span>(<span class="tok-builtin">@sizeOf</span>(<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sockaddr">sockaddr</a>.<a href="#">un</a>)));
+        },
+
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.net.Address.listen" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">listen</span><a href="#src.zig-std.net.Address.listen">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">listen</span>(address: <a href="std.net.Address.html">Address</a>, options: <a href="std.net.Address.ListenOptions.html">ListenOptions</a>) <a href="std.net.Address.html#std.net.Address.ListenError">ListenError</a>!<a href="std.net.Server.html">Server</a></code></pre></div><div class="tldDocs"><p>The returned <code>Server</code> has an open <code>stream</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>address: <a href="std.net.Address.html">Address</a></code></pre></div><div><pre><code>options: <a href="std.net.Address.ListenOptions.html">ListenOptions</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.net.Address.listen">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">listen</span>(address: <a href="std.net.Address.html">Address</a>, options: <a href="std.net.Address.ListenOptions.html">ListenOptions</a>) <a href="std.net.Address.html#std.net.Address.ListenError">ListenError</a>!<a href="std.net.Server.html">Server</a> {
+    <span class="tok-kw">const</span> nonblock: <span class="tok-type">u32</span> = <span class="tok-kw">if</span> (options.force_nonblocking) <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SOCK">SOCK</a>.<a href="#">NONBLOCK</a> <span class="tok-kw">else</span> <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> sock_flags = <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SOCK">SOCK</a>.<a href="#">STREAM</a> | <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SOCK">SOCK</a>.<a href="#">CLOEXEC</a> | nonblock;
+    <span class="tok-kw">const</span> proto: <span class="tok-type">u32</span> = <span class="tok-kw">if</span> (address.any.family == <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">UNIX</a>) <span class="tok-number">0</span> <span class="tok-kw">else</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.IPPROTO">IPPROTO</a>.<a href="#">TCP</a>;
+
+    <span class="tok-kw">const</span> sockfd = <span class="tok-kw">try</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.socket">socket</a>(address.any.family, sock_flags, proto);
+    <span class="tok-kw">var</span> s: <a href="std.net.Server.html">Server</a> = .{
+        .listen_address = <span class="tok-null">undefined</span>,
+        .stream = .{ .handle = sockfd },
+    };
+    <span class="tok-kw">errdefer</span> s.stream.close();
+
+    <span class="tok-kw">if</span> (options.reuse_address <span class="tok-kw">or</span> options.reuse_port) {
+        <span class="tok-kw">try</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.setsockopt">setsockopt</a>(
+            sockfd,
+            <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SOL">SOL</a>.<a href="#">SOCKET</a>,
+            <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SO">SO</a>.<a href="#">REUSEADDR</a>,
+            &amp;<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.toBytes">toBytes</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">c_int</span>, <span class="tok-number">1</span>)),
+        );
+        <span class="tok-kw">if</span> (<span class="tok-builtin">@hasDecl</span>(<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SO">SO</a>, <span class="tok-str">&quot;REUSEPORT&quot;</span>) <span class="tok-kw">and</span> address.any.family != <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">UNIX</a>) {
+            <span class="tok-kw">try</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.setsockopt">setsockopt</a>(
+                sockfd,
+                <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SOL">SOL</a>.<a href="#">SOCKET</a>,
+                <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SO">SO</a>.<a href="#">REUSEPORT</a>,
+                &amp;<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.toBytes">toBytes</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">c_int</span>, <span class="tok-number">1</span>)),
+            );
+        }
+    }
+
+    <span class="tok-kw">var</span> socklen = address.getOsSockLen();
+    <span class="tok-kw">try</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.bind">bind</a>(sockfd, &amp;address.any, socklen);
+    <span class="tok-kw">try</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.listen">listen</a>(sockfd, options.kernel_backlog);
+    <span class="tok-kw">try</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.getsockname">getsockname</a>(sockfd, &amp;s.listen_address.any, &amp;socklen);
+    <span class="tok-kw">return</span> s;
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.net.Address">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Address = <span class="tok-kw">extern</span> <span class="tok-kw">union</span> {
+    any: <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sockaddr">sockaddr</a>,
+    in: <a href="std.net.Ip4Address.html">Ip4Address</a>,
+    in6: <a href="std.net.Ip6Address.html">Ip6Address</a>,
+    un: <span class="tok-kw">if</span> (<a href="std.net.html#std.net.has_unix_sockets">has_unix_sockets</a>) <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sockaddr">sockaddr</a>.<a href="#">un</a> <span class="tok-kw">else</span> <span class="tok-type">void</span>,
+
+    <span class="tok-comment">/// Parse the given IP address string into an Address value.</span>
+    <span class="tok-comment">/// It is recommended to use `resolveIp` instead, to handle</span>
+    <span class="tok-comment">/// IPv6 link-local unix addresses.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseIp</span>(name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>) !<a href="std.net.Address.html">Address</a> {
+        <span class="tok-kw">if</span> (<a href="std.net.Address.html#std.net.Address.parseIp4">parseIp4</a>(name, port)) |ip4| <span class="tok-kw">return</span> ip4 <span class="tok-kw">else</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.Overflow,
+            <span class="tok-kw">error</span>.InvalidEnd,
+            <span class="tok-kw">error</span>.InvalidCharacter,
+            <span class="tok-kw">error</span>.Incomplete,
+            <span class="tok-kw">error</span>.NonCanonical,
+            =&gt; {},
+        }
+
+        <span class="tok-kw">if</span> (<a href="std.net.Address.html#std.net.Address.parseIp6">parseIp6</a>(name, port)) |ip6| <span class="tok-kw">return</span> ip6 <span class="tok-kw">else</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.Overflow,
+            <span class="tok-kw">error</span>.InvalidEnd,
+            <span class="tok-kw">error</span>.InvalidCharacter,
+            <span class="tok-kw">error</span>.Incomplete,
+            <span class="tok-kw">error</span>.InvalidIpv4Mapping,
+            =&gt; {},
+        }
+
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidIPAddressFormat;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">resolveIp</span>(name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>) !<a href="std.net.Address.html">Address</a> {
+        <span class="tok-kw">if</span> (<a href="std.net.Address.html#std.net.Address.parseIp4">parseIp4</a>(name, port)) |ip4| <span class="tok-kw">return</span> ip4 <span class="tok-kw">else</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.Overflow,
+            <span class="tok-kw">error</span>.InvalidEnd,
+            <span class="tok-kw">error</span>.InvalidCharacter,
+            <span class="tok-kw">error</span>.Incomplete,
+            <span class="tok-kw">error</span>.NonCanonical,
+            =&gt; {},
+        }
+
+        <span class="tok-kw">if</span> (<a href="std.net.Address.html#std.net.Address.resolveIp6">resolveIp6</a>(name, port)) |ip6| <span class="tok-kw">return</span> ip6 <span class="tok-kw">else</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.Overflow,
+            <span class="tok-kw">error</span>.InvalidEnd,
+            <span class="tok-kw">error</span>.InvalidCharacter,
+            <span class="tok-kw">error</span>.Incomplete,
+            <span class="tok-kw">error</span>.InvalidIpv4Mapping,
+            =&gt; {},
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> err,
+        }
+
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidIPAddressFormat;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseExpectingFamily</span>(name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, family: <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sa_family_t">sa_family_t</a>, port: <span class="tok-type">u16</span>) !<a href="std.net.Address.html">Address</a> {
+        <span class="tok-kw">switch</span> (family) {
+            <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET</a> =&gt; <span class="tok-kw">return</span> <a href="std.net.Address.html#std.net.Address.parseIp4">parseIp4</a>(name, port),
+            <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET6</a> =&gt; <span class="tok-kw">return</span> <a href="std.net.Address.html#std.net.Address.parseIp6">parseIp6</a>(name, port),
+            <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">UNSPEC</a> =&gt; <span class="tok-kw">return</span> <a href="std.net.Address.html#std.net.Address.parseIp">parseIp</a>(name, port),
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+        }
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseIp6</span>(buf: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>) <a href="std.net.html#std.net.IPv6ParseError">IPv6ParseError</a>!<a href="std.net.Address.html">Address</a> {
+        <span class="tok-kw">return</span> .{ .in6 = <span class="tok-kw">try</span> <a href="std.net.Ip6Address.html">Ip6Address</a>.<a href="std.net.Ip6Address.html#std.net.Ip6Address.parse">parse</a>(buf, port) };
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">resolveIp6</span>(buf: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>) <a href="std.net.html#std.net.IPv6ResolveError">IPv6ResolveError</a>!<a href="std.net.Address.html">Address</a> {
+        <span class="tok-kw">return</span> .{ .in6 = <span class="tok-kw">try</span> <a href="std.net.Ip6Address.html">Ip6Address</a>.<a href="std.net.Ip6Address.html#std.net.Ip6Address.resolve">resolve</a>(buf, port) };
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseIp4</span>(buf: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>) <a href="std.net.html#std.net.IPv4ParseError">IPv4ParseError</a>!<a href="std.net.Address.html">Address</a> {
+        <span class="tok-kw">return</span> .{ .in = <span class="tok-kw">try</span> <a href="std.net.Ip4Address.html">Ip4Address</a>.<a href="std.net.Ip4Address.html#std.net.Ip4Address.parse">parse</a>(buf, port) };
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initIp4</span>(addr: [<span class="tok-number">4</span>]<span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>) <a href="std.net.Address.html">Address</a> {
+        <span class="tok-kw">return</span> .{ .in = <a href="std.net.Ip4Address.html">Ip4Address</a>.<a href="std.net.Ip4Address.html#std.net.Ip4Address.init">init</a>(addr, port) };
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initIp6</span>(addr: [<span class="tok-number">16</span>]<span class="tok-type">u8</span>, port: <span class="tok-type">u16</span>, flowinfo: <span class="tok-type">u32</span>, scope_id: <span class="tok-type">u32</span>) <a href="std.net.Address.html">Address</a> {
+        <span class="tok-kw">return</span> .{ .in6 = <a href="std.net.Ip6Address.html">Ip6Address</a>.<a href="std.net.Ip6Address.html#std.net.Ip6Address.init">init</a>(addr, port, flowinfo, scope_id) };
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initUnix</span>(path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<a href="std.net.Address.html">Address</a> {
+        <span class="tok-kw">var</span> sock_addr = <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sockaddr">sockaddr</a>.<a href="#">un</a>{
+            .family = <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">UNIX</a>,
+            .path = <span class="tok-null">undefined</span>,
+        };<span class="tok-comment">
+
+        // Add 1 to ensure a terminating 0 is present in the path array for maximum portability.
+        </span><span class="tok-kw">if</span> (path.len + <span class="tok-number">1</span> &gt; sock_addr.path.len) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NameTooLong;
+
+        <span class="tok-builtin">@memset</span>(&amp;sock_addr.path, <span class="tok-number">0</span>);
+        <span class="tok-builtin">@memcpy</span>(sock_addr.path[<span class="tok-number">0</span>..path.len], path);
+
+        <span class="tok-kw">return</span> .{ .un = sock_addr };
+    }
+
+    <span class="tok-comment">/// Returns the port in native endian.</span>
+    <span class="tok-comment">/// Asserts that the address is ip4 or ip6.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPort</span>(self: <a href="std.net.Address.html">Address</a>) <span class="tok-type">u16</span> {
+        <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (self.any.family) {
+            <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET</a> =&gt; self.in.getPort(),
+            <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET6</a> =&gt; self.in6.getPort(),
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+        };
+    }
+
+    <span class="tok-comment">/// `port` is native-endian.</span>
+    <span class="tok-comment">/// Asserts that the address is ip4 or ip6.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setPort</span>(self: *<a href="std.net.Address.html">Address</a>, port: <span class="tok-type">u16</span>) <span class="tok-type">void</span> {
+        <span class="tok-kw">switch</span> (self.any.family) {
+            <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET</a> =&gt; self.in.setPort(port),
+            <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET6</a> =&gt; self.in6.setPort(port),
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+        }
+    }
+
+    <span class="tok-comment">/// Asserts that `addr` is an IP address.</span>
+    <span class="tok-comment">/// This function will read past the end of the pointer, with a size depending</span>
+    <span class="tok-comment">/// on the address family.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initPosix</span>(addr: *<span class="tok-kw">align</span>(<span class="tok-number">4</span>) <span class="tok-kw">const</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sockaddr">sockaddr</a>) <a href="std.net.Address.html">Address</a> {
+        <span class="tok-kw">switch</span> (addr.family) {
+            <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET</a> =&gt; <span class="tok-kw">return</span> <a href="std.net.Address.html">Address</a>{ .in = <a href="std.net.Ip4Address.html">Ip4Address</a>{ .sa = <span class="tok-builtin">@as</span>(*<span class="tok-kw">const</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sockaddr">sockaddr</a>.<a href="#">in</a>, <span class="tok-builtin">@ptrCast</span>(addr)).* } },
+            <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET6</a> =&gt; <span class="tok-kw">return</span> <a href="std.net.Address.html">Address</a>{ .in6 = <a href="std.net.Ip6Address.html">Ip6Address</a>{ .sa = <span class="tok-builtin">@as</span>(*<span class="tok-kw">const</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sockaddr">sockaddr</a>.<a href="#">in6</a>, <span class="tok-builtin">@ptrCast</span>(addr)).* } },
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+        }
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">format</span>(
+        self: <a href="std.net.Address.html">Address</a>,
+        <span class="tok-kw">comptime</span> fmt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+        options: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.FormatOptions.html">FormatOptions</a>,
+        out_stream: <span class="tok-kw">anytype</span>,
+    ) !<span class="tok-type">void</span> {
+        <span class="tok-kw">if</span> (fmt.len != <span class="tok-number">0</span>) <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.invalidFmtError">invalidFmtError</a>(fmt, self);
+        <span class="tok-kw">switch</span> (self.any.family) {
+            <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET</a> =&gt; <span class="tok-kw">try</span> self.in.format(fmt, options, out_stream),
+            <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET6</a> =&gt; <span class="tok-kw">try</span> self.in6.format(fmt, options, out_stream),
+            <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">UNIX</a> =&gt; {
+                <span class="tok-kw">if</span> (!<a href="std.net.html#std.net.has_unix_sockets">has_unix_sockets</a>) {
+                    <span class="tok-kw">unreachable</span>;
+                }
+
+                <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.format">format</a>(out_stream, <span class="tok-str">&quot;{s}&quot;</span>, .{<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.sliceTo">sliceTo</a>(&amp;self.un.path, <span class="tok-number">0</span>)});
+            },
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+        }
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eql</span>(a: <a href="std.net.Address.html">Address</a>, b: <a href="std.net.Address.html">Address</a>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">const</span> a_bytes = <span class="tok-builtin">@as</span>([*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;a.any))[<span class="tok-number">0</span>..a.getOsSockLen()];
+        <span class="tok-kw">const</span> b_bytes = <span class="tok-builtin">@as</span>([*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;b.any))[<span class="tok-number">0</span>..b.getOsSockLen()];
+        <span class="tok-kw">return</span> <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, a_bytes, b_bytes);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getOsSockLen</span>(self: <a href="std.net.Address.html">Address</a>) <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.socklen_t">socklen_t</a> {
+        <span class="tok-kw">switch</span> (self.any.family) {
+            <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET</a> =&gt; <span class="tok-kw">return</span> self.in.getOsSockLen(),
+            <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">INET6</a> =&gt; <span class="tok-kw">return</span> self.in6.getOsSockLen(),
+            <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">UNIX</a> =&gt; {
+                <span class="tok-kw">if</span> (!<a href="std.net.html#std.net.has_unix_sockets">has_unix_sockets</a>) {
+                    <span class="tok-kw">unreachable</span>;
+                }<span class="tok-comment">
+
+                // Using the full length of the structure here is more portable than returning
+                // the number of bytes actually used by the currently stored path.
+                // This also is correct regardless if we are passing a socket address to the kernel
+                // (e.g. in bind, connect, sendto) since we ensure the path is 0 terminated in
+                // initUnix() or if we are receiving a socket address from the kernel and must
+                // provide the full buffer size (e.g. getsockname, getpeername, recvfrom, accept).
+                //
+                // To access the path, std.mem.sliceTo(&amp;address.un.path, 0) should be used.
+                </span><span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.socklen_t">socklen_t</a>, <span class="tok-builtin">@intCast</span>(<span class="tok-builtin">@sizeOf</span>(<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sockaddr">sockaddr</a>.<a href="#">un</a>)));
+            },
+
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+        }
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ListenError = <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SocketError">SocketError</a> || <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.BindError">BindError</a> || <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.ListenError">ListenError</a> ||
+        <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SetSockOptError">SetSockOptError</a> || <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.GetSockNameError">GetSockNameError</a>;
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ListenOptions = <span class="tok-kw">struct</span> {
+        <span class="tok-comment">/// How many connections the kernel will accept on the application's behalf.</span>
+        <span class="tok-comment">/// If more than this many connections pool in the kernel, clients will start</span>
+        <span class="tok-comment">/// seeing &quot;Connection refused&quot;.</span>
+        kernel_backlog: <span class="tok-type">u31</span> = <span class="tok-number">128</span>,
+        <span class="tok-comment">/// Sets SO_REUSEADDR and SO_REUSEPORT on POSIX.</span>
+        <span class="tok-comment">/// Sets SO_REUSEADDR on Windows, which is roughly equivalent.</span>
+        reuse_address: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+        <span class="tok-comment">/// Deprecated. Does the same thing as reuse_address.</span>
+        reuse_port: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+        force_nonblocking: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    };
+
+    <span class="tok-comment">/// The returned `Server` has an open `stream`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">listen</span>(address: <a href="std.net.Address.html">Address</a>, options: <a href="std.net.Address.ListenOptions.html">ListenOptions</a>) <a href="std.net.Address.html#std.net.Address.ListenError">ListenError</a>!<a href="std.net.Server.html">Server</a> {
+        <span class="tok-kw">const</span> nonblock: <span class="tok-type">u32</span> = <span class="tok-kw">if</span> (options.force_nonblocking) <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SOCK">SOCK</a>.<a href="#">NONBLOCK</a> <span class="tok-kw">else</span> <span class="tok-number">0</span>;
+        <span class="tok-kw">const</span> sock_flags = <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SOCK">SOCK</a>.<a href="#">STREAM</a> | <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SOCK">SOCK</a>.<a href="#">CLOEXEC</a> | nonblock;
+        <span class="tok-kw">const</span> proto: <span class="tok-type">u32</span> = <span class="tok-kw">if</span> (address.any.family == <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">UNIX</a>) <span class="tok-number">0</span> <span class="tok-kw">else</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.IPPROTO">IPPROTO</a>.<a href="#">TCP</a>;
+
+        <span class="tok-kw">const</span> sockfd = <span class="tok-kw">try</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.socket">socket</a>(address.any.family, sock_flags, proto);
+        <span class="tok-kw">var</span> s: <a href="std.net.Server.html">Server</a> = .{
+            .listen_address = <span class="tok-null">undefined</span>,
+            .stream = .{ .handle = sockfd },
+        };
+        <span class="tok-kw">errdefer</span> s.stream.close();
+
+        <span class="tok-kw">if</span> (options.reuse_address <span class="tok-kw">or</span> options.reuse_port) {
+            <span class="tok-kw">try</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.setsockopt">setsockopt</a>(
+                sockfd,
+                <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SOL">SOL</a>.<a href="#">SOCKET</a>,
+                <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SO">SO</a>.<a href="#">REUSEADDR</a>,
+                &amp;<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.toBytes">toBytes</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">c_int</span>, <span class="tok-number">1</span>)),
+            );
+            <span class="tok-kw">if</span> (<span class="tok-builtin">@hasDecl</span>(<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SO">SO</a>, <span class="tok-str">&quot;REUSEPORT&quot;</span>) <span class="tok-kw">and</span> address.any.family != <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.AF">AF</a>.<a href="#">UNIX</a>) {
+                <span class="tok-kw">try</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.setsockopt">setsockopt</a>(
+                    sockfd,
+                    <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SOL">SOL</a>.<a href="#">SOCKET</a>,
+                    <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.SO">SO</a>.<a href="#">REUSEPORT</a>,
+                    &amp;<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.toBytes">toBytes</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">c_int</span>, <span class="tok-number">1</span>)),
+                );
+            }
+        }
+
+        <span class="tok-kw">var</span> socklen = address.getOsSockLen();
+        <span class="tok-kw">try</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.bind">bind</a>(sockfd, &amp;address.any, socklen);
+        <span class="tok-kw">try</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.listen">listen</a>(sockfd, options.kernel_backlog);
+        <span class="tok-kw">try</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.getsockname">getsockname</a>(sockfd, &amp;s.listen_address.any, &amp;socklen);
+        <span class="tok-kw">return</span> s;
+    }
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

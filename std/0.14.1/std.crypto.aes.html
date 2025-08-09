@@ -1,0 +1,578 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">crypto</a></li><li><a href="std.crypto.aes.html" class="active">aes</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.crypto.aes" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.crypto.aes</span><a href="#src.zig-std.crypto.aes">[src]</a></h1><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.crypto.aes.has_hardware_support" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">has_hardware_support</span><a href="#src.zig-std.crypto.aes.has_hardware_support">[src]</a></h2><div class="tldDocs"><p><code>true</code> if AES is backed by hardware (AES-NI on x86_64, ARM Crypto Extensions on AArch64).
+Software implementations are much slower, and should be avoided if possible.</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.aes.has_hardware_support">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> has_hardware_support =
+    (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.cpu">cpu</a>.<a href="#">arch</a> == .x86_64 <span class="tok-kw">and</span> <a href="std.crypto.aes.html#std.crypto.aes.has_aesni">has_aesni</a> <span class="tok-kw">and</span> <a href="std.crypto.aes.html#std.crypto.aes.has_avx">has_avx</a>) <span class="tok-kw">or</span>
+    (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.cpu">cpu</a>.<a href="#">arch</a> == .aarch64 <span class="tok-kw">and</span> <a href="std.crypto.aes.html#std.crypto.aes.has_armaes">has_armaes</a>)</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.aes.Block" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Block</span><a href="#src.zig-std.crypto.aes.Block">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.aes.Block">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Block = <a href="std.crypto.aes.html#std.crypto.aes.impl">impl</a>.<a href="#">Block</a></code></pre></details></div></div><div class="decl"><h2 id="std.crypto.aes.BlockVec" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">BlockVec</span><a href="#src.zig-std.crypto.aes.BlockVec">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.aes.BlockVec">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> BlockVec = <a href="std.crypto.aes.html#std.crypto.aes.impl">impl</a>.<a href="#">BlockVec</a></code></pre></details></div></div><div class="decl"><h2 id="std.crypto.aes.AesEncryptCtx" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">AesEncryptCtx</span><a href="#src.zig-std.crypto.aes.AesEncryptCtx">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.aes.AesEncryptCtx">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> AesEncryptCtx = <a href="std.crypto.aes.html#std.crypto.aes.impl">impl</a>.<a href="#">AesEncryptCtx</a></code></pre></details></div></div><div class="decl"><h2 id="std.crypto.aes.AesDecryptCtx" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">AesDecryptCtx</span><a href="#src.zig-std.crypto.aes.AesDecryptCtx">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.aes.AesDecryptCtx">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> AesDecryptCtx = <a href="std.crypto.aes.html#std.crypto.aes.impl">impl</a>.<a href="#">AesDecryptCtx</a></code></pre></details></div></div><div class="decl"><h2 id="std.crypto.aes.Aes128" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Aes128</span><a href="#src.zig-std.crypto.aes.Aes128">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.aes.Aes128">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aes128 = <a href="std.crypto.aes.html#std.crypto.aes.impl">impl</a>.<a href="#">Aes128</a></code></pre></details></div></div><div class="decl"><h2 id="std.crypto.aes.Aes256" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Aes256</span><a href="#src.zig-std.crypto.aes.Aes256">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.aes.Aes256">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aes256 = <a href="std.crypto.aes.html#std.crypto.aes.impl">impl</a>.<a href="#">Aes256</a></code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.crypto.aes">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;../std.zig&quot;</span>);
+<span class="tok-kw">const</span> builtin = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;builtin&quot;</span>);
+<span class="tok-kw">const</span> testing = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>;
+
+<span class="tok-kw">const</span> has_aesni = <a href="std.html">std</a>.<a href="std.Target.html">Target</a>.<a href="std.Target.x86.html">x86</a>.<a href="std.Target.x86.html#std.Target.x86.featureSetHas">featureSetHas</a>(<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.cpu">cpu</a>.<a href="#">features</a>, .aes);
+<span class="tok-kw">const</span> has_avx = <a href="std.html">std</a>.<a href="std.Target.html">Target</a>.<a href="std.Target.x86.html">x86</a>.<a href="std.Target.x86.html#std.Target.x86.featureSetHas">featureSetHas</a>(<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.cpu">cpu</a>.<a href="#">features</a>, .avx);
+<span class="tok-kw">const</span> has_armaes = <a href="std.html">std</a>.<a href="std.Target.html">Target</a>.<a href="std.Target.aarch64.html">aarch64</a>.<a href="std.Target.aarch64.html#std.Target.aarch64.featureSetHas">featureSetHas</a>(<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.cpu">cpu</a>.<a href="#">features</a>, .aes);<span class="tok-comment">
+// C backend doesn't currently support passing vectors to inline asm.
+</span><span class="tok-kw">const</span> impl = <span class="tok-kw">if</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.cpu">cpu</a>.<a href="#">arch</a> == .x86_64 <span class="tok-kw">and</span> <a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.zig_backend">zig_backend</a> != .stage2_c <span class="tok-kw">and</span> <a href="std.crypto.aes.html#std.crypto.aes.has_aesni">has_aesni</a> <span class="tok-kw">and</span> <a href="std.crypto.aes.html#std.crypto.aes.has_avx">has_avx</a>) impl: {
+    <span class="tok-kw">break</span> :impl <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;aes/aesni.zig&quot;</span>);
+} <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.cpu">cpu</a>.<a href="#">arch</a> == .aarch64 <span class="tok-kw">and</span> <a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.zig_backend">zig_backend</a> != .stage2_c <span class="tok-kw">and</span> <a href="std.crypto.aes.html#std.crypto.aes.has_armaes">has_armaes</a>)
+impl: {
+    <span class="tok-kw">break</span> :impl <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;aes/armcrypto.zig&quot;</span>);
+} <span class="tok-kw">else</span> impl: {
+    <span class="tok-kw">break</span> :impl <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;aes/soft.zig&quot;</span>);
+};
+
+<span class="tok-comment">/// `true` if AES is backed by hardware (AES-NI on x86_64, ARM Crypto Extensions on AArch64).</span>
+<span class="tok-comment">/// Software implementations are much slower, and should be avoided if possible.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> has_hardware_support =
+    (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.cpu">cpu</a>.<a href="#">arch</a> == .x86_64 <span class="tok-kw">and</span> <a href="std.crypto.aes.html#std.crypto.aes.has_aesni">has_aesni</a> <span class="tok-kw">and</span> <a href="std.crypto.aes.html#std.crypto.aes.has_avx">has_avx</a>) <span class="tok-kw">or</span>
+    (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.cpu">cpu</a>.<a href="#">arch</a> == .aarch64 <span class="tok-kw">and</span> <a href="std.crypto.aes.html#std.crypto.aes.has_armaes">has_armaes</a>);
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Block = <a href="std.crypto.aes.html#std.crypto.aes.impl">impl</a>.<a href="#">Block</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> BlockVec = <a href="std.crypto.aes.html#std.crypto.aes.impl">impl</a>.<a href="#">BlockVec</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> AesEncryptCtx = <a href="std.crypto.aes.html#std.crypto.aes.impl">impl</a>.<a href="#">AesEncryptCtx</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> AesDecryptCtx = <a href="std.crypto.aes.html#std.crypto.aes.impl">impl</a>.<a href="#">AesDecryptCtx</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aes128 = <a href="std.crypto.aes.html#std.crypto.aes.impl">impl</a>.<a href="#">Aes128</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aes256 = <a href="std.crypto.aes.html#std.crypto.aes.impl">impl</a>.<a href="#">Aes256</a>;
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;ctr&quot;</span> {<span class="tok-comment">
+    // NIST SP 800-38A pp 55-58
+    </span><span class="tok-kw">const</span> ctr = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;modes.zig&quot;</span>).ctr;
+
+    <span class="tok-kw">const</span> key = [_]<span class="tok-type">u8</span>{ <span class="tok-number">0x2b</span>, <span class="tok-number">0x7e</span>, <span class="tok-number">0x15</span>, <span class="tok-number">0x16</span>, <span class="tok-number">0x28</span>, <span class="tok-number">0xae</span>, <span class="tok-number">0xd2</span>, <span class="tok-number">0xa6</span>, <span class="tok-number">0xab</span>, <span class="tok-number">0xf7</span>, <span class="tok-number">0x15</span>, <span class="tok-number">0x88</span>, <span class="tok-number">0x09</span>, <span class="tok-number">0xcf</span>, <span class="tok-number">0x4f</span>, <span class="tok-number">0x3c</span> };
+    <span class="tok-kw">const</span> iv = [_]<span class="tok-type">u8</span>{ <span class="tok-number">0xf0</span>, <span class="tok-number">0xf1</span>, <span class="tok-number">0xf2</span>, <span class="tok-number">0xf3</span>, <span class="tok-number">0xf4</span>, <span class="tok-number">0xf5</span>, <span class="tok-number">0xf6</span>, <span class="tok-number">0xf7</span>, <span class="tok-number">0xf8</span>, <span class="tok-number">0xf9</span>, <span class="tok-number">0xfa</span>, <span class="tok-number">0xfb</span>, <span class="tok-number">0xfc</span>, <span class="tok-number">0xfd</span>, <span class="tok-number">0xfe</span>, <span class="tok-number">0xff</span> };
+    <span class="tok-kw">const</span> in = [_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0x6b</span>, <span class="tok-number">0xc1</span>, <span class="tok-number">0xbe</span>, <span class="tok-number">0xe2</span>, <span class="tok-number">0x2e</span>, <span class="tok-number">0x40</span>, <span class="tok-number">0x9f</span>, <span class="tok-number">0x96</span>, <span class="tok-number">0xe9</span>, <span class="tok-number">0x3d</span>, <span class="tok-number">0x7e</span>, <span class="tok-number">0x11</span>, <span class="tok-number">0x73</span>, <span class="tok-number">0x93</span>, <span class="tok-number">0x17</span>, <span class="tok-number">0x2a</span>,
+        <span class="tok-number">0xae</span>, <span class="tok-number">0x2d</span>, <span class="tok-number">0x8a</span>, <span class="tok-number">0x57</span>, <span class="tok-number">0x1e</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0xac</span>, <span class="tok-number">0x9c</span>, <span class="tok-number">0x9e</span>, <span class="tok-number">0xb7</span>, <span class="tok-number">0x6f</span>, <span class="tok-number">0xac</span>, <span class="tok-number">0x45</span>, <span class="tok-number">0xaf</span>, <span class="tok-number">0x8e</span>, <span class="tok-number">0x51</span>,
+        <span class="tok-number">0x30</span>, <span class="tok-number">0xc8</span>, <span class="tok-number">0x1c</span>, <span class="tok-number">0x46</span>, <span class="tok-number">0xa3</span>, <span class="tok-number">0x5c</span>, <span class="tok-number">0xe4</span>, <span class="tok-number">0x11</span>, <span class="tok-number">0xe5</span>, <span class="tok-number">0xfb</span>, <span class="tok-number">0xc1</span>, <span class="tok-number">0x19</span>, <span class="tok-number">0x1a</span>, <span class="tok-number">0x0a</span>, <span class="tok-number">0x52</span>, <span class="tok-number">0xef</span>,
+        <span class="tok-number">0xf6</span>, <span class="tok-number">0x9f</span>, <span class="tok-number">0x24</span>, <span class="tok-number">0x45</span>, <span class="tok-number">0xdf</span>, <span class="tok-number">0x4f</span>, <span class="tok-number">0x9b</span>, <span class="tok-number">0x17</span>, <span class="tok-number">0xad</span>, <span class="tok-number">0x2b</span>, <span class="tok-number">0x41</span>, <span class="tok-number">0x7b</span>, <span class="tok-number">0xe6</span>, <span class="tok-number">0x6c</span>, <span class="tok-number">0x37</span>, <span class="tok-number">0x10</span>,
+    };
+    <span class="tok-kw">const</span> exp_out = [_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0x87</span>, <span class="tok-number">0x4d</span>, <span class="tok-number">0x61</span>, <span class="tok-number">0x91</span>, <span class="tok-number">0xb6</span>, <span class="tok-number">0x20</span>, <span class="tok-number">0xe3</span>, <span class="tok-number">0x26</span>, <span class="tok-number">0x1b</span>, <span class="tok-number">0xef</span>, <span class="tok-number">0x68</span>, <span class="tok-number">0x64</span>, <span class="tok-number">0x99</span>, <span class="tok-number">0x0d</span>, <span class="tok-number">0xb6</span>, <span class="tok-number">0xce</span>,
+        <span class="tok-number">0x98</span>, <span class="tok-number">0x06</span>, <span class="tok-number">0xf6</span>, <span class="tok-number">0x6b</span>, <span class="tok-number">0x79</span>, <span class="tok-number">0x70</span>, <span class="tok-number">0xfd</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0x86</span>, <span class="tok-number">0x17</span>, <span class="tok-number">0x18</span>, <span class="tok-number">0x7b</span>, <span class="tok-number">0xb9</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0xfd</span>, <span class="tok-number">0xff</span>,
+        <span class="tok-number">0x5a</span>, <span class="tok-number">0xe4</span>, <span class="tok-number">0xdf</span>, <span class="tok-number">0x3e</span>, <span class="tok-number">0xdb</span>, <span class="tok-number">0xd5</span>, <span class="tok-number">0xd3</span>, <span class="tok-number">0x5e</span>, <span class="tok-number">0x5b</span>, <span class="tok-number">0x4f</span>, <span class="tok-number">0x09</span>, <span class="tok-number">0x02</span>, <span class="tok-number">0x0d</span>, <span class="tok-number">0xb0</span>, <span class="tok-number">0x3e</span>, <span class="tok-number">0xab</span>,
+        <span class="tok-number">0x1e</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0x1d</span>, <span class="tok-number">0xda</span>, <span class="tok-number">0x2f</span>, <span class="tok-number">0xbe</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0xd1</span>, <span class="tok-number">0x79</span>, <span class="tok-number">0x21</span>, <span class="tok-number">0x70</span>, <span class="tok-number">0xa0</span>, <span class="tok-number">0xf3</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x9c</span>, <span class="tok-number">0xee</span>,
+    };
+
+    <span class="tok-kw">var</span> out: [exp_out.len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">const</span> ctx = <a href="std.crypto.aes.html#std.crypto.aes.Aes128">Aes128</a>.<a href="#">initEnc</a>(key);
+    ctr(<a href="std.crypto.aes.html#std.crypto.aes.AesEncryptCtx">AesEncryptCtx</a>(<a href="std.crypto.aes.html#std.crypto.aes.Aes128">Aes128</a>), ctx, out[<span class="tok-number">0</span>..], in[<span class="tok-number">0</span>..], iv, <a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.Endian.html">Endian</a>.<a href="#">big</a>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, exp_out[<span class="tok-number">0</span>..], out[<span class="tok-number">0</span>..]);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;encrypt&quot;</span> {<span class="tok-comment">
+    // Appendix B
+    </span>{
+        <span class="tok-kw">const</span> key = [_]<span class="tok-type">u8</span>{ <span class="tok-number">0x2b</span>, <span class="tok-number">0x7e</span>, <span class="tok-number">0x15</span>, <span class="tok-number">0x16</span>, <span class="tok-number">0x28</span>, <span class="tok-number">0xae</span>, <span class="tok-number">0xd2</span>, <span class="tok-number">0xa6</span>, <span class="tok-number">0xab</span>, <span class="tok-number">0xf7</span>, <span class="tok-number">0x15</span>, <span class="tok-number">0x88</span>, <span class="tok-number">0x09</span>, <span class="tok-number">0xcf</span>, <span class="tok-number">0x4f</span>, <span class="tok-number">0x3c</span> };
+        <span class="tok-kw">const</span> in = [_]<span class="tok-type">u8</span>{ <span class="tok-number">0x32</span>, <span class="tok-number">0x43</span>, <span class="tok-number">0xf6</span>, <span class="tok-number">0xa8</span>, <span class="tok-number">0x88</span>, <span class="tok-number">0x5a</span>, <span class="tok-number">0x30</span>, <span class="tok-number">0x8d</span>, <span class="tok-number">0x31</span>, <span class="tok-number">0x31</span>, <span class="tok-number">0x98</span>, <span class="tok-number">0xa2</span>, <span class="tok-number">0xe0</span>, <span class="tok-number">0x37</span>, <span class="tok-number">0x07</span>, <span class="tok-number">0x34</span> };
+        <span class="tok-kw">const</span> exp_out = [_]<span class="tok-type">u8</span>{ <span class="tok-number">0x39</span>, <span class="tok-number">0x25</span>, <span class="tok-number">0x84</span>, <span class="tok-number">0x1d</span>, <span class="tok-number">0x02</span>, <span class="tok-number">0xdc</span>, <span class="tok-number">0x09</span>, <span class="tok-number">0xfb</span>, <span class="tok-number">0xdc</span>, <span class="tok-number">0x11</span>, <span class="tok-number">0x85</span>, <span class="tok-number">0x97</span>, <span class="tok-number">0x19</span>, <span class="tok-number">0x6a</span>, <span class="tok-number">0x0b</span>, <span class="tok-number">0x32</span> };
+
+        <span class="tok-kw">var</span> out: [exp_out.len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">var</span> ctx = <a href="std.crypto.aes.html#std.crypto.aes.Aes128">Aes128</a>.<a href="#">initEnc</a>(key);
+        ctx.encrypt(out[<span class="tok-number">0</span>..], in[<span class="tok-number">0</span>..]);
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, exp_out[<span class="tok-number">0</span>..], out[<span class="tok-number">0</span>..]);
+    }<span class="tok-comment">
+
+    // Appendix C.3
+    </span>{
+        <span class="tok-kw">const</span> key = [_]<span class="tok-type">u8</span>{
+            <span class="tok-number">0x00</span>, <span class="tok-number">0x01</span>, <span class="tok-number">0x02</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0x04</span>, <span class="tok-number">0x05</span>, <span class="tok-number">0x06</span>, <span class="tok-number">0x07</span>, <span class="tok-number">0x08</span>, <span class="tok-number">0x09</span>, <span class="tok-number">0x0a</span>, <span class="tok-number">0x0b</span>, <span class="tok-number">0x0c</span>, <span class="tok-number">0x0d</span>, <span class="tok-number">0x0e</span>, <span class="tok-number">0x0f</span>,
+            <span class="tok-number">0x10</span>, <span class="tok-number">0x11</span>, <span class="tok-number">0x12</span>, <span class="tok-number">0x13</span>, <span class="tok-number">0x14</span>, <span class="tok-number">0x15</span>, <span class="tok-number">0x16</span>, <span class="tok-number">0x17</span>, <span class="tok-number">0x18</span>, <span class="tok-number">0x19</span>, <span class="tok-number">0x1a</span>, <span class="tok-number">0x1b</span>, <span class="tok-number">0x1c</span>, <span class="tok-number">0x1d</span>, <span class="tok-number">0x1e</span>, <span class="tok-number">0x1f</span>,
+        };
+        <span class="tok-kw">const</span> in = [_]<span class="tok-type">u8</span>{ <span class="tok-number">0x00</span>, <span class="tok-number">0x11</span>, <span class="tok-number">0x22</span>, <span class="tok-number">0x33</span>, <span class="tok-number">0x44</span>, <span class="tok-number">0x55</span>, <span class="tok-number">0x66</span>, <span class="tok-number">0x77</span>, <span class="tok-number">0x88</span>, <span class="tok-number">0x99</span>, <span class="tok-number">0xaa</span>, <span class="tok-number">0xbb</span>, <span class="tok-number">0xcc</span>, <span class="tok-number">0xdd</span>, <span class="tok-number">0xee</span>, <span class="tok-number">0xff</span> };
+        <span class="tok-kw">const</span> exp_out = [_]<span class="tok-type">u8</span>{ <span class="tok-number">0x8e</span>, <span class="tok-number">0xa2</span>, <span class="tok-number">0xb7</span>, <span class="tok-number">0xca</span>, <span class="tok-number">0x51</span>, <span class="tok-number">0x67</span>, <span class="tok-number">0x45</span>, <span class="tok-number">0xbf</span>, <span class="tok-number">0xea</span>, <span class="tok-number">0xfc</span>, <span class="tok-number">0x49</span>, <span class="tok-number">0x90</span>, <span class="tok-number">0x4b</span>, <span class="tok-number">0x49</span>, <span class="tok-number">0x60</span>, <span class="tok-number">0x89</span> };
+
+        <span class="tok-kw">var</span> out: [exp_out.len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">var</span> ctx = <a href="std.crypto.aes.html#std.crypto.aes.Aes256">Aes256</a>.<a href="#">initEnc</a>(key);
+        ctx.encrypt(out[<span class="tok-number">0</span>..], in[<span class="tok-number">0</span>..]);
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, exp_out[<span class="tok-number">0</span>..], out[<span class="tok-number">0</span>..]);
+    }
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;decrypt&quot;</span> {<span class="tok-comment">
+    // Appendix B
+    </span>{
+        <span class="tok-kw">const</span> key = [_]<span class="tok-type">u8</span>{ <span class="tok-number">0x2b</span>, <span class="tok-number">0x7e</span>, <span class="tok-number">0x15</span>, <span class="tok-number">0x16</span>, <span class="tok-number">0x28</span>, <span class="tok-number">0xae</span>, <span class="tok-number">0xd2</span>, <span class="tok-number">0xa6</span>, <span class="tok-number">0xab</span>, <span class="tok-number">0xf7</span>, <span class="tok-number">0x15</span>, <span class="tok-number">0x88</span>, <span class="tok-number">0x09</span>, <span class="tok-number">0xcf</span>, <span class="tok-number">0x4f</span>, <span class="tok-number">0x3c</span> };
+        <span class="tok-kw">const</span> in = [_]<span class="tok-type">u8</span>{ <span class="tok-number">0x39</span>, <span class="tok-number">0x25</span>, <span class="tok-number">0x84</span>, <span class="tok-number">0x1d</span>, <span class="tok-number">0x02</span>, <span class="tok-number">0xdc</span>, <span class="tok-number">0x09</span>, <span class="tok-number">0xfb</span>, <span class="tok-number">0xdc</span>, <span class="tok-number">0x11</span>, <span class="tok-number">0x85</span>, <span class="tok-number">0x97</span>, <span class="tok-number">0x19</span>, <span class="tok-number">0x6a</span>, <span class="tok-number">0x0b</span>, <span class="tok-number">0x32</span> };
+        <span class="tok-kw">const</span> exp_out = [_]<span class="tok-type">u8</span>{ <span class="tok-number">0x32</span>, <span class="tok-number">0x43</span>, <span class="tok-number">0xf6</span>, <span class="tok-number">0xa8</span>, <span class="tok-number">0x88</span>, <span class="tok-number">0x5a</span>, <span class="tok-number">0x30</span>, <span class="tok-number">0x8d</span>, <span class="tok-number">0x31</span>, <span class="tok-number">0x31</span>, <span class="tok-number">0x98</span>, <span class="tok-number">0xa2</span>, <span class="tok-number">0xe0</span>, <span class="tok-number">0x37</span>, <span class="tok-number">0x07</span>, <span class="tok-number">0x34</span> };
+
+        <span class="tok-kw">var</span> out: [exp_out.len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">var</span> ctx = <a href="std.crypto.aes.html#std.crypto.aes.Aes128">Aes128</a>.<a href="#">initDec</a>(key);
+        ctx.decrypt(out[<span class="tok-number">0</span>..], in[<span class="tok-number">0</span>..]);
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, exp_out[<span class="tok-number">0</span>..], out[<span class="tok-number">0</span>..]);
+    }<span class="tok-comment">
+
+    // Appendix C.3
+    </span>{
+        <span class="tok-kw">const</span> key = [_]<span class="tok-type">u8</span>{
+            <span class="tok-number">0x00</span>, <span class="tok-number">0x01</span>, <span class="tok-number">0x02</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0x04</span>, <span class="tok-number">0x05</span>, <span class="tok-number">0x06</span>, <span class="tok-number">0x07</span>, <span class="tok-number">0x08</span>, <span class="tok-number">0x09</span>, <span class="tok-number">0x0a</span>, <span class="tok-number">0x0b</span>, <span class="tok-number">0x0c</span>, <span class="tok-number">0x0d</span>, <span class="tok-number">0x0e</span>, <span class="tok-number">0x0f</span>,
+            <span class="tok-number">0x10</span>, <span class="tok-number">0x11</span>, <span class="tok-number">0x12</span>, <span class="tok-number">0x13</span>, <span class="tok-number">0x14</span>, <span class="tok-number">0x15</span>, <span class="tok-number">0x16</span>, <span class="tok-number">0x17</span>, <span class="tok-number">0x18</span>, <span class="tok-number">0x19</span>, <span class="tok-number">0x1a</span>, <span class="tok-number">0x1b</span>, <span class="tok-number">0x1c</span>, <span class="tok-number">0x1d</span>, <span class="tok-number">0x1e</span>, <span class="tok-number">0x1f</span>,
+        };
+        <span class="tok-kw">const</span> in = [_]<span class="tok-type">u8</span>{ <span class="tok-number">0x8e</span>, <span class="tok-number">0xa2</span>, <span class="tok-number">0xb7</span>, <span class="tok-number">0xca</span>, <span class="tok-number">0x51</span>, <span class="tok-number">0x67</span>, <span class="tok-number">0x45</span>, <span class="tok-number">0xbf</span>, <span class="tok-number">0xea</span>, <span class="tok-number">0xfc</span>, <span class="tok-number">0x49</span>, <span class="tok-number">0x90</span>, <span class="tok-number">0x4b</span>, <span class="tok-number">0x49</span>, <span class="tok-number">0x60</span>, <span class="tok-number">0x89</span> };
+        <span class="tok-kw">const</span> exp_out = [_]<span class="tok-type">u8</span>{ <span class="tok-number">0x00</span>, <span class="tok-number">0x11</span>, <span class="tok-number">0x22</span>, <span class="tok-number">0x33</span>, <span class="tok-number">0x44</span>, <span class="tok-number">0x55</span>, <span class="tok-number">0x66</span>, <span class="tok-number">0x77</span>, <span class="tok-number">0x88</span>, <span class="tok-number">0x99</span>, <span class="tok-number">0xaa</span>, <span class="tok-number">0xbb</span>, <span class="tok-number">0xcc</span>, <span class="tok-number">0xdd</span>, <span class="tok-number">0xee</span>, <span class="tok-number">0xff</span> };
+
+        <span class="tok-kw">var</span> out: [exp_out.len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">var</span> ctx = <a href="std.crypto.aes.html#std.crypto.aes.Aes256">Aes256</a>.<a href="#">initDec</a>(key);
+        ctx.decrypt(out[<span class="tok-number">0</span>..], in[<span class="tok-number">0</span>..]);
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, exp_out[<span class="tok-number">0</span>..], out[<span class="tok-number">0</span>..]);
+    }
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;expand 128-bit key&quot;</span> {
+    <span class="tok-kw">const</span> key = [_]<span class="tok-type">u8</span>{ <span class="tok-number">0x2b</span>, <span class="tok-number">0x7e</span>, <span class="tok-number">0x15</span>, <span class="tok-number">0x16</span>, <span class="tok-number">0x28</span>, <span class="tok-number">0xae</span>, <span class="tok-number">0xd2</span>, <span class="tok-number">0xa6</span>, <span class="tok-number">0xab</span>, <span class="tok-number">0xf7</span>, <span class="tok-number">0x15</span>, <span class="tok-number">0x88</span>, <span class="tok-number">0x09</span>, <span class="tok-number">0xcf</span>, <span class="tok-number">0x4f</span>, <span class="tok-number">0x3c</span> };
+    <span class="tok-kw">const</span> exp_enc = [_]*<span class="tok-kw">const</span> [<span class="tok-number">32</span>:<span class="tok-number">0</span>]<span class="tok-type">u8</span>{
+        <span class="tok-str">&quot;2b7e151628aed2a6abf7158809cf4f3c&quot;</span>, <span class="tok-str">&quot;a0fafe1788542cb123a339392a6c7605&quot;</span>, <span class="tok-str">&quot;f2c295f27a96b9435935807a7359f67f&quot;</span>, <span class="tok-str">&quot;3d80477d4716fe3e1e237e446d7a883b&quot;</span>, <span class="tok-str">&quot;ef44a541a8525b7fb671253bdb0bad00&quot;</span>, <span class="tok-str">&quot;d4d1c6f87c839d87caf2b8bc11f915bc&quot;</span>, <span class="tok-str">&quot;6d88a37a110b3efddbf98641ca0093fd&quot;</span>, <span class="tok-str">&quot;4e54f70e5f5fc9f384a64fb24ea6dc4f&quot;</span>, <span class="tok-str">&quot;ead27321b58dbad2312bf5607f8d292f&quot;</span>, <span class="tok-str">&quot;ac7766f319fadc2128d12941575c006e&quot;</span>, <span class="tok-str">&quot;d014f9a8c9ee2589e13f0cc8b6630ca6&quot;</span>,
+    };
+    <span class="tok-kw">const</span> exp_dec = [_]*<span class="tok-kw">const</span> [<span class="tok-number">32</span>:<span class="tok-number">0</span>]<span class="tok-type">u8</span>{
+        <span class="tok-str">&quot;d014f9a8c9ee2589e13f0cc8b6630ca6&quot;</span>, <span class="tok-str">&quot;0c7b5a631319eafeb0398890664cfbb4&quot;</span>, <span class="tok-str">&quot;df7d925a1f62b09da320626ed6757324&quot;</span>, <span class="tok-str">&quot;12c07647c01f22c7bc42d2f37555114a&quot;</span>, <span class="tok-str">&quot;6efcd876d2df54807c5df034c917c3b9&quot;</span>, <span class="tok-str">&quot;6ea30afcbc238cf6ae82a4b4b54a338d&quot;</span>, <span class="tok-str">&quot;90884413d280860a12a128421bc89739&quot;</span>, <span class="tok-str">&quot;7c1f13f74208c219c021ae480969bf7b&quot;</span>, <span class="tok-str">&quot;cc7505eb3e17d1ee82296c51c9481133&quot;</span>, <span class="tok-str">&quot;2b3708a7f262d405bc3ebdbf4b617d62&quot;</span>, <span class="tok-str">&quot;2b7e151628aed2a6abf7158809cf4f3c&quot;</span>,
+    };
+    <span class="tok-kw">const</span> enc = <a href="std.crypto.aes.html#std.crypto.aes.Aes128">Aes128</a>.<a href="#">initEnc</a>(key);
+    <span class="tok-kw">const</span> dec = <a href="std.crypto.aes.html#std.crypto.aes.Aes128">Aes128</a>.<a href="#">initDec</a>(key);
+    <span class="tok-kw">var</span> exp: [<span class="tok-number">16</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+
+    <span class="tok-kw">for</span> (enc.key_schedule.round_keys, <span class="tok-number">0</span>..) |round_key, i| {
+        _ = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.hexToBytes">hexToBytes</a>(&amp;exp, exp_enc[i]);
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, &amp;exp, &amp;round_key.toBytes());
+    }
+    <span class="tok-kw">for</span> (dec.key_schedule.round_keys, <span class="tok-number">0</span>..) |round_key, i| {
+        _ = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.hexToBytes">hexToBytes</a>(&amp;exp, exp_dec[i]);
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, &amp;exp, &amp;round_key.toBytes());
+    }
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;expand 256-bit key&quot;</span> {
+    <span class="tok-kw">const</span> key = [_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0x60</span>, <span class="tok-number">0x3d</span>, <span class="tok-number">0xeb</span>, <span class="tok-number">0x10</span>,
+        <span class="tok-number">0x15</span>, <span class="tok-number">0xca</span>, <span class="tok-number">0x71</span>, <span class="tok-number">0xbe</span>,
+        <span class="tok-number">0x2b</span>, <span class="tok-number">0x73</span>, <span class="tok-number">0xae</span>, <span class="tok-number">0xf0</span>,
+        <span class="tok-number">0x85</span>, <span class="tok-number">0x7d</span>, <span class="tok-number">0x77</span>, <span class="tok-number">0x81</span>,
+        <span class="tok-number">0x1f</span>, <span class="tok-number">0x35</span>, <span class="tok-number">0x2c</span>, <span class="tok-number">0x07</span>,
+        <span class="tok-number">0x3b</span>, <span class="tok-number">0x61</span>, <span class="tok-number">0x08</span>, <span class="tok-number">0xd7</span>,
+        <span class="tok-number">0x2d</span>, <span class="tok-number">0x98</span>, <span class="tok-number">0x10</span>, <span class="tok-number">0xa3</span>,
+        <span class="tok-number">0x09</span>, <span class="tok-number">0x14</span>, <span class="tok-number">0xdf</span>, <span class="tok-number">0xf4</span>,
+    };
+    <span class="tok-kw">const</span> exp_enc = [_]*<span class="tok-kw">const</span> [<span class="tok-number">32</span>:<span class="tok-number">0</span>]<span class="tok-type">u8</span>{
+        <span class="tok-str">&quot;603deb1015ca71be2b73aef0857d7781&quot;</span>, <span class="tok-str">&quot;1f352c073b6108d72d9810a30914dff4&quot;</span>, <span class="tok-str">&quot;9ba354118e6925afa51a8b5f2067fcde&quot;</span>,
+        <span class="tok-str">&quot;a8b09c1a93d194cdbe49846eb75d5b9a&quot;</span>, <span class="tok-str">&quot;d59aecb85bf3c917fee94248de8ebe96&quot;</span>, <span class="tok-str">&quot;b5a9328a2678a647983122292f6c79b3&quot;</span>,
+        <span class="tok-str">&quot;812c81addadf48ba24360af2fab8b464&quot;</span>, <span class="tok-str">&quot;98c5bfc9bebd198e268c3ba709e04214&quot;</span>, <span class="tok-str">&quot;68007bacb2df331696e939e46c518d80&quot;</span>,
+        <span class="tok-str">&quot;c814e20476a9fb8a5025c02d59c58239&quot;</span>, <span class="tok-str">&quot;de1369676ccc5a71fa2563959674ee15&quot;</span>, <span class="tok-str">&quot;5886ca5d2e2f31d77e0af1fa27cf73c3&quot;</span>,
+        <span class="tok-str">&quot;749c47ab18501ddae2757e4f7401905a&quot;</span>, <span class="tok-str">&quot;cafaaae3e4d59b349adf6acebd10190d&quot;</span>, <span class="tok-str">&quot;fe4890d1e6188d0b046df344706c631e&quot;</span>,
+    };
+    <span class="tok-kw">const</span> exp_dec = [_]*<span class="tok-kw">const</span> [<span class="tok-number">32</span>:<span class="tok-number">0</span>]<span class="tok-type">u8</span>{
+        <span class="tok-str">&quot;fe4890d1e6188d0b046df344706c631e&quot;</span>, <span class="tok-str">&quot;ada23f4963e23b2455427c8a5c709104&quot;</span>, <span class="tok-str">&quot;57c96cf6074f07c0706abb07137f9241&quot;</span>,
+        <span class="tok-str">&quot;b668b621ce40046d36a047ae0932ed8e&quot;</span>, <span class="tok-str">&quot;34ad1e4450866b367725bcc763152946&quot;</span>, <span class="tok-str">&quot;32526c367828b24cf8e043c33f92aa20&quot;</span>,
+        <span class="tok-str">&quot;c440b289642b757227a3d7f114309581&quot;</span>, <span class="tok-str">&quot;d669a7334a7ade7a80c8f18fc772e9e3&quot;</span>, <span class="tok-str">&quot;25ba3c22a06bc7fb4388a28333934270&quot;</span>,
+        <span class="tok-str">&quot;54fb808b9c137949cab22ff547ba186c&quot;</span>, <span class="tok-str">&quot;6c3d632985d1fbd9e3e36578701be0f3&quot;</span>, <span class="tok-str">&quot;4a7459f9c8e8f9c256a156bc8d083799&quot;</span>,
+        <span class="tok-str">&quot;42107758e9ec98f066329ea193f8858b&quot;</span>, <span class="tok-str">&quot;8ec6bff6829ca03b9e49af7edba96125&quot;</span>, <span class="tok-str">&quot;603deb1015ca71be2b73aef0857d7781&quot;</span>,
+    };
+    <span class="tok-kw">const</span> enc = <a href="std.crypto.aes.html#std.crypto.aes.Aes256">Aes256</a>.<a href="#">initEnc</a>(key);
+    <span class="tok-kw">const</span> dec = <a href="std.crypto.aes.html#std.crypto.aes.Aes256">Aes256</a>.<a href="#">initDec</a>(key);
+    <span class="tok-kw">var</span> exp: [<span class="tok-number">16</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+
+    <span class="tok-kw">for</span> (enc.key_schedule.round_keys, <span class="tok-number">0</span>..) |round_key, i| {
+        _ = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.hexToBytes">hexToBytes</a>(&amp;exp, exp_enc[i]);
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, &amp;exp, &amp;round_key.toBytes());
+    }
+    <span class="tok-kw">for</span> (dec.key_schedule.round_keys, <span class="tok-number">0</span>..) |round_key, i| {
+        _ = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.hexToBytes">hexToBytes</a>(&amp;exp, exp_dec[i]);
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, &amp;exp, &amp;round_key.toBytes());
+    }
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

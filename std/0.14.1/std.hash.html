@@ -1,0 +1,827 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.hash.html" class="active">hash</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.hash" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.hash</span><a href="#src.zig-std.hash">[src]</a></h1><div class="sectNamespaces"><h2 class="sectionHeader">Namespaces</h2><ul class="listNamespaces columns"><li><a href="std.hash.crc.html">std.hash.crc</a></li><li><a href="std.hash.murmur.html">std.hash.murmur</a></li><li><a href="std.hash.murmur.Murmur2_32.html">std.hash.murmur.Murmur2_32</a></li><li><a href="std.hash.murmur.Murmur2_64.html">std.hash.murmur.Murmur2_64</a></li><li><a href="std.hash.murmur.Murmur3_32.html">std.hash.murmur.Murmur3_32</a></li><li><a href="std.hash.cityhash.html">std.hash.cityhash</a></li><li><a href="std.hash.cityhash.CityHash32.html">std.hash.cityhash.CityHash32</a></li><li><a href="std.hash.cityhash.CityHash64.html">std.hash.cityhash.CityHash64</a></li><li><a href="std.hash.RapidHash.html">std.hash.RapidHash</a></li></ul></div><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.hash.adler.Adler32.html">std.hash.adler.Adler32</a></li><li><a href="std.hash.auto_hash.HashStrategy.html">std.hash.auto_hash.HashStrategy</a></li><li><a href="std.hash.wyhash.Wyhash.html">std.hash.wyhash.Wyhash</a></li><li><a href="std.hash.xxhash.XxHash3.html">std.hash.xxhash.XxHash3</a></li><li><a href="std.hash.xxhash.XxHash64.html">std.hash.xxhash.XxHash64</a></li><li><a href="std.hash.xxhash.XxHash32.html">std.hash.xxhash.XxHash32</a></li></ul></div><div class="sectTypes"><h2 class="sectionHeader">Types</h2><div class="listTypes"><div class="decl"><h2 id="std.hash.crc.Crc32IsoHdlc" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">Crc32IsoHdlc</span><a href="#src.zig-std.hash.crc.Crc32IsoHdlc">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.hash.crc.Crc32IsoHdlc">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Crc32IsoHdlc = <a href="std.hash.crc.impl.html#std.hash.crc.impl.Crc">Crc</a>(<span class="tok-type">u32</span>, .{
+    .polynomial = <span class="tok-number">0x04c11db7</span>,
+    .initial = <span class="tok-number">0xffffffff</span>,
+    .reflect_input = <span class="tok-null">true</span>,
+    .reflect_output = <span class="tok-null">true</span>,
+    .xor_output = <span class="tok-number">0xffffffff</span>,
+})</code></pre></details></div></div><div class="decl"><h2 id="std.hash.fnv.Fnv1a_32" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">Fnv1a_32</span><a href="#src.zig-std.hash.fnv.Fnv1a_32">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.hash.fnv.Fnv1a_32">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Fnv1a_32 = <a href="std.hash.fnv.html#std.hash.fnv.Fnv1a">Fnv1a</a>(<span class="tok-type">u32</span>, <span class="tok-number">0x01000193</span>, <span class="tok-number">0x811c9dc5</span>)</code></pre></details></div></div><div class="decl"><h2 id="std.hash.fnv.Fnv1a_64" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">Fnv1a_64</span><a href="#src.zig-std.hash.fnv.Fnv1a_64">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.hash.fnv.Fnv1a_64">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Fnv1a_64 = <a href="std.hash.fnv.html#std.hash.fnv.Fnv1a">Fnv1a</a>(<span class="tok-type">u64</span>, <span class="tok-number">0x100000001b3</span>, <span class="tok-number">0xcbf29ce484222325</span>)</code></pre></details></div></div><div class="decl"><h2 id="std.hash.fnv.Fnv1a_128" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">Fnv1a_128</span><a href="#src.zig-std.hash.fnv.Fnv1a_128">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.hash.fnv.Fnv1a_128">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Fnv1a_128 = <a href="std.hash.fnv.html#std.hash.fnv.Fnv1a">Fnv1a</a>(<span class="tok-type">u128</span>, <span class="tok-number">0x1000000000000000000013b</span>, <span class="tok-number">0x6c62272e07bb014262b821756295c58d</span>)</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.siphash.SipHash64" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">SipHash64</span><a href="#src.zig-std.crypto.siphash.SipHash64">[src]</a></h2><div class="tldDocs"><p>SipHash function with 64-bit output.</p>
+<p>Recommended parameters are:</p>
+<ul>
+<li>(c_rounds=4, d_rounds=8) for conservative security; regular hash functions such as BLAKE2 or BLAKE3 are usually a better alternative.</li>
+<li>(c_rounds=2, d_rounds=4) standard parameters.</li>
+<li>(c_rounds=1, d_rounds=3) reduced-round function. Faster, no known implications on its practical security level.</li>
+<li>(c_rounds=1, d_rounds=2) fastest option, but the output may be distinguishable from random data with related keys or non-uniform input - not suitable as a PRF.</li>
+</ul>
+<p>SipHash is not a traditional hash function. If the input includes untrusted content, a secret key is absolutely necessary.
+And due to its small output size, collisions in SipHash64 can be found with an exhaustive search.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>c_rounds: <span class="tok-type">usize</span></code></pre></div><div><pre><code>d_rounds: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectTypes"><h3 class="sectionHeader">Types</h3><div class="listTypes"><div class="decl"><h3 id="std.crypto.siphash.SipHash.Writer" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">Writer</span><a href="#src.zig-std.crypto.siphash.SipHash.Writer">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.Writer">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Writer = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.html#std.io.GenericWriter">Writer</a>(*<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>, <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.Error">Error</a>, <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.write">write</a>)</code></pre></details></div></div></div></div><div class="sectFields"><h3 class="sectionHeader">Fields</h3><div class="listFields"><div><pre><code>state: <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.State">State</a></code></pre></div><div><pre><code>buf: [<span class="tok-number">8</span>]<span class="tok-type">u8</span></code></pre></div><div><pre><code>buf_len: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectValues"><h3 class="sectionHeader">Values</h3><div class="listValues"><div class="decl"><h3 id="std.crypto.siphash.SipHash.key_length" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">key_length</span><a href="#src.zig-std.crypto.siphash.SipHash.key_length">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.key_length">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> key_length = <span class="tok-number">16</span></code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.mac_length" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">mac_length</span><a href="#src.zig-std.crypto.siphash.SipHash.mac_length">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.mac_length">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> mac_length = <span class="tok-builtin">@sizeOf</span>(T)</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.block_length" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">block_length</span><a href="#src.zig-std.crypto.siphash.SipHash.block_length">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.block_length">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> block_length = <span class="tok-number">8</span></code></pre></details></div></div></div></div><div class="sectErrSets"><h3 class="sectionHeader">Error Sets</h3><div class="listErrSets"><div class="decl"><h3 id="std.crypto.siphash.SipHash.Error" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">Error</span><a href="#src.zig-std.crypto.siphash.SipHash.Error">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.Error">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = <span class="tok-kw">error</span>{}</code></pre></details></div></div></div></div><div class="sectFns"><h3 class="sectionHeader">Functions</h3><div class="listFns"><div class="decl"><h3 id="std.crypto.siphash.SipHash.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.crypto.siphash.SipHash.init">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(key: *<span class="tok-kw">const</span> [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.key_length">key_length</a>]<span class="tok-type">u8</span>) <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a></code></pre></div><div class="tldDocs"><p>Initialize a state for a SipHash function</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>key: *<span class="tok-kw">const</span> [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.key_length">key_length</a>]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.init">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(key: *<span class="tok-kw">const</span> [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.key_length">key_length</a>]<span class="tok-type">u8</span>) <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a> {
+    <span class="tok-kw">return</span> <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>{
+        .state = <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.State">State</a>.<a href="#">init</a>(key),
+        .buf = <span class="tok-null">undefined</span>,
+        .buf_len = <span class="tok-number">0</span>,
+    };
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.update" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">update</span><a href="#src.zig-std.crypto.siphash.SipHash.update">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">update</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>, b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Add data to the state</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a></code></pre></div><div><pre><code>b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.update">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">update</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>, b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> off: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+
+    <span class="tok-kw">if</span> (self.buf_len != <span class="tok-number">0</span> <span class="tok-kw">and</span> self.buf_len + b.len &gt;= <span class="tok-number">8</span>) {
+        off += <span class="tok-number">8</span> - self.buf_len;
+        <span class="tok-builtin">@memcpy</span>(self.buf[self.buf_len..][<span class="tok-number">0</span>..off], b[<span class="tok-number">0</span>..off]);
+        self.state.update(self.buf[<span class="tok-number">0</span>..]);
+        self.buf_len = <span class="tok-number">0</span>;
+    }
+
+    <span class="tok-kw">const</span> remain_len = b.len - off;
+    <span class="tok-kw">const</span> aligned_len = remain_len - (remain_len % <span class="tok-number">8</span>);
+    self.state.update(b[off .. off + aligned_len]);
+
+    <span class="tok-kw">const</span> b_slice = b[off + aligned_len ..];
+    <span class="tok-builtin">@memcpy</span>(self.buf[self.buf_len..][<span class="tok-number">0</span>..b_slice.len], b_slice);
+    self.buf_len += <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-builtin">@intCast</span>(b_slice.len));
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.peek" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">peek</span><a href="#src.zig-std.crypto.siphash.SipHash.peek">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">peek</span>(self: <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>) [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.peek">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">peek</span>(self: <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>) [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span> {
+    <span class="tok-kw">var</span> copy = self;
+    <span class="tok-kw">return</span> copy.finalResult();
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.final" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">final</span><a href="#src.zig-std.crypto.siphash.SipHash.final">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">final</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>, out: *[<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Return an authentication tag for the current state
+Assumes <code>out</code> is less than or equal to <code>mac_length</code>.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a></code></pre></div><div><pre><code>out: *[<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.final">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">final</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>, out: *[<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(T, out, self.state.final(self.buf[<span class="tok-number">0</span>..self.buf_len]), .little);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.finalResult" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">finalResult</span><a href="#src.zig-std.crypto.siphash.SipHash.finalResult">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">finalResult</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>) [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.finalResult">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">finalResult</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>) [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span> {
+    <span class="tok-kw">var</span> result: [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    self.final(&amp;result);
+    <span class="tok-kw">return</span> result;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.create" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">create</span><a href="#src.zig-std.crypto.siphash.SipHash.create">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">create</span>(out: *[<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span>, msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, key: *<span class="tok-kw">const</span> [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.key_length">key_length</a>]<span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Return an authentication tag for a message and a key</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>out: *[<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span></code></pre></div><div><pre><code>msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>key: *<span class="tok-kw">const</span> [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.key_length">key_length</a>]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.create">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">create</span>(out: *[<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span>, msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, key: *<span class="tok-kw">const</span> [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.key_length">key_length</a>]<span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> ctx = <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>.<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.init">init</a>(key);
+    ctx.update(msg);
+    ctx.final(out);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.finalInt" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">finalInt</span><a href="#src.zig-std.crypto.siphash.SipHash.finalInt">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">finalInt</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>) T</code></pre></div><div class="tldDocs"><p>Return an authentication tag for the current state, as an integer</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.finalInt">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">finalInt</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>) T {
+    <span class="tok-kw">return</span> self.state.final(self.buf[<span class="tok-number">0</span>..self.buf_len]);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.toInt" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">toInt</span><a href="#src.zig-std.crypto.siphash.SipHash.toInt">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toInt</span>(msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, key: *<span class="tok-kw">const</span> [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.key_length">key_length</a>]<span class="tok-type">u8</span>) T</code></pre></div><div class="tldDocs"><p>Return an authentication tag for a message and a key, as an integer</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>key: *<span class="tok-kw">const</span> [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.key_length">key_length</a>]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.toInt">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toInt</span>(msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, key: *<span class="tok-kw">const</span> [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.key_length">key_length</a>]<span class="tok-type">u8</span>) T {
+    <span class="tok-kw">return</span> <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.State">State</a>.<a href="#">hash</a>(msg, key);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.writer" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">writer</span><a href="#src.zig-std.crypto.siphash.SipHash.writer">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writer</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>) <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.Writer">Writer</a></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.writer">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writer</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>) <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.Writer">Writer</a> {
+    <span class="tok-kw">return</span> .{ .context = self };
+}</code></pre></details></div></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash64">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">SipHash64</span>(<span class="tok-kw">comptime</span> c_rounds: <span class="tok-type">usize</span>, <span class="tok-kw">comptime</span> d_rounds: <span class="tok-type">usize</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">SipHash</a>(<span class="tok-type">u64</span>, c_rounds, d_rounds);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.siphash.SipHash128" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">SipHash128</span><a href="#src.zig-std.crypto.siphash.SipHash128">[src]</a></h2><div class="tldDocs"><p>SipHash function with 128-bit output.</p>
+<p>Recommended parameters are:</p>
+<ul>
+<li>(c_rounds=4, d_rounds=8) for conservative security; regular hash functions such as BLAKE2 or BLAKE3 are usually a better alternative.</li>
+<li>(c_rounds=2, d_rounds=4) standard parameters.</li>
+<li>(c_rounds=1, d_rounds=4) reduced-round function. Recommended to hash very short, similar strings, when a 128-bit PRF output is still required.</li>
+<li>(c_rounds=1, d_rounds=3) reduced-round function. Faster, no known implications on its practical security level.</li>
+<li>(c_rounds=1, d_rounds=2) fastest option, but the output may be distinguishable from random data with related keys or non-uniform input - not suitable as a PRF.</li>
+</ul>
+<p>SipHash is not a traditional hash function. If the input includes untrusted content, a secret key is absolutely necessary.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>c_rounds: <span class="tok-type">usize</span></code></pre></div><div><pre><code>d_rounds: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectTypes"><h3 class="sectionHeader">Types</h3><div class="listTypes"><div class="decl"><h3 id="std.crypto.siphash.SipHash.Writer" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">Writer</span><a href="#src.zig-std.crypto.siphash.SipHash.Writer">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.Writer">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Writer = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.html#std.io.GenericWriter">Writer</a>(*<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>, <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.Error">Error</a>, <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.write">write</a>)</code></pre></details></div></div></div></div><div class="sectFields"><h3 class="sectionHeader">Fields</h3><div class="listFields"><div><pre><code>state: <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.State">State</a></code></pre></div><div><pre><code>buf: [<span class="tok-number">8</span>]<span class="tok-type">u8</span></code></pre></div><div><pre><code>buf_len: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectValues"><h3 class="sectionHeader">Values</h3><div class="listValues"><div class="decl"><h3 id="std.crypto.siphash.SipHash.key_length" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">key_length</span><a href="#src.zig-std.crypto.siphash.SipHash.key_length">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.key_length">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> key_length = <span class="tok-number">16</span></code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.mac_length" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">mac_length</span><a href="#src.zig-std.crypto.siphash.SipHash.mac_length">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.mac_length">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> mac_length = <span class="tok-builtin">@sizeOf</span>(T)</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.block_length" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">block_length</span><a href="#src.zig-std.crypto.siphash.SipHash.block_length">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.block_length">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> block_length = <span class="tok-number">8</span></code></pre></details></div></div></div></div><div class="sectErrSets"><h3 class="sectionHeader">Error Sets</h3><div class="listErrSets"><div class="decl"><h3 id="std.crypto.siphash.SipHash.Error" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">Error</span><a href="#src.zig-std.crypto.siphash.SipHash.Error">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.Error">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = <span class="tok-kw">error</span>{}</code></pre></details></div></div></div></div><div class="sectFns"><h3 class="sectionHeader">Functions</h3><div class="listFns"><div class="decl"><h3 id="std.crypto.siphash.SipHash.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.crypto.siphash.SipHash.init">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(key: *<span class="tok-kw">const</span> [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.key_length">key_length</a>]<span class="tok-type">u8</span>) <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a></code></pre></div><div class="tldDocs"><p>Initialize a state for a SipHash function</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>key: *<span class="tok-kw">const</span> [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.key_length">key_length</a>]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.init">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(key: *<span class="tok-kw">const</span> [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.key_length">key_length</a>]<span class="tok-type">u8</span>) <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a> {
+    <span class="tok-kw">return</span> <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>{
+        .state = <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.State">State</a>.<a href="#">init</a>(key),
+        .buf = <span class="tok-null">undefined</span>,
+        .buf_len = <span class="tok-number">0</span>,
+    };
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.update" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">update</span><a href="#src.zig-std.crypto.siphash.SipHash.update">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">update</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>, b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Add data to the state</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a></code></pre></div><div><pre><code>b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.update">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">update</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>, b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> off: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+
+    <span class="tok-kw">if</span> (self.buf_len != <span class="tok-number">0</span> <span class="tok-kw">and</span> self.buf_len + b.len &gt;= <span class="tok-number">8</span>) {
+        off += <span class="tok-number">8</span> - self.buf_len;
+        <span class="tok-builtin">@memcpy</span>(self.buf[self.buf_len..][<span class="tok-number">0</span>..off], b[<span class="tok-number">0</span>..off]);
+        self.state.update(self.buf[<span class="tok-number">0</span>..]);
+        self.buf_len = <span class="tok-number">0</span>;
+    }
+
+    <span class="tok-kw">const</span> remain_len = b.len - off;
+    <span class="tok-kw">const</span> aligned_len = remain_len - (remain_len % <span class="tok-number">8</span>);
+    self.state.update(b[off .. off + aligned_len]);
+
+    <span class="tok-kw">const</span> b_slice = b[off + aligned_len ..];
+    <span class="tok-builtin">@memcpy</span>(self.buf[self.buf_len..][<span class="tok-number">0</span>..b_slice.len], b_slice);
+    self.buf_len += <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-builtin">@intCast</span>(b_slice.len));
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.peek" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">peek</span><a href="#src.zig-std.crypto.siphash.SipHash.peek">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">peek</span>(self: <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>) [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.peek">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">peek</span>(self: <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>) [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span> {
+    <span class="tok-kw">var</span> copy = self;
+    <span class="tok-kw">return</span> copy.finalResult();
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.final" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">final</span><a href="#src.zig-std.crypto.siphash.SipHash.final">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">final</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>, out: *[<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Return an authentication tag for the current state
+Assumes <code>out</code> is less than or equal to <code>mac_length</code>.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a></code></pre></div><div><pre><code>out: *[<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.final">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">final</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>, out: *[<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(T, out, self.state.final(self.buf[<span class="tok-number">0</span>..self.buf_len]), .little);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.finalResult" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">finalResult</span><a href="#src.zig-std.crypto.siphash.SipHash.finalResult">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">finalResult</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>) [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.finalResult">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">finalResult</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>) [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span> {
+    <span class="tok-kw">var</span> result: [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    self.final(&amp;result);
+    <span class="tok-kw">return</span> result;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.create" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">create</span><a href="#src.zig-std.crypto.siphash.SipHash.create">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">create</span>(out: *[<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span>, msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, key: *<span class="tok-kw">const</span> [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.key_length">key_length</a>]<span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Return an authentication tag for a message and a key</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>out: *[<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span></code></pre></div><div><pre><code>msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>key: *<span class="tok-kw">const</span> [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.key_length">key_length</a>]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.create">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">create</span>(out: *[<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.mac_length">mac_length</a>]<span class="tok-type">u8</span>, msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, key: *<span class="tok-kw">const</span> [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.key_length">key_length</a>]<span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> ctx = <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>.<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.init">init</a>(key);
+    ctx.update(msg);
+    ctx.final(out);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.finalInt" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">finalInt</span><a href="#src.zig-std.crypto.siphash.SipHash.finalInt">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">finalInt</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>) T</code></pre></div><div class="tldDocs"><p>Return an authentication tag for the current state, as an integer</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.finalInt">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">finalInt</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>) T {
+    <span class="tok-kw">return</span> self.state.final(self.buf[<span class="tok-number">0</span>..self.buf_len]);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.toInt" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">toInt</span><a href="#src.zig-std.crypto.siphash.SipHash.toInt">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toInt</span>(msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, key: *<span class="tok-kw">const</span> [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.key_length">key_length</a>]<span class="tok-type">u8</span>) T</code></pre></div><div class="tldDocs"><p>Return an authentication tag for a message and a key, as an integer</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>key: *<span class="tok-kw">const</span> [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.key_length">key_length</a>]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.toInt">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toInt</span>(msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, key: *<span class="tok-kw">const</span> [<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.key_length">key_length</a>]<span class="tok-type">u8</span>) T {
+    <span class="tok-kw">return</span> <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.State">State</a>.<a href="#">hash</a>(msg, key);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.siphash.SipHash.writer" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">writer</span><a href="#src.zig-std.crypto.siphash.SipHash.writer">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writer</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>) <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.Writer">Writer</a></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash.writer">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writer</span>(self: *<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">Self</a>) <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash.Writer">Writer</a> {
+    <span class="tok-kw">return</span> .{ .context = self };
+}</code></pre></details></div></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.siphash.SipHash128">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">SipHash128</span>(<span class="tok-kw">comptime</span> c_rounds: <span class="tok-type">usize</span>, <span class="tok-kw">comptime</span> d_rounds: <span class="tok-type">usize</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <a href="std.crypto.siphash.html#std.crypto.siphash.SipHash">SipHash</a>(<span class="tok-type">u128</span>, c_rounds, d_rounds);
+}</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.hash.auto_hash.autoHash" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">autoHash</span><a href="#src.zig-std.hash.auto_hash.autoHash">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">autoHash</span>(hasher: <span class="tok-kw">anytype</span>, key: <span class="tok-kw">anytype</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Provides generic hashing for any eligible type.
+Only hashes <code>key</code> itself, pointers are not followed.
+Slices as well as unions and structs containing slices are rejected to avoid
+ambiguity on the user's intention.</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.hash.auto_hash.autoHash">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">autoHash</span>(hasher: <span class="tok-kw">anytype</span>, key: <span class="tok-kw">anytype</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> Key = <span class="tok-builtin">@TypeOf</span>(key);
+    <span class="tok-kw">if</span> (<span class="tok-kw">comptime</span> <a href="std.hash.auto_hash.html#std.hash.auto_hash.typeContainsSlice">typeContainsSlice</a>(Key)) {
+        <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;std.hash.autoHash does not allow slices as well as unions and structs containing slices here (&quot;</span> ++ <span class="tok-builtin">@typeName</span>(Key) ++
+            <span class="tok-str">&quot;) because the intent is unclear. Consider using std.hash.autoHashStrat or providing your own hash function instead.&quot;</span>);
+    }
+
+    <a href="std.hash.auto_hash.html#std.hash.auto_hash.hash">hash</a>(hasher, key, .Shallow);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.hash.auto_hash.hash" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">hash</span><a href="#src.zig-std.hash.auto_hash.hash">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">hash</span>(hasher: <span class="tok-kw">anytype</span>, key: <span class="tok-kw">anytype</span>, <span class="tok-kw">comptime</span> strat: <a href="std.hash.auto_hash.HashStrategy.html">HashStrategy</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Provides generic hashing for any eligible type.
+Strategy is provided to determine if pointers should be followed or not.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>strat: <a href="std.hash.auto_hash.HashStrategy.html">HashStrategy</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.hash.auto_hash.hash">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">hash</span>(hasher: <span class="tok-kw">anytype</span>, key: <span class="tok-kw">anytype</span>, <span class="tok-kw">comptime</span> strat: <a href="std.hash.auto_hash.HashStrategy.html">HashStrategy</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> Key = <span class="tok-builtin">@TypeOf</span>(key);
+    <span class="tok-kw">const</span> Hasher = <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(hasher))) {
+        .pointer =&gt; |ptr| ptr.child,
+        <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@TypeOf</span>(hasher),
+    };
+
+    <span class="tok-kw">if</span> (strat == .Shallow <span class="tok-kw">and</span> <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.hasUniqueRepresentation">hasUniqueRepresentation</a>(Key)) {
+        <span class="tok-builtin">@call</span>(.always_inline, Hasher.update, .{ hasher, <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.asBytes">asBytes</a>(&amp;key) });
+        <span class="tok-kw">return</span>;
+    }
+
+    <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(Key)) {
+        .<span class="tok-type">noreturn</span>,
+        .@&quot;opaque&quot;,
+        .<span class="tok-null">undefined</span>,
+        .<span class="tok-null">null</span>,
+        .<span class="tok-type">comptime_float</span>,
+        .<span class="tok-type">comptime_int</span>,
+        .<span class="tok-type">type</span>,
+        .enum_literal,
+        .frame,
+        .float,
+        =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;unable to hash type &quot;</span> ++ <span class="tok-builtin">@typeName</span>(Key)),
+
+        .<span class="tok-type">void</span> =&gt; <span class="tok-kw">return</span>,<span class="tok-comment">
+
+        // Help the optimizer see that hashing an int is easy by inlining!
+        // TODO Check if the situation is better after #561 is resolved.
+        </span>.int =&gt; |int| <span class="tok-kw">switch</span> (int.signedness) {
+            .signed =&gt; <a href="std.hash.auto_hash.html#std.hash.auto_hash.hash">hash</a>(hasher, <span class="tok-builtin">@as</span>(<span class="tok-builtin">@Type</span>(.{ .int = .{
+                .bits = int.bits,
+                .signedness = .unsigned,
+            } }), <span class="tok-builtin">@bitCast</span>(key)), strat),
+            .unsigned =&gt; {
+                <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.hasUniqueRepresentation">hasUniqueRepresentation</a>(Key)) {
+                    <span class="tok-builtin">@call</span>(.always_inline, Hasher.update, .{ hasher, <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.asBytes">asBytes</a>(&amp;key) });
+                } <span class="tok-kw">else</span> {<span class="tok-comment">
+                    // Take only the part containing the key value, the remaining
+                    // bytes are undefined and must not be hashed!
+                    </span><span class="tok-kw">const</span> byte_size = <span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.divCeil">divCeil</a>(<span class="tok-type">comptime_int</span>, <span class="tok-builtin">@bitSizeOf</span>(Key), <span class="tok-number">8</span>) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+                    <span class="tok-builtin">@call</span>(.always_inline, Hasher.update, .{ hasher, <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.asBytes">asBytes</a>(&amp;key)[<span class="tok-number">0</span>..byte_size] });
+                }
+            },
+        },
+
+        .<span class="tok-type">bool</span> =&gt; <a href="std.hash.auto_hash.html#std.hash.auto_hash.hash">hash</a>(hasher, <span class="tok-builtin">@intFromBool</span>(key), strat),
+        .@&quot;enum&quot; =&gt; <a href="std.hash.auto_hash.html#std.hash.auto_hash.hash">hash</a>(hasher, <span class="tok-builtin">@intFromEnum</span>(key), strat),
+        .error_set =&gt; <a href="std.hash.auto_hash.html#std.hash.auto_hash.hash">hash</a>(hasher, <span class="tok-builtin">@intFromError</span>(key), strat),
+        .@&quot;anyframe&quot;, .@&quot;fn&quot; =&gt; <a href="std.hash.auto_hash.html#std.hash.auto_hash.hash">hash</a>(hasher, <span class="tok-builtin">@intFromPtr</span>(key), strat),
+
+        .pointer =&gt; <span class="tok-builtin">@call</span>(.always_inline, <a href="std.hash.auto_hash.html#std.hash.auto_hash.hashPointer">hashPointer</a>, .{ hasher, key, strat }),
+
+        .optional =&gt; <span class="tok-kw">if</span> (key) |k| <a href="std.hash.auto_hash.html#std.hash.auto_hash.hash">hash</a>(hasher, k, strat),
+
+        .array =&gt; <a href="std.hash.auto_hash.html#std.hash.auto_hash.hashArray">hashArray</a>(hasher, key, strat),
+
+        .vector =&gt; |info| {
+            <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.hasUniqueRepresentation">hasUniqueRepresentation</a>(Key)) {
+                hasher.update(<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.asBytes">asBytes</a>(&amp;key));
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">comptime</span> <span class="tok-kw">var</span> i = <span class="tok-number">0</span>;
+                <span class="tok-kw">inline</span> <span class="tok-kw">while</span> (i &lt; info.len) : (i += <span class="tok-number">1</span>) {
+                    <a href="std.hash.auto_hash.html#std.hash.auto_hash.hash">hash</a>(hasher, key[i], strat);
+                }
+            }
+        },
+
+        .@&quot;struct&quot; =&gt; |info| {
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (info.fields) |field| {<span class="tok-comment">
+                // We reuse the hash of the previous field as the seed for the
+                // next one so that they're dependant.
+                </span><a href="std.hash.auto_hash.html#std.hash.auto_hash.hash">hash</a>(hasher, <span class="tok-builtin">@field</span>(key, field.name), strat);
+            }
+        },
+
+        .@&quot;union&quot; =&gt; |info| {
+            <span class="tok-kw">if</span> (info.tag_type) |tag_type| {
+                <span class="tok-kw">const</span> tag = <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.activeTag">activeTag</a>(key);
+                <a href="std.hash.auto_hash.html#std.hash.auto_hash.hash">hash</a>(hasher, tag, strat);
+                <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (info.fields) |field| {
+                    <span class="tok-kw">if</span> (<span class="tok-builtin">@field</span>(tag_type, field.name) == tag) {
+                        <span class="tok-kw">if</span> (field.<span class="tok-type">type</span> != <span class="tok-type">void</span>) {
+                            <a href="std.hash.auto_hash.html#std.hash.auto_hash.hash">hash</a>(hasher, <span class="tok-builtin">@field</span>(key, field.name), strat);
+                        }<span class="tok-comment">
+                        // TODO use a labelled break when it does not crash the compiler. cf #2908
+                        // break :blk;
+                        </span><span class="tok-kw">return</span>;
+                    }
+                }
+                <span class="tok-kw">unreachable</span>;
+            } <span class="tok-kw">else</span> <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;cannot hash untagged union type: &quot;</span> ++ <span class="tok-builtin">@typeName</span>(Key) ++ <span class="tok-str">&quot;, provide your own hash function&quot;</span>);
+        },
+
+        .error_union =&gt; blk: {
+            <span class="tok-kw">const</span> payload = key <span class="tok-kw">catch</span> |err| {
+                <a href="std.hash.auto_hash.html#std.hash.auto_hash.hash">hash</a>(hasher, err, strat);
+                <span class="tok-kw">break</span> :blk;
+            };
+            <a href="std.hash.auto_hash.html#std.hash.auto_hash.hash">hash</a>(hasher, payload, strat);
+        },
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.hash.int" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">int</span><a href="#src.zig-std.hash.int">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">int</span>(input: <span class="tok-kw">anytype</span>) <span class="tok-builtin">@TypeOf</span>(input)</code></pre></div><div class="tldDocs"><p>Integer-to-integer hashing for bit widths &lt;= 256.</p>
+</div><div class="sectDocTests"><h3 class="sectionHeader">Example Usage</h3><pre><code class="docTestsCode"><span class="tok-kw">test</span> int {
+    <span class="tok-kw">const</span> expectEqual = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>).testing.expectEqual;
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x1</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u1</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x3</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u2</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x4</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u3</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0xD6</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x2880</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u16</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x2880</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">i16</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x838380</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u24</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x42741D6</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x42741D6</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">i32</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x71894DE00D9981F</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x71894DE00D9981F</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">i64</span>, <span class="tok-number">1</span>)));
+}</code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.hash.int">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">int</span>(input: <span class="tok-kw">anytype</span>) <span class="tok-builtin">@TypeOf</span>(input) {<span class="tok-comment">
+    // This function is only intended for integer types
+    </span><span class="tok-kw">const</span> info = <span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(input)).int;
+    <span class="tok-kw">const</span> bits = info.bits;<span class="tok-comment">
+    // Convert input to unsigned integer (easier to deal with)
+    </span><span class="tok-kw">const</span> Uint = <span class="tok-builtin">@Type</span>(.{ .int = .{ .bits = bits, .signedness = .unsigned } });
+    <span class="tok-kw">const</span> u_input: Uint = <span class="tok-builtin">@bitCast</span>(input);
+    <span class="tok-kw">if</span> (bits &gt; <span class="tok-number">256</span>) <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;bit widths &gt; 256 are unsupported, use std.hash.autoHash functionality.&quot;</span>);<span class="tok-comment">
+    // For bit widths that don't have a dedicated function, use a heuristic
+    // construction with a multiplier suited to diffusion -
+    // a mod 2^bits where a^2 - 46 * a + 1 = 0 mod 2^(bits + 4),
+    // on Mathematica: bits = 256; BaseForm[Solve[1 - 46 a + a^2 == 0, a, Modulus -&gt; 2^(bits + 4)][[-1]][[1]][[2]], 16]
+    </span><span class="tok-kw">const</span> mult: Uint = <span class="tok-builtin">@truncate</span>(<span class="tok-number">0xfac2e27ed2036860a062b5f264d80a512b00aa459b448bf1eca24d41c96f59e5b</span>);<span class="tok-comment">
+    // The bit width of the input integer determines how to hash it
+    </span><span class="tok-kw">const</span> output = <span class="tok-kw">switch</span> (bits) {
+        <span class="tok-number">0</span>...<span class="tok-number">2</span> =&gt; u_input *% mult,
+        <span class="tok-number">16</span> =&gt; <a href="std.hash.html#std.hash.uint16">uint16</a>(u_input),
+        <span class="tok-number">32</span> =&gt; <a href="std.hash.html#std.hash.uint32">uint32</a>(u_input),
+        <span class="tok-number">64</span> =&gt; <a href="std.hash.html#std.hash.uint64">uint64</a>(u_input),
+        <span class="tok-kw">else</span> =&gt; blk: {
+            <span class="tok-kw">var</span> x: Uint = u_input;
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-number">0</span>..<span class="tok-number">4</span>) |_| {
+                x ^= x &gt;&gt; (bits / <span class="tok-number">2</span>);
+                x *%= mult;
+            }
+            <span class="tok-kw">break</span> :blk x;
+        },
+    };
+    <span class="tok-kw">return</span> <span class="tok-builtin">@bitCast</span>(output);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.hash.uint32" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">uint32</span><a href="#src.zig-std.hash.uint32">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">uint32</span>(input: <span class="tok-type">u32</span>) <span class="tok-type">u32</span></code></pre></div><div class="tldDocs"><p>DEPRECATED: use std.hash.int()
+Source: <a href="https://github.com/skeeto/hash-prospector">https://github.com/skeeto/hash-prospector</a></p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>input: <span class="tok-type">u32</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.hash.uint32">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">uint32</span>(input: <span class="tok-type">u32</span>) <span class="tok-type">u32</span> {
+    <span class="tok-kw">var</span> x: <span class="tok-type">u32</span> = input;
+    x = (x ^ (x &gt;&gt; <span class="tok-number">17</span>)) *% <span class="tok-number">0xed5ad4bb</span>;
+    x = (x ^ (x &gt;&gt; <span class="tok-number">11</span>)) *% <span class="tok-number">0xac4c1b51</span>;
+    x = (x ^ (x &gt;&gt; <span class="tok-number">15</span>)) *% <span class="tok-number">0x31848bab</span>;
+    x = x ^ (x &gt;&gt; <span class="tok-number">14</span>);
+    <span class="tok-kw">return</span> x;
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.hash">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> adler = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;hash/adler.zig&quot;</span>);
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Adler32 = <a href="std.hash.adler.html">adler</a>.<a href="std.hash.adler.Adler32.html">Adler32</a>;
+
+<span class="tok-kw">const</span> auto_hash = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;hash/auto_hash.zig&quot;</span>);
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> autoHash = <a href="std.hash.auto_hash.html">auto_hash</a>.<a href="std.hash.auto_hash.html#std.hash.auto_hash.autoHash">autoHash</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> autoHashStrat = <a href="std.hash.auto_hash.html">auto_hash</a>.<a href="std.hash.auto_hash.html#std.hash.auto_hash.hash">hash</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Strategy = <a href="std.hash.auto_hash.html">auto_hash</a>.<a href="std.hash.auto_hash.HashStrategy.html">HashStrategy</a>;<span class="tok-comment">
+
+// pub for polynomials + generic crc32 construction
+</span><span class="tok-kw">pub</span> <span class="tok-kw">const</span> crc = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;hash/crc.zig&quot;</span>);
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Crc32 = <a href="std.hash.crc.html">crc</a>.<a href="std.hash.crc.html#std.hash.crc.Crc32IsoHdlc">Crc32</a>;
+
+<span class="tok-kw">const</span> fnv = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;hash/fnv.zig&quot;</span>);
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Fnv1a_32 = <a href="std.hash.fnv.html">fnv</a>.<a href="std.hash.fnv.html#std.hash.fnv.Fnv1a_32">Fnv1a_32</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Fnv1a_64 = <a href="std.hash.fnv.html">fnv</a>.<a href="std.hash.fnv.html#std.hash.fnv.Fnv1a_64">Fnv1a_64</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Fnv1a_128 = <a href="std.hash.fnv.html">fnv</a>.<a href="std.hash.fnv.html#std.hash.fnv.Fnv1a_128">Fnv1a_128</a>;
+
+<span class="tok-kw">const</span> siphash = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/siphash.zig&quot;</span>);
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SipHash64 = <a href="std.crypto.siphash.html">siphash</a>.<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash64">SipHash64</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SipHash128 = <a href="std.crypto.siphash.html">siphash</a>.<a href="std.crypto.siphash.html#std.crypto.siphash.SipHash128">SipHash128</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> murmur = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;hash/murmur.zig&quot;</span>);
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Murmur2_32 = <a href="std.hash.murmur.html">murmur</a>.<a href="std.hash.murmur.Murmur2_32.html">Murmur2_32</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Murmur2_64 = <a href="std.hash.murmur.html">murmur</a>.<a href="std.hash.murmur.Murmur2_64.html">Murmur2_64</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Murmur3_32 = <a href="std.hash.murmur.html">murmur</a>.<a href="std.hash.murmur.Murmur3_32.html">Murmur3_32</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> cityhash = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;hash/cityhash.zig&quot;</span>);
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CityHash32 = <a href="std.hash.cityhash.html">cityhash</a>.<a href="std.hash.cityhash.CityHash32.html">CityHash32</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CityHash64 = <a href="std.hash.cityhash.html">cityhash</a>.<a href="std.hash.cityhash.CityHash64.html">CityHash64</a>;
+
+<span class="tok-kw">const</span> wyhash = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;hash/wyhash.zig&quot;</span>);
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Wyhash = <a href="std.hash.wyhash.html">wyhash</a>.<a href="std.hash.wyhash.Wyhash.html">Wyhash</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> RapidHash = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;hash/RapidHash.zig&quot;</span>);
+
+<span class="tok-kw">const</span> xxhash = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;hash/xxhash.zig&quot;</span>);
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> XxHash3 = <a href="std.hash.xxhash.html">xxhash</a>.<a href="std.hash.xxhash.XxHash3.html">XxHash3</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> XxHash64 = <a href="std.hash.xxhash.html">xxhash</a>.<a href="std.hash.xxhash.XxHash64.html">XxHash64</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> XxHash32 = <a href="std.hash.xxhash.html">xxhash</a>.<a href="std.hash.xxhash.XxHash32.html">XxHash32</a>;
+
+<span class="tok-comment">/// Integer-to-integer hashing for bit widths &lt;= 256.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">int</span>(input: <span class="tok-kw">anytype</span>) <span class="tok-builtin">@TypeOf</span>(input) {<span class="tok-comment">
+    // This function is only intended for integer types
+    </span><span class="tok-kw">const</span> info = <span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(input)).int;
+    <span class="tok-kw">const</span> bits = info.bits;<span class="tok-comment">
+    // Convert input to unsigned integer (easier to deal with)
+    </span><span class="tok-kw">const</span> Uint = <span class="tok-builtin">@Type</span>(.{ .int = .{ .bits = bits, .signedness = .unsigned } });
+    <span class="tok-kw">const</span> u_input: Uint = <span class="tok-builtin">@bitCast</span>(input);
+    <span class="tok-kw">if</span> (bits &gt; <span class="tok-number">256</span>) <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;bit widths &gt; 256 are unsupported, use std.hash.autoHash functionality.&quot;</span>);<span class="tok-comment">
+    // For bit widths that don't have a dedicated function, use a heuristic
+    // construction with a multiplier suited to diffusion -
+    // a mod 2^bits where a^2 - 46 * a + 1 = 0 mod 2^(bits + 4),
+    // on Mathematica: bits = 256; BaseForm[Solve[1 - 46 a + a^2 == 0, a, Modulus -&gt; 2^(bits + 4)][[-1]][[1]][[2]], 16]
+    </span><span class="tok-kw">const</span> mult: Uint = <span class="tok-builtin">@truncate</span>(<span class="tok-number">0xfac2e27ed2036860a062b5f264d80a512b00aa459b448bf1eca24d41c96f59e5b</span>);<span class="tok-comment">
+    // The bit width of the input integer determines how to hash it
+    </span><span class="tok-kw">const</span> output = <span class="tok-kw">switch</span> (bits) {
+        <span class="tok-number">0</span>...<span class="tok-number">2</span> =&gt; u_input *% mult,
+        <span class="tok-number">16</span> =&gt; <a href="std.hash.html#std.hash.uint16">uint16</a>(u_input),
+        <span class="tok-number">32</span> =&gt; <a href="std.hash.html#std.hash.uint32">uint32</a>(u_input),
+        <span class="tok-number">64</span> =&gt; <a href="std.hash.html#std.hash.uint64">uint64</a>(u_input),
+        <span class="tok-kw">else</span> =&gt; blk: {
+            <span class="tok-kw">var</span> x: Uint = u_input;
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-number">0</span>..<span class="tok-number">4</span>) |_| {
+                x ^= x &gt;&gt; (bits / <span class="tok-number">2</span>);
+                x *%= mult;
+            }
+            <span class="tok-kw">break</span> :blk x;
+        },
+    };
+    <span class="tok-kw">return</span> <span class="tok-builtin">@bitCast</span>(output);
+}
+
+<span class="tok-comment">/// Source: https://github.com/skeeto/hash-prospector</span>
+<span class="tok-kw">fn</span> <span class="tok-fn">uint16</span>(input: <span class="tok-type">u16</span>) <span class="tok-type">u16</span> {
+    <span class="tok-kw">var</span> x: <span class="tok-type">u16</span> = input;
+    x = (x ^ (x &gt;&gt; <span class="tok-number">7</span>)) *% <span class="tok-number">0x2993</span>;
+    x = (x ^ (x &gt;&gt; <span class="tok-number">5</span>)) *% <span class="tok-number">0xe877</span>;
+    x = (x ^ (x &gt;&gt; <span class="tok-number">9</span>)) *% <span class="tok-number">0x0235</span>;
+    x = x ^ (x &gt;&gt; <span class="tok-number">10</span>);
+    <span class="tok-kw">return</span> x;
+}
+
+<span class="tok-comment">/// DEPRECATED: use std.hash.int()</span>
+<span class="tok-comment">/// Source: https://github.com/skeeto/hash-prospector</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">uint32</span>(input: <span class="tok-type">u32</span>) <span class="tok-type">u32</span> {
+    <span class="tok-kw">var</span> x: <span class="tok-type">u32</span> = input;
+    x = (x ^ (x &gt;&gt; <span class="tok-number">17</span>)) *% <span class="tok-number">0xed5ad4bb</span>;
+    x = (x ^ (x &gt;&gt; <span class="tok-number">11</span>)) *% <span class="tok-number">0xac4c1b51</span>;
+    x = (x ^ (x &gt;&gt; <span class="tok-number">15</span>)) *% <span class="tok-number">0x31848bab</span>;
+    x = x ^ (x &gt;&gt; <span class="tok-number">14</span>);
+    <span class="tok-kw">return</span> x;
+}
+
+<span class="tok-comment">/// Source: https://github.com/jonmaiga/mx3</span>
+<span class="tok-kw">fn</span> <span class="tok-fn">uint64</span>(input: <span class="tok-type">u64</span>) <span class="tok-type">u64</span> {
+    <span class="tok-kw">var</span> x: <span class="tok-type">u64</span> = input;
+    <span class="tok-kw">const</span> c = <span class="tok-number">0xbea225f9eb34556d</span>;
+    x = (x ^ (x &gt;&gt; <span class="tok-number">32</span>)) *% c;
+    x = (x ^ (x &gt;&gt; <span class="tok-number">29</span>)) *% c;
+    x = (x ^ (x &gt;&gt; <span class="tok-number">32</span>)) *% c;
+    x = x ^ (x &gt;&gt; <span class="tok-number">29</span>);
+    <span class="tok-kw">return</span> x;
+}
+
+<span class="tok-kw">test</span> int {
+    <span class="tok-kw">const</span> expectEqual = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>).testing.expectEqual;
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x1</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u1</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x3</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u2</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x4</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u3</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0xD6</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x2880</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u16</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x2880</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">i16</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x838380</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u24</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x42741D6</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x42741D6</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">i32</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x71894DE00D9981F</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> expectEqual(<span class="tok-number">0x71894DE00D9981F</span>, <a href="std.hash.html#std.hash.int">int</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">i64</span>, <span class="tok-number">1</span>)));
+}
+
+<span class="tok-kw">test</span> {
+    _ = <a href="std.hash.adler.html">adler</a>;
+    _ = <a href="std.hash.auto_hash.html">auto_hash</a>;
+    _ = <a href="std.hash.crc.html">crc</a>;
+    _ = <a href="std.hash.fnv.html">fnv</a>;
+    _ = <a href="std.hash.murmur.html">murmur</a>;
+    _ = <a href="std.hash.cityhash.html">cityhash</a>;
+    _ = <a href="std.hash.wyhash.html">wyhash</a>;
+    _ = <a href="std.hash.xxhash.html">xxhash</a>;
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

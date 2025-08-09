@@ -1,0 +1,1327 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">debug</a></li><li><a href="std.debug.Pdb.html" class="active">Pdb</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.debug.Pdb" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.debug.Pdb</span><a href="#src.zig-std.debug.Pdb">[src]</a></h1><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.debug.Pdb.Module.html">std.debug.Pdb.Module</a></li></ul></div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>in_file: <a href="std.fs.File.html">File</a></code></pre></div><div><pre><code>msf: <a href="std.debug.Pdb.Msf.html">Msf</a></code></pre></div><div><pre><code>allocator: <a href="std.mem.Allocator.html">Allocator</a></code></pre></div><div><pre><code>string_table: ?*<a href="std.debug.Pdb.MsfStream.html">MsfStream</a></code></pre></div><div><pre><code>dbi: ?*<a href="std.debug.Pdb.MsfStream.html">MsfStream</a></code></pre></div><div><pre><code>modules: []<a href="std.debug.Pdb.Module.html">Module</a></code></pre></div><div><pre><code>sect_contribs: []<a href="std.pdb.html">pdb</a>.<a href="std.pdb.SectionContribEntry.html">SectionContribEntry</a></code></pre></div><div><pre><code>guid: [<span class="tok-number">16</span>]<span class="tok-type">u8</span></code></pre></div><div><pre><code>age: <span class="tok-type">u32</span></code></pre></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.debug.Pdb.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.debug.Pdb.init">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(allocator: <a href="std.mem.Allocator.html">Allocator</a>, path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<a href="std.debug.Pdb.html">Pdb</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>allocator: <a href="std.mem.Allocator.html">Allocator</a></code></pre></div><div><pre><code>path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.Pdb.init">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(allocator: <a href="std.mem.Allocator.html">Allocator</a>, path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<a href="std.debug.Pdb.html">Pdb</a> {
+    <span class="tok-kw">const</span> file = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.cwd">cwd</a>().openFile(path, .{});
+    <span class="tok-kw">errdefer</span> file.close();
+
+    <span class="tok-kw">return</span> .{
+        .in_file = file,
+        .allocator = allocator,
+        .string_table = <span class="tok-null">null</span>,
+        .dbi = <span class="tok-null">null</span>,
+        .msf = <span class="tok-kw">try</span> <a href="std.debug.Pdb.Msf.html">Msf</a>.<a href="std.debug.Pdb.Msf.html#std.debug.Pdb.Msf.init">init</a>(allocator, file),
+        .modules = &amp;[_]<a href="std.debug.Pdb.Module.html">Module</a>{},
+        .sect_contribs = &amp;[_]<a href="std.pdb.html">pdb</a>.<a href="std.pdb.SectionContribEntry.html">SectionContribEntry</a>{},
+        .guid = <span class="tok-null">undefined</span>,
+        .age = <span class="tok-null">undefined</span>,
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.Pdb.deinit" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">deinit</span><a href="#src.zig-std.debug.Pdb.deinit">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.debug.Pdb.html">Pdb</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.Pdb.deinit">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>) <span class="tok-type">void</span> {
+    self.in_file.close();
+    self.msf.deinit(self.allocator);
+    <span class="tok-kw">for</span> (self.modules) |*module| {
+        module.deinit(self.allocator);
+    }
+    self.allocator.free(self.modules);
+    self.allocator.free(self.sect_contribs);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.Pdb.parseDbiStream" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">parseDbiStream</span><a href="#src.zig-std.debug.Pdb.parseDbiStream">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseDbiStream</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>) !<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.debug.Pdb.html">Pdb</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.Pdb.parseDbiStream">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseDbiStream</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> stream = self.getStream(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.StreamType.html">StreamType</a>.<a href="#">dbi</a>) <span class="tok-kw">orelse</span>
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+    <span class="tok-kw">const</span> reader = stream.reader();
+
+    <span class="tok-kw">const</span> header = <span class="tok-kw">try</span> reader.readStruct(<a href="std.html">std</a>.<a href="std.pdb.html">pdb</a>.<a href="std.pdb.DbiStreamHeader.html">DbiStreamHeader</a>);
+    <span class="tok-kw">if</span> (header.version_header != <span class="tok-number">19990903</span>)<span class="tok-comment"> // V70, only value observed by LLVM team
+        </span><span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnknownPDBVersion;<span class="tok-comment">
+    // if (header.Age != age)
+    //     return error.UnmatchingPDB;
+
+    </span><span class="tok-kw">const</span> mod_info_size = header.mod_info_size;
+    <span class="tok-kw">const</span> section_contrib_size = header.section_contribution_size;
+
+    <span class="tok-kw">var</span> modules = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<a href="std.debug.Pdb.Module.html">Module</a>).init(self.allocator);
+    <span class="tok-kw">errdefer</span> modules.deinit();<span class="tok-comment">
+
+    // Module Info Substream
+    </span><span class="tok-kw">var</span> mod_info_offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (mod_info_offset != mod_info_size) {
+        <span class="tok-kw">const</span> mod_info = <span class="tok-kw">try</span> reader.readStruct(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.ModInfo.html">ModInfo</a>);
+        <span class="tok-kw">var</span> this_record_len: <span class="tok-type">usize</span> = <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.ModInfo.html">ModInfo</a>);
+
+        <span class="tok-kw">const</span> module_name = <span class="tok-kw">try</span> reader.readUntilDelimiterAlloc(self.allocator, <span class="tok-number">0</span>, <span class="tok-number">1024</span>);
+        <span class="tok-kw">errdefer</span> self.allocator.free(module_name);
+        this_record_len += module_name.len + <span class="tok-number">1</span>;
+
+        <span class="tok-kw">const</span> obj_file_name = <span class="tok-kw">try</span> reader.readUntilDelimiterAlloc(self.allocator, <span class="tok-number">0</span>, <span class="tok-number">1024</span>);
+        <span class="tok-kw">errdefer</span> self.allocator.free(obj_file_name);
+        this_record_len += obj_file_name.len + <span class="tok-number">1</span>;
+
+        <span class="tok-kw">if</span> (this_record_len % <span class="tok-number">4</span> != <span class="tok-number">0</span>) {
+            <span class="tok-kw">const</span> round_to_next_4 = (this_record_len | <span class="tok-number">0x3</span>) + <span class="tok-number">1</span>;
+            <span class="tok-kw">const</span> march_forward_bytes = round_to_next_4 - this_record_len;
+            <span class="tok-kw">try</span> stream.seekBy(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, <span class="tok-builtin">@intCast</span>(march_forward_bytes)));
+            this_record_len += march_forward_bytes;
+        }
+
+        <span class="tok-kw">try</span> modules.append(<a href="std.debug.Pdb.Module.html">Module</a>{
+            .mod_info = mod_info,
+            .module_name = module_name,
+            .obj_file_name = obj_file_name,
+
+            .populated = <span class="tok-null">false</span>,
+            .symbols = <span class="tok-null">undefined</span>,
+            .subsect_info = <span class="tok-null">undefined</span>,
+            .checksum_offset = <span class="tok-null">null</span>,
+        });
+
+        mod_info_offset += this_record_len;
+        <span class="tok-kw">if</span> (mod_info_offset &gt; mod_info_size)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+    }<span class="tok-comment">
+
+    // Section Contribution Substream
+    </span><span class="tok-kw">var</span> sect_contribs = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.SectionContribEntry.html">SectionContribEntry</a>).init(self.allocator);
+    <span class="tok-kw">errdefer</span> sect_contribs.deinit();
+
+    <span class="tok-kw">var</span> sect_cont_offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">if</span> (section_contrib_size != <span class="tok-number">0</span>) {
+        <span class="tok-kw">const</span> version = reader.readEnum(<a href="std.html">std</a>.<a href="std.pdb.html">pdb</a>.<a href="std.pdb.SectionContrSubstreamVersion.html">SectionContrSubstreamVersion</a>, .little) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.InvalidValue =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo,
+            <span class="tok-kw">else</span> =&gt; |e| <span class="tok-kw">return</span> e,
+        };
+        _ = version;
+        sect_cont_offset += <span class="tok-builtin">@sizeOf</span>(<span class="tok-type">u32</span>);
+    }
+    <span class="tok-kw">while</span> (sect_cont_offset != section_contrib_size) {
+        <span class="tok-kw">const</span> entry = <span class="tok-kw">try</span> sect_contribs.addOne();
+        entry.* = <span class="tok-kw">try</span> reader.readStruct(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.SectionContribEntry.html">SectionContribEntry</a>);
+        sect_cont_offset += <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.SectionContribEntry.html">SectionContribEntry</a>);
+
+        <span class="tok-kw">if</span> (sect_cont_offset &gt; section_contrib_size)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+    }
+
+    self.modules = <span class="tok-kw">try</span> modules.toOwnedSlice();
+    self.sect_contribs = <span class="tok-kw">try</span> sect_contribs.toOwnedSlice();
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.Pdb.parseInfoStream" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">parseInfoStream</span><a href="#src.zig-std.debug.Pdb.parseInfoStream">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseInfoStream</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>) !<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.debug.Pdb.html">Pdb</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.Pdb.parseInfoStream">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseInfoStream</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> stream = self.getStream(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.StreamType.html">StreamType</a>.<a href="#">pdb</a>) <span class="tok-kw">orelse</span>
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+    <span class="tok-kw">const</span> reader = stream.reader();<span class="tok-comment">
+
+    // Parse the InfoStreamHeader.
+    </span><span class="tok-kw">const</span> version = <span class="tok-kw">try</span> reader.readInt(<span class="tok-type">u32</span>, .little);
+    <span class="tok-kw">const</span> signature = <span class="tok-kw">try</span> reader.readInt(<span class="tok-type">u32</span>, .little);
+    _ = signature;
+    <span class="tok-kw">const</span> age = <span class="tok-kw">try</span> reader.readInt(<span class="tok-type">u32</span>, .little);
+    <span class="tok-kw">const</span> guid = <span class="tok-kw">try</span> reader.readBytesNoEof(<span class="tok-number">16</span>);
+
+    <span class="tok-kw">if</span> (version != <span class="tok-number">20000404</span>)<span class="tok-comment"> // VC70, only value observed by LLVM team
+        </span><span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnknownPDBVersion;
+
+    self.guid = guid;
+    self.age = age;<span class="tok-comment">
+
+    // Find the string table.
+    </span><span class="tok-kw">const</span> string_table_index = str_tab_index: {
+        <span class="tok-kw">const</span> name_bytes_len = <span class="tok-kw">try</span> reader.readInt(<span class="tok-type">u32</span>, .little);
+        <span class="tok-kw">const</span> name_bytes = <span class="tok-kw">try</span> self.allocator.alloc(<span class="tok-type">u8</span>, name_bytes_len);
+        <span class="tok-kw">defer</span> self.allocator.free(name_bytes);
+        <span class="tok-kw">try</span> reader.readNoEof(name_bytes);
+
+        <span class="tok-kw">const</span> HashTableHeader = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+            size: <span class="tok-type">u32</span>,
+            capacity: <span class="tok-type">u32</span>,
+
+            <span class="tok-kw">fn</span> <span class="tok-fn">maxLoad</span>(cap: <span class="tok-type">u32</span>) <span class="tok-type">u32</span> {
+                <span class="tok-kw">return</span> cap * <span class="tok-number">2</span> / <span class="tok-number">3</span> + <span class="tok-number">1</span>;
+            }
+        };
+        <span class="tok-kw">const</span> hash_tbl_hdr = <span class="tok-kw">try</span> reader.readStruct(HashTableHeader);
+        <span class="tok-kw">if</span> (hash_tbl_hdr.capacity == <span class="tok-number">0</span>)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+
+        <span class="tok-kw">if</span> (hash_tbl_hdr.size &gt; HashTableHeader.maxLoad(hash_tbl_hdr.capacity))
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+
+        <span class="tok-kw">const</span> present = <span class="tok-kw">try</span> <a href="std.debug.Pdb.html#std.debug.Pdb.readSparseBitVector">readSparseBitVector</a>(&amp;reader, self.allocator);
+        <span class="tok-kw">defer</span> self.allocator.free(present);
+        <span class="tok-kw">if</span> (present.len != hash_tbl_hdr.size)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+        <span class="tok-kw">const</span> deleted = <span class="tok-kw">try</span> <a href="std.debug.Pdb.html#std.debug.Pdb.readSparseBitVector">readSparseBitVector</a>(&amp;reader, self.allocator);
+        <span class="tok-kw">defer</span> self.allocator.free(deleted);
+
+        <span class="tok-kw">for</span> (present) |_| {
+            <span class="tok-kw">const</span> name_offset = <span class="tok-kw">try</span> reader.readInt(<span class="tok-type">u32</span>, .little);
+            <span class="tok-kw">const</span> name_index = <span class="tok-kw">try</span> reader.readInt(<span class="tok-type">u32</span>, .little);
+            <span class="tok-kw">if</span> (name_offset &gt; name_bytes.len)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+            <span class="tok-kw">const</span> name = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.sliceTo">sliceTo</a>(name_bytes[name_offset..], <span class="tok-number">0</span>);
+            <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, name, <span class="tok-str">&quot;/names&quot;</span>)) {
+                <span class="tok-kw">break</span> :str_tab_index name_index;
+            }
+        }
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MissingDebugInfo;
+    };
+
+    self.string_table = self.getStreamById(string_table_index) <span class="tok-kw">orelse</span>
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MissingDebugInfo;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.Pdb.getSymbolName" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getSymbolName</span><a href="#src.zig-std.debug.Pdb.getSymbolName">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSymbolName</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>, module: *<a href="std.debug.Pdb.Module.html">Module</a>, address: <span class="tok-type">u64</span>) ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.debug.Pdb.html">Pdb</a></code></pre></div><div><pre><code>module: *<a href="std.debug.Pdb.Module.html">Module</a></code></pre></div><div><pre><code>address: <span class="tok-type">u64</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.Pdb.getSymbolName">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSymbolName</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>, module: *<a href="std.debug.Pdb.Module.html">Module</a>, address: <span class="tok-type">u64</span>) ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    _ = self;
+    <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(module.populated);
+
+    <span class="tok-kw">var</span> symbol_i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (symbol_i != module.symbols.len) {
+        <span class="tok-kw">const</span> prefix: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.RecordPrefix.html">RecordPrefix</a> = <span class="tok-builtin">@ptrCast</span>(&amp;module.symbols[symbol_i]);
+        <span class="tok-kw">if</span> (prefix.record_len &lt; <span class="tok-number">2</span>)
+            <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+        <span class="tok-kw">switch</span> (prefix.record_kind) {
+            .lproc32, .gproc32 =&gt; {
+                <span class="tok-kw">const</span> proc_sym: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.ProcSym.html">ProcSym</a> = <span class="tok-builtin">@ptrCast</span>(&amp;module.symbols[symbol_i + <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.RecordPrefix.html">RecordPrefix</a>)]);
+                <span class="tok-kw">if</span> (address &gt;= proc_sym.code_offset <span class="tok-kw">and</span> address &lt; proc_sym.code_offset + proc_sym.code_size) {
+                    <span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.sliceTo">sliceTo</a>(<span class="tok-builtin">@as</span>([*:<span class="tok-number">0</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;proc_sym.name[<span class="tok-number">0</span>])), <span class="tok-number">0</span>);
+                }
+            },
+            <span class="tok-kw">else</span> =&gt; {},
+        }
+        symbol_i += prefix.record_len + <span class="tok-builtin">@sizeOf</span>(<span class="tok-type">u16</span>);
+    }
+
+    <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.Pdb.getLineNumberInfo" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getLineNumberInfo</span><a href="#src.zig-std.debug.Pdb.getLineNumberInfo">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getLineNumberInfo</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>, module: *<a href="std.debug.Pdb.Module.html">Module</a>, address: <span class="tok-type">u64</span>) !<a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.SourceLocation.html">SourceLocation</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.debug.Pdb.html">Pdb</a></code></pre></div><div><pre><code>module: *<a href="std.debug.Pdb.Module.html">Module</a></code></pre></div><div><pre><code>address: <span class="tok-type">u64</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.Pdb.getLineNumberInfo">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getLineNumberInfo</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>, module: *<a href="std.debug.Pdb.Module.html">Module</a>, address: <span class="tok-type">u64</span>) !<a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.SourceLocation.html">SourceLocation</a> {
+    <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(module.populated);
+    <span class="tok-kw">const</span> subsect_info = module.subsect_info;
+
+    <span class="tok-kw">var</span> sect_offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">var</span> skip_len: <span class="tok-type">usize</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">const</span> checksum_offset = module.checksum_offset <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MissingDebugInfo;
+    <span class="tok-kw">while</span> (sect_offset != subsect_info.len) : (sect_offset += skip_len) {
+        <span class="tok-kw">const</span> subsect_hdr: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.DebugSubsectionHeader.html">DebugSubsectionHeader</a> = <span class="tok-builtin">@ptrCast</span>(&amp;subsect_info[sect_offset]);
+        skip_len = subsect_hdr.length;
+        sect_offset += <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.DebugSubsectionHeader.html">DebugSubsectionHeader</a>);
+
+        <span class="tok-kw">switch</span> (subsect_hdr.kind) {
+            .lines =&gt; {
+                <span class="tok-kw">var</span> line_index = sect_offset;
+
+                <span class="tok-kw">const</span> line_hdr: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.LineFragmentHeader.html">LineFragmentHeader</a> = <span class="tok-builtin">@ptrCast</span>(&amp;subsect_info[line_index]);
+                <span class="tok-kw">if</span> (line_hdr.reloc_segment == <span class="tok-number">0</span>)
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MissingDebugInfo;
+                line_index += <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.LineFragmentHeader.html">LineFragmentHeader</a>);
+                <span class="tok-kw">const</span> frag_vaddr_start = line_hdr.reloc_offset;
+                <span class="tok-kw">const</span> frag_vaddr_end = frag_vaddr_start + line_hdr.code_size;
+
+                <span class="tok-kw">if</span> (address &gt;= frag_vaddr_start <span class="tok-kw">and</span> address &lt; frag_vaddr_end) {<span class="tok-comment">
+                    // There is an unknown number of LineBlockFragmentHeaders (and their accompanying line and column records)
+                    // from now on. We will iterate through them, and eventually find a SourceLocation that we're interested in,
+                    // breaking out to :subsections. If not, we will make sure to not read anything outside of this subsection.
+                    </span><span class="tok-kw">const</span> subsection_end_index = sect_offset + subsect_hdr.length;
+
+                    <span class="tok-kw">while</span> (line_index &lt; subsection_end_index) {
+                        <span class="tok-kw">const</span> block_hdr: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.LineBlockFragmentHeader.html">LineBlockFragmentHeader</a> = <span class="tok-builtin">@ptrCast</span>(&amp;subsect_info[line_index]);
+                        line_index += <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.LineBlockFragmentHeader.html">LineBlockFragmentHeader</a>);
+                        <span class="tok-kw">const</span> start_line_index = line_index;
+
+                        <span class="tok-kw">const</span> has_column = line_hdr.flags.have_columns;<span class="tok-comment">
+
+                        // All line entries are stored inside their line block by ascending start address.
+                        // Heuristic: we want to find the last line entry
+                        // that has a vaddr_start &lt;= address.
+                        // This is done with a simple linear search.
+                        </span><span class="tok-kw">var</span> line_i: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+                        <span class="tok-kw">while</span> (line_i &lt; block_hdr.num_lines) : (line_i += <span class="tok-number">1</span>) {
+                            <span class="tok-kw">const</span> line_num_entry: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.LineNumberEntry.html">LineNumberEntry</a> = <span class="tok-builtin">@ptrCast</span>(&amp;subsect_info[line_index]);
+                            line_index += <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.LineNumberEntry.html">LineNumberEntry</a>);
+
+                            <span class="tok-kw">const</span> vaddr_start = frag_vaddr_start + line_num_entry.offset;
+                            <span class="tok-kw">if</span> (address &lt; vaddr_start) {
+                                <span class="tok-kw">break</span>;
+                            }
+                        }<span class="tok-comment">
+
+                        // line_i == 0 would mean that no matching pdb.LineNumberEntry was found.
+                        </span><span class="tok-kw">if</span> (line_i &gt; <span class="tok-number">0</span>) {
+                            <span class="tok-kw">const</span> subsect_index = checksum_offset + block_hdr.name_index;
+                            <span class="tok-kw">const</span> chksum_hdr: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.FileChecksumEntryHeader.html">FileChecksumEntryHeader</a> = <span class="tok-builtin">@ptrCast</span>(&amp;module.subsect_info[subsect_index]);
+                            <span class="tok-kw">const</span> strtab_offset = <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.StringTableHeader.html">StringTableHeader</a>) + chksum_hdr.file_name_offset;
+                            <span class="tok-kw">try</span> self.string_table.?.seekTo(strtab_offset);
+                            <span class="tok-kw">const</span> source_file_name = <span class="tok-kw">try</span> self.string_table.?.reader().readUntilDelimiterAlloc(self.allocator, <span class="tok-number">0</span>, <span class="tok-number">1024</span>);
+
+                            <span class="tok-kw">const</span> line_entry_idx = line_i - <span class="tok-number">1</span>;
+
+                            <span class="tok-kw">const</span> column = <span class="tok-kw">if</span> (has_column) blk: {
+                                <span class="tok-kw">const</span> start_col_index = start_line_index + <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.LineNumberEntry.html">LineNumberEntry</a>) * block_hdr.num_lines;
+                                <span class="tok-kw">const</span> col_index = start_col_index + <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.ColumnNumberEntry.html">ColumnNumberEntry</a>) * line_entry_idx;
+                                <span class="tok-kw">const</span> col_num_entry: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.ColumnNumberEntry.html">ColumnNumberEntry</a> = <span class="tok-builtin">@ptrCast</span>(&amp;subsect_info[col_index]);
+                                <span class="tok-kw">break</span> :blk col_num_entry.start_column;
+                            } <span class="tok-kw">else</span> <span class="tok-number">0</span>;
+
+                            <span class="tok-kw">const</span> found_line_index = start_line_index + line_entry_idx * <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.LineNumberEntry.html">LineNumberEntry</a>);
+                            <span class="tok-kw">const</span> line_num_entry: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.LineNumberEntry.html">LineNumberEntry</a> = <span class="tok-builtin">@ptrCast</span>(&amp;subsect_info[found_line_index]);
+
+                            <span class="tok-kw">return</span> .{
+                                .file_name = source_file_name,
+                                .line = line_num_entry.flags.start,
+                                .column = column,
+                            };
+                        }
+                    }<span class="tok-comment">
+
+                    // Checking that we are not reading garbage after the (possibly) multiple block fragments.
+                    </span><span class="tok-kw">if</span> (line_index != subsection_end_index) {
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+                    }
+                }
+            },
+            <span class="tok-kw">else</span> =&gt; {},
+        }
+
+        <span class="tok-kw">if</span> (sect_offset &gt; subsect_info.len)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+    }
+
+    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MissingDebugInfo;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.Pdb.getModule" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getModule</span><a href="#src.zig-std.debug.Pdb.getModule">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getModule</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>, index: <span class="tok-type">usize</span>) !?*<a href="std.debug.Pdb.Module.html">Module</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.debug.Pdb.html">Pdb</a></code></pre></div><div><pre><code>index: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.Pdb.getModule">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getModule</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>, index: <span class="tok-type">usize</span>) !?*<a href="std.debug.Pdb.Module.html">Module</a> {
+    <span class="tok-kw">if</span> (index &gt;= self.modules.len)
+        <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+    <span class="tok-kw">const</span> mod = &amp;self.modules[index];
+    <span class="tok-kw">if</span> (mod.populated)
+        <span class="tok-kw">return</span> mod;<span class="tok-comment">
+
+    // At most one can be non-zero.
+    </span><span class="tok-kw">if</span> (mod.mod_info.c11_byte_size != <span class="tok-number">0</span> <span class="tok-kw">and</span> mod.mod_info.c13_byte_size != <span class="tok-number">0</span>)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+    <span class="tok-kw">if</span> (mod.mod_info.c13_byte_size == <span class="tok-number">0</span>)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+
+    <span class="tok-kw">const</span> stream = self.getStreamById(mod.mod_info.module_sym_stream) <span class="tok-kw">orelse</span>
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MissingDebugInfo;
+    <span class="tok-kw">const</span> reader = stream.reader();
+
+    <span class="tok-kw">const</span> signature = <span class="tok-kw">try</span> reader.readInt(<span class="tok-type">u32</span>, .little);
+    <span class="tok-kw">if</span> (signature != <span class="tok-number">4</span>)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+
+    mod.symbols = <span class="tok-kw">try</span> self.allocator.alloc(<span class="tok-type">u8</span>, mod.mod_info.sym_byte_size - <span class="tok-number">4</span>);
+    <span class="tok-kw">errdefer</span> self.allocator.free(mod.symbols);
+    <span class="tok-kw">try</span> reader.readNoEof(mod.symbols);
+
+    mod.subsect_info = <span class="tok-kw">try</span> self.allocator.alloc(<span class="tok-type">u8</span>, mod.mod_info.c13_byte_size);
+    <span class="tok-kw">errdefer</span> self.allocator.free(mod.subsect_info);
+    <span class="tok-kw">try</span> reader.readNoEof(mod.subsect_info);
+
+    <span class="tok-kw">var</span> sect_offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">var</span> skip_len: <span class="tok-type">usize</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">while</span> (sect_offset != mod.subsect_info.len) : (sect_offset += skip_len) {
+        <span class="tok-kw">const</span> subsect_hdr: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.DebugSubsectionHeader.html">DebugSubsectionHeader</a> = <span class="tok-builtin">@ptrCast</span>(&amp;mod.subsect_info[sect_offset]);
+        skip_len = subsect_hdr.length;
+        sect_offset += <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.DebugSubsectionHeader.html">DebugSubsectionHeader</a>);
+
+        <span class="tok-kw">switch</span> (subsect_hdr.kind) {
+            .file_checksums =&gt; {
+                mod.checksum_offset = sect_offset;
+                <span class="tok-kw">break</span>;
+            },
+            <span class="tok-kw">else</span> =&gt; {},
+        }
+
+        <span class="tok-kw">if</span> (sect_offset &gt; mod.subsect_info.len)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+    }
+
+    mod.populated = <span class="tok-null">true</span>;
+    <span class="tok-kw">return</span> mod;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.Pdb.getStreamById" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getStreamById</span><a href="#src.zig-std.debug.Pdb.getStreamById">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getStreamById</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>, id: <span class="tok-type">u32</span>) ?*<a href="std.debug.Pdb.MsfStream.html">MsfStream</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.debug.Pdb.html">Pdb</a></code></pre></div><div><pre><code>id: <span class="tok-type">u32</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.Pdb.getStreamById">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getStreamById</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>, id: <span class="tok-type">u32</span>) ?*<a href="std.debug.Pdb.MsfStream.html">MsfStream</a> {
+    <span class="tok-kw">if</span> (id &gt;= self.msf.streams.len)
+        <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+    <span class="tok-kw">return</span> &amp;self.msf.streams[id];
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.Pdb.getStream" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getStream</span><a href="#src.zig-std.debug.Pdb.getStream">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getStream</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>, stream: <a href="std.pdb.html">pdb</a>.<a href="std.pdb.StreamType.html">StreamType</a>) ?*<a href="std.debug.Pdb.MsfStream.html">MsfStream</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.debug.Pdb.html">Pdb</a></code></pre></div><div><pre><code>stream: <a href="std.pdb.html">pdb</a>.<a href="std.pdb.StreamType.html">StreamType</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.Pdb.getStream">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getStream</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>, stream: <a href="std.pdb.html">pdb</a>.<a href="std.pdb.StreamType.html">StreamType</a>) ?*<a href="std.debug.Pdb.MsfStream.html">MsfStream</a> {
+    <span class="tok-kw">const</span> id = <span class="tok-builtin">@intFromEnum</span>(stream);
+    <span class="tok-kw">return</span> self.getStreamById(id);
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.debug.Pdb">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;../std.zig&quot;</span>);
+<span class="tok-kw">const</span> File = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.File.html">File</a>;
+<span class="tok-kw">const</span> Allocator = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>;
+<span class="tok-kw">const</span> pdb = <a href="std.html">std</a>.<a href="std.pdb.html">pdb</a>;
+
+<span class="tok-kw">const</span> Pdb = <span class="tok-builtin">@This</span>();
+
+in_file: <a href="std.fs.File.html">File</a>,
+msf: <a href="std.debug.Pdb.Msf.html">Msf</a>,
+allocator: <a href="std.mem.Allocator.html">Allocator</a>,
+string_table: ?*<a href="std.debug.Pdb.MsfStream.html">MsfStream</a>,
+dbi: ?*<a href="std.debug.Pdb.MsfStream.html">MsfStream</a>,
+modules: []<a href="std.debug.Pdb.Module.html">Module</a>,
+sect_contribs: []<a href="std.pdb.html">pdb</a>.<a href="std.pdb.SectionContribEntry.html">SectionContribEntry</a>,
+guid: [<span class="tok-number">16</span>]<span class="tok-type">u8</span>,
+age: <span class="tok-type">u32</span>,
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Module = <span class="tok-kw">struct</span> {
+    mod_info: <a href="std.pdb.html">pdb</a>.<a href="std.pdb.ModInfo.html">ModInfo</a>,
+    module_name: []<span class="tok-type">u8</span>,
+    obj_file_name: []<span class="tok-type">u8</span>,<span class="tok-comment">
+    // The fields below are filled on demand.
+    </span>populated: <span class="tok-type">bool</span>,
+    symbols: []<span class="tok-type">u8</span>,
+    subsect_info: []<span class="tok-type">u8</span>,
+    checksum_offset: ?<span class="tok-type">usize</span>,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: *<a href="std.debug.Pdb.Module.html">Module</a>, allocator: <a href="std.mem.Allocator.html">Allocator</a>) <span class="tok-type">void</span> {
+        allocator.free(self.module_name);
+        allocator.free(self.obj_file_name);
+        <span class="tok-kw">if</span> (self.populated) {
+            allocator.free(self.symbols);
+            allocator.free(self.subsect_info);
+        }
+    }
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(allocator: <a href="std.mem.Allocator.html">Allocator</a>, path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<a href="std.debug.Pdb.html">Pdb</a> {
+    <span class="tok-kw">const</span> file = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.cwd">cwd</a>().openFile(path, .{});
+    <span class="tok-kw">errdefer</span> file.close();
+
+    <span class="tok-kw">return</span> .{
+        .in_file = file,
+        .allocator = allocator,
+        .string_table = <span class="tok-null">null</span>,
+        .dbi = <span class="tok-null">null</span>,
+        .msf = <span class="tok-kw">try</span> <a href="std.debug.Pdb.Msf.html">Msf</a>.<a href="std.debug.Pdb.Msf.html#std.debug.Pdb.Msf.init">init</a>(allocator, file),
+        .modules = &amp;[_]<a href="std.debug.Pdb.Module.html">Module</a>{},
+        .sect_contribs = &amp;[_]<a href="std.pdb.html">pdb</a>.<a href="std.pdb.SectionContribEntry.html">SectionContribEntry</a>{},
+        .guid = <span class="tok-null">undefined</span>,
+        .age = <span class="tok-null">undefined</span>,
+    };
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>) <span class="tok-type">void</span> {
+    self.in_file.close();
+    self.msf.deinit(self.allocator);
+    <span class="tok-kw">for</span> (self.modules) |*module| {
+        module.deinit(self.allocator);
+    }
+    self.allocator.free(self.modules);
+    self.allocator.free(self.sect_contribs);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseDbiStream</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> stream = self.getStream(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.StreamType.html">StreamType</a>.<a href="#">dbi</a>) <span class="tok-kw">orelse</span>
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+    <span class="tok-kw">const</span> reader = stream.reader();
+
+    <span class="tok-kw">const</span> header = <span class="tok-kw">try</span> reader.readStruct(<a href="std.html">std</a>.<a href="std.pdb.html">pdb</a>.<a href="std.pdb.DbiStreamHeader.html">DbiStreamHeader</a>);
+    <span class="tok-kw">if</span> (header.version_header != <span class="tok-number">19990903</span>)<span class="tok-comment"> // V70, only value observed by LLVM team
+        </span><span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnknownPDBVersion;<span class="tok-comment">
+    // if (header.Age != age)
+    //     return error.UnmatchingPDB;
+
+    </span><span class="tok-kw">const</span> mod_info_size = header.mod_info_size;
+    <span class="tok-kw">const</span> section_contrib_size = header.section_contribution_size;
+
+    <span class="tok-kw">var</span> modules = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<a href="std.debug.Pdb.Module.html">Module</a>).init(self.allocator);
+    <span class="tok-kw">errdefer</span> modules.deinit();<span class="tok-comment">
+
+    // Module Info Substream
+    </span><span class="tok-kw">var</span> mod_info_offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (mod_info_offset != mod_info_size) {
+        <span class="tok-kw">const</span> mod_info = <span class="tok-kw">try</span> reader.readStruct(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.ModInfo.html">ModInfo</a>);
+        <span class="tok-kw">var</span> this_record_len: <span class="tok-type">usize</span> = <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.ModInfo.html">ModInfo</a>);
+
+        <span class="tok-kw">const</span> module_name = <span class="tok-kw">try</span> reader.readUntilDelimiterAlloc(self.allocator, <span class="tok-number">0</span>, <span class="tok-number">1024</span>);
+        <span class="tok-kw">errdefer</span> self.allocator.free(module_name);
+        this_record_len += module_name.len + <span class="tok-number">1</span>;
+
+        <span class="tok-kw">const</span> obj_file_name = <span class="tok-kw">try</span> reader.readUntilDelimiterAlloc(self.allocator, <span class="tok-number">0</span>, <span class="tok-number">1024</span>);
+        <span class="tok-kw">errdefer</span> self.allocator.free(obj_file_name);
+        this_record_len += obj_file_name.len + <span class="tok-number">1</span>;
+
+        <span class="tok-kw">if</span> (this_record_len % <span class="tok-number">4</span> != <span class="tok-number">0</span>) {
+            <span class="tok-kw">const</span> round_to_next_4 = (this_record_len | <span class="tok-number">0x3</span>) + <span class="tok-number">1</span>;
+            <span class="tok-kw">const</span> march_forward_bytes = round_to_next_4 - this_record_len;
+            <span class="tok-kw">try</span> stream.seekBy(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, <span class="tok-builtin">@intCast</span>(march_forward_bytes)));
+            this_record_len += march_forward_bytes;
+        }
+
+        <span class="tok-kw">try</span> modules.append(<a href="std.debug.Pdb.Module.html">Module</a>{
+            .mod_info = mod_info,
+            .module_name = module_name,
+            .obj_file_name = obj_file_name,
+
+            .populated = <span class="tok-null">false</span>,
+            .symbols = <span class="tok-null">undefined</span>,
+            .subsect_info = <span class="tok-null">undefined</span>,
+            .checksum_offset = <span class="tok-null">null</span>,
+        });
+
+        mod_info_offset += this_record_len;
+        <span class="tok-kw">if</span> (mod_info_offset &gt; mod_info_size)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+    }<span class="tok-comment">
+
+    // Section Contribution Substream
+    </span><span class="tok-kw">var</span> sect_contribs = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.SectionContribEntry.html">SectionContribEntry</a>).init(self.allocator);
+    <span class="tok-kw">errdefer</span> sect_contribs.deinit();
+
+    <span class="tok-kw">var</span> sect_cont_offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">if</span> (section_contrib_size != <span class="tok-number">0</span>) {
+        <span class="tok-kw">const</span> version = reader.readEnum(<a href="std.html">std</a>.<a href="std.pdb.html">pdb</a>.<a href="std.pdb.SectionContrSubstreamVersion.html">SectionContrSubstreamVersion</a>, .little) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.InvalidValue =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo,
+            <span class="tok-kw">else</span> =&gt; |e| <span class="tok-kw">return</span> e,
+        };
+        _ = version;
+        sect_cont_offset += <span class="tok-builtin">@sizeOf</span>(<span class="tok-type">u32</span>);
+    }
+    <span class="tok-kw">while</span> (sect_cont_offset != section_contrib_size) {
+        <span class="tok-kw">const</span> entry = <span class="tok-kw">try</span> sect_contribs.addOne();
+        entry.* = <span class="tok-kw">try</span> reader.readStruct(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.SectionContribEntry.html">SectionContribEntry</a>);
+        sect_cont_offset += <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.SectionContribEntry.html">SectionContribEntry</a>);
+
+        <span class="tok-kw">if</span> (sect_cont_offset &gt; section_contrib_size)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+    }
+
+    self.modules = <span class="tok-kw">try</span> modules.toOwnedSlice();
+    self.sect_contribs = <span class="tok-kw">try</span> sect_contribs.toOwnedSlice();
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseInfoStream</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> stream = self.getStream(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.StreamType.html">StreamType</a>.<a href="#">pdb</a>) <span class="tok-kw">orelse</span>
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+    <span class="tok-kw">const</span> reader = stream.reader();<span class="tok-comment">
+
+    // Parse the InfoStreamHeader.
+    </span><span class="tok-kw">const</span> version = <span class="tok-kw">try</span> reader.readInt(<span class="tok-type">u32</span>, .little);
+    <span class="tok-kw">const</span> signature = <span class="tok-kw">try</span> reader.readInt(<span class="tok-type">u32</span>, .little);
+    _ = signature;
+    <span class="tok-kw">const</span> age = <span class="tok-kw">try</span> reader.readInt(<span class="tok-type">u32</span>, .little);
+    <span class="tok-kw">const</span> guid = <span class="tok-kw">try</span> reader.readBytesNoEof(<span class="tok-number">16</span>);
+
+    <span class="tok-kw">if</span> (version != <span class="tok-number">20000404</span>)<span class="tok-comment"> // VC70, only value observed by LLVM team
+        </span><span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnknownPDBVersion;
+
+    self.guid = guid;
+    self.age = age;<span class="tok-comment">
+
+    // Find the string table.
+    </span><span class="tok-kw">const</span> string_table_index = str_tab_index: {
+        <span class="tok-kw">const</span> name_bytes_len = <span class="tok-kw">try</span> reader.readInt(<span class="tok-type">u32</span>, .little);
+        <span class="tok-kw">const</span> name_bytes = <span class="tok-kw">try</span> self.allocator.alloc(<span class="tok-type">u8</span>, name_bytes_len);
+        <span class="tok-kw">defer</span> self.allocator.free(name_bytes);
+        <span class="tok-kw">try</span> reader.readNoEof(name_bytes);
+
+        <span class="tok-kw">const</span> HashTableHeader = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+            size: <span class="tok-type">u32</span>,
+            capacity: <span class="tok-type">u32</span>,
+
+            <span class="tok-kw">fn</span> <span class="tok-fn">maxLoad</span>(cap: <span class="tok-type">u32</span>) <span class="tok-type">u32</span> {
+                <span class="tok-kw">return</span> cap * <span class="tok-number">2</span> / <span class="tok-number">3</span> + <span class="tok-number">1</span>;
+            }
+        };
+        <span class="tok-kw">const</span> hash_tbl_hdr = <span class="tok-kw">try</span> reader.readStruct(HashTableHeader);
+        <span class="tok-kw">if</span> (hash_tbl_hdr.capacity == <span class="tok-number">0</span>)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+
+        <span class="tok-kw">if</span> (hash_tbl_hdr.size &gt; HashTableHeader.maxLoad(hash_tbl_hdr.capacity))
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+
+        <span class="tok-kw">const</span> present = <span class="tok-kw">try</span> <a href="std.debug.Pdb.html#std.debug.Pdb.readSparseBitVector">readSparseBitVector</a>(&amp;reader, self.allocator);
+        <span class="tok-kw">defer</span> self.allocator.free(present);
+        <span class="tok-kw">if</span> (present.len != hash_tbl_hdr.size)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+        <span class="tok-kw">const</span> deleted = <span class="tok-kw">try</span> <a href="std.debug.Pdb.html#std.debug.Pdb.readSparseBitVector">readSparseBitVector</a>(&amp;reader, self.allocator);
+        <span class="tok-kw">defer</span> self.allocator.free(deleted);
+
+        <span class="tok-kw">for</span> (present) |_| {
+            <span class="tok-kw">const</span> name_offset = <span class="tok-kw">try</span> reader.readInt(<span class="tok-type">u32</span>, .little);
+            <span class="tok-kw">const</span> name_index = <span class="tok-kw">try</span> reader.readInt(<span class="tok-type">u32</span>, .little);
+            <span class="tok-kw">if</span> (name_offset &gt; name_bytes.len)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+            <span class="tok-kw">const</span> name = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.sliceTo">sliceTo</a>(name_bytes[name_offset..], <span class="tok-number">0</span>);
+            <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, name, <span class="tok-str">&quot;/names&quot;</span>)) {
+                <span class="tok-kw">break</span> :str_tab_index name_index;
+            }
+        }
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MissingDebugInfo;
+    };
+
+    self.string_table = self.getStreamById(string_table_index) <span class="tok-kw">orelse</span>
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MissingDebugInfo;
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSymbolName</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>, module: *<a href="std.debug.Pdb.Module.html">Module</a>, address: <span class="tok-type">u64</span>) ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    _ = self;
+    <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(module.populated);
+
+    <span class="tok-kw">var</span> symbol_i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (symbol_i != module.symbols.len) {
+        <span class="tok-kw">const</span> prefix: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.RecordPrefix.html">RecordPrefix</a> = <span class="tok-builtin">@ptrCast</span>(&amp;module.symbols[symbol_i]);
+        <span class="tok-kw">if</span> (prefix.record_len &lt; <span class="tok-number">2</span>)
+            <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+        <span class="tok-kw">switch</span> (prefix.record_kind) {
+            .lproc32, .gproc32 =&gt; {
+                <span class="tok-kw">const</span> proc_sym: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.ProcSym.html">ProcSym</a> = <span class="tok-builtin">@ptrCast</span>(&amp;module.symbols[symbol_i + <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.RecordPrefix.html">RecordPrefix</a>)]);
+                <span class="tok-kw">if</span> (address &gt;= proc_sym.code_offset <span class="tok-kw">and</span> address &lt; proc_sym.code_offset + proc_sym.code_size) {
+                    <span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.sliceTo">sliceTo</a>(<span class="tok-builtin">@as</span>([*:<span class="tok-number">0</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;proc_sym.name[<span class="tok-number">0</span>])), <span class="tok-number">0</span>);
+                }
+            },
+            <span class="tok-kw">else</span> =&gt; {},
+        }
+        symbol_i += prefix.record_len + <span class="tok-builtin">@sizeOf</span>(<span class="tok-type">u16</span>);
+    }
+
+    <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getLineNumberInfo</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>, module: *<a href="std.debug.Pdb.Module.html">Module</a>, address: <span class="tok-type">u64</span>) !<a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.SourceLocation.html">SourceLocation</a> {
+    <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(module.populated);
+    <span class="tok-kw">const</span> subsect_info = module.subsect_info;
+
+    <span class="tok-kw">var</span> sect_offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">var</span> skip_len: <span class="tok-type">usize</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">const</span> checksum_offset = module.checksum_offset <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MissingDebugInfo;
+    <span class="tok-kw">while</span> (sect_offset != subsect_info.len) : (sect_offset += skip_len) {
+        <span class="tok-kw">const</span> subsect_hdr: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.DebugSubsectionHeader.html">DebugSubsectionHeader</a> = <span class="tok-builtin">@ptrCast</span>(&amp;subsect_info[sect_offset]);
+        skip_len = subsect_hdr.length;
+        sect_offset += <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.DebugSubsectionHeader.html">DebugSubsectionHeader</a>);
+
+        <span class="tok-kw">switch</span> (subsect_hdr.kind) {
+            .lines =&gt; {
+                <span class="tok-kw">var</span> line_index = sect_offset;
+
+                <span class="tok-kw">const</span> line_hdr: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.LineFragmentHeader.html">LineFragmentHeader</a> = <span class="tok-builtin">@ptrCast</span>(&amp;subsect_info[line_index]);
+                <span class="tok-kw">if</span> (line_hdr.reloc_segment == <span class="tok-number">0</span>)
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MissingDebugInfo;
+                line_index += <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.LineFragmentHeader.html">LineFragmentHeader</a>);
+                <span class="tok-kw">const</span> frag_vaddr_start = line_hdr.reloc_offset;
+                <span class="tok-kw">const</span> frag_vaddr_end = frag_vaddr_start + line_hdr.code_size;
+
+                <span class="tok-kw">if</span> (address &gt;= frag_vaddr_start <span class="tok-kw">and</span> address &lt; frag_vaddr_end) {<span class="tok-comment">
+                    // There is an unknown number of LineBlockFragmentHeaders (and their accompanying line and column records)
+                    // from now on. We will iterate through them, and eventually find a SourceLocation that we're interested in,
+                    // breaking out to :subsections. If not, we will make sure to not read anything outside of this subsection.
+                    </span><span class="tok-kw">const</span> subsection_end_index = sect_offset + subsect_hdr.length;
+
+                    <span class="tok-kw">while</span> (line_index &lt; subsection_end_index) {
+                        <span class="tok-kw">const</span> block_hdr: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.LineBlockFragmentHeader.html">LineBlockFragmentHeader</a> = <span class="tok-builtin">@ptrCast</span>(&amp;subsect_info[line_index]);
+                        line_index += <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.LineBlockFragmentHeader.html">LineBlockFragmentHeader</a>);
+                        <span class="tok-kw">const</span> start_line_index = line_index;
+
+                        <span class="tok-kw">const</span> has_column = line_hdr.flags.have_columns;<span class="tok-comment">
+
+                        // All line entries are stored inside their line block by ascending start address.
+                        // Heuristic: we want to find the last line entry
+                        // that has a vaddr_start &lt;= address.
+                        // This is done with a simple linear search.
+                        </span><span class="tok-kw">var</span> line_i: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+                        <span class="tok-kw">while</span> (line_i &lt; block_hdr.num_lines) : (line_i += <span class="tok-number">1</span>) {
+                            <span class="tok-kw">const</span> line_num_entry: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.LineNumberEntry.html">LineNumberEntry</a> = <span class="tok-builtin">@ptrCast</span>(&amp;subsect_info[line_index]);
+                            line_index += <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.LineNumberEntry.html">LineNumberEntry</a>);
+
+                            <span class="tok-kw">const</span> vaddr_start = frag_vaddr_start + line_num_entry.offset;
+                            <span class="tok-kw">if</span> (address &lt; vaddr_start) {
+                                <span class="tok-kw">break</span>;
+                            }
+                        }<span class="tok-comment">
+
+                        // line_i == 0 would mean that no matching pdb.LineNumberEntry was found.
+                        </span><span class="tok-kw">if</span> (line_i &gt; <span class="tok-number">0</span>) {
+                            <span class="tok-kw">const</span> subsect_index = checksum_offset + block_hdr.name_index;
+                            <span class="tok-kw">const</span> chksum_hdr: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.FileChecksumEntryHeader.html">FileChecksumEntryHeader</a> = <span class="tok-builtin">@ptrCast</span>(&amp;module.subsect_info[subsect_index]);
+                            <span class="tok-kw">const</span> strtab_offset = <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.StringTableHeader.html">StringTableHeader</a>) + chksum_hdr.file_name_offset;
+                            <span class="tok-kw">try</span> self.string_table.?.seekTo(strtab_offset);
+                            <span class="tok-kw">const</span> source_file_name = <span class="tok-kw">try</span> self.string_table.?.reader().readUntilDelimiterAlloc(self.allocator, <span class="tok-number">0</span>, <span class="tok-number">1024</span>);
+
+                            <span class="tok-kw">const</span> line_entry_idx = line_i - <span class="tok-number">1</span>;
+
+                            <span class="tok-kw">const</span> column = <span class="tok-kw">if</span> (has_column) blk: {
+                                <span class="tok-kw">const</span> start_col_index = start_line_index + <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.LineNumberEntry.html">LineNumberEntry</a>) * block_hdr.num_lines;
+                                <span class="tok-kw">const</span> col_index = start_col_index + <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.ColumnNumberEntry.html">ColumnNumberEntry</a>) * line_entry_idx;
+                                <span class="tok-kw">const</span> col_num_entry: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.ColumnNumberEntry.html">ColumnNumberEntry</a> = <span class="tok-builtin">@ptrCast</span>(&amp;subsect_info[col_index]);
+                                <span class="tok-kw">break</span> :blk col_num_entry.start_column;
+                            } <span class="tok-kw">else</span> <span class="tok-number">0</span>;
+
+                            <span class="tok-kw">const</span> found_line_index = start_line_index + line_entry_idx * <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.LineNumberEntry.html">LineNumberEntry</a>);
+                            <span class="tok-kw">const</span> line_num_entry: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.LineNumberEntry.html">LineNumberEntry</a> = <span class="tok-builtin">@ptrCast</span>(&amp;subsect_info[found_line_index]);
+
+                            <span class="tok-kw">return</span> .{
+                                .file_name = source_file_name,
+                                .line = line_num_entry.flags.start,
+                                .column = column,
+                            };
+                        }
+                    }<span class="tok-comment">
+
+                    // Checking that we are not reading garbage after the (possibly) multiple block fragments.
+                    </span><span class="tok-kw">if</span> (line_index != subsection_end_index) {
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+                    }
+                }
+            },
+            <span class="tok-kw">else</span> =&gt; {},
+        }
+
+        <span class="tok-kw">if</span> (sect_offset &gt; subsect_info.len)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+    }
+
+    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MissingDebugInfo;
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getModule</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>, index: <span class="tok-type">usize</span>) !?*<a href="std.debug.Pdb.Module.html">Module</a> {
+    <span class="tok-kw">if</span> (index &gt;= self.modules.len)
+        <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+    <span class="tok-kw">const</span> mod = &amp;self.modules[index];
+    <span class="tok-kw">if</span> (mod.populated)
+        <span class="tok-kw">return</span> mod;<span class="tok-comment">
+
+    // At most one can be non-zero.
+    </span><span class="tok-kw">if</span> (mod.mod_info.c11_byte_size != <span class="tok-number">0</span> <span class="tok-kw">and</span> mod.mod_info.c13_byte_size != <span class="tok-number">0</span>)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+    <span class="tok-kw">if</span> (mod.mod_info.c13_byte_size == <span class="tok-number">0</span>)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+
+    <span class="tok-kw">const</span> stream = self.getStreamById(mod.mod_info.module_sym_stream) <span class="tok-kw">orelse</span>
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MissingDebugInfo;
+    <span class="tok-kw">const</span> reader = stream.reader();
+
+    <span class="tok-kw">const</span> signature = <span class="tok-kw">try</span> reader.readInt(<span class="tok-type">u32</span>, .little);
+    <span class="tok-kw">if</span> (signature != <span class="tok-number">4</span>)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+
+    mod.symbols = <span class="tok-kw">try</span> self.allocator.alloc(<span class="tok-type">u8</span>, mod.mod_info.sym_byte_size - <span class="tok-number">4</span>);
+    <span class="tok-kw">errdefer</span> self.allocator.free(mod.symbols);
+    <span class="tok-kw">try</span> reader.readNoEof(mod.symbols);
+
+    mod.subsect_info = <span class="tok-kw">try</span> self.allocator.alloc(<span class="tok-type">u8</span>, mod.mod_info.c13_byte_size);
+    <span class="tok-kw">errdefer</span> self.allocator.free(mod.subsect_info);
+    <span class="tok-kw">try</span> reader.readNoEof(mod.subsect_info);
+
+    <span class="tok-kw">var</span> sect_offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">var</span> skip_len: <span class="tok-type">usize</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">while</span> (sect_offset != mod.subsect_info.len) : (sect_offset += skip_len) {
+        <span class="tok-kw">const</span> subsect_hdr: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.pdb.html">pdb</a>.<a href="std.pdb.DebugSubsectionHeader.html">DebugSubsectionHeader</a> = <span class="tok-builtin">@ptrCast</span>(&amp;mod.subsect_info[sect_offset]);
+        skip_len = subsect_hdr.length;
+        sect_offset += <span class="tok-builtin">@sizeOf</span>(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.DebugSubsectionHeader.html">DebugSubsectionHeader</a>);
+
+        <span class="tok-kw">switch</span> (subsect_hdr.kind) {
+            .file_checksums =&gt; {
+                mod.checksum_offset = sect_offset;
+                <span class="tok-kw">break</span>;
+            },
+            <span class="tok-kw">else</span> =&gt; {},
+        }
+
+        <span class="tok-kw">if</span> (sect_offset &gt; mod.subsect_info.len)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+    }
+
+    mod.populated = <span class="tok-null">true</span>;
+    <span class="tok-kw">return</span> mod;
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getStreamById</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>, id: <span class="tok-type">u32</span>) ?*<a href="std.debug.Pdb.MsfStream.html">MsfStream</a> {
+    <span class="tok-kw">if</span> (id &gt;= self.msf.streams.len)
+        <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+    <span class="tok-kw">return</span> &amp;self.msf.streams[id];
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getStream</span>(self: *<a href="std.debug.Pdb.html">Pdb</a>, stream: <a href="std.pdb.html">pdb</a>.<a href="std.pdb.StreamType.html">StreamType</a>) ?*<a href="std.debug.Pdb.MsfStream.html">MsfStream</a> {
+    <span class="tok-kw">const</span> id = <span class="tok-builtin">@intFromEnum</span>(stream);
+    <span class="tok-kw">return</span> self.getStreamById(id);
+}
+
+<span class="tok-comment">/// https://llvm.org/docs/PDB/MsfFile.html</span>
+<span class="tok-kw">const</span> Msf = <span class="tok-kw">struct</span> {
+    directory: <a href="std.debug.Pdb.MsfStream.html">MsfStream</a>,
+    streams: []<a href="std.debug.Pdb.MsfStream.html">MsfStream</a>,
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(allocator: <a href="std.mem.Allocator.html">Allocator</a>, file: <a href="std.fs.File.html">File</a>) !<a href="std.debug.Pdb.Msf.html">Msf</a> {
+        <span class="tok-kw">const</span> in = file.reader();
+
+        <span class="tok-kw">const</span> superblock = <span class="tok-kw">try</span> in.readStruct(<a href="std.pdb.html">pdb</a>.<a href="std.pdb.SuperBlock.html">SuperBlock</a>);<span class="tok-comment">
+
+        // Sanity checks
+        </span><span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, &amp;superblock.file_magic, <a href="std.pdb.html">pdb</a>.<a href="std.pdb.SuperBlock.html">SuperBlock</a>.<a href="std.pdb.SuperBlock.html#std.pdb.SuperBlock.expect_magic">expect_magic</a>))
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+        <span class="tok-kw">if</span> (superblock.free_block_map_block != <span class="tok-number">1</span> <span class="tok-kw">and</span> superblock.free_block_map_block != <span class="tok-number">2</span>)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+        <span class="tok-kw">const</span> file_len = <span class="tok-kw">try</span> file.getEndPos();
+        <span class="tok-kw">if</span> (superblock.num_blocks * superblock.block_size != file_len)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo;
+        <span class="tok-kw">switch</span> (superblock.block_size) {<span class="tok-comment">
+            // llvm only supports 4096 but we can handle any of these values
+            </span><span class="tok-number">512</span>, <span class="tok-number">1024</span>, <span class="tok-number">2048</span>, <span class="tok-number">4096</span> =&gt; {},
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugInfo,
+        }
+
+        <span class="tok-kw">const</span> dir_block_count = <a href="std.debug.Pdb.html#std.debug.Pdb.blockCountFromSize">blockCountFromSize</a>(superblock.num_directory_bytes, superblock.block_size);
+        <span class="tok-kw">if</span> (dir_block_count &gt; superblock.block_size / <span class="tok-builtin">@sizeOf</span>(<span class="tok-type">u32</span>))
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnhandledBigDirectoryStream;<span class="tok-comment"> // cf. BlockMapAddr comment.
+
+        </span><span class="tok-kw">try</span> file.seekTo(superblock.block_size * superblock.block_map_addr);
+        <span class="tok-kw">const</span> dir_blocks = <span class="tok-kw">try</span> allocator.alloc(<span class="tok-type">u32</span>, dir_block_count);
+        <span class="tok-kw">for</span> (dir_blocks) |*b| {
+            b.* = <span class="tok-kw">try</span> in.readInt(<span class="tok-type">u32</span>, .little);
+        }
+        <span class="tok-kw">var</span> directory = <a href="std.debug.Pdb.MsfStream.html">MsfStream</a>.<a href="std.debug.Pdb.MsfStream.html#std.debug.Pdb.MsfStream.init">init</a>(
+            superblock.block_size,
+            file,
+            dir_blocks,
+        );
+
+        <span class="tok-kw">const</span> begin = directory.pos;
+        <span class="tok-kw">const</span> stream_count = <span class="tok-kw">try</span> directory.reader().readInt(<span class="tok-type">u32</span>, .little);
+        <span class="tok-kw">const</span> stream_sizes = <span class="tok-kw">try</span> allocator.alloc(<span class="tok-type">u32</span>, stream_count);
+        <span class="tok-kw">defer</span> allocator.free(stream_sizes);<span class="tok-comment">
+
+        // Microsoft's implementation uses @as(u32, -1) for inexistent streams.
+        // These streams are not used, but still participate in the file
+        // and must be taken into account when resolving stream indices.
+        </span><span class="tok-kw">const</span> Nil = <span class="tok-number">0xFFFFFFFF</span>;
+        <span class="tok-kw">for</span> (stream_sizes) |*s| {
+            <span class="tok-kw">const</span> size = <span class="tok-kw">try</span> directory.reader().readInt(<span class="tok-type">u32</span>, .little);
+            s.* = <span class="tok-kw">if</span> (size == Nil) <span class="tok-number">0</span> <span class="tok-kw">else</span> <a href="std.debug.Pdb.html#std.debug.Pdb.blockCountFromSize">blockCountFromSize</a>(size, superblock.block_size);
+        }
+
+        <span class="tok-kw">const</span> streams = <span class="tok-kw">try</span> allocator.alloc(<a href="std.debug.Pdb.MsfStream.html">MsfStream</a>, stream_count);
+        <span class="tok-kw">for</span> (streams, <span class="tok-number">0</span>..) |*stream, i| {
+            <span class="tok-kw">const</span> size = stream_sizes[i];
+            <span class="tok-kw">if</span> (size == <span class="tok-number">0</span>) {
+                stream.* = <a href="std.debug.Pdb.MsfStream.html">MsfStream</a>{
+                    .blocks = &amp;[_]<span class="tok-type">u32</span>{},
+                };
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">var</span> blocks = <span class="tok-kw">try</span> allocator.alloc(<span class="tok-type">u32</span>, size);
+                <span class="tok-kw">var</span> j: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+                <span class="tok-kw">while</span> (j &lt; size) : (j += <span class="tok-number">1</span>) {
+                    <span class="tok-kw">const</span> block_id = <span class="tok-kw">try</span> directory.reader().readInt(<span class="tok-type">u32</span>, .little);
+                    <span class="tok-kw">const</span> n = (block_id % superblock.block_size);<span class="tok-comment">
+                    // 0 is for pdb.SuperBlock, 1 and 2 for FPMs.
+                    </span><span class="tok-kw">if</span> (block_id == <span class="tok-number">0</span> <span class="tok-kw">or</span> n == <span class="tok-number">1</span> <span class="tok-kw">or</span> n == <span class="tok-number">2</span> <span class="tok-kw">or</span> block_id * superblock.block_size &gt; file_len)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidBlockIndex;
+                    blocks[j] = block_id;
+                }
+
+                stream.* = <a href="std.debug.Pdb.MsfStream.html">MsfStream</a>.<a href="std.debug.Pdb.MsfStream.html#std.debug.Pdb.MsfStream.init">init</a>(
+                    superblock.block_size,
+                    file,
+                    blocks,
+                );
+            }
+        }
+
+        <span class="tok-kw">const</span> end = directory.pos;
+        <span class="tok-kw">if</span> (end - begin != superblock.num_directory_bytes)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidStreamDirectory;
+
+        <span class="tok-kw">return</span> <a href="std.debug.Pdb.Msf.html">Msf</a>{
+            .directory = directory,
+            .streams = streams,
+        };
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: *<a href="std.debug.Pdb.Msf.html">Msf</a>, allocator: <a href="std.mem.Allocator.html">Allocator</a>) <span class="tok-type">void</span> {
+        allocator.free(self.directory.blocks);
+        <span class="tok-kw">for</span> (self.streams) |*stream| {
+            allocator.free(stream.blocks);
+        }
+        allocator.free(self.streams);
+    }
+};
+
+<span class="tok-kw">const</span> MsfStream = <span class="tok-kw">struct</span> {
+    in_file: <a href="std.fs.File.html">File</a> = <span class="tok-null">undefined</span>,
+    pos: <span class="tok-type">u64</span> = <span class="tok-null">undefined</span>,
+    blocks: []<span class="tok-type">u32</span> = <span class="tok-null">undefined</span>,
+    block_size: <span class="tok-type">u32</span> = <span class="tok-null">undefined</span>,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = <span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(<a href="std.debug.Pdb.MsfStream.html#std.debug.Pdb.MsfStream.read">read</a>)).@&quot;fn&quot;.return_type.?).error_union.error_set;
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(block_size: <span class="tok-type">u32</span>, file: <a href="std.fs.File.html">File</a>, blocks: []<span class="tok-type">u32</span>) <a href="std.debug.Pdb.MsfStream.html">MsfStream</a> {
+        <span class="tok-kw">const</span> stream = <a href="std.debug.Pdb.MsfStream.html">MsfStream</a>{
+            .in_file = file,
+            .pos = <span class="tok-number">0</span>,
+            .blocks = blocks,
+            .block_size = block_size,
+        };
+
+        <span class="tok-kw">return</span> stream;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">read</span>(self: *<a href="std.debug.Pdb.MsfStream.html">MsfStream</a>, buffer: []<span class="tok-type">u8</span>) !<span class="tok-type">usize</span> {
+        <span class="tok-kw">var</span> block_id = <span class="tok-builtin">@as</span>(<span class="tok-type">usize</span>, <span class="tok-builtin">@intCast</span>(self.pos / self.block_size));
+        <span class="tok-kw">if</span> (block_id &gt;= self.blocks.len) <span class="tok-kw">return</span> <span class="tok-number">0</span>;<span class="tok-comment"> // End of Stream
+        </span><span class="tok-kw">var</span> block = self.blocks[block_id];
+        <span class="tok-kw">var</span> offset = self.pos % self.block_size;
+
+        <span class="tok-kw">try</span> self.in_file.seekTo(block * self.block_size + offset);
+        <span class="tok-kw">const</span> in = self.in_file.reader();
+
+        <span class="tok-kw">var</span> size: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">var</span> rem_buffer = buffer;
+        <span class="tok-kw">while</span> (size &lt; buffer.len) {
+            <span class="tok-kw">const</span> size_to_read = <span class="tok-builtin">@min</span>(self.block_size - offset, rem_buffer.len);
+            size += <span class="tok-kw">try</span> in.read(rem_buffer[<span class="tok-number">0</span>..size_to_read]);
+            rem_buffer = buffer[size..];
+            offset += size_to_read;<span class="tok-comment">
+
+            // If we're at the end of a block, go to the next one.
+            </span><span class="tok-kw">if</span> (offset == self.block_size) {
+                offset = <span class="tok-number">0</span>;
+                block_id += <span class="tok-number">1</span>;
+                <span class="tok-kw">if</span> (block_id &gt;= self.blocks.len) <span class="tok-kw">break</span>;<span class="tok-comment"> // End of Stream
+                </span>block = self.blocks[block_id];
+                <span class="tok-kw">try</span> self.in_file.seekTo(block * self.block_size);
+            }
+        }
+
+        self.pos += buffer.len;
+        <span class="tok-kw">return</span> buffer.len;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">seekBy</span>(self: *<a href="std.debug.Pdb.MsfStream.html">MsfStream</a>, len: <span class="tok-type">i64</span>) !<span class="tok-type">void</span> {
+        self.pos = <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, <span class="tok-builtin">@intCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">i64</span>, <span class="tok-builtin">@intCast</span>(self.pos)) + len));
+        <span class="tok-kw">if</span> (self.pos &gt;= self.blocks.len * self.block_size)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.EOF;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">seekTo</span>(self: *<a href="std.debug.Pdb.MsfStream.html">MsfStream</a>, len: <span class="tok-type">u64</span>) !<span class="tok-type">void</span> {
+        self.pos = len;
+        <span class="tok-kw">if</span> (self.pos &gt;= self.blocks.len * self.block_size)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.EOF;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">getSize</span>(self: *<span class="tok-kw">const</span> <a href="std.debug.Pdb.MsfStream.html">MsfStream</a>) <span class="tok-type">u64</span> {
+        <span class="tok-kw">return</span> self.blocks.len * self.block_size;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">getFilePos</span>(self: <a href="std.debug.Pdb.MsfStream.html">MsfStream</a>) <span class="tok-type">u64</span> {
+        <span class="tok-kw">const</span> block_id = self.pos / self.block_size;
+        <span class="tok-kw">const</span> block = self.blocks[block_id];
+        <span class="tok-kw">const</span> offset = self.pos % self.block_size;
+
+        <span class="tok-kw">return</span> block * self.block_size + offset;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">reader</span>(self: *<a href="std.debug.Pdb.MsfStream.html">MsfStream</a>) <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.html#std.io.GenericReader">Reader</a>(*<a href="std.debug.Pdb.MsfStream.html">MsfStream</a>, <a href="std.debug.Pdb.MsfStream.html#std.debug.Pdb.MsfStream.Error">Error</a>, <a href="std.debug.Pdb.MsfStream.html#std.debug.Pdb.MsfStream.read">read</a>) {
+        <span class="tok-kw">return</span> .{ .context = self };
+    }
+};
+
+<span class="tok-kw">fn</span> <span class="tok-fn">readSparseBitVector</span>(stream: <span class="tok-kw">anytype</span>, allocator: <a href="std.mem.Allocator.html">Allocator</a>) ![]<span class="tok-type">u32</span> {
+    <span class="tok-kw">const</span> num_words = <span class="tok-kw">try</span> stream.readInt(<span class="tok-type">u32</span>, .little);
+    <span class="tok-kw">var</span> list = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u32</span>).init(allocator);
+    <span class="tok-kw">errdefer</span> list.deinit();
+    <span class="tok-kw">var</span> word_i: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (word_i != num_words) : (word_i += <span class="tok-number">1</span>) {
+        <span class="tok-kw">const</span> word = <span class="tok-kw">try</span> stream.readInt(<span class="tok-type">u32</span>, .little);
+        <span class="tok-kw">var</span> bit_i: <span class="tok-type">u5</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">while</span> (<span class="tok-null">true</span>) : (bit_i += <span class="tok-number">1</span>) {
+            <span class="tok-kw">if</span> (word &amp; (<span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-number">1</span>) &lt;&lt; bit_i) != <span class="tok-number">0</span>) {
+                <span class="tok-kw">try</span> list.append(word_i * <span class="tok-number">32</span> + bit_i);
+            }
+            <span class="tok-kw">if</span> (bit_i == <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u5</span>)) <span class="tok-kw">break</span>;
+        }
+    }
+    <span class="tok-kw">return</span> <span class="tok-kw">try</span> list.toOwnedSlice();
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">blockCountFromSize</span>(size: <span class="tok-type">u32</span>, block_size: <span class="tok-type">u32</span>) <span class="tok-type">u32</span> {
+    <span class="tok-kw">return</span> (size + block_size - <span class="tok-number">1</span>) / block_size;
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

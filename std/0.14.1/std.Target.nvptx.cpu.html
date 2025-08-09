@@ -1,0 +1,716 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">Target</a></li><li><a href="std.Target.nvptx.html" class="">nvptx</a></li><li><a href="std.Target.nvptx.cpu.html" class="active">cpu</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.Target.nvptx.cpu" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.Target.nvptx.cpu</span><a href="#src.zig-std.Target.nvptx.cpu">[src]</a></h1><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_20" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_20</span><a href="#src.zig-std.Target.nvptx.cpu.sm_20">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_20">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_20: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_20&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_20&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx32,
+        .sm_20,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_21" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_21</span><a href="#src.zig-std.Target.nvptx.cpu.sm_21">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_21">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_21: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_21&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_21&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx32,
+        .sm_21,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_30" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_30</span><a href="#src.zig-std.Target.nvptx.cpu.sm_30">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_30">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_30: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_30&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_30&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .sm_30,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_32" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_32</span><a href="#src.zig-std.Target.nvptx.cpu.sm_32">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_32">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_32: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_32&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_32&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx40,
+        .sm_32,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_35" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_35</span><a href="#src.zig-std.Target.nvptx.cpu.sm_35">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_35">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_35: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_35&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_35&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx32,
+        .sm_35,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_37" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_37</span><a href="#src.zig-std.Target.nvptx.cpu.sm_37">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_37">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_37: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_37&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_37&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx41,
+        .sm_37,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_50" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_50</span><a href="#src.zig-std.Target.nvptx.cpu.sm_50">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_50">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_50: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_50&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_50&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx40,
+        .sm_50,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_52" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_52</span><a href="#src.zig-std.Target.nvptx.cpu.sm_52">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_52">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_52: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_52&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_52&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx41,
+        .sm_52,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_53" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_53</span><a href="#src.zig-std.Target.nvptx.cpu.sm_53">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_53">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_53: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_53&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_53&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx42,
+        .sm_53,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_60" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_60</span><a href="#src.zig-std.Target.nvptx.cpu.sm_60">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_60">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_60: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_60&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_60&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx50,
+        .sm_60,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_61" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_61</span><a href="#src.zig-std.Target.nvptx.cpu.sm_61">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_61">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_61: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_61&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_61&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx50,
+        .sm_61,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_62" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_62</span><a href="#src.zig-std.Target.nvptx.cpu.sm_62">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_62">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_62: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_62&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_62&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx50,
+        .sm_62,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_70" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_70</span><a href="#src.zig-std.Target.nvptx.cpu.sm_70">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_70">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_70: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_70&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_70&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx60,
+        .sm_70,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_72" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_72</span><a href="#src.zig-std.Target.nvptx.cpu.sm_72">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_72">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_72: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_72&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_72&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx61,
+        .sm_72,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_75" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_75</span><a href="#src.zig-std.Target.nvptx.cpu.sm_75">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_75">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_75: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_75&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_75&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx63,
+        .sm_75,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_80" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_80</span><a href="#src.zig-std.Target.nvptx.cpu.sm_80">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_80">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_80: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_80&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_80&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx70,
+        .sm_80,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_86" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_86</span><a href="#src.zig-std.Target.nvptx.cpu.sm_86">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_86">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_86: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_86&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_86&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx71,
+        .sm_86,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_87" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_87</span><a href="#src.zig-std.Target.nvptx.cpu.sm_87">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_87">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_87: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_87&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_87&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx74,
+        .sm_87,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_89" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_89</span><a href="#src.zig-std.Target.nvptx.cpu.sm_89">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_89">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_89: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_89&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_89&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx78,
+        .sm_89,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_90" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_90</span><a href="#src.zig-std.Target.nvptx.cpu.sm_90">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_90">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_90: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_90&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_90&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx78,
+        .sm_90,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.nvptx.cpu.sm_90a" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">sm_90a</span><a href="#src.zig-std.Target.nvptx.cpu.sm_90a">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu.sm_90a">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_90a: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;sm_90a&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;sm_90a&quot;</span>,
+    .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+        .ptx80,
+        .sm_90a,
+    }),
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.Target.nvptx.cpu">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> cpu = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_20: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_20&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_20&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx32,
+            .sm_20,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_21: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_21&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_21&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx32,
+            .sm_21,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_30: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_30&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_30&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .sm_30,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_32: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_32&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_32&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx40,
+            .sm_32,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_35: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_35&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_35&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx32,
+            .sm_35,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_37: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_37&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_37&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx41,
+            .sm_37,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_50: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_50&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_50&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx40,
+            .sm_50,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_52: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_52&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_52&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx41,
+            .sm_52,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_53: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_53&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_53&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx42,
+            .sm_53,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_60: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_60&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_60&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx50,
+            .sm_60,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_61: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_61&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_61&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx50,
+            .sm_61,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_62: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_62&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_62&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx50,
+            .sm_62,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_70: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_70&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_70&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx60,
+            .sm_70,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_72: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_72&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_72&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx61,
+            .sm_72,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_75: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_75&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_75&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx63,
+            .sm_75,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_80: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_80&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_80&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx70,
+            .sm_80,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_86: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_86&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_86&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx71,
+            .sm_86,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_87: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_87&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_87&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx74,
+            .sm_87,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_89: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_89&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_89&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx78,
+            .sm_89,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_90: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_90&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_90&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx78,
+            .sm_90,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sm_90a: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;sm_90a&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;sm_90a&quot;</span>,
+        .features = <a href="std.Target.nvptx.html#std.Target.nvptx.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.nvptx.Feature.html">Feature</a>{
+            .ptx80,
+            .sm_90a,
+        }),
+    };
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

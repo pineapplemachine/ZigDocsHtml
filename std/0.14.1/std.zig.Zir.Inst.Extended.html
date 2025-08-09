@@ -1,0 +1,817 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">zig</a></li><li><a href="std.zig.Zir.html" class="">Zir</a></li><li><a href="std.zig.Zir.Inst.html" class="">Inst</a></li><li><a href="std.zig.Zir.Inst.Extended.html" class="active">Extended</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.zig.Zir.Inst.Extended" class="declHeader"><span class="declHeaderCategory">enum</span><span class="declHeaderIdentifier">std.zig.Zir.Inst.Extended</span><a href="#src.zig-std.zig.Zir.Inst.Extended">[src]</a></h1><div class="tldDocs"><p>Rarer instructions are here; ones that do not fit in the 8-bit <code><a href="std.zig.Zir.Inst.Tag.html">Tag</a></code> enum.
+<code>noreturn</code> instructions may not go here; they must be part of the main <code><a href="std.zig.Zir.Inst.Tag.html">Tag</a></code> enum.</p>
+</div><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.zig.Zir.Inst.Extended.InstData.html">std.zig.Zir.Inst.Extended.InstData</a></li></ul></div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>struct_decl</code></pre><div class="fieldDocs"><p>A struct type definition. Contains references to ZIR instructions for
+the field types, defaults, and alignments.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.StructDecl.html">StructDecl</a></code>.
+<code>small</code> is <code><a href="std.zig.Zir.Inst.StructDecl.Small.html">StructDecl.Small</a></code>.</p>
+</div></div><div><pre><code>enum_decl</code></pre><div class="fieldDocs"><p>An enum type definition. Contains references to ZIR instructions for
+the field value expressions and optional type tag expression.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.EnumDecl.html">EnumDecl</a></code>.
+<code>small</code> is <code><a href="std.zig.Zir.Inst.EnumDecl.Small.html">EnumDecl.Small</a></code>.</p>
+</div></div><div><pre><code>union_decl</code></pre><div class="fieldDocs"><p>A union type definition. Contains references to ZIR instructions for
+the field types and optional type tag expression.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.UnionDecl.html">UnionDecl</a></code>.
+<code>small</code> is <code><a href="std.zig.Zir.Inst.UnionDecl.Small.html">UnionDecl.Small</a></code>.</p>
+</div></div><div><pre><code>opaque_decl</code></pre><div class="fieldDocs"><p>An opaque type definition. Contains references to decls and captures.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.OpaqueDecl.html">OpaqueDecl</a></code>.
+<code>small</code> is <code><a href="std.zig.Zir.Inst.OpaqueDecl.Small.html">OpaqueDecl.Small</a></code>.</p>
+</div></div><div><pre><code>tuple_decl</code></pre><div class="fieldDocs"><p>A tuple type. Note that tuples are not namespace/container types.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.TupleDecl.html">TupleDecl</a></code>.
+<code>small</code> is <code>fields_len: u16</code>.</p>
+</div></div><div><pre><code>this</code></pre><div class="fieldDocs"><p>Implements the <code>@This</code> builtin.
+<code>operand</code> is <code>src_node: i32</code>.</p>
+</div></div><div><pre><code>ret_addr</code></pre><div class="fieldDocs"><p>Implements the <code>@returnAddress</code> builtin.
+<code>operand</code> is <code>src_node: i32</code>.</p>
+</div></div><div><pre><code>builtin_src</code></pre><div class="fieldDocs"><p>Implements the <code>@src</code> builtin.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.LineColumn.html">LineColumn</a></code>.</p>
+</div></div><div><pre><code>error_return_trace</code></pre><div class="fieldDocs"><p>Implements the <code>@errorReturnTrace</code> builtin.
+<code>operand</code> is <code>src_node: i32</code>.</p>
+</div></div><div><pre><code>frame</code></pre><div class="fieldDocs"><p>Implements the <code>@frame</code> builtin.
+<code>operand</code> is <code>src_node: i32</code>.</p>
+</div></div><div><pre><code>frame_address</code></pre><div class="fieldDocs"><p>Implements the <code>@frameAddress</code> builtin.
+<code>operand</code> is <code>src_node: i32</code>.</p>
+</div></div><div><pre><code>alloc</code></pre><div class="fieldDocs"><p>Same as <code>alloc</code> from <code><a href="std.zig.Zir.Inst.Tag.html">Tag</a></code> but may contain an alignment instruction.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.AllocExtended.html">AllocExtended</a></code>.
+<code>small</code>:</p>
+<ul>
+<li>0b000X - has type</li>
+<li>0b00X0 - has alignment</li>
+<li>0b0X00 - 1=const, 0=var</li>
+<li>0bX000 - is comptime</li>
+</ul>
+</div></div><div><pre><code>builtin_extern</code></pre><div class="fieldDocs"><p>The <code>@extern</code> builtin.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.BinNode.html">BinNode</a></code>.</p>
+</div></div><div><pre><code>@&quot;asm&quot;</code></pre><div class="fieldDocs"><p>Inline assembly.
+<code>small</code>:</p>
+<ul>
+<li>0b00000000_000XXXXX - <code>outputs_len</code>.</li>
+<li>0b000000XX_XXX00000 - <code>inputs_len</code>.</li>
+<li>0b0XXXXX00_00000000 - <code>clobbers_len</code>.</li>
+<li>0bX0000000_00000000 - is volatile
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.Asm.html">Asm</a></code>.</li>
+</ul>
+</div></div><div><pre><code>asm_expr</code></pre><div class="fieldDocs"><p>Same as <code>asm</code> except the assembly template is not a string literal but a comptime
+expression.
+The <code>asm_source</code> field of the Asm is not a null-terminated string
+but instead a Ref.</p>
+</div></div><div><pre><code>compile_log</code></pre><div class="fieldDocs"><p>Log compile time variables and emit an error message.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.NodeMultiOp.html">NodeMultiOp</a></code>.
+<code>small</code> is <code>operands_len</code>.
+The AST node is the compile log builtin call.</p>
+</div></div><div><pre><code>typeof_peer</code></pre><div class="fieldDocs"><p>The builtin <code>@TypeOf</code> which returns the type after Peer Type Resolution
+of one or more params.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.TypeOfPeer.html">TypeOfPeer</a></code>.
+<code>small</code> is <code>operands_len</code>.
+The AST node is the builtin call.</p>
+</div></div><div><pre><code>min_multi</code></pre><div class="fieldDocs"><p>Implements the <code>@min</code> builtin for more than 2 args.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.NodeMultiOp.html">NodeMultiOp</a></code>.
+<code>small</code> is <code>operands_len</code>.
+The AST node is the builtin call.</p>
+</div></div><div><pre><code>max_multi</code></pre><div class="fieldDocs"><p>Implements the <code>@max</code> builtin for more than 2 args.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.NodeMultiOp.html">NodeMultiOp</a></code>.
+<code>small</code> is <code>operands_len</code>.
+The AST node is the builtin call.</p>
+</div></div><div><pre><code>add_with_overflow</code></pre><div class="fieldDocs"><p>Implements the <code>@addWithOverflow</code> builtin.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.BinNode.html">BinNode</a></code>.
+<code>small</code> is unused.</p>
+</div></div><div><pre><code>sub_with_overflow</code></pre><div class="fieldDocs"><p>Implements the <code>@subWithOverflow</code> builtin.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.BinNode.html">BinNode</a></code>.
+<code>small</code> is unused.</p>
+</div></div><div><pre><code>mul_with_overflow</code></pre><div class="fieldDocs"><p>Implements the <code>@mulWithOverflow</code> builtin.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.BinNode.html">BinNode</a></code>.
+<code>small</code> is unused.</p>
+</div></div><div><pre><code>shl_with_overflow</code></pre><div class="fieldDocs"><p>Implements the <code>@shlWithOverflow</code> builtin.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.BinNode.html">BinNode</a></code>.
+<code>small</code> is unused.</p>
+</div></div><div><pre><code>c_undef</code></pre><div class="fieldDocs"><p><code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.UnNode.html">UnNode</a></code>.</p>
+</div></div><div><pre><code>c_include</code></pre><div class="fieldDocs"><p><code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.UnNode.html">UnNode</a></code>.</p>
+</div></div><div><pre><code>c_define</code></pre><div class="fieldDocs"><p><code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.BinNode.html">BinNode</a></code>.</p>
+</div></div><div><pre><code>wasm_memory_size</code></pre><div class="fieldDocs"><p><code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.UnNode.html">UnNode</a></code>.</p>
+</div></div><div><pre><code>wasm_memory_grow</code></pre><div class="fieldDocs"><p><code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.BinNode.html">BinNode</a></code>.</p>
+</div></div><div><pre><code>prefetch</code></pre><div class="fieldDocs"><p>The <code>@prefetch</code> builtin.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.BinNode.html">BinNode</a></code>.</p>
+</div></div><div><pre><code>set_float_mode</code></pre><div class="fieldDocs"><p>Implement builtin <code>@setFloatMode</code>.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.UnNode.html">UnNode</a></code>.</p>
+</div></div><div><pre><code>error_cast</code></pre><div class="fieldDocs"><p>Implements the <code>@errorCast</code> builtin.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.BinNode.html">BinNode</a></code>. <code>lhs</code> is dest type, <code>rhs</code> is operand.</p>
+</div></div><div><pre><code>await_nosuspend</code></pre><div class="fieldDocs"><p><code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.UnNode.html">UnNode</a></code>.</p>
+</div></div><div><pre><code>breakpoint</code></pre><div class="fieldDocs"><p>Implements <code>@breakpoint</code>.
+<code>operand</code> is <code>src_node: i32</code>.</p>
+</div></div><div><pre><code>disable_instrumentation</code></pre><div class="fieldDocs"><p>Implement builtin <code>@disableInstrumentation</code>. <code>operand</code> is <code>src_node: i32</code>.</p>
+</div></div><div><pre><code>disable_intrinsics</code></pre><div class="fieldDocs"><p>Implement builtin <code>@disableIntrinsics</code>. <code>operand</code> is <code>src_node: i32</code>.</p>
+</div></div><div><pre><code>select</code></pre><div class="fieldDocs"><p>Implements the <code>@select</code> builtin.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.Select.html">Select</a></code>.</p>
+</div></div><div><pre><code>int_from_error</code></pre><div class="fieldDocs"><p>Implement builtin <code>@errToInt</code>.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.UnNode.html">UnNode</a></code>.</p>
+</div></div><div><pre><code>error_from_int</code></pre><div class="fieldDocs"><p>Implement builtin <code>@errorFromInt</code>.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.UnNode.html">UnNode</a></code>.</p>
+</div></div><div><pre><code>reify</code></pre><div class="fieldDocs"><p>Implement builtin <code>@Type</code>.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.Reify.html">Reify</a></code>.
+<code>small</code> contains <code><a href="std.zig.Zir.Inst.NameStrategy.html">NameStrategy</a></code>.</p>
+</div></div><div><pre><code>builtin_async_call</code></pre><div class="fieldDocs"><p>Implements the <code>@asyncCall</code> builtin.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.AsyncCall.html">AsyncCall</a></code>.</p>
+</div></div><div><pre><code>cmpxchg</code></pre><div class="fieldDocs"><p>Implements the <code>@cmpxchgStrong</code> and <code>@cmpxchgWeak</code> builtins.
+<code>small</code> 0=&gt;weak 1=&gt;strong
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.Cmpxchg.html">Cmpxchg</a></code>.</p>
+</div></div><div><pre><code>c_va_arg</code></pre><div class="fieldDocs"><p>Implement builtin <code>@cVaArg</code>.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.BinNode.html">BinNode</a></code>.</p>
+</div></div><div><pre><code>c_va_copy</code></pre><div class="fieldDocs"><p>Implement builtin <code>@cVaCopy</code>.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.UnNode.html">UnNode</a></code>.</p>
+</div></div><div><pre><code>c_va_end</code></pre><div class="fieldDocs"><p>Implement builtin <code>@cVaEnd</code>.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.UnNode.html">UnNode</a></code>.</p>
+</div></div><div><pre><code>c_va_start</code></pre><div class="fieldDocs"><p>Implement builtin <code>@cVaStart</code>.
+<code>operand</code> is <code>src_node: i32</code>.</p>
+</div></div><div><pre><code>ptr_cast_full</code></pre><div class="fieldDocs"><p>Implements the following builtins:
+<code>@ptrCast</code>, <code>@alignCast</code>, <code>@addrSpaceCast</code>, <code>@constCast</code>, <code>@volatileCast</code>.
+Represents an arbitrary nesting of the above builtins. Such a nesting is treated as a
+single operation which can modify multiple components of a pointer type.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.BinNode.html">BinNode</a></code>.
+<code>small</code> contains <code><a href="std.zig.Zir.Inst.FullPtrCastFlags.html">FullPtrCastFlags</a></code>.
+AST node is the root of the nested casts.
+<code>lhs</code> is dest type, <code>rhs</code> is operand.</p>
+</div></div><div><pre><code>ptr_cast_no_dest</code></pre><div class="fieldDocs"><p><code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.UnNode.html">UnNode</a></code>.
+<code>small</code> contains <code><a href="std.zig.Zir.Inst.FullPtrCastFlags.html">FullPtrCastFlags</a></code>.
+Guaranteed to only have flags where no explicit destination type is
+required (const_cast and volatile_cast).
+AST node is the root of the nested casts.</p>
+</div></div><div><pre><code>work_item_id</code></pre><div class="fieldDocs"><p>Implements the <code>@workItemId</code> builtin.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.UnNode.html">UnNode</a></code>.</p>
+</div></div><div><pre><code>work_group_size</code></pre><div class="fieldDocs"><p>Implements the <code>@workGroupSize</code> builtin.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.UnNode.html">UnNode</a></code>.</p>
+</div></div><div><pre><code>work_group_id</code></pre><div class="fieldDocs"><p>Implements the <code>@workGroupId</code> builtin.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.UnNode.html">UnNode</a></code>.</p>
+</div></div><div><pre><code>in_comptime</code></pre><div class="fieldDocs"><p>Implements the <code>@inComptime</code> builtin.
+<code>operand</code> is <code>src_node: i32</code>.</p>
+</div></div><div><pre><code>restore_err_ret_index</code></pre><div class="fieldDocs"><p>Restores the error return index to its last saved state in a given
+block. If the block is <code>.none</code>, restores to the state from the point
+of function entry. If the operand is not <code>.none</code>, the restore is
+conditional on the operand value not being an error.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.RestoreErrRetIndex.html">RestoreErrRetIndex</a></code>.
+<code>small</code> is undefined.</p>
+</div></div><div><pre><code>closure_get</code></pre><div class="fieldDocs"><p>Retrieves a value from the current type declaration scope's closure.
+<code>operand</code> is <code>src_node: i32</code>.
+<code>small</code> is closure index.</p>
+</div></div><div><pre><code>value_placeholder</code></pre><div class="fieldDocs"><p>Used as a placeholder instruction which is just a dummy index for Sema to replace
+with a specific value. For instance, this is used for the capture of an <code>errdefer</code>.
+This should never appear in a body.</p>
+</div></div><div><pre><code>field_parent_ptr</code></pre><div class="fieldDocs"><p>Implements the <code>@fieldParentPtr</code> builtin.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.FieldParentPtr.html">FieldParentPtr</a></code>.
+<code>small</code> contains <code><a href="std.zig.Zir.Inst.FullPtrCastFlags.html">FullPtrCastFlags</a></code>.
+Guaranteed to not have the <code>ptr_cast</code> flag.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.FieldParentPtr.html">FieldParentPtr</a></code>.</p>
+</div></div><div><pre><code>builtin_value</code></pre><div class="fieldDocs"><p>Get a type or value from <code><a href="std.builtin.html">std.builtin</a></code>.
+<code>operand</code> is <code>src_node: i32</code>.
+<code>small</code> is an <code><a href="std.zig.Zir.Inst.BuiltinValue.html">Inst.BuiltinValue</a></code>.</p>
+</div></div><div><pre><code>branch_hint</code></pre><div class="fieldDocs"><p>Provide a <code>@branchHint</code> for the current block.
+<code>operand</code> is payload index to <code><a href="std.zig.Zir.Inst.UnNode.html">UnNode</a></code>.
+<code>small</code> is unused.</p>
+</div></div><div><pre><code>inplace_arith_result_ty</code></pre><div class="fieldDocs"><p>Compute the result type for in-place arithmetic, e.g. <code>+=</code>.
+<code>operand</code> is <code><a href="std.zig.Zir.Inst.Ref.html">Zir.Inst.Ref</a></code> of the loaded LHS (<em>not</em> its type).
+<code>small</code> is an <code><a href="std.zig.Zir.Inst.InplaceOp.html">Inst.InplaceOp</a></code>.</p>
+</div></div><div><pre><code>dbg_empty_stmt</code></pre><div class="fieldDocs"><p>Marks a statement that can be stepped to but produces no code.
+<code>operand</code> and <code>small</code> are ignored.</p>
+</div></div><div><pre><code>astgen_error</code></pre><div class="fieldDocs"><p>At this point, AstGen encountered a fatal error which terminated ZIR lowering for this body.
+A file-level error has been reported. Sema should terminate semantic analysis.
+<code>operand</code> and <code>small</code> are ignored.
+This instruction is always <code>noreturn</code>, however, it is not considered as such by ZIR-level queries. This allows AstGen to assume that
+any code may have gone here, avoiding false-positive &quot;unreachable code&quot; errors.</p>
+</div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.zig.Zir.Inst.Extended">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Extended = <span class="tok-kw">enum</span>(<span class="tok-type">u16</span>) {
+    <span class="tok-comment">/// A struct type definition. Contains references to ZIR instructions for</span>
+    <span class="tok-comment">/// the field types, defaults, and alignments.</span>
+    <span class="tok-comment">/// `operand` is payload index to `StructDecl`.</span>
+    <span class="tok-comment">/// `small` is `StructDecl.Small`.</span>
+    struct_decl,
+    <span class="tok-comment">/// An enum type definition. Contains references to ZIR instructions for</span>
+    <span class="tok-comment">/// the field value expressions and optional type tag expression.</span>
+    <span class="tok-comment">/// `operand` is payload index to `EnumDecl`.</span>
+    <span class="tok-comment">/// `small` is `EnumDecl.Small`.</span>
+    enum_decl,
+    <span class="tok-comment">/// A union type definition. Contains references to ZIR instructions for</span>
+    <span class="tok-comment">/// the field types and optional type tag expression.</span>
+    <span class="tok-comment">/// `operand` is payload index to `UnionDecl`.</span>
+    <span class="tok-comment">/// `small` is `UnionDecl.Small`.</span>
+    union_decl,
+    <span class="tok-comment">/// An opaque type definition. Contains references to decls and captures.</span>
+    <span class="tok-comment">/// `operand` is payload index to `OpaqueDecl`.</span>
+    <span class="tok-comment">/// `small` is `OpaqueDecl.Small`.</span>
+    opaque_decl,
+    <span class="tok-comment">/// A tuple type. Note that tuples are not namespace/container types.</span>
+    <span class="tok-comment">/// `operand` is payload index to `TupleDecl`.</span>
+    <span class="tok-comment">/// `small` is `fields_len: u16`.</span>
+    tuple_decl,
+    <span class="tok-comment">/// Implements the `@This` builtin.</span>
+    <span class="tok-comment">/// `operand` is `src_node: i32`.</span>
+    this,
+    <span class="tok-comment">/// Implements the `@returnAddress` builtin.</span>
+    <span class="tok-comment">/// `operand` is `src_node: i32`.</span>
+    ret_addr,
+    <span class="tok-comment">/// Implements the `@src` builtin.</span>
+    <span class="tok-comment">/// `operand` is payload index to `LineColumn`.</span>
+    builtin_src,
+    <span class="tok-comment">/// Implements the `@errorReturnTrace` builtin.</span>
+    <span class="tok-comment">/// `operand` is `src_node: i32`.</span>
+    error_return_trace,
+    <span class="tok-comment">/// Implements the `@frame` builtin.</span>
+    <span class="tok-comment">/// `operand` is `src_node: i32`.</span>
+    frame,
+    <span class="tok-comment">/// Implements the `@frameAddress` builtin.</span>
+    <span class="tok-comment">/// `operand` is `src_node: i32`.</span>
+    frame_address,
+    <span class="tok-comment">/// Same as `alloc` from `Tag` but may contain an alignment instruction.</span>
+    <span class="tok-comment">/// `operand` is payload index to `AllocExtended`.</span>
+    <span class="tok-comment">/// `small`:</span>
+    <span class="tok-comment">///  * 0b000X - has type</span>
+    <span class="tok-comment">///  * 0b00X0 - has alignment</span>
+    <span class="tok-comment">///  * 0b0X00 - 1=const, 0=var</span>
+    <span class="tok-comment">///  * 0bX000 - is comptime</span>
+    alloc,
+    <span class="tok-comment">/// The `@extern` builtin.</span>
+    <span class="tok-comment">/// `operand` is payload index to `BinNode`.</span>
+    builtin_extern,
+    <span class="tok-comment">/// Inline assembly.</span>
+    <span class="tok-comment">/// `small`:</span>
+    <span class="tok-comment">///  * 0b00000000_000XXXXX - `outputs_len`.</span>
+    <span class="tok-comment">///  * 0b000000XX_XXX00000 - `inputs_len`.</span>
+    <span class="tok-comment">///  * 0b0XXXXX00_00000000 - `clobbers_len`.</span>
+    <span class="tok-comment">///  * 0bX0000000_00000000 - is volatile</span>
+    <span class="tok-comment">/// `operand` is payload index to `Asm`.</span>
+    @&quot;asm&quot;,
+    <span class="tok-comment">/// Same as `asm` except the assembly template is not a string literal but a comptime</span>
+    <span class="tok-comment">/// expression.</span>
+    <span class="tok-comment">/// The `asm_source` field of the Asm is not a null-terminated string</span>
+    <span class="tok-comment">/// but instead a Ref.</span>
+    asm_expr,
+    <span class="tok-comment">/// Log compile time variables and emit an error message.</span>
+    <span class="tok-comment">/// `operand` is payload index to `NodeMultiOp`.</span>
+    <span class="tok-comment">/// `small` is `operands_len`.</span>
+    <span class="tok-comment">/// The AST node is the compile log builtin call.</span>
+    compile_log,
+    <span class="tok-comment">/// The builtin `@TypeOf` which returns the type after Peer Type Resolution</span>
+    <span class="tok-comment">/// of one or more params.</span>
+    <span class="tok-comment">/// `operand` is payload index to `TypeOfPeer`.</span>
+    <span class="tok-comment">/// `small` is `operands_len`.</span>
+    <span class="tok-comment">/// The AST node is the builtin call.</span>
+    typeof_peer,
+    <span class="tok-comment">/// Implements the `@min` builtin for more than 2 args.</span>
+    <span class="tok-comment">/// `operand` is payload index to `NodeMultiOp`.</span>
+    <span class="tok-comment">/// `small` is `operands_len`.</span>
+    <span class="tok-comment">/// The AST node is the builtin call.</span>
+    min_multi,
+    <span class="tok-comment">/// Implements the `@max` builtin for more than 2 args.</span>
+    <span class="tok-comment">/// `operand` is payload index to `NodeMultiOp`.</span>
+    <span class="tok-comment">/// `small` is `operands_len`.</span>
+    <span class="tok-comment">/// The AST node is the builtin call.</span>
+    max_multi,
+    <span class="tok-comment">/// Implements the `@addWithOverflow` builtin.</span>
+    <span class="tok-comment">/// `operand` is payload index to `BinNode`.</span>
+    <span class="tok-comment">/// `small` is unused.</span>
+    add_with_overflow,
+    <span class="tok-comment">/// Implements the `@subWithOverflow` builtin.</span>
+    <span class="tok-comment">/// `operand` is payload index to `BinNode`.</span>
+    <span class="tok-comment">/// `small` is unused.</span>
+    sub_with_overflow,
+    <span class="tok-comment">/// Implements the `@mulWithOverflow` builtin.</span>
+    <span class="tok-comment">/// `operand` is payload index to `BinNode`.</span>
+    <span class="tok-comment">/// `small` is unused.</span>
+    mul_with_overflow,
+    <span class="tok-comment">/// Implements the `@shlWithOverflow` builtin.</span>
+    <span class="tok-comment">/// `operand` is payload index to `BinNode`.</span>
+    <span class="tok-comment">/// `small` is unused.</span>
+    shl_with_overflow,
+    <span class="tok-comment">/// `operand` is payload index to `UnNode`.</span>
+    c_undef,
+    <span class="tok-comment">/// `operand` is payload index to `UnNode`.</span>
+    c_include,
+    <span class="tok-comment">/// `operand` is payload index to `BinNode`.</span>
+    c_define,
+    <span class="tok-comment">/// `operand` is payload index to `UnNode`.</span>
+    wasm_memory_size,
+    <span class="tok-comment">/// `operand` is payload index to `BinNode`.</span>
+    wasm_memory_grow,
+    <span class="tok-comment">/// The `@prefetch` builtin.</span>
+    <span class="tok-comment">/// `operand` is payload index to `BinNode`.</span>
+    prefetch,
+    <span class="tok-comment">/// Implement builtin `@setFloatMode`.</span>
+    <span class="tok-comment">/// `operand` is payload index to `UnNode`.</span>
+    set_float_mode,
+    <span class="tok-comment">/// Implements the `@errorCast` builtin.</span>
+    <span class="tok-comment">/// `operand` is payload index to `BinNode`. `lhs` is dest type, `rhs` is operand.</span>
+    error_cast,
+    <span class="tok-comment">/// `operand` is payload index to `UnNode`.</span>
+    await_nosuspend,
+    <span class="tok-comment">/// Implements `@breakpoint`.</span>
+    <span class="tok-comment">/// `operand` is `src_node: i32`.</span>
+    breakpoint,
+    <span class="tok-comment">/// Implement builtin `@disableInstrumentation`. `operand` is `src_node: i32`.</span>
+    disable_instrumentation,
+    <span class="tok-comment">/// Implement builtin `@disableIntrinsics`. `operand` is `src_node: i32`.</span>
+    disable_intrinsics,
+    <span class="tok-comment">/// Implements the `@select` builtin.</span>
+    <span class="tok-comment">/// `operand` is payload index to `Select`.</span>
+    select,
+    <span class="tok-comment">/// Implement builtin `@errToInt`.</span>
+    <span class="tok-comment">/// `operand` is payload index to `UnNode`.</span>
+    int_from_error,
+    <span class="tok-comment">/// Implement builtin `@errorFromInt`.</span>
+    <span class="tok-comment">/// `operand` is payload index to `UnNode`.</span>
+    error_from_int,
+    <span class="tok-comment">/// Implement builtin `@Type`.</span>
+    <span class="tok-comment">/// `operand` is payload index to `Reify`.</span>
+    <span class="tok-comment">/// `small` contains `NameStrategy`.</span>
+    reify,
+    <span class="tok-comment">/// Implements the `@asyncCall` builtin.</span>
+    <span class="tok-comment">/// `operand` is payload index to `AsyncCall`.</span>
+    builtin_async_call,
+    <span class="tok-comment">/// Implements the `@cmpxchgStrong` and `@cmpxchgWeak` builtins.</span>
+    <span class="tok-comment">/// `small` 0=&gt;weak 1=&gt;strong</span>
+    <span class="tok-comment">/// `operand` is payload index to `Cmpxchg`.</span>
+    cmpxchg,
+    <span class="tok-comment">/// Implement builtin `@cVaArg`.</span>
+    <span class="tok-comment">/// `operand` is payload index to `BinNode`.</span>
+    c_va_arg,
+    <span class="tok-comment">/// Implement builtin `@cVaCopy`.</span>
+    <span class="tok-comment">/// `operand` is payload index to `UnNode`.</span>
+    c_va_copy,
+    <span class="tok-comment">/// Implement builtin `@cVaEnd`.</span>
+    <span class="tok-comment">/// `operand` is payload index to `UnNode`.</span>
+    c_va_end,
+    <span class="tok-comment">/// Implement builtin `@cVaStart`.</span>
+    <span class="tok-comment">/// `operand` is `src_node: i32`.</span>
+    c_va_start,
+    <span class="tok-comment">/// Implements the following builtins:</span>
+    <span class="tok-comment">/// `@ptrCast`, `@alignCast`, `@addrSpaceCast`, `@constCast`, `@volatileCast`.</span>
+    <span class="tok-comment">/// Represents an arbitrary nesting of the above builtins. Such a nesting is treated as a</span>
+    <span class="tok-comment">/// single operation which can modify multiple components of a pointer type.</span>
+    <span class="tok-comment">/// `operand` is payload index to `BinNode`.</span>
+    <span class="tok-comment">/// `small` contains `FullPtrCastFlags`.</span>
+    <span class="tok-comment">/// AST node is the root of the nested casts.</span>
+    <span class="tok-comment">/// `lhs` is dest type, `rhs` is operand.</span>
+    ptr_cast_full,
+    <span class="tok-comment">/// `operand` is payload index to `UnNode`.</span>
+    <span class="tok-comment">/// `small` contains `FullPtrCastFlags`.</span>
+    <span class="tok-comment">/// Guaranteed to only have flags where no explicit destination type is</span>
+    <span class="tok-comment">/// required (const_cast and volatile_cast).</span>
+    <span class="tok-comment">/// AST node is the root of the nested casts.</span>
+    ptr_cast_no_dest,
+    <span class="tok-comment">/// Implements the `@workItemId` builtin.</span>
+    <span class="tok-comment">/// `operand` is payload index to `UnNode`.</span>
+    work_item_id,
+    <span class="tok-comment">/// Implements the `@workGroupSize` builtin.</span>
+    <span class="tok-comment">/// `operand` is payload index to `UnNode`.</span>
+    work_group_size,
+    <span class="tok-comment">/// Implements the `@workGroupId` builtin.</span>
+    <span class="tok-comment">/// `operand` is payload index to `UnNode`.</span>
+    work_group_id,
+    <span class="tok-comment">/// Implements the `@inComptime` builtin.</span>
+    <span class="tok-comment">/// `operand` is `src_node: i32`.</span>
+    in_comptime,
+    <span class="tok-comment">/// Restores the error return index to its last saved state in a given</span>
+    <span class="tok-comment">/// block. If the block is `.none`, restores to the state from the point</span>
+    <span class="tok-comment">/// of function entry. If the operand is not `.none`, the restore is</span>
+    <span class="tok-comment">/// conditional on the operand value not being an error.</span>
+    <span class="tok-comment">/// `operand` is payload index to `RestoreErrRetIndex`.</span>
+    <span class="tok-comment">/// `small` is undefined.</span>
+    restore_err_ret_index,
+    <span class="tok-comment">/// Retrieves a value from the current type declaration scope's closure.</span>
+    <span class="tok-comment">/// `operand` is `src_node: i32`.</span>
+    <span class="tok-comment">/// `small` is closure index.</span>
+    closure_get,
+    <span class="tok-comment">/// Used as a placeholder instruction which is just a dummy index for Sema to replace</span>
+    <span class="tok-comment">/// with a specific value. For instance, this is used for the capture of an `errdefer`.</span>
+    <span class="tok-comment">/// This should never appear in a body.</span>
+    value_placeholder,
+    <span class="tok-comment">/// Implements the `@fieldParentPtr` builtin.</span>
+    <span class="tok-comment">/// `operand` is payload index to `FieldParentPtr`.</span>
+    <span class="tok-comment">/// `small` contains `FullPtrCastFlags`.</span>
+    <span class="tok-comment">/// Guaranteed to not have the `ptr_cast` flag.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `FieldParentPtr`.</span>
+    field_parent_ptr,
+    <span class="tok-comment">/// Get a type or value from `std.builtin`.</span>
+    <span class="tok-comment">/// `operand` is `src_node: i32`.</span>
+    <span class="tok-comment">/// `small` is an `Inst.BuiltinValue`.</span>
+    builtin_value,
+    <span class="tok-comment">/// Provide a `@branchHint` for the current block.</span>
+    <span class="tok-comment">/// `operand` is payload index to `UnNode`.</span>
+    <span class="tok-comment">/// `small` is unused.</span>
+    branch_hint,
+    <span class="tok-comment">/// Compute the result type for in-place arithmetic, e.g. `+=`.</span>
+    <span class="tok-comment">/// `operand` is `Zir.Inst.Ref` of the loaded LHS (*not* its type).</span>
+    <span class="tok-comment">/// `small` is an `Inst.InplaceOp`.</span>
+    inplace_arith_result_ty,
+    <span class="tok-comment">/// Marks a statement that can be stepped to but produces no code.</span>
+    <span class="tok-comment">/// `operand` and `small` are ignored.</span>
+    dbg_empty_stmt,
+    <span class="tok-comment">/// At this point, AstGen encountered a fatal error which terminated ZIR lowering for this body.</span>
+    <span class="tok-comment">/// A file-level error has been reported. Sema should terminate semantic analysis.</span>
+    <span class="tok-comment">/// `operand` and `small` are ignored.</span>
+    <span class="tok-comment">/// This instruction is always `noreturn`, however, it is not considered as such by ZIR-level queries. This allows AstGen to assume that</span>
+    <span class="tok-comment">/// any code may have gone here, avoiding false-positive &quot;unreachable code&quot; errors.</span>
+    astgen_error,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> InstData = <span class="tok-kw">struct</span> {
+        opcode: <a href="std.zig.Zir.Inst.Extended.html">Extended</a>,
+        small: <span class="tok-type">u16</span>,
+        operand: <span class="tok-type">u32</span>,
+    };
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

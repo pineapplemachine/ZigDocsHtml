@@ -1,0 +1,986 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">zig</a></li><li><a href="std.zig.html" class="">llvm</a></li><li><a href="std.zig.llvm.BitcodeReader.html" class="active">BitcodeReader</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.zig.llvm.BitcodeReader" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.zig.llvm.BitcodeReader</span><a href="#src.zig-std.zig.llvm.BitcodeReader">[src]</a></h1><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.zig.llvm.BitcodeReader.Item.html">std.zig.llvm.BitcodeReader.Item</a></li><li><a href="std.zig.llvm.BitcodeReader.Block.html">std.zig.llvm.BitcodeReader.Block</a></li><li><a href="std.zig.llvm.BitcodeReader.Record.html">std.zig.llvm.BitcodeReader.Record</a></li><li><a href="std.zig.llvm.BitcodeReader.InitOptions.html">std.zig.llvm.BitcodeReader.InitOptions</a></li></ul></div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a></code></pre></div><div><pre><code>record_arena: <a href="std.html">std</a>.<a href="std.heap.html">heap</a>.<a href="std.heap.arena_allocator.ArenaAllocator.html">ArenaAllocator</a>.<a href="std.heap.arena_allocator.ArenaAllocator.State.html">State</a></code></pre></div><div><pre><code>reader: <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.Reader.html">AnyReader</a></code></pre></div><div><pre><code>keep_names: <span class="tok-type">bool</span></code></pre></div><div><pre><code>bit_buffer: <span class="tok-type">u32</span></code></pre></div><div><pre><code>bit_offset: <span class="tok-type">u5</span></code></pre></div><div><pre><code>stack: <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayListUnmanaged">ArrayListUnmanaged</a>(<a href="std.zig.llvm.BitcodeReader.State.html">State</a>)</code></pre></div><div><pre><code>block_info: <a href="std.html">std</a>.<a href="std.hash_map.html#std.hash_map.AutoHashMapUnmanaged">AutoHashMapUnmanaged</a>(<span class="tok-type">u32</span>, <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>.<a href="std.zig.llvm.BitcodeReader.Block.Info.html">Info</a>)</code></pre></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.zig.llvm.BitcodeReader.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.zig.llvm.BitcodeReader.init">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, options: <a href="std.zig.llvm.BitcodeReader.InitOptions.html">InitOptions</a>) <a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a></code></pre></div><div><pre><code>options: <a href="std.zig.llvm.BitcodeReader.InitOptions.html">InitOptions</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.llvm.BitcodeReader.init">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, options: <a href="std.zig.llvm.BitcodeReader.InitOptions.html">InitOptions</a>) <a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a> {
+    <span class="tok-kw">return</span> .{
+        .allocator = allocator,
+        .record_arena = .{},
+        .reader = options.reader,
+        .keep_names = options.keep_names,
+        .bit_buffer = <span class="tok-number">0</span>,
+        .bit_offset = <span class="tok-number">0</span>,
+        .stack = .{},
+        .block_info = .{},
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.zig.llvm.BitcodeReader.deinit" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">deinit</span><a href="#src.zig-std.zig.llvm.BitcodeReader.deinit">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.llvm.BitcodeReader.deinit">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> block_info_it = bc.block_info.valueIterator();
+    <span class="tok-kw">while</span> (block_info_it.next()) |block_info| block_info.deinit(bc.allocator);
+    bc.block_info.deinit(bc.allocator);
+    <span class="tok-kw">for</span> (bc.stack.items) |*state| state.deinit(bc.allocator);
+    bc.stack.deinit(bc.allocator);
+    bc.record_arena.promote(bc.allocator).deinit();
+    bc.* = <span class="tok-null">undefined</span>;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.zig.llvm.BitcodeReader.checkMagic" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">checkMagic</span><a href="#src.zig-std.zig.llvm.BitcodeReader.checkMagic">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">checkMagic</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>, magic: *<span class="tok-kw">const</span> [<span class="tok-number">4</span>]<span class="tok-type">u8</span>) !<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a></code></pre></div><div><pre><code>magic: *<span class="tok-kw">const</span> [<span class="tok-number">4</span>]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.llvm.BitcodeReader.checkMagic">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">checkMagic</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>, magic: *<span class="tok-kw">const</span> [<span class="tok-number">4</span>]<span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> buffer: [<span class="tok-number">4</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">try</span> bc.readBytes(&amp;buffer);
+    <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, &amp;buffer, magic)) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidMagic;
+
+    <span class="tok-kw">try</span> bc.startBlock(<span class="tok-null">null</span>, <span class="tok-number">2</span>);
+    <span class="tok-kw">try</span> bc.block_info.put(bc.allocator, <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>.<a href="std.zig.llvm.BitcodeReader.Block.html#std.zig.llvm.BitcodeReader.Block.block_info">block_info</a>, <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>.<a href="std.zig.llvm.BitcodeReader.Block.Info.html">Info</a>.<a href="std.zig.llvm.BitcodeReader.Block.Info.html#std.zig.llvm.BitcodeReader.Block.Info.default">default</a>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.zig.llvm.BitcodeReader.next" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">next</span><a href="#src.zig-std.zig.llvm.BitcodeReader.next">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">next</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>) !?<a href="std.zig.llvm.BitcodeReader.Item.html">Item</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.llvm.BitcodeReader.next">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">next</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>) !?<a href="std.zig.llvm.BitcodeReader.Item.html">Item</a> {
+    <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+        <span class="tok-kw">const</span> record = (<span class="tok-kw">try</span> bc.nextRecord()) <span class="tok-kw">orelse</span>
+            <span class="tok-kw">return</span> <span class="tok-kw">if</span> (bc.stack.items.len &gt; <span class="tok-number">1</span>) <span class="tok-kw">error</span>.EndOfStream <span class="tok-kw">else</span> <span class="tok-null">null</span>;
+        <span class="tok-kw">switch</span> (record.id) {
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> .{ .record = record },
+            <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>.<a href="#">end_block</a>.<a href="#">toRecordId</a>() =&gt; {
+                <span class="tok-kw">const</span> block_id = bc.stack.items[bc.stack.items.len - <span class="tok-number">1</span>].block_id.?;
+                <span class="tok-kw">try</span> bc.endBlock();
+                <span class="tok-kw">return</span> .{ .end_block = .{
+                    .name = <span class="tok-kw">if</span> (bc.block_info.get(block_id)) |block_info|
+                        block_info.block_name
+                    <span class="tok-kw">else</span>
+                        &amp;.{},
+                    .id = block_id,
+                    .len = <span class="tok-number">0</span>,
+                } };
+            },
+            <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>.<a href="#">enter_subblock</a>.<a href="#">toRecordId</a>() =&gt; {
+                <span class="tok-kw">const</span> block_id: <span class="tok-type">u32</span> = <span class="tok-builtin">@intCast</span>(record.operands[<span class="tok-number">0</span>]);
+                <span class="tok-kw">switch</span> (block_id) {
+                    <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>.<a href="std.zig.llvm.BitcodeReader.Block.html#std.zig.llvm.BitcodeReader.Block.block_info">block_info</a> =&gt; <span class="tok-kw">try</span> bc.parseBlockInfoBlock(),
+                    <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>.<a href="std.zig.llvm.BitcodeReader.Block.html#std.zig.llvm.BitcodeReader.Block.first_reserved">first_reserved</a>...<a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>.<a href="std.zig.llvm.BitcodeReader.Block.html#std.zig.llvm.BitcodeReader.Block.last_standard">last_standard</a> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnsupportedBlockId,
+                    <span class="tok-kw">else</span> =&gt; {
+                        <span class="tok-kw">try</span> bc.startBlock(block_id, <span class="tok-builtin">@intCast</span>(record.operands[<span class="tok-number">1</span>]));
+                        <span class="tok-kw">return</span> .{ .start_block = .{
+                            .name = <span class="tok-kw">if</span> (bc.block_info.get(block_id)) |block_info|
+                                block_info.block_name
+                            <span class="tok-kw">else</span>
+                                &amp;.{},
+                            .id = block_id,
+                            .len = <span class="tok-builtin">@intCast</span>(record.operands[<span class="tok-number">2</span>]),
+                        } };
+                    },
+                }
+            },
+            <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>.<a href="#">define_abbrev</a>.<a href="#">toRecordId</a>() =&gt; <span class="tok-kw">try</span> bc.stack.items[bc.stack.items.len - <span class="tok-number">1</span>]
+                .abbrevs.addOwnedAbbrev(bc.allocator, <span class="tok-kw">try</span> record.toOwnedAbbrev(bc.allocator)),
+        }
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.zig.llvm.BitcodeReader.skipBlock" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">skipBlock</span><a href="#src.zig-std.zig.llvm.BitcodeReader.skipBlock">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">skipBlock</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>, block: <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>) !<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a></code></pre></div><div><pre><code>block: <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.llvm.BitcodeReader.skipBlock">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">skipBlock</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>, block: <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>) !<span class="tok-type">void</span> {
+    <a href="std.debug.html#std.debug.assert">assert</a>(bc.bit_offset == <span class="tok-number">0</span>);
+    <span class="tok-kw">try</span> bc.reader.skipBytes(<span class="tok-builtin">@as</span>(<span class="tok-type">u34</span>, block.len) * <span class="tok-number">4</span>, .{});
+    <span class="tok-kw">try</span> bc.endBlock();
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.zig.llvm.BitcodeReader">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText">allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>,
+record_arena: <a href="std.html">std</a>.<a href="std.heap.html">heap</a>.<a href="std.heap.arena_allocator.ArenaAllocator.html">ArenaAllocator</a>.<a href="std.heap.arena_allocator.ArenaAllocator.State.html">State</a>,
+reader: <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.Reader.html">AnyReader</a>,
+keep_names: <span class="tok-type">bool</span>,
+bit_buffer: <span class="tok-type">u32</span>,
+bit_offset: <span class="tok-type">u5</span>,
+stack: <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayListUnmanaged">ArrayListUnmanaged</a>(<a href="std.zig.llvm.BitcodeReader.State.html">State</a>),
+block_info: <a href="std.html">std</a>.<a href="std.hash_map.html#std.hash_map.AutoHashMapUnmanaged">AutoHashMapUnmanaged</a>(<span class="tok-type">u32</span>, <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>.<a href="std.zig.llvm.BitcodeReader.Block.Info.html">Info</a>),
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Item = <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) {
+    start_block: <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>,
+    record: <a href="std.zig.llvm.BitcodeReader.Record.html">Record</a>,
+    end_block: <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Block = <span class="tok-kw">struct</span> {
+    name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    id: <span class="tok-type">u32</span>,
+    len: <span class="tok-type">u32</span>,
+
+    <span class="tok-kw">const</span> block_info: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> first_reserved: <span class="tok-type">u32</span> = <span class="tok-number">1</span>;
+    <span class="tok-kw">const</span> last_standard: <span class="tok-type">u32</span> = <span class="tok-number">7</span>;
+
+    <span class="tok-kw">const</span> Info = <span class="tok-kw">struct</span> {
+        block_name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+        record_names: <a href="std.html">std</a>.<a href="std.hash_map.html#std.hash_map.AutoHashMapUnmanaged">AutoHashMapUnmanaged</a>(<span class="tok-type">u32</span>, []<span class="tok-kw">const</span> <span class="tok-type">u8</span>),
+        abbrevs: <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Store.html">Store</a>,
+
+        <span class="tok-kw">const</span> default: <a href="std.zig.llvm.BitcodeReader.Block.Info.html">Info</a> = .{
+            .block_name = &amp;.{},
+            .record_names = .{},
+            .abbrevs = .{ .abbrevs = .{} },
+        };
+
+        <span class="tok-kw">const</span> set_bid_id: <span class="tok-type">u32</span> = <span class="tok-number">1</span>;
+        <span class="tok-kw">const</span> block_name_id: <span class="tok-type">u32</span> = <span class="tok-number">2</span>;
+        <span class="tok-kw">const</span> set_record_name_id: <span class="tok-type">u32</span> = <span class="tok-number">3</span>;
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(info: *<a href="std.zig.llvm.BitcodeReader.Block.Info.html">Info</a>, allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) <span class="tok-type">void</span> {
+            allocator.free(info.block_name);
+            <span class="tok-kw">var</span> record_names_it = info.record_names.valueIterator();
+            <span class="tok-kw">while</span> (record_names_it.next()) |record_name| allocator.free(record_name.*);
+            info.record_names.deinit(allocator);
+            info.abbrevs.deinit(allocator);
+            info.* = <span class="tok-null">undefined</span>;
+        }
+    };
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Record = <span class="tok-kw">struct</span> {
+    name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    id: <span class="tok-type">u32</span>,
+    operands: []<span class="tok-kw">const</span> <span class="tok-type">u64</span>,
+    blob: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">toOwnedAbbrev</span>(record: <a href="std.zig.llvm.BitcodeReader.Record.html">Record</a>, allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) !<a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a> {
+        <span class="tok-kw">var</span> operands = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Operand.html">Operand</a>).init(allocator);
+        <span class="tok-kw">defer</span> operands.deinit();
+
+        <a href="std.debug.html#std.debug.assert">assert</a>(record.id == <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>.<a href="#">define_abbrev</a>.<a href="#">toRecordId</a>());
+        <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">while</span> (i &lt; record.operands.len) <span class="tok-kw">switch</span> (record.operands[i]) {
+            <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Operand.html">Operand</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Operand.html#std.zig.llvm.BitcodeReader.Abbrev.Operand.literal_id">literal_id</a> =&gt; {
+                <span class="tok-kw">try</span> operands.append(.{ .literal = record.operands[i + <span class="tok-number">1</span>] });
+                i += <span class="tok-number">2</span>;
+            },
+            <span class="tok-builtin">@intFromEnum</span>(<a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Operand.html">Operand</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Operand.Encoding.html">Encoding</a>.<a href="#">fixed</a>) =&gt; {
+                <span class="tok-kw">try</span> operands.append(.{ .encoding = .{ .fixed = <span class="tok-builtin">@intCast</span>(record.operands[i + <span class="tok-number">1</span>]) } });
+                i += <span class="tok-number">2</span>;
+            },
+            <span class="tok-builtin">@intFromEnum</span>(<a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Operand.html">Operand</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Operand.Encoding.html">Encoding</a>.<a href="#">vbr</a>) =&gt; {
+                <span class="tok-kw">try</span> operands.append(.{ .encoding = .{ .vbr = <span class="tok-builtin">@intCast</span>(record.operands[i + <span class="tok-number">1</span>]) } });
+                i += <span class="tok-number">2</span>;
+            },
+            <span class="tok-builtin">@intFromEnum</span>(<a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Operand.html">Operand</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Operand.Encoding.html">Encoding</a>.<a href="#">array</a>) =&gt; {
+                <span class="tok-kw">try</span> operands.append(.{ .encoding = .{ .array = <span class="tok-number">6</span> } });
+                i += <span class="tok-number">1</span>;
+            },
+            <span class="tok-builtin">@intFromEnum</span>(<a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Operand.html">Operand</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Operand.Encoding.html">Encoding</a>.<a href="#">char6</a>) =&gt; {
+                <span class="tok-kw">try</span> operands.append(.{ .encoding = .char6 });
+                i += <span class="tok-number">1</span>;
+            },
+            <span class="tok-builtin">@intFromEnum</span>(<a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Operand.html">Operand</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Operand.Encoding.html">Encoding</a>.<a href="#">blob</a>) =&gt; {
+                <span class="tok-kw">try</span> operands.append(.{ .encoding = .{ .blob = <span class="tok-number">6</span> } });
+                i += <span class="tok-number">1</span>;
+            },
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+        };
+
+        <span class="tok-kw">return</span> .{ .operands = <span class="tok-kw">try</span> operands.toOwnedSlice() };
+    }
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> InitOptions = <span class="tok-kw">struct</span> {
+    reader: <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.Reader.html">AnyReader</a>,
+    keep_names: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+};
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, options: <a href="std.zig.llvm.BitcodeReader.InitOptions.html">InitOptions</a>) <a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a> {
+    <span class="tok-kw">return</span> .{
+        .allocator = allocator,
+        .record_arena = .{},
+        .reader = options.reader,
+        .keep_names = options.keep_names,
+        .bit_buffer = <span class="tok-number">0</span>,
+        .bit_offset = <span class="tok-number">0</span>,
+        .stack = .{},
+        .block_info = .{},
+    };
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> block_info_it = bc.block_info.valueIterator();
+    <span class="tok-kw">while</span> (block_info_it.next()) |block_info| block_info.deinit(bc.allocator);
+    bc.block_info.deinit(bc.allocator);
+    <span class="tok-kw">for</span> (bc.stack.items) |*state| state.deinit(bc.allocator);
+    bc.stack.deinit(bc.allocator);
+    bc.record_arena.promote(bc.allocator).deinit();
+    bc.* = <span class="tok-null">undefined</span>;
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">checkMagic</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>, magic: *<span class="tok-kw">const</span> [<span class="tok-number">4</span>]<span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> buffer: [<span class="tok-number">4</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">try</span> bc.readBytes(&amp;buffer);
+    <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, &amp;buffer, magic)) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidMagic;
+
+    <span class="tok-kw">try</span> bc.startBlock(<span class="tok-null">null</span>, <span class="tok-number">2</span>);
+    <span class="tok-kw">try</span> bc.block_info.put(bc.allocator, <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>.<a href="std.zig.llvm.BitcodeReader.Block.html#std.zig.llvm.BitcodeReader.Block.block_info">block_info</a>, <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>.<a href="std.zig.llvm.BitcodeReader.Block.Info.html">Info</a>.<a href="std.zig.llvm.BitcodeReader.Block.Info.html#std.zig.llvm.BitcodeReader.Block.Info.default">default</a>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">next</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>) !?<a href="std.zig.llvm.BitcodeReader.Item.html">Item</a> {
+    <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+        <span class="tok-kw">const</span> record = (<span class="tok-kw">try</span> bc.nextRecord()) <span class="tok-kw">orelse</span>
+            <span class="tok-kw">return</span> <span class="tok-kw">if</span> (bc.stack.items.len &gt; <span class="tok-number">1</span>) <span class="tok-kw">error</span>.EndOfStream <span class="tok-kw">else</span> <span class="tok-null">null</span>;
+        <span class="tok-kw">switch</span> (record.id) {
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> .{ .record = record },
+            <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>.<a href="#">end_block</a>.<a href="#">toRecordId</a>() =&gt; {
+                <span class="tok-kw">const</span> block_id = bc.stack.items[bc.stack.items.len - <span class="tok-number">1</span>].block_id.?;
+                <span class="tok-kw">try</span> bc.endBlock();
+                <span class="tok-kw">return</span> .{ .end_block = .{
+                    .name = <span class="tok-kw">if</span> (bc.block_info.get(block_id)) |block_info|
+                        block_info.block_name
+                    <span class="tok-kw">else</span>
+                        &amp;.{},
+                    .id = block_id,
+                    .len = <span class="tok-number">0</span>,
+                } };
+            },
+            <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>.<a href="#">enter_subblock</a>.<a href="#">toRecordId</a>() =&gt; {
+                <span class="tok-kw">const</span> block_id: <span class="tok-type">u32</span> = <span class="tok-builtin">@intCast</span>(record.operands[<span class="tok-number">0</span>]);
+                <span class="tok-kw">switch</span> (block_id) {
+                    <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>.<a href="std.zig.llvm.BitcodeReader.Block.html#std.zig.llvm.BitcodeReader.Block.block_info">block_info</a> =&gt; <span class="tok-kw">try</span> bc.parseBlockInfoBlock(),
+                    <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>.<a href="std.zig.llvm.BitcodeReader.Block.html#std.zig.llvm.BitcodeReader.Block.first_reserved">first_reserved</a>...<a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>.<a href="std.zig.llvm.BitcodeReader.Block.html#std.zig.llvm.BitcodeReader.Block.last_standard">last_standard</a> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnsupportedBlockId,
+                    <span class="tok-kw">else</span> =&gt; {
+                        <span class="tok-kw">try</span> bc.startBlock(block_id, <span class="tok-builtin">@intCast</span>(record.operands[<span class="tok-number">1</span>]));
+                        <span class="tok-kw">return</span> .{ .start_block = .{
+                            .name = <span class="tok-kw">if</span> (bc.block_info.get(block_id)) |block_info|
+                                block_info.block_name
+                            <span class="tok-kw">else</span>
+                                &amp;.{},
+                            .id = block_id,
+                            .len = <span class="tok-builtin">@intCast</span>(record.operands[<span class="tok-number">2</span>]),
+                        } };
+                    },
+                }
+            },
+            <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>.<a href="#">define_abbrev</a>.<a href="#">toRecordId</a>() =&gt; <span class="tok-kw">try</span> bc.stack.items[bc.stack.items.len - <span class="tok-number">1</span>]
+                .abbrevs.addOwnedAbbrev(bc.allocator, <span class="tok-kw">try</span> record.toOwnedAbbrev(bc.allocator)),
+        }
+    }
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">skipBlock</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>, block: <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>) !<span class="tok-type">void</span> {
+    <a href="std.debug.html#std.debug.assert">assert</a>(bc.bit_offset == <span class="tok-number">0</span>);
+    <span class="tok-kw">try</span> bc.reader.skipBytes(<span class="tok-builtin">@as</span>(<span class="tok-type">u34</span>, block.len) * <span class="tok-number">4</span>, .{});
+    <span class="tok-kw">try</span> bc.endBlock();
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">nextRecord</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>) !?<a href="std.zig.llvm.BitcodeReader.Record.html">Record</a> {
+    <span class="tok-kw">const</span> state = &amp;bc.stack.items[bc.stack.items.len - <span class="tok-number">1</span>];
+    <span class="tok-kw">const</span> abbrev_id = bc.readFixed(<span class="tok-type">u32</span>, state.abbrev_id_width) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+        <span class="tok-kw">error</span>.EndOfStream =&gt; <span class="tok-kw">return</span> <span class="tok-null">null</span>,
+        <span class="tok-kw">else</span> =&gt; |e| <span class="tok-kw">return</span> e,
+    };
+    <span class="tok-kw">if</span> (abbrev_id &gt;= state.abbrevs.abbrevs.items.len) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidAbbrevId;
+    <span class="tok-kw">const</span> abbrev = state.abbrevs.abbrevs.items[abbrev_id];
+
+    <span class="tok-kw">var</span> record_arena = bc.record_arena.promote(bc.allocator);
+    <span class="tok-kw">defer</span> bc.record_arena = record_arena.state;
+    _ = record_arena.reset(.retain_capacity);
+
+    <span class="tok-kw">var</span> operands = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u64</span>).initCapacity(record_arena.allocator(), abbrev.operands.len);
+    <span class="tok-kw">var</span> blob = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>).init(record_arena.allocator());
+    <span class="tok-kw">for</span> (abbrev.operands, <span class="tok-number">0</span>..) |abbrev_operand, abbrev_operand_i| <span class="tok-kw">switch</span> (abbrev_operand) {
+        .literal =&gt; |value| operands.appendAssumeCapacity(value),
+        .encoding =&gt; |abbrev_encoding| <span class="tok-kw">switch</span> (abbrev_encoding) {
+            .fixed =&gt; |width| operands.appendAssumeCapacity(<span class="tok-kw">try</span> bc.readFixed(<span class="tok-type">u64</span>, width)),
+            .vbr =&gt; |width| operands.appendAssumeCapacity(<span class="tok-kw">try</span> bc.readVbr(<span class="tok-type">u64</span>, width)),
+            .array =&gt; |len_width| {
+                <a href="std.debug.html#std.debug.assert">assert</a>(abbrev_operand_i + <span class="tok-number">2</span> == abbrev.operands.len);
+                <span class="tok-kw">const</span> len: <span class="tok-type">usize</span> = <span class="tok-builtin">@intCast</span>(<span class="tok-kw">try</span> bc.readVbr(<span class="tok-type">u32</span>, len_width));
+                <span class="tok-kw">try</span> operands.ensureUnusedCapacity(len);
+                <span class="tok-kw">for</span> (<span class="tok-number">0</span>..len) |_| <span class="tok-kw">switch</span> (abbrev.operands[abbrev.operands.len - <span class="tok-number">1</span>]) {
+                    .literal =&gt; |elem_value| operands.appendAssumeCapacity(elem_value),
+                    .encoding =&gt; |elem_encoding| <span class="tok-kw">switch</span> (elem_encoding) {
+                        .fixed =&gt; |elem_width| operands.appendAssumeCapacity(<span class="tok-kw">try</span> bc.readFixed(<span class="tok-type">u64</span>, elem_width)),
+                        .vbr =&gt; |elem_width| operands.appendAssumeCapacity(<span class="tok-kw">try</span> bc.readVbr(<span class="tok-type">u64</span>, elem_width)),
+                        .array, .blob =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidArrayElement,
+                        .char6 =&gt; operands.appendAssumeCapacity(<span class="tok-kw">try</span> bc.readChar6()),
+                    },
+                    .align_32_bits, .block_len =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnsupportedArrayElement,
+                    .abbrev_op =&gt; <span class="tok-kw">switch</span> (<span class="tok-kw">try</span> bc.readFixed(<span class="tok-type">u1</span>, <span class="tok-number">1</span>)) {
+                        <span class="tok-number">1</span> =&gt; <span class="tok-kw">try</span> operands.appendSlice(&amp;.{
+                            <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Operand.html">Operand</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Operand.html#std.zig.llvm.BitcodeReader.Abbrev.Operand.literal_id">literal_id</a>,
+                            <span class="tok-kw">try</span> bc.readVbr(<span class="tok-type">u64</span>, <span class="tok-number">8</span>),
+                        }),
+                        <span class="tok-number">0</span> =&gt; {
+                            <span class="tok-kw">const</span> encoding: <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Operand.html">Operand</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Operand.Encoding.html">Encoding</a> =
+                                <span class="tok-builtin">@enumFromInt</span>(<span class="tok-kw">try</span> bc.readFixed(<span class="tok-type">u3</span>, <span class="tok-number">3</span>));
+                            <span class="tok-kw">try</span> operands.append(<span class="tok-builtin">@intFromEnum</span>(encoding));
+                            <span class="tok-kw">switch</span> (encoding) {
+                                .fixed, .vbr =&gt; <span class="tok-kw">try</span> operands.append(<span class="tok-kw">try</span> bc.readVbr(<span class="tok-type">u7</span>, <span class="tok-number">5</span>)),
+                                .array, .char6, .blob =&gt; {},
+                                _ =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnsuportedAbbrevEncoding,
+                            }
+                        },
+                    },
+                };
+                <span class="tok-kw">break</span>;
+            },
+            .char6 =&gt; operands.appendAssumeCapacity(<span class="tok-kw">try</span> bc.readChar6()),
+            .blob =&gt; |len_width| {
+                <a href="std.debug.html#std.debug.assert">assert</a>(abbrev_operand_i + <span class="tok-number">1</span> == abbrev.operands.len);
+                <span class="tok-kw">const</span> len = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.cast">cast</a>(<span class="tok-type">usize</span>, <span class="tok-kw">try</span> bc.readVbr(<span class="tok-type">u32</span>, len_width)) <span class="tok-kw">orelse</span>
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Overflow;
+                bc.align32Bits();
+                <span class="tok-kw">try</span> bc.readBytes(<span class="tok-kw">try</span> blob.addManyAsSlice(len));
+                bc.align32Bits();
+            },
+        },
+        .align_32_bits =&gt; bc.align32Bits(),
+        .block_len =&gt; operands.appendAssumeCapacity(<span class="tok-kw">try</span> bc.read32Bits()),
+        .abbrev_op =&gt; <span class="tok-kw">unreachable</span>,
+    };
+    <span class="tok-kw">return</span> .{
+        .name = name: {
+            <span class="tok-kw">if</span> (operands.items.len &lt; <span class="tok-number">1</span>) <span class="tok-kw">break</span> :name &amp;.{};
+            <span class="tok-kw">const</span> record_id = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.cast">cast</a>(<span class="tok-type">u32</span>, operands.items[<span class="tok-number">0</span>]) <span class="tok-kw">orelse</span> <span class="tok-kw">break</span> :name &amp;.{};
+            <span class="tok-kw">if</span> (state.block_id) |block_id| {
+                <span class="tok-kw">if</span> (bc.block_info.get(block_id)) |block_info| {
+                    <span class="tok-kw">break</span> :name block_info.record_names.get(record_id) <span class="tok-kw">orelse</span> <span class="tok-kw">break</span> :name &amp;.{};
+                }
+            }
+            <span class="tok-kw">break</span> :name &amp;.{};
+        },
+        .id = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.cast">cast</a>(<span class="tok-type">u32</span>, operands.items[<span class="tok-number">0</span>]) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidRecordId,
+        .operands = operands.items[<span class="tok-number">1</span>..],
+        .blob = blob.items,
+    };
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">startBlock</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>, block_id: ?<span class="tok-type">u32</span>, new_abbrev_len: <span class="tok-type">u6</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> abbrevs = <span class="tok-kw">if</span> (block_id) |id|
+        <span class="tok-kw">if</span> (bc.block_info.get(id)) |block_info| block_info.abbrevs.abbrevs.items <span class="tok-kw">else</span> &amp;.{}
+    <span class="tok-kw">else</span>
+        &amp;.{};
+
+    <span class="tok-kw">const</span> state = <span class="tok-kw">try</span> bc.stack.addOne(bc.allocator);
+    state.* = .{
+        .block_id = block_id,
+        .abbrev_id_width = new_abbrev_len,
+        .abbrevs = .{ .abbrevs = .{} },
+    };
+    <span class="tok-kw">try</span> state.abbrevs.abbrevs.ensureTotalCapacity(
+        bc.allocator,
+        <span class="tok-builtin">@typeInfo</span>(<a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>).@&quot;enum&quot;.fields.len + abbrevs.len,
+    );
+
+    <a href="std.debug.html#std.debug.assert">assert</a>(state.abbrevs.abbrevs.items.len == <span class="tok-builtin">@intFromEnum</span>(<a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>.<a href="#">end_block</a>));
+    <span class="tok-kw">try</span> state.abbrevs.addAbbrevAssumeCapacity(bc.allocator, .{
+        .operands = &amp;.{
+            .{ .literal = <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>.<a href="#">end_block</a>.<a href="#">toRecordId</a>() },
+            .align_32_bits,
+        },
+    });
+    <a href="std.debug.html#std.debug.assert">assert</a>(state.abbrevs.abbrevs.items.len == <span class="tok-builtin">@intFromEnum</span>(<a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>.<a href="#">enter_subblock</a>));
+    <span class="tok-kw">try</span> state.abbrevs.addAbbrevAssumeCapacity(bc.allocator, .{
+        .operands = &amp;.{
+            .{ .literal = <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>.<a href="#">enter_subblock</a>.<a href="#">toRecordId</a>() },
+            .{ .encoding = .{ .vbr = <span class="tok-number">8</span> } },<span class="tok-comment"> // blockid
+            </span>.{ .encoding = .{ .vbr = <span class="tok-number">4</span> } },<span class="tok-comment"> // newabbrevlen
+            </span>.align_32_bits,
+            .block_len,
+        },
+    });
+    <a href="std.debug.html#std.debug.assert">assert</a>(state.abbrevs.abbrevs.items.len == <span class="tok-builtin">@intFromEnum</span>(<a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>.<a href="#">define_abbrev</a>));
+    <span class="tok-kw">try</span> state.abbrevs.addAbbrevAssumeCapacity(bc.allocator, .{
+        .operands = &amp;.{
+            .{ .literal = <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>.<a href="#">define_abbrev</a>.<a href="#">toRecordId</a>() },
+            .{ .encoding = .{ .array = <span class="tok-number">5</span> } },<span class="tok-comment"> // numabbrevops
+            </span>.abbrev_op,
+        },
+    });
+    <a href="std.debug.html#std.debug.assert">assert</a>(state.abbrevs.abbrevs.items.len == <span class="tok-builtin">@intFromEnum</span>(<a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>.<a href="#">unabbrev_record</a>));
+    <span class="tok-kw">try</span> state.abbrevs.addAbbrevAssumeCapacity(bc.allocator, .{
+        .operands = &amp;.{
+            .{ .encoding = .{ .vbr = <span class="tok-number">6</span> } },<span class="tok-comment"> // code
+            </span>.{ .encoding = .{ .array = <span class="tok-number">6</span> } },<span class="tok-comment"> // numops
+            </span>.{ .encoding = .{ .vbr = <span class="tok-number">6</span> } },<span class="tok-comment"> // ops
+        </span>},
+    });
+    <a href="std.debug.html#std.debug.assert">assert</a>(state.abbrevs.abbrevs.items.len == <span class="tok-builtin">@typeInfo</span>(<a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>).@&quot;enum&quot;.fields.len);
+    <span class="tok-kw">for</span> (abbrevs) |abbrev| <span class="tok-kw">try</span> state.abbrevs.addAbbrevAssumeCapacity(bc.allocator, abbrev);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">endBlock</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (bc.stack.items.len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidEndBlock;
+    bc.stack.items[bc.stack.items.len - <span class="tok-number">1</span>].deinit(bc.allocator);
+    bc.stack.items.len -= <span class="tok-number">1</span>;
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">parseBlockInfoBlock</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> block_id: ?<span class="tok-type">u32</span> = <span class="tok-null">null</span>;
+    <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+        <span class="tok-kw">const</span> record = (<span class="tok-kw">try</span> bc.nextRecord()) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.EndOfStream;
+        <span class="tok-kw">switch</span> (record.id) {
+            <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>.<a href="#">end_block</a>.<a href="#">toRecordId</a>() =&gt; <span class="tok-kw">break</span>,
+            <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>.<a href="#">define_abbrev</a>.<a href="#">toRecordId</a>() =&gt; {
+                <span class="tok-kw">const</span> gop = <span class="tok-kw">try</span> bc.block_info.getOrPut(bc.allocator, block_id <span class="tok-kw">orelse</span>
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnspecifiedBlockId);
+                <span class="tok-kw">if</span> (!gop.found_existing) gop.value_ptr.* = <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>.<a href="std.zig.llvm.BitcodeReader.Block.Info.html">Info</a>.<a href="std.zig.llvm.BitcodeReader.Block.Info.html#std.zig.llvm.BitcodeReader.Block.Info.default">default</a>;
+                <span class="tok-kw">try</span> gop.value_ptr.abbrevs.addOwnedAbbrev(
+                    bc.allocator,
+                    <span class="tok-kw">try</span> record.toOwnedAbbrev(bc.allocator),
+                );
+            },
+            <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>.<a href="std.zig.llvm.BitcodeReader.Block.Info.html">Info</a>.<a href="std.zig.llvm.BitcodeReader.Block.Info.html#std.zig.llvm.BitcodeReader.Block.Info.set_bid_id">set_bid_id</a> =&gt; block_id = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.cast">cast</a>(<span class="tok-type">u32</span>, record.operands[<span class="tok-number">0</span>]) <span class="tok-kw">orelse</span>
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Overflow,
+            <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>.<a href="std.zig.llvm.BitcodeReader.Block.Info.html">Info</a>.<a href="std.zig.llvm.BitcodeReader.Block.Info.html#std.zig.llvm.BitcodeReader.Block.Info.block_name_id">block_name_id</a> =&gt; <span class="tok-kw">if</span> (bc.keep_names) {
+                <span class="tok-kw">const</span> gop = <span class="tok-kw">try</span> bc.block_info.getOrPut(bc.allocator, block_id <span class="tok-kw">orelse</span>
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnspecifiedBlockId);
+                <span class="tok-kw">if</span> (!gop.found_existing) gop.value_ptr.* = <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>.<a href="std.zig.llvm.BitcodeReader.Block.Info.html">Info</a>.<a href="std.zig.llvm.BitcodeReader.Block.Info.html#std.zig.llvm.BitcodeReader.Block.Info.default">default</a>;
+                <span class="tok-kw">const</span> name = <span class="tok-kw">try</span> bc.allocator.alloc(<span class="tok-type">u8</span>, record.operands.len);
+                <span class="tok-kw">errdefer</span> bc.allocator.free(name);
+                <span class="tok-kw">for</span> (name, record.operands) |*byte, operand|
+                    byte.* = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.cast">cast</a>(<span class="tok-type">u8</span>, operand) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidName;
+                gop.value_ptr.block_name = name;
+            },
+            <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>.<a href="std.zig.llvm.BitcodeReader.Block.Info.html">Info</a>.<a href="std.zig.llvm.BitcodeReader.Block.Info.html#std.zig.llvm.BitcodeReader.Block.Info.set_record_name_id">set_record_name_id</a> =&gt; <span class="tok-kw">if</span> (bc.keep_names) {
+                <span class="tok-kw">const</span> gop = <span class="tok-kw">try</span> bc.block_info.getOrPut(bc.allocator, block_id <span class="tok-kw">orelse</span>
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnspecifiedBlockId);
+                <span class="tok-kw">if</span> (!gop.found_existing) gop.value_ptr.* = <a href="std.zig.llvm.BitcodeReader.Block.html">Block</a>.<a href="std.zig.llvm.BitcodeReader.Block.Info.html">Info</a>.<a href="std.zig.llvm.BitcodeReader.Block.Info.html#std.zig.llvm.BitcodeReader.Block.Info.default">default</a>;
+                <span class="tok-kw">const</span> name = <span class="tok-kw">try</span> bc.allocator.alloc(<span class="tok-type">u8</span>, record.operands.len - <span class="tok-number">1</span>);
+                <span class="tok-kw">errdefer</span> bc.allocator.free(name);
+                <span class="tok-kw">for</span> (name, record.operands[<span class="tok-number">1</span>..]) |*byte, operand|
+                    byte.* = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.cast">cast</a>(<span class="tok-type">u8</span>, operand) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidName;
+                <span class="tok-kw">try</span> gop.value_ptr.record_names.put(
+                    bc.allocator,
+                    <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.cast">cast</a>(<span class="tok-type">u32</span>, record.operands[<span class="tok-number">0</span>]) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Overflow,
+                    name,
+                );
+            },
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnsupportedBlockInfoRecord,
+        }
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">align32Bits</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>) <span class="tok-type">void</span> {
+    bc.bit_offset = <span class="tok-number">0</span>;
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">read32Bits</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>) !<span class="tok-type">u32</span> {
+    <a href="std.debug.html#std.debug.assert">assert</a>(bc.bit_offset == <span class="tok-number">0</span>);
+    <span class="tok-kw">return</span> bc.reader.readInt(<span class="tok-type">u32</span>, .little);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">readBytes</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>, bytes: []<span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+    <a href="std.debug.html#std.debug.assert">assert</a>(bc.bit_offset == <span class="tok-number">0</span>);
+    <span class="tok-kw">try</span> bc.reader.readNoEof(bytes);
+
+    <span class="tok-kw">const</span> trailing_bytes = bytes.len % <span class="tok-number">4</span>;
+    <span class="tok-kw">if</span> (trailing_bytes &gt; <span class="tok-number">0</span>) {
+        <span class="tok-kw">var</span> bit_buffer = [<span class="tok-number">1</span>]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-number">4</span>;
+        <span class="tok-kw">try</span> bc.reader.readNoEof(bit_buffer[trailing_bytes..]);
+        bc.bit_buffer = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u32</span>, &amp;bit_buffer, .little);
+        bc.bit_offset = <span class="tok-builtin">@intCast</span>(trailing_bytes * <span class="tok-number">8</span>);
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">readFixed</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>, <span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, bits: <span class="tok-type">u7</span>) !T {
+    <span class="tok-kw">var</span> result: T = <span class="tok-number">0</span>;
+    <span class="tok-kw">var</span> shift: <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.Log2IntCeil">Log2IntCeil</a>(T) = <span class="tok-number">0</span>;
+    <span class="tok-kw">var</span> remaining = bits;
+    <span class="tok-kw">while</span> (remaining &gt; <span class="tok-number">0</span>) {
+        <span class="tok-kw">if</span> (bc.bit_offset == <span class="tok-number">0</span>) bc.bit_buffer = <span class="tok-kw">try</span> bc.read32Bits();
+        <span class="tok-kw">const</span> chunk_len = <span class="tok-builtin">@min</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">u6</span>, <span class="tok-number">32</span>) - bc.bit_offset, remaining);
+        <span class="tok-kw">const</span> chunk_mask = <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u32</span>)) &gt;&gt; <span class="tok-builtin">@intCast</span>(<span class="tok-number">32</span> - chunk_len);
+        result |= <span class="tok-builtin">@as</span>(T, <span class="tok-builtin">@intCast</span>(bc.bit_buffer &gt;&gt; bc.bit_offset &amp; chunk_mask)) &lt;&lt; <span class="tok-builtin">@intCast</span>(shift);
+        shift += <span class="tok-builtin">@intCast</span>(chunk_len);
+        remaining -= chunk_len;
+        bc.bit_offset = <span class="tok-builtin">@truncate</span>(bc.bit_offset + chunk_len);
+    }
+    <span class="tok-kw">return</span> result;
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">readVbr</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>, <span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, bits: <span class="tok-type">u7</span>) !T {
+    <span class="tok-kw">const</span> chunk_bits: <span class="tok-type">u6</span> = <span class="tok-builtin">@intCast</span>(bits - <span class="tok-number">1</span>);
+    <span class="tok-kw">const</span> chunk_msb = <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, <span class="tok-number">1</span>) &lt;&lt; chunk_bits;
+
+    <span class="tok-kw">var</span> result: <span class="tok-type">u64</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">var</span> shift: <span class="tok-type">u6</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+        <span class="tok-kw">const</span> chunk = <span class="tok-kw">try</span> bc.readFixed(<span class="tok-type">u64</span>, bits);
+        result |= (chunk &amp; (chunk_msb - <span class="tok-number">1</span>)) &lt;&lt; shift;
+        <span class="tok-kw">if</span> (chunk &amp; chunk_msb == <span class="tok-number">0</span>) <span class="tok-kw">break</span>;
+        shift += chunk_bits;
+    }
+    <span class="tok-kw">return</span> <span class="tok-builtin">@intCast</span>(result);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">readChar6</span>(bc: *<a href="std.zig.llvm.BitcodeReader.html">BitcodeReader</a>) !<span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (<span class="tok-kw">try</span> bc.readFixed(<span class="tok-type">u6</span>, <span class="tok-number">6</span>)) {
+        <span class="tok-number">0</span>...<span class="tok-number">25</span> =&gt; |c| <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, c - <span class="tok-number">0</span>) + <span class="tok-str">'a'</span>,
+        <span class="tok-number">26</span>...<span class="tok-number">51</span> =&gt; |c| <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, c - <span class="tok-number">26</span>) + <span class="tok-str">'A'</span>,
+        <span class="tok-number">52</span>...<span class="tok-number">61</span> =&gt; |c| <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, c - <span class="tok-number">52</span>) + <span class="tok-str">'0'</span>,
+        <span class="tok-number">62</span> =&gt; <span class="tok-str">'.'</span>,
+        <span class="tok-number">63</span> =&gt; <span class="tok-str">'_'</span>,
+    };
+}
+
+<span class="tok-kw">const</span> State = <span class="tok-kw">struct</span> {
+    block_id: ?<span class="tok-type">u32</span>,
+    abbrev_id_width: <span class="tok-type">u6</span>,
+    abbrevs: <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Store.html">Store</a>,
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(state: *<a href="std.zig.llvm.BitcodeReader.State.html">State</a>, allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) <span class="tok-type">void</span> {
+        state.abbrevs.deinit(allocator);
+        state.* = <span class="tok-null">undefined</span>;
+    }
+};
+
+<span class="tok-kw">const</span> Abbrev = <span class="tok-kw">struct</span> {
+    operands: []<span class="tok-kw">const</span> <a href="std.zig.llvm.BitcodeReader.Abbrev.Operand.html">Operand</a>,
+
+    <span class="tok-kw">const</span> Builtin = <span class="tok-kw">enum</span>(<span class="tok-type">u2</span>) {
+        end_block,
+        enter_subblock,
+        define_abbrev,
+        unabbrev_record,
+
+        <span class="tok-kw">const</span> first_record_id: <span class="tok-type">u32</span> = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u32</span>) - <span class="tok-builtin">@typeInfo</span>(<a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>).@&quot;enum&quot;.fields.len + <span class="tok-number">1</span>;
+        <span class="tok-kw">fn</span> <span class="tok-fn">toRecordId</span>(builtin: <a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html">Builtin</a>) <span class="tok-type">u32</span> {
+            <span class="tok-kw">return</span> <a href="std.zig.llvm.BitcodeReader.Abbrev.Builtin.html#std.zig.llvm.BitcodeReader.Abbrev.Builtin.first_record_id">first_record_id</a> + <span class="tok-builtin">@intFromEnum</span>(builtin);
+        }
+    };
+
+    <span class="tok-kw">const</span> Operand = <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) {
+        literal: <span class="tok-type">u64</span>,
+        encoding: <span class="tok-kw">union</span>(Encoding) {
+            fixed: <span class="tok-type">u7</span>,
+            vbr: <span class="tok-type">u6</span>,
+            array: <span class="tok-type">u3</span>,
+            char6,
+            blob: <span class="tok-type">u3</span>,
+        },
+        align_32_bits,
+        block_len,
+        abbrev_op,
+
+        <span class="tok-kw">const</span> literal_id = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u64</span>);
+        <span class="tok-kw">const</span> Encoding = <span class="tok-kw">enum</span>(<span class="tok-type">u3</span>) {
+            fixed = <span class="tok-number">1</span>,
+            vbr = <span class="tok-number">2</span>,
+            array = <span class="tok-number">3</span>,
+            char6 = <span class="tok-number">4</span>,
+            blob = <span class="tok-number">5</span>,
+            _,
+        };
+    };
+
+    <span class="tok-kw">const</span> Store = <span class="tok-kw">struct</span> {
+        abbrevs: <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayListUnmanaged">ArrayListUnmanaged</a>(<a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>),
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(store: *<a href="std.zig.llvm.BitcodeReader.Abbrev.Store.html">Store</a>, allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) <span class="tok-type">void</span> {
+            <span class="tok-kw">for</span> (store.abbrevs.items) |abbrev| allocator.free(abbrev.operands);
+            store.abbrevs.deinit(allocator);
+            store.* = <span class="tok-null">undefined</span>;
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">addAbbrev</span>(store: *<a href="std.zig.llvm.BitcodeReader.Abbrev.Store.html">Store</a>, allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, abbrev: <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">try</span> store.ensureUnusedCapacity(allocator, <span class="tok-number">1</span>);
+            store.addAbbrevAssumeCapacity(abbrev);
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">addAbbrevAssumeCapacity</span>(store: *<a href="std.zig.llvm.BitcodeReader.Abbrev.Store.html">Store</a>, allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, abbrev: <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>) !<span class="tok-type">void</span> {
+            store.abbrevs.appendAssumeCapacity(.{
+                .operands = <span class="tok-kw">try</span> allocator.dupe(<a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>.<a href="std.zig.llvm.BitcodeReader.Abbrev.Operand.html">Operand</a>, abbrev.operands),
+            });
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">addOwnedAbbrev</span>(store: *<a href="std.zig.llvm.BitcodeReader.Abbrev.Store.html">Store</a>, allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, abbrev: <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">try</span> store.abbrevs.ensureUnusedCapacity(allocator, <span class="tok-number">1</span>);
+            store.addOwnedAbbrevAssumeCapacity(abbrev);
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">addOwnedAbbrevAssumeCapacity</span>(store: *<a href="std.zig.llvm.BitcodeReader.Abbrev.Store.html">Store</a>, abbrev: <a href="std.zig.llvm.BitcodeReader.Abbrev.html">Abbrev</a>) <span class="tok-type">void</span> {
+            store.abbrevs.appendAssumeCapacity(abbrev);
+        }
+    };
+};
+
+<span class="tok-kw">const</span> assert = <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>;
+<span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;../../std.zig&quot;</span>);
+
+<span class="tok-kw">const</span> BitcodeReader = <span class="tok-builtin">@This</span>();</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

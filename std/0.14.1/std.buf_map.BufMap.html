@@ -1,0 +1,556 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.buf_map.html" class="">buf_map</a></li><li><a href="std.buf_map.BufMap.html" class="active">BufMap</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.buf_map.BufMap" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.buf_map.BufMap</span><a href="#src.zig-std.buf_map.BufMap">[src]</a></h1><div class="tldDocs"><p>BufMap copies keys and values before they go into the map and
+frees them when they get removed.</p>
+</div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>hash_map: <a href="std.buf_map.BufMap.html#std.buf_map.BufMap.BufMapHashMap">BufMapHashMap</a></code></pre></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.buf_map.BufMap.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.buf_map.BufMap.init">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(allocator: <a href="std.mem.Allocator.html">Allocator</a>) <a href="std.buf_map.BufMap.html">BufMap</a></code></pre></div><div class="tldDocs"><p>Create a BufMap backed by a specific allocator.
+That allocator will be used for both backing allocations
+and string deduplication.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>allocator: <a href="std.mem.Allocator.html">Allocator</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.buf_map.BufMap.init">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(allocator: <a href="std.mem.Allocator.html">Allocator</a>) <a href="std.buf_map.BufMap.html">BufMap</a> {
+    <span class="tok-kw">return</span> .{ .hash_map = <a href="std.buf_map.BufMap.html#std.buf_map.BufMap.BufMapHashMap">BufMapHashMap</a>.<a href="#">init</a>(allocator) };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.buf_map.BufMap.deinit" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">deinit</span><a href="#src.zig-std.buf_map.BufMap.deinit">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: *<a href="std.buf_map.BufMap.html">BufMap</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Free the backing storage of the map, as well as all
+of the stored keys and values.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.buf_map.BufMap.html">BufMap</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.buf_map.BufMap.deinit">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: *<a href="std.buf_map.BufMap.html">BufMap</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> it = self.hash_map.iterator();
+    <span class="tok-kw">while</span> (it.next()) |entry| {
+        self.free(entry.key_ptr.*);
+        self.free(entry.value_ptr.*);
+    }
+
+    self.hash_map.deinit();
+}</code></pre></details></div></div><div class="decl"><h2 id="std.buf_map.BufMap.putMove" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">putMove</span><a href="#src.zig-std.buf_map.BufMap.putMove">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">putMove</span>(self: *<a href="std.buf_map.BufMap.html">BufMap</a>, key: []<span class="tok-type">u8</span>, value: []<span class="tok-type">u8</span>) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Same as <code>put</code> but the key and value become owned by the BufMap rather
+than being copied.
+If <code>putMove</code> fails, the ownership of key and value does not transfer.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.buf_map.BufMap.html">BufMap</a></code></pre></div><div><pre><code>key: []<span class="tok-type">u8</span></code></pre></div><div><pre><code>value: []<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.buf_map.BufMap.putMove">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">putMove</span>(self: *<a href="std.buf_map.BufMap.html">BufMap</a>, key: []<span class="tok-type">u8</span>, value: []<span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> get_or_put = <span class="tok-kw">try</span> self.hash_map.getOrPut(key);
+    <span class="tok-kw">if</span> (get_or_put.found_existing) {
+        self.free(get_or_put.key_ptr.*);
+        self.free(get_or_put.value_ptr.*);
+        get_or_put.key_ptr.* = key;
+    }
+    get_or_put.value_ptr.* = value;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.buf_map.BufMap.put" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">put</span><a href="#src.zig-std.buf_map.BufMap.put">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">put</span>(self: *<a href="std.buf_map.BufMap.html">BufMap</a>, key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, value: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p><code>key</code> and <code>value</code> are copied into the BufMap.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.buf_map.BufMap.html">BufMap</a></code></pre></div><div><pre><code>key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>value: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.buf_map.BufMap.put">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">put</span>(self: *<a href="std.buf_map.BufMap.html">BufMap</a>, key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, value: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> value_copy = <span class="tok-kw">try</span> self.copy(value);
+    <span class="tok-kw">errdefer</span> self.free(value_copy);
+    <span class="tok-kw">const</span> get_or_put = <span class="tok-kw">try</span> self.hash_map.getOrPut(key);
+    <span class="tok-kw">if</span> (get_or_put.found_existing) {
+        self.free(get_or_put.value_ptr.*);
+    } <span class="tok-kw">else</span> {
+        get_or_put.key_ptr.* = self.copy(key) <span class="tok-kw">catch</span> |err| {
+            _ = self.hash_map.remove(key);
+            <span class="tok-kw">return</span> err;
+        };
+    }
+    get_or_put.value_ptr.* = value_copy;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.buf_map.BufMap.getPtr" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getPtr</span><a href="#src.zig-std.buf_map.BufMap.getPtr">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPtr</span>(self: <a href="std.buf_map.BufMap.html">BufMap</a>, key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?*[]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>Find the address of the value associated with a key.
+The returned pointer is invalidated if the map resizes.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.buf_map.BufMap.html">BufMap</a></code></pre></div><div><pre><code>key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.buf_map.BufMap.getPtr">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPtr</span>(self: <a href="std.buf_map.BufMap.html">BufMap</a>, key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?*[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> self.hash_map.getPtr(key);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.buf_map.BufMap.get" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">get</span><a href="#src.zig-std.buf_map.BufMap.get">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: <a href="std.buf_map.BufMap.html">BufMap</a>, key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>Return the map's copy of the value associated with
+a key.  The returned string is invalidated if this
+key is removed from the map.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.buf_map.BufMap.html">BufMap</a></code></pre></div><div><pre><code>key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.buf_map.BufMap.get">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: <a href="std.buf_map.BufMap.html">BufMap</a>, key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> self.hash_map.get(key);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.buf_map.BufMap.remove" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">remove</span><a href="#src.zig-std.buf_map.BufMap.remove">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">remove</span>(self: *<a href="std.buf_map.BufMap.html">BufMap</a>, key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Removes the item from the map and frees its value.
+This invalidates the value returned by get() for this key.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.buf_map.BufMap.html">BufMap</a></code></pre></div><div><pre><code>key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.buf_map.BufMap.remove">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">remove</span>(self: *<a href="std.buf_map.BufMap.html">BufMap</a>, key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> kv = self.hash_map.fetchRemove(key) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span>;
+    self.free(kv.key);
+    self.free(kv.value);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.buf_map.BufMap.count" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">count</span><a href="#src.zig-std.buf_map.BufMap.count">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">count</span>(self: <a href="std.buf_map.BufMap.html">BufMap</a>) <a href="std.buf_map.BufMap.html#std.buf_map.BufMap.BufMapHashMap">BufMapHashMap</a>.<a href="#">Size</a></code></pre></div><div class="tldDocs"><p>Returns the number of KV pairs stored in the map.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.buf_map.BufMap.html">BufMap</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.buf_map.BufMap.count">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">count</span>(self: <a href="std.buf_map.BufMap.html">BufMap</a>) <a href="std.buf_map.BufMap.html#std.buf_map.BufMap.BufMapHashMap">BufMapHashMap</a>.<a href="#">Size</a> {
+    <span class="tok-kw">return</span> self.hash_map.count();
+}</code></pre></details></div></div><div class="decl"><h2 id="std.buf_map.BufMap.iterator" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">iterator</span><a href="#src.zig-std.buf_map.BufMap.iterator">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">iterator</span>(self: *<span class="tok-kw">const</span> <a href="std.buf_map.BufMap.html">BufMap</a>) <a href="std.buf_map.BufMap.html#std.buf_map.BufMap.BufMapHashMap">BufMapHashMap</a>.<a href="#">Iterator</a></code></pre></div><div class="tldDocs"><p>Returns an iterator over entries in the map.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.buf_map.BufMap.html">BufMap</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.buf_map.BufMap.iterator">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">iterator</span>(self: *<span class="tok-kw">const</span> <a href="std.buf_map.BufMap.html">BufMap</a>) <a href="std.buf_map.BufMap.html#std.buf_map.BufMap.BufMapHashMap">BufMapHashMap</a>.<a href="#">Iterator</a> {
+    <span class="tok-kw">return</span> self.hash_map.iterator();
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.buf_map.BufMap">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> BufMap = <span class="tok-kw">struct</span> {
+    hash_map: <a href="std.buf_map.BufMap.html#std.buf_map.BufMap.BufMapHashMap">BufMapHashMap</a>,
+
+    <span class="tok-kw">const</span> BufMapHashMap = <a href="std.hash_map.html#std.hash_map.StringHashMap">StringHashMap</a>([]<span class="tok-kw">const</span> <span class="tok-type">u8</span>);
+
+    <span class="tok-comment">/// Create a BufMap backed by a specific allocator.</span>
+    <span class="tok-comment">/// That allocator will be used for both backing allocations</span>
+    <span class="tok-comment">/// and string deduplication.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(allocator: <a href="std.mem.Allocator.html">Allocator</a>) <a href="std.buf_map.BufMap.html">BufMap</a> {
+        <span class="tok-kw">return</span> .{ .hash_map = <a href="std.buf_map.BufMap.html#std.buf_map.BufMap.BufMapHashMap">BufMapHashMap</a>.<a href="#">init</a>(allocator) };
+    }
+
+    <span class="tok-comment">/// Free the backing storage of the map, as well as all</span>
+    <span class="tok-comment">/// of the stored keys and values.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: *<a href="std.buf_map.BufMap.html">BufMap</a>) <span class="tok-type">void</span> {
+        <span class="tok-kw">var</span> it = self.hash_map.iterator();
+        <span class="tok-kw">while</span> (it.next()) |entry| {
+            self.free(entry.key_ptr.*);
+            self.free(entry.value_ptr.*);
+        }
+
+        self.hash_map.deinit();
+    }
+
+    <span class="tok-comment">/// Same as `put` but the key and value become owned by the BufMap rather</span>
+    <span class="tok-comment">/// than being copied.</span>
+    <span class="tok-comment">/// If `putMove` fails, the ownership of key and value does not transfer.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">putMove</span>(self: *<a href="std.buf_map.BufMap.html">BufMap</a>, key: []<span class="tok-type">u8</span>, value: []<span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+        <span class="tok-kw">const</span> get_or_put = <span class="tok-kw">try</span> self.hash_map.getOrPut(key);
+        <span class="tok-kw">if</span> (get_or_put.found_existing) {
+            self.free(get_or_put.key_ptr.*);
+            self.free(get_or_put.value_ptr.*);
+            get_or_put.key_ptr.* = key;
+        }
+        get_or_put.value_ptr.* = value;
+    }
+
+    <span class="tok-comment">/// `key` and `value` are copied into the BufMap.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">put</span>(self: *<a href="std.buf_map.BufMap.html">BufMap</a>, key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, value: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+        <span class="tok-kw">const</span> value_copy = <span class="tok-kw">try</span> self.copy(value);
+        <span class="tok-kw">errdefer</span> self.free(value_copy);
+        <span class="tok-kw">const</span> get_or_put = <span class="tok-kw">try</span> self.hash_map.getOrPut(key);
+        <span class="tok-kw">if</span> (get_or_put.found_existing) {
+            self.free(get_or_put.value_ptr.*);
+        } <span class="tok-kw">else</span> {
+            get_or_put.key_ptr.* = self.copy(key) <span class="tok-kw">catch</span> |err| {
+                _ = self.hash_map.remove(key);
+                <span class="tok-kw">return</span> err;
+            };
+        }
+        get_or_put.value_ptr.* = value_copy;
+    }
+
+    <span class="tok-comment">/// Find the address of the value associated with a key.</span>
+    <span class="tok-comment">/// The returned pointer is invalidated if the map resizes.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPtr</span>(self: <a href="std.buf_map.BufMap.html">BufMap</a>, key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?*[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> self.hash_map.getPtr(key);
+    }
+
+    <span class="tok-comment">/// Return the map's copy of the value associated with</span>
+    <span class="tok-comment">/// a key.  The returned string is invalidated if this</span>
+    <span class="tok-comment">/// key is removed from the map.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: <a href="std.buf_map.BufMap.html">BufMap</a>, key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> self.hash_map.get(key);
+    }
+
+    <span class="tok-comment">/// Removes the item from the map and frees its value.</span>
+    <span class="tok-comment">/// This invalidates the value returned by get() for this key.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">remove</span>(self: *<a href="std.buf_map.BufMap.html">BufMap</a>, key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+        <span class="tok-kw">const</span> kv = self.hash_map.fetchRemove(key) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span>;
+        self.free(kv.key);
+        self.free(kv.value);
+    }
+
+    <span class="tok-comment">/// Returns the number of KV pairs stored in the map.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">count</span>(self: <a href="std.buf_map.BufMap.html">BufMap</a>) <a href="std.buf_map.BufMap.html#std.buf_map.BufMap.BufMapHashMap">BufMapHashMap</a>.<a href="#">Size</a> {
+        <span class="tok-kw">return</span> self.hash_map.count();
+    }
+
+    <span class="tok-comment">/// Returns an iterator over entries in the map.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">iterator</span>(self: *<span class="tok-kw">const</span> <a href="std.buf_map.BufMap.html">BufMap</a>) <a href="std.buf_map.BufMap.html#std.buf_map.BufMap.BufMapHashMap">BufMapHashMap</a>.<a href="#">Iterator</a> {
+        <span class="tok-kw">return</span> self.hash_map.iterator();
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">free</span>(self: <a href="std.buf_map.BufMap.html">BufMap</a>, value: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+        self.hash_map.allocator.free(value);
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">copy</span>(self: <a href="std.buf_map.BufMap.html">BufMap</a>, value: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ![]<span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> self.hash_map.allocator.dupe(<span class="tok-type">u8</span>, value);
+    }
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,3563 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">zig</a></li><li><a href="std.zig.Zir.html" class="">Zir</a></li><li><a href="std.zig.Zir.Inst.html" class="">Inst</a></li><li><a href="std.zig.Zir.Inst.Tag.html" class="active">Tag</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.zig.Zir.Inst.Tag" class="declHeader"><span class="declHeaderCategory">enum</span><span class="declHeaderIdentifier">std.zig.Zir.Inst.Tag</span><a href="#src.zig-std.zig.Zir.Inst.Tag">[src]</a></h1><div class="tldDocs"><p>These names are used directly as the instruction names in the text format.
+See <code>data_field_map</code> for a list of which <code><a href="std.zig.Zir.Inst.Data.html">Data</a></code> fields are used by each <code><a href="std.zig.Zir.Inst.Tag.html">Tag</a></code>.</p>
+</div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>add</code></pre><div class="fieldDocs"><p>Arithmetic addition, asserts no integer overflow.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>addwrap</code></pre><div class="fieldDocs"><p>Twos complement wrapping integer addition.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>add_sat</code></pre><div class="fieldDocs"><p>Saturating addition.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>add_unsafe</code></pre><div class="fieldDocs"><p>The same as <code>add</code> except no safety check.</p>
+</div></div><div><pre><code>sub</code></pre><div class="fieldDocs"><p>Arithmetic subtraction. Asserts no integer overflow.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>subwrap</code></pre><div class="fieldDocs"><p>Twos complement wrapping integer subtraction.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>sub_sat</code></pre><div class="fieldDocs"><p>Saturating subtraction.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>mul</code></pre><div class="fieldDocs"><p>Arithmetic multiplication. Asserts no integer overflow.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>mulwrap</code></pre><div class="fieldDocs"><p>Twos complement wrapping integer multiplication.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>mul_sat</code></pre><div class="fieldDocs"><p>Saturating multiplication.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>div_exact</code></pre><div class="fieldDocs"><p>Implements the <code>@divExact</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>div_floor</code></pre><div class="fieldDocs"><p>Implements the <code>@divFloor</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>div_trunc</code></pre><div class="fieldDocs"><p>Implements the <code>@divTrunc</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>mod</code></pre><div class="fieldDocs"><p>Implements the <code>@mod</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>rem</code></pre><div class="fieldDocs"><p>Implements the <code>@rem</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>mod_rem</code></pre><div class="fieldDocs"><p>Ambiguously remainder division or modulus. If the computation would possibly have
+a different value depending on whether the operation is remainder division or modulus,
+a compile error is emitted. Otherwise the computation is performed.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>shl</code></pre><div class="fieldDocs"><p>Integer shift-left. Zeroes are shifted in from the right hand side.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>shl_exact</code></pre><div class="fieldDocs"><p>Implements the <code>@shlExact</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>shl_sat</code></pre><div class="fieldDocs"><p>Saturating shift-left.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>shr</code></pre><div class="fieldDocs"><p>Integer shift-right. Arithmetic or logical depending on the signedness of
+the integer type.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>shr_exact</code></pre><div class="fieldDocs"><p>Implements the <code>@shrExact</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>param</code></pre><div class="fieldDocs"><p>Declares a parameter of the current function. Used for:</p>
+<ul>
+<li>debug info</li>
+<li>checking shadowing against declarations in the current namespace</li>
+<li>parameter type expressions referencing other parameters
+These occur in the block outside a function body (the same block as
+contains the func instruction).
+Uses the <code>pl_tok</code> field. Token is the parameter name, payload is a <code><a href="std.zig.Zir.Inst.Param.html">Param</a></code>.</li>
+</ul>
+</div></div><div><pre><code>param_comptime</code></pre><div class="fieldDocs"><p>Same as <code>param</code> except the parameter is marked comptime.</p>
+</div></div><div><pre><code>param_anytype</code></pre><div class="fieldDocs"><p>Same as <code>param</code> except the parameter is marked anytype.
+Uses the <code>str_tok</code> field. Token is the parameter name. String is the parameter name.</p>
+</div></div><div><pre><code>param_anytype_comptime</code></pre><div class="fieldDocs"><p>Same as <code>param</code> except the parameter is marked both comptime and anytype.
+Uses the <code>str_tok</code> field. Token is the parameter name. String is the parameter name.</p>
+</div></div><div><pre><code>array_cat</code></pre><div class="fieldDocs"><p>Array concatenation. <code>a ++ b</code>
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>array_mul</code></pre><div class="fieldDocs"><p>Array multiplication <code>a ** b</code>
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.ArrayMul.html">ArrayMul</a></code>.</p>
+</div></div><div><pre><code>array_type</code></pre><div class="fieldDocs"><p><code>[N]T</code> syntax. No source location provided.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>. lhs is length, rhs is element type.</p>
+</div></div><div><pre><code>array_type_sentinel</code></pre><div class="fieldDocs"><p><code>[N:S]T</code> syntax. Source location is the array type expression node.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.ArrayTypeSentinel.html">ArrayTypeSentinel</a></code>.</p>
+</div></div><div><pre><code>vector_type</code></pre><div class="fieldDocs"><p><code>@Vector</code> builtin.
+Uses the <code>pl_node</code> union field with <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code> payload.
+lhs is length, rhs is element type.</p>
+</div></div><div><pre><code>elem_type</code></pre><div class="fieldDocs"><p>Given a pointer type, returns its element type. Reaches through any optional or error
+union types wrapping the pointer. Asserts that the underlying type is a pointer type.
+Returns generic poison if the element type is <code>anyopaque</code>.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>indexable_ptr_elem_type</code></pre><div class="fieldDocs"><p>Given an indexable pointer (slice, many-ptr, single-ptr-to-array), returns its
+element type. Emits a compile error if the type is not an indexable pointer.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>vec_arr_elem_type</code></pre><div class="fieldDocs"><p>Given a vector or array type, returns its element type.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>indexable_ptr_len</code></pre><div class="fieldDocs"><p>Given a pointer to an indexable object, returns the len property. This is
+used by for loops. This instruction also emits a for-loop specific compile
+error if the indexable object is not indexable.
+Uses the <code>un_node</code> field. The AST node is the for loop node.</p>
+</div></div><div><pre><code>anyframe_type</code></pre><div class="fieldDocs"><p>Create a <code>anyframe-&gt;T</code> type.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>as_node</code></pre><div class="fieldDocs"><p>Type coercion to the function's return type.
+Uses the <code>pl_node</code> field. Payload is <code><a href="std.zig.Zir.Inst.As.html">As</a></code>. AST node could be many things.</p>
+</div></div><div><pre><code>as_shift_operand</code></pre><div class="fieldDocs"><p>Same as <code>as_node</code> but ignores runtime to comptime int error.</p>
+</div></div><div><pre><code>bit_and</code></pre><div class="fieldDocs"><p>Bitwise AND. <code>&amp;</code></p>
+</div></div><div><pre><code>bitcast</code></pre><div class="fieldDocs"><p>Reinterpret the memory representation of a value as a different type.
+Uses the pl_node field with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>bit_not</code></pre><div class="fieldDocs"><p>Bitwise NOT. <code>~</code>
+Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>bit_or</code></pre><div class="fieldDocs"><p>Bitwise OR. <code>|</code></p>
+</div></div><div><pre><code>block</code></pre><div class="fieldDocs"><p>A labeled block of code, which can return a value.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Block.html">Block</a></code>.</p>
+</div></div><div><pre><code>block_comptime</code></pre><div class="fieldDocs"><p>Like <code>block</code>, but forces full evaluation of its contents at compile-time.
+Exited with <code>break_inline</code>.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.BlockComptime.html">BlockComptime</a></code>.</p>
+</div></div><div><pre><code>block_inline</code></pre><div class="fieldDocs"><p>A list of instructions which are analyzed in the parent context, without
+generating a runtime block. Must terminate with an &quot;inline&quot; variant of
+a noreturn instruction.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Block.html">Block</a></code>.</p>
+</div></div><div><pre><code>declaration</code></pre><div class="fieldDocs"><p>This instruction may only ever appear in the list of declarations for a
+namespace type, e.g. within a <code>struct_decl</code> instruction. It represents a
+single source declaration (<code>const</code>/<code>var</code>/<code>fn</code>), containing the name,
+attributes, type, and value of the declaration.
+Uses the <code>declaration</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Declaration.html">Declaration</a></code>.</p>
+</div></div><div><pre><code>suspend_block</code></pre><div class="fieldDocs"><p>Implements <code>suspend {...}</code>.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Block.html">Block</a></code>.</p>
+</div></div><div><pre><code>bool_not</code></pre><div class="fieldDocs"><p>Boolean NOT. See also <code>bit_not</code>.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>bool_br_and</code></pre><div class="fieldDocs"><p>Short-circuiting boolean <code>and</code>. <code>lhs</code> is a boolean <code><a href="std.zig.Zir.Inst.Ref.html">Ref</a></code> and the other operand
+is a block, which is evaluated if <code>lhs</code> is <code>true</code>.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.BoolBr.html">BoolBr</a></code>.</p>
+</div></div><div><pre><code>bool_br_or</code></pre><div class="fieldDocs"><p>Short-circuiting boolean <code>or</code>. <code>lhs</code> is a boolean <code><a href="std.zig.Zir.Inst.Ref.html">Ref</a></code> and the other operand
+is a block, which is evaluated if <code>lhs</code> is <code>false</code>.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.BoolBr.html">BoolBr</a></code>.</p>
+</div></div><div><pre><code>@&quot;break&quot;</code></pre><div class="fieldDocs"><p>Return a value from a block.
+Uses the <code>break</code> union field.
+Uses the source information from previous instruction.</p>
+</div></div><div><pre><code>break_inline</code></pre><div class="fieldDocs"><p>Return a value from a block. This instruction is used as the terminator
+of a <code>block_inline</code>. It allows using the return value from <code>Sema.analyzeBody</code>.
+This instruction may also be used when it is known that there is only one
+break instruction in a block, and the target block is the parent.
+Uses the <code>break</code> union field.</p>
+</div></div><div><pre><code>switch_continue</code></pre><div class="fieldDocs"><p>Branch from within a switch case to the case specified by the operand.
+Uses the <code>break</code> union field. <code>block_inst</code> refers to a <code>switch_block</code> or <code>switch_block_ref</code>.</p>
+</div></div><div><pre><code>check_comptime_control_flow</code></pre><div class="fieldDocs"><p>Checks that comptime control flow does not happen inside a runtime block.
+Uses the <code>un_node</code> union field.</p>
+</div></div><div><pre><code>call</code></pre><div class="fieldDocs"><p>Function call.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.Call.html">Call</a></code>.
+AST node is the function call.</p>
+</div></div><div><pre><code>field_call</code></pre><div class="fieldDocs"><p>Function call using <code>a.b()</code> syntax.
+Uses the named field as the callee. If there is no such field, searches in the type for
+a decl matching the field name. The decl is resolved and we ensure that it's a function
+which can accept the object as the first parameter, with one pointer fixup. This
+function is then used as the callee, with the object as an implicit first parameter.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.FieldCall.html">FieldCall</a></code>.
+AST node is the function call.</p>
+</div></div><div><pre><code>builtin_call</code></pre><div class="fieldDocs"><p>Implements the <code>@call</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.BuiltinCall.html">BuiltinCall</a></code>.
+AST node is the builtin call.</p>
+</div></div><div><pre><code>cmp_lt</code></pre><div class="fieldDocs"><p><code>&lt;</code>
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>cmp_lte</code></pre><div class="fieldDocs"><p><code>&lt;=</code>
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>cmp_eq</code></pre><div class="fieldDocs"><p><code>==</code>
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>cmp_gte</code></pre><div class="fieldDocs"><p><code>&gt;=</code>
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>cmp_gt</code></pre><div class="fieldDocs"><p><code>&gt;</code>
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>cmp_neq</code></pre><div class="fieldDocs"><p><code>!=</code>
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>condbr</code></pre><div class="fieldDocs"><p>Conditional branch. Splits control flow based on a boolean condition value.
+Uses the <code>pl_node</code> union field. AST node is an if, while, for, etc.
+Payload is <code><a href="std.zig.Zir.Inst.CondBr.html">CondBr</a></code>.</p>
+</div></div><div><pre><code>condbr_inline</code></pre><div class="fieldDocs"><p>Same as <code>condbr</code>, except the condition is coerced to a comptime value, and
+only the taken branch is analyzed. The then block and else block must
+terminate with an &quot;inline&quot; variant of a noreturn instruction.</p>
+</div></div><div><pre><code>@&quot;try&quot;</code></pre><div class="fieldDocs"><p>Given an operand which is an error union, splits control flow. In
+case of error, control flow goes into the block that is part of this
+instruction, which is guaranteed to end with a return instruction
+and never breaks out of the block.
+In the case of non-error, control flow proceeds to the next instruction
+after the <code>try</code>, with the result of this instruction being the unwrapped
+payload value, as if <code>err_union_payload_unsafe</code> was executed on the operand.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Try.html">Try</a></code>.</p>
+</div></div><div><pre><code>try_ptr</code></pre><div class="fieldDocs"><p>Same as <code>try</code> except the operand is a pointer and the result is a pointer.</p>
+</div></div><div><pre><code>error_set_decl</code></pre><div class="fieldDocs"><p>An error set type definition. Contains a list of field names.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.ErrorSetDecl.html">ErrorSetDecl</a></code>.</p>
+</div></div><div><pre><code>dbg_stmt</code></pre><div class="fieldDocs"><p>Declares the beginning of a statement. Used for debug info.
+Uses the <code>dbg_stmt</code> union field. The line and column are offset
+from the parent declaration.</p>
+</div></div><div><pre><code>dbg_var_ptr</code></pre><div class="fieldDocs"><p>Marks a variable declaration. Used for debug info.
+Uses the <code>str_op</code> union field. The string is the local variable name,
+and the operand is the pointer to the variable's location. The local
+may be a const or a var.</p>
+</div></div><div><pre><code>dbg_var_val</code></pre><div class="fieldDocs"><p>Same as <code>dbg_var_ptr</code> but the local is always a const and the operand
+is the local's value.</p>
+</div></div><div><pre><code>decl_ref</code></pre><div class="fieldDocs"><p>Uses a name to identify a Decl and takes a pointer to it.
+Uses the <code>str_tok</code> union field.</p>
+</div></div><div><pre><code>decl_val</code></pre><div class="fieldDocs"><p>Uses a name to identify a Decl and uses it as a value.
+Uses the <code>str_tok</code> union field.</p>
+</div></div><div><pre><code>load</code></pre><div class="fieldDocs"><p>Load the value from a pointer. Assumes <code>x.*</code> syntax.
+Uses <code>un_node</code> field. AST node is the <code>x.*</code> syntax.</p>
+</div></div><div><pre><code>div</code></pre><div class="fieldDocs"><p>Arithmetic division. Asserts no integer overflow.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>elem_ptr_node</code></pre><div class="fieldDocs"><p>Given a pointer to an array, slice, or pointer, returns a pointer to the element at
+the provided index.
+Uses the <code>pl_node</code> union field. AST node is a[b] syntax. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>elem_ptr</code></pre><div class="fieldDocs"><p>Same as <code>elem_ptr_node</code> but used only for for loop.
+Uses the <code>pl_node</code> union field. AST node is the condition of a for loop.
+Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.
+No OOB safety check is emitted.</p>
+</div></div><div><pre><code>elem_val_node</code></pre><div class="fieldDocs"><p>Given an array, slice, or pointer, returns the element at the provided index.
+Uses the <code>pl_node</code> union field. AST node is a[b] syntax. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>elem_val</code></pre><div class="fieldDocs"><p>Same as <code>elem_val_node</code> but used only for for loop.
+Uses the <code>pl_node</code> union field. AST node is the condition of a for loop.
+Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.
+No OOB safety check is emitted.</p>
+</div></div><div><pre><code>elem_val_imm</code></pre><div class="fieldDocs"><p>Same as <code>elem_val</code> but takes the index as an immediate value.
+No OOB safety check is emitted. A prior instruction must validate this operation.
+Uses the <code>elem_val_imm</code> union field.</p>
+</div></div><div><pre><code>ensure_result_used</code></pre><div class="fieldDocs"><p>Emits a compile error if the operand is not <code>void</code>.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>ensure_result_non_error</code></pre><div class="fieldDocs"><p>Emits a compile error if an error is ignored.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>ensure_err_union_payload_void</code></pre><div class="fieldDocs"><p>Emits a compile error error union payload is not void.</p>
+</div></div><div><pre><code>error_union_type</code></pre><div class="fieldDocs"><p>Create a <code>E!T</code> type.
+Uses the <code>pl_node</code> field with <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code> payload.</p>
+</div></div><div><pre><code>error_value</code></pre><div class="fieldDocs"><p><code>error.Foo</code> syntax. Uses the <code>str_tok</code> field of the Data union.</p>
+</div></div><div><pre><code>@&quot;export&quot;</code></pre><div class="fieldDocs"><p>Implements the <code>@export</code> builtin function.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Export.html">Export</a></code>.</p>
+</div></div><div><pre><code>field_ptr</code></pre><div class="fieldDocs"><p>Given a pointer to a struct or object that contains virtual fields, returns a pointer
+to the named field. The field name is stored in string_bytes. Used by a.b syntax.
+Uses <code>pl_node</code> field. The AST node is the a.b syntax. Payload is Field.</p>
+</div></div><div><pre><code>field_val</code></pre><div class="fieldDocs"><p>Given a struct or object that contains virtual fields, returns the named field.
+The field name is stored in string_bytes. Used by a.b syntax.
+This instruction also accepts a pointer.
+Uses <code>pl_node</code> field. The AST node is the a.b syntax. Payload is Field.</p>
+</div></div><div><pre><code>field_ptr_named</code></pre><div class="fieldDocs"><p>Given a pointer to a struct or object that contains virtual fields, returns a pointer
+to the named field. The field name is a comptime instruction. Used by @field.
+Uses <code>pl_node</code> field. The AST node is the builtin call. Payload is FieldNamed.</p>
+</div></div><div><pre><code>field_val_named</code></pre><div class="fieldDocs"><p>Given a struct or object that contains virtual fields, returns the named field.
+The field name is a comptime instruction. Used by @field.
+Uses <code>pl_node</code> field. The AST node is the builtin call. Payload is FieldNamed.</p>
+</div></div><div><pre><code>func</code></pre><div class="fieldDocs"><p>Returns a function type, or a function instance, depending on whether
+the body_len is 0. Calling convention is auto.
+Uses the <code>pl_node</code> union field. <code>payload_index</code> points to a <code><a href="std.zig.Zir.Inst.Func.html">Func</a></code>.</p>
+</div></div><div><pre><code>func_inferred</code></pre><div class="fieldDocs"><p>Same as <code>func</code> but has an inferred error set.</p>
+</div></div><div><pre><code>func_fancy</code></pre><div class="fieldDocs"><p>Represents a function declaration or function prototype, depending on
+whether body_len is 0.
+Uses the <code>pl_node</code> union field. <code>payload_index</code> points to a <code><a href="std.zig.Zir.Inst.FuncFancy.html">FuncFancy</a></code>.</p>
+</div></div><div><pre><code>import</code></pre><div class="fieldDocs"><p>Implements the <code>@import</code> builtin.
+Uses the <code>pl_tok</code> field.</p>
+</div></div><div><pre><code>int</code></pre><div class="fieldDocs"><p>Integer literal that fits in a u64. Uses the <code>int</code> union field.</p>
+</div></div><div><pre><code>int_big</code></pre><div class="fieldDocs"><p>Arbitrary sized integer literal. Uses the <code>str</code> union field.</p>
+</div></div><div><pre><code>float</code></pre><div class="fieldDocs"><p>A float literal that fits in a f64. Uses the float union value.</p>
+</div></div><div><pre><code>float128</code></pre><div class="fieldDocs"><p>A float literal that fits in a f128. Uses the <code>pl_node</code> union value.
+Payload is <code><a href="std.zig.Zir.Inst.Float128.html">Float128</a></code>.</p>
+</div></div><div><pre><code>int_type</code></pre><div class="fieldDocs"><p>Make an integer type out of signedness and bit count.
+Payload is <code>int_type</code></p>
+</div></div><div><pre><code>is_non_null</code></pre><div class="fieldDocs"><p>Return a boolean false if an optional is null. <code>x != null</code>
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>is_non_null_ptr</code></pre><div class="fieldDocs"><p>Return a boolean false if an optional is null. <code>x.* != null</code>
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>is_non_err</code></pre><div class="fieldDocs"><p>Return a boolean false if value is an error
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>is_non_err_ptr</code></pre><div class="fieldDocs"><p>Return a boolean false if dereferenced pointer is an error
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>ret_is_non_err</code></pre><div class="fieldDocs"><p>Same as <code>is_non_er</code> but doesn't validate that the type can be an error.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>loop</code></pre><div class="fieldDocs"><p>A labeled block of code that loops forever. At the end of the body will have either
+a <code>repeat</code> instruction or a <code>repeat_inline</code> instruction.
+Uses the <code>pl_node</code> field. The AST node is either a for loop or while loop.
+This ZIR instruction is needed because AIR does not (yet?) match ZIR, and Sema
+needs to emit more than 1 AIR block for this instruction.
+The payload is <code><a href="std.zig.Zir.Inst.Block.html">Block</a></code>.</p>
+</div></div><div><pre><code>repeat</code></pre><div class="fieldDocs"><p>Sends runtime control flow back to the beginning of the current block.
+Uses the <code>node</code> field.</p>
+</div></div><div><pre><code>repeat_inline</code></pre><div class="fieldDocs"><p>Sends comptime control flow back to the beginning of the current block.
+Uses the <code>node</code> field.</p>
+</div></div><div><pre><code>for_len</code></pre><div class="fieldDocs"><p>Asserts that all the lengths provided match. Used to build a for loop.
+Return value is the length as a usize.
+Uses the <code>pl_node</code> field with payload <code><a href="std.zig.Zir.Inst.MultiOp.html">MultiOp</a></code>.
+There are two items for each AST node inside the for loop condition.
+If both items in a pair are <code>.none</code>, then this node is an unbounded range.
+If only the second item in a pair is <code>.none</code>, then the first is an indexable.
+Otherwise, the node is a bounded range <code>a..b</code>, with the items being <code>a</code> and <code>b</code>.
+Illegal behaviors:</p>
+<ul>
+<li>If all lengths are unbounded ranges (always a compile error).</li>
+<li>If any two lengths do not match each other.</li>
+</ul>
+</div></div><div><pre><code>merge_error_sets</code></pre><div class="fieldDocs"><p>Merge two error sets into one, <code>E1 || E2</code>.
+Uses the <code>pl_node</code> field with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>ref</code></pre><div class="fieldDocs"><p>Turns an R-Value into a const L-Value. In other words, it takes a value,
+stores it in a memory location, and returns a const pointer to it. If the value
+is <code>comptime</code>, the memory location is global static constant data. Otherwise,
+the memory location is in the stack frame, local to the scope containing the
+instruction.
+Uses the <code>un_tok</code> union field.</p>
+</div></div><div><pre><code>ret_node</code></pre><div class="fieldDocs"><p>Sends control flow back to the function's callee.
+Includes an operand as the return value.
+Includes an AST node source location.
+Uses the <code>un_node</code> union field.</p>
+</div></div><div><pre><code>ret_load</code></pre><div class="fieldDocs"><p>Sends control flow back to the function's callee.
+The operand is a <code>ret_ptr</code> instruction, where the return value can be found.
+Includes an AST node source location.
+Uses the <code>un_node</code> union field.</p>
+</div></div><div><pre><code>ret_implicit</code></pre><div class="fieldDocs"><p>Sends control flow back to the function's callee.
+Includes an operand as the return value.
+Includes a token source location.
+Uses the <code>un_tok</code> union field.</p>
+</div></div><div><pre><code>ret_err_value</code></pre><div class="fieldDocs"><p>Sends control flow back to the function's callee.
+The return operand is <code>error.foo</code> where <code>foo</code> is given by the string.
+If the current function has an inferred error set, the error given by the
+name is added to it.
+Uses the <code>str_tok</code> union field.</p>
+</div></div><div><pre><code>ret_err_value_code</code></pre><div class="fieldDocs"><p>A string name is provided which is an anonymous error set value.
+If the current function has an inferred error set, the error given by the
+name is added to it.
+Results in the error code. Note that control flow is not diverted with
+this instruction; a following 'ret' instruction will do the diversion.
+Uses the <code>str_tok</code> union field.</p>
+</div></div><div><pre><code>ret_ptr</code></pre><div class="fieldDocs"><p>Obtains a pointer to the return value.
+Uses the <code>node</code> union field.</p>
+</div></div><div><pre><code>ret_type</code></pre><div class="fieldDocs"><p>Obtains the return type of the in-scope function.
+Uses the <code>node</code> union field.</p>
+</div></div><div><pre><code>ptr_type</code></pre><div class="fieldDocs"><p>Create a pointer type which can have a sentinel, alignment, address space, and/or bit range.
+Uses the <code>ptr_type</code> union field.</p>
+</div></div><div><pre><code>slice_start</code></pre><div class="fieldDocs"><p>Slice operation <code>lhs[rhs..]</code>. No sentinel and no end offset.
+Returns a pointer to the subslice.
+Uses the <code>pl_node</code> field. AST node is the slice syntax. Payload is <code><a href="std.zig.Zir.Inst.SliceStart.html">SliceStart</a></code>.</p>
+</div></div><div><pre><code>slice_end</code></pre><div class="fieldDocs"><p>Slice operation <code>array_ptr[start..end]</code>. No sentinel.
+Returns a pointer to the subslice.
+Uses the <code>pl_node</code> field. AST node is the slice syntax. Payload is <code><a href="std.zig.Zir.Inst.SliceEnd.html">SliceEnd</a></code>.</p>
+</div></div><div><pre><code>slice_sentinel</code></pre><div class="fieldDocs"><p>Slice operation <code>array_ptr[start..end:sentinel]</code>.
+Returns a pointer to the subslice.
+Uses the <code>pl_node</code> field. AST node is the slice syntax. Payload is <code><a href="std.zig.Zir.Inst.SliceSentinel.html">SliceSentinel</a></code>.</p>
+</div></div><div><pre><code>slice_length</code></pre><div class="fieldDocs"><p>Slice operation <code>array_ptr[start..][0..len]</code>. Optional sentinel.
+Returns a pointer to the subslice.
+Uses the <code>pl_node</code> field. AST node is the slice syntax. Payload is <code><a href="std.zig.Zir.Inst.SliceLength.html">SliceLength</a></code>.</p>
+</div></div><div><pre><code>slice_sentinel_ty</code></pre><div class="fieldDocs"><p>Given a value which is a pointer to the LHS of a slice operation, return the sentinel
+type, used as the result type of the slice sentinel (i.e. <code>s</code> in <code>lhs[a..b :s]</code>).
+Uses the <code>un_node</code> field. AST node is the slice syntax. Operand is <code>lhs</code>.</p>
+</div></div><div><pre><code>store_node</code></pre><div class="fieldDocs"><p>Same as <code>store</code> except provides a source location.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>store_to_inferred_ptr</code></pre><div class="fieldDocs"><p>Same as <code>store_node</code> but the type of the value being stored will be
+used to infer the pointer type of an <code>alloc_inferred</code>.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>str</code></pre><div class="fieldDocs"><p>String Literal. Makes an anonymous Decl and then takes a pointer to it.
+Uses the <code>str</code> union field.</p>
+</div></div><div><pre><code>negate</code></pre><div class="fieldDocs"><p>Arithmetic negation. Asserts no integer overflow.
+Same as sub with a lhs of 0, split into a separate instruction to save memory.
+Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>negate_wrap</code></pre><div class="fieldDocs"><p>Twos complement wrapping integer negation.
+Same as subwrap with a lhs of 0, split into a separate instruction to save memory.
+Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>typeof</code></pre><div class="fieldDocs"><p>Returns the type of a value.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>typeof_builtin</code></pre><div class="fieldDocs"><p>Implements <code>@TypeOf</code> for one operand.
+Uses the <code>pl_node</code> field. Payload is <code><a href="std.zig.Zir.Inst.Block.html">Block</a></code>.</p>
+</div></div><div><pre><code>typeof_log2_int_type</code></pre><div class="fieldDocs"><p>Given a value, look at the type of it, which must be an integer type.
+Returns the integer type for the RHS of a shift operation.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>@&quot;unreachable&quot;</code></pre><div class="fieldDocs"><p>Asserts control-flow will not reach this instruction (<code>unreachable</code>).
+Uses the <code>@&quot;unreachable&quot;</code> union field.</p>
+</div></div><div><pre><code>xor</code></pre><div class="fieldDocs"><p>Bitwise XOR. <code>^</code>
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>optional_type</code></pre><div class="fieldDocs"><p>Create an optional type '?T'
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>optional_payload_safe</code></pre><div class="fieldDocs"><p>?T =&gt; T with safety.
+Given an optional value, returns the payload value, with a safety check that
+the value is non-null. Used for <code>orelse</code>, <code>if</code> and <code>while</code>.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>optional_payload_unsafe</code></pre><div class="fieldDocs"><p>?T =&gt; T without safety.
+Given an optional value, returns the payload value. No safety checks.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>optional_payload_safe_ptr</code></pre><div class="fieldDocs"><p>*?T =&gt; *T with safety.
+Given a pointer to an optional value, returns a pointer to the payload value,
+with a safety check that the value is non-null. Used for <code>orelse</code>, <code>if</code> and <code>while</code>.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>optional_payload_unsafe_ptr</code></pre><div class="fieldDocs"><p>*?T =&gt; *T without safety.
+Given a pointer to an optional value, returns a pointer to the payload value.
+No safety checks.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>err_union_payload_unsafe</code></pre><div class="fieldDocs"><p>E!T =&gt; T without safety.
+Given an error union value, returns the payload value. No safety checks.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>err_union_payload_unsafe_ptr</code></pre><div class="fieldDocs"><p>*E!T =&gt; *T without safety.
+Given a pointer to a error union value, returns a pointer to the payload value.
+No safety checks.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>err_union_code</code></pre><div class="fieldDocs"><p>E!T =&gt; E without safety.
+Given an error union value, returns the error code. No safety checks.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>err_union_code_ptr</code></pre><div class="fieldDocs"><p>*E!T =&gt; E without safety.
+Given a pointer to an error union value, returns the error code. No safety checks.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>enum_literal</code></pre><div class="fieldDocs"><p>An enum literal. Uses the <code>str_tok</code> union field.</p>
+</div></div><div><pre><code>decl_literal</code></pre><div class="fieldDocs"><p>A decl literal. This is similar to <code>field</code>, but unwraps error unions and optionals,
+and coerces the result to the given type.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Field.html">Field</a></code>.</p>
+</div></div><div><pre><code>decl_literal_no_coerce</code></pre><div class="fieldDocs"><p>The same as <code>decl_literal</code>, but the coercion is omitted. This is used for decl literal
+function call syntax, i.e. <code>.foo()</code>.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Field.html">Field</a></code>.</p>
+</div></div><div><pre><code>switch_block</code></pre><div class="fieldDocs"><p>A switch expression. Uses the <code>pl_node</code> union field.
+AST node is the switch, payload is <code><a href="std.zig.Zir.Inst.SwitchBlock.html">SwitchBlock</a></code>.</p>
+</div></div><div><pre><code>switch_block_ref</code></pre><div class="fieldDocs"><p>A switch expression. Uses the <code>pl_node</code> union field.
+AST node is the switch, payload is <code><a href="std.zig.Zir.Inst.SwitchBlock.html">SwitchBlock</a></code>. Operand is a pointer.</p>
+</div></div><div><pre><code>switch_block_err_union</code></pre><div class="fieldDocs"><p>A switch on an error union <code>a catch |err| switch (err) {...}</code>.
+Uses the <code>pl_node</code> union field. AST node is the <code>catch</code>, payload is <code><a href="std.zig.Zir.Inst.SwitchBlockErrUnion.html">SwitchBlockErrUnion</a></code>.</p>
+</div></div><div><pre><code>validate_deref</code></pre><div class="fieldDocs"><p>Check that operand type supports the dereference operand (.*).
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>validate_destructure</code></pre><div class="fieldDocs"><p>Check that the operand's type is an array or tuple with the given number of elements.
+Uses the <code>pl_node</code> field. Payload is <code><a href="std.zig.Zir.Inst.ValidateDestructure.html">ValidateDestructure</a></code>.</p>
+</div></div><div><pre><code>field_type_ref</code></pre><div class="fieldDocs"><p>Given a struct or union, and a field name as a Ref,
+returns the field type. Uses the <code>pl_node</code> field. Payload is <code><a href="std.zig.Zir.Inst.FieldTypeRef.html">FieldTypeRef</a></code>.</p>
+</div></div><div><pre><code>opt_eu_base_ptr_init</code></pre><div class="fieldDocs"><p>Given a pointer, initializes all error unions and optionals in the pointee to payloads,
+returning the base payload pointer. For instance, converts *E!?T into a valid *T
+(clobbering any existing error or null value).
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>coerce_ptr_elem_ty</code></pre><div class="fieldDocs"><p>Coerce a given value such that when a reference is taken, the resulting pointer will be
+coercible to the given type. For instance, given a value of type 'u32' and the pointer
+type '*u64', coerces the value to a 'u64'. Asserts that the type is a pointer type.
+Uses the <code>pl_node</code> field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.
+LHS is the pointer type, RHS is the value.</p>
+</div></div><div><pre><code>validate_ref_ty</code></pre><div class="fieldDocs"><p>Given a type, validate that it is a pointer type suitable for return from the address-of
+operator. Emit a compile error if not.
+Uses the <code>un_tok</code> union field. Token is the <code>&amp;</code> operator. Operand is the type.</p>
+</div></div><div><pre><code>validate_const</code></pre><div class="fieldDocs"><p>Given a value, check whether it is a valid local constant in this scope.
+In a runtime scope, this is always a nop.
+In a comptime scope, raises a compile error if the value is runtime-known.
+Result is always void.
+Uses the <code>un_node</code> union field. Node is the initializer. Operand is the initializer value.</p>
+</div></div><div><pre><code>struct_init_empty</code></pre><div class="fieldDocs"><p>A struct literal with a specified explicit type, with no fields.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>struct_init_empty_result</code></pre><div class="fieldDocs"><p>An anonymous struct literal with a known result type, with no fields.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>struct_init_empty_ref_result</code></pre><div class="fieldDocs"><p>An anonymous struct literal with no fields, returned by reference, with a known result
+type for the pointer. Asserts that the type is a pointer.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>struct_init_anon</code></pre><div class="fieldDocs"><p>Struct initialization without a type. Creates a value of an anonymous struct type.
+Uses the <code>pl_node</code> field. Payload is <code><a href="std.zig.Zir.Inst.StructInitAnon.html">StructInitAnon</a></code>.</p>
+</div></div><div><pre><code>struct_init</code></pre><div class="fieldDocs"><p>Finalizes a typed struct or union initialization, performs validation, and returns the
+struct or union value. The given type must be validated prior to this instruction, using
+<code>validate_struct_init_ty</code> or <code>validate_struct_init_result_ty</code>. If the given type is
+generic poison, this is downgraded to an anonymous initialization.
+Uses the <code>pl_node</code> field. Payload is <code><a href="std.zig.Zir.Inst.StructInit.html">StructInit</a></code>.</p>
+</div></div><div><pre><code>struct_init_ref</code></pre><div class="fieldDocs"><p>Struct initialization syntax, make the result a pointer. Equivalent to <code>struct_init</code>
+followed by <code>ref</code> - this ZIR tag exists as an optimization for a common pattern.
+Uses the <code>pl_node</code> field. Payload is <code><a href="std.zig.Zir.Inst.StructInit.html">StructInit</a></code>.</p>
+</div></div><div><pre><code>validate_struct_init_ty</code></pre><div class="fieldDocs"><p>Checks that the type supports struct init syntax. Always returns void.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>validate_struct_init_result_ty</code></pre><div class="fieldDocs"><p>Like <code>validate_struct_init_ty</code>, but additionally accepts types which structs coerce to.
+Used on the known result type of a struct init expression. Always returns void.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>validate_ptr_struct_init</code></pre><div class="fieldDocs"><p>Given a set of <code>struct_init_field_ptr</code> instructions, assumes they are all part of a
+struct initialization expression, and emits compile errors for duplicate fields as well
+as missing fields, if applicable.
+This instruction asserts that there is at least one struct_init_field_ptr instruction,
+because it must use one of them to find out the struct type.
+Uses the <code>pl_node</code> field. Payload is <code><a href="std.zig.Zir.Inst.Block.html">Block</a></code>.</p>
+</div></div><div><pre><code>struct_init_field_type</code></pre><div class="fieldDocs"><p>Given a type being used for a struct initialization expression, returns the type of the
+field with the given name.
+Uses the <code>pl_node</code> field. Payload is <code><a href="std.zig.Zir.Inst.FieldType.html">FieldType</a></code>.</p>
+</div></div><div><pre><code>struct_init_field_ptr</code></pre><div class="fieldDocs"><p>Given a pointer being used as the result pointer of a struct initialization expression,
+return a pointer to the field of the given name.
+Uses the <code>pl_node</code> field. The AST node is the field initializer. Payload is Field.</p>
+</div></div><div><pre><code>array_init_anon</code></pre><div class="fieldDocs"><p>Array initialization without a type. Creates a value of a tuple type.
+Uses the <code>pl_node</code> field. Payload is <code><a href="std.zig.Zir.Inst.MultiOp.html">MultiOp</a></code>.</p>
+</div></div><div><pre><code>array_init</code></pre><div class="fieldDocs"><p>Array initialization syntax with a known type. The given type must be validated prior to
+this instruction, using some <code>validate_array_init_*_ty</code> instruction.
+Uses the <code>pl_node</code> field. Payload is <code><a href="std.zig.Zir.Inst.MultiOp.html">MultiOp</a></code>, where the first operand is the type.</p>
+</div></div><div><pre><code>array_init_ref</code></pre><div class="fieldDocs"><p>Array initialization syntax, make the result a pointer. Equivalent to <code>array_init</code>
+followed by <code>ref</code>- this ZIR tag exists as an optimization for a common pattern.
+Uses the <code>pl_node</code> field. Payload is <code><a href="std.zig.Zir.Inst.MultiOp.html">MultiOp</a></code>, where the first operand is the type.</p>
+</div></div><div><pre><code>validate_array_init_ty</code></pre><div class="fieldDocs"><p>Checks that the type supports array init syntax. Always returns void.
+Uses the <code>pl_node</code> field. Payload is <code><a href="std.zig.Zir.Inst.ArrayInit.html">ArrayInit</a></code>.</p>
+</div></div><div><pre><code>validate_array_init_result_ty</code></pre><div class="fieldDocs"><p>Like <code>validate_array_init_ty</code>, but additionally accepts types which arrays coerce to.
+Used on the known result type of an array init expression. Always returns void.
+Uses the <code>pl_node</code> field. Payload is <code><a href="std.zig.Zir.Inst.ArrayInit.html">ArrayInit</a></code>.</p>
+</div></div><div><pre><code>validate_array_init_ref_ty</code></pre><div class="fieldDocs"><p>Given a pointer or slice type and an element count, return the expected type of an array
+initializer such that a pointer to the initializer has the given pointer type, checking
+that this type supports array init syntax and emitting a compile error if not. Preserves
+error union and optional wrappers on the array type, if any.
+Asserts that the given type is a pointer or slice type.
+Uses the <code>pl_node</code> field. Payload is <code><a href="std.zig.Zir.Inst.ArrayInitRefTy.html">ArrayInitRefTy</a></code>.</p>
+</div></div><div><pre><code>validate_ptr_array_init</code></pre><div class="fieldDocs"><p>Given a set of <code>array_init_elem_ptr</code> instructions, assumes they are all part of an array
+initialization expression, and emits a compile error if the number of elements does not
+match the array type.
+This instruction asserts that there is at least one <code>array_init_elem_ptr</code> instruction,
+because it must use one of them to find out the array type.
+Uses the <code>pl_node</code> field. Payload is <code><a href="std.zig.Zir.Inst.Block.html">Block</a></code>.</p>
+</div></div><div><pre><code>array_init_elem_type</code></pre><div class="fieldDocs"><p>Given a type being used for an array initialization expression, returns the type of the
+element at the given index.
+Uses the <code>bin</code> union field. lhs is the indexable type, rhs is the index.</p>
+</div></div><div><pre><code>array_init_elem_ptr</code></pre><div class="fieldDocs"><p>Given a pointer being used as the result pointer of an array initialization expression,
+return a pointer to the element at the given index.
+Uses the <code>pl_node</code> union field. AST node is an element inside array initialization
+syntax. Payload is <code><a href="std.zig.Zir.Inst.ElemPtrImm.html">ElemPtrImm</a></code>.</p>
+</div></div><div><pre><code>union_init</code></pre><div class="fieldDocs"><p>Implements the <code>@unionInit</code> builtin.
+Uses the <code>pl_node</code> field. Payload is <code><a href="std.zig.Zir.Inst.UnionInit.html">UnionInit</a></code>.</p>
+</div></div><div><pre><code>type_info</code></pre><div class="fieldDocs"><p>Implements the <code>@typeInfo</code> builtin. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>size_of</code></pre><div class="fieldDocs"><p>Implements the <code>@sizeOf</code> builtin. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>bit_size_of</code></pre><div class="fieldDocs"><p>Implements the <code>@bitSizeOf</code> builtin. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>int_from_ptr</code></pre><div class="fieldDocs"><p>Implement builtin <code>@intFromPtr</code>. Uses <code>un_node</code>.
+Convert a pointer to a <code>usize</code> integer.</p>
+</div></div><div><pre><code>compile_error</code></pre><div class="fieldDocs"><p>Emit an error message and fail compilation.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>set_eval_branch_quota</code></pre><div class="fieldDocs"><p>Changes the maximum number of backwards branches that compile-time
+code execution can use before giving up and making a compile error.
+Uses the <code>un_node</code> union field.</p>
+</div></div><div><pre><code>int_from_enum</code></pre><div class="fieldDocs"><p>Converts an enum value into an integer. Resulting type will be the tag type
+of the enum. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>align_of</code></pre><div class="fieldDocs"><p>Implement builtin <code>@alignOf</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>int_from_bool</code></pre><div class="fieldDocs"><p>Implement builtin <code>@intFromBool</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>embed_file</code></pre><div class="fieldDocs"><p>Implement builtin <code>@embedFile</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>error_name</code></pre><div class="fieldDocs"><p>Implement builtin <code>@errorName</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>panic</code></pre><div class="fieldDocs"><p>Implement builtin <code>@panic</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>trap</code></pre><div class="fieldDocs"><p>Implements <code>@trap</code>.
+Uses the <code>node</code> field.</p>
+</div></div><div><pre><code>set_runtime_safety</code></pre><div class="fieldDocs"><p>Implement builtin <code>@setRuntimeSafety</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>sqrt</code></pre><div class="fieldDocs"><p>Implement builtin <code>@sqrt</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>sin</code></pre><div class="fieldDocs"><p>Implement builtin <code>@sin</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>cos</code></pre><div class="fieldDocs"><p>Implement builtin <code>@cos</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>tan</code></pre><div class="fieldDocs"><p>Implement builtin <code>@tan</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>exp</code></pre><div class="fieldDocs"><p>Implement builtin <code>@exp</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>exp2</code></pre><div class="fieldDocs"><p>Implement builtin <code>@exp2</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>log</code></pre><div class="fieldDocs"><p>Implement builtin <code>@log</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>log2</code></pre><div class="fieldDocs"><p>Implement builtin <code>@log2</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>log10</code></pre><div class="fieldDocs"><p>Implement builtin <code>@log10</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>abs</code></pre><div class="fieldDocs"><p>Implement builtin <code>@abs</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>floor</code></pre><div class="fieldDocs"><p>Implement builtin <code>@floor</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>ceil</code></pre><div class="fieldDocs"><p>Implement builtin <code>@ceil</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>trunc</code></pre><div class="fieldDocs"><p>Implement builtin <code>@trunc</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>round</code></pre><div class="fieldDocs"><p>Implement builtin <code>@round</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>tag_name</code></pre><div class="fieldDocs"><p>Implement builtin <code>@tagName</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>type_name</code></pre><div class="fieldDocs"><p>Implement builtin <code>@typeName</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>frame_type</code></pre><div class="fieldDocs"><p>Implement builtin <code>@Frame</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>frame_size</code></pre><div class="fieldDocs"><p>Implement builtin <code>@frameSize</code>. Uses <code>un_node</code>.</p>
+</div></div><div><pre><code>int_from_float</code></pre><div class="fieldDocs"><p>Implements the <code>@intFromFloat</code> builtin.
+Uses <code>pl_node</code> with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>. <code>lhs</code> is dest type, <code>rhs</code> is operand.</p>
+</div></div><div><pre><code>float_from_int</code></pre><div class="fieldDocs"><p>Implements the <code>@floatFromInt</code> builtin.
+Uses <code>pl_node</code> with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>. <code>lhs</code> is dest type, <code>rhs</code> is operand.</p>
+</div></div><div><pre><code>ptr_from_int</code></pre><div class="fieldDocs"><p>Implements the <code>@ptrFromInt</code> builtin.
+Uses <code>pl_node</code> with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>. <code>lhs</code> is dest type, <code>rhs</code> is operand.</p>
+</div></div><div><pre><code>enum_from_int</code></pre><div class="fieldDocs"><p>Converts an integer into an enum value.
+Uses <code>pl_node</code> with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>. <code>lhs</code> is dest type, <code>rhs</code> is operand.</p>
+</div></div><div><pre><code>float_cast</code></pre><div class="fieldDocs"><p>Convert a larger float type to any other float type, possibly causing
+a loss of precision.
+Uses the <code>pl_node</code> field. AST is the <code>@floatCast</code> syntax.
+Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code> with lhs as the dest type, rhs the operand.</p>
+</div></div><div><pre><code>int_cast</code></pre><div class="fieldDocs"><p>Implements the <code>@intCast</code> builtin.
+Uses <code>pl_node</code> with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>. <code>lhs</code> is dest type, <code>rhs</code> is operand.
+Convert an integer value to another integer type, asserting that the destination type
+can hold the same mathematical value.</p>
+</div></div><div><pre><code>ptr_cast</code></pre><div class="fieldDocs"><p>Implements the <code>@ptrCast</code> builtin.
+Uses <code>pl_node</code> with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>. <code>lhs</code> is dest type, <code>rhs</code> is operand.
+Not every <code>@ptrCast</code> will correspond to this instruction - see also
+<code>ptr_cast_full</code> in <code><a href="std.zig.Zir.Inst.Extended.html">Extended</a></code>.</p>
+</div></div><div><pre><code>truncate</code></pre><div class="fieldDocs"><p>Implements the <code>@truncate</code> builtin.
+Uses <code>pl_node</code> with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>. <code>lhs</code> is dest type, <code>rhs</code> is operand.</p>
+</div></div><div><pre><code>has_decl</code></pre><div class="fieldDocs"><p>Implements the <code>@hasDecl</code> builtin.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>has_field</code></pre><div class="fieldDocs"><p>Implements the <code>@hasField</code> builtin.
+Uses the <code>pl_node</code> union field. Payload is <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>clz</code></pre><div class="fieldDocs"><p>Implements the <code>@clz</code> builtin. Uses the <code>un_node</code> union field.</p>
+</div></div><div><pre><code>ctz</code></pre><div class="fieldDocs"><p>Implements the <code>@ctz</code> builtin. Uses the <code>un_node</code> union field.</p>
+</div></div><div><pre><code>pop_count</code></pre><div class="fieldDocs"><p>Implements the <code>@popCount</code> builtin. Uses the <code>un_node</code> union field.</p>
+</div></div><div><pre><code>byte_swap</code></pre><div class="fieldDocs"><p>Implements the <code>@byteSwap</code> builtin. Uses the <code>un_node</code> union field.</p>
+</div></div><div><pre><code>bit_reverse</code></pre><div class="fieldDocs"><p>Implements the <code>@bitReverse</code> builtin. Uses the <code>un_node</code> union field.</p>
+</div></div><div><pre><code>bit_offset_of</code></pre><div class="fieldDocs"><p>Implements the <code>@bitOffsetOf</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>offset_of</code></pre><div class="fieldDocs"><p>Implements the <code>@offsetOf</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>splat</code></pre><div class="fieldDocs"><p>Implements the <code>@splat</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>reduce</code></pre><div class="fieldDocs"><p>Implements the <code>@reduce</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>shuffle</code></pre><div class="fieldDocs"><p>Implements the <code>@shuffle</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.Shuffle.html">Shuffle</a></code>.</p>
+</div></div><div><pre><code>atomic_load</code></pre><div class="fieldDocs"><p>Implements the <code>@atomicLoad</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.AtomicLoad.html">AtomicLoad</a></code>.</p>
+</div></div><div><pre><code>atomic_rmw</code></pre><div class="fieldDocs"><p>Implements the <code>@atomicRmw</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.AtomicRmw.html">AtomicRmw</a></code>.</p>
+</div></div><div><pre><code>atomic_store</code></pre><div class="fieldDocs"><p>Implements the <code>@atomicStore</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.AtomicStore.html">AtomicStore</a></code>.</p>
+</div></div><div><pre><code>mul_add</code></pre><div class="fieldDocs"><p>Implements the <code>@mulAdd</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.MulAdd.html">MulAdd</a></code>.
+The addend communicates the type of the builtin.
+The mulends need to be coerced to the same type.</p>
+</div></div><div><pre><code>memcpy</code></pre><div class="fieldDocs"><p>Implements the <code>@memcpy</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>memset</code></pre><div class="fieldDocs"><p>Implements the <code>@memset</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code>.</p>
+</div></div><div><pre><code>min</code></pre><div class="fieldDocs"><p>Implements the <code>@min</code> builtin for 2 args.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code></p>
+</div></div><div><pre><code>max</code></pre><div class="fieldDocs"><p>Implements the <code>@max</code> builtin for 2 args.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.Bin.html">Bin</a></code></p>
+</div></div><div><pre><code>c_import</code></pre><div class="fieldDocs"><p>Implements the <code>@cImport</code> builtin.
+Uses the <code>pl_node</code> union field with payload <code><a href="std.zig.Zir.Inst.Block.html">Block</a></code>.</p>
+</div></div><div><pre><code>alloc</code></pre><div class="fieldDocs"><p>Allocates stack local memory.
+Uses the <code>un_node</code> union field. The operand is the type of the allocated object.
+The node source location points to a var decl node.
+A <code>make_ptr_const</code> instruction should be used once the value has
+been stored to the allocation. To ensure comptime value detection
+functions, there are some restrictions on how this pointer should be
+used prior to the <code>make_ptr_const</code> instruction: no pointer derived
+from this <code>alloc</code> may be returned from a block or stored to another
+address. In other words, it must be trivial to determine whether any
+given pointer derives from this one.</p>
+</div></div><div><pre><code>alloc_mut</code></pre><div class="fieldDocs"><p>Same as <code>alloc</code> except mutable. As such, <code>make_ptr_const</code> need not be used,
+and there are no restrictions on the usage of the pointer.</p>
+</div></div><div><pre><code>alloc_comptime_mut</code></pre><div class="fieldDocs"><p>Allocates comptime-mutable memory.
+Uses the <code>un_node</code> union field. The operand is the type of the allocated object.
+The node source location points to a var decl node.</p>
+</div></div><div><pre><code>alloc_inferred</code></pre><div class="fieldDocs"><p>Same as <code>alloc</code> except the type is inferred.
+Uses the <code>node</code> union field.</p>
+</div></div><div><pre><code>alloc_inferred_mut</code></pre><div class="fieldDocs"><p>Same as <code>alloc_inferred</code> except mutable.</p>
+</div></div><div><pre><code>alloc_inferred_comptime</code></pre><div class="fieldDocs"><p>Allocates comptime const memory.
+Uses the <code>node</code> union field. The type of the allocated object is inferred.
+The node source location points to a var decl node.</p>
+</div></div><div><pre><code>alloc_inferred_comptime_mut</code></pre><div class="fieldDocs"><p>Same as <code>alloc_comptime_mut</code> except the type is inferred.</p>
+</div></div><div><pre><code>resolve_inferred_alloc</code></pre><div class="fieldDocs"><p>Each <code>store_to_inferred_ptr</code> puts the type of the stored value into a set,
+and then <code>resolve_inferred_alloc</code> triggers peer type resolution on the set.
+The operand is a <code>alloc_inferred</code> or <code>alloc_inferred_mut</code> instruction, which
+is the allocation that needs to have its type inferred.
+Results in the final resolved pointer. The <code>alloc_inferred[_comptime][_mut]</code>
+instruction should never be referred to after this instruction.
+Uses the <code>un_node</code> field. The AST node is the var decl.</p>
+</div></div><div><pre><code>make_ptr_const</code></pre><div class="fieldDocs"><p>Turns a pointer coming from an <code>alloc</code> or <code>Extended.alloc</code> into a constant
+version of the same pointer. For inferred allocations this is instead implicitly
+handled by the <code>resolve_inferred_alloc</code> instruction.
+Uses the <code>un_node</code> union field.</p>
+</div></div><div><pre><code>@&quot;resume&quot;</code></pre><div class="fieldDocs"><p>Implements <code>resume</code> syntax. Uses <code>un_node</code> field.</p>
+</div></div><div><pre><code>@&quot;await&quot;</code></pre></div><div><pre><code>@&quot;defer&quot;</code></pre><div class="fieldDocs"><p>A defer statement.
+Uses the <code>defer</code> union field.</p>
+</div></div><div><pre><code>defer_err_code</code></pre><div class="fieldDocs"><p>An errdefer statement with a code.
+Uses the <code>err_defer_code</code> union field.</p>
+</div></div><div><pre><code>save_err_ret_index</code></pre><div class="fieldDocs"><p>Requests that Sema update the saved error return trace index for the enclosing
+block, if the operand is .none or of an error/error-union type.
+Uses the <code>save_err_ret_index</code> field.</p>
+</div></div><div><pre><code>restore_err_ret_index_unconditional</code></pre><div class="fieldDocs"><p>Specialized form of <code>Extended.restore_err_ret_index</code>.
+Unconditionally restores the error return index to its last saved state
+in the block referred to by <code>operand</code>. If <code>operand</code> is <code>none</code>, restores
+to the point of function entry.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>restore_err_ret_index_fn_entry</code></pre><div class="fieldDocs"><p>Specialized form of <code>Extended.restore_err_ret_index</code>.
+Restores the error return index to its state at the entry of
+the current function conditional on <code>operand</code> being a non-error.
+If <code>operand</code> is <code>none</code>, restores unconditionally.
+Uses the <code>un_node</code> field.</p>
+</div></div><div><pre><code>extended</code></pre><div class="fieldDocs"><p>The ZIR instruction tag is one of the <code><a href="std.zig.Zir.Inst.Extended.html">Extended</a></code> ones.
+Uses the <code>extended</code> union field.</p>
+</div></div></div></div><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.zig.Zir.Inst.Tag.data_tags" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">data_tags</span><a href="#src.zig-std.zig.Zir.Inst.Tag.data_tags">[src]</a></h2><div class="tldDocs"><p>Used by debug safety-checking code.</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.Zir.Inst.Tag.data_tags">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> data_tags = list: {
+    <span class="tok-builtin">@setEvalBranchQuota</span>(<span class="tok-number">2000</span>);
+    <span class="tok-kw">break</span> :list <a href="std.html">std</a>.<a href="std.enums.html">enums</a>.<a href="std.enums.html#std.enums.directEnumArray">directEnumArray</a>(<a href="std.zig.Zir.Inst.Tag.html">Tag</a>, <a href="std.zig.Zir.Inst.Data.html">Data</a>.<a href="std.zig.Zir.Inst.Data.FieldEnum.html">FieldEnum</a>, <span class="tok-number">0</span>, .{
+        .add = .pl_node,
+        .addwrap = .pl_node,
+        .add_sat = .pl_node,
+        .add_unsafe = .pl_node,
+        .sub = .pl_node,
+        .subwrap = .pl_node,
+        .sub_sat = .pl_node,
+        .mul = .pl_node,
+        .mulwrap = .pl_node,
+        .mul_sat = .pl_node,
+
+        .param = .pl_tok,
+        .param_comptime = .pl_tok,
+        .param_anytype = .str_tok,
+        .param_anytype_comptime = .str_tok,
+        .array_cat = .pl_node,
+        .array_mul = .pl_node,
+        .array_type = .pl_node,
+        .array_type_sentinel = .pl_node,
+        .vector_type = .pl_node,
+        .elem_type = .un_node,
+        .indexable_ptr_elem_type = .un_node,
+        .vec_arr_elem_type = .un_node,
+        .indexable_ptr_len = .un_node,
+        .anyframe_type = .un_node,
+        .as_node = .pl_node,
+        .as_shift_operand = .pl_node,
+        .bit_and = .pl_node,
+        .bitcast = .pl_node,
+        .bit_not = .un_node,
+        .bit_or = .pl_node,
+        .block = .pl_node,
+        .block_comptime = .pl_node,
+        .block_inline = .pl_node,
+        .declaration = .declaration,
+        .suspend_block = .pl_node,
+        .bool_not = .un_node,
+        .bool_br_and = .pl_node,
+        .bool_br_or = .pl_node,
+        .@&quot;break&quot; = .@&quot;break&quot;,
+        .break_inline = .@&quot;break&quot;,
+        .switch_continue = .@&quot;break&quot;,
+        .check_comptime_control_flow = .un_node,
+        .for_len = .pl_node,
+        .call = .pl_node,
+        .field_call = .pl_node,
+        .cmp_lt = .pl_node,
+        .cmp_lte = .pl_node,
+        .cmp_eq = .pl_node,
+        .cmp_gte = .pl_node,
+        .cmp_gt = .pl_node,
+        .cmp_neq = .pl_node,
+        .condbr = .pl_node,
+        .condbr_inline = .pl_node,
+        .@&quot;try&quot; = .pl_node,
+        .try_ptr = .pl_node,
+        .error_set_decl = .pl_node,
+        .dbg_stmt = .dbg_stmt,
+        .dbg_var_ptr = .str_op,
+        .dbg_var_val = .str_op,
+        .decl_ref = .str_tok,
+        .decl_val = .str_tok,
+        .load = .un_node,
+        .div = .pl_node,
+        .elem_ptr = .pl_node,
+        .elem_ptr_node = .pl_node,
+        .elem_val = .pl_node,
+        .elem_val_node = .pl_node,
+        .elem_val_imm = .elem_val_imm,
+        .ensure_result_used = .un_node,
+        .ensure_result_non_error = .un_node,
+        .ensure_err_union_payload_void = .un_node,
+        .error_union_type = .pl_node,
+        .error_value = .str_tok,
+        .@&quot;export&quot; = .pl_node,
+        .field_ptr = .pl_node,
+        .field_val = .pl_node,
+        .field_ptr_named = .pl_node,
+        .field_val_named = .pl_node,
+        .func = .pl_node,
+        .func_inferred = .pl_node,
+        .func_fancy = .pl_node,
+        .import = .pl_tok,
+        .int = .int,
+        .int_big = .str,
+        .float = .float,
+        .float128 = .pl_node,
+        .int_type = .int_type,
+        .is_non_null = .un_node,
+        .is_non_null_ptr = .un_node,
+        .is_non_err = .un_node,
+        .is_non_err_ptr = .un_node,
+        .ret_is_non_err = .un_node,
+        .loop = .pl_node,
+        .repeat = .node,
+        .repeat_inline = .node,
+        .merge_error_sets = .pl_node,
+        .mod_rem = .pl_node,
+        .ref = .un_tok,
+        .ret_node = .un_node,
+        .ret_load = .un_node,
+        .ret_implicit = .un_tok,
+        .ret_err_value = .str_tok,
+        .ret_err_value_code = .str_tok,
+        .ret_ptr = .node,
+        .ret_type = .node,
+        .ptr_type = .ptr_type,
+        .slice_start = .pl_node,
+        .slice_end = .pl_node,
+        .slice_sentinel = .pl_node,
+        .slice_length = .pl_node,
+        .slice_sentinel_ty = .un_node,
+        .store_node = .pl_node,
+        .store_to_inferred_ptr = .pl_node,
+        .str = .str,
+        .negate = .un_node,
+        .negate_wrap = .un_node,
+        .typeof = .un_node,
+        .typeof_log2_int_type = .un_node,
+        .@&quot;unreachable&quot; = .@&quot;unreachable&quot;,
+        .xor = .pl_node,
+        .optional_type = .un_node,
+        .optional_payload_safe = .un_node,
+        .optional_payload_unsafe = .un_node,
+        .optional_payload_safe_ptr = .un_node,
+        .optional_payload_unsafe_ptr = .un_node,
+        .err_union_payload_unsafe = .un_node,
+        .err_union_payload_unsafe_ptr = .un_node,
+        .err_union_code = .un_node,
+        .err_union_code_ptr = .un_node,
+        .enum_literal = .str_tok,
+        .decl_literal = .pl_node,
+        .decl_literal_no_coerce = .pl_node,
+        .switch_block = .pl_node,
+        .switch_block_ref = .pl_node,
+        .switch_block_err_union = .pl_node,
+        .validate_deref = .un_node,
+        .validate_destructure = .pl_node,
+        .field_type_ref = .pl_node,
+        .union_init = .pl_node,
+        .type_info = .un_node,
+        .size_of = .un_node,
+        .bit_size_of = .un_node,
+        .opt_eu_base_ptr_init = .un_node,
+        .coerce_ptr_elem_ty = .pl_node,
+        .validate_ref_ty = .un_tok,
+        .validate_const = .un_node,
+
+        .int_from_ptr = .un_node,
+        .compile_error = .un_node,
+        .set_eval_branch_quota = .un_node,
+        .int_from_enum = .un_node,
+        .align_of = .un_node,
+        .int_from_bool = .un_node,
+        .embed_file = .un_node,
+        .error_name = .un_node,
+        .panic = .un_node,
+        .trap = .node,
+        .set_runtime_safety = .un_node,
+        .sqrt = .un_node,
+        .sin = .un_node,
+        .cos = .un_node,
+        .tan = .un_node,
+        .exp = .un_node,
+        .exp2 = .un_node,
+        .log = .un_node,
+        .log2 = .un_node,
+        .log10 = .un_node,
+        .abs = .un_node,
+        .floor = .un_node,
+        .ceil = .un_node,
+        .trunc = .un_node,
+        .round = .un_node,
+        .tag_name = .un_node,
+        .type_name = .un_node,
+        .frame_type = .un_node,
+        .frame_size = .un_node,
+
+        .int_from_float = .pl_node,
+        .float_from_int = .pl_node,
+        .ptr_from_int = .pl_node,
+        .enum_from_int = .pl_node,
+        .float_cast = .pl_node,
+        .int_cast = .pl_node,
+        .ptr_cast = .pl_node,
+        .truncate = .pl_node,
+        .typeof_builtin = .pl_node,
+
+        .has_decl = .pl_node,
+        .has_field = .pl_node,
+
+        .clz = .un_node,
+        .ctz = .un_node,
+        .pop_count = .un_node,
+        .byte_swap = .un_node,
+        .bit_reverse = .un_node,
+
+        .div_exact = .pl_node,
+        .div_floor = .pl_node,
+        .div_trunc = .pl_node,
+        .mod = .pl_node,
+        .rem = .pl_node,
+
+        .shl = .pl_node,
+        .shl_exact = .pl_node,
+        .shl_sat = .pl_node,
+        .shr = .pl_node,
+        .shr_exact = .pl_node,
+
+        .bit_offset_of = .pl_node,
+        .offset_of = .pl_node,
+        .splat = .pl_node,
+        .reduce = .pl_node,
+        .shuffle = .pl_node,
+        .atomic_load = .pl_node,
+        .atomic_rmw = .pl_node,
+        .atomic_store = .pl_node,
+        .mul_add = .pl_node,
+        .builtin_call = .pl_node,
+        .max = .pl_node,
+        .memcpy = .pl_node,
+        .memset = .pl_node,
+        .min = .pl_node,
+        .c_import = .pl_node,
+
+        .alloc = .un_node,
+        .alloc_mut = .un_node,
+        .alloc_comptime_mut = .un_node,
+        .alloc_inferred = .node,
+        .alloc_inferred_mut = .node,
+        .alloc_inferred_comptime = .node,
+        .alloc_inferred_comptime_mut = .node,
+        .resolve_inferred_alloc = .un_node,
+        .make_ptr_const = .un_node,
+
+        .@&quot;resume&quot; = .un_node,
+        .@&quot;await&quot; = .un_node,
+
+        .@&quot;defer&quot; = .@&quot;defer&quot;,
+        .defer_err_code = .defer_err_code,
+
+        .save_err_ret_index = .save_err_ret_index,
+        .restore_err_ret_index_unconditional = .un_node,
+        .restore_err_ret_index_fn_entry = .un_node,
+
+        .struct_init_empty = .un_node,
+        .struct_init_empty_result = .un_node,
+        .struct_init_empty_ref_result = .un_node,
+        .struct_init_anon = .pl_node,
+        .struct_init = .pl_node,
+        .struct_init_ref = .pl_node,
+        .validate_struct_init_ty = .un_node,
+        .validate_struct_init_result_ty = .un_node,
+        .validate_ptr_struct_init = .pl_node,
+        .struct_init_field_type = .pl_node,
+        .struct_init_field_ptr = .pl_node,
+        .array_init_anon = .pl_node,
+        .array_init = .pl_node,
+        .array_init_ref = .pl_node,
+        .validate_array_init_ty = .pl_node,
+        .validate_array_init_result_ty = .pl_node,
+        .validate_array_init_ref_ty = .pl_node,
+        .validate_ptr_array_init = .pl_node,
+        .array_init_elem_type = .bin,
+        .array_init_elem_ptr = .pl_node,
+
+        .extended = .extended,
+    });
+}</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.zig.Zir.Inst.Tag.isNoReturn" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">isNoReturn</span><a href="#src.zig-std.zig.Zir.Inst.Tag.isNoReturn">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isNoReturn</span>(tag: <a href="std.zig.Zir.Inst.Tag.html">Tag</a>) <span class="tok-type">bool</span></code></pre></div><div class="tldDocs"><p>Returns whether the instruction is one of the control flow &quot;noreturn&quot; types.
+Function calls do not count.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>tag: <a href="std.zig.Zir.Inst.Tag.html">Tag</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.Zir.Inst.Tag.isNoReturn">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isNoReturn</span>(tag: <a href="std.zig.Zir.Inst.Tag.html">Tag</a>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (tag) {
+        .param,
+        .param_comptime,
+        .param_anytype,
+        .param_anytype_comptime,
+        .add,
+        .addwrap,
+        .add_sat,
+        .add_unsafe,
+        .alloc,
+        .alloc_mut,
+        .alloc_comptime_mut,
+        .alloc_inferred,
+        .alloc_inferred_mut,
+        .alloc_inferred_comptime,
+        .alloc_inferred_comptime_mut,
+        .make_ptr_const,
+        .array_cat,
+        .array_mul,
+        .array_type,
+        .array_type_sentinel,
+        .vector_type,
+        .elem_type,
+        .indexable_ptr_elem_type,
+        .vec_arr_elem_type,
+        .indexable_ptr_len,
+        .anyframe_type,
+        .as_node,
+        .as_shift_operand,
+        .bit_and,
+        .bitcast,
+        .bit_or,
+        .block,
+        .block_comptime,
+        .block_inline,
+        .declaration,
+        .suspend_block,
+        .loop,
+        .bool_br_and,
+        .bool_br_or,
+        .bool_not,
+        .call,
+        .field_call,
+        .cmp_lt,
+        .cmp_lte,
+        .cmp_eq,
+        .cmp_gte,
+        .cmp_gt,
+        .cmp_neq,
+        .error_set_decl,
+        .dbg_stmt,
+        .dbg_var_ptr,
+        .dbg_var_val,
+        .decl_ref,
+        .decl_val,
+        .load,
+        .div,
+        .elem_ptr,
+        .elem_val,
+        .elem_ptr_node,
+        .elem_val_node,
+        .elem_val_imm,
+        .ensure_result_used,
+        .ensure_result_non_error,
+        .ensure_err_union_payload_void,
+        .@&quot;export&quot;,
+        .field_ptr,
+        .field_val,
+        .field_ptr_named,
+        .field_val_named,
+        .func,
+        .func_inferred,
+        .func_fancy,
+        .has_decl,
+        .int,
+        .int_big,
+        .float,
+        .float128,
+        .int_type,
+        .is_non_null,
+        .is_non_null_ptr,
+        .is_non_err,
+        .is_non_err_ptr,
+        .ret_is_non_err,
+        .mod_rem,
+        .mul,
+        .mulwrap,
+        .mul_sat,
+        .ref,
+        .shl,
+        .shl_sat,
+        .shr,
+        .store_node,
+        .store_to_inferred_ptr,
+        .str,
+        .sub,
+        .subwrap,
+        .sub_sat,
+        .negate,
+        .negate_wrap,
+        .typeof,
+        .typeof_builtin,
+        .xor,
+        .optional_type,
+        .optional_payload_safe,
+        .optional_payload_unsafe,
+        .optional_payload_safe_ptr,
+        .optional_payload_unsafe_ptr,
+        .err_union_payload_unsafe,
+        .err_union_payload_unsafe_ptr,
+        .err_union_code,
+        .err_union_code_ptr,
+        .ptr_type,
+        .enum_literal,
+        .decl_literal,
+        .decl_literal_no_coerce,
+        .merge_error_sets,
+        .error_union_type,
+        .bit_not,
+        .error_value,
+        .slice_start,
+        .slice_end,
+        .slice_sentinel,
+        .slice_length,
+        .slice_sentinel_ty,
+        .import,
+        .typeof_log2_int_type,
+        .resolve_inferred_alloc,
+        .set_eval_branch_quota,
+        .switch_block,
+        .switch_block_ref,
+        .switch_block_err_union,
+        .validate_deref,
+        .validate_destructure,
+        .union_init,
+        .field_type_ref,
+        .enum_from_int,
+        .int_from_enum,
+        .type_info,
+        .size_of,
+        .bit_size_of,
+        .int_from_ptr,
+        .align_of,
+        .int_from_bool,
+        .embed_file,
+        .error_name,
+        .set_runtime_safety,
+        .sqrt,
+        .sin,
+        .cos,
+        .tan,
+        .exp,
+        .exp2,
+        .log,
+        .log2,
+        .log10,
+        .abs,
+        .floor,
+        .ceil,
+        .trunc,
+        .round,
+        .tag_name,
+        .type_name,
+        .frame_type,
+        .frame_size,
+        .int_from_float,
+        .float_from_int,
+        .ptr_from_int,
+        .float_cast,
+        .int_cast,
+        .ptr_cast,
+        .truncate,
+        .has_field,
+        .clz,
+        .ctz,
+        .pop_count,
+        .byte_swap,
+        .bit_reverse,
+        .div_exact,
+        .div_floor,
+        .div_trunc,
+        .mod,
+        .rem,
+        .shl_exact,
+        .shr_exact,
+        .bit_offset_of,
+        .offset_of,
+        .splat,
+        .reduce,
+        .shuffle,
+        .atomic_load,
+        .atomic_rmw,
+        .atomic_store,
+        .mul_add,
+        .builtin_call,
+        .max,
+        .memcpy,
+        .memset,
+        .min,
+        .c_import,
+        .@&quot;resume&quot;,
+        .@&quot;await&quot;,
+        .ret_err_value_code,
+        .extended,
+        .ret_ptr,
+        .ret_type,
+        .@&quot;try&quot;,
+        .try_ptr,
+        .@&quot;defer&quot;,
+        .defer_err_code,
+        .save_err_ret_index,
+        .for_len,
+        .opt_eu_base_ptr_init,
+        .coerce_ptr_elem_ty,
+        .struct_init_empty,
+        .struct_init_empty_result,
+        .struct_init_empty_ref_result,
+        .struct_init_anon,
+        .struct_init,
+        .struct_init_ref,
+        .validate_struct_init_ty,
+        .validate_struct_init_result_ty,
+        .validate_ptr_struct_init,
+        .struct_init_field_type,
+        .struct_init_field_ptr,
+        .array_init_anon,
+        .array_init,
+        .array_init_ref,
+        .validate_array_init_ty,
+        .validate_array_init_result_ty,
+        .validate_array_init_ref_ty,
+        .validate_ptr_array_init,
+        .array_init_elem_type,
+        .array_init_elem_ptr,
+        .validate_ref_ty,
+        .validate_const,
+        .restore_err_ret_index_unconditional,
+        .restore_err_ret_index_fn_entry,
+        =&gt; <span class="tok-null">false</span>,
+
+        .@&quot;break&quot;,
+        .break_inline,
+        .condbr,
+        .condbr_inline,
+        .compile_error,
+        .ret_node,
+        .ret_load,
+        .ret_implicit,
+        .ret_err_value,
+        .@&quot;unreachable&quot;,
+        .repeat,
+        .repeat_inline,
+        .panic,
+        .trap,
+        .check_comptime_control_flow,
+        .switch_continue,
+        =&gt; <span class="tok-null">true</span>,
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.zig.Zir.Inst.Tag.isAlwaysVoid" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">isAlwaysVoid</span><a href="#src.zig-std.zig.Zir.Inst.Tag.isAlwaysVoid">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isAlwaysVoid</span>(tag: <a href="std.zig.Zir.Inst.Tag.html">Tag</a>, data: <a href="std.zig.Zir.Inst.Data.html">Data</a>) <span class="tok-type">bool</span></code></pre></div><div class="tldDocs"><p>AstGen uses this to find out if <code>Ref.void_value</code> should be used in place
+of the result of a given instruction. This allows Sema to forego adding
+the instruction to the map after analysis.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>tag: <a href="std.zig.Zir.Inst.Tag.html">Tag</a></code></pre></div><div><pre><code>data: <a href="std.zig.Zir.Inst.Data.html">Data</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.Zir.Inst.Tag.isAlwaysVoid">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isAlwaysVoid</span>(tag: <a href="std.zig.Zir.Inst.Tag.html">Tag</a>, data: <a href="std.zig.Zir.Inst.Data.html">Data</a>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (tag) {
+        .dbg_stmt,
+        .dbg_var_ptr,
+        .dbg_var_val,
+        .ensure_result_used,
+        .ensure_result_non_error,
+        .ensure_err_union_payload_void,
+        .set_eval_branch_quota,
+        .atomic_store,
+        .store_node,
+        .store_to_inferred_ptr,
+        .validate_deref,
+        .validate_destructure,
+        .@&quot;export&quot;,
+        .set_runtime_safety,
+        .memcpy,
+        .memset,
+        .check_comptime_control_flow,
+        .@&quot;defer&quot;,
+        .defer_err_code,
+        .save_err_ret_index,
+        .restore_err_ret_index_unconditional,
+        .restore_err_ret_index_fn_entry,
+        .validate_struct_init_ty,
+        .validate_struct_init_result_ty,
+        .validate_ptr_struct_init,
+        .validate_array_init_ty,
+        .validate_array_init_result_ty,
+        .validate_ptr_array_init,
+        .validate_ref_ty,
+        .validate_const,
+        =&gt; <span class="tok-null">true</span>,
+
+        .param,
+        .param_comptime,
+        .param_anytype,
+        .param_anytype_comptime,
+        .add,
+        .addwrap,
+        .add_sat,
+        .add_unsafe,
+        .alloc,
+        .alloc_mut,
+        .alloc_comptime_mut,
+        .alloc_inferred,
+        .alloc_inferred_mut,
+        .alloc_inferred_comptime,
+        .alloc_inferred_comptime_mut,
+        .resolve_inferred_alloc,
+        .make_ptr_const,
+        .array_cat,
+        .array_mul,
+        .array_type,
+        .array_type_sentinel,
+        .vector_type,
+        .elem_type,
+        .indexable_ptr_elem_type,
+        .vec_arr_elem_type,
+        .indexable_ptr_len,
+        .anyframe_type,
+        .as_node,
+        .as_shift_operand,
+        .bit_and,
+        .bitcast,
+        .bit_or,
+        .block,
+        .block_comptime,
+        .block_inline,
+        .declaration,
+        .suspend_block,
+        .loop,
+        .bool_br_and,
+        .bool_br_or,
+        .bool_not,
+        .call,
+        .field_call,
+        .cmp_lt,
+        .cmp_lte,
+        .cmp_eq,
+        .cmp_gte,
+        .cmp_gt,
+        .cmp_neq,
+        .error_set_decl,
+        .decl_ref,
+        .decl_val,
+        .load,
+        .div,
+        .elem_ptr,
+        .elem_val,
+        .elem_ptr_node,
+        .elem_val_node,
+        .elem_val_imm,
+        .field_ptr,
+        .field_val,
+        .field_ptr_named,
+        .field_val_named,
+        .func,
+        .func_inferred,
+        .func_fancy,
+        .has_decl,
+        .int,
+        .int_big,
+        .float,
+        .float128,
+        .int_type,
+        .is_non_null,
+        .is_non_null_ptr,
+        .is_non_err,
+        .is_non_err_ptr,
+        .ret_is_non_err,
+        .mod_rem,
+        .mul,
+        .mulwrap,
+        .mul_sat,
+        .ref,
+        .shl,
+        .shl_sat,
+        .shr,
+        .str,
+        .sub,
+        .subwrap,
+        .sub_sat,
+        .negate,
+        .negate_wrap,
+        .typeof,
+        .typeof_builtin,
+        .xor,
+        .optional_type,
+        .optional_payload_safe,
+        .optional_payload_unsafe,
+        .optional_payload_safe_ptr,
+        .optional_payload_unsafe_ptr,
+        .err_union_payload_unsafe,
+        .err_union_payload_unsafe_ptr,
+        .err_union_code,
+        .err_union_code_ptr,
+        .ptr_type,
+        .enum_literal,
+        .decl_literal,
+        .decl_literal_no_coerce,
+        .merge_error_sets,
+        .error_union_type,
+        .bit_not,
+        .error_value,
+        .slice_start,
+        .slice_end,
+        .slice_sentinel,
+        .slice_length,
+        .slice_sentinel_ty,
+        .import,
+        .typeof_log2_int_type,
+        .switch_block,
+        .switch_block_ref,
+        .switch_block_err_union,
+        .union_init,
+        .field_type_ref,
+        .enum_from_int,
+        .int_from_enum,
+        .type_info,
+        .size_of,
+        .bit_size_of,
+        .int_from_ptr,
+        .align_of,
+        .int_from_bool,
+        .embed_file,
+        .error_name,
+        .sqrt,
+        .sin,
+        .cos,
+        .tan,
+        .exp,
+        .exp2,
+        .log,
+        .log2,
+        .log10,
+        .abs,
+        .floor,
+        .ceil,
+        .trunc,
+        .round,
+        .tag_name,
+        .type_name,
+        .frame_type,
+        .frame_size,
+        .int_from_float,
+        .float_from_int,
+        .ptr_from_int,
+        .float_cast,
+        .int_cast,
+        .ptr_cast,
+        .truncate,
+        .has_field,
+        .clz,
+        .ctz,
+        .pop_count,
+        .byte_swap,
+        .bit_reverse,
+        .div_exact,
+        .div_floor,
+        .div_trunc,
+        .mod,
+        .rem,
+        .shl_exact,
+        .shr_exact,
+        .bit_offset_of,
+        .offset_of,
+        .splat,
+        .reduce,
+        .shuffle,
+        .atomic_load,
+        .atomic_rmw,
+        .mul_add,
+        .builtin_call,
+        .max,
+        .min,
+        .c_import,
+        .@&quot;resume&quot;,
+        .@&quot;await&quot;,
+        .ret_err_value_code,
+        .@&quot;break&quot;,
+        .break_inline,
+        .condbr,
+        .condbr_inline,
+        .switch_continue,
+        .compile_error,
+        .ret_node,
+        .ret_load,
+        .ret_implicit,
+        .ret_err_value,
+        .ret_ptr,
+        .ret_type,
+        .@&quot;unreachable&quot;,
+        .repeat,
+        .repeat_inline,
+        .panic,
+        .trap,
+        .for_len,
+        .@&quot;try&quot;,
+        .try_ptr,
+        .opt_eu_base_ptr_init,
+        .coerce_ptr_elem_ty,
+        .struct_init_empty,
+        .struct_init_empty_result,
+        .struct_init_empty_ref_result,
+        .struct_init_anon,
+        .struct_init,
+        .struct_init_ref,
+        .struct_init_field_type,
+        .struct_init_field_ptr,
+        .array_init_anon,
+        .array_init,
+        .array_init_ref,
+        .validate_array_init_ref_ty,
+        .array_init_elem_type,
+        .array_init_elem_ptr,
+        =&gt; <span class="tok-null">false</span>,
+
+        .extended =&gt; <span class="tok-kw">switch</span> (data.extended.opcode) {
+            .branch_hint,
+            .breakpoint,
+            .disable_instrumentation,
+            .disable_intrinsics,
+            =&gt; <span class="tok-null">true</span>,
+            <span class="tok-kw">else</span> =&gt; <span class="tok-null">false</span>,
+        },
+    };
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.zig.Zir.Inst.Tag">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Tag = <span class="tok-kw">enum</span>(<span class="tok-type">u8</span>) {
+    <span class="tok-comment">/// Arithmetic addition, asserts no integer overflow.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    add,
+    <span class="tok-comment">/// Twos complement wrapping integer addition.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    addwrap,
+    <span class="tok-comment">/// Saturating addition.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    add_sat,
+    <span class="tok-comment">/// The same as `add` except no safety check.</span>
+    add_unsafe,
+    <span class="tok-comment">/// Arithmetic subtraction. Asserts no integer overflow.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    sub,
+    <span class="tok-comment">/// Twos complement wrapping integer subtraction.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    subwrap,
+    <span class="tok-comment">/// Saturating subtraction.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    sub_sat,
+    <span class="tok-comment">/// Arithmetic multiplication. Asserts no integer overflow.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    mul,
+    <span class="tok-comment">/// Twos complement wrapping integer multiplication.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    mulwrap,
+    <span class="tok-comment">/// Saturating multiplication.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    mul_sat,
+    <span class="tok-comment">/// Implements the `@divExact` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `Bin`.</span>
+    div_exact,
+    <span class="tok-comment">/// Implements the `@divFloor` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `Bin`.</span>
+    div_floor,
+    <span class="tok-comment">/// Implements the `@divTrunc` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `Bin`.</span>
+    div_trunc,
+    <span class="tok-comment">/// Implements the `@mod` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `Bin`.</span>
+    mod,
+    <span class="tok-comment">/// Implements the `@rem` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `Bin`.</span>
+    rem,
+    <span class="tok-comment">/// Ambiguously remainder division or modulus. If the computation would possibly have</span>
+    <span class="tok-comment">/// a different value depending on whether the operation is remainder division or modulus,</span>
+    <span class="tok-comment">/// a compile error is emitted. Otherwise the computation is performed.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    mod_rem,
+    <span class="tok-comment">/// Integer shift-left. Zeroes are shifted in from the right hand side.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    shl,
+    <span class="tok-comment">/// Implements the `@shlExact` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `Bin`.</span>
+    shl_exact,
+    <span class="tok-comment">/// Saturating shift-left.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    shl_sat,
+    <span class="tok-comment">/// Integer shift-right. Arithmetic or logical depending on the signedness of</span>
+    <span class="tok-comment">/// the integer type.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    shr,
+    <span class="tok-comment">/// Implements the `@shrExact` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `Bin`.</span>
+    shr_exact,
+
+    <span class="tok-comment">/// Declares a parameter of the current function. Used for:</span>
+    <span class="tok-comment">/// * debug info</span>
+    <span class="tok-comment">/// * checking shadowing against declarations in the current namespace</span>
+    <span class="tok-comment">/// * parameter type expressions referencing other parameters</span>
+    <span class="tok-comment">/// These occur in the block outside a function body (the same block as</span>
+    <span class="tok-comment">/// contains the func instruction).</span>
+    <span class="tok-comment">/// Uses the `pl_tok` field. Token is the parameter name, payload is a `Param`.</span>
+    param,
+    <span class="tok-comment">/// Same as `param` except the parameter is marked comptime.</span>
+    param_comptime,
+    <span class="tok-comment">/// Same as `param` except the parameter is marked anytype.</span>
+    <span class="tok-comment">/// Uses the `str_tok` field. Token is the parameter name. String is the parameter name.</span>
+    param_anytype,
+    <span class="tok-comment">/// Same as `param` except the parameter is marked both comptime and anytype.</span>
+    <span class="tok-comment">/// Uses the `str_tok` field. Token is the parameter name. String is the parameter name.</span>
+    param_anytype_comptime,
+    <span class="tok-comment">/// Array concatenation. `a ++ b`</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    array_cat,
+    <span class="tok-comment">/// Array multiplication `a ** b`</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `ArrayMul`.</span>
+    array_mul,
+    <span class="tok-comment">/// `[N]T` syntax. No source location provided.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`. lhs is length, rhs is element type.</span>
+    array_type,
+    <span class="tok-comment">/// `[N:S]T` syntax. Source location is the array type expression node.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `ArrayTypeSentinel`.</span>
+    array_type_sentinel,
+    <span class="tok-comment">/// `@Vector` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with `Bin` payload.</span>
+    <span class="tok-comment">/// lhs is length, rhs is element type.</span>
+    vector_type,
+    <span class="tok-comment">/// Given a pointer type, returns its element type. Reaches through any optional or error</span>
+    <span class="tok-comment">/// union types wrapping the pointer. Asserts that the underlying type is a pointer type.</span>
+    <span class="tok-comment">/// Returns generic poison if the element type is `anyopaque`.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    elem_type,
+    <span class="tok-comment">/// Given an indexable pointer (slice, many-ptr, single-ptr-to-array), returns its</span>
+    <span class="tok-comment">/// element type. Emits a compile error if the type is not an indexable pointer.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    indexable_ptr_elem_type,
+    <span class="tok-comment">/// Given a vector or array type, returns its element type.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    vec_arr_elem_type,
+    <span class="tok-comment">/// Given a pointer to an indexable object, returns the len property. This is</span>
+    <span class="tok-comment">/// used by for loops. This instruction also emits a for-loop specific compile</span>
+    <span class="tok-comment">/// error if the indexable object is not indexable.</span>
+    <span class="tok-comment">/// Uses the `un_node` field. The AST node is the for loop node.</span>
+    indexable_ptr_len,
+    <span class="tok-comment">/// Create a `anyframe-&gt;T` type.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    anyframe_type,
+    <span class="tok-comment">/// Type coercion to the function's return type.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. Payload is `As`. AST node could be many things.</span>
+    as_node,
+    <span class="tok-comment">/// Same as `as_node` but ignores runtime to comptime int error.</span>
+    as_shift_operand,
+    <span class="tok-comment">/// Bitwise AND. `&amp;`</span>
+    bit_and,
+    <span class="tok-comment">/// Reinterpret the memory representation of a value as a different type.</span>
+    <span class="tok-comment">/// Uses the pl_node field with payload `Bin`.</span>
+    bitcast,
+    <span class="tok-comment">/// Bitwise NOT. `~`</span>
+    <span class="tok-comment">/// Uses `un_node`.</span>
+    bit_not,
+    <span class="tok-comment">/// Bitwise OR. `|`</span>
+    bit_or,
+    <span class="tok-comment">/// A labeled block of code, which can return a value.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Block`.</span>
+    block,
+    <span class="tok-comment">/// Like `block`, but forces full evaluation of its contents at compile-time.</span>
+    <span class="tok-comment">/// Exited with `break_inline`.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `BlockComptime`.</span>
+    block_comptime,
+    <span class="tok-comment">/// A list of instructions which are analyzed in the parent context, without</span>
+    <span class="tok-comment">/// generating a runtime block. Must terminate with an &quot;inline&quot; variant of</span>
+    <span class="tok-comment">/// a noreturn instruction.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Block`.</span>
+    block_inline,
+    <span class="tok-comment">/// This instruction may only ever appear in the list of declarations for a</span>
+    <span class="tok-comment">/// namespace type, e.g. within a `struct_decl` instruction. It represents a</span>
+    <span class="tok-comment">/// single source declaration (`const`/`var`/`fn`), containing the name,</span>
+    <span class="tok-comment">/// attributes, type, and value of the declaration.</span>
+    <span class="tok-comment">/// Uses the `declaration` union field. Payload is `Declaration`.</span>
+    declaration,
+    <span class="tok-comment">/// Implements `suspend {...}`.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Block`.</span>
+    suspend_block,
+    <span class="tok-comment">/// Boolean NOT. See also `bit_not`.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    bool_not,
+    <span class="tok-comment">/// Short-circuiting boolean `and`. `lhs` is a boolean `Ref` and the other operand</span>
+    <span class="tok-comment">/// is a block, which is evaluated if `lhs` is `true`.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `BoolBr`.</span>
+    bool_br_and,
+    <span class="tok-comment">/// Short-circuiting boolean `or`. `lhs` is a boolean `Ref` and the other operand</span>
+    <span class="tok-comment">/// is a block, which is evaluated if `lhs` is `false`.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `BoolBr`.</span>
+    bool_br_or,
+    <span class="tok-comment">/// Return a value from a block.</span>
+    <span class="tok-comment">/// Uses the `break` union field.</span>
+    <span class="tok-comment">/// Uses the source information from previous instruction.</span>
+    @&quot;break&quot;,
+    <span class="tok-comment">/// Return a value from a block. This instruction is used as the terminator</span>
+    <span class="tok-comment">/// of a `block_inline`. It allows using the return value from `Sema.analyzeBody`.</span>
+    <span class="tok-comment">/// This instruction may also be used when it is known that there is only one</span>
+    <span class="tok-comment">/// break instruction in a block, and the target block is the parent.</span>
+    <span class="tok-comment">/// Uses the `break` union field.</span>
+    break_inline,
+    <span class="tok-comment">/// Branch from within a switch case to the case specified by the operand.</span>
+    <span class="tok-comment">/// Uses the `break` union field. `block_inst` refers to a `switch_block` or `switch_block_ref`.</span>
+    switch_continue,
+    <span class="tok-comment">/// Checks that comptime control flow does not happen inside a runtime block.</span>
+    <span class="tok-comment">/// Uses the `un_node` union field.</span>
+    check_comptime_control_flow,
+    <span class="tok-comment">/// Function call.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `Call`.</span>
+    <span class="tok-comment">/// AST node is the function call.</span>
+    call,
+    <span class="tok-comment">/// Function call using `a.b()` syntax.</span>
+    <span class="tok-comment">/// Uses the named field as the callee. If there is no such field, searches in the type for</span>
+    <span class="tok-comment">/// a decl matching the field name. The decl is resolved and we ensure that it's a function</span>
+    <span class="tok-comment">/// which can accept the object as the first parameter, with one pointer fixup. This</span>
+    <span class="tok-comment">/// function is then used as the callee, with the object as an implicit first parameter.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `FieldCall`.</span>
+    <span class="tok-comment">/// AST node is the function call.</span>
+    field_call,
+    <span class="tok-comment">/// Implements the `@call` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `BuiltinCall`.</span>
+    <span class="tok-comment">/// AST node is the builtin call.</span>
+    builtin_call,
+    <span class="tok-comment">/// `&lt;`</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    cmp_lt,
+    <span class="tok-comment">/// `&lt;=`</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    cmp_lte,
+    <span class="tok-comment">/// `==`</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    cmp_eq,
+    <span class="tok-comment">/// `&gt;=`</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    cmp_gte,
+    <span class="tok-comment">/// `&gt;`</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    cmp_gt,
+    <span class="tok-comment">/// `!=`</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    cmp_neq,
+    <span class="tok-comment">/// Conditional branch. Splits control flow based on a boolean condition value.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. AST node is an if, while, for, etc.</span>
+    <span class="tok-comment">/// Payload is `CondBr`.</span>
+    condbr,
+    <span class="tok-comment">/// Same as `condbr`, except the condition is coerced to a comptime value, and</span>
+    <span class="tok-comment">/// only the taken branch is analyzed. The then block and else block must</span>
+    <span class="tok-comment">/// terminate with an &quot;inline&quot; variant of a noreturn instruction.</span>
+    condbr_inline,
+    <span class="tok-comment">/// Given an operand which is an error union, splits control flow. In</span>
+    <span class="tok-comment">/// case of error, control flow goes into the block that is part of this</span>
+    <span class="tok-comment">/// instruction, which is guaranteed to end with a return instruction</span>
+    <span class="tok-comment">/// and never breaks out of the block.</span>
+    <span class="tok-comment">/// In the case of non-error, control flow proceeds to the next instruction</span>
+    <span class="tok-comment">/// after the `try`, with the result of this instruction being the unwrapped</span>
+    <span class="tok-comment">/// payload value, as if `err_union_payload_unsafe` was executed on the operand.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Try`.</span>
+    @&quot;try&quot;,
+    <span class="tok-comment">/// Same as `try` except the operand is a pointer and the result is a pointer.</span>
+    try_ptr,
+    <span class="tok-comment">/// An error set type definition. Contains a list of field names.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `ErrorSetDecl`.</span>
+    error_set_decl,
+    <span class="tok-comment">/// Declares the beginning of a statement. Used for debug info.</span>
+    <span class="tok-comment">/// Uses the `dbg_stmt` union field. The line and column are offset</span>
+    <span class="tok-comment">/// from the parent declaration.</span>
+    dbg_stmt,
+    <span class="tok-comment">/// Marks a variable declaration. Used for debug info.</span>
+    <span class="tok-comment">/// Uses the `str_op` union field. The string is the local variable name,</span>
+    <span class="tok-comment">/// and the operand is the pointer to the variable's location. The local</span>
+    <span class="tok-comment">/// may be a const or a var.</span>
+    dbg_var_ptr,
+    <span class="tok-comment">/// Same as `dbg_var_ptr` but the local is always a const and the operand</span>
+    <span class="tok-comment">/// is the local's value.</span>
+    dbg_var_val,
+    <span class="tok-comment">/// Uses a name to identify a Decl and takes a pointer to it.</span>
+    <span class="tok-comment">/// Uses the `str_tok` union field.</span>
+    decl_ref,
+    <span class="tok-comment">/// Uses a name to identify a Decl and uses it as a value.</span>
+    <span class="tok-comment">/// Uses the `str_tok` union field.</span>
+    decl_val,
+    <span class="tok-comment">/// Load the value from a pointer. Assumes `x.*` syntax.</span>
+    <span class="tok-comment">/// Uses `un_node` field. AST node is the `x.*` syntax.</span>
+    load,
+    <span class="tok-comment">/// Arithmetic division. Asserts no integer overflow.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    div,
+    <span class="tok-comment">/// Given a pointer to an array, slice, or pointer, returns a pointer to the element at</span>
+    <span class="tok-comment">/// the provided index.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. AST node is a[b] syntax. Payload is `Bin`.</span>
+    elem_ptr_node,
+    <span class="tok-comment">/// Same as `elem_ptr_node` but used only for for loop.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. AST node is the condition of a for loop.</span>
+    <span class="tok-comment">/// Payload is `Bin`.</span>
+    <span class="tok-comment">/// No OOB safety check is emitted.</span>
+    elem_ptr,
+    <span class="tok-comment">/// Given an array, slice, or pointer, returns the element at the provided index.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. AST node is a[b] syntax. Payload is `Bin`.</span>
+    elem_val_node,
+    <span class="tok-comment">/// Same as `elem_val_node` but used only for for loop.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. AST node is the condition of a for loop.</span>
+    <span class="tok-comment">/// Payload is `Bin`.</span>
+    <span class="tok-comment">/// No OOB safety check is emitted.</span>
+    elem_val,
+    <span class="tok-comment">/// Same as `elem_val` but takes the index as an immediate value.</span>
+    <span class="tok-comment">/// No OOB safety check is emitted. A prior instruction must validate this operation.</span>
+    <span class="tok-comment">/// Uses the `elem_val_imm` union field.</span>
+    elem_val_imm,
+    <span class="tok-comment">/// Emits a compile error if the operand is not `void`.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    ensure_result_used,
+    <span class="tok-comment">/// Emits a compile error if an error is ignored.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    ensure_result_non_error,
+    <span class="tok-comment">/// Emits a compile error error union payload is not void.</span>
+    ensure_err_union_payload_void,
+    <span class="tok-comment">/// Create a `E!T` type.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field with `Bin` payload.</span>
+    error_union_type,
+    <span class="tok-comment">/// `error.Foo` syntax. Uses the `str_tok` field of the Data union.</span>
+    error_value,
+    <span class="tok-comment">/// Implements the `@export` builtin function.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Export`.</span>
+    @&quot;export&quot;,
+    <span class="tok-comment">/// Given a pointer to a struct or object that contains virtual fields, returns a pointer</span>
+    <span class="tok-comment">/// to the named field. The field name is stored in string_bytes. Used by a.b syntax.</span>
+    <span class="tok-comment">/// Uses `pl_node` field. The AST node is the a.b syntax. Payload is Field.</span>
+    field_ptr,
+    <span class="tok-comment">/// Given a struct or object that contains virtual fields, returns the named field.</span>
+    <span class="tok-comment">/// The field name is stored in string_bytes. Used by a.b syntax.</span>
+    <span class="tok-comment">/// This instruction also accepts a pointer.</span>
+    <span class="tok-comment">/// Uses `pl_node` field. The AST node is the a.b syntax. Payload is Field.</span>
+    field_val,
+    <span class="tok-comment">/// Given a pointer to a struct or object that contains virtual fields, returns a pointer</span>
+    <span class="tok-comment">/// to the named field. The field name is a comptime instruction. Used by @field.</span>
+    <span class="tok-comment">/// Uses `pl_node` field. The AST node is the builtin call. Payload is FieldNamed.</span>
+    field_ptr_named,
+    <span class="tok-comment">/// Given a struct or object that contains virtual fields, returns the named field.</span>
+    <span class="tok-comment">/// The field name is a comptime instruction. Used by @field.</span>
+    <span class="tok-comment">/// Uses `pl_node` field. The AST node is the builtin call. Payload is FieldNamed.</span>
+    field_val_named,
+    <span class="tok-comment">/// Returns a function type, or a function instance, depending on whether</span>
+    <span class="tok-comment">/// the body_len is 0. Calling convention is auto.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. `payload_index` points to a `Func`.</span>
+    func,
+    <span class="tok-comment">/// Same as `func` but has an inferred error set.</span>
+    func_inferred,
+    <span class="tok-comment">/// Represents a function declaration or function prototype, depending on</span>
+    <span class="tok-comment">/// whether body_len is 0.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. `payload_index` points to a `FuncFancy`.</span>
+    func_fancy,
+    <span class="tok-comment">/// Implements the `@import` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_tok` field.</span>
+    import,
+    <span class="tok-comment">/// Integer literal that fits in a u64. Uses the `int` union field.</span>
+    int,
+    <span class="tok-comment">/// Arbitrary sized integer literal. Uses the `str` union field.</span>
+    int_big,
+    <span class="tok-comment">/// A float literal that fits in a f64. Uses the float union value.</span>
+    float,
+    <span class="tok-comment">/// A float literal that fits in a f128. Uses the `pl_node` union value.</span>
+    <span class="tok-comment">/// Payload is `Float128`.</span>
+    float128,
+    <span class="tok-comment">/// Make an integer type out of signedness and bit count.</span>
+    <span class="tok-comment">/// Payload is `int_type`</span>
+    int_type,
+    <span class="tok-comment">/// Return a boolean false if an optional is null. `x != null`</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    is_non_null,
+    <span class="tok-comment">/// Return a boolean false if an optional is null. `x.* != null`</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    is_non_null_ptr,
+    <span class="tok-comment">/// Return a boolean false if value is an error</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    is_non_err,
+    <span class="tok-comment">/// Return a boolean false if dereferenced pointer is an error</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    is_non_err_ptr,
+    <span class="tok-comment">/// Same as `is_non_er` but doesn't validate that the type can be an error.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    ret_is_non_err,
+    <span class="tok-comment">/// A labeled block of code that loops forever. At the end of the body will have either</span>
+    <span class="tok-comment">/// a `repeat` instruction or a `repeat_inline` instruction.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. The AST node is either a for loop or while loop.</span>
+    <span class="tok-comment">/// This ZIR instruction is needed because AIR does not (yet?) match ZIR, and Sema</span>
+    <span class="tok-comment">/// needs to emit more than 1 AIR block for this instruction.</span>
+    <span class="tok-comment">/// The payload is `Block`.</span>
+    loop,
+    <span class="tok-comment">/// Sends runtime control flow back to the beginning of the current block.</span>
+    <span class="tok-comment">/// Uses the `node` field.</span>
+    repeat,
+    <span class="tok-comment">/// Sends comptime control flow back to the beginning of the current block.</span>
+    <span class="tok-comment">/// Uses the `node` field.</span>
+    repeat_inline,
+    <span class="tok-comment">/// Asserts that all the lengths provided match. Used to build a for loop.</span>
+    <span class="tok-comment">/// Return value is the length as a usize.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field with payload `MultiOp`.</span>
+    <span class="tok-comment">/// There are two items for each AST node inside the for loop condition.</span>
+    <span class="tok-comment">/// If both items in a pair are `.none`, then this node is an unbounded range.</span>
+    <span class="tok-comment">/// If only the second item in a pair is `.none`, then the first is an indexable.</span>
+    <span class="tok-comment">/// Otherwise, the node is a bounded range `a..b`, with the items being `a` and `b`.</span>
+    <span class="tok-comment">/// Illegal behaviors:</span>
+    <span class="tok-comment">///  * If all lengths are unbounded ranges (always a compile error).</span>
+    <span class="tok-comment">///  * If any two lengths do not match each other.</span>
+    for_len,
+    <span class="tok-comment">/// Merge two error sets into one, `E1 || E2`.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field with payload `Bin`.</span>
+    merge_error_sets,
+    <span class="tok-comment">/// Turns an R-Value into a const L-Value. In other words, it takes a value,</span>
+    <span class="tok-comment">/// stores it in a memory location, and returns a const pointer to it. If the value</span>
+    <span class="tok-comment">/// is `comptime`, the memory location is global static constant data. Otherwise,</span>
+    <span class="tok-comment">/// the memory location is in the stack frame, local to the scope containing the</span>
+    <span class="tok-comment">/// instruction.</span>
+    <span class="tok-comment">/// Uses the `un_tok` union field.</span>
+    ref,
+    <span class="tok-comment">/// Sends control flow back to the function's callee.</span>
+    <span class="tok-comment">/// Includes an operand as the return value.</span>
+    <span class="tok-comment">/// Includes an AST node source location.</span>
+    <span class="tok-comment">/// Uses the `un_node` union field.</span>
+    ret_node,
+    <span class="tok-comment">/// Sends control flow back to the function's callee.</span>
+    <span class="tok-comment">/// The operand is a `ret_ptr` instruction, where the return value can be found.</span>
+    <span class="tok-comment">/// Includes an AST node source location.</span>
+    <span class="tok-comment">/// Uses the `un_node` union field.</span>
+    ret_load,
+    <span class="tok-comment">/// Sends control flow back to the function's callee.</span>
+    <span class="tok-comment">/// Includes an operand as the return value.</span>
+    <span class="tok-comment">/// Includes a token source location.</span>
+    <span class="tok-comment">/// Uses the `un_tok` union field.</span>
+    ret_implicit,
+    <span class="tok-comment">/// Sends control flow back to the function's callee.</span>
+    <span class="tok-comment">/// The return operand is `error.foo` where `foo` is given by the string.</span>
+    <span class="tok-comment">/// If the current function has an inferred error set, the error given by the</span>
+    <span class="tok-comment">/// name is added to it.</span>
+    <span class="tok-comment">/// Uses the `str_tok` union field.</span>
+    ret_err_value,
+    <span class="tok-comment">/// A string name is provided which is an anonymous error set value.</span>
+    <span class="tok-comment">/// If the current function has an inferred error set, the error given by the</span>
+    <span class="tok-comment">/// name is added to it.</span>
+    <span class="tok-comment">/// Results in the error code. Note that control flow is not diverted with</span>
+    <span class="tok-comment">/// this instruction; a following 'ret' instruction will do the diversion.</span>
+    <span class="tok-comment">/// Uses the `str_tok` union field.</span>
+    ret_err_value_code,
+    <span class="tok-comment">/// Obtains a pointer to the return value.</span>
+    <span class="tok-comment">/// Uses the `node` union field.</span>
+    ret_ptr,
+    <span class="tok-comment">/// Obtains the return type of the in-scope function.</span>
+    <span class="tok-comment">/// Uses the `node` union field.</span>
+    ret_type,
+    <span class="tok-comment">/// Create a pointer type which can have a sentinel, alignment, address space, and/or bit range.</span>
+    <span class="tok-comment">/// Uses the `ptr_type` union field.</span>
+    ptr_type,
+    <span class="tok-comment">/// Slice operation `lhs[rhs..]`. No sentinel and no end offset.</span>
+    <span class="tok-comment">/// Returns a pointer to the subslice.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. AST node is the slice syntax. Payload is `SliceStart`.</span>
+    slice_start,
+    <span class="tok-comment">/// Slice operation `array_ptr[start..end]`. No sentinel.</span>
+    <span class="tok-comment">/// Returns a pointer to the subslice.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. AST node is the slice syntax. Payload is `SliceEnd`.</span>
+    slice_end,
+    <span class="tok-comment">/// Slice operation `array_ptr[start..end:sentinel]`.</span>
+    <span class="tok-comment">/// Returns a pointer to the subslice.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. AST node is the slice syntax. Payload is `SliceSentinel`.</span>
+    slice_sentinel,
+    <span class="tok-comment">/// Slice operation `array_ptr[start..][0..len]`. Optional sentinel.</span>
+    <span class="tok-comment">/// Returns a pointer to the subslice.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. AST node is the slice syntax. Payload is `SliceLength`.</span>
+    slice_length,
+    <span class="tok-comment">/// Given a value which is a pointer to the LHS of a slice operation, return the sentinel</span>
+    <span class="tok-comment">/// type, used as the result type of the slice sentinel (i.e. `s` in `lhs[a..b :s]`).</span>
+    <span class="tok-comment">/// Uses the `un_node` field. AST node is the slice syntax. Operand is `lhs`.</span>
+    slice_sentinel_ty,
+    <span class="tok-comment">/// Same as `store` except provides a source location.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    store_node,
+    <span class="tok-comment">/// Same as `store_node` but the type of the value being stored will be</span>
+    <span class="tok-comment">/// used to infer the pointer type of an `alloc_inferred`.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    store_to_inferred_ptr,
+    <span class="tok-comment">/// String Literal. Makes an anonymous Decl and then takes a pointer to it.</span>
+    <span class="tok-comment">/// Uses the `str` union field.</span>
+    str,
+    <span class="tok-comment">/// Arithmetic negation. Asserts no integer overflow.</span>
+    <span class="tok-comment">/// Same as sub with a lhs of 0, split into a separate instruction to save memory.</span>
+    <span class="tok-comment">/// Uses `un_node`.</span>
+    negate,
+    <span class="tok-comment">/// Twos complement wrapping integer negation.</span>
+    <span class="tok-comment">/// Same as subwrap with a lhs of 0, split into a separate instruction to save memory.</span>
+    <span class="tok-comment">/// Uses `un_node`.</span>
+    negate_wrap,
+    <span class="tok-comment">/// Returns the type of a value.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    typeof,
+    <span class="tok-comment">/// Implements `@TypeOf` for one operand.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. Payload is `Block`.</span>
+    typeof_builtin,
+    <span class="tok-comment">/// Given a value, look at the type of it, which must be an integer type.</span>
+    <span class="tok-comment">/// Returns the integer type for the RHS of a shift operation.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    typeof_log2_int_type,
+    <span class="tok-comment">/// Asserts control-flow will not reach this instruction (`unreachable`).</span>
+    <span class="tok-comment">/// Uses the `@&quot;unreachable&quot;` union field.</span>
+    @&quot;unreachable&quot;,
+    <span class="tok-comment">/// Bitwise XOR. `^`</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    xor,
+    <span class="tok-comment">/// Create an optional type '?T'</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    optional_type,
+    <span class="tok-comment">/// ?T =&gt; T with safety.</span>
+    <span class="tok-comment">/// Given an optional value, returns the payload value, with a safety check that</span>
+    <span class="tok-comment">/// the value is non-null. Used for `orelse`, `if` and `while`.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    optional_payload_safe,
+    <span class="tok-comment">/// ?T =&gt; T without safety.</span>
+    <span class="tok-comment">/// Given an optional value, returns the payload value. No safety checks.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    optional_payload_unsafe,
+    <span class="tok-comment">/// *?T =&gt; *T with safety.</span>
+    <span class="tok-comment">/// Given a pointer to an optional value, returns a pointer to the payload value,</span>
+    <span class="tok-comment">/// with a safety check that the value is non-null. Used for `orelse`, `if` and `while`.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    optional_payload_safe_ptr,
+    <span class="tok-comment">/// *?T =&gt; *T without safety.</span>
+    <span class="tok-comment">/// Given a pointer to an optional value, returns a pointer to the payload value.</span>
+    <span class="tok-comment">/// No safety checks.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    optional_payload_unsafe_ptr,
+    <span class="tok-comment">/// E!T =&gt; T without safety.</span>
+    <span class="tok-comment">/// Given an error union value, returns the payload value. No safety checks.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    err_union_payload_unsafe,
+    <span class="tok-comment">/// *E!T =&gt; *T without safety.</span>
+    <span class="tok-comment">/// Given a pointer to a error union value, returns a pointer to the payload value.</span>
+    <span class="tok-comment">/// No safety checks.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    err_union_payload_unsafe_ptr,
+    <span class="tok-comment">/// E!T =&gt; E without safety.</span>
+    <span class="tok-comment">/// Given an error union value, returns the error code. No safety checks.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    err_union_code,
+    <span class="tok-comment">/// *E!T =&gt; E without safety.</span>
+    <span class="tok-comment">/// Given a pointer to an error union value, returns the error code. No safety checks.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    err_union_code_ptr,
+    <span class="tok-comment">/// An enum literal. Uses the `str_tok` union field.</span>
+    enum_literal,
+    <span class="tok-comment">/// A decl literal. This is similar to `field`, but unwraps error unions and optionals,</span>
+    <span class="tok-comment">/// and coerces the result to the given type.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Field`.</span>
+    decl_literal,
+    <span class="tok-comment">/// The same as `decl_literal`, but the coercion is omitted. This is used for decl literal</span>
+    <span class="tok-comment">/// function call syntax, i.e. `.foo()`.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Field`.</span>
+    decl_literal_no_coerce,
+    <span class="tok-comment">/// A switch expression. Uses the `pl_node` union field.</span>
+    <span class="tok-comment">/// AST node is the switch, payload is `SwitchBlock`.</span>
+    switch_block,
+    <span class="tok-comment">/// A switch expression. Uses the `pl_node` union field.</span>
+    <span class="tok-comment">/// AST node is the switch, payload is `SwitchBlock`. Operand is a pointer.</span>
+    switch_block_ref,
+    <span class="tok-comment">/// A switch on an error union `a catch |err| switch (err) {...}`.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. AST node is the `catch`, payload is `SwitchBlockErrUnion`.</span>
+    switch_block_err_union,
+    <span class="tok-comment">/// Check that operand type supports the dereference operand (.*).</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    validate_deref,
+    <span class="tok-comment">/// Check that the operand's type is an array or tuple with the given number of elements.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. Payload is `ValidateDestructure`.</span>
+    validate_destructure,
+    <span class="tok-comment">/// Given a struct or union, and a field name as a Ref,</span>
+    <span class="tok-comment">/// returns the field type. Uses the `pl_node` field. Payload is `FieldTypeRef`.</span>
+    field_type_ref,
+    <span class="tok-comment">/// Given a pointer, initializes all error unions and optionals in the pointee to payloads,</span>
+    <span class="tok-comment">/// returning the base payload pointer. For instance, converts *E!?T into a valid *T</span>
+    <span class="tok-comment">/// (clobbering any existing error or null value).</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    opt_eu_base_ptr_init,
+    <span class="tok-comment">/// Coerce a given value such that when a reference is taken, the resulting pointer will be</span>
+    <span class="tok-comment">/// coercible to the given type. For instance, given a value of type 'u32' and the pointer</span>
+    <span class="tok-comment">/// type '*u64', coerces the value to a 'u64'. Asserts that the type is a pointer type.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. Payload is `Bin`.</span>
+    <span class="tok-comment">/// LHS is the pointer type, RHS is the value.</span>
+    coerce_ptr_elem_ty,
+    <span class="tok-comment">/// Given a type, validate that it is a pointer type suitable for return from the address-of</span>
+    <span class="tok-comment">/// operator. Emit a compile error if not.</span>
+    <span class="tok-comment">/// Uses the `un_tok` union field. Token is the `&amp;` operator. Operand is the type.</span>
+    validate_ref_ty,
+    <span class="tok-comment">/// Given a value, check whether it is a valid local constant in this scope.</span>
+    <span class="tok-comment">/// In a runtime scope, this is always a nop.</span>
+    <span class="tok-comment">/// In a comptime scope, raises a compile error if the value is runtime-known.</span>
+    <span class="tok-comment">/// Result is always void.</span>
+    <span class="tok-comment">/// Uses the `un_node` union field. Node is the initializer. Operand is the initializer value.</span>
+    validate_const,<span class="tok-comment">
+
+    // The following tags all relate to struct initialization expressions.
+
+    </span><span class="tok-comment">/// A struct literal with a specified explicit type, with no fields.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    struct_init_empty,
+    <span class="tok-comment">/// An anonymous struct literal with a known result type, with no fields.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    struct_init_empty_result,
+    <span class="tok-comment">/// An anonymous struct literal with no fields, returned by reference, with a known result</span>
+    <span class="tok-comment">/// type for the pointer. Asserts that the type is a pointer.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    struct_init_empty_ref_result,
+    <span class="tok-comment">/// Struct initialization without a type. Creates a value of an anonymous struct type.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. Payload is `StructInitAnon`.</span>
+    struct_init_anon,
+    <span class="tok-comment">/// Finalizes a typed struct or union initialization, performs validation, and returns the</span>
+    <span class="tok-comment">/// struct or union value. The given type must be validated prior to this instruction, using</span>
+    <span class="tok-comment">/// `validate_struct_init_ty` or `validate_struct_init_result_ty`. If the given type is</span>
+    <span class="tok-comment">/// generic poison, this is downgraded to an anonymous initialization.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. Payload is `StructInit`.</span>
+    struct_init,
+    <span class="tok-comment">/// Struct initialization syntax, make the result a pointer. Equivalent to `struct_init`</span>
+    <span class="tok-comment">/// followed by `ref` - this ZIR tag exists as an optimization for a common pattern.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. Payload is `StructInit`.</span>
+    struct_init_ref,
+    <span class="tok-comment">/// Checks that the type supports struct init syntax. Always returns void.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    validate_struct_init_ty,
+    <span class="tok-comment">/// Like `validate_struct_init_ty`, but additionally accepts types which structs coerce to.</span>
+    <span class="tok-comment">/// Used on the known result type of a struct init expression. Always returns void.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    validate_struct_init_result_ty,
+    <span class="tok-comment">/// Given a set of `struct_init_field_ptr` instructions, assumes they are all part of a</span>
+    <span class="tok-comment">/// struct initialization expression, and emits compile errors for duplicate fields as well</span>
+    <span class="tok-comment">/// as missing fields, if applicable.</span>
+    <span class="tok-comment">/// This instruction asserts that there is at least one struct_init_field_ptr instruction,</span>
+    <span class="tok-comment">/// because it must use one of them to find out the struct type.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. Payload is `Block`.</span>
+    validate_ptr_struct_init,
+    <span class="tok-comment">/// Given a type being used for a struct initialization expression, returns the type of the</span>
+    <span class="tok-comment">/// field with the given name.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. Payload is `FieldType`.</span>
+    struct_init_field_type,
+    <span class="tok-comment">/// Given a pointer being used as the result pointer of a struct initialization expression,</span>
+    <span class="tok-comment">/// return a pointer to the field of the given name.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. The AST node is the field initializer. Payload is Field.</span>
+    struct_init_field_ptr,<span class="tok-comment">
+
+    // The following tags all relate to array initialization expressions.
+
+    </span><span class="tok-comment">/// Array initialization without a type. Creates a value of a tuple type.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. Payload is `MultiOp`.</span>
+    array_init_anon,
+    <span class="tok-comment">/// Array initialization syntax with a known type. The given type must be validated prior to</span>
+    <span class="tok-comment">/// this instruction, using some `validate_array_init_*_ty` instruction.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. Payload is `MultiOp`, where the first operand is the type.</span>
+    array_init,
+    <span class="tok-comment">/// Array initialization syntax, make the result a pointer. Equivalent to `array_init`</span>
+    <span class="tok-comment">/// followed by `ref`- this ZIR tag exists as an optimization for a common pattern.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. Payload is `MultiOp`, where the first operand is the type.</span>
+    array_init_ref,
+    <span class="tok-comment">/// Checks that the type supports array init syntax. Always returns void.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. Payload is `ArrayInit`.</span>
+    validate_array_init_ty,
+    <span class="tok-comment">/// Like `validate_array_init_ty`, but additionally accepts types which arrays coerce to.</span>
+    <span class="tok-comment">/// Used on the known result type of an array init expression. Always returns void.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. Payload is `ArrayInit`.</span>
+    validate_array_init_result_ty,
+    <span class="tok-comment">/// Given a pointer or slice type and an element count, return the expected type of an array</span>
+    <span class="tok-comment">/// initializer such that a pointer to the initializer has the given pointer type, checking</span>
+    <span class="tok-comment">/// that this type supports array init syntax and emitting a compile error if not. Preserves</span>
+    <span class="tok-comment">/// error union and optional wrappers on the array type, if any.</span>
+    <span class="tok-comment">/// Asserts that the given type is a pointer or slice type.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. Payload is `ArrayInitRefTy`.</span>
+    validate_array_init_ref_ty,
+    <span class="tok-comment">/// Given a set of `array_init_elem_ptr` instructions, assumes they are all part of an array</span>
+    <span class="tok-comment">/// initialization expression, and emits a compile error if the number of elements does not</span>
+    <span class="tok-comment">/// match the array type.</span>
+    <span class="tok-comment">/// This instruction asserts that there is at least one `array_init_elem_ptr` instruction,</span>
+    <span class="tok-comment">/// because it must use one of them to find out the array type.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. Payload is `Block`.</span>
+    validate_ptr_array_init,
+    <span class="tok-comment">/// Given a type being used for an array initialization expression, returns the type of the</span>
+    <span class="tok-comment">/// element at the given index.</span>
+    <span class="tok-comment">/// Uses the `bin` union field. lhs is the indexable type, rhs is the index.</span>
+    array_init_elem_type,
+    <span class="tok-comment">/// Given a pointer being used as the result pointer of an array initialization expression,</span>
+    <span class="tok-comment">/// return a pointer to the element at the given index.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. AST node is an element inside array initialization</span>
+    <span class="tok-comment">/// syntax. Payload is `ElemPtrImm`.</span>
+    array_init_elem_ptr,
+
+    <span class="tok-comment">/// Implements the `@unionInit` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. Payload is `UnionInit`.</span>
+    union_init,
+    <span class="tok-comment">/// Implements the `@typeInfo` builtin. Uses `un_node`.</span>
+    type_info,
+    <span class="tok-comment">/// Implements the `@sizeOf` builtin. Uses `un_node`.</span>
+    size_of,
+    <span class="tok-comment">/// Implements the `@bitSizeOf` builtin. Uses `un_node`.</span>
+    bit_size_of,
+
+    <span class="tok-comment">/// Implement builtin `@intFromPtr`. Uses `un_node`.</span>
+    <span class="tok-comment">/// Convert a pointer to a `usize` integer.</span>
+    int_from_ptr,
+    <span class="tok-comment">/// Emit an error message and fail compilation.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    compile_error,
+    <span class="tok-comment">/// Changes the maximum number of backwards branches that compile-time</span>
+    <span class="tok-comment">/// code execution can use before giving up and making a compile error.</span>
+    <span class="tok-comment">/// Uses the `un_node` union field.</span>
+    set_eval_branch_quota,
+    <span class="tok-comment">/// Converts an enum value into an integer. Resulting type will be the tag type</span>
+    <span class="tok-comment">/// of the enum. Uses `un_node`.</span>
+    int_from_enum,
+    <span class="tok-comment">/// Implement builtin `@alignOf`. Uses `un_node`.</span>
+    align_of,
+    <span class="tok-comment">/// Implement builtin `@intFromBool`. Uses `un_node`.</span>
+    int_from_bool,
+    <span class="tok-comment">/// Implement builtin `@embedFile`. Uses `un_node`.</span>
+    embed_file,
+    <span class="tok-comment">/// Implement builtin `@errorName`. Uses `un_node`.</span>
+    error_name,
+    <span class="tok-comment">/// Implement builtin `@panic`. Uses `un_node`.</span>
+    panic,
+    <span class="tok-comment">/// Implements `@trap`.</span>
+    <span class="tok-comment">/// Uses the `node` field.</span>
+    trap,
+    <span class="tok-comment">/// Implement builtin `@setRuntimeSafety`. Uses `un_node`.</span>
+    set_runtime_safety,
+    <span class="tok-comment">/// Implement builtin `@sqrt`. Uses `un_node`.</span>
+    sqrt,
+    <span class="tok-comment">/// Implement builtin `@sin`. Uses `un_node`.</span>
+    sin,
+    <span class="tok-comment">/// Implement builtin `@cos`. Uses `un_node`.</span>
+    cos,
+    <span class="tok-comment">/// Implement builtin `@tan`. Uses `un_node`.</span>
+    tan,
+    <span class="tok-comment">/// Implement builtin `@exp`. Uses `un_node`.</span>
+    exp,
+    <span class="tok-comment">/// Implement builtin `@exp2`. Uses `un_node`.</span>
+    exp2,
+    <span class="tok-comment">/// Implement builtin `@log`. Uses `un_node`.</span>
+    log,
+    <span class="tok-comment">/// Implement builtin `@log2`. Uses `un_node`.</span>
+    log2,
+    <span class="tok-comment">/// Implement builtin `@log10`. Uses `un_node`.</span>
+    log10,
+    <span class="tok-comment">/// Implement builtin `@abs`. Uses `un_node`.</span>
+    abs,
+    <span class="tok-comment">/// Implement builtin `@floor`. Uses `un_node`.</span>
+    floor,
+    <span class="tok-comment">/// Implement builtin `@ceil`. Uses `un_node`.</span>
+    ceil,
+    <span class="tok-comment">/// Implement builtin `@trunc`. Uses `un_node`.</span>
+    trunc,
+    <span class="tok-comment">/// Implement builtin `@round`. Uses `un_node`.</span>
+    round,
+    <span class="tok-comment">/// Implement builtin `@tagName`. Uses `un_node`.</span>
+    tag_name,
+    <span class="tok-comment">/// Implement builtin `@typeName`. Uses `un_node`.</span>
+    type_name,
+    <span class="tok-comment">/// Implement builtin `@Frame`. Uses `un_node`.</span>
+    frame_type,
+    <span class="tok-comment">/// Implement builtin `@frameSize`. Uses `un_node`.</span>
+    frame_size,
+
+    <span class="tok-comment">/// Implements the `@intFromFloat` builtin.</span>
+    <span class="tok-comment">/// Uses `pl_node` with payload `Bin`. `lhs` is dest type, `rhs` is operand.</span>
+    int_from_float,
+    <span class="tok-comment">/// Implements the `@floatFromInt` builtin.</span>
+    <span class="tok-comment">/// Uses `pl_node` with payload `Bin`. `lhs` is dest type, `rhs` is operand.</span>
+    float_from_int,
+    <span class="tok-comment">/// Implements the `@ptrFromInt` builtin.</span>
+    <span class="tok-comment">/// Uses `pl_node` with payload `Bin`. `lhs` is dest type, `rhs` is operand.</span>
+    ptr_from_int,
+    <span class="tok-comment">/// Converts an integer into an enum value.</span>
+    <span class="tok-comment">/// Uses `pl_node` with payload `Bin`. `lhs` is dest type, `rhs` is operand.</span>
+    enum_from_int,
+    <span class="tok-comment">/// Convert a larger float type to any other float type, possibly causing</span>
+    <span class="tok-comment">/// a loss of precision.</span>
+    <span class="tok-comment">/// Uses the `pl_node` field. AST is the `@floatCast` syntax.</span>
+    <span class="tok-comment">/// Payload is `Bin` with lhs as the dest type, rhs the operand.</span>
+    float_cast,
+    <span class="tok-comment">/// Implements the `@intCast` builtin.</span>
+    <span class="tok-comment">/// Uses `pl_node` with payload `Bin`. `lhs` is dest type, `rhs` is operand.</span>
+    <span class="tok-comment">/// Convert an integer value to another integer type, asserting that the destination type</span>
+    <span class="tok-comment">/// can hold the same mathematical value.</span>
+    int_cast,
+    <span class="tok-comment">/// Implements the `@ptrCast` builtin.</span>
+    <span class="tok-comment">/// Uses `pl_node` with payload `Bin`. `lhs` is dest type, `rhs` is operand.</span>
+    <span class="tok-comment">/// Not every `@ptrCast` will correspond to this instruction - see also</span>
+    <span class="tok-comment">/// `ptr_cast_full` in `Extended`.</span>
+    ptr_cast,
+    <span class="tok-comment">/// Implements the `@truncate` builtin.</span>
+    <span class="tok-comment">/// Uses `pl_node` with payload `Bin`. `lhs` is dest type, `rhs` is operand.</span>
+    truncate,
+
+    <span class="tok-comment">/// Implements the `@hasDecl` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    has_decl,
+    <span class="tok-comment">/// Implements the `@hasField` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field. Payload is `Bin`.</span>
+    has_field,
+
+    <span class="tok-comment">/// Implements the `@clz` builtin. Uses the `un_node` union field.</span>
+    clz,
+    <span class="tok-comment">/// Implements the `@ctz` builtin. Uses the `un_node` union field.</span>
+    ctz,
+    <span class="tok-comment">/// Implements the `@popCount` builtin. Uses the `un_node` union field.</span>
+    pop_count,
+    <span class="tok-comment">/// Implements the `@byteSwap` builtin. Uses the `un_node` union field.</span>
+    byte_swap,
+    <span class="tok-comment">/// Implements the `@bitReverse` builtin. Uses the `un_node` union field.</span>
+    bit_reverse,
+
+    <span class="tok-comment">/// Implements the `@bitOffsetOf` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `Bin`.</span>
+    bit_offset_of,
+    <span class="tok-comment">/// Implements the `@offsetOf` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `Bin`.</span>
+    offset_of,
+    <span class="tok-comment">/// Implements the `@splat` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `Bin`.</span>
+    splat,
+    <span class="tok-comment">/// Implements the `@reduce` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `Bin`.</span>
+    reduce,
+    <span class="tok-comment">/// Implements the `@shuffle` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `Shuffle`.</span>
+    shuffle,
+    <span class="tok-comment">/// Implements the `@atomicLoad` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `AtomicLoad`.</span>
+    atomic_load,
+    <span class="tok-comment">/// Implements the `@atomicRmw` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `AtomicRmw`.</span>
+    atomic_rmw,
+    <span class="tok-comment">/// Implements the `@atomicStore` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `AtomicStore`.</span>
+    atomic_store,
+    <span class="tok-comment">/// Implements the `@mulAdd` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `MulAdd`.</span>
+    <span class="tok-comment">/// The addend communicates the type of the builtin.</span>
+    <span class="tok-comment">/// The mulends need to be coerced to the same type.</span>
+    mul_add,
+    <span class="tok-comment">/// Implements the `@memcpy` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `Bin`.</span>
+    memcpy,
+    <span class="tok-comment">/// Implements the `@memset` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `Bin`.</span>
+    memset,
+    <span class="tok-comment">/// Implements the `@min` builtin for 2 args.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `Bin`</span>
+    min,
+    <span class="tok-comment">/// Implements the `@max` builtin for 2 args.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `Bin`</span>
+    max,
+    <span class="tok-comment">/// Implements the `@cImport` builtin.</span>
+    <span class="tok-comment">/// Uses the `pl_node` union field with payload `Block`.</span>
+    c_import,
+
+    <span class="tok-comment">/// Allocates stack local memory.</span>
+    <span class="tok-comment">/// Uses the `un_node` union field. The operand is the type of the allocated object.</span>
+    <span class="tok-comment">/// The node source location points to a var decl node.</span>
+    <span class="tok-comment">/// A `make_ptr_const` instruction should be used once the value has</span>
+    <span class="tok-comment">/// been stored to the allocation. To ensure comptime value detection</span>
+    <span class="tok-comment">/// functions, there are some restrictions on how this pointer should be</span>
+    <span class="tok-comment">/// used prior to the `make_ptr_const` instruction: no pointer derived</span>
+    <span class="tok-comment">/// from this `alloc` may be returned from a block or stored to another</span>
+    <span class="tok-comment">/// address. In other words, it must be trivial to determine whether any</span>
+    <span class="tok-comment">/// given pointer derives from this one.</span>
+    alloc,
+    <span class="tok-comment">/// Same as `alloc` except mutable. As such, `make_ptr_const` need not be used,</span>
+    <span class="tok-comment">/// and there are no restrictions on the usage of the pointer.</span>
+    alloc_mut,
+    <span class="tok-comment">/// Allocates comptime-mutable memory.</span>
+    <span class="tok-comment">/// Uses the `un_node` union field. The operand is the type of the allocated object.</span>
+    <span class="tok-comment">/// The node source location points to a var decl node.</span>
+    alloc_comptime_mut,
+    <span class="tok-comment">/// Same as `alloc` except the type is inferred.</span>
+    <span class="tok-comment">/// Uses the `node` union field.</span>
+    alloc_inferred,
+    <span class="tok-comment">/// Same as `alloc_inferred` except mutable.</span>
+    alloc_inferred_mut,
+    <span class="tok-comment">/// Allocates comptime const memory.</span>
+    <span class="tok-comment">/// Uses the `node` union field. The type of the allocated object is inferred.</span>
+    <span class="tok-comment">/// The node source location points to a var decl node.</span>
+    alloc_inferred_comptime,
+    <span class="tok-comment">/// Same as `alloc_comptime_mut` except the type is inferred.</span>
+    alloc_inferred_comptime_mut,
+    <span class="tok-comment">/// Each `store_to_inferred_ptr` puts the type of the stored value into a set,</span>
+    <span class="tok-comment">/// and then `resolve_inferred_alloc` triggers peer type resolution on the set.</span>
+    <span class="tok-comment">/// The operand is a `alloc_inferred` or `alloc_inferred_mut` instruction, which</span>
+    <span class="tok-comment">/// is the allocation that needs to have its type inferred.</span>
+    <span class="tok-comment">/// Results in the final resolved pointer. The `alloc_inferred[_comptime][_mut]`</span>
+    <span class="tok-comment">/// instruction should never be referred to after this instruction.</span>
+    <span class="tok-comment">/// Uses the `un_node` field. The AST node is the var decl.</span>
+    resolve_inferred_alloc,
+    <span class="tok-comment">/// Turns a pointer coming from an `alloc` or `Extended.alloc` into a constant</span>
+    <span class="tok-comment">/// version of the same pointer. For inferred allocations this is instead implicitly</span>
+    <span class="tok-comment">/// handled by the `resolve_inferred_alloc` instruction.</span>
+    <span class="tok-comment">/// Uses the `un_node` union field.</span>
+    make_ptr_const,
+
+    <span class="tok-comment">/// Implements `resume` syntax. Uses `un_node` field.</span>
+    @&quot;resume&quot;,
+    @&quot;await&quot;,
+
+    <span class="tok-comment">/// A defer statement.</span>
+    <span class="tok-comment">/// Uses the `defer` union field.</span>
+    @&quot;defer&quot;,
+    <span class="tok-comment">/// An errdefer statement with a code.</span>
+    <span class="tok-comment">/// Uses the `err_defer_code` union field.</span>
+    defer_err_code,
+
+    <span class="tok-comment">/// Requests that Sema update the saved error return trace index for the enclosing</span>
+    <span class="tok-comment">/// block, if the operand is .none or of an error/error-union type.</span>
+    <span class="tok-comment">/// Uses the `save_err_ret_index` field.</span>
+    save_err_ret_index,
+    <span class="tok-comment">/// Specialized form of `Extended.restore_err_ret_index`.</span>
+    <span class="tok-comment">/// Unconditionally restores the error return index to its last saved state</span>
+    <span class="tok-comment">/// in the block referred to by `operand`. If `operand` is `none`, restores</span>
+    <span class="tok-comment">/// to the point of function entry.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    restore_err_ret_index_unconditional,
+    <span class="tok-comment">/// Specialized form of `Extended.restore_err_ret_index`.</span>
+    <span class="tok-comment">/// Restores the error return index to its state at the entry of</span>
+    <span class="tok-comment">/// the current function conditional on `operand` being a non-error.</span>
+    <span class="tok-comment">/// If `operand` is `none`, restores unconditionally.</span>
+    <span class="tok-comment">/// Uses the `un_node` field.</span>
+    restore_err_ret_index_fn_entry,
+
+    <span class="tok-comment">/// The ZIR instruction tag is one of the `Extended` ones.</span>
+    <span class="tok-comment">/// Uses the `extended` union field.</span>
+    extended,
+
+    <span class="tok-comment">/// Returns whether the instruction is one of the control flow &quot;noreturn&quot; types.</span>
+    <span class="tok-comment">/// Function calls do not count.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isNoReturn</span>(tag: <a href="std.zig.Zir.Inst.Tag.html">Tag</a>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (tag) {
+            .param,
+            .param_comptime,
+            .param_anytype,
+            .param_anytype_comptime,
+            .add,
+            .addwrap,
+            .add_sat,
+            .add_unsafe,
+            .alloc,
+            .alloc_mut,
+            .alloc_comptime_mut,
+            .alloc_inferred,
+            .alloc_inferred_mut,
+            .alloc_inferred_comptime,
+            .alloc_inferred_comptime_mut,
+            .make_ptr_const,
+            .array_cat,
+            .array_mul,
+            .array_type,
+            .array_type_sentinel,
+            .vector_type,
+            .elem_type,
+            .indexable_ptr_elem_type,
+            .vec_arr_elem_type,
+            .indexable_ptr_len,
+            .anyframe_type,
+            .as_node,
+            .as_shift_operand,
+            .bit_and,
+            .bitcast,
+            .bit_or,
+            .block,
+            .block_comptime,
+            .block_inline,
+            .declaration,
+            .suspend_block,
+            .loop,
+            .bool_br_and,
+            .bool_br_or,
+            .bool_not,
+            .call,
+            .field_call,
+            .cmp_lt,
+            .cmp_lte,
+            .cmp_eq,
+            .cmp_gte,
+            .cmp_gt,
+            .cmp_neq,
+            .error_set_decl,
+            .dbg_stmt,
+            .dbg_var_ptr,
+            .dbg_var_val,
+            .decl_ref,
+            .decl_val,
+            .load,
+            .div,
+            .elem_ptr,
+            .elem_val,
+            .elem_ptr_node,
+            .elem_val_node,
+            .elem_val_imm,
+            .ensure_result_used,
+            .ensure_result_non_error,
+            .ensure_err_union_payload_void,
+            .@&quot;export&quot;,
+            .field_ptr,
+            .field_val,
+            .field_ptr_named,
+            .field_val_named,
+            .func,
+            .func_inferred,
+            .func_fancy,
+            .has_decl,
+            .int,
+            .int_big,
+            .float,
+            .float128,
+            .int_type,
+            .is_non_null,
+            .is_non_null_ptr,
+            .is_non_err,
+            .is_non_err_ptr,
+            .ret_is_non_err,
+            .mod_rem,
+            .mul,
+            .mulwrap,
+            .mul_sat,
+            .ref,
+            .shl,
+            .shl_sat,
+            .shr,
+            .store_node,
+            .store_to_inferred_ptr,
+            .str,
+            .sub,
+            .subwrap,
+            .sub_sat,
+            .negate,
+            .negate_wrap,
+            .typeof,
+            .typeof_builtin,
+            .xor,
+            .optional_type,
+            .optional_payload_safe,
+            .optional_payload_unsafe,
+            .optional_payload_safe_ptr,
+            .optional_payload_unsafe_ptr,
+            .err_union_payload_unsafe,
+            .err_union_payload_unsafe_ptr,
+            .err_union_code,
+            .err_union_code_ptr,
+            .ptr_type,
+            .enum_literal,
+            .decl_literal,
+            .decl_literal_no_coerce,
+            .merge_error_sets,
+            .error_union_type,
+            .bit_not,
+            .error_value,
+            .slice_start,
+            .slice_end,
+            .slice_sentinel,
+            .slice_length,
+            .slice_sentinel_ty,
+            .import,
+            .typeof_log2_int_type,
+            .resolve_inferred_alloc,
+            .set_eval_branch_quota,
+            .switch_block,
+            .switch_block_ref,
+            .switch_block_err_union,
+            .validate_deref,
+            .validate_destructure,
+            .union_init,
+            .field_type_ref,
+            .enum_from_int,
+            .int_from_enum,
+            .type_info,
+            .size_of,
+            .bit_size_of,
+            .int_from_ptr,
+            .align_of,
+            .int_from_bool,
+            .embed_file,
+            .error_name,
+            .set_runtime_safety,
+            .sqrt,
+            .sin,
+            .cos,
+            .tan,
+            .exp,
+            .exp2,
+            .log,
+            .log2,
+            .log10,
+            .abs,
+            .floor,
+            .ceil,
+            .trunc,
+            .round,
+            .tag_name,
+            .type_name,
+            .frame_type,
+            .frame_size,
+            .int_from_float,
+            .float_from_int,
+            .ptr_from_int,
+            .float_cast,
+            .int_cast,
+            .ptr_cast,
+            .truncate,
+            .has_field,
+            .clz,
+            .ctz,
+            .pop_count,
+            .byte_swap,
+            .bit_reverse,
+            .div_exact,
+            .div_floor,
+            .div_trunc,
+            .mod,
+            .rem,
+            .shl_exact,
+            .shr_exact,
+            .bit_offset_of,
+            .offset_of,
+            .splat,
+            .reduce,
+            .shuffle,
+            .atomic_load,
+            .atomic_rmw,
+            .atomic_store,
+            .mul_add,
+            .builtin_call,
+            .max,
+            .memcpy,
+            .memset,
+            .min,
+            .c_import,
+            .@&quot;resume&quot;,
+            .@&quot;await&quot;,
+            .ret_err_value_code,
+            .extended,
+            .ret_ptr,
+            .ret_type,
+            .@&quot;try&quot;,
+            .try_ptr,
+            .@&quot;defer&quot;,
+            .defer_err_code,
+            .save_err_ret_index,
+            .for_len,
+            .opt_eu_base_ptr_init,
+            .coerce_ptr_elem_ty,
+            .struct_init_empty,
+            .struct_init_empty_result,
+            .struct_init_empty_ref_result,
+            .struct_init_anon,
+            .struct_init,
+            .struct_init_ref,
+            .validate_struct_init_ty,
+            .validate_struct_init_result_ty,
+            .validate_ptr_struct_init,
+            .struct_init_field_type,
+            .struct_init_field_ptr,
+            .array_init_anon,
+            .array_init,
+            .array_init_ref,
+            .validate_array_init_ty,
+            .validate_array_init_result_ty,
+            .validate_array_init_ref_ty,
+            .validate_ptr_array_init,
+            .array_init_elem_type,
+            .array_init_elem_ptr,
+            .validate_ref_ty,
+            .validate_const,
+            .restore_err_ret_index_unconditional,
+            .restore_err_ret_index_fn_entry,
+            =&gt; <span class="tok-null">false</span>,
+
+            .@&quot;break&quot;,
+            .break_inline,
+            .condbr,
+            .condbr_inline,
+            .compile_error,
+            .ret_node,
+            .ret_load,
+            .ret_implicit,
+            .ret_err_value,
+            .@&quot;unreachable&quot;,
+            .repeat,
+            .repeat_inline,
+            .panic,
+            .trap,
+            .check_comptime_control_flow,
+            .switch_continue,
+            =&gt; <span class="tok-null">true</span>,
+        };
+    }
+
+    <span class="tok-comment">/// AstGen uses this to find out if `Ref.void_value` should be used in place</span>
+    <span class="tok-comment">/// of the result of a given instruction. This allows Sema to forego adding</span>
+    <span class="tok-comment">/// the instruction to the map after analysis.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isAlwaysVoid</span>(tag: <a href="std.zig.Zir.Inst.Tag.html">Tag</a>, data: <a href="std.zig.Zir.Inst.Data.html">Data</a>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (tag) {
+            .dbg_stmt,
+            .dbg_var_ptr,
+            .dbg_var_val,
+            .ensure_result_used,
+            .ensure_result_non_error,
+            .ensure_err_union_payload_void,
+            .set_eval_branch_quota,
+            .atomic_store,
+            .store_node,
+            .store_to_inferred_ptr,
+            .validate_deref,
+            .validate_destructure,
+            .@&quot;export&quot;,
+            .set_runtime_safety,
+            .memcpy,
+            .memset,
+            .check_comptime_control_flow,
+            .@&quot;defer&quot;,
+            .defer_err_code,
+            .save_err_ret_index,
+            .restore_err_ret_index_unconditional,
+            .restore_err_ret_index_fn_entry,
+            .validate_struct_init_ty,
+            .validate_struct_init_result_ty,
+            .validate_ptr_struct_init,
+            .validate_array_init_ty,
+            .validate_array_init_result_ty,
+            .validate_ptr_array_init,
+            .validate_ref_ty,
+            .validate_const,
+            =&gt; <span class="tok-null">true</span>,
+
+            .param,
+            .param_comptime,
+            .param_anytype,
+            .param_anytype_comptime,
+            .add,
+            .addwrap,
+            .add_sat,
+            .add_unsafe,
+            .alloc,
+            .alloc_mut,
+            .alloc_comptime_mut,
+            .alloc_inferred,
+            .alloc_inferred_mut,
+            .alloc_inferred_comptime,
+            .alloc_inferred_comptime_mut,
+            .resolve_inferred_alloc,
+            .make_ptr_const,
+            .array_cat,
+            .array_mul,
+            .array_type,
+            .array_type_sentinel,
+            .vector_type,
+            .elem_type,
+            .indexable_ptr_elem_type,
+            .vec_arr_elem_type,
+            .indexable_ptr_len,
+            .anyframe_type,
+            .as_node,
+            .as_shift_operand,
+            .bit_and,
+            .bitcast,
+            .bit_or,
+            .block,
+            .block_comptime,
+            .block_inline,
+            .declaration,
+            .suspend_block,
+            .loop,
+            .bool_br_and,
+            .bool_br_or,
+            .bool_not,
+            .call,
+            .field_call,
+            .cmp_lt,
+            .cmp_lte,
+            .cmp_eq,
+            .cmp_gte,
+            .cmp_gt,
+            .cmp_neq,
+            .error_set_decl,
+            .decl_ref,
+            .decl_val,
+            .load,
+            .div,
+            .elem_ptr,
+            .elem_val,
+            .elem_ptr_node,
+            .elem_val_node,
+            .elem_val_imm,
+            .field_ptr,
+            .field_val,
+            .field_ptr_named,
+            .field_val_named,
+            .func,
+            .func_inferred,
+            .func_fancy,
+            .has_decl,
+            .int,
+            .int_big,
+            .float,
+            .float128,
+            .int_type,
+            .is_non_null,
+            .is_non_null_ptr,
+            .is_non_err,
+            .is_non_err_ptr,
+            .ret_is_non_err,
+            .mod_rem,
+            .mul,
+            .mulwrap,
+            .mul_sat,
+            .ref,
+            .shl,
+            .shl_sat,
+            .shr,
+            .str,
+            .sub,
+            .subwrap,
+            .sub_sat,
+            .negate,
+            .negate_wrap,
+            .typeof,
+            .typeof_builtin,
+            .xor,
+            .optional_type,
+            .optional_payload_safe,
+            .optional_payload_unsafe,
+            .optional_payload_safe_ptr,
+            .optional_payload_unsafe_ptr,
+            .err_union_payload_unsafe,
+            .err_union_payload_unsafe_ptr,
+            .err_union_code,
+            .err_union_code_ptr,
+            .ptr_type,
+            .enum_literal,
+            .decl_literal,
+            .decl_literal_no_coerce,
+            .merge_error_sets,
+            .error_union_type,
+            .bit_not,
+            .error_value,
+            .slice_start,
+            .slice_end,
+            .slice_sentinel,
+            .slice_length,
+            .slice_sentinel_ty,
+            .import,
+            .typeof_log2_int_type,
+            .switch_block,
+            .switch_block_ref,
+            .switch_block_err_union,
+            .union_init,
+            .field_type_ref,
+            .enum_from_int,
+            .int_from_enum,
+            .type_info,
+            .size_of,
+            .bit_size_of,
+            .int_from_ptr,
+            .align_of,
+            .int_from_bool,
+            .embed_file,
+            .error_name,
+            .sqrt,
+            .sin,
+            .cos,
+            .tan,
+            .exp,
+            .exp2,
+            .log,
+            .log2,
+            .log10,
+            .abs,
+            .floor,
+            .ceil,
+            .trunc,
+            .round,
+            .tag_name,
+            .type_name,
+            .frame_type,
+            .frame_size,
+            .int_from_float,
+            .float_from_int,
+            .ptr_from_int,
+            .float_cast,
+            .int_cast,
+            .ptr_cast,
+            .truncate,
+            .has_field,
+            .clz,
+            .ctz,
+            .pop_count,
+            .byte_swap,
+            .bit_reverse,
+            .div_exact,
+            .div_floor,
+            .div_trunc,
+            .mod,
+            .rem,
+            .shl_exact,
+            .shr_exact,
+            .bit_offset_of,
+            .offset_of,
+            .splat,
+            .reduce,
+            .shuffle,
+            .atomic_load,
+            .atomic_rmw,
+            .mul_add,
+            .builtin_call,
+            .max,
+            .min,
+            .c_import,
+            .@&quot;resume&quot;,
+            .@&quot;await&quot;,
+            .ret_err_value_code,
+            .@&quot;break&quot;,
+            .break_inline,
+            .condbr,
+            .condbr_inline,
+            .switch_continue,
+            .compile_error,
+            .ret_node,
+            .ret_load,
+            .ret_implicit,
+            .ret_err_value,
+            .ret_ptr,
+            .ret_type,
+            .@&quot;unreachable&quot;,
+            .repeat,
+            .repeat_inline,
+            .panic,
+            .trap,
+            .for_len,
+            .@&quot;try&quot;,
+            .try_ptr,
+            .opt_eu_base_ptr_init,
+            .coerce_ptr_elem_ty,
+            .struct_init_empty,
+            .struct_init_empty_result,
+            .struct_init_empty_ref_result,
+            .struct_init_anon,
+            .struct_init,
+            .struct_init_ref,
+            .struct_init_field_type,
+            .struct_init_field_ptr,
+            .array_init_anon,
+            .array_init,
+            .array_init_ref,
+            .validate_array_init_ref_ty,
+            .array_init_elem_type,
+            .array_init_elem_ptr,
+            =&gt; <span class="tok-null">false</span>,
+
+            .extended =&gt; <span class="tok-kw">switch</span> (data.extended.opcode) {
+                .branch_hint,
+                .breakpoint,
+                .disable_instrumentation,
+                .disable_intrinsics,
+                =&gt; <span class="tok-null">true</span>,
+                <span class="tok-kw">else</span> =&gt; <span class="tok-null">false</span>,
+            },
+        };
+    }
+
+    <span class="tok-comment">/// Used by debug safety-checking code.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> data_tags = list: {
+        <span class="tok-builtin">@setEvalBranchQuota</span>(<span class="tok-number">2000</span>);
+        <span class="tok-kw">break</span> :list <a href="std.html">std</a>.<a href="std.enums.html">enums</a>.<a href="std.enums.html#std.enums.directEnumArray">directEnumArray</a>(<a href="std.zig.Zir.Inst.Tag.html">Tag</a>, <a href="std.zig.Zir.Inst.Data.html">Data</a>.<a href="std.zig.Zir.Inst.Data.FieldEnum.html">FieldEnum</a>, <span class="tok-number">0</span>, .{
+            .add = .pl_node,
+            .addwrap = .pl_node,
+            .add_sat = .pl_node,
+            .add_unsafe = .pl_node,
+            .sub = .pl_node,
+            .subwrap = .pl_node,
+            .sub_sat = .pl_node,
+            .mul = .pl_node,
+            .mulwrap = .pl_node,
+            .mul_sat = .pl_node,
+
+            .param = .pl_tok,
+            .param_comptime = .pl_tok,
+            .param_anytype = .str_tok,
+            .param_anytype_comptime = .str_tok,
+            .array_cat = .pl_node,
+            .array_mul = .pl_node,
+            .array_type = .pl_node,
+            .array_type_sentinel = .pl_node,
+            .vector_type = .pl_node,
+            .elem_type = .un_node,
+            .indexable_ptr_elem_type = .un_node,
+            .vec_arr_elem_type = .un_node,
+            .indexable_ptr_len = .un_node,
+            .anyframe_type = .un_node,
+            .as_node = .pl_node,
+            .as_shift_operand = .pl_node,
+            .bit_and = .pl_node,
+            .bitcast = .pl_node,
+            .bit_not = .un_node,
+            .bit_or = .pl_node,
+            .block = .pl_node,
+            .block_comptime = .pl_node,
+            .block_inline = .pl_node,
+            .declaration = .declaration,
+            .suspend_block = .pl_node,
+            .bool_not = .un_node,
+            .bool_br_and = .pl_node,
+            .bool_br_or = .pl_node,
+            .@&quot;break&quot; = .@&quot;break&quot;,
+            .break_inline = .@&quot;break&quot;,
+            .switch_continue = .@&quot;break&quot;,
+            .check_comptime_control_flow = .un_node,
+            .for_len = .pl_node,
+            .call = .pl_node,
+            .field_call = .pl_node,
+            .cmp_lt = .pl_node,
+            .cmp_lte = .pl_node,
+            .cmp_eq = .pl_node,
+            .cmp_gte = .pl_node,
+            .cmp_gt = .pl_node,
+            .cmp_neq = .pl_node,
+            .condbr = .pl_node,
+            .condbr_inline = .pl_node,
+            .@&quot;try&quot; = .pl_node,
+            .try_ptr = .pl_node,
+            .error_set_decl = .pl_node,
+            .dbg_stmt = .dbg_stmt,
+            .dbg_var_ptr = .str_op,
+            .dbg_var_val = .str_op,
+            .decl_ref = .str_tok,
+            .decl_val = .str_tok,
+            .load = .un_node,
+            .div = .pl_node,
+            .elem_ptr = .pl_node,
+            .elem_ptr_node = .pl_node,
+            .elem_val = .pl_node,
+            .elem_val_node = .pl_node,
+            .elem_val_imm = .elem_val_imm,
+            .ensure_result_used = .un_node,
+            .ensure_result_non_error = .un_node,
+            .ensure_err_union_payload_void = .un_node,
+            .error_union_type = .pl_node,
+            .error_value = .str_tok,
+            .@&quot;export&quot; = .pl_node,
+            .field_ptr = .pl_node,
+            .field_val = .pl_node,
+            .field_ptr_named = .pl_node,
+            .field_val_named = .pl_node,
+            .func = .pl_node,
+            .func_inferred = .pl_node,
+            .func_fancy = .pl_node,
+            .import = .pl_tok,
+            .int = .int,
+            .int_big = .str,
+            .float = .float,
+            .float128 = .pl_node,
+            .int_type = .int_type,
+            .is_non_null = .un_node,
+            .is_non_null_ptr = .un_node,
+            .is_non_err = .un_node,
+            .is_non_err_ptr = .un_node,
+            .ret_is_non_err = .un_node,
+            .loop = .pl_node,
+            .repeat = .node,
+            .repeat_inline = .node,
+            .merge_error_sets = .pl_node,
+            .mod_rem = .pl_node,
+            .ref = .un_tok,
+            .ret_node = .un_node,
+            .ret_load = .un_node,
+            .ret_implicit = .un_tok,
+            .ret_err_value = .str_tok,
+            .ret_err_value_code = .str_tok,
+            .ret_ptr = .node,
+            .ret_type = .node,
+            .ptr_type = .ptr_type,
+            .slice_start = .pl_node,
+            .slice_end = .pl_node,
+            .slice_sentinel = .pl_node,
+            .slice_length = .pl_node,
+            .slice_sentinel_ty = .un_node,
+            .store_node = .pl_node,
+            .store_to_inferred_ptr = .pl_node,
+            .str = .str,
+            .negate = .un_node,
+            .negate_wrap = .un_node,
+            .typeof = .un_node,
+            .typeof_log2_int_type = .un_node,
+            .@&quot;unreachable&quot; = .@&quot;unreachable&quot;,
+            .xor = .pl_node,
+            .optional_type = .un_node,
+            .optional_payload_safe = .un_node,
+            .optional_payload_unsafe = .un_node,
+            .optional_payload_safe_ptr = .un_node,
+            .optional_payload_unsafe_ptr = .un_node,
+            .err_union_payload_unsafe = .un_node,
+            .err_union_payload_unsafe_ptr = .un_node,
+            .err_union_code = .un_node,
+            .err_union_code_ptr = .un_node,
+            .enum_literal = .str_tok,
+            .decl_literal = .pl_node,
+            .decl_literal_no_coerce = .pl_node,
+            .switch_block = .pl_node,
+            .switch_block_ref = .pl_node,
+            .switch_block_err_union = .pl_node,
+            .validate_deref = .un_node,
+            .validate_destructure = .pl_node,
+            .field_type_ref = .pl_node,
+            .union_init = .pl_node,
+            .type_info = .un_node,
+            .size_of = .un_node,
+            .bit_size_of = .un_node,
+            .opt_eu_base_ptr_init = .un_node,
+            .coerce_ptr_elem_ty = .pl_node,
+            .validate_ref_ty = .un_tok,
+            .validate_const = .un_node,
+
+            .int_from_ptr = .un_node,
+            .compile_error = .un_node,
+            .set_eval_branch_quota = .un_node,
+            .int_from_enum = .un_node,
+            .align_of = .un_node,
+            .int_from_bool = .un_node,
+            .embed_file = .un_node,
+            .error_name = .un_node,
+            .panic = .un_node,
+            .trap = .node,
+            .set_runtime_safety = .un_node,
+            .sqrt = .un_node,
+            .sin = .un_node,
+            .cos = .un_node,
+            .tan = .un_node,
+            .exp = .un_node,
+            .exp2 = .un_node,
+            .log = .un_node,
+            .log2 = .un_node,
+            .log10 = .un_node,
+            .abs = .un_node,
+            .floor = .un_node,
+            .ceil = .un_node,
+            .trunc = .un_node,
+            .round = .un_node,
+            .tag_name = .un_node,
+            .type_name = .un_node,
+            .frame_type = .un_node,
+            .frame_size = .un_node,
+
+            .int_from_float = .pl_node,
+            .float_from_int = .pl_node,
+            .ptr_from_int = .pl_node,
+            .enum_from_int = .pl_node,
+            .float_cast = .pl_node,
+            .int_cast = .pl_node,
+            .ptr_cast = .pl_node,
+            .truncate = .pl_node,
+            .typeof_builtin = .pl_node,
+
+            .has_decl = .pl_node,
+            .has_field = .pl_node,
+
+            .clz = .un_node,
+            .ctz = .un_node,
+            .pop_count = .un_node,
+            .byte_swap = .un_node,
+            .bit_reverse = .un_node,
+
+            .div_exact = .pl_node,
+            .div_floor = .pl_node,
+            .div_trunc = .pl_node,
+            .mod = .pl_node,
+            .rem = .pl_node,
+
+            .shl = .pl_node,
+            .shl_exact = .pl_node,
+            .shl_sat = .pl_node,
+            .shr = .pl_node,
+            .shr_exact = .pl_node,
+
+            .bit_offset_of = .pl_node,
+            .offset_of = .pl_node,
+            .splat = .pl_node,
+            .reduce = .pl_node,
+            .shuffle = .pl_node,
+            .atomic_load = .pl_node,
+            .atomic_rmw = .pl_node,
+            .atomic_store = .pl_node,
+            .mul_add = .pl_node,
+            .builtin_call = .pl_node,
+            .max = .pl_node,
+            .memcpy = .pl_node,
+            .memset = .pl_node,
+            .min = .pl_node,
+            .c_import = .pl_node,
+
+            .alloc = .un_node,
+            .alloc_mut = .un_node,
+            .alloc_comptime_mut = .un_node,
+            .alloc_inferred = .node,
+            .alloc_inferred_mut = .node,
+            .alloc_inferred_comptime = .node,
+            .alloc_inferred_comptime_mut = .node,
+            .resolve_inferred_alloc = .un_node,
+            .make_ptr_const = .un_node,
+
+            .@&quot;resume&quot; = .un_node,
+            .@&quot;await&quot; = .un_node,
+
+            .@&quot;defer&quot; = .@&quot;defer&quot;,
+            .defer_err_code = .defer_err_code,
+
+            .save_err_ret_index = .save_err_ret_index,
+            .restore_err_ret_index_unconditional = .un_node,
+            .restore_err_ret_index_fn_entry = .un_node,
+
+            .struct_init_empty = .un_node,
+            .struct_init_empty_result = .un_node,
+            .struct_init_empty_ref_result = .un_node,
+            .struct_init_anon = .pl_node,
+            .struct_init = .pl_node,
+            .struct_init_ref = .pl_node,
+            .validate_struct_init_ty = .un_node,
+            .validate_struct_init_result_ty = .un_node,
+            .validate_ptr_struct_init = .pl_node,
+            .struct_init_field_type = .pl_node,
+            .struct_init_field_ptr = .pl_node,
+            .array_init_anon = .pl_node,
+            .array_init = .pl_node,
+            .array_init_ref = .pl_node,
+            .validate_array_init_ty = .pl_node,
+            .validate_array_init_result_ty = .pl_node,
+            .validate_array_init_ref_ty = .pl_node,
+            .validate_ptr_array_init = .pl_node,
+            .array_init_elem_type = .bin,
+            .array_init_elem_ptr = .pl_node,
+
+            .extended = .extended,
+        });
+    };<span class="tok-comment">
+
+    // Uncomment to view how many tag slots are available.
+    //comptime {
+    //    @compileLog(&quot;ZIR tags left: &quot;, 256 - @typeInfo(Tag).@&quot;enum&quot;.fields.len);
+    //}
+</span>}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

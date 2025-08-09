@@ -1,0 +1,487 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">os</a></li><li><a href="std.os.linux.html" class="">linux</a></li><li><a href="std.os.linux.IPV6.html" class="active">IPV6</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.os.linux.IPV6" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.os.linux.IPV6</span><a href="#src.zig-std.os.linux.IPV6">[src]</a></h1><div class="tldDocs"><p>IPv6 socket options</p>
+</div><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.os.linux.IPV6.ADDRFORM" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ADDRFORM</span><a href="#src.zig-std.os.linux.IPV6.ADDRFORM">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.ADDRFORM">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ADDRFORM = <span class="tok-number">1</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.@%222292PKTINFO%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"2292PKTINFO"</span><a href="#src.zig-std.os.linux.IPV6.@%222292PKTINFO%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.@%222292PKTINFO%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;2292PKTINFO&quot; = <span class="tok-number">2</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.@%222292HOPOPTS%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"2292HOPOPTS"</span><a href="#src.zig-std.os.linux.IPV6.@%222292HOPOPTS%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.@%222292HOPOPTS%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;2292HOPOPTS&quot; = <span class="tok-number">3</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.@%222292DSTOPTS%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"2292DSTOPTS"</span><a href="#src.zig-std.os.linux.IPV6.@%222292DSTOPTS%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.@%222292DSTOPTS%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;2292DSTOPTS&quot; = <span class="tok-number">4</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.@%222292RTHDR%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"2292RTHDR"</span><a href="#src.zig-std.os.linux.IPV6.@%222292RTHDR%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.@%222292RTHDR%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;2292RTHDR&quot; = <span class="tok-number">5</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.@%222292PKTOPTIONS%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"2292PKTOPTIONS"</span><a href="#src.zig-std.os.linux.IPV6.@%222292PKTOPTIONS%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.@%222292PKTOPTIONS%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;2292PKTOPTIONS&quot; = <span class="tok-number">6</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.CHECKSUM" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">CHECKSUM</span><a href="#src.zig-std.os.linux.IPV6.CHECKSUM">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.CHECKSUM">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> CHECKSUM = <span class="tok-number">7</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.@%222292HOPLIMIT%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"2292HOPLIMIT"</span><a href="#src.zig-std.os.linux.IPV6.@%222292HOPLIMIT%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.@%222292HOPLIMIT%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;2292HOPLIMIT&quot; = <span class="tok-number">8</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.NEXTHOP" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">NEXTHOP</span><a href="#src.zig-std.os.linux.IPV6.NEXTHOP">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.NEXTHOP">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> NEXTHOP = <span class="tok-number">9</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.AUTHHDR" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">AUTHHDR</span><a href="#src.zig-std.os.linux.IPV6.AUTHHDR">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.AUTHHDR">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> AUTHHDR = <span class="tok-number">10</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.FLOWINFO" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">FLOWINFO</span><a href="#src.zig-std.os.linux.IPV6.FLOWINFO">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.FLOWINFO">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> FLOWINFO = <span class="tok-number">11</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.UNICAST_HOPS" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">UNICAST_HOPS</span><a href="#src.zig-std.os.linux.IPV6.UNICAST_HOPS">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.UNICAST_HOPS">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> UNICAST_HOPS = <span class="tok-number">16</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.MULTICAST_IF" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">MULTICAST_IF</span><a href="#src.zig-std.os.linux.IPV6.MULTICAST_IF">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.MULTICAST_IF">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MULTICAST_IF = <span class="tok-number">17</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.MULTICAST_HOPS" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">MULTICAST_HOPS</span><a href="#src.zig-std.os.linux.IPV6.MULTICAST_HOPS">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.MULTICAST_HOPS">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MULTICAST_HOPS = <span class="tok-number">18</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.MULTICAST_LOOP" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">MULTICAST_LOOP</span><a href="#src.zig-std.os.linux.IPV6.MULTICAST_LOOP">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.MULTICAST_LOOP">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MULTICAST_LOOP = <span class="tok-number">19</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.ADD_MEMBERSHIP" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ADD_MEMBERSHIP</span><a href="#src.zig-std.os.linux.IPV6.ADD_MEMBERSHIP">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.ADD_MEMBERSHIP">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ADD_MEMBERSHIP = <span class="tok-number">20</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.DROP_MEMBERSHIP" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">DROP_MEMBERSHIP</span><a href="#src.zig-std.os.linux.IPV6.DROP_MEMBERSHIP">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.DROP_MEMBERSHIP">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> DROP_MEMBERSHIP = <span class="tok-number">21</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.ROUTER_ALERT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ROUTER_ALERT</span><a href="#src.zig-std.os.linux.IPV6.ROUTER_ALERT">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.ROUTER_ALERT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ROUTER_ALERT = <span class="tok-number">22</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.MTU_DISCOVER" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">MTU_DISCOVER</span><a href="#src.zig-std.os.linux.IPV6.MTU_DISCOVER">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.MTU_DISCOVER">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MTU_DISCOVER = <span class="tok-number">23</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.MTU" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">MTU</span><a href="#src.zig-std.os.linux.IPV6.MTU">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.MTU">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MTU = <span class="tok-number">24</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.RECVERR" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">RECVERR</span><a href="#src.zig-std.os.linux.IPV6.RECVERR">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.RECVERR">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECVERR = <span class="tok-number">25</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.V6ONLY" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">V6ONLY</span><a href="#src.zig-std.os.linux.IPV6.V6ONLY">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.V6ONLY">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> V6ONLY = <span class="tok-number">26</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.JOIN_ANYCAST" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">JOIN_ANYCAST</span><a href="#src.zig-std.os.linux.IPV6.JOIN_ANYCAST">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.JOIN_ANYCAST">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> JOIN_ANYCAST = <span class="tok-number">27</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.LEAVE_ANYCAST" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">LEAVE_ANYCAST</span><a href="#src.zig-std.os.linux.IPV6.LEAVE_ANYCAST">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.LEAVE_ANYCAST">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> LEAVE_ANYCAST = <span class="tok-number">28</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.PMTUDISC_DONT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PMTUDISC_DONT</span><a href="#src.zig-std.os.linux.IPV6.PMTUDISC_DONT">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.PMTUDISC_DONT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PMTUDISC_DONT = <span class="tok-number">0</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.PMTUDISC_WANT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PMTUDISC_WANT</span><a href="#src.zig-std.os.linux.IPV6.PMTUDISC_WANT">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.PMTUDISC_WANT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PMTUDISC_WANT = <span class="tok-number">1</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.PMTUDISC_DO" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PMTUDISC_DO</span><a href="#src.zig-std.os.linux.IPV6.PMTUDISC_DO">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.PMTUDISC_DO">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PMTUDISC_DO = <span class="tok-number">2</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.PMTUDISC_PROBE" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PMTUDISC_PROBE</span><a href="#src.zig-std.os.linux.IPV6.PMTUDISC_PROBE">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.PMTUDISC_PROBE">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PMTUDISC_PROBE = <span class="tok-number">3</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.PMTUDISC_INTERFACE" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PMTUDISC_INTERFACE</span><a href="#src.zig-std.os.linux.IPV6.PMTUDISC_INTERFACE">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.PMTUDISC_INTERFACE">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PMTUDISC_INTERFACE = <span class="tok-number">4</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.PMTUDISC_OMIT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PMTUDISC_OMIT</span><a href="#src.zig-std.os.linux.IPV6.PMTUDISC_OMIT">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.PMTUDISC_OMIT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PMTUDISC_OMIT = <span class="tok-number">5</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.FLOWLABEL_MGR" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">FLOWLABEL_MGR</span><a href="#src.zig-std.os.linux.IPV6.FLOWLABEL_MGR">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.FLOWLABEL_MGR">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> FLOWLABEL_MGR = <span class="tok-number">32</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.FLOWINFO_SEND" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">FLOWINFO_SEND</span><a href="#src.zig-std.os.linux.IPV6.FLOWINFO_SEND">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.FLOWINFO_SEND">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> FLOWINFO_SEND = <span class="tok-number">33</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.IPSEC_POLICY" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">IPSEC_POLICY</span><a href="#src.zig-std.os.linux.IPV6.IPSEC_POLICY">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.IPSEC_POLICY">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> IPSEC_POLICY = <span class="tok-number">34</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.XFRM_POLICY" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">XFRM_POLICY</span><a href="#src.zig-std.os.linux.IPV6.XFRM_POLICY">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.XFRM_POLICY">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> XFRM_POLICY = <span class="tok-number">35</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.HDRINCL" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">HDRINCL</span><a href="#src.zig-std.os.linux.IPV6.HDRINCL">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.HDRINCL">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> HDRINCL = <span class="tok-number">36</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.RECVPKTINFO" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">RECVPKTINFO</span><a href="#src.zig-std.os.linux.IPV6.RECVPKTINFO">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.RECVPKTINFO">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECVPKTINFO = <span class="tok-number">49</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.PKTINFO" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PKTINFO</span><a href="#src.zig-std.os.linux.IPV6.PKTINFO">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.PKTINFO">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PKTINFO = <span class="tok-number">50</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.RECVHOPLIMIT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">RECVHOPLIMIT</span><a href="#src.zig-std.os.linux.IPV6.RECVHOPLIMIT">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.RECVHOPLIMIT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECVHOPLIMIT = <span class="tok-number">51</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.HOPLIMIT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">HOPLIMIT</span><a href="#src.zig-std.os.linux.IPV6.HOPLIMIT">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.HOPLIMIT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> HOPLIMIT = <span class="tok-number">52</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.RECVHOPOPTS" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">RECVHOPOPTS</span><a href="#src.zig-std.os.linux.IPV6.RECVHOPOPTS">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.RECVHOPOPTS">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECVHOPOPTS = <span class="tok-number">53</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.HOPOPTS" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">HOPOPTS</span><a href="#src.zig-std.os.linux.IPV6.HOPOPTS">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.HOPOPTS">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> HOPOPTS = <span class="tok-number">54</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.RTHDRDSTOPTS" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">RTHDRDSTOPTS</span><a href="#src.zig-std.os.linux.IPV6.RTHDRDSTOPTS">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.RTHDRDSTOPTS">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> RTHDRDSTOPTS = <span class="tok-number">55</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.RECVRTHDR" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">RECVRTHDR</span><a href="#src.zig-std.os.linux.IPV6.RECVRTHDR">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.RECVRTHDR">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECVRTHDR = <span class="tok-number">56</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.RTHDR" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">RTHDR</span><a href="#src.zig-std.os.linux.IPV6.RTHDR">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.RTHDR">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> RTHDR = <span class="tok-number">57</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.RECVDSTOPTS" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">RECVDSTOPTS</span><a href="#src.zig-std.os.linux.IPV6.RECVDSTOPTS">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.RECVDSTOPTS">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECVDSTOPTS = <span class="tok-number">58</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.DSTOPTS" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">DSTOPTS</span><a href="#src.zig-std.os.linux.IPV6.DSTOPTS">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.DSTOPTS">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> DSTOPTS = <span class="tok-number">59</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.RECVPATHMTU" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">RECVPATHMTU</span><a href="#src.zig-std.os.linux.IPV6.RECVPATHMTU">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.RECVPATHMTU">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECVPATHMTU = <span class="tok-number">60</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.PATHMTU" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PATHMTU</span><a href="#src.zig-std.os.linux.IPV6.PATHMTU">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.PATHMTU">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PATHMTU = <span class="tok-number">61</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.DONTFRAG" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">DONTFRAG</span><a href="#src.zig-std.os.linux.IPV6.DONTFRAG">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.DONTFRAG">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> DONTFRAG = <span class="tok-number">62</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.RECVTCLASS" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">RECVTCLASS</span><a href="#src.zig-std.os.linux.IPV6.RECVTCLASS">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.RECVTCLASS">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECVTCLASS = <span class="tok-number">66</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.TCLASS" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">TCLASS</span><a href="#src.zig-std.os.linux.IPV6.TCLASS">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.TCLASS">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> TCLASS = <span class="tok-number">67</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.AUTOFLOWLABEL" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">AUTOFLOWLABEL</span><a href="#src.zig-std.os.linux.IPV6.AUTOFLOWLABEL">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.AUTOFLOWLABEL">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> AUTOFLOWLABEL = <span class="tok-number">70</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.ADDR_PREFERENCES" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ADDR_PREFERENCES</span><a href="#src.zig-std.os.linux.IPV6.ADDR_PREFERENCES">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.ADDR_PREFERENCES">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ADDR_PREFERENCES = <span class="tok-number">72</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.PREFER_SRC_TMP" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PREFER_SRC_TMP</span><a href="#src.zig-std.os.linux.IPV6.PREFER_SRC_TMP">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.PREFER_SRC_TMP">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PREFER_SRC_TMP = <span class="tok-number">0x0001</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.PREFER_SRC_PUBLIC" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PREFER_SRC_PUBLIC</span><a href="#src.zig-std.os.linux.IPV6.PREFER_SRC_PUBLIC">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.PREFER_SRC_PUBLIC">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PREFER_SRC_PUBLIC = <span class="tok-number">0x0002</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.PREFER_SRC_PUBTMP_DEFAULT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PREFER_SRC_PUBTMP_DEFAULT</span><a href="#src.zig-std.os.linux.IPV6.PREFER_SRC_PUBTMP_DEFAULT">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.PREFER_SRC_PUBTMP_DEFAULT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PREFER_SRC_PUBTMP_DEFAULT = <span class="tok-number">0x0100</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.PREFER_SRC_COA" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PREFER_SRC_COA</span><a href="#src.zig-std.os.linux.IPV6.PREFER_SRC_COA">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.PREFER_SRC_COA">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PREFER_SRC_COA = <span class="tok-number">0x0004</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.PREFER_SRC_HOME" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PREFER_SRC_HOME</span><a href="#src.zig-std.os.linux.IPV6.PREFER_SRC_HOME">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.PREFER_SRC_HOME">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PREFER_SRC_HOME = <span class="tok-number">0x0400</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.PREFER_SRC_CGA" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PREFER_SRC_CGA</span><a href="#src.zig-std.os.linux.IPV6.PREFER_SRC_CGA">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.PREFER_SRC_CGA">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PREFER_SRC_CGA = <span class="tok-number">0x0008</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.PREFER_SRC_NONCGA" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PREFER_SRC_NONCGA</span><a href="#src.zig-std.os.linux.IPV6.PREFER_SRC_NONCGA">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.PREFER_SRC_NONCGA">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PREFER_SRC_NONCGA = <span class="tok-number">0x0800</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.MINHOPCOUNT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">MINHOPCOUNT</span><a href="#src.zig-std.os.linux.IPV6.MINHOPCOUNT">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.MINHOPCOUNT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MINHOPCOUNT = <span class="tok-number">73</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.ORIGDSTADDR" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ORIGDSTADDR</span><a href="#src.zig-std.os.linux.IPV6.ORIGDSTADDR">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.ORIGDSTADDR">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ORIGDSTADDR = <span class="tok-number">74</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.ORIGDSTADDR" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ORIGDSTADDR</span><a href="#src.zig-std.os.linux.IPV6.ORIGDSTADDR">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.ORIGDSTADDR">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ORIGDSTADDR = <span class="tok-number">74</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.TRANSPARENT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">TRANSPARENT</span><a href="#src.zig-std.os.linux.IPV6.TRANSPARENT">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.TRANSPARENT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> TRANSPARENT = <span class="tok-number">75</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.UNICAST_IF" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">UNICAST_IF</span><a href="#src.zig-std.os.linux.IPV6.UNICAST_IF">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.UNICAST_IF">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> UNICAST_IF = <span class="tok-number">76</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.RECVFRAGSIZE" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">RECVFRAGSIZE</span><a href="#src.zig-std.os.linux.IPV6.RECVFRAGSIZE">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.RECVFRAGSIZE">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECVFRAGSIZE = <span class="tok-number">77</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.IPV6.FREEBIND" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">FREEBIND</span><a href="#src.zig-std.os.linux.IPV6.FREEBIND">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.IPV6.FREEBIND">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> FREEBIND = <span class="tok-number">78</span></code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.os.linux.IPV6">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> IPV6 = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ADDRFORM = <span class="tok-number">1</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;2292PKTINFO&quot; = <span class="tok-number">2</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;2292HOPOPTS&quot; = <span class="tok-number">3</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;2292DSTOPTS&quot; = <span class="tok-number">4</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;2292RTHDR&quot; = <span class="tok-number">5</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;2292PKTOPTIONS&quot; = <span class="tok-number">6</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> CHECKSUM = <span class="tok-number">7</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;2292HOPLIMIT&quot; = <span class="tok-number">8</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> NEXTHOP = <span class="tok-number">9</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> AUTHHDR = <span class="tok-number">10</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> FLOWINFO = <span class="tok-number">11</span>;
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> UNICAST_HOPS = <span class="tok-number">16</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> MULTICAST_IF = <span class="tok-number">17</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> MULTICAST_HOPS = <span class="tok-number">18</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> MULTICAST_LOOP = <span class="tok-number">19</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ADD_MEMBERSHIP = <span class="tok-number">20</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> DROP_MEMBERSHIP = <span class="tok-number">21</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ROUTER_ALERT = <span class="tok-number">22</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> MTU_DISCOVER = <span class="tok-number">23</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> MTU = <span class="tok-number">24</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECVERR = <span class="tok-number">25</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> V6ONLY = <span class="tok-number">26</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> JOIN_ANYCAST = <span class="tok-number">27</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> LEAVE_ANYCAST = <span class="tok-number">28</span>;<span class="tok-comment">
+
+    // IPV6.MTU_DISCOVER values
+    </span><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PMTUDISC_DONT = <span class="tok-number">0</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> PMTUDISC_WANT = <span class="tok-number">1</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> PMTUDISC_DO = <span class="tok-number">2</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> PMTUDISC_PROBE = <span class="tok-number">3</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> PMTUDISC_INTERFACE = <span class="tok-number">4</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> PMTUDISC_OMIT = <span class="tok-number">5</span>;<span class="tok-comment">
+
+    // Flowlabel
+    </span><span class="tok-kw">pub</span> <span class="tok-kw">const</span> FLOWLABEL_MGR = <span class="tok-number">32</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> FLOWINFO_SEND = <span class="tok-number">33</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> IPSEC_POLICY = <span class="tok-number">34</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> XFRM_POLICY = <span class="tok-number">35</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> HDRINCL = <span class="tok-number">36</span>;<span class="tok-comment">
+
+    // Advanced API (RFC3542) (1)
+    </span><span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECVPKTINFO = <span class="tok-number">49</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> PKTINFO = <span class="tok-number">50</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECVHOPLIMIT = <span class="tok-number">51</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> HOPLIMIT = <span class="tok-number">52</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECVHOPOPTS = <span class="tok-number">53</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> HOPOPTS = <span class="tok-number">54</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> RTHDRDSTOPTS = <span class="tok-number">55</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECVRTHDR = <span class="tok-number">56</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> RTHDR = <span class="tok-number">57</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECVDSTOPTS = <span class="tok-number">58</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> DSTOPTS = <span class="tok-number">59</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECVPATHMTU = <span class="tok-number">60</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> PATHMTU = <span class="tok-number">61</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> DONTFRAG = <span class="tok-number">62</span>;<span class="tok-comment">
+
+    // Advanced API (RFC3542) (2)
+    </span><span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECVTCLASS = <span class="tok-number">66</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> TCLASS = <span class="tok-number">67</span>;
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> AUTOFLOWLABEL = <span class="tok-number">70</span>;<span class="tok-comment">
+
+    // RFC5014: Source address selection
+    </span><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ADDR_PREFERENCES = <span class="tok-number">72</span>;
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> PREFER_SRC_TMP = <span class="tok-number">0x0001</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> PREFER_SRC_PUBLIC = <span class="tok-number">0x0002</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> PREFER_SRC_PUBTMP_DEFAULT = <span class="tok-number">0x0100</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> PREFER_SRC_COA = <span class="tok-number">0x0004</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> PREFER_SRC_HOME = <span class="tok-number">0x0400</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> PREFER_SRC_CGA = <span class="tok-number">0x0008</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> PREFER_SRC_NONCGA = <span class="tok-number">0x0800</span>;<span class="tok-comment">
+
+    // RFC5082: Generalized Ttl Security Mechanism
+    </span><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MINHOPCOUNT = <span class="tok-number">73</span>;
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ORIGDSTADDR = <span class="tok-number">74</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECVORIGDSTADDR = <a href="std.os.linux.IPV6.html">IPV6</a>.<a href="std.os.linux.IPV6.html#std.os.linux.IPV6.ORIGDSTADDR">ORIGDSTADDR</a>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> TRANSPARENT = <span class="tok-number">75</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> UNICAST_IF = <span class="tok-number">76</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECVFRAGSIZE = <span class="tok-number">77</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> FREEBIND = <span class="tok-number">78</span>;
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,592 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">crypto</a></li><li><a href="std.crypto.blake3.html" class="">blake3</a></li><li><a href="std.crypto.blake3.Blake3.html" class="active">Blake3</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.crypto.blake3.Blake3" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.crypto.blake3.Blake3</span><a href="#src.zig-std.crypto.blake3.Blake3">[src]</a></h1><div class="tldDocs"><p>An incremental hasher that can accept any number of writes.</p>
+</div><div class="sectNamespaces"><h2 class="sectionHeader">Namespaces</h2><ul class="listNamespaces columns"><li><a href="std.crypto.blake3.Blake3.KdfOptions.html">std.crypto.blake3.Blake3.KdfOptions</a></li></ul></div><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.crypto.blake3.Blake3.Options.html">std.crypto.blake3.Blake3.Options</a></li></ul></div><div class="sectTypes"><h2 class="sectionHeader">Types</h2><div class="listTypes"><div class="decl"><h2 id="std.crypto.blake3.Blake3.Writer" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">Writer</span><a href="#src.zig-std.crypto.blake3.Blake3.Writer">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.blake3.Blake3.Writer">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Writer = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.html#std.io.GenericWriter">Writer</a>(*<a href="std.crypto.blake3.Blake3.html">Blake3</a>, <a href="std.crypto.blake3.Blake3.html#std.crypto.blake3.Blake3.Error">Error</a>, <a href="std.crypto.blake3.Blake3.html#std.crypto.blake3.Blake3.write">write</a>)</code></pre></details></div></div></div></div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>chunk_state: <a href="std.crypto.blake3.ChunkState.html">ChunkState</a></code></pre></div><div><pre><code>key: [<span class="tok-number">8</span>]<span class="tok-type">u32</span></code></pre></div><div><pre><code>cv_stack: [<span class="tok-number">54</span>][<span class="tok-number">8</span>]<span class="tok-type">u32</span> = <span class="tok-null">undefined</span></code></pre></div><div><pre><code>cv_stack_len: <span class="tok-type">u8</span> = <span class="tok-number">0</span></code></pre></div><div><pre><code>flags: <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.crypto.blake3.BLOCK_LEN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">BLOCK_LEN</span><a href="#src.zig-std.crypto.blake3.BLOCK_LEN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.blake3.BLOCK_LEN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> BLOCK_LEN: <span class="tok-type">usize</span> = <span class="tok-number">64</span></code></pre></details></div></div><div class="decl"><h2 id="std.crypto.blake3.OUT_LEN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">OUT_LEN</span><a href="#src.zig-std.crypto.blake3.OUT_LEN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.blake3.OUT_LEN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> OUT_LEN: <span class="tok-type">usize</span> = <span class="tok-number">32</span></code></pre></details></div></div><div class="decl"><h2 id="std.crypto.blake3.KEY_LEN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">KEY_LEN</span><a href="#src.zig-std.crypto.blake3.KEY_LEN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.blake3.KEY_LEN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> KEY_LEN: <span class="tok-type">usize</span> = <span class="tok-number">32</span></code></pre></details></div></div></div></div><div class="sectErrSets"><h2 class="sectionHeader">Error Sets</h2><div class="listErrSets"><div class="decl"><h2 id="std.crypto.blake3.Blake3.Error" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">Error</span><a href="#src.zig-std.crypto.blake3.Blake3.Error">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.blake3.Blake3.Error">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = <span class="tok-kw">error</span>{}</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.crypto.blake3.Blake3.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.crypto.blake3.Blake3.init">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(options: <a href="std.crypto.blake3.Blake3.Options.html">Options</a>) <a href="std.crypto.blake3.Blake3.html">Blake3</a></code></pre></div><div class="tldDocs"><p>Construct a new <code>Blake3</code> for the hash function, with an optional key</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>options: <a href="std.crypto.blake3.Blake3.Options.html">Options</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.blake3.Blake3.init">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(options: <a href="std.crypto.blake3.Blake3.Options.html">Options</a>) <a href="std.crypto.blake3.Blake3.html">Blake3</a> {
+    <span class="tok-kw">if</span> (options.key) |key| {
+        <span class="tok-kw">const</span> key_words = <a href="std.crypto.blake3.html#std.crypto.blake3.wordsFromLittleEndianBytes">wordsFromLittleEndianBytes</a>(<span class="tok-number">8</span>, key);
+        <span class="tok-kw">return</span> <a href="std.crypto.blake3.Blake3.html">Blake3</a>.<a href="std.crypto.blake3.Blake3.html#std.crypto.blake3.Blake3.init_internal">init_internal</a>(key_words, <a href="std.crypto.blake3.html#std.crypto.blake3.KEYED_HASH">KEYED_HASH</a>);
+    } <span class="tok-kw">else</span> {
+        <span class="tok-kw">return</span> <a href="std.crypto.blake3.Blake3.html">Blake3</a>.<a href="std.crypto.blake3.Blake3.html#std.crypto.blake3.Blake3.init_internal">init_internal</a>(<a href="std.crypto.blake3.html#std.crypto.blake3.IV">IV</a>, <span class="tok-number">0</span>);
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.blake3.Blake3.initKdf" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">initKdf</span><a href="#src.zig-std.crypto.blake3.Blake3.initKdf">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initKdf</span>(context: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, options: <a href="std.crypto.blake3.Blake3.KdfOptions.html">KdfOptions</a>) <a href="std.crypto.blake3.Blake3.html">Blake3</a></code></pre></div><div class="tldDocs"><p>Construct a new <code>Blake3</code> for the key derivation function. The context
+string should be hardcoded, globally unique, and application-specific.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>context: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>options: <a href="std.crypto.blake3.Blake3.KdfOptions.html">KdfOptions</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.blake3.Blake3.initKdf">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initKdf</span>(context: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, options: <a href="std.crypto.blake3.Blake3.KdfOptions.html">KdfOptions</a>) <a href="std.crypto.blake3.Blake3.html">Blake3</a> {
+    _ = options;
+    <span class="tok-kw">var</span> context_hasher = <a href="std.crypto.blake3.Blake3.html">Blake3</a>.<a href="std.crypto.blake3.Blake3.html#std.crypto.blake3.Blake3.init_internal">init_internal</a>(<a href="std.crypto.blake3.html#std.crypto.blake3.IV">IV</a>, <a href="std.crypto.blake3.html#std.crypto.blake3.DERIVE_KEY_CONTEXT">DERIVE_KEY_CONTEXT</a>);
+    context_hasher.update(context);
+    <span class="tok-kw">var</span> context_key: [<a href="std.crypto.blake3.html#std.crypto.blake3.KEY_LEN">KEY_LEN</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    context_hasher.final(context_key[<span class="tok-number">0</span>..]);
+    <span class="tok-kw">const</span> context_key_words = <a href="std.crypto.blake3.html#std.crypto.blake3.wordsFromLittleEndianBytes">wordsFromLittleEndianBytes</a>(<span class="tok-number">8</span>, context_key);
+    <span class="tok-kw">return</span> <a href="std.crypto.blake3.Blake3.html">Blake3</a>.<a href="std.crypto.blake3.Blake3.html#std.crypto.blake3.Blake3.init_internal">init_internal</a>(context_key_words, <a href="std.crypto.blake3.html#std.crypto.blake3.DERIVE_KEY_MATERIAL">DERIVE_KEY_MATERIAL</a>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.blake3.Blake3.hash" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">hash</span><a href="#src.zig-std.crypto.blake3.Blake3.hash">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">hash</span>(b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, out: []<span class="tok-type">u8</span>, options: <a href="std.crypto.blake3.Blake3.Options.html">Options</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>out: []<span class="tok-type">u8</span></code></pre></div><div><pre><code>options: <a href="std.crypto.blake3.Blake3.Options.html">Options</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.blake3.Blake3.hash">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">hash</span>(b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, out: []<span class="tok-type">u8</span>, options: <a href="std.crypto.blake3.Blake3.Options.html">Options</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> d = <a href="std.crypto.blake3.Blake3.html">Blake3</a>.<a href="std.crypto.blake3.Blake3.html#std.crypto.blake3.Blake3.init">init</a>(options);
+    d.update(b);
+    d.final(out);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.blake3.Blake3.update" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">update</span><a href="#src.zig-std.crypto.blake3.Blake3.update">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">update</span>(self: *<a href="std.crypto.blake3.Blake3.html">Blake3</a>, input_slice: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Add input to the hash state. This can be called any number of times.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.crypto.blake3.Blake3.html">Blake3</a></code></pre></div><div><pre><code>input_slice: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.blake3.Blake3.update">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">update</span>(self: *<a href="std.crypto.blake3.Blake3.html">Blake3</a>, input_slice: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> input = input_slice;
+    <span class="tok-kw">while</span> (input.len &gt; <span class="tok-number">0</span>) {<span class="tok-comment">
+        // If the current chunk is complete, finalize it and reset the
+        // chunk state. More input is coming, so this chunk is not ROOT.
+        </span><span class="tok-kw">if</span> (self.chunk_state.len() == <a href="std.crypto.blake3.html#std.crypto.blake3.CHUNK_LEN">CHUNK_LEN</a>) {
+            <span class="tok-kw">const</span> chunk_cv = self.chunk_state.output().chainingValue();
+            <span class="tok-kw">const</span> total_chunks = self.chunk_state.chunk_counter + <span class="tok-number">1</span>;
+            self.addChunkChainingValue(chunk_cv, total_chunks);
+            self.chunk_state = <a href="std.crypto.blake3.ChunkState.html">ChunkState</a>.<a href="std.crypto.blake3.ChunkState.html#std.crypto.blake3.ChunkState.init">init</a>(self.key, total_chunks, self.flags);
+        }<span class="tok-comment">
+
+        // Compress input bytes into the current chunk state.
+        </span><span class="tok-kw">const</span> want = <a href="std.crypto.blake3.html#std.crypto.blake3.CHUNK_LEN">CHUNK_LEN</a> - self.chunk_state.len();
+        <span class="tok-kw">const</span> take = <span class="tok-builtin">@min</span>(want, input.len);
+        self.chunk_state.update(input[<span class="tok-number">0</span>..take]);
+        input = input[take..];
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.blake3.Blake3.final" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">final</span><a href="#src.zig-std.crypto.blake3.Blake3.final">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">final</span>(self: *<span class="tok-kw">const</span> <a href="std.crypto.blake3.Blake3.html">Blake3</a>, out_slice: []<span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Finalize the hash and write any number of output bytes.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.crypto.blake3.Blake3.html">Blake3</a></code></pre></div><div><pre><code>out_slice: []<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.blake3.Blake3.final">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">final</span>(self: *<span class="tok-kw">const</span> <a href="std.crypto.blake3.Blake3.html">Blake3</a>, out_slice: []<span class="tok-type">u8</span>) <span class="tok-type">void</span> {<span class="tok-comment">
+    // Starting with the Output from the current chunk, compute all the
+    // parent chaining values along the right edge of the tree, until we
+    // have the root Output.
+    </span><span class="tok-kw">var</span> output = self.chunk_state.output();
+    <span class="tok-kw">var</span> parent_nodes_remaining: <span class="tok-type">usize</span> = self.cv_stack_len;
+    <span class="tok-kw">while</span> (parent_nodes_remaining &gt; <span class="tok-number">0</span>) {
+        parent_nodes_remaining -= <span class="tok-number">1</span>;
+        output = <a href="std.crypto.blake3.html#std.crypto.blake3.parentOutput">parentOutput</a>(
+            self.cv_stack[parent_nodes_remaining],
+            output.chainingValue(),
+            self.key,
+            self.flags,
+        );
+    }
+    output.rootOutputBytes(out_slice);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.blake3.Blake3.writer" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">writer</span><a href="#src.zig-std.crypto.blake3.Blake3.writer">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writer</span>(self: *<a href="std.crypto.blake3.Blake3.html">Blake3</a>) <a href="std.crypto.blake3.Blake3.html#std.crypto.blake3.Blake3.Writer">Writer</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.crypto.blake3.Blake3.html">Blake3</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.blake3.Blake3.writer">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writer</span>(self: *<a href="std.crypto.blake3.Blake3.html">Blake3</a>) <a href="std.crypto.blake3.Blake3.html#std.crypto.blake3.Blake3.Writer">Writer</a> {
+    <span class="tok-kw">return</span> .{ .context = self };
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.crypto.blake3.Blake3">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Blake3 = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Options = <span class="tok-kw">struct</span> { key: ?[<a href="std.crypto.blake3.html#std.crypto.blake3.OUT_LEN">digest_length</a>]<span class="tok-type">u8</span> = <span class="tok-null">null</span> };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> KdfOptions = <span class="tok-kw">struct</span> {};
+
+    chunk_state: <a href="std.crypto.blake3.ChunkState.html">ChunkState</a>,
+    key: [<span class="tok-number">8</span>]<span class="tok-type">u32</span>,
+    cv_stack: [<span class="tok-number">54</span>][<span class="tok-number">8</span>]<span class="tok-type">u32</span> = <span class="tok-null">undefined</span>,<span class="tok-comment"> // Space for 54 subtree chaining values:
+    </span>cv_stack_len: <span class="tok-type">u8</span> = <span class="tok-number">0</span>,<span class="tok-comment"> // 2^54 * CHUNK_LEN = 2^64
+    </span>flags: <span class="tok-type">u8</span>,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> block_length = <a href="std.crypto.blake3.html#std.crypto.blake3.BLOCK_LEN">BLOCK_LEN</a>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> digest_length = <a href="std.crypto.blake3.html#std.crypto.blake3.OUT_LEN">OUT_LEN</a>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> key_length = <a href="std.crypto.blake3.html#std.crypto.blake3.KEY_LEN">KEY_LEN</a>;
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">init_internal</span>(key: [<span class="tok-number">8</span>]<span class="tok-type">u32</span>, flags: <span class="tok-type">u8</span>) <a href="std.crypto.blake3.Blake3.html">Blake3</a> {
+        <span class="tok-kw">return</span> <a href="std.crypto.blake3.Blake3.html">Blake3</a>{
+            .chunk_state = <a href="std.crypto.blake3.ChunkState.html">ChunkState</a>.<a href="std.crypto.blake3.ChunkState.html#std.crypto.blake3.ChunkState.init">init</a>(key, <span class="tok-number">0</span>, flags),
+            .key = key,
+            .flags = flags,
+        };
+    }
+
+    <span class="tok-comment">/// Construct a new `Blake3` for the hash function, with an optional key</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(options: <a href="std.crypto.blake3.Blake3.Options.html">Options</a>) <a href="std.crypto.blake3.Blake3.html">Blake3</a> {
+        <span class="tok-kw">if</span> (options.key) |key| {
+            <span class="tok-kw">const</span> key_words = <a href="std.crypto.blake3.html#std.crypto.blake3.wordsFromLittleEndianBytes">wordsFromLittleEndianBytes</a>(<span class="tok-number">8</span>, key);
+            <span class="tok-kw">return</span> <a href="std.crypto.blake3.Blake3.html">Blake3</a>.<a href="std.crypto.blake3.Blake3.html#std.crypto.blake3.Blake3.init_internal">init_internal</a>(key_words, <a href="std.crypto.blake3.html#std.crypto.blake3.KEYED_HASH">KEYED_HASH</a>);
+        } <span class="tok-kw">else</span> {
+            <span class="tok-kw">return</span> <a href="std.crypto.blake3.Blake3.html">Blake3</a>.<a href="std.crypto.blake3.Blake3.html#std.crypto.blake3.Blake3.init_internal">init_internal</a>(<a href="std.crypto.blake3.html#std.crypto.blake3.IV">IV</a>, <span class="tok-number">0</span>);
+        }
+    }
+
+    <span class="tok-comment">/// Construct a new `Blake3` for the key derivation function. The context</span>
+    <span class="tok-comment">/// string should be hardcoded, globally unique, and application-specific.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initKdf</span>(context: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, options: <a href="std.crypto.blake3.Blake3.KdfOptions.html">KdfOptions</a>) <a href="std.crypto.blake3.Blake3.html">Blake3</a> {
+        _ = options;
+        <span class="tok-kw">var</span> context_hasher = <a href="std.crypto.blake3.Blake3.html">Blake3</a>.<a href="std.crypto.blake3.Blake3.html#std.crypto.blake3.Blake3.init_internal">init_internal</a>(<a href="std.crypto.blake3.html#std.crypto.blake3.IV">IV</a>, <a href="std.crypto.blake3.html#std.crypto.blake3.DERIVE_KEY_CONTEXT">DERIVE_KEY_CONTEXT</a>);
+        context_hasher.update(context);
+        <span class="tok-kw">var</span> context_key: [<a href="std.crypto.blake3.html#std.crypto.blake3.KEY_LEN">KEY_LEN</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        context_hasher.final(context_key[<span class="tok-number">0</span>..]);
+        <span class="tok-kw">const</span> context_key_words = <a href="std.crypto.blake3.html#std.crypto.blake3.wordsFromLittleEndianBytes">wordsFromLittleEndianBytes</a>(<span class="tok-number">8</span>, context_key);
+        <span class="tok-kw">return</span> <a href="std.crypto.blake3.Blake3.html">Blake3</a>.<a href="std.crypto.blake3.Blake3.html#std.crypto.blake3.Blake3.init_internal">init_internal</a>(context_key_words, <a href="std.crypto.blake3.html#std.crypto.blake3.DERIVE_KEY_MATERIAL">DERIVE_KEY_MATERIAL</a>);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">hash</span>(b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, out: []<span class="tok-type">u8</span>, options: <a href="std.crypto.blake3.Blake3.Options.html">Options</a>) <span class="tok-type">void</span> {
+        <span class="tok-kw">var</span> d = <a href="std.crypto.blake3.Blake3.html">Blake3</a>.<a href="std.crypto.blake3.Blake3.html#std.crypto.blake3.Blake3.init">init</a>(options);
+        d.update(b);
+        d.final(out);
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">pushCv</span>(self: *<a href="std.crypto.blake3.Blake3.html">Blake3</a>, cv: [<span class="tok-number">8</span>]<span class="tok-type">u32</span>) <span class="tok-type">void</span> {
+        self.cv_stack[self.cv_stack_len] = cv;
+        self.cv_stack_len += <span class="tok-number">1</span>;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">popCv</span>(self: *<a href="std.crypto.blake3.Blake3.html">Blake3</a>) [<span class="tok-number">8</span>]<span class="tok-type">u32</span> {
+        self.cv_stack_len -= <span class="tok-number">1</span>;
+        <span class="tok-kw">return</span> self.cv_stack[self.cv_stack_len];
+    }<span class="tok-comment">
+
+    // Section 5.1.2 of the BLAKE3 spec explains this algorithm in more detail.
+    </span><span class="tok-kw">fn</span> <span class="tok-fn">addChunkChainingValue</span>(self: *<a href="std.crypto.blake3.Blake3.html">Blake3</a>, first_cv: [<span class="tok-number">8</span>]<span class="tok-type">u32</span>, total_chunks: <span class="tok-type">u64</span>) <span class="tok-type">void</span> {<span class="tok-comment">
+        // This chunk might complete some subtrees. For each completed subtree,
+        // its left child will be the current top entry in the CV stack, and
+        // its right child will be the current value of `new_cv`. Pop each left
+        // child off the stack, merge it with `new_cv`, and overwrite `new_cv`
+        // with the result. After all these merges, push the final value of
+        // `new_cv` onto the stack. The number of completed subtrees is given
+        // by the number of trailing 0-bits in the new total number of chunks.
+        </span><span class="tok-kw">var</span> new_cv = first_cv;
+        <span class="tok-kw">var</span> chunk_counter = total_chunks;
+        <span class="tok-kw">while</span> (chunk_counter &amp; <span class="tok-number">1</span> == <span class="tok-number">0</span>) {
+            new_cv = <a href="std.crypto.blake3.html#std.crypto.blake3.parentCv">parentCv</a>(self.popCv(), new_cv, self.key, self.flags);
+            chunk_counter &gt;&gt;= <span class="tok-number">1</span>;
+        }
+        self.pushCv(new_cv);
+    }
+
+    <span class="tok-comment">/// Add input to the hash state. This can be called any number of times.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">update</span>(self: *<a href="std.crypto.blake3.Blake3.html">Blake3</a>, input_slice: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+        <span class="tok-kw">var</span> input = input_slice;
+        <span class="tok-kw">while</span> (input.len &gt; <span class="tok-number">0</span>) {<span class="tok-comment">
+            // If the current chunk is complete, finalize it and reset the
+            // chunk state. More input is coming, so this chunk is not ROOT.
+            </span><span class="tok-kw">if</span> (self.chunk_state.len() == <a href="std.crypto.blake3.html#std.crypto.blake3.CHUNK_LEN">CHUNK_LEN</a>) {
+                <span class="tok-kw">const</span> chunk_cv = self.chunk_state.output().chainingValue();
+                <span class="tok-kw">const</span> total_chunks = self.chunk_state.chunk_counter + <span class="tok-number">1</span>;
+                self.addChunkChainingValue(chunk_cv, total_chunks);
+                self.chunk_state = <a href="std.crypto.blake3.ChunkState.html">ChunkState</a>.<a href="std.crypto.blake3.ChunkState.html#std.crypto.blake3.ChunkState.init">init</a>(self.key, total_chunks, self.flags);
+            }<span class="tok-comment">
+
+            // Compress input bytes into the current chunk state.
+            </span><span class="tok-kw">const</span> want = <a href="std.crypto.blake3.html#std.crypto.blake3.CHUNK_LEN">CHUNK_LEN</a> - self.chunk_state.len();
+            <span class="tok-kw">const</span> take = <span class="tok-builtin">@min</span>(want, input.len);
+            self.chunk_state.update(input[<span class="tok-number">0</span>..take]);
+            input = input[take..];
+        }
+    }
+
+    <span class="tok-comment">/// Finalize the hash and write any number of output bytes.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">final</span>(self: *<span class="tok-kw">const</span> <a href="std.crypto.blake3.Blake3.html">Blake3</a>, out_slice: []<span class="tok-type">u8</span>) <span class="tok-type">void</span> {<span class="tok-comment">
+        // Starting with the Output from the current chunk, compute all the
+        // parent chaining values along the right edge of the tree, until we
+        // have the root Output.
+        </span><span class="tok-kw">var</span> output = self.chunk_state.output();
+        <span class="tok-kw">var</span> parent_nodes_remaining: <span class="tok-type">usize</span> = self.cv_stack_len;
+        <span class="tok-kw">while</span> (parent_nodes_remaining &gt; <span class="tok-number">0</span>) {
+            parent_nodes_remaining -= <span class="tok-number">1</span>;
+            output = <a href="std.crypto.blake3.html#std.crypto.blake3.parentOutput">parentOutput</a>(
+                self.cv_stack[parent_nodes_remaining],
+                output.chainingValue(),
+                self.key,
+                self.flags,
+            );
+        }
+        output.rootOutputBytes(out_slice);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = <span class="tok-kw">error</span>{};
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Writer = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.html#std.io.GenericWriter">Writer</a>(*<a href="std.crypto.blake3.Blake3.html">Blake3</a>, <a href="std.crypto.blake3.Blake3.html#std.crypto.blake3.Blake3.Error">Error</a>, <a href="std.crypto.blake3.Blake3.html#std.crypto.blake3.Blake3.write">write</a>);
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">write</span>(self: *<a href="std.crypto.blake3.Blake3.html">Blake3</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.crypto.blake3.Blake3.html#std.crypto.blake3.Blake3.Error">Error</a>!<span class="tok-type">usize</span> {
+        self.update(bytes);
+        <span class="tok-kw">return</span> bytes.len;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writer</span>(self: *<a href="std.crypto.blake3.Blake3.html">Blake3</a>) <a href="std.crypto.blake3.Blake3.html#std.crypto.blake3.Blake3.Writer">Writer</a> {
+        <span class="tok-kw">return</span> .{ .context = self };
+    }
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

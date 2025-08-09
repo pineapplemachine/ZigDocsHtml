@@ -1,0 +1,645 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">Target</a></li><li><a href="std.Target.riscv.html" class="">riscv</a></li><li><a href="std.Target.riscv.Feature.html" class="active">Feature</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.Target.riscv.Feature" class="declHeader"><span class="declHeaderCategory">enum</span><span class="declHeaderIdentifier">std.Target.riscv.Feature</span><a href="#src.zig-std.Target.riscv.Feature">[src]</a></h1><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>@&quot;32bit&quot;</code></pre></div><div><pre><code>@&quot;64bit&quot;</code></pre></div><div><pre><code>a</code></pre></div><div><pre><code>auipc_addi_fusion</code></pre></div><div><pre><code>b</code></pre></div><div><pre><code>c</code></pre></div><div><pre><code>conditional_cmv_fusion</code></pre></div><div><pre><code>d</code></pre></div><div><pre><code>dlen_factor_2</code></pre></div><div><pre><code>e</code></pre></div><div><pre><code>experimental</code></pre></div><div><pre><code>experimental_rva23s64</code></pre></div><div><pre><code>experimental_rva23u64</code></pre></div><div><pre><code>experimental_rvb23s64</code></pre></div><div><pre><code>experimental_rvb23u64</code></pre></div><div><pre><code>experimental_rvm23u32</code></pre></div><div><pre><code>experimental_smmpm</code></pre></div><div><pre><code>experimental_smnpm</code></pre></div><div><pre><code>experimental_ssnpm</code></pre></div><div><pre><code>experimental_sspm</code></pre></div><div><pre><code>experimental_ssqosid</code></pre></div><div><pre><code>experimental_supm</code></pre></div><div><pre><code>experimental_zacas</code></pre></div><div><pre><code>experimental_zalasr</code></pre></div><div><pre><code>experimental_zicfilp</code></pre></div><div><pre><code>experimental_zicfiss</code></pre></div><div><pre><code>f</code></pre></div><div><pre><code>forced_atomics</code></pre></div><div><pre><code>forced_sw_shadow_stack</code></pre></div><div><pre><code>h</code></pre></div><div><pre><code>i</code></pre></div><div><pre><code>ld_add_fusion</code></pre></div><div><pre><code>lui_addi_fusion</code></pre></div><div><pre><code>m</code></pre></div><div><pre><code>no_default_unroll</code></pre></div><div><pre><code>no_rvc_hints</code></pre></div><div><pre><code>no_sink_splat_operands</code></pre></div><div><pre><code>no_trailing_seq_cst_fence</code></pre></div><div><pre><code>optimized_zero_stride_load</code></pre></div><div><pre><code>predictable_select_expensive</code></pre></div><div><pre><code>prefer_w_inst</code></pre></div><div><pre><code>relax</code></pre></div><div><pre><code>reserve_x1</code></pre></div><div><pre><code>reserve_x10</code></pre></div><div><pre><code>reserve_x11</code></pre></div><div><pre><code>reserve_x12</code></pre></div><div><pre><code>reserve_x13</code></pre></div><div><pre><code>reserve_x14</code></pre></div><div><pre><code>reserve_x15</code></pre></div><div><pre><code>reserve_x16</code></pre></div><div><pre><code>reserve_x17</code></pre></div><div><pre><code>reserve_x18</code></pre></div><div><pre><code>reserve_x19</code></pre></div><div><pre><code>reserve_x2</code></pre></div><div><pre><code>reserve_x20</code></pre></div><div><pre><code>reserve_x21</code></pre></div><div><pre><code>reserve_x22</code></pre></div><div><pre><code>reserve_x23</code></pre></div><div><pre><code>reserve_x24</code></pre></div><div><pre><code>reserve_x25</code></pre></div><div><pre><code>reserve_x26</code></pre></div><div><pre><code>reserve_x27</code></pre></div><div><pre><code>reserve_x28</code></pre></div><div><pre><code>reserve_x29</code></pre></div><div><pre><code>reserve_x3</code></pre></div><div><pre><code>reserve_x30</code></pre></div><div><pre><code>reserve_x31</code></pre></div><div><pre><code>reserve_x4</code></pre></div><div><pre><code>reserve_x5</code></pre></div><div><pre><code>reserve_x6</code></pre></div><div><pre><code>reserve_x7</code></pre></div><div><pre><code>reserve_x8</code></pre></div><div><pre><code>reserve_x9</code></pre></div><div><pre><code>rva20s64</code></pre></div><div><pre><code>rva20u64</code></pre></div><div><pre><code>rva22s64</code></pre></div><div><pre><code>rva22u64</code></pre></div><div><pre><code>rvi20u32</code></pre></div><div><pre><code>rvi20u64</code></pre></div><div><pre><code>save_restore</code></pre></div><div><pre><code>shcounterenw</code></pre></div><div><pre><code>shgatpa</code></pre></div><div><pre><code>shifted_zextw_fusion</code></pre></div><div><pre><code>short_forward_branch_opt</code></pre></div><div><pre><code>shtvala</code></pre></div><div><pre><code>shvsatpa</code></pre></div><div><pre><code>shvstvala</code></pre></div><div><pre><code>shvstvecd</code></pre></div><div><pre><code>smaia</code></pre></div><div><pre><code>smcdeleg</code></pre></div><div><pre><code>smcsrind</code></pre></div><div><pre><code>smepmp</code></pre></div><div><pre><code>smstateen</code></pre></div><div><pre><code>ssaia</code></pre></div><div><pre><code>ssccfg</code></pre></div><div><pre><code>ssccptr</code></pre></div><div><pre><code>sscofpmf</code></pre></div><div><pre><code>sscounterenw</code></pre></div><div><pre><code>sscsrind</code></pre></div><div><pre><code>ssstateen</code></pre></div><div><pre><code>ssstrict</code></pre></div><div><pre><code>sstc</code></pre></div><div><pre><code>sstvala</code></pre></div><div><pre><code>sstvecd</code></pre></div><div><pre><code>ssu64xl</code></pre></div><div><pre><code>svade</code></pre></div><div><pre><code>svadu</code></pre></div><div><pre><code>svbare</code></pre></div><div><pre><code>svinval</code></pre></div><div><pre><code>svnapot</code></pre></div><div><pre><code>svpbmt</code></pre></div><div><pre><code>tagged_globals</code></pre></div><div><pre><code>unaligned_scalar_mem</code></pre></div><div><pre><code>unaligned_vector_mem</code></pre></div><div><pre><code>use_postra_scheduler</code></pre></div><div><pre><code>v</code></pre></div><div><pre><code>ventana_veyron</code></pre></div><div><pre><code>xcvalu</code></pre></div><div><pre><code>xcvbi</code></pre></div><div><pre><code>xcvbitmanip</code></pre></div><div><pre><code>xcvelw</code></pre></div><div><pre><code>xcvmac</code></pre></div><div><pre><code>xcvmem</code></pre></div><div><pre><code>xcvsimd</code></pre></div><div><pre><code>xsfcease</code></pre></div><div><pre><code>xsfvcp</code></pre></div><div><pre><code>xsfvfnrclipxfqf</code></pre></div><div><pre><code>xsfvfwmaccqqq</code></pre></div><div><pre><code>xsfvqmaccdod</code></pre></div><div><pre><code>xsfvqmaccqoq</code></pre></div><div><pre><code>xsifivecdiscarddlone</code></pre></div><div><pre><code>xsifivecflushdlone</code></pre></div><div><pre><code>xtheadba</code></pre></div><div><pre><code>xtheadbb</code></pre></div><div><pre><code>xtheadbs</code></pre></div><div><pre><code>xtheadcmo</code></pre></div><div><pre><code>xtheadcondmov</code></pre></div><div><pre><code>xtheadfmemidx</code></pre></div><div><pre><code>xtheadmac</code></pre></div><div><pre><code>xtheadmemidx</code></pre></div><div><pre><code>xtheadmempair</code></pre></div><div><pre><code>xtheadsync</code></pre></div><div><pre><code>xtheadvdot</code></pre></div><div><pre><code>xventanacondops</code></pre></div><div><pre><code>xwchc</code></pre></div><div><pre><code>za128rs</code></pre></div><div><pre><code>za64rs</code></pre></div><div><pre><code>zaamo</code></pre></div><div><pre><code>zabha</code></pre></div><div><pre><code>zalrsc</code></pre></div><div><pre><code>zama16b</code></pre></div><div><pre><code>zawrs</code></pre></div><div><pre><code>zba</code></pre></div><div><pre><code>zbb</code></pre></div><div><pre><code>zbc</code></pre></div><div><pre><code>zbkb</code></pre></div><div><pre><code>zbkc</code></pre></div><div><pre><code>zbkx</code></pre></div><div><pre><code>zbs</code></pre></div><div><pre><code>zca</code></pre></div><div><pre><code>zcb</code></pre></div><div><pre><code>zcd</code></pre></div><div><pre><code>zce</code></pre></div><div><pre><code>zcf</code></pre></div><div><pre><code>zcmop</code></pre></div><div><pre><code>zcmp</code></pre></div><div><pre><code>zcmt</code></pre></div><div><pre><code>zdinx</code></pre></div><div><pre><code>zexth_fusion</code></pre></div><div><pre><code>zextw_fusion</code></pre></div><div><pre><code>zfa</code></pre></div><div><pre><code>zfbfmin</code></pre></div><div><pre><code>zfh</code></pre></div><div><pre><code>zfhmin</code></pre></div><div><pre><code>zfinx</code></pre></div><div><pre><code>zhinx</code></pre></div><div><pre><code>zhinxmin</code></pre></div><div><pre><code>zic64b</code></pre></div><div><pre><code>zicbom</code></pre></div><div><pre><code>zicbop</code></pre></div><div><pre><code>zicboz</code></pre></div><div><pre><code>ziccamoa</code></pre></div><div><pre><code>ziccif</code></pre></div><div><pre><code>zicclsm</code></pre></div><div><pre><code>ziccrse</code></pre></div><div><pre><code>zicntr</code></pre></div><div><pre><code>zicond</code></pre></div><div><pre><code>zicsr</code></pre></div><div><pre><code>zifencei</code></pre></div><div><pre><code>zihintntl</code></pre></div><div><pre><code>zihintpause</code></pre></div><div><pre><code>zihpm</code></pre></div><div><pre><code>zimop</code></pre></div><div><pre><code>zk</code></pre></div><div><pre><code>zkn</code></pre></div><div><pre><code>zknd</code></pre></div><div><pre><code>zkne</code></pre></div><div><pre><code>zknh</code></pre></div><div><pre><code>zkr</code></pre></div><div><pre><code>zks</code></pre></div><div><pre><code>zksed</code></pre></div><div><pre><code>zksh</code></pre></div><div><pre><code>zkt</code></pre></div><div><pre><code>zmmul</code></pre></div><div><pre><code>ztso</code></pre></div><div><pre><code>zvbb</code></pre></div><div><pre><code>zvbc</code></pre></div><div><pre><code>zve32f</code></pre></div><div><pre><code>zve32x</code></pre></div><div><pre><code>zve64d</code></pre></div><div><pre><code>zve64f</code></pre></div><div><pre><code>zve64x</code></pre></div><div><pre><code>zvfbfmin</code></pre></div><div><pre><code>zvfbfwma</code></pre></div><div><pre><code>zvfh</code></pre></div><div><pre><code>zvfhmin</code></pre></div><div><pre><code>zvkb</code></pre></div><div><pre><code>zvkg</code></pre></div><div><pre><code>zvkn</code></pre></div><div><pre><code>zvknc</code></pre></div><div><pre><code>zvkned</code></pre></div><div><pre><code>zvkng</code></pre></div><div><pre><code>zvknha</code></pre></div><div><pre><code>zvknhb</code></pre></div><div><pre><code>zvks</code></pre></div><div><pre><code>zvksc</code></pre></div><div><pre><code>zvksed</code></pre></div><div><pre><code>zvksg</code></pre></div><div><pre><code>zvksh</code></pre></div><div><pre><code>zvkt</code></pre></div><div><pre><code>zvl1024b</code></pre></div><div><pre><code>zvl128b</code></pre></div><div><pre><code>zvl16384b</code></pre></div><div><pre><code>zvl2048b</code></pre></div><div><pre><code>zvl256b</code></pre></div><div><pre><code>zvl32768b</code></pre></div><div><pre><code>zvl32b</code></pre></div><div><pre><code>zvl4096b</code></pre></div><div><pre><code>zvl512b</code></pre></div><div><pre><code>zvl64b</code></pre></div><div><pre><code>zvl65536b</code></pre></div><div><pre><code>zvl8192b</code></pre></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.Target.riscv.Feature">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Feature = <span class="tok-kw">enum</span> {
+    @&quot;32bit&quot;,
+    @&quot;64bit&quot;,
+    a,
+    auipc_addi_fusion,
+    b,
+    c,
+    conditional_cmv_fusion,
+    d,
+    dlen_factor_2,
+    e,
+    experimental,
+    experimental_rva23s64,
+    experimental_rva23u64,
+    experimental_rvb23s64,
+    experimental_rvb23u64,
+    experimental_rvm23u32,
+    experimental_smmpm,
+    experimental_smnpm,
+    experimental_ssnpm,
+    experimental_sspm,
+    experimental_ssqosid,
+    experimental_supm,
+    experimental_zacas,
+    experimental_zalasr,
+    experimental_zicfilp,
+    experimental_zicfiss,
+    f,
+    forced_atomics,
+    forced_sw_shadow_stack,
+    h,
+    i,
+    ld_add_fusion,
+    lui_addi_fusion,
+    m,
+    no_default_unroll,
+    no_rvc_hints,
+    no_sink_splat_operands,
+    no_trailing_seq_cst_fence,
+    optimized_zero_stride_load,
+    predictable_select_expensive,
+    prefer_w_inst,
+    relax,
+    reserve_x1,
+    reserve_x10,
+    reserve_x11,
+    reserve_x12,
+    reserve_x13,
+    reserve_x14,
+    reserve_x15,
+    reserve_x16,
+    reserve_x17,
+    reserve_x18,
+    reserve_x19,
+    reserve_x2,
+    reserve_x20,
+    reserve_x21,
+    reserve_x22,
+    reserve_x23,
+    reserve_x24,
+    reserve_x25,
+    reserve_x26,
+    reserve_x27,
+    reserve_x28,
+    reserve_x29,
+    reserve_x3,
+    reserve_x30,
+    reserve_x31,
+    reserve_x4,
+    reserve_x5,
+    reserve_x6,
+    reserve_x7,
+    reserve_x8,
+    reserve_x9,
+    rva20s64,
+    rva20u64,
+    rva22s64,
+    rva22u64,
+    rvi20u32,
+    rvi20u64,
+    save_restore,
+    shcounterenw,
+    shgatpa,
+    shifted_zextw_fusion,
+    short_forward_branch_opt,
+    shtvala,
+    shvsatpa,
+    shvstvala,
+    shvstvecd,
+    smaia,
+    smcdeleg,
+    smcsrind,
+    smepmp,
+    smstateen,
+    ssaia,
+    ssccfg,
+    ssccptr,
+    sscofpmf,
+    sscounterenw,
+    sscsrind,
+    ssstateen,
+    ssstrict,
+    sstc,
+    sstvala,
+    sstvecd,
+    ssu64xl,
+    svade,
+    svadu,
+    svbare,
+    svinval,
+    svnapot,
+    svpbmt,
+    tagged_globals,
+    unaligned_scalar_mem,
+    unaligned_vector_mem,
+    use_postra_scheduler,
+    v,
+    ventana_veyron,
+    xcvalu,
+    xcvbi,
+    xcvbitmanip,
+    xcvelw,
+    xcvmac,
+    xcvmem,
+    xcvsimd,
+    xsfcease,
+    xsfvcp,
+    xsfvfnrclipxfqf,
+    xsfvfwmaccqqq,
+    xsfvqmaccdod,
+    xsfvqmaccqoq,
+    xsifivecdiscarddlone,
+    xsifivecflushdlone,
+    xtheadba,
+    xtheadbb,
+    xtheadbs,
+    xtheadcmo,
+    xtheadcondmov,
+    xtheadfmemidx,
+    xtheadmac,
+    xtheadmemidx,
+    xtheadmempair,
+    xtheadsync,
+    xtheadvdot,
+    xventanacondops,
+    xwchc,
+    za128rs,
+    za64rs,
+    zaamo,
+    zabha,
+    zalrsc,
+    zama16b,
+    zawrs,
+    zba,
+    zbb,
+    zbc,
+    zbkb,
+    zbkc,
+    zbkx,
+    zbs,
+    zca,
+    zcb,
+    zcd,
+    zce,
+    zcf,
+    zcmop,
+    zcmp,
+    zcmt,
+    zdinx,
+    zexth_fusion,
+    zextw_fusion,
+    zfa,
+    zfbfmin,
+    zfh,
+    zfhmin,
+    zfinx,
+    zhinx,
+    zhinxmin,
+    zic64b,
+    zicbom,
+    zicbop,
+    zicboz,
+    ziccamoa,
+    ziccif,
+    zicclsm,
+    ziccrse,
+    zicntr,
+    zicond,
+    zicsr,
+    zifencei,
+    zihintntl,
+    zihintpause,
+    zihpm,
+    zimop,
+    zk,
+    zkn,
+    zknd,
+    zkne,
+    zknh,
+    zkr,
+    zks,
+    zksed,
+    zksh,
+    zkt,
+    zmmul,
+    ztso,
+    zvbb,
+    zvbc,
+    zve32f,
+    zve32x,
+    zve64d,
+    zve64f,
+    zve64x,
+    zvfbfmin,
+    zvfbfwma,
+    zvfh,
+    zvfhmin,
+    zvkb,
+    zvkg,
+    zvkn,
+    zvknc,
+    zvkned,
+    zvkng,
+    zvknha,
+    zvknhb,
+    zvks,
+    zvksc,
+    zvksed,
+    zvksg,
+    zvksh,
+    zvkt,
+    zvl1024b,
+    zvl128b,
+    zvl16384b,
+    zvl2048b,
+    zvl256b,
+    zvl32768b,
+    zvl32b,
+    zvl4096b,
+    zvl512b,
+    zvl64b,
+    zvl65536b,
+    zvl8192b,
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

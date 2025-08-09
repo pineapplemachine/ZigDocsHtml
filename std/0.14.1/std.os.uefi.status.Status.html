@@ -1,0 +1,758 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">os</a></li><li><a href="std.os.html" class="">uefi</a></li><li><a href="std.os.uefi.status.html" class="">status</a></li><li><a href="std.os.uefi.status.Status.html" class="active">Status</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.os.uefi.status.Status" class="declHeader"><span class="declHeaderCategory">enum</span><span class="declHeaderIdentifier">std.os.uefi.status.Status</span><a href="#src.zig-std.os.uefi.status.Status">[src]</a></h1><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>success = <span class="tok-number">0</span></code></pre><div class="fieldDocs"><p>The operation completed successfully.</p>
+</div></div><div><pre><code>load_error = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">1</span></code></pre><div class="fieldDocs"><p>The image failed to load.</p>
+</div></div><div><pre><code>invalid_parameter = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">2</span></code></pre><div class="fieldDocs"><p>A parameter was incorrect.</p>
+</div></div><div><pre><code>unsupported = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">3</span></code></pre><div class="fieldDocs"><p>The operation is not supported.</p>
+</div></div><div><pre><code>bad_buffer_size = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">4</span></code></pre><div class="fieldDocs"><p>The buffer was not the proper size for the request.</p>
+</div></div><div><pre><code>buffer_too_small = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">5</span></code></pre><div class="fieldDocs"><p>The buffer is not large enough to hold the requested data. The required buffer size is returned in the appropriate parameter when this error occurs.</p>
+</div></div><div><pre><code>not_ready = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">6</span></code></pre><div class="fieldDocs"><p>There is no data pending upon return.</p>
+</div></div><div><pre><code>device_error = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">7</span></code></pre><div class="fieldDocs"><p>The physical device reported an error while attempting the operation.</p>
+</div></div><div><pre><code>write_protected = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">8</span></code></pre><div class="fieldDocs"><p>The device cannot be written to.</p>
+</div></div><div><pre><code>out_of_resources = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">9</span></code></pre><div class="fieldDocs"><p>A resource has run out.</p>
+</div></div><div><pre><code>volume_corrupted = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">10</span></code></pre><div class="fieldDocs"><p>An inconstancy was detected on the file system causing the operating to fail.</p>
+</div></div><div><pre><code>volume_full = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">11</span></code></pre><div class="fieldDocs"><p>There is no more space on the file system.</p>
+</div></div><div><pre><code>no_media = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">12</span></code></pre><div class="fieldDocs"><p>The device does not contain any medium to perform the operation.</p>
+</div></div><div><pre><code>media_changed = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">13</span></code></pre><div class="fieldDocs"><p>The medium in the device has changed since the last access.</p>
+</div></div><div><pre><code>not_found = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">14</span></code></pre><div class="fieldDocs"><p>The item was not found.</p>
+</div></div><div><pre><code>access_denied = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">15</span></code></pre><div class="fieldDocs"><p>Access was denied.</p>
+</div></div><div><pre><code>no_response = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">16</span></code></pre><div class="fieldDocs"><p>The server was not found or did not respond to the request.</p>
+</div></div><div><pre><code>no_mapping = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">17</span></code></pre><div class="fieldDocs"><p>A mapping to a device does not exist.</p>
+</div></div><div><pre><code>timeout = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">18</span></code></pre><div class="fieldDocs"><p>The timeout time expired.</p>
+</div></div><div><pre><code>not_started = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">19</span></code></pre><div class="fieldDocs"><p>The protocol has not been started.</p>
+</div></div><div><pre><code>already_started = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">20</span></code></pre><div class="fieldDocs"><p>The protocol has already been started.</p>
+</div></div><div><pre><code>aborted = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">21</span></code></pre><div class="fieldDocs"><p>The operation was aborted.</p>
+</div></div><div><pre><code>icmp_error = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">22</span></code></pre><div class="fieldDocs"><p>An ICMP error occurred during the network operation.</p>
+</div></div><div><pre><code>tftp_error = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">23</span></code></pre><div class="fieldDocs"><p>A TFTP error occurred during the network operation.</p>
+</div></div><div><pre><code>protocol_error = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">24</span></code></pre><div class="fieldDocs"><p>A protocol error occurred during the network operation.</p>
+</div></div><div><pre><code>incompatible_version = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">25</span></code></pre><div class="fieldDocs"><p>The function encountered an internal version that was incompatible with a version requested by the caller.</p>
+</div></div><div><pre><code>security_violation = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">26</span></code></pre><div class="fieldDocs"><p>The function was not performed due to a security violation.</p>
+</div></div><div><pre><code>crc_error = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">27</span></code></pre><div class="fieldDocs"><p>A CRC error was detected.</p>
+</div></div><div><pre><code>end_of_media = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">28</span></code></pre><div class="fieldDocs"><p>Beginning or end of media was reached</p>
+</div></div><div><pre><code>end_of_file = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">31</span></code></pre><div class="fieldDocs"><p>The end of the file was reached.</p>
+</div></div><div><pre><code>invalid_language = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">32</span></code></pre><div class="fieldDocs"><p>The language specified was invalid.</p>
+</div></div><div><pre><code>compromised_data = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">33</span></code></pre><div class="fieldDocs"><p>The security status of the data is unknown or compromised and the data must be updated or replaced to restore a valid security status.</p>
+</div></div><div><pre><code>ip_address_conflict = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">34</span></code></pre><div class="fieldDocs"><p>There is an address conflict address allocation</p>
+</div></div><div><pre><code>http_error = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">35</span></code></pre><div class="fieldDocs"><p>A HTTP error occurred during the network operation.</p>
+</div></div><div><pre><code>network_unreachable = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">100</span></code></pre></div><div><pre><code>host_unreachable = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">101</span></code></pre></div><div><pre><code>protocol_unreachable = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">102</span></code></pre></div><div><pre><code>port_unreachable = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">103</span></code></pre></div><div><pre><code>connection_fin = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">104</span></code></pre></div><div><pre><code>connection_reset = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">105</span></code></pre></div><div><pre><code>connection_refused = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">106</span></code></pre></div><div><pre><code>warn_unknown_glyph = <span class="tok-number">1</span></code></pre><div class="fieldDocs"><p>The string contained one or more characters that the device could not render and were skipped.</p>
+</div></div><div><pre><code>warn_delete_failure = <span class="tok-number">2</span></code></pre><div class="fieldDocs"><p>The handle was closed, but the file was not deleted.</p>
+</div></div><div><pre><code>warn_write_failure = <span class="tok-number">3</span></code></pre><div class="fieldDocs"><p>The handle was closed, but the data to the file was not flushed properly.</p>
+</div></div><div><pre><code>warn_buffer_too_small = <span class="tok-number">4</span></code></pre><div class="fieldDocs"><p>The resulting buffer was too small, and the data was truncated to the buffer size.</p>
+</div></div><div><pre><code>warn_stale_data = <span class="tok-number">5</span></code></pre><div class="fieldDocs"><p>The data has not been updated within the timeframe set by localpolicy for this type of data.</p>
+</div></div><div><pre><code>warn_file_system = <span class="tok-number">6</span></code></pre><div class="fieldDocs"><p>The resulting buffer contains UEFI-compliant file system.</p>
+</div></div><div><pre><code>warn_reset_required = <span class="tok-number">7</span></code></pre><div class="fieldDocs"><p>The operation will be processed across a system reset.</p>
+</div></div><div><pre><code>_</code></pre></div></div></div><div class="sectErrSets"><h2 class="sectionHeader">Error Sets</h2><div class="listErrSets"><div class="decl"><h2 id="std.os.uefi.status.Status.Error" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">Error</span><a href="#src.zig-std.os.uefi.status.Status.Error">[src]</a></h2><div class="sectFnErrors"><h3 class="sectionHeader">Errors</h3><div class="fnErrorsAnyError"><p><span class="tok-type">anyerror</span> means the error set is known only at runtime.</p></div><div class="tableFnErrors"><dl class="listFnErrors"><div><dt>Aborted</dt></div><div><dt>AccessDenied</dt></div><div><dt>AlreadyStarted</dt></div><div><dt>BadBufferSize</dt></div><div><dt>BufferTooSmall</dt></div><div><dt>CompromisedData</dt></div><div><dt>ConnectionFin</dt></div><div><dt>ConnectionRefused</dt></div><div><dt>ConnectionReset</dt></div><div><dt>CrcError</dt></div><div><dt>DeviceError</dt></div><div><dt>EndOfFile</dt></div><div><dt>EndOfMedia</dt></div><div><dt>HostUnreachable</dt></div><div><dt>HttpError</dt></div><div><dt>IcmpError</dt></div><div><dt>IncompatibleVersion</dt></div><div><dt>InvalidLanguage</dt></div><div><dt>InvalidParameter</dt></div><div><dt>IpAddressConflict</dt></div><div><dt>LoadError</dt></div><div><dt>MediaChanged</dt></div><div><dt>NetworkUnreachable</dt></div><div><dt>NoMapping</dt></div><div><dt>NoMedia</dt></div><div><dt>NoResponse</dt></div><div><dt>NotFound</dt></div><div><dt>NotReady</dt></div><div><dt>NotStarted</dt></div><div><dt>OutOfResources</dt></div><div><dt>PortUnreachable</dt></div><div><dt>ProtocolError</dt></div><div><dt>ProtocolUnreachable</dt></div><div><dt>SecurityViolation</dt></div><div><dt>TftpError</dt></div><div><dt>Timeout</dt></div><div><dt>Unsupported</dt></div><div><dt>VolumeCorrupted</dt></div><div><dt>VolumeFull</dt></div><div><dt>WriteProtected</dt></div></dl></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.status.Status.Error">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = <span class="tok-kw">error</span>{
+    LoadError,
+    InvalidParameter,
+    Unsupported,
+    BadBufferSize,
+    BufferTooSmall,
+    NotReady,
+    DeviceError,
+    WriteProtected,
+    OutOfResources,
+    VolumeCorrupted,
+    VolumeFull,
+    NoMedia,
+    MediaChanged,
+    NotFound,
+    AccessDenied,
+    NoResponse,
+    NoMapping,
+    Timeout,
+    NotStarted,
+    AlreadyStarted,
+    Aborted,
+    IcmpError,
+    TftpError,
+    ProtocolError,
+    IncompatibleVersion,
+    SecurityViolation,
+    CrcError,
+    EndOfMedia,
+    EndOfFile,
+    InvalidLanguage,
+    CompromisedData,
+    IpAddressConflict,
+    HttpError,
+    NetworkUnreachable,
+    HostUnreachable,
+    ProtocolUnreachable,
+    PortUnreachable,
+    ConnectionFin,
+    ConnectionReset,
+    ConnectionRefused,
+}</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.os.uefi.status.Status.err" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">err</span><a href="#src.zig-std.os.uefi.status.Status.err">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">err</span>(self: <a href="std.os.uefi.status.Status.html">Status</a>) <a href="std.os.uefi.status.Status.html#std.os.uefi.status.Status.Error">Error</a>!<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.status.Status.err">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">err</span>(self: <a href="std.os.uefi.status.Status.html">Status</a>) <a href="std.os.uefi.status.Status.html#std.os.uefi.status.Status.Error">Error</a>!<span class="tok-type">void</span> {
+    <span class="tok-kw">switch</span> (self) {
+        .load_error =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.LoadError,
+        .invalid_parameter =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidParameter,
+        .unsupported =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Unsupported,
+        .bad_buffer_size =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.BadBufferSize,
+        .buffer_too_small =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.BufferTooSmall,
+        .not_ready =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NotReady,
+        .device_error =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.DeviceError,
+        .write_protected =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.WriteProtected,
+        .out_of_resources =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutOfResources,
+        .volume_corrupted =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.VolumeCorrupted,
+        .volume_full =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.VolumeFull,
+        .no_media =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NoMedia,
+        .media_changed =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MediaChanged,
+        .not_found =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NotFound,
+        .access_denied =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.AccessDenied,
+        .no_response =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NoResponse,
+        .no_mapping =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NoMapping,
+        .timeout =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Timeout,
+        .not_started =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NotStarted,
+        .already_started =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.AlreadyStarted,
+        .aborted =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Aborted,
+        .icmp_error =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.IcmpError,
+        .tftp_error =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TftpError,
+        .protocol_error =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ProtocolError,
+        .incompatible_version =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.IncompatibleVersion,
+        .security_violation =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SecurityViolation,
+        .crc_error =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.CrcError,
+        .end_of_media =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.EndOfMedia,
+        .end_of_file =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.EndOfFile,
+        .invalid_language =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidLanguage,
+        .compromised_data =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.CompromisedData,
+        .ip_address_conflict =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.IpAddressConflict,
+        .http_error =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.HttpError,
+        .network_unreachable =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NetworkUnreachable,
+        .host_unreachable =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.HostUnreachable,
+        .protocol_unreachable =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ProtocolUnreachable,
+        .port_unreachable =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PortUnreachable,
+        .connection_fin =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ConnectionFin,
+        .connection_reset =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ConnectionReset,
+        .connection_refused =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ConnectionRefused,<span class="tok-comment">
+        // success, warn_*, _
+        </span><span class="tok-kw">else</span> =&gt; {},
+    }
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.os.uefi.status.Status">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Status = <span class="tok-kw">enum</span>(<span class="tok-type">usize</span>) {
+    <span class="tok-comment">/// The operation completed successfully.</span>
+    success = <span class="tok-number">0</span>,
+
+    <span class="tok-comment">/// The image failed to load.</span>
+    load_error = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">1</span>,
+
+    <span class="tok-comment">/// A parameter was incorrect.</span>
+    invalid_parameter = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">2</span>,
+
+    <span class="tok-comment">/// The operation is not supported.</span>
+    unsupported = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">3</span>,
+
+    <span class="tok-comment">/// The buffer was not the proper size for the request.</span>
+    bad_buffer_size = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">4</span>,
+
+    <span class="tok-comment">/// The buffer is not large enough to hold the requested data. The required buffer size is returned in the appropriate parameter when this error occurs.</span>
+    buffer_too_small = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">5</span>,
+
+    <span class="tok-comment">/// There is no data pending upon return.</span>
+    not_ready = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">6</span>,
+
+    <span class="tok-comment">/// The physical device reported an error while attempting the operation.</span>
+    device_error = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">7</span>,
+
+    <span class="tok-comment">/// The device cannot be written to.</span>
+    write_protected = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">8</span>,
+
+    <span class="tok-comment">/// A resource has run out.</span>
+    out_of_resources = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">9</span>,
+
+    <span class="tok-comment">/// An inconstancy was detected on the file system causing the operating to fail.</span>
+    volume_corrupted = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">10</span>,
+
+    <span class="tok-comment">/// There is no more space on the file system.</span>
+    volume_full = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">11</span>,
+
+    <span class="tok-comment">/// The device does not contain any medium to perform the operation.</span>
+    no_media = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">12</span>,
+
+    <span class="tok-comment">/// The medium in the device has changed since the last access.</span>
+    media_changed = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">13</span>,
+
+    <span class="tok-comment">/// The item was not found.</span>
+    not_found = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">14</span>,
+
+    <span class="tok-comment">/// Access was denied.</span>
+    access_denied = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">15</span>,
+
+    <span class="tok-comment">/// The server was not found or did not respond to the request.</span>
+    no_response = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">16</span>,
+
+    <span class="tok-comment">/// A mapping to a device does not exist.</span>
+    no_mapping = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">17</span>,
+
+    <span class="tok-comment">/// The timeout time expired.</span>
+    timeout = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">18</span>,
+
+    <span class="tok-comment">/// The protocol has not been started.</span>
+    not_started = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">19</span>,
+
+    <span class="tok-comment">/// The protocol has already been started.</span>
+    already_started = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">20</span>,
+
+    <span class="tok-comment">/// The operation was aborted.</span>
+    aborted = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">21</span>,
+
+    <span class="tok-comment">/// An ICMP error occurred during the network operation.</span>
+    icmp_error = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">22</span>,
+
+    <span class="tok-comment">/// A TFTP error occurred during the network operation.</span>
+    tftp_error = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">23</span>,
+
+    <span class="tok-comment">/// A protocol error occurred during the network operation.</span>
+    protocol_error = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">24</span>,
+
+    <span class="tok-comment">/// The function encountered an internal version that was incompatible with a version requested by the caller.</span>
+    incompatible_version = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">25</span>,
+
+    <span class="tok-comment">/// The function was not performed due to a security violation.</span>
+    security_violation = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">26</span>,
+
+    <span class="tok-comment">/// A CRC error was detected.</span>
+    crc_error = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">27</span>,
+
+    <span class="tok-comment">/// Beginning or end of media was reached</span>
+    end_of_media = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">28</span>,
+
+    <span class="tok-comment">/// The end of the file was reached.</span>
+    end_of_file = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">31</span>,
+
+    <span class="tok-comment">/// The language specified was invalid.</span>
+    invalid_language = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">32</span>,
+
+    <span class="tok-comment">/// The security status of the data is unknown or compromised and the data must be updated or replaced to restore a valid security status.</span>
+    compromised_data = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">33</span>,
+
+    <span class="tok-comment">/// There is an address conflict address allocation</span>
+    ip_address_conflict = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">34</span>,
+
+    <span class="tok-comment">/// A HTTP error occurred during the network operation.</span>
+    http_error = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">35</span>,
+
+    network_unreachable = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">100</span>,
+
+    host_unreachable = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">101</span>,
+
+    protocol_unreachable = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">102</span>,
+
+    port_unreachable = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">103</span>,
+
+    connection_fin = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">104</span>,
+
+    connection_reset = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">105</span>,
+
+    connection_refused = <a href="std.os.uefi.status.html#std.os.uefi.status.high_bit">high_bit</a> | <span class="tok-number">106</span>,
+
+    <span class="tok-comment">/// The string contained one or more characters that the device could not render and were skipped.</span>
+    warn_unknown_glyph = <span class="tok-number">1</span>,
+
+    <span class="tok-comment">/// The handle was closed, but the file was not deleted.</span>
+    warn_delete_failure = <span class="tok-number">2</span>,
+
+    <span class="tok-comment">/// The handle was closed, but the data to the file was not flushed properly.</span>
+    warn_write_failure = <span class="tok-number">3</span>,
+
+    <span class="tok-comment">/// The resulting buffer was too small, and the data was truncated to the buffer size.</span>
+    warn_buffer_too_small = <span class="tok-number">4</span>,
+
+    <span class="tok-comment">/// The data has not been updated within the timeframe set by localpolicy for this type of data.</span>
+    warn_stale_data = <span class="tok-number">5</span>,
+
+    <span class="tok-comment">/// The resulting buffer contains UEFI-compliant file system.</span>
+    warn_file_system = <span class="tok-number">6</span>,
+
+    <span class="tok-comment">/// The operation will be processed across a system reset.</span>
+    warn_reset_required = <span class="tok-number">7</span>,
+
+    _,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = <span class="tok-kw">error</span>{
+        LoadError,
+        InvalidParameter,
+        Unsupported,
+        BadBufferSize,
+        BufferTooSmall,
+        NotReady,
+        DeviceError,
+        WriteProtected,
+        OutOfResources,
+        VolumeCorrupted,
+        VolumeFull,
+        NoMedia,
+        MediaChanged,
+        NotFound,
+        AccessDenied,
+        NoResponse,
+        NoMapping,
+        Timeout,
+        NotStarted,
+        AlreadyStarted,
+        Aborted,
+        IcmpError,
+        TftpError,
+        ProtocolError,
+        IncompatibleVersion,
+        SecurityViolation,
+        CrcError,
+        EndOfMedia,
+        EndOfFile,
+        InvalidLanguage,
+        CompromisedData,
+        IpAddressConflict,
+        HttpError,
+        NetworkUnreachable,
+        HostUnreachable,
+        ProtocolUnreachable,
+        PortUnreachable,
+        ConnectionFin,
+        ConnectionReset,
+        ConnectionRefused,
+    };
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">err</span>(self: <a href="std.os.uefi.status.Status.html">Status</a>) <a href="std.os.uefi.status.Status.html#std.os.uefi.status.Status.Error">Error</a>!<span class="tok-type">void</span> {
+        <span class="tok-kw">switch</span> (self) {
+            .load_error =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.LoadError,
+            .invalid_parameter =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidParameter,
+            .unsupported =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Unsupported,
+            .bad_buffer_size =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.BadBufferSize,
+            .buffer_too_small =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.BufferTooSmall,
+            .not_ready =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NotReady,
+            .device_error =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.DeviceError,
+            .write_protected =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.WriteProtected,
+            .out_of_resources =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutOfResources,
+            .volume_corrupted =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.VolumeCorrupted,
+            .volume_full =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.VolumeFull,
+            .no_media =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NoMedia,
+            .media_changed =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MediaChanged,
+            .not_found =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NotFound,
+            .access_denied =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.AccessDenied,
+            .no_response =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NoResponse,
+            .no_mapping =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NoMapping,
+            .timeout =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Timeout,
+            .not_started =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NotStarted,
+            .already_started =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.AlreadyStarted,
+            .aborted =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Aborted,
+            .icmp_error =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.IcmpError,
+            .tftp_error =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TftpError,
+            .protocol_error =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ProtocolError,
+            .incompatible_version =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.IncompatibleVersion,
+            .security_violation =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SecurityViolation,
+            .crc_error =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.CrcError,
+            .end_of_media =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.EndOfMedia,
+            .end_of_file =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.EndOfFile,
+            .invalid_language =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidLanguage,
+            .compromised_data =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.CompromisedData,
+            .ip_address_conflict =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.IpAddressConflict,
+            .http_error =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.HttpError,
+            .network_unreachable =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NetworkUnreachable,
+            .host_unreachable =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.HostUnreachable,
+            .protocol_unreachable =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ProtocolUnreachable,
+            .port_unreachable =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PortUnreachable,
+            .connection_fin =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ConnectionFin,
+            .connection_reset =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ConnectionReset,
+            .connection_refused =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ConnectionRefused,<span class="tok-comment">
+            // success, warn_*, _
+            </span><span class="tok-kw">else</span> =&gt; {},
+        }
+    }
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

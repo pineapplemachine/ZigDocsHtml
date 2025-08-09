@@ -1,0 +1,721 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">crypto</a></li><li><a href="std.crypto.Certificate.html" class="">Certificate</a></li><li><a href="std.crypto.Certificate.Parsed.html" class="active">Parsed</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.crypto.Certificate.Parsed" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.crypto.Certificate.Parsed</span><a href="#src.zig-std.crypto.Certificate.Parsed">[src]</a></h1><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.crypto.Certificate.Parsed.PubKeyAlgo.html">std.crypto.Certificate.Parsed.PubKeyAlgo</a></li><li><a href="std.crypto.Certificate.Parsed.Validity.html">std.crypto.Certificate.Parsed.Validity</a></li><li><a href="std.crypto.Certificate.der.Element.Slice.html">std.crypto.Certificate.der.Element.Slice</a></li></ul></div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>certificate: <a href="std.crypto.Certificate.html">Certificate</a></code></pre></div><div><pre><code>issuer_slice: <a href="std.crypto.Certificate.der.Element.Slice.html">Slice</a></code></pre></div><div><pre><code>subject_slice: <a href="std.crypto.Certificate.der.Element.Slice.html">Slice</a></code></pre></div><div><pre><code>common_name_slice: <a href="std.crypto.Certificate.der.Element.Slice.html">Slice</a></code></pre></div><div><pre><code>signature_slice: <a href="std.crypto.Certificate.der.Element.Slice.html">Slice</a></code></pre></div><div><pre><code>signature_algorithm: <a href="std.crypto.Certificate.Algorithm.html">Algorithm</a></code></pre></div><div><pre><code>pub_key_algo: <a href="std.crypto.Certificate.Parsed.PubKeyAlgo.html">PubKeyAlgo</a></code></pre></div><div><pre><code>pub_key_slice: <a href="std.crypto.Certificate.der.Element.Slice.html">Slice</a></code></pre></div><div><pre><code>message_slice: <a href="std.crypto.Certificate.der.Element.Slice.html">Slice</a></code></pre></div><div><pre><code>subject_alt_name_slice: <a href="std.crypto.Certificate.der.Element.Slice.html">Slice</a></code></pre></div><div><pre><code>validity: <a href="std.crypto.Certificate.Parsed.Validity.html">Validity</a></code></pre></div><div><pre><code>version: <a href="std.crypto.Certificate.Version.html">Version</a></code></pre></div></div></div><div class="sectErrSets"><h2 class="sectionHeader">Error Sets</h2><div class="listErrSets"><div class="decl"><h2 id="std.crypto.Certificate.Parsed.VerifyError" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">VerifyError</span><a href="#src.zig-std.crypto.Certificate.Parsed.VerifyError">[src]</a></h2><div class="sectFnErrors"><h3 class="sectionHeader">Errors</h3><div class="fnErrorsAnyError"><p><span class="tok-type">anyerror</span> means the error set is known only at runtime.</p></div><div class="tableFnErrors"><dl class="listFnErrors"><div><dt>CertificateExpired</dt></div><div><dt>CertificateFieldHasInvalidLength</dt></div><div><dt>CertificateFieldHasWrongDataType</dt></div><div><dt>CertificateIssuerMismatch</dt></div><div><dt>CertificateNotYetValid</dt></div><div><dt>CertificatePublicKeyInvalid</dt></div><div><dt>CertificateSignatureAlgorithmMismatch</dt></div><div><dt>CertificateSignatureAlgorithmUnsupported</dt></div><div><dt>CertificateSignatureInvalid</dt></div><div><dt>CertificateSignatureInvalidLength</dt></div><div><dt>CertificateSignatureNamedCurveUnsupported</dt></div><div><dt>CertificateSignatureUnsupportedBitCount</dt></div></dl></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.Certificate.Parsed.VerifyError">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> VerifyError = <span class="tok-kw">error</span>{
+    CertificateIssuerMismatch,
+    CertificateNotYetValid,
+    CertificateExpired,
+    CertificateSignatureAlgorithmUnsupported,
+    CertificateSignatureAlgorithmMismatch,
+    CertificateFieldHasInvalidLength,
+    CertificateFieldHasWrongDataType,
+    CertificatePublicKeyInvalid,
+    CertificateSignatureInvalidLength,
+    CertificateSignatureInvalid,
+    CertificateSignatureUnsupportedBitCount,
+    CertificateSignatureNamedCurveUnsupported,
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.Certificate.Parsed.VerifyHostNameError" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">VerifyHostNameError</span><a href="#src.zig-std.crypto.Certificate.Parsed.VerifyHostNameError">[src]</a></h2><div class="sectFnErrors"><h3 class="sectionHeader">Errors</h3><div class="fnErrorsAnyError"><p><span class="tok-type">anyerror</span> means the error set is known only at runtime.</p></div><div class="tableFnErrors"><dl class="listFnErrors"><div><dt>CertificateFieldHasInvalidLength</dt></div><div><dt>CertificateHostMismatch</dt></div></dl></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.Certificate.Parsed.VerifyHostNameError">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> VerifyHostNameError = <span class="tok-kw">error</span>{
+    CertificateHostMismatch,
+    CertificateFieldHasInvalidLength,
+}</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.crypto.Certificate.Parsed.slice" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">slice</span><a href="#src.zig-std.crypto.Certificate.Parsed.slice">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">slice</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>, s: <a href="std.crypto.Certificate.der.Element.Slice.html">Slice</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a></code></pre></div><div><pre><code>s: <a href="std.crypto.Certificate.der.Element.Slice.html">Slice</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.Certificate.Parsed.slice">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">slice</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>, s: <a href="std.crypto.Certificate.der.Element.Slice.html">Slice</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> p.certificate.buffer[s.start..s.end];
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.Certificate.Parsed.issuer" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">issuer</span><a href="#src.zig-std.crypto.Certificate.Parsed.issuer">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">issuer</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.Certificate.Parsed.issuer">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">issuer</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> p.slice(p.issuer_slice);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.Certificate.Parsed.subject" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">subject</span><a href="#src.zig-std.crypto.Certificate.Parsed.subject">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">subject</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.Certificate.Parsed.subject">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">subject</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> p.slice(p.subject_slice);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.Certificate.Parsed.commonName" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">commonName</span><a href="#src.zig-std.crypto.Certificate.Parsed.commonName">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">commonName</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.Certificate.Parsed.commonName">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">commonName</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> p.slice(p.common_name_slice);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.Certificate.Parsed.signature" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">signature</span><a href="#src.zig-std.crypto.Certificate.Parsed.signature">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">signature</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.Certificate.Parsed.signature">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">signature</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> p.slice(p.signature_slice);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.Certificate.Parsed.pubKey" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">pubKey</span><a href="#src.zig-std.crypto.Certificate.Parsed.pubKey">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">pubKey</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.Certificate.Parsed.pubKey">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">pubKey</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> p.slice(p.pub_key_slice);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.Certificate.Parsed.pubKeySigAlgo" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">pubKeySigAlgo</span><a href="#src.zig-std.crypto.Certificate.Parsed.pubKeySigAlgo">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">pubKeySigAlgo</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.Certificate.Parsed.pubKeySigAlgo">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">pubKeySigAlgo</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> p.slice(p.pub_key_signature_algorithm_slice);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.Certificate.Parsed.message" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">message</span><a href="#src.zig-std.crypto.Certificate.Parsed.message">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">message</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.Certificate.Parsed.message">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">message</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> p.slice(p.message_slice);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.Certificate.Parsed.subjectAltName" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">subjectAltName</span><a href="#src.zig-std.crypto.Certificate.Parsed.subjectAltName">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">subjectAltName</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.Certificate.Parsed.subjectAltName">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">subjectAltName</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> p.slice(p.subject_alt_name_slice);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.Certificate.Parsed.verify" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">verify</span><a href="#src.zig-std.crypto.Certificate.Parsed.verify">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">verify</span>(parsed_subject: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>, parsed_issuer: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>, now_sec: <span class="tok-type">i64</span>) <a href="std.crypto.Certificate.Parsed.html#std.crypto.Certificate.Parsed.VerifyError">VerifyError</a>!<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>This function verifies:</p>
+<ul>
+<li>That the subject's issuer is indeed the provided issuer.</li>
+<li>The time validity of the subject.</li>
+<li>The signature.</li>
+</ul>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>parsed_subject: <a href="std.crypto.Certificate.Parsed.html">Parsed</a></code></pre></div><div><pre><code>parsed_issuer: <a href="std.crypto.Certificate.Parsed.html">Parsed</a></code></pre></div><div><pre><code>now_sec: <span class="tok-type">i64</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.Certificate.Parsed.verify">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">verify</span>(parsed_subject: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>, parsed_issuer: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>, now_sec: <span class="tok-type">i64</span>) <a href="std.crypto.Certificate.Parsed.html#std.crypto.Certificate.Parsed.VerifyError">VerifyError</a>!<span class="tok-type">void</span> {<span class="tok-comment">
+    // Check that the subject's issuer name matches the issuer's
+    // subject name.
+    </span><span class="tok-kw">if</span> (!<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, parsed_subject.issuer(), parsed_issuer.subject())) {
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.CertificateIssuerMismatch;
+    }
+
+    <span class="tok-kw">if</span> (now_sec &lt; parsed_subject.validity.not_before)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.CertificateNotYetValid;
+    <span class="tok-kw">if</span> (now_sec &gt; parsed_subject.validity.not_after)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.CertificateExpired;
+
+    <span class="tok-kw">switch</span> (parsed_subject.signature_algorithm) {
+        <span class="tok-kw">inline</span> .sha1WithRSAEncryption,
+        .sha224WithRSAEncryption,
+        .sha256WithRSAEncryption,
+        .sha384WithRSAEncryption,
+        .sha512WithRSAEncryption,
+        =&gt; |algorithm| <span class="tok-kw">return</span> <a href="std.crypto.Certificate.html#std.crypto.Certificate.verifyRsa">verifyRsa</a>(
+            algorithm.Hash(),
+            parsed_subject.message(),
+            parsed_subject.signature(),
+            parsed_issuer.pub_key_algo,
+            parsed_issuer.pubKey(),
+        ),
+
+        <span class="tok-kw">inline</span> .ecdsa_with_SHA224,
+        .ecdsa_with_SHA256,
+        .ecdsa_with_SHA384,
+        .ecdsa_with_SHA512,
+        =&gt; |algorithm| <span class="tok-kw">return</span> <a href="std.crypto.Certificate.html#std.crypto.Certificate.verify_ecdsa">verify_ecdsa</a>(
+            algorithm.Hash(),
+            parsed_subject.message(),
+            parsed_subject.signature(),
+            parsed_issuer.pub_key_algo,
+            parsed_issuer.pubKey(),
+        ),
+
+        .md2WithRSAEncryption, .md5WithRSAEncryption =&gt; {
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.CertificateSignatureAlgorithmUnsupported;
+        },
+
+        .curveEd25519 =&gt; <span class="tok-kw">return</span> <a href="std.crypto.Certificate.html#std.crypto.Certificate.verifyEd25519">verifyEd25519</a>(
+            parsed_subject.message(),
+            parsed_subject.signature(),
+            parsed_issuer.pub_key_algo,
+            parsed_issuer.pubKey(),
+        ),
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.Certificate.Parsed.verifyHostName" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">verifyHostName</span><a href="#src.zig-std.crypto.Certificate.Parsed.verifyHostName">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">verifyHostName</span>(parsed_subject: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>, host_name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.crypto.Certificate.Parsed.html#std.crypto.Certificate.Parsed.VerifyHostNameError">VerifyHostNameError</a>!<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>parsed_subject: <a href="std.crypto.Certificate.Parsed.html">Parsed</a></code></pre></div><div><pre><code>host_name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.Certificate.Parsed.verifyHostName">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">verifyHostName</span>(parsed_subject: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>, host_name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.crypto.Certificate.Parsed.html#std.crypto.Certificate.Parsed.VerifyHostNameError">VerifyHostNameError</a>!<span class="tok-type">void</span> {<span class="tok-comment">
+    // If the Subject Alternative Names extension is present, this is
+    // what to check. Otherwise, only the common name is checked.
+    </span><span class="tok-kw">const</span> subject_alt_name = parsed_subject.subjectAltName();
+    <span class="tok-kw">if</span> (subject_alt_name.len == <span class="tok-number">0</span>) {
+        <span class="tok-kw">if</span> (<a href="std.crypto.Certificate.Parsed.html#std.crypto.Certificate.Parsed.checkHostName">checkHostName</a>(host_name, parsed_subject.commonName())) {
+            <span class="tok-kw">return</span>;
+        } <span class="tok-kw">else</span> {
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.CertificateHostMismatch;
+        }
+    }
+
+    <span class="tok-kw">const</span> general_names = <span class="tok-kw">try</span> <a href="std.crypto.Certificate.der.html">der</a>.<a href="std.crypto.Certificate.der.Element.html">Element</a>.<a href="std.crypto.Certificate.der.Element.html#std.crypto.Certificate.der.Element.parse">parse</a>(subject_alt_name, <span class="tok-number">0</span>);
+    <span class="tok-kw">var</span> name_i = general_names.slice.start;
+    <span class="tok-kw">while</span> (name_i &lt; general_names.slice.end) {
+        <span class="tok-kw">const</span> general_name = <span class="tok-kw">try</span> <a href="std.crypto.Certificate.der.html">der</a>.<a href="std.crypto.Certificate.der.Element.html">Element</a>.<a href="std.crypto.Certificate.der.Element.html#std.crypto.Certificate.der.Element.parse">parse</a>(subject_alt_name, name_i);
+        name_i = general_name.slice.end;
+        <span class="tok-kw">switch</span> (<span class="tok-builtin">@as</span>(<a href="std.crypto.Certificate.GeneralNameTag.html">GeneralNameTag</a>, <span class="tok-builtin">@enumFromInt</span>(<span class="tok-builtin">@intFromEnum</span>(general_name.identifier.tag)))) {
+            .dNSName =&gt; {
+                <span class="tok-kw">const</span> dns_name = subject_alt_name[general_name.slice.start..general_name.slice.end];
+                <span class="tok-kw">if</span> (<a href="std.crypto.Certificate.Parsed.html#std.crypto.Certificate.Parsed.checkHostName">checkHostName</a>(host_name, dns_name)) <span class="tok-kw">return</span>;
+            },
+            <span class="tok-kw">else</span> =&gt; {},
+        }
+    }
+
+    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.CertificateHostMismatch;
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.crypto.Certificate.Parsed">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Parsed = <span class="tok-kw">struct</span> {
+    certificate: <a href="std.crypto.Certificate.html">Certificate</a>,
+    issuer_slice: <a href="std.crypto.Certificate.der.Element.Slice.html">Slice</a>,
+    subject_slice: <a href="std.crypto.Certificate.der.Element.Slice.html">Slice</a>,
+    common_name_slice: <a href="std.crypto.Certificate.der.Element.Slice.html">Slice</a>,
+    signature_slice: <a href="std.crypto.Certificate.der.Element.Slice.html">Slice</a>,
+    signature_algorithm: <a href="std.crypto.Certificate.Algorithm.html">Algorithm</a>,
+    pub_key_algo: <a href="std.crypto.Certificate.Parsed.PubKeyAlgo.html">PubKeyAlgo</a>,
+    pub_key_slice: <a href="std.crypto.Certificate.der.Element.Slice.html">Slice</a>,
+    message_slice: <a href="std.crypto.Certificate.der.Element.Slice.html">Slice</a>,
+    subject_alt_name_slice: <a href="std.crypto.Certificate.der.Element.Slice.html">Slice</a>,
+    validity: <a href="std.crypto.Certificate.Parsed.Validity.html">Validity</a>,
+    version: <a href="std.crypto.Certificate.Version.html">Version</a>,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> PubKeyAlgo = <span class="tok-kw">union</span>(AlgorithmCategory) {
+        rsaEncryption: <span class="tok-type">void</span>,
+        rsassa_pss: <span class="tok-type">void</span>,
+        X9_62_id_ecPublicKey: <a href="std.crypto.Certificate.NamedCurve.html">NamedCurve</a>,
+        curveEd25519: <span class="tok-type">void</span>,
+    };
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Validity = <span class="tok-kw">struct</span> {
+        not_before: <span class="tok-type">u64</span>,
+        not_after: <span class="tok-type">u64</span>,
+    };
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Slice = <a href="std.crypto.Certificate.der.html">der</a>.<a href="std.crypto.Certificate.der.Element.html">Element</a>.<a href="std.crypto.Certificate.der.Element.Slice.html">Slice</a>;
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">slice</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>, s: <a href="std.crypto.Certificate.der.Element.Slice.html">Slice</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> p.certificate.buffer[s.start..s.end];
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">issuer</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> p.slice(p.issuer_slice);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">subject</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> p.slice(p.subject_slice);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">commonName</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> p.slice(p.common_name_slice);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">signature</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> p.slice(p.signature_slice);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">pubKey</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> p.slice(p.pub_key_slice);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">pubKeySigAlgo</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> p.slice(p.pub_key_signature_algorithm_slice);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">message</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> p.slice(p.message_slice);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">subjectAltName</span>(p: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> p.slice(p.subject_alt_name_slice);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> VerifyError = <span class="tok-kw">error</span>{
+        CertificateIssuerMismatch,
+        CertificateNotYetValid,
+        CertificateExpired,
+        CertificateSignatureAlgorithmUnsupported,
+        CertificateSignatureAlgorithmMismatch,
+        CertificateFieldHasInvalidLength,
+        CertificateFieldHasWrongDataType,
+        CertificatePublicKeyInvalid,
+        CertificateSignatureInvalidLength,
+        CertificateSignatureInvalid,
+        CertificateSignatureUnsupportedBitCount,
+        CertificateSignatureNamedCurveUnsupported,
+    };
+
+    <span class="tok-comment">/// This function verifies:</span>
+    <span class="tok-comment">///  * That the subject's issuer is indeed the provided issuer.</span>
+    <span class="tok-comment">///  * The time validity of the subject.</span>
+    <span class="tok-comment">///  * The signature.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">verify</span>(parsed_subject: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>, parsed_issuer: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>, now_sec: <span class="tok-type">i64</span>) <a href="std.crypto.Certificate.Parsed.html#std.crypto.Certificate.Parsed.VerifyError">VerifyError</a>!<span class="tok-type">void</span> {<span class="tok-comment">
+        // Check that the subject's issuer name matches the issuer's
+        // subject name.
+        </span><span class="tok-kw">if</span> (!<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, parsed_subject.issuer(), parsed_issuer.subject())) {
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.CertificateIssuerMismatch;
+        }
+
+        <span class="tok-kw">if</span> (now_sec &lt; parsed_subject.validity.not_before)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.CertificateNotYetValid;
+        <span class="tok-kw">if</span> (now_sec &gt; parsed_subject.validity.not_after)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.CertificateExpired;
+
+        <span class="tok-kw">switch</span> (parsed_subject.signature_algorithm) {
+            <span class="tok-kw">inline</span> .sha1WithRSAEncryption,
+            .sha224WithRSAEncryption,
+            .sha256WithRSAEncryption,
+            .sha384WithRSAEncryption,
+            .sha512WithRSAEncryption,
+            =&gt; |algorithm| <span class="tok-kw">return</span> <a href="std.crypto.Certificate.html#std.crypto.Certificate.verifyRsa">verifyRsa</a>(
+                algorithm.Hash(),
+                parsed_subject.message(),
+                parsed_subject.signature(),
+                parsed_issuer.pub_key_algo,
+                parsed_issuer.pubKey(),
+            ),
+
+            <span class="tok-kw">inline</span> .ecdsa_with_SHA224,
+            .ecdsa_with_SHA256,
+            .ecdsa_with_SHA384,
+            .ecdsa_with_SHA512,
+            =&gt; |algorithm| <span class="tok-kw">return</span> <a href="std.crypto.Certificate.html#std.crypto.Certificate.verify_ecdsa">verify_ecdsa</a>(
+                algorithm.Hash(),
+                parsed_subject.message(),
+                parsed_subject.signature(),
+                parsed_issuer.pub_key_algo,
+                parsed_issuer.pubKey(),
+            ),
+
+            .md2WithRSAEncryption, .md5WithRSAEncryption =&gt; {
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.CertificateSignatureAlgorithmUnsupported;
+            },
+
+            .curveEd25519 =&gt; <span class="tok-kw">return</span> <a href="std.crypto.Certificate.html#std.crypto.Certificate.verifyEd25519">verifyEd25519</a>(
+                parsed_subject.message(),
+                parsed_subject.signature(),
+                parsed_issuer.pub_key_algo,
+                parsed_issuer.pubKey(),
+            ),
+        }
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> VerifyHostNameError = <span class="tok-kw">error</span>{
+        CertificateHostMismatch,
+        CertificateFieldHasInvalidLength,
+    };
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">verifyHostName</span>(parsed_subject: <a href="std.crypto.Certificate.Parsed.html">Parsed</a>, host_name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.crypto.Certificate.Parsed.html#std.crypto.Certificate.Parsed.VerifyHostNameError">VerifyHostNameError</a>!<span class="tok-type">void</span> {<span class="tok-comment">
+        // If the Subject Alternative Names extension is present, this is
+        // what to check. Otherwise, only the common name is checked.
+        </span><span class="tok-kw">const</span> subject_alt_name = parsed_subject.subjectAltName();
+        <span class="tok-kw">if</span> (subject_alt_name.len == <span class="tok-number">0</span>) {
+            <span class="tok-kw">if</span> (<a href="std.crypto.Certificate.Parsed.html#std.crypto.Certificate.Parsed.checkHostName">checkHostName</a>(host_name, parsed_subject.commonName())) {
+                <span class="tok-kw">return</span>;
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.CertificateHostMismatch;
+            }
+        }
+
+        <span class="tok-kw">const</span> general_names = <span class="tok-kw">try</span> <a href="std.crypto.Certificate.der.html">der</a>.<a href="std.crypto.Certificate.der.Element.html">Element</a>.<a href="std.crypto.Certificate.der.Element.html#std.crypto.Certificate.der.Element.parse">parse</a>(subject_alt_name, <span class="tok-number">0</span>);
+        <span class="tok-kw">var</span> name_i = general_names.slice.start;
+        <span class="tok-kw">while</span> (name_i &lt; general_names.slice.end) {
+            <span class="tok-kw">const</span> general_name = <span class="tok-kw">try</span> <a href="std.crypto.Certificate.der.html">der</a>.<a href="std.crypto.Certificate.der.Element.html">Element</a>.<a href="std.crypto.Certificate.der.Element.html#std.crypto.Certificate.der.Element.parse">parse</a>(subject_alt_name, name_i);
+            name_i = general_name.slice.end;
+            <span class="tok-kw">switch</span> (<span class="tok-builtin">@as</span>(<a href="std.crypto.Certificate.GeneralNameTag.html">GeneralNameTag</a>, <span class="tok-builtin">@enumFromInt</span>(<span class="tok-builtin">@intFromEnum</span>(general_name.identifier.tag)))) {
+                .dNSName =&gt; {
+                    <span class="tok-kw">const</span> dns_name = subject_alt_name[general_name.slice.start..general_name.slice.end];
+                    <span class="tok-kw">if</span> (<a href="std.crypto.Certificate.Parsed.html#std.crypto.Certificate.Parsed.checkHostName">checkHostName</a>(host_name, dns_name)) <span class="tok-kw">return</span>;
+                },
+                <span class="tok-kw">else</span> =&gt; {},
+            }
+        }
+
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.CertificateHostMismatch;
+    }<span class="tok-comment">
+
+    // Check hostname according to RFC2818 specification:
+    //
+    // If more than one identity of a given type is present in
+    // the certificate (e.g., more than one DNSName name, a match in any one
+    // of the set is considered acceptable.) Names may contain the wildcard
+    // character * which is considered to match any single domain name
+    // component or component fragment. E.g., *.a.com matches foo.a.com but
+    // not bar.foo.a.com. f*.com matches foo.com but not bar.com.
+    </span><span class="tok-kw">fn</span> <span class="tok-fn">checkHostName</span>(host_name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, dns_name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.ascii.html">ascii</a>.<a href="std.ascii.html#std.ascii.eqlIgnoreCase">eqlIgnoreCase</a>(dns_name, host_name)) {
+            <span class="tok-kw">return</span> <span class="tok-null">true</span>;<span class="tok-comment"> // exact match
+        </span>}
+
+        <span class="tok-kw">var</span> it_host = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, host_name, <span class="tok-str">'.'</span>);
+        <span class="tok-kw">var</span> it_dns = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, dns_name, <span class="tok-str">'.'</span>);
+
+        <span class="tok-kw">const</span> len_match = <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+            <span class="tok-kw">const</span> host = it_host.next();
+            <span class="tok-kw">const</span> dns = it_dns.next();
+
+            <span class="tok-kw">if</span> (host == <span class="tok-null">null</span> <span class="tok-kw">or</span> dns == <span class="tok-null">null</span>) {
+                <span class="tok-kw">break</span> host == <span class="tok-null">null</span> <span class="tok-kw">and</span> dns == <span class="tok-null">null</span>;
+            }<span class="tok-comment">
+
+            // If not a wildcard and they dont
+            // match then there is no match.
+            </span><span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, dns.?, <span class="tok-str">&quot;*&quot;</span>) == <span class="tok-null">false</span> <span class="tok-kw">and</span> <a href="std.html">std</a>.<a href="std.ascii.html">ascii</a>.<a href="std.ascii.html#std.ascii.eqlIgnoreCase">eqlIgnoreCase</a>(dns.?, host.?) == <span class="tok-null">false</span>) {
+                <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+            }
+        };<span class="tok-comment">
+
+        // If the components are not the same
+        // length then there is no match.
+        </span><span class="tok-kw">return</span> len_match;
+    }
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

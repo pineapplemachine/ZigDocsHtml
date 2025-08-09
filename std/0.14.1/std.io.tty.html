@@ -1,0 +1,566 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">io</a></li><li><a href="std.io.tty.html" class="active">tty</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.io.tty" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.io.tty</span><a href="#src.zig-std.io.tty">[src]</a></h1><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.io.tty.Color.html">std.io.tty.Color</a></li><li><a href="std.io.tty.Config.html">std.io.tty.Config</a></li></ul></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.io.tty.detectConfig" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">detectConfig</span><a href="#src.zig-std.io.tty.detectConfig">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">detectConfig</span>(file: <a href="std.fs.File.html">File</a>) <a href="std.io.tty.Config.html">Config</a></code></pre></div><div class="tldDocs"><p>Detect suitable TTY configuration options for the given file (commonly stdout/stderr).
+This includes feature checks for ANSI escape codes and the Windows console API, as well as
+respecting the <code>NO_COLOR</code> and <code>CLICOLOR_FORCE</code> environment variables to override the default.
+Will attempt to enable ANSI escape code support if necessary/possible.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>file: <a href="std.fs.File.html">File</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.io.tty.detectConfig">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">detectConfig</span>(file: <a href="std.fs.File.html">File</a>) <a href="std.io.tty.Config.html">Config</a> {
+    <span class="tok-kw">const</span> force_color: ?<span class="tok-type">bool</span> = <span class="tok-kw">if</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.os">os</a>.<a href="#">tag</a> == .wasi)
+        <span class="tok-null">null</span><span class="tok-comment"> // wasi does not support environment variables
+    </span><span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.process.html">process</a>.<a href="std.process.html#std.process.hasNonEmptyEnvVarConstant">hasNonEmptyEnvVarConstant</a>(<span class="tok-str">&quot;NO_COLOR&quot;</span>))
+        <span class="tok-null">false</span>
+    <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.process.html">process</a>.<a href="std.process.html#std.process.hasNonEmptyEnvVarConstant">hasNonEmptyEnvVarConstant</a>(<span class="tok-str">&quot;CLICOLOR_FORCE&quot;</span>))
+        <span class="tok-null">true</span>
+    <span class="tok-kw">else</span>
+        <span class="tok-null">null</span>;
+
+    <span class="tok-kw">if</span> (force_color == <span class="tok-null">false</span>) <span class="tok-kw">return</span> .no_color;
+
+    <span class="tok-kw">if</span> (file.getOrEnableAnsiEscapeSupport()) <span class="tok-kw">return</span> .escape_codes;
+
+    <span class="tok-kw">if</span> (<a href="std.io.tty.html#std.io.tty.native_os">native_os</a> == .windows <span class="tok-kw">and</span> file.isTty()) {
+        <span class="tok-kw">var</span> info: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.CONSOLE_SCREEN_BUFFER_INFO.html">CONSOLE_SCREEN_BUFFER_INFO</a> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">if</span> (<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.kernel32.html">kernel32</a>.<a href="std.os.windows.kernel32.html#std.os.windows.kernel32.GetConsoleScreenBufferInfo">GetConsoleScreenBufferInfo</a>(file.handle, &amp;info) == <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FALSE">FALSE</a>) {
+            <span class="tok-kw">return</span> <span class="tok-kw">if</span> (force_color == <span class="tok-null">true</span>) .escape_codes <span class="tok-kw">else</span> .no_color;
+        }
+        <span class="tok-kw">return</span> .{ .windows_api = .{
+            .handle = file.handle,
+            .reset_attributes = info.wAttributes,
+        } };
+    }
+
+    <span class="tok-kw">return</span> <span class="tok-kw">if</span> (force_color == <span class="tok-null">true</span>) .escape_codes <span class="tok-kw">else</span> .no_color;
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.io.tty">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>);
+<span class="tok-kw">const</span> builtin = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;builtin&quot;</span>);
+<span class="tok-kw">const</span> File = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.File.html">File</a>;
+<span class="tok-kw">const</span> process = <a href="std.html">std</a>.<a href="std.process.html">process</a>;
+<span class="tok-kw">const</span> windows = <a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>;
+<span class="tok-kw">const</span> native_os = <a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.os">os</a>.<a href="#">tag</a>;
+
+<span class="tok-comment">/// Detect suitable TTY configuration options for the given file (commonly stdout/stderr).</span>
+<span class="tok-comment">/// This includes feature checks for ANSI escape codes and the Windows console API, as well as</span>
+<span class="tok-comment">/// respecting the `NO_COLOR` and `CLICOLOR_FORCE` environment variables to override the default.</span>
+<span class="tok-comment">/// Will attempt to enable ANSI escape code support if necessary/possible.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">detectConfig</span>(file: <a href="std.fs.File.html">File</a>) <a href="std.io.tty.Config.html">Config</a> {
+    <span class="tok-kw">const</span> force_color: ?<span class="tok-type">bool</span> = <span class="tok-kw">if</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.os">os</a>.<a href="#">tag</a> == .wasi)
+        <span class="tok-null">null</span><span class="tok-comment"> // wasi does not support environment variables
+    </span><span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.process.html">process</a>.<a href="std.process.html#std.process.hasNonEmptyEnvVarConstant">hasNonEmptyEnvVarConstant</a>(<span class="tok-str">&quot;NO_COLOR&quot;</span>))
+        <span class="tok-null">false</span>
+    <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.process.html">process</a>.<a href="std.process.html#std.process.hasNonEmptyEnvVarConstant">hasNonEmptyEnvVarConstant</a>(<span class="tok-str">&quot;CLICOLOR_FORCE&quot;</span>))
+        <span class="tok-null">true</span>
+    <span class="tok-kw">else</span>
+        <span class="tok-null">null</span>;
+
+    <span class="tok-kw">if</span> (force_color == <span class="tok-null">false</span>) <span class="tok-kw">return</span> .no_color;
+
+    <span class="tok-kw">if</span> (file.getOrEnableAnsiEscapeSupport()) <span class="tok-kw">return</span> .escape_codes;
+
+    <span class="tok-kw">if</span> (<a href="std.io.tty.html#std.io.tty.native_os">native_os</a> == .windows <span class="tok-kw">and</span> file.isTty()) {
+        <span class="tok-kw">var</span> info: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.CONSOLE_SCREEN_BUFFER_INFO.html">CONSOLE_SCREEN_BUFFER_INFO</a> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">if</span> (<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.kernel32.html">kernel32</a>.<a href="std.os.windows.kernel32.html#std.os.windows.kernel32.GetConsoleScreenBufferInfo">GetConsoleScreenBufferInfo</a>(file.handle, &amp;info) == <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FALSE">FALSE</a>) {
+            <span class="tok-kw">return</span> <span class="tok-kw">if</span> (force_color == <span class="tok-null">true</span>) .escape_codes <span class="tok-kw">else</span> .no_color;
+        }
+        <span class="tok-kw">return</span> .{ .windows_api = .{
+            .handle = file.handle,
+            .reset_attributes = info.wAttributes,
+        } };
+    }
+
+    <span class="tok-kw">return</span> <span class="tok-kw">if</span> (force_color == <span class="tok-null">true</span>) .escape_codes <span class="tok-kw">else</span> .no_color;
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Color = <span class="tok-kw">enum</span> {
+    black,
+    red,
+    green,
+    yellow,
+    blue,
+    magenta,
+    cyan,
+    white,
+    bright_black,
+    bright_red,
+    bright_green,
+    bright_yellow,
+    bright_blue,
+    bright_magenta,
+    bright_cyan,
+    bright_white,
+    dim,
+    bold,
+    reset,
+};
+
+<span class="tok-comment">/// Provides simple functionality for manipulating the terminal in some way,</span>
+<span class="tok-comment">/// such as coloring text, etc.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Config = <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) {
+    no_color,
+    escape_codes,
+    windows_api: <span class="tok-kw">if</span> (<a href="std.io.tty.html#std.io.tty.native_os">native_os</a> == .windows) <a href="std.io.tty.Config.WindowsContext.html">WindowsContext</a> <span class="tok-kw">else</span> <span class="tok-type">void</span>,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> WindowsContext = <span class="tok-kw">struct</span> {
+        handle: <a href="std.fs.File.html">File</a>.<a href="std.posix.html#std.posix.fd_t">Handle</a>,
+        reset_attributes: <span class="tok-type">u16</span>,
+    };
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setColor</span>(
+        conf: <a href="std.io.tty.Config.html">Config</a>,
+        writer: <span class="tok-kw">anytype</span>,
+        color: <a href="std.io.tty.Color.html">Color</a>,
+    ) (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(writer.writeAll(<span class="tok-str">&quot;&quot;</span>))).error_union.error_set ||
+        <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.SetConsoleTextAttributeError">SetConsoleTextAttributeError</a>)!<span class="tok-type">void</span> {
+        <span class="tok-kw">nosuspend</span> <span class="tok-kw">switch</span> (conf) {
+            .no_color =&gt; <span class="tok-kw">return</span>,
+            .escape_codes =&gt; {
+                <span class="tok-kw">const</span> color_string = <span class="tok-kw">switch</span> (color) {
+                    .black =&gt; <span class="tok-str">&quot;\x1b[30m&quot;</span>,
+                    .red =&gt; <span class="tok-str">&quot;\x1b[31m&quot;</span>,
+                    .green =&gt; <span class="tok-str">&quot;\x1b[32m&quot;</span>,
+                    .yellow =&gt; <span class="tok-str">&quot;\x1b[33m&quot;</span>,
+                    .blue =&gt; <span class="tok-str">&quot;\x1b[34m&quot;</span>,
+                    .magenta =&gt; <span class="tok-str">&quot;\x1b[35m&quot;</span>,
+                    .cyan =&gt; <span class="tok-str">&quot;\x1b[36m&quot;</span>,
+                    .white =&gt; <span class="tok-str">&quot;\x1b[37m&quot;</span>,
+                    .bright_black =&gt; <span class="tok-str">&quot;\x1b[90m&quot;</span>,
+                    .bright_red =&gt; <span class="tok-str">&quot;\x1b[91m&quot;</span>,
+                    .bright_green =&gt; <span class="tok-str">&quot;\x1b[92m&quot;</span>,
+                    .bright_yellow =&gt; <span class="tok-str">&quot;\x1b[93m&quot;</span>,
+                    .bright_blue =&gt; <span class="tok-str">&quot;\x1b[94m&quot;</span>,
+                    .bright_magenta =&gt; <span class="tok-str">&quot;\x1b[95m&quot;</span>,
+                    .bright_cyan =&gt; <span class="tok-str">&quot;\x1b[96m&quot;</span>,
+                    .bright_white =&gt; <span class="tok-str">&quot;\x1b[97m&quot;</span>,
+                    .bold =&gt; <span class="tok-str">&quot;\x1b[1m&quot;</span>,
+                    .dim =&gt; <span class="tok-str">&quot;\x1b[2m&quot;</span>,
+                    .reset =&gt; <span class="tok-str">&quot;\x1b[0m&quot;</span>,
+                };
+                <span class="tok-kw">try</span> writer.writeAll(color_string);
+            },
+            .windows_api =&gt; |ctx| <span class="tok-kw">if</span> (<a href="std.io.tty.html#std.io.tty.native_os">native_os</a> == .windows) {
+                <span class="tok-kw">const</span> attributes = <span class="tok-kw">switch</span> (color) {
+                    .black =&gt; <span class="tok-number">0</span>,
+                    .red =&gt; <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_RED">FOREGROUND_RED</a>,
+                    .green =&gt; <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_GREEN">FOREGROUND_GREEN</a>,
+                    .yellow =&gt; <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_RED">FOREGROUND_RED</a> | <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_GREEN">FOREGROUND_GREEN</a>,
+                    .blue =&gt; <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_BLUE">FOREGROUND_BLUE</a>,
+                    .magenta =&gt; <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_RED">FOREGROUND_RED</a> | <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_BLUE">FOREGROUND_BLUE</a>,
+                    .cyan =&gt; <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_GREEN">FOREGROUND_GREEN</a> | <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_BLUE">FOREGROUND_BLUE</a>,
+                    .white =&gt; <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_RED">FOREGROUND_RED</a> | <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_GREEN">FOREGROUND_GREEN</a> | <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_BLUE">FOREGROUND_BLUE</a>,
+                    .bright_black =&gt; <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_INTENSITY">FOREGROUND_INTENSITY</a>,
+                    .bright_red =&gt; <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_RED">FOREGROUND_RED</a> | <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_INTENSITY">FOREGROUND_INTENSITY</a>,
+                    .bright_green =&gt; <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_GREEN">FOREGROUND_GREEN</a> | <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_INTENSITY">FOREGROUND_INTENSITY</a>,
+                    .bright_yellow =&gt; <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_RED">FOREGROUND_RED</a> | <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_GREEN">FOREGROUND_GREEN</a> | <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_INTENSITY">FOREGROUND_INTENSITY</a>,
+                    .bright_blue =&gt; <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_BLUE">FOREGROUND_BLUE</a> | <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_INTENSITY">FOREGROUND_INTENSITY</a>,
+                    .bright_magenta =&gt; <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_RED">FOREGROUND_RED</a> | <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_BLUE">FOREGROUND_BLUE</a> | <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_INTENSITY">FOREGROUND_INTENSITY</a>,
+                    .bright_cyan =&gt; <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_GREEN">FOREGROUND_GREEN</a> | <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_BLUE">FOREGROUND_BLUE</a> | <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_INTENSITY">FOREGROUND_INTENSITY</a>,
+                    .bright_white, .bold =&gt; <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_RED">FOREGROUND_RED</a> | <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_GREEN">FOREGROUND_GREEN</a> | <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_BLUE">FOREGROUND_BLUE</a> | <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_INTENSITY">FOREGROUND_INTENSITY</a>,<span class="tok-comment">
+                    // &quot;dim&quot; is not supported using basic character attributes, but let's still make it do *something*.
+                    // This matches the old behavior of TTY.Color before the bright variants were added.
+                    </span>.dim =&gt; <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.FOREGROUND_INTENSITY">FOREGROUND_INTENSITY</a>,
+                    .reset =&gt; ctx.reset_attributes,
+                };
+                <span class="tok-kw">try</span> <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.SetConsoleTextAttribute">SetConsoleTextAttribute</a>(ctx.handle, attributes);
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">unreachable</span>;
+            },
+        };
+    }
+};</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

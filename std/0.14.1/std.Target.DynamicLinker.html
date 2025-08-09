@@ -1,0 +1,1399 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.Target.html" class="">Target</a></li><li><a href="std.Target.DynamicLinker.html" class="active">DynamicLinker</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.Target.DynamicLinker" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.Target.DynamicLinker</span><a href="#src.zig-std.Target.DynamicLinker">[src]</a></h1><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.Target.DynamicLinker.Kind.html">std.Target.DynamicLinker.Kind</a></li></ul></div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>buffer: [<span class="tok-number">255</span>]<span class="tok-type">u8</span></code></pre><div class="fieldDocs"><p>Contains the memory used to store the dynamic linker path. This field
+should not be used directly. See <code><a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.get">get</a></code> and <code><a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.set">set</a></code>. This field exists so
+that this API requires no allocator.</p>
+</div></div><div><pre><code>len: <span class="tok-type">u8</span></code></pre><div class="fieldDocs"><p>Used to construct the dynamic linker path. This field should not be used
+directly. See <code><a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.get">get</a></code> and <code><a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.set">set</a></code>.</p>
+</div></div></div></div><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.Target.DynamicLinker.none" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">none</span><a href="#src.zig-std.Target.DynamicLinker.none">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.DynamicLinker.none">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> none: <a href="std.Target.DynamicLinker.html">DynamicLinker</a> = .{ .buffer = <span class="tok-null">undefined</span>, .len = <span class="tok-number">0</span> }</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.Target.DynamicLinker.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.Target.DynamicLinker.init">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(maybe_path: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.Target.DynamicLinker.html">DynamicLinker</a></code></pre></div><div class="tldDocs"><p>Asserts that the length is less than or equal to 255 bytes.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>maybe_path: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.DynamicLinker.init">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(maybe_path: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.Target.DynamicLinker.html">DynamicLinker</a> {
+    <span class="tok-kw">var</span> dl: <a href="std.Target.DynamicLinker.html">DynamicLinker</a> = <span class="tok-null">undefined</span>;
+    dl.set(maybe_path);
+    <span class="tok-kw">return</span> dl;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.DynamicLinker.initFmt" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">initFmt</span><a href="#src.zig-std.Target.DynamicLinker.initFmt">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initFmt</span>(<span class="tok-kw">comptime</span> fmt_str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, args: <span class="tok-kw">anytype</span>) !<a href="std.Target.DynamicLinker.html">DynamicLinker</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fmt_str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.DynamicLinker.initFmt">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initFmt</span>(<span class="tok-kw">comptime</span> fmt_str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, args: <span class="tok-kw">anytype</span>) !<a href="std.Target.DynamicLinker.html">DynamicLinker</a> {
+    <span class="tok-kw">var</span> dl: <a href="std.Target.DynamicLinker.html">DynamicLinker</a> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">try</span> dl.setFmt(fmt_str, args);
+    <span class="tok-kw">return</span> dl;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.DynamicLinker.get" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">get</span><a href="#src.zig-std.Target.DynamicLinker.get">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(dl: *<span class="tok-kw">const</span> <a href="std.Target.DynamicLinker.html">DynamicLinker</a>) ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>The returned memory has the same lifetime as the <code>DynamicLinker</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>dl: *<span class="tok-kw">const</span> <a href="std.Target.DynamicLinker.html">DynamicLinker</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.DynamicLinker.get">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(dl: *<span class="tok-kw">const</span> <a href="std.Target.DynamicLinker.html">DynamicLinker</a>) ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">if</span> (dl.len &gt; <span class="tok-number">0</span>) dl.buffer[<span class="tok-number">0</span>..dl.len] <span class="tok-kw">else</span> <span class="tok-null">null</span>;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.DynamicLinker.set" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">set</span><a href="#src.zig-std.Target.DynamicLinker.set">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">set</span>(dl: *<a href="std.Target.DynamicLinker.html">DynamicLinker</a>, maybe_path: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Asserts that the length is less than or equal to 255 bytes.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>dl: *<a href="std.Target.DynamicLinker.html">DynamicLinker</a></code></pre></div><div><pre><code>maybe_path: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.DynamicLinker.set">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">set</span>(dl: *<a href="std.Target.DynamicLinker.html">DynamicLinker</a>, maybe_path: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> path = maybe_path <span class="tok-kw">orelse</span> <span class="tok-str">&quot;&quot;</span>;
+    <span class="tok-builtin">@memcpy</span>(dl.buffer[<span class="tok-number">0</span>..path.len], path);
+    dl.len = <span class="tok-builtin">@intCast</span>(path.len);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.DynamicLinker.setFmt" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">setFmt</span><a href="#src.zig-std.Target.DynamicLinker.setFmt">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setFmt</span>(dl: *<a href="std.Target.DynamicLinker.html">DynamicLinker</a>, <span class="tok-kw">comptime</span> fmt_str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, args: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Asserts that the length is less than or equal to 255 bytes.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>dl: *<a href="std.Target.DynamicLinker.html">DynamicLinker</a></code></pre></div><div><pre><code>fmt_str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.DynamicLinker.setFmt">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setFmt</span>(dl: *<a href="std.Target.DynamicLinker.html">DynamicLinker</a>, <span class="tok-kw">comptime</span> fmt_str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, args: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    dl.len = <span class="tok-builtin">@intCast</span>((<span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.bufPrint">bufPrint</a>(&amp;dl.buffer, fmt_str, args)).len);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.DynamicLinker.eql" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">eql</span><a href="#src.zig-std.Target.DynamicLinker.eql">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eql</span>(lhs: <a href="std.Target.DynamicLinker.html">DynamicLinker</a>, rhs: <a href="std.Target.DynamicLinker.html">DynamicLinker</a>) <span class="tok-type">bool</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>lhs: <a href="std.Target.DynamicLinker.html">DynamicLinker</a></code></pre></div><div><pre><code>rhs: <a href="std.Target.DynamicLinker.html">DynamicLinker</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.DynamicLinker.eql">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eql</span>(lhs: <a href="std.Target.DynamicLinker.html">DynamicLinker</a>, rhs: <a href="std.Target.DynamicLinker.html">DynamicLinker</a>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, lhs.buffer[<span class="tok-number">0</span>..lhs.len], rhs.buffer[<span class="tok-number">0</span>..rhs.len]);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.DynamicLinker.kind" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">kind</span><a href="#src.zig-std.Target.DynamicLinker.kind">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">kind</span>(os: <a href="std.Target.Os.html">Os</a>.<a href="std.Target.Os.Tag.html">Tag</a>) <a href="std.Target.DynamicLinker.Kind.html">Kind</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>os: <a href="std.Target.Os.html">Os</a>.<a href="std.Target.Os.Tag.html">Tag</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.DynamicLinker.kind">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">kind</span>(os: <a href="std.Target.Os.html">Os</a>.<a href="std.Target.Os.Tag.html">Tag</a>) <a href="std.Target.DynamicLinker.Kind.html">Kind</a> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (os) {
+        .fuchsia,
+
+        .haiku,
+        .serenity,
+
+        .dragonfly,
+        .freebsd,
+        .netbsd,
+        .openbsd,
+
+        .driverkit,
+        .ios,
+        .macos,
+        .tvos,
+        .visionos,
+        .watchos,
+
+        .illumos,
+        .solaris,
+        =&gt; .arch_os,
+        .hurd,
+        .linux,
+        =&gt; .arch_os_abi,
+        .freestanding,
+        .other,
+
+        .contiki,
+        .elfiamcu,
+        .hermit,
+
+        .aix,
+        .plan9,
+        .rtems,
+        .zos,
+
+        .uefi,
+        .windows,
+
+        .emscripten,
+        .wasi,
+
+        .amdhsa,
+        .amdpal,
+        .cuda,
+        .mesa3d,
+        .nvcl,
+        .opencl,
+        .opengl,
+        .vulkan,
+
+        .ps3,
+        .ps4,
+        .ps5,
+        =&gt; .none,
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.DynamicLinker.standard" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">standard</span><a href="#src.zig-std.Target.DynamicLinker.standard">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">standard</span>(cpu: <a href="std.Target.Cpu.html">Cpu</a>, os: <a href="std.Target.Os.html">Os</a>, abi: <a href="std.Target.Abi.html">Abi</a>) <a href="std.Target.DynamicLinker.html">DynamicLinker</a></code></pre></div><div class="tldDocs"><p>The strictness of this function depends on the value of <code>kind(os.tag)</code>:</p>
+<ul>
+<li><code>.none</code>: Ignores all arguments and just returns <code>none</code>.</li>
+<li><code>.arch_os</code>: Ignores <code>abi</code> and returns the dynamic linker matching <code>cpu</code> and <code>os</code>.</li>
+<li><code>.arch_os_abi</code>: Returns the dynamic linker matching <code>cpu</code>, <code>os</code>, and <code>abi</code>.</li>
+</ul>
+<p>In the case of <code>.arch_os</code> in particular, callers should be aware that a valid dynamic linker
+being returned only means that the <code>cpu</code> + <code>os</code> combination represents a platform that
+actually exists and which has an established dynamic linker path that does not change with
+the ABI; it does not necessarily mean that <code>abi</code> makes any sense at all for that platform.
+The responsibility for determining whether <code>abi</code> is valid in this case rests with the
+caller. <code>Abi.default()</code> can be used to pick a best-effort default ABI for such platforms.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>cpu: <a href="std.Target.Cpu.html">Cpu</a></code></pre></div><div><pre><code>os: <a href="std.Target.Os.html">Os</a></code></pre></div><div><pre><code>abi: <a href="std.Target.Abi.html">Abi</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.DynamicLinker.standard">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">standard</span>(cpu: <a href="std.Target.Cpu.html">Cpu</a>, os: <a href="std.Target.Os.html">Os</a>, abi: <a href="std.Target.Abi.html">Abi</a>) <a href="std.Target.DynamicLinker.html">DynamicLinker</a> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (os.tag) {
+        .fuchsia =&gt; <span class="tok-kw">switch</span> (cpu.arch) {
+            .aarch64,
+            .riscv64,
+            .x86_64,
+            =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;ld.so.1&quot;</span>),<span class="tok-comment"> // Fuchsia is unusual in that `DT_INTERP` is just a basename.
+            </span><span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+        },
+
+        .haiku =&gt; <span class="tok-kw">switch</span> (cpu.arch) {
+            .arm,
+            .thumb,
+            .aarch64,
+            .m68k,
+            .powerpc,
+            .riscv64,
+            .sparc64,
+            .x86,
+            .x86_64,
+            =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/system/runtime_loader&quot;</span>),
+            <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+        },
+
+        .hurd =&gt; <span class="tok-kw">switch</span> (cpu.arch) {
+            .aarch64,
+            .aarch64_be,
+            =&gt; |arch| <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-{s}{s}.so.1&quot;</span>, .{
+                <span class="tok-builtin">@tagName</span>(arch),
+                <span class="tok-kw">switch</span> (abi) {
+                    .gnu =&gt; <span class="tok-str">&quot;&quot;</span>,
+                    .gnuilp32 =&gt; <span class="tok-str">&quot;_ilp32&quot;</span>,
+                    <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                },
+            }),
+
+            .x86 =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib/ld.so.1&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+            .x86_64 =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-{s}.so.1&quot;</span>, .{<span class="tok-kw">switch</span> (abi) {
+                .gnu =&gt; <span class="tok-str">&quot;x86-64&quot;</span>,
+                .gnux32 =&gt; <span class="tok-str">&quot;x32&quot;</span>,
+                <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+            }}),
+
+            <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+        },
+
+        .linux =&gt; <span class="tok-kw">if</span> (abi.isAndroid())
+            <span class="tok-kw">switch</span> (cpu.arch) {
+                .arm,
+                .thumb,
+                =&gt; <span class="tok-kw">if</span> (abi == .androideabi) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/system/bin/linker&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                .aarch64,
+                .riscv64,
+                .x86,
+                .x86_64,
+                =&gt; <span class="tok-kw">if</span> (abi == .android) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/system/bin/linker{s}&quot;</span>, .{
+                    <span class="tok-kw">if</span> (<a href="std.Target.html#std.Target.ptrBitWidth_cpu_abi">ptrBitWidth_cpu_abi</a>(cpu, abi) == <span class="tok-number">64</span>) <span class="tok-str">&quot;64&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;&quot;</span>,
+                }) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+            }
+        <span class="tok-kw">else</span> <span class="tok-kw">if</span> (abi.isMusl())
+            <span class="tok-kw">switch</span> (cpu.arch) {
+                .arm,
+                .armeb,
+                .thumb,
+                .thumbeb,
+                =&gt; |arch| <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-musl-arm{s}{s}.so.1&quot;</span>, .{
+                    <span class="tok-kw">if</span> (arch == .armeb <span class="tok-kw">or</span> arch == .thumbeb) <span class="tok-str">&quot;eb&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;&quot;</span>,
+                    <span class="tok-kw">switch</span> (abi) {
+                        .musleabi =&gt; <span class="tok-str">&quot;&quot;</span>,
+                        .musleabihf =&gt; <span class="tok-str">&quot;hf&quot;</span>,
+                        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                    },
+                }),
+
+                .aarch64,
+                .aarch64_be,
+                .loongarch64,<span class="tok-comment"> // TODO: `-sp` and `-sf` ABI support in LLVM 20.
+                </span>.m68k,
+                .powerpc64,
+                .powerpc64le,
+                .s390x,
+                =&gt; |arch| <span class="tok-kw">if</span> (abi == .musl) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-musl-{s}.so.1&quot;</span>, .{<span class="tok-builtin">@tagName</span>(arch)}) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                .mips,
+                .mipsel,
+                =&gt; |arch| <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-musl-mips{s}{s}{s}.so.1&quot;</span>, .{
+                    <span class="tok-kw">if</span> (<a href="std.Target.mips.html">mips</a>.<a href="std.Target.mips.html#std.Target.mips.featureSetHas">featureSetHas</a>(cpu.features, .mips32r6)) <span class="tok-str">&quot;r6&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;&quot;</span>,
+                    <span class="tok-kw">if</span> (arch == .mipsel) <span class="tok-str">&quot;el&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;&quot;</span>,
+                    <span class="tok-kw">switch</span> (abi) {
+                        .musleabi =&gt; <span class="tok-str">&quot;-sf&quot;</span>,
+                        .musleabihf =&gt; <span class="tok-str">&quot;&quot;</span>,
+                        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                    },
+                }),
+
+                .mips64,
+                .mips64el,
+                =&gt; |arch| <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-musl-mips{s}{s}{s}.so.1&quot;</span>, .{
+                    <span class="tok-kw">switch</span> (abi) {
+                        .muslabi64 =&gt; <span class="tok-str">&quot;64&quot;</span>,
+                        .muslabin32 =&gt; <span class="tok-str">&quot;n32&quot;</span>,
+                        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                    },
+                    <span class="tok-kw">if</span> (<a href="std.Target.mips.html">mips</a>.<a href="std.Target.mips.html#std.Target.mips.featureSetHas">featureSetHas</a>(cpu.features, .mips64r6)) <span class="tok-str">&quot;r6&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;&quot;</span>,
+                    <span class="tok-kw">if</span> (arch == .mips64el) <span class="tok-str">&quot;el&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;&quot;</span>,
+                }),
+
+                .powerpc =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-musl-powerpc{s}.so.1&quot;</span>, .{<span class="tok-kw">switch</span> (abi) {
+                    .musleabi =&gt; <span class="tok-str">&quot;-sf&quot;</span>,
+                    .musleabihf =&gt; <span class="tok-str">&quot;&quot;</span>,
+                    <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                }}),
+
+                .riscv32,
+                .riscv64,
+                =&gt; |arch| <span class="tok-kw">if</span> (abi == .musl) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-musl-{s}{s}.so.1&quot;</span>, .{
+                    <span class="tok-builtin">@tagName</span>(arch),
+                    <span class="tok-kw">if</span> (<a href="std.Target.riscv.html">riscv</a>.<a href="std.Target.riscv.html#std.Target.riscv.featureSetHas">featureSetHas</a>(cpu.features, .d))
+                        <span class="tok-str">&quot;&quot;</span>
+                    <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.Target.riscv.html">riscv</a>.<a href="std.Target.riscv.html#std.Target.riscv.featureSetHas">featureSetHas</a>(cpu.features, .f))
+                        <span class="tok-str">&quot;-sp&quot;</span>
+                    <span class="tok-kw">else</span>
+                        <span class="tok-str">&quot;-sf&quot;</span>,
+                }) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                .x86 =&gt; <span class="tok-kw">if</span> (abi == .musl) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib/ld-musl-i386.so.1&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                .x86_64 =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-musl-{s}.so.1&quot;</span>, .{<span class="tok-kw">switch</span> (abi) {
+                    .musl =&gt; <span class="tok-str">&quot;x86_64&quot;</span>,
+                    .muslx32 =&gt; <span class="tok-str">&quot;x32&quot;</span>,
+                    <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                }}),
+
+                <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+            }
+        <span class="tok-kw">else</span> <span class="tok-kw">if</span> (abi.isGnu())
+            <span class="tok-kw">switch</span> (cpu.arch) {<span class="tok-comment">
+                // TODO: `eb` architecture support.
+                // TODO: `700` ABI support.
+                </span>.arc =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib/ld-linux-arc.so.2&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                .arm,
+                .armeb,
+                .thumb,
+                .thumbeb,
+                =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-linux{s}.so.3&quot;</span>, .{<span class="tok-kw">switch</span> (abi) {
+                    .gnueabi =&gt; <span class="tok-str">&quot;&quot;</span>,
+                    .gnueabihf =&gt; <span class="tok-str">&quot;-armhf&quot;</span>,
+                    <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                }}),
+
+                .aarch64,
+                .aarch64_be,
+                =&gt; |arch| <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-linux-{s}{s}.so.1&quot;</span>, .{
+                    <span class="tok-builtin">@tagName</span>(arch),
+                    <span class="tok-kw">switch</span> (abi) {
+                        .gnu =&gt; <span class="tok-str">&quot;&quot;</span>,
+                        .gnuilp32 =&gt; <span class="tok-str">&quot;_ilp32&quot;</span>,
+                        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                    },
+                }),<span class="tok-comment">
+
+                // TODO: `-be` architecture support.
+                </span>.csky =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-linux-cskyv2{s}.so.1&quot;</span>, .{<span class="tok-kw">switch</span> (abi) {
+                    .gnueabi =&gt; <span class="tok-str">&quot;&quot;</span>,
+                    .gnueabihf =&gt; <span class="tok-str">&quot;-hf&quot;</span>,
+                    <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                }}),
+
+                .loongarch64 =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib64/ld-linux-loongarch-{s}.so.1&quot;</span>, .{<span class="tok-kw">switch</span> (abi) {
+                    .gnu =&gt; <span class="tok-str">&quot;lp64d&quot;</span>,
+                    .gnuf32 =&gt; <span class="tok-str">&quot;lp64f&quot;</span>,
+                    .gnusf =&gt; <span class="tok-str">&quot;lp64s&quot;</span>,
+                    <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                }}),
+
+                .m68k =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib/ld.so.1&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                .mips,
+                .mipsel,
+                =&gt; <span class="tok-kw">switch</span> (abi) {
+                    .gnueabi,
+                    .gnueabihf,
+                    =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld{s}.so.1&quot;</span>, .{
+                        <span class="tok-kw">if</span> (<a href="std.Target.mips.html">mips</a>.<a href="std.Target.mips.html#std.Target.mips.featureSetHas">featureSetHas</a>(cpu.features, .nan2008)) <span class="tok-str">&quot;-linux-mipsn8&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;&quot;</span>,
+                    }),
+                    <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                },
+
+                .mips64,
+                .mips64el,
+                =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib{s}/ld{s}.so.1&quot;</span>, .{
+                    <span class="tok-kw">switch</span> (abi) {
+                        .gnuabi64 =&gt; <span class="tok-str">&quot;64&quot;</span>,
+                        .gnuabin32 =&gt; <span class="tok-str">&quot;32&quot;</span>,
+                        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                    },
+                    <span class="tok-kw">if</span> (<a href="std.Target.mips.html">mips</a>.<a href="std.Target.mips.html#std.Target.mips.featureSetHas">featureSetHas</a>(cpu.features, .nan2008)) <span class="tok-str">&quot;-linux-mipsn8&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;&quot;</span>,
+                }),
+
+                .powerpc =&gt; <span class="tok-kw">switch</span> (abi) {
+                    .gnueabi,
+                    .gnueabihf,
+                    =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib/ld.so.1&quot;</span>),
+                    <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                },<span class="tok-comment">
+                // TODO: ELFv2 ABI (`/lib64/ld64.so.2`) opt-in support.
+                </span>.powerpc64 =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib64/ld64.so.1&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                .powerpc64le =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib64/ld64.so.2&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                .riscv32,
+                .riscv64,
+                =&gt; |arch| <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-linux-{s}{s}.so.1&quot;</span>, .{
+                    <span class="tok-kw">switch</span> (arch) {
+                        .riscv32 =&gt; <span class="tok-str">&quot;riscv32-ilp32&quot;</span>,
+                        .riscv64 =&gt; <span class="tok-str">&quot;riscv64-lp64&quot;</span>,
+                        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+                    },
+                    <span class="tok-kw">if</span> (<a href="std.Target.riscv.html">riscv</a>.<a href="std.Target.riscv.html#std.Target.riscv.featureSetHas">featureSetHas</a>(cpu.features, .d))
+                        <span class="tok-str">&quot;d&quot;</span>
+                    <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.Target.riscv.html">riscv</a>.<a href="std.Target.riscv.html#std.Target.riscv.featureSetHas">featureSetHas</a>(cpu.features, .f))
+                        <span class="tok-str">&quot;f&quot;</span>
+                    <span class="tok-kw">else</span>
+                        <span class="tok-str">&quot;&quot;</span>,
+                }) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                .s390x =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib/ld64.so.1&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                .sparc =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib/ld-linux.so.2&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                .sparc64 =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib64/ld-linux.so.2&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                .x86 =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib/ld-linux.so.2&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                .x86_64 =&gt; <span class="tok-kw">switch</span> (abi) {
+                    .gnu =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib64/ld-linux-x86-64.so.2&quot;</span>),
+                    .gnux32 =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/libx32/ld-linux-x32.so.2&quot;</span>),
+                    <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                },
+
+                .xtensa =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib/ld.so.1&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+            }
+        <span class="tok-kw">else</span>
+            <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,<span class="tok-comment"> // Not a known Linux libc.
+
+        </span>.serenity =&gt; <span class="tok-kw">switch</span> (cpu.arch) {
+            .aarch64,
+            .riscv64,
+            .x86_64,
+            =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/usr/lib/Loader.so&quot;</span>),
+            <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+        },
+
+        .dragonfly =&gt; <span class="tok-kw">if</span> (cpu.arch == .x86_64) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;{s}/libexec/ld-elf.so.2&quot;</span>, .{
+            <span class="tok-kw">if</span> (os.version_range.semver.isAtLeast(.{ .major = <span class="tok-number">3</span>, .minor = <span class="tok-number">8</span>, .patch = <span class="tok-number">0</span> }) <span class="tok-kw">orelse</span> <span class="tok-null">false</span>)
+                <span class="tok-str">&quot;&quot;</span>
+            <span class="tok-kw">else</span>
+                <span class="tok-str">&quot;/usr&quot;</span>,
+        }) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+        .freebsd =&gt; <span class="tok-kw">switch</span> (cpu.arch) {
+            .arm,
+            .armeb,
+            .thumb,
+            .thumbeb,
+            .aarch64,
+            .mips,
+            .mipsel,
+            .mips64,
+            .mips64el,
+            .powerpc,
+            .powerpc64,
+            .powerpc64le,
+            .riscv64,
+            .sparc64,
+            .x86,
+            .x86_64,
+            =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;{s}/libexec/ld-elf.so.1&quot;</span>, .{
+                <span class="tok-kw">if</span> (os.version_range.semver.isAtLeast(.{ .major = <span class="tok-number">6</span>, .minor = <span class="tok-number">0</span>, .patch = <span class="tok-number">0</span> }) <span class="tok-kw">orelse</span> <span class="tok-null">false</span>)
+                    <span class="tok-str">&quot;&quot;</span>
+                <span class="tok-kw">else</span>
+                    <span class="tok-str">&quot;/usr&quot;</span>,
+            }),
+            <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+        },
+
+        .netbsd =&gt; <span class="tok-kw">switch</span> (cpu.arch) {
+            .arm,
+            .armeb,
+            .thumb,
+            .thumbeb,
+            .aarch64,
+            .aarch64_be,
+            .m68k,
+            .mips,
+            .mipsel,
+            .mips64,
+            .mips64el,
+            .powerpc,
+            .riscv64,
+            .sparc,
+            .sparc64,
+            .x86,
+            .x86_64,
+            =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/libexec/ld.elf_so&quot;</span>),
+            <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+        },
+
+        .openbsd =&gt; <span class="tok-kw">switch</span> (cpu.arch) {
+            .arm,
+            .thumb,
+            .aarch64,
+            .mips64,
+            .mips64el,
+            .powerpc,
+            .powerpc64,
+            .riscv64,
+            .sparc64,
+            .x86,
+            .x86_64,
+            =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/usr/libexec/ld.so&quot;</span>),
+            <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+        },
+
+        .driverkit,
+        .ios,
+        .macos,
+        .tvos,
+        .visionos,
+        .watchos,
+        =&gt; <span class="tok-kw">switch</span> (cpu.arch) {
+            .aarch64,
+            .x86_64,
+            =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/usr/lib/dyld&quot;</span>),
+            <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+        },
+
+        .illumos,
+        .solaris,
+        =&gt; <span class="tok-kw">switch</span> (cpu.arch) {
+            .sparc,
+            .sparc64,
+            .x86,
+            .x86_64,
+            =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/{s}ld.so.1&quot;</span>, .{<span class="tok-kw">if</span> (<a href="std.Target.html#std.Target.ptrBitWidth_cpu_abi">ptrBitWidth_cpu_abi</a>(cpu, .none) == <span class="tok-number">64</span>) <span class="tok-str">&quot;64/&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;&quot;</span>}),
+            <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+        },<span class="tok-comment">
+
+        // Operating systems in this list have been verified as not having a standard
+        // dynamic linker path.
+        </span>.freestanding,
+        .other,
+
+        .contiki,
+        .elfiamcu,
+        .hermit,
+
+        .aix,
+        .plan9,
+        .rtems,
+        .zos,
+
+        .uefi,
+        .windows,
+
+        .emscripten,
+        .wasi,
+
+        .amdhsa,
+        .amdpal,
+        .cuda,
+        .mesa3d,
+        .nvcl,
+        .opencl,
+        .opengl,
+        .vulkan,
+        =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,<span class="tok-comment">
+
+        // TODO go over each item in this list and either move it to the above list, or
+        // implement the standard dynamic linker path code for it.
+        </span>.ps3,
+        .ps4,
+        .ps5,
+        =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+    } <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.Target.DynamicLinker">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> DynamicLinker = <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Contains the memory used to store the dynamic linker path. This field</span>
+    <span class="tok-comment">/// should not be used directly. See `get` and `set`. This field exists so</span>
+    <span class="tok-comment">/// that this API requires no allocator.</span>
+    buffer: [<span class="tok-number">255</span>]<span class="tok-type">u8</span>,
+
+    <span class="tok-comment">/// Used to construct the dynamic linker path. This field should not be used</span>
+    <span class="tok-comment">/// directly. See `get` and `set`.</span>
+    len: <span class="tok-type">u8</span>,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> none: <a href="std.Target.DynamicLinker.html">DynamicLinker</a> = .{ .buffer = <span class="tok-null">undefined</span>, .len = <span class="tok-number">0</span> };
+
+    <span class="tok-comment">/// Asserts that the length is less than or equal to 255 bytes.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(maybe_path: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.Target.DynamicLinker.html">DynamicLinker</a> {
+        <span class="tok-kw">var</span> dl: <a href="std.Target.DynamicLinker.html">DynamicLinker</a> = <span class="tok-null">undefined</span>;
+        dl.set(maybe_path);
+        <span class="tok-kw">return</span> dl;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initFmt</span>(<span class="tok-kw">comptime</span> fmt_str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, args: <span class="tok-kw">anytype</span>) !<a href="std.Target.DynamicLinker.html">DynamicLinker</a> {
+        <span class="tok-kw">var</span> dl: <a href="std.Target.DynamicLinker.html">DynamicLinker</a> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">try</span> dl.setFmt(fmt_str, args);
+        <span class="tok-kw">return</span> dl;
+    }
+
+    <span class="tok-comment">/// The returned memory has the same lifetime as the `DynamicLinker`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(dl: *<span class="tok-kw">const</span> <a href="std.Target.DynamicLinker.html">DynamicLinker</a>) ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> <span class="tok-kw">if</span> (dl.len &gt; <span class="tok-number">0</span>) dl.buffer[<span class="tok-number">0</span>..dl.len] <span class="tok-kw">else</span> <span class="tok-null">null</span>;
+    }
+
+    <span class="tok-comment">/// Asserts that the length is less than or equal to 255 bytes.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">set</span>(dl: *<a href="std.Target.DynamicLinker.html">DynamicLinker</a>, maybe_path: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+        <span class="tok-kw">const</span> path = maybe_path <span class="tok-kw">orelse</span> <span class="tok-str">&quot;&quot;</span>;
+        <span class="tok-builtin">@memcpy</span>(dl.buffer[<span class="tok-number">0</span>..path.len], path);
+        dl.len = <span class="tok-builtin">@intCast</span>(path.len);
+    }
+
+    <span class="tok-comment">/// Asserts that the length is less than or equal to 255 bytes.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setFmt</span>(dl: *<a href="std.Target.DynamicLinker.html">DynamicLinker</a>, <span class="tok-kw">comptime</span> fmt_str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, args: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+        dl.len = <span class="tok-builtin">@intCast</span>((<span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.bufPrint">bufPrint</a>(&amp;dl.buffer, fmt_str, args)).len);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eql</span>(lhs: <a href="std.Target.DynamicLinker.html">DynamicLinker</a>, rhs: <a href="std.Target.DynamicLinker.html">DynamicLinker</a>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, lhs.buffer[<span class="tok-number">0</span>..lhs.len], rhs.buffer[<span class="tok-number">0</span>..rhs.len]);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Kind = <span class="tok-kw">enum</span> {
+        <span class="tok-comment">/// No dynamic linker.</span>
+        <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+        <span class="tok-comment">/// Dynamic linker path is determined by the arch/OS components.</span>
+        arch_os,
+        <span class="tok-comment">/// Dynamic linker path is determined by the arch/OS/ABI components.</span>
+        arch_os_abi,
+    };
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">kind</span>(os: <a href="std.Target.Os.html">Os</a>.<a href="std.Target.Os.Tag.html">Tag</a>) <a href="std.Target.DynamicLinker.Kind.html">Kind</a> {
+        <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (os) {
+            .fuchsia,
+
+            .haiku,
+            .serenity,
+
+            .dragonfly,
+            .freebsd,
+            .netbsd,
+            .openbsd,
+
+            .driverkit,
+            .ios,
+            .macos,
+            .tvos,
+            .visionos,
+            .watchos,
+
+            .illumos,
+            .solaris,
+            =&gt; .arch_os,
+            .hurd,
+            .linux,
+            =&gt; .arch_os_abi,
+            .freestanding,
+            .other,
+
+            .contiki,
+            .elfiamcu,
+            .hermit,
+
+            .aix,
+            .plan9,
+            .rtems,
+            .zos,
+
+            .uefi,
+            .windows,
+
+            .emscripten,
+            .wasi,
+
+            .amdhsa,
+            .amdpal,
+            .cuda,
+            .mesa3d,
+            .nvcl,
+            .opencl,
+            .opengl,
+            .vulkan,
+
+            .ps3,
+            .ps4,
+            .ps5,
+            =&gt; .none,
+        };
+    }
+
+    <span class="tok-comment">/// The strictness of this function depends on the value of `kind(os.tag)`:</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// * `.none`: Ignores all arguments and just returns `none`.</span>
+    <span class="tok-comment">/// * `.arch_os`: Ignores `abi` and returns the dynamic linker matching `cpu` and `os`.</span>
+    <span class="tok-comment">/// * `.arch_os_abi`: Returns the dynamic linker matching `cpu`, `os`, and `abi`.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// In the case of `.arch_os` in particular, callers should be aware that a valid dynamic linker</span>
+    <span class="tok-comment">/// being returned only means that the `cpu` + `os` combination represents a platform that</span>
+    <span class="tok-comment">/// actually exists and which has an established dynamic linker path that does not change with</span>
+    <span class="tok-comment">/// the ABI; it does not necessarily mean that `abi` makes any sense at all for that platform.</span>
+    <span class="tok-comment">/// The responsibility for determining whether `abi` is valid in this case rests with the</span>
+    <span class="tok-comment">/// caller. `Abi.default()` can be used to pick a best-effort default ABI for such platforms.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">standard</span>(cpu: <a href="std.Target.Cpu.html">Cpu</a>, os: <a href="std.Target.Os.html">Os</a>, abi: <a href="std.Target.Abi.html">Abi</a>) <a href="std.Target.DynamicLinker.html">DynamicLinker</a> {
+        <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (os.tag) {
+            .fuchsia =&gt; <span class="tok-kw">switch</span> (cpu.arch) {
+                .aarch64,
+                .riscv64,
+                .x86_64,
+                =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;ld.so.1&quot;</span>),<span class="tok-comment"> // Fuchsia is unusual in that `DT_INTERP` is just a basename.
+                </span><span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+            },
+
+            .haiku =&gt; <span class="tok-kw">switch</span> (cpu.arch) {
+                .arm,
+                .thumb,
+                .aarch64,
+                .m68k,
+                .powerpc,
+                .riscv64,
+                .sparc64,
+                .x86,
+                .x86_64,
+                =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/system/runtime_loader&quot;</span>),
+                <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+            },
+
+            .hurd =&gt; <span class="tok-kw">switch</span> (cpu.arch) {
+                .aarch64,
+                .aarch64_be,
+                =&gt; |arch| <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-{s}{s}.so.1&quot;</span>, .{
+                    <span class="tok-builtin">@tagName</span>(arch),
+                    <span class="tok-kw">switch</span> (abi) {
+                        .gnu =&gt; <span class="tok-str">&quot;&quot;</span>,
+                        .gnuilp32 =&gt; <span class="tok-str">&quot;_ilp32&quot;</span>,
+                        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                    },
+                }),
+
+                .x86 =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib/ld.so.1&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                .x86_64 =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-{s}.so.1&quot;</span>, .{<span class="tok-kw">switch</span> (abi) {
+                    .gnu =&gt; <span class="tok-str">&quot;x86-64&quot;</span>,
+                    .gnux32 =&gt; <span class="tok-str">&quot;x32&quot;</span>,
+                    <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                }}),
+
+                <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+            },
+
+            .linux =&gt; <span class="tok-kw">if</span> (abi.isAndroid())
+                <span class="tok-kw">switch</span> (cpu.arch) {
+                    .arm,
+                    .thumb,
+                    =&gt; <span class="tok-kw">if</span> (abi == .androideabi) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/system/bin/linker&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                    .aarch64,
+                    .riscv64,
+                    .x86,
+                    .x86_64,
+                    =&gt; <span class="tok-kw">if</span> (abi == .android) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/system/bin/linker{s}&quot;</span>, .{
+                        <span class="tok-kw">if</span> (<a href="std.Target.html#std.Target.ptrBitWidth_cpu_abi">ptrBitWidth_cpu_abi</a>(cpu, abi) == <span class="tok-number">64</span>) <span class="tok-str">&quot;64&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;&quot;</span>,
+                    }) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                    <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                }
+            <span class="tok-kw">else</span> <span class="tok-kw">if</span> (abi.isMusl())
+                <span class="tok-kw">switch</span> (cpu.arch) {
+                    .arm,
+                    .armeb,
+                    .thumb,
+                    .thumbeb,
+                    =&gt; |arch| <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-musl-arm{s}{s}.so.1&quot;</span>, .{
+                        <span class="tok-kw">if</span> (arch == .armeb <span class="tok-kw">or</span> arch == .thumbeb) <span class="tok-str">&quot;eb&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;&quot;</span>,
+                        <span class="tok-kw">switch</span> (abi) {
+                            .musleabi =&gt; <span class="tok-str">&quot;&quot;</span>,
+                            .musleabihf =&gt; <span class="tok-str">&quot;hf&quot;</span>,
+                            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                        },
+                    }),
+
+                    .aarch64,
+                    .aarch64_be,
+                    .loongarch64,<span class="tok-comment"> // TODO: `-sp` and `-sf` ABI support in LLVM 20.
+                    </span>.m68k,
+                    .powerpc64,
+                    .powerpc64le,
+                    .s390x,
+                    =&gt; |arch| <span class="tok-kw">if</span> (abi == .musl) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-musl-{s}.so.1&quot;</span>, .{<span class="tok-builtin">@tagName</span>(arch)}) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                    .mips,
+                    .mipsel,
+                    =&gt; |arch| <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-musl-mips{s}{s}{s}.so.1&quot;</span>, .{
+                        <span class="tok-kw">if</span> (<a href="std.Target.mips.html">mips</a>.<a href="std.Target.mips.html#std.Target.mips.featureSetHas">featureSetHas</a>(cpu.features, .mips32r6)) <span class="tok-str">&quot;r6&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;&quot;</span>,
+                        <span class="tok-kw">if</span> (arch == .mipsel) <span class="tok-str">&quot;el&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;&quot;</span>,
+                        <span class="tok-kw">switch</span> (abi) {
+                            .musleabi =&gt; <span class="tok-str">&quot;-sf&quot;</span>,
+                            .musleabihf =&gt; <span class="tok-str">&quot;&quot;</span>,
+                            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                        },
+                    }),
+
+                    .mips64,
+                    .mips64el,
+                    =&gt; |arch| <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-musl-mips{s}{s}{s}.so.1&quot;</span>, .{
+                        <span class="tok-kw">switch</span> (abi) {
+                            .muslabi64 =&gt; <span class="tok-str">&quot;64&quot;</span>,
+                            .muslabin32 =&gt; <span class="tok-str">&quot;n32&quot;</span>,
+                            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                        },
+                        <span class="tok-kw">if</span> (<a href="std.Target.mips.html">mips</a>.<a href="std.Target.mips.html#std.Target.mips.featureSetHas">featureSetHas</a>(cpu.features, .mips64r6)) <span class="tok-str">&quot;r6&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;&quot;</span>,
+                        <span class="tok-kw">if</span> (arch == .mips64el) <span class="tok-str">&quot;el&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;&quot;</span>,
+                    }),
+
+                    .powerpc =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-musl-powerpc{s}.so.1&quot;</span>, .{<span class="tok-kw">switch</span> (abi) {
+                        .musleabi =&gt; <span class="tok-str">&quot;-sf&quot;</span>,
+                        .musleabihf =&gt; <span class="tok-str">&quot;&quot;</span>,
+                        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                    }}),
+
+                    .riscv32,
+                    .riscv64,
+                    =&gt; |arch| <span class="tok-kw">if</span> (abi == .musl) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-musl-{s}{s}.so.1&quot;</span>, .{
+                        <span class="tok-builtin">@tagName</span>(arch),
+                        <span class="tok-kw">if</span> (<a href="std.Target.riscv.html">riscv</a>.<a href="std.Target.riscv.html#std.Target.riscv.featureSetHas">featureSetHas</a>(cpu.features, .d))
+                            <span class="tok-str">&quot;&quot;</span>
+                        <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.Target.riscv.html">riscv</a>.<a href="std.Target.riscv.html#std.Target.riscv.featureSetHas">featureSetHas</a>(cpu.features, .f))
+                            <span class="tok-str">&quot;-sp&quot;</span>
+                        <span class="tok-kw">else</span>
+                            <span class="tok-str">&quot;-sf&quot;</span>,
+                    }) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                    .x86 =&gt; <span class="tok-kw">if</span> (abi == .musl) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib/ld-musl-i386.so.1&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                    .x86_64 =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-musl-{s}.so.1&quot;</span>, .{<span class="tok-kw">switch</span> (abi) {
+                        .musl =&gt; <span class="tok-str">&quot;x86_64&quot;</span>,
+                        .muslx32 =&gt; <span class="tok-str">&quot;x32&quot;</span>,
+                        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                    }}),
+
+                    <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                }
+            <span class="tok-kw">else</span> <span class="tok-kw">if</span> (abi.isGnu())
+                <span class="tok-kw">switch</span> (cpu.arch) {<span class="tok-comment">
+                    // TODO: `eb` architecture support.
+                    // TODO: `700` ABI support.
+                    </span>.arc =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib/ld-linux-arc.so.2&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                    .arm,
+                    .armeb,
+                    .thumb,
+                    .thumbeb,
+                    =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-linux{s}.so.3&quot;</span>, .{<span class="tok-kw">switch</span> (abi) {
+                        .gnueabi =&gt; <span class="tok-str">&quot;&quot;</span>,
+                        .gnueabihf =&gt; <span class="tok-str">&quot;-armhf&quot;</span>,
+                        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                    }}),
+
+                    .aarch64,
+                    .aarch64_be,
+                    =&gt; |arch| <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-linux-{s}{s}.so.1&quot;</span>, .{
+                        <span class="tok-builtin">@tagName</span>(arch),
+                        <span class="tok-kw">switch</span> (abi) {
+                            .gnu =&gt; <span class="tok-str">&quot;&quot;</span>,
+                            .gnuilp32 =&gt; <span class="tok-str">&quot;_ilp32&quot;</span>,
+                            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                        },
+                    }),<span class="tok-comment">
+
+                    // TODO: `-be` architecture support.
+                    </span>.csky =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-linux-cskyv2{s}.so.1&quot;</span>, .{<span class="tok-kw">switch</span> (abi) {
+                        .gnueabi =&gt; <span class="tok-str">&quot;&quot;</span>,
+                        .gnueabihf =&gt; <span class="tok-str">&quot;-hf&quot;</span>,
+                        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                    }}),
+
+                    .loongarch64 =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib64/ld-linux-loongarch-{s}.so.1&quot;</span>, .{<span class="tok-kw">switch</span> (abi) {
+                        .gnu =&gt; <span class="tok-str">&quot;lp64d&quot;</span>,
+                        .gnuf32 =&gt; <span class="tok-str">&quot;lp64f&quot;</span>,
+                        .gnusf =&gt; <span class="tok-str">&quot;lp64s&quot;</span>,
+                        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                    }}),
+
+                    .m68k =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib/ld.so.1&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                    .mips,
+                    .mipsel,
+                    =&gt; <span class="tok-kw">switch</span> (abi) {
+                        .gnueabi,
+                        .gnueabihf,
+                        =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld{s}.so.1&quot;</span>, .{
+                            <span class="tok-kw">if</span> (<a href="std.Target.mips.html">mips</a>.<a href="std.Target.mips.html#std.Target.mips.featureSetHas">featureSetHas</a>(cpu.features, .nan2008)) <span class="tok-str">&quot;-linux-mipsn8&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;&quot;</span>,
+                        }),
+                        <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                    },
+
+                    .mips64,
+                    .mips64el,
+                    =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib{s}/ld{s}.so.1&quot;</span>, .{
+                        <span class="tok-kw">switch</span> (abi) {
+                            .gnuabi64 =&gt; <span class="tok-str">&quot;64&quot;</span>,
+                            .gnuabin32 =&gt; <span class="tok-str">&quot;32&quot;</span>,
+                            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                        },
+                        <span class="tok-kw">if</span> (<a href="std.Target.mips.html">mips</a>.<a href="std.Target.mips.html#std.Target.mips.featureSetHas">featureSetHas</a>(cpu.features, .nan2008)) <span class="tok-str">&quot;-linux-mipsn8&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;&quot;</span>,
+                    }),
+
+                    .powerpc =&gt; <span class="tok-kw">switch</span> (abi) {
+                        .gnueabi,
+                        .gnueabihf,
+                        =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib/ld.so.1&quot;</span>),
+                        <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                    },<span class="tok-comment">
+                    // TODO: ELFv2 ABI (`/lib64/ld64.so.2`) opt-in support.
+                    </span>.powerpc64 =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib64/ld64.so.1&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                    .powerpc64le =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib64/ld64.so.2&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                    .riscv32,
+                    .riscv64,
+                    =&gt; |arch| <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/ld-linux-{s}{s}.so.1&quot;</span>, .{
+                        <span class="tok-kw">switch</span> (arch) {
+                            .riscv32 =&gt; <span class="tok-str">&quot;riscv32-ilp32&quot;</span>,
+                            .riscv64 =&gt; <span class="tok-str">&quot;riscv64-lp64&quot;</span>,
+                            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+                        },
+                        <span class="tok-kw">if</span> (<a href="std.Target.riscv.html">riscv</a>.<a href="std.Target.riscv.html#std.Target.riscv.featureSetHas">featureSetHas</a>(cpu.features, .d))
+                            <span class="tok-str">&quot;d&quot;</span>
+                        <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.Target.riscv.html">riscv</a>.<a href="std.Target.riscv.html#std.Target.riscv.featureSetHas">featureSetHas</a>(cpu.features, .f))
+                            <span class="tok-str">&quot;f&quot;</span>
+                        <span class="tok-kw">else</span>
+                            <span class="tok-str">&quot;&quot;</span>,
+                    }) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                    .s390x =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib/ld64.so.1&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                    .sparc =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib/ld-linux.so.2&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                    .sparc64 =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib64/ld-linux.so.2&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                    .x86 =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib/ld-linux.so.2&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                    .x86_64 =&gt; <span class="tok-kw">switch</span> (abi) {
+                        .gnu =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib64/ld-linux-x86-64.so.2&quot;</span>),
+                        .gnux32 =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/libx32/ld-linux-x32.so.2&quot;</span>),
+                        <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                    },
+
+                    .xtensa =&gt; <span class="tok-kw">if</span> (abi == .gnu) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/lib/ld.so.1&quot;</span>) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+                    <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+                }
+            <span class="tok-kw">else</span>
+                <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,<span class="tok-comment"> // Not a known Linux libc.
+
+            </span>.serenity =&gt; <span class="tok-kw">switch</span> (cpu.arch) {
+                .aarch64,
+                .riscv64,
+                .x86_64,
+                =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/usr/lib/Loader.so&quot;</span>),
+                <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+            },
+
+            .dragonfly =&gt; <span class="tok-kw">if</span> (cpu.arch == .x86_64) <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;{s}/libexec/ld-elf.so.2&quot;</span>, .{
+                <span class="tok-kw">if</span> (os.version_range.semver.isAtLeast(.{ .major = <span class="tok-number">3</span>, .minor = <span class="tok-number">8</span>, .patch = <span class="tok-number">0</span> }) <span class="tok-kw">orelse</span> <span class="tok-null">false</span>)
+                    <span class="tok-str">&quot;&quot;</span>
+                <span class="tok-kw">else</span>
+                    <span class="tok-str">&quot;/usr&quot;</span>,
+            }) <span class="tok-kw">else</span> <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+
+            .freebsd =&gt; <span class="tok-kw">switch</span> (cpu.arch) {
+                .arm,
+                .armeb,
+                .thumb,
+                .thumbeb,
+                .aarch64,
+                .mips,
+                .mipsel,
+                .mips64,
+                .mips64el,
+                .powerpc,
+                .powerpc64,
+                .powerpc64le,
+                .riscv64,
+                .sparc64,
+                .x86,
+                .x86_64,
+                =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;{s}/libexec/ld-elf.so.1&quot;</span>, .{
+                    <span class="tok-kw">if</span> (os.version_range.semver.isAtLeast(.{ .major = <span class="tok-number">6</span>, .minor = <span class="tok-number">0</span>, .patch = <span class="tok-number">0</span> }) <span class="tok-kw">orelse</span> <span class="tok-null">false</span>)
+                        <span class="tok-str">&quot;&quot;</span>
+                    <span class="tok-kw">else</span>
+                        <span class="tok-str">&quot;/usr&quot;</span>,
+                }),
+                <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+            },
+
+            .netbsd =&gt; <span class="tok-kw">switch</span> (cpu.arch) {
+                .arm,
+                .armeb,
+                .thumb,
+                .thumbeb,
+                .aarch64,
+                .aarch64_be,
+                .m68k,
+                .mips,
+                .mipsel,
+                .mips64,
+                .mips64el,
+                .powerpc,
+                .riscv64,
+                .sparc,
+                .sparc64,
+                .x86,
+                .x86_64,
+                =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/libexec/ld.elf_so&quot;</span>),
+                <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+            },
+
+            .openbsd =&gt; <span class="tok-kw">switch</span> (cpu.arch) {
+                .arm,
+                .thumb,
+                .aarch64,
+                .mips64,
+                .mips64el,
+                .powerpc,
+                .powerpc64,
+                .riscv64,
+                .sparc64,
+                .x86,
+                .x86_64,
+                =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/usr/libexec/ld.so&quot;</span>),
+                <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+            },
+
+            .driverkit,
+            .ios,
+            .macos,
+            .tvos,
+            .visionos,
+            .watchos,
+            =&gt; <span class="tok-kw">switch</span> (cpu.arch) {
+                .aarch64,
+                .x86_64,
+                =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.init">init</a>(<span class="tok-str">&quot;/usr/lib/dyld&quot;</span>),
+                <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+            },
+
+            .illumos,
+            .solaris,
+            =&gt; <span class="tok-kw">switch</span> (cpu.arch) {
+                .sparc,
+                .sparc64,
+                .x86,
+                .x86_64,
+                =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.initFmt">initFmt</a>(<span class="tok-str">&quot;/lib/{s}ld.so.1&quot;</span>, .{<span class="tok-kw">if</span> (<a href="std.Target.html#std.Target.ptrBitWidth_cpu_abi">ptrBitWidth_cpu_abi</a>(cpu, .none) == <span class="tok-number">64</span>) <span class="tok-str">&quot;64/&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;&quot;</span>}),
+                <span class="tok-kw">else</span> =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+            },<span class="tok-comment">
+
+            // Operating systems in this list have been verified as not having a standard
+            // dynamic linker path.
+            </span>.freestanding,
+            .other,
+
+            .contiki,
+            .elfiamcu,
+            .hermit,
+
+            .aix,
+            .plan9,
+            .rtems,
+            .zos,
+
+            .uefi,
+            .windows,
+
+            .emscripten,
+            .wasi,
+
+            .amdhsa,
+            .amdpal,
+            .cuda,
+            .mesa3d,
+            .nvcl,
+            .opencl,
+            .opengl,
+            .vulkan,
+            =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,<span class="tok-comment">
+
+            // TODO go over each item in this list and either move it to the above list, or
+            // implement the standard dynamic linker path code for it.
+            </span>.ps3,
+            .ps4,
+            .ps5,
+            =&gt; <a href="std.Target.DynamicLinker.html#std.Target.DynamicLinker.none">none</a>,
+        } <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+    }
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

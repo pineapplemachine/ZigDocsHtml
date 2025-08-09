@@ -1,0 +1,1340 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">crypto</a></li><li><a href="std.crypto.keccak_p.html" class="active">keccak_p</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.crypto.keccak_p" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.crypto.keccak_p</span><a href="#src.zig-std.crypto.keccak_p">[src]</a></h1><div class="sectTypes"><h2 class="sectionHeader">Types</h2><div class="listTypes"><div class="decl"><h2 id="std.crypto.keccak_p.KeccakF" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">KeccakF</span><a href="#src.zig-std.crypto.keccak_p.KeccakF">[src]</a></h2><div class="tldDocs"><p>The Keccak-f permutation.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>f: <span class="tok-type">u11</span></code></pre></div></div></div><div class="sectFields"><h3 class="sectionHeader">Fields</h3><div class="listFields"><div><pre><code>st: Block = [_]T{<span class="tok-number">0</span>} ** <span class="tok-number">25</span></code></pre></div></div></div><div class="sectValues"><h3 class="sectionHeader">Values</h3><div class="listValues"><div class="decl"><h3 id="std.crypto.keccak_p.KeccakF.block_bytes" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">block_bytes</span><a href="#src.zig-std.crypto.keccak_p.KeccakF.block_bytes">[src]</a></h3><div class="tldDocs"><p>Number of bytes in the state.</p>
+</div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.KeccakF.block_bytes">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> block_bytes = f / <span class="tok-number">8</span></code></pre></details></div></div><div class="decl"><h3 id="std.crypto.keccak_p.KeccakF.max_rounds" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">max_rounds</span><a href="#src.zig-std.crypto.keccak_p.KeccakF.max_rounds">[src]</a></h3><div class="tldDocs"><p>Maximum number of rounds for the given f parameter.</p>
+</div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.KeccakF.max_rounds">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> max_rounds = <span class="tok-number">12</span> + <span class="tok-number">2</span> * <a href="std.math.html">math</a>.<a href="std.math.log2.html#std.math.log2.log2">log2</a>(f / <span class="tok-number">25</span>)</code></pre></details></div></div></div></div><div class="sectFns"><h3 class="sectionHeader">Functions</h3><div class="listFns"><div class="decl"><h3 id="std.crypto.keccak_p.KeccakF.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.crypto.keccak_p.KeccakF.init">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(bytes: [<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.block_bytes">block_bytes</a>]<span class="tok-type">u8</span>) <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a></code></pre></div><div class="tldDocs"><p>Initialize the state from a slice of bytes.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>bytes: [<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.block_bytes">block_bytes</a>]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.KeccakF.init">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(bytes: [<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.block_bytes">block_bytes</a>]<span class="tok-type">u8</span>) <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a> {
+    <span class="tok-kw">var</span> self: <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (&amp;self.st, <span class="tok-number">0</span>..) |*r, i| {
+        r.* = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, bytes[<span class="tok-builtin">@sizeOf</span>(T) * i ..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(T)], .little);
+    }
+    <span class="tok-kw">return</span> self;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.keccak_p.KeccakF.asBytes" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">asBytes</span><a href="#src.zig-std.crypto.keccak_p.KeccakF.asBytes">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">asBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>) *[<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.block_bytes">block_bytes</a>]<span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>A representation of the state as bytes. The byte order is architecture-dependent.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.KeccakF.asBytes">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">asBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>) *[<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.block_bytes">block_bytes</a>]<span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.asBytes">asBytes</a>(&amp;self.st);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.keccak_p.KeccakF.endianSwap" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">endianSwap</span><a href="#src.zig-std.crypto.keccak_p.KeccakF.endianSwap">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">endianSwap</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Byte-swap the entire state if the architecture doesn't match the required endianness.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.KeccakF.endianSwap">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">endianSwap</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">for</span> (&amp;self.st) |*w| {
+        w.* = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.littleToNative">littleToNative</a>(T, w.*);
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.keccak_p.KeccakF.setBytes" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">setBytes</span><a href="#src.zig-std.crypto.keccak_p.KeccakF.setBytes">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Set bytes starting at the beginning of the state.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a></code></pre></div><div><pre><code>bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.KeccakF.setBytes">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (i + <span class="tok-builtin">@sizeOf</span>(T) &lt;= bytes.len) : (i += <span class="tok-builtin">@sizeOf</span>(T)) {
+        self.st[i / <span class="tok-builtin">@sizeOf</span>(T)] = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, bytes[i..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(T)], .little);
+    }
+    <span class="tok-kw">if</span> (i &lt; bytes.len) {
+        <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-builtin">@sizeOf</span>(T);
+        <span class="tok-builtin">@memcpy</span>(padded[<span class="tok-number">0</span> .. bytes.len - i], bytes[i..]);
+        self.st[i / <span class="tok-builtin">@sizeOf</span>(T)] = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, padded[<span class="tok-number">0</span>..], .little);
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.keccak_p.KeccakF.addByte" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addByte</span><a href="#src.zig-std.crypto.keccak_p.KeccakF.addByte">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addByte</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, byte: <span class="tok-type">u8</span>, offset: <span class="tok-type">usize</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>XOR a byte into the state at a given offset.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a></code></pre></div><div><pre><code>byte: <span class="tok-type">u8</span></code></pre></div><div><pre><code>offset: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.KeccakF.addByte">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addByte</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, byte: <span class="tok-type">u8</span>, offset: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> z = <span class="tok-builtin">@sizeOf</span>(T) * <span class="tok-builtin">@as</span>(<a href="std.math.html">math</a>.<a href="std.math.html#std.math.Log2Int">Log2Int</a>(T), <span class="tok-builtin">@truncate</span>(offset % <span class="tok-builtin">@sizeOf</span>(T)));
+    self.st[offset / <span class="tok-builtin">@sizeOf</span>(T)] ^= <span class="tok-builtin">@as</span>(T, byte) &lt;&lt; z;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.keccak_p.KeccakF.addBytes" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addBytes</span><a href="#src.zig-std.crypto.keccak_p.KeccakF.addBytes">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>XOR bytes into the beginning of the state.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a></code></pre></div><div><pre><code>bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.KeccakF.addBytes">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (i + <span class="tok-builtin">@sizeOf</span>(T) &lt;= bytes.len) : (i += <span class="tok-builtin">@sizeOf</span>(T)) {
+        self.st[i / <span class="tok-builtin">@sizeOf</span>(T)] ^= <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, bytes[i..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(T)], .little);
+    }
+    <span class="tok-kw">if</span> (i &lt; bytes.len) {
+        <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-builtin">@sizeOf</span>(T);
+        <span class="tok-builtin">@memcpy</span>(padded[<span class="tok-number">0</span> .. bytes.len - i], bytes[i..]);
+        self.st[i / <span class="tok-builtin">@sizeOf</span>(T)] ^= <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, padded[<span class="tok-number">0</span>..], .little);
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.keccak_p.KeccakF.extractBytes" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">extractBytes</span><a href="#src.zig-std.crypto.keccak_p.KeccakF.extractBytes">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">extractBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, out: []<span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Extract the first bytes of the state.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a></code></pre></div><div><pre><code>out: []<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.KeccakF.extractBytes">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">extractBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, out: []<span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (i + <span class="tok-builtin">@sizeOf</span>(T) &lt;= out.len) : (i += <span class="tok-builtin">@sizeOf</span>(T)) {
+        <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(T, out[i..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(T)], self.st[i / <span class="tok-builtin">@sizeOf</span>(T)], .little);
+    }
+    <span class="tok-kw">if</span> (i &lt; out.len) {
+        <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-builtin">@sizeOf</span>(T);
+        <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(T, padded[<span class="tok-number">0</span>..], self.st[i / <span class="tok-builtin">@sizeOf</span>(T)], .little);
+        <span class="tok-builtin">@memcpy</span>(out[i..], padded[<span class="tok-number">0</span> .. out.len - i]);
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.keccak_p.KeccakF.xorBytes" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">xorBytes</span><a href="#src.zig-std.crypto.keccak_p.KeccakF.xorBytes">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">xorBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, out: []<span class="tok-type">u8</span>, in: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>XOR the first bytes of the state into a slice of bytes.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a></code></pre></div><div><pre><code>out: []<span class="tok-type">u8</span></code></pre></div><div><pre><code>in: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.KeccakF.xorBytes">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">xorBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, out: []<span class="tok-type">u8</span>, in: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <a href="std.debug.html#std.debug.assert">assert</a>(out.len == in.len);
+
+    <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (i + <span class="tok-builtin">@sizeOf</span>(T) &lt;= in.len) : (i += <span class="tok-builtin">@sizeOf</span>(T)) {
+        <span class="tok-kw">const</span> x = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, in[i..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(T)], <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.native_endian">native_endian</a>) ^ <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeToLittle">nativeToLittle</a>(T, self.st[i / <span class="tok-builtin">@sizeOf</span>(T)]);
+        <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(T, out[i..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(T)], x, <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.native_endian">native_endian</a>);
+    }
+    <span class="tok-kw">if</span> (i &lt; in.len) {
+        <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-builtin">@sizeOf</span>(T);
+        <span class="tok-builtin">@memcpy</span>(padded[<span class="tok-number">0</span> .. in.len - i], in[i..]);
+        <span class="tok-kw">const</span> x = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, &amp;padded, <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.native_endian">native_endian</a>) ^ <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeToLittle">nativeToLittle</a>(T, self.st[i / <span class="tok-builtin">@sizeOf</span>(T)]);
+        <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(T, &amp;padded, x, <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.native_endian">native_endian</a>);
+        <span class="tok-builtin">@memcpy</span>(out[i..], padded[<span class="tok-number">0</span> .. in.len - i]);
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.keccak_p.KeccakF.clear" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">clear</span><a href="#src.zig-std.crypto.keccak_p.KeccakF.clear">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">clear</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, from: <span class="tok-type">usize</span>, to: <span class="tok-type">usize</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Set the words storing the bytes of a given range to zero.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a></code></pre></div><div><pre><code>from: <span class="tok-type">usize</span></code></pre></div><div><pre><code>to: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.KeccakF.clear">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">clear</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, from: <span class="tok-type">usize</span>, to: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+    <span class="tok-builtin">@memset</span>(self.st[from / <span class="tok-builtin">@sizeOf</span>(T) .. (to + <span class="tok-builtin">@sizeOf</span>(T) - <span class="tok-number">1</span>) / <span class="tok-builtin">@sizeOf</span>(T)], <span class="tok-number">0</span>);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.keccak_p.KeccakF.secureZero" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">secureZero</span><a href="#src.zig-std.crypto.keccak_p.KeccakF.secureZero">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">secureZero</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Clear the entire state, disabling compiler optimizations.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.KeccakF.secureZero">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">secureZero</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>) <span class="tok-type">void</span> {
+    <a href="std.html">std</a>.<a href="std.crypto.html">crypto</a>.<a href="std.crypto.html#std.crypto.secureZero">secureZero</a>(T, &amp;self.st);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.keccak_p.KeccakF.permuteR" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">permuteR</span><a href="#src.zig-std.crypto.keccak_p.KeccakF.permuteR">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">permuteR</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, <span class="tok-kw">comptime</span> rounds: <span class="tok-type">u5</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Apply a (possibly) reduced-round permutation to the state.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a></code></pre></div><div><pre><code>rounds: <span class="tok-type">u5</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.KeccakF.permuteR">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">permuteR</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, <span class="tok-kw">comptime</span> rounds: <span class="tok-type">u5</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> i = <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>.<a href="#">len</a> - rounds;
+    <span class="tok-kw">while</span> (i &lt; <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>.<a href="#">len</a> - <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>.<a href="#">len</a> % <span class="tok-number">3</span>) : (i += <span class="tok-number">3</span>) {
+        self.round(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>[i]);
+        self.round(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>[i + <span class="tok-number">1</span>]);
+        self.round(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>[i + <span class="tok-number">2</span>]);
+    }
+    <span class="tok-kw">while</span> (i &lt; <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>.<a href="#">len</a>) : (i += <span class="tok-number">1</span>) {
+        self.round(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>[i]);
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.keccak_p.KeccakF.permute" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">permute</span><a href="#src.zig-std.crypto.keccak_p.KeccakF.permute">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">permute</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Apply a full-round permutation to the state.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.KeccakF.permute">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">permute</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>) <span class="tok-type">void</span> {
+    self.permuteR(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.max_rounds">max_rounds</a>);
+}</code></pre></details></div></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.keccak_p.KeccakF">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">KeccakF</span>(<span class="tok-kw">comptime</span> f: <span class="tok-type">u11</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">comptime</span> <a href="std.debug.html#std.debug.assert">assert</a>(f &gt;= <span class="tok-number">200</span> <span class="tok-kw">and</span> f &lt;= <span class="tok-number">1600</span> <span class="tok-kw">and</span> f % <span class="tok-number">200</span> == <span class="tok-number">0</span>);<span class="tok-comment"> // invalid bit size
+    </span><span class="tok-kw">const</span> T = <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.Int">Int</a>(.unsigned, f / <span class="tok-number">25</span>);
+    <span class="tok-kw">const</span> Block = [<span class="tok-number">25</span>]T;
+
+    <span class="tok-kw">const</span> PI = [_]<span class="tok-type">u5</span>{
+        <span class="tok-number">10</span>, <span class="tok-number">7</span>, <span class="tok-number">11</span>, <span class="tok-number">17</span>, <span class="tok-number">18</span>, <span class="tok-number">3</span>, <span class="tok-number">5</span>, <span class="tok-number">16</span>, <span class="tok-number">8</span>, <span class="tok-number">21</span>, <span class="tok-number">24</span>, <span class="tok-number">4</span>, <span class="tok-number">15</span>, <span class="tok-number">23</span>, <span class="tok-number">19</span>, <span class="tok-number">13</span>, <span class="tok-number">12</span>, <span class="tok-number">2</span>, <span class="tok-number">20</span>, <span class="tok-number">14</span>, <span class="tok-number">22</span>, <span class="tok-number">9</span>, <span class="tok-number">6</span>, <span class="tok-number">1</span>,
+    };
+
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+
+        <span class="tok-comment">/// Number of bytes in the state.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> block_bytes = f / <span class="tok-number">8</span>;
+
+        <span class="tok-comment">/// Maximum number of rounds for the given f parameter.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> max_rounds = <span class="tok-number">12</span> + <span class="tok-number">2</span> * <a href="std.math.html">math</a>.<a href="std.math.log2.html#std.math.log2.log2">log2</a>(f / <span class="tok-number">25</span>);<span class="tok-comment">
+
+        // Round constants
+        </span><span class="tok-kw">const</span> RC = rc: {
+            <span class="tok-kw">const</span> RC64 = [_]<span class="tok-type">u64</span>{
+                <span class="tok-number">0x0000000000000001</span>, <span class="tok-number">0x0000000000008082</span>, <span class="tok-number">0x800000000000808a</span>, <span class="tok-number">0x8000000080008000</span>,
+                <span class="tok-number">0x000000000000808b</span>, <span class="tok-number">0x0000000080000001</span>, <span class="tok-number">0x8000000080008081</span>, <span class="tok-number">0x8000000000008009</span>,
+                <span class="tok-number">0x000000000000008a</span>, <span class="tok-number">0x0000000000000088</span>, <span class="tok-number">0x0000000080008009</span>, <span class="tok-number">0x000000008000000a</span>,
+                <span class="tok-number">0x000000008000808b</span>, <span class="tok-number">0x800000000000008b</span>, <span class="tok-number">0x8000000000008089</span>, <span class="tok-number">0x8000000000008003</span>,
+                <span class="tok-number">0x8000000000008002</span>, <span class="tok-number">0x8000000000000080</span>, <span class="tok-number">0x000000000000800a</span>, <span class="tok-number">0x800000008000000a</span>,
+                <span class="tok-number">0x8000000080008081</span>, <span class="tok-number">0x8000000000008080</span>, <span class="tok-number">0x0000000080000001</span>, <span class="tok-number">0x8000000080008008</span>,
+            };
+            <span class="tok-kw">var</span> rc: [<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.max_rounds">max_rounds</a>]T = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">for</span> (&amp;rc, RC64[<span class="tok-number">0</span>..<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.max_rounds">max_rounds</a>]) |*t, c| t.* = <span class="tok-builtin">@as</span>(T, <span class="tok-builtin">@truncate</span>(c));
+            <span class="tok-kw">break</span> :rc rc;
+        };
+
+        st: Block = [_]T{<span class="tok-number">0</span>} ** <span class="tok-number">25</span>,
+
+        <span class="tok-comment">/// Initialize the state from a slice of bytes.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(bytes: [<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.block_bytes">block_bytes</a>]<span class="tok-type">u8</span>) <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a> {
+            <span class="tok-kw">var</span> self: <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (&amp;self.st, <span class="tok-number">0</span>..) |*r, i| {
+                r.* = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, bytes[<span class="tok-builtin">@sizeOf</span>(T) * i ..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(T)], .little);
+            }
+            <span class="tok-kw">return</span> self;
+        }
+
+        <span class="tok-comment">/// A representation of the state as bytes. The byte order is architecture-dependent.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">asBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>) *[<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.block_bytes">block_bytes</a>]<span class="tok-type">u8</span> {
+            <span class="tok-kw">return</span> <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.asBytes">asBytes</a>(&amp;self.st);
+        }
+
+        <span class="tok-comment">/// Byte-swap the entire state if the architecture doesn't match the required endianness.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">endianSwap</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>) <span class="tok-type">void</span> {
+            <span class="tok-kw">for</span> (&amp;self.st) |*w| {
+                w.* = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.littleToNative">littleToNative</a>(T, w.*);
+            }
+        }
+
+        <span class="tok-comment">/// Set bytes starting at the beginning of the state.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (i + <span class="tok-builtin">@sizeOf</span>(T) &lt;= bytes.len) : (i += <span class="tok-builtin">@sizeOf</span>(T)) {
+                self.st[i / <span class="tok-builtin">@sizeOf</span>(T)] = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, bytes[i..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(T)], .little);
+            }
+            <span class="tok-kw">if</span> (i &lt; bytes.len) {
+                <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-builtin">@sizeOf</span>(T);
+                <span class="tok-builtin">@memcpy</span>(padded[<span class="tok-number">0</span> .. bytes.len - i], bytes[i..]);
+                self.st[i / <span class="tok-builtin">@sizeOf</span>(T)] = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, padded[<span class="tok-number">0</span>..], .little);
+            }
+        }
+
+        <span class="tok-comment">/// XOR a byte into the state at a given offset.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addByte</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, byte: <span class="tok-type">u8</span>, offset: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">const</span> z = <span class="tok-builtin">@sizeOf</span>(T) * <span class="tok-builtin">@as</span>(<a href="std.math.html">math</a>.<a href="std.math.html#std.math.Log2Int">Log2Int</a>(T), <span class="tok-builtin">@truncate</span>(offset % <span class="tok-builtin">@sizeOf</span>(T)));
+            self.st[offset / <span class="tok-builtin">@sizeOf</span>(T)] ^= <span class="tok-builtin">@as</span>(T, byte) &lt;&lt; z;
+        }
+
+        <span class="tok-comment">/// XOR bytes into the beginning of the state.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (i + <span class="tok-builtin">@sizeOf</span>(T) &lt;= bytes.len) : (i += <span class="tok-builtin">@sizeOf</span>(T)) {
+                self.st[i / <span class="tok-builtin">@sizeOf</span>(T)] ^= <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, bytes[i..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(T)], .little);
+            }
+            <span class="tok-kw">if</span> (i &lt; bytes.len) {
+                <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-builtin">@sizeOf</span>(T);
+                <span class="tok-builtin">@memcpy</span>(padded[<span class="tok-number">0</span> .. bytes.len - i], bytes[i..]);
+                self.st[i / <span class="tok-builtin">@sizeOf</span>(T)] ^= <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, padded[<span class="tok-number">0</span>..], .little);
+            }
+        }
+
+        <span class="tok-comment">/// Extract the first bytes of the state.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">extractBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, out: []<span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (i + <span class="tok-builtin">@sizeOf</span>(T) &lt;= out.len) : (i += <span class="tok-builtin">@sizeOf</span>(T)) {
+                <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(T, out[i..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(T)], self.st[i / <span class="tok-builtin">@sizeOf</span>(T)], .little);
+            }
+            <span class="tok-kw">if</span> (i &lt; out.len) {
+                <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-builtin">@sizeOf</span>(T);
+                <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(T, padded[<span class="tok-number">0</span>..], self.st[i / <span class="tok-builtin">@sizeOf</span>(T)], .little);
+                <span class="tok-builtin">@memcpy</span>(out[i..], padded[<span class="tok-number">0</span> .. out.len - i]);
+            }
+        }
+
+        <span class="tok-comment">/// XOR the first bytes of the state into a slice of bytes.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">xorBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, out: []<span class="tok-type">u8</span>, in: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            <a href="std.debug.html#std.debug.assert">assert</a>(out.len == in.len);
+
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (i + <span class="tok-builtin">@sizeOf</span>(T) &lt;= in.len) : (i += <span class="tok-builtin">@sizeOf</span>(T)) {
+                <span class="tok-kw">const</span> x = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, in[i..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(T)], <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.native_endian">native_endian</a>) ^ <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeToLittle">nativeToLittle</a>(T, self.st[i / <span class="tok-builtin">@sizeOf</span>(T)]);
+                <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(T, out[i..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(T)], x, <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.native_endian">native_endian</a>);
+            }
+            <span class="tok-kw">if</span> (i &lt; in.len) {
+                <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-builtin">@sizeOf</span>(T);
+                <span class="tok-builtin">@memcpy</span>(padded[<span class="tok-number">0</span> .. in.len - i], in[i..]);
+                <span class="tok-kw">const</span> x = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, &amp;padded, <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.native_endian">native_endian</a>) ^ <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeToLittle">nativeToLittle</a>(T, self.st[i / <span class="tok-builtin">@sizeOf</span>(T)]);
+                <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(T, &amp;padded, x, <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.native_endian">native_endian</a>);
+                <span class="tok-builtin">@memcpy</span>(out[i..], padded[<span class="tok-number">0</span> .. in.len - i]);
+            }
+        }
+
+        <span class="tok-comment">/// Set the words storing the bytes of a given range to zero.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">clear</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, from: <span class="tok-type">usize</span>, to: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+            <span class="tok-builtin">@memset</span>(self.st[from / <span class="tok-builtin">@sizeOf</span>(T) .. (to + <span class="tok-builtin">@sizeOf</span>(T) - <span class="tok-number">1</span>) / <span class="tok-builtin">@sizeOf</span>(T)], <span class="tok-number">0</span>);
+        }
+
+        <span class="tok-comment">/// Clear the entire state, disabling compiler optimizations.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">secureZero</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>) <span class="tok-type">void</span> {
+            <a href="std.html">std</a>.<a href="std.crypto.html">crypto</a>.<a href="std.crypto.html#std.crypto.secureZero">secureZero</a>(T, &amp;self.st);
+        }
+
+        <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">round</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, rc: T) <span class="tok-type">void</span> {
+            <span class="tok-kw">const</span> st = &amp;self.st;<span class="tok-comment">
+
+            // theta
+            </span><span class="tok-kw">var</span> t = [_]T{<span class="tok-number">0</span>} ** <span class="tok-number">5</span>;
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-number">0</span>..<span class="tok-number">5</span>) |i| {
+                <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-number">0</span>..<span class="tok-number">5</span>) |j| {
+                    t[i] ^= st[j * <span class="tok-number">5</span> + i];
+                }
+            }
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-number">0</span>..<span class="tok-number">5</span>) |i| {
+                <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-number">0</span>..<span class="tok-number">5</span>) |j| {
+                    st[j * <span class="tok-number">5</span> + i] ^= t[(i + <span class="tok-number">4</span>) % <span class="tok-number">5</span>] ^ <a href="std.math.html">math</a>.<a href="std.math.html#std.math.rotl">rotl</a>(T, t[(i + <span class="tok-number">1</span>) % <span class="tok-number">5</span>], <span class="tok-number">1</span>);
+                }
+            }<span class="tok-comment">
+
+            // rho+pi
+            </span><span class="tok-kw">var</span> last = st[<span class="tok-number">1</span>];
+            <span class="tok-kw">comptime</span> <span class="tok-kw">var</span> rotc = <span class="tok-number">0</span>;
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-number">0</span>..<span class="tok-number">24</span>) |i| {
+                <span class="tok-kw">const</span> x = PI[i];
+                <span class="tok-kw">const</span> tmp = st[x];
+                rotc = (rotc + i + <span class="tok-number">1</span>) % <span class="tok-builtin">@bitSizeOf</span>(T);
+                st[x] = <a href="std.math.html">math</a>.<a href="std.math.html#std.math.rotl">rotl</a>(T, last, rotc);
+                last = tmp;
+            }
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-number">0</span>..<span class="tok-number">5</span>) |i| {
+                <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-number">0</span>..<span class="tok-number">5</span>) |j| {
+                    t[j] = st[i * <span class="tok-number">5</span> + j];
+                }
+                <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-number">0</span>..<span class="tok-number">5</span>) |j| {
+                    st[i * <span class="tok-number">5</span> + j] = t[j] ^ (~t[(j + <span class="tok-number">1</span>) % <span class="tok-number">5</span>] &amp; t[(j + <span class="tok-number">2</span>) % <span class="tok-number">5</span>]);
+                }
+            }<span class="tok-comment">
+
+            // iota
+            </span>st[<span class="tok-number">0</span>] ^= rc;
+        }
+
+        <span class="tok-comment">/// Apply a (possibly) reduced-round permutation to the state.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">permuteR</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, <span class="tok-kw">comptime</span> rounds: <span class="tok-type">u5</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">var</span> i = <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>.<a href="#">len</a> - rounds;
+            <span class="tok-kw">while</span> (i &lt; <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>.<a href="#">len</a> - <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>.<a href="#">len</a> % <span class="tok-number">3</span>) : (i += <span class="tok-number">3</span>) {
+                self.round(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>[i]);
+                self.round(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>[i + <span class="tok-number">1</span>]);
+                self.round(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>[i + <span class="tok-number">2</span>]);
+            }
+            <span class="tok-kw">while</span> (i &lt; <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>.<a href="#">len</a>) : (i += <span class="tok-number">1</span>) {
+                self.round(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>[i]);
+            }
+        }
+
+        <span class="tok-comment">/// Apply a full-round permutation to the state.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">permute</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>) <span class="tok-type">void</span> {
+            self.permuteR(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.max_rounds">max_rounds</a>);
+        }
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.keccak_p.State" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">State</span><a href="#src.zig-std.crypto.keccak_p.State">[src]</a></h2><div class="tldDocs"><p>A generic Keccak-P state.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>f: <span class="tok-type">u11</span></code></pre></div><div><pre><code>capacity: <span class="tok-type">u11</span></code></pre></div><div><pre><code>rounds: <span class="tok-type">u5</span></code></pre></div></div></div><div class="sectNamespaces"><h3 class="sectionHeader">Namespaces</h3><ul class="listNamespaces columns"><li><a href="std.crypto.keccak_p.State.Options.html">std.crypto.keccak_p.State.Options</a></li></ul></div><div class="sectFields"><h3 class="sectionHeader">Fields</h3><div class="listFields"><div><pre><code>delim: <span class="tok-type">u8</span></code></pre><div class="fieldDocs"><p>The input delimiter.</p>
+</div></div><div><pre><code>offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span></code></pre></div><div><pre><code>buf: [<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span></code></pre></div><div><pre><code>st: <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">KeccakF</a>(f) = .{}</code></pre></div><div><pre><code>transition: TransitionTracker = .{}</code></pre></div></div></div><div class="sectValues"><h3 class="sectionHeader">Values</h3><div class="listValues"><div class="decl"><h3 id="std.crypto.keccak_p.State.rate" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">rate</span><a href="#src.zig-std.crypto.keccak_p.State.rate">[src]</a></h3><div class="tldDocs"><p>The block length, or rate, in bytes.</p>
+</div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.State.rate">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> rate = <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">KeccakF</a>(f).block_bytes - capacity / <span class="tok-number">8</span></code></pre></details></div></div></div></div><div class="sectFns"><h3 class="sectionHeader">Functions</h3><div class="listFns"><div class="decl"><h3 id="std.crypto.keccak_p.State.absorb" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">absorb</span><a href="#src.zig-std.crypto.keccak_p.State.absorb">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">absorb</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Absorb a slice of bytes into the sponge.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a></code></pre></div><div><pre><code>bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.State.absorb">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">absorb</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    self.transition.to(.absorb);
+    <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">if</span> (self.offset &gt; <span class="tok-number">0</span>) {
+        <span class="tok-kw">const</span> left = <span class="tok-builtin">@min</span>(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a> - self.offset, bytes.len);
+        <span class="tok-builtin">@memcpy</span>(self.buf[self.offset..][<span class="tok-number">0</span>..left], bytes[<span class="tok-number">0</span>..left]);
+        self.offset += left;
+        <span class="tok-kw">if</span> (left == bytes.len) <span class="tok-kw">return</span>;
+        <span class="tok-kw">if</span> (self.offset == <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>) {
+            self.st.addBytes(self.buf[<span class="tok-number">0</span>..]);
+            self.st.permuteR(rounds);
+            self.offset = <span class="tok-number">0</span>;
+        }
+        i = left;
+    }
+    <span class="tok-kw">while</span> (i + <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a> &lt; bytes.len) : (i += <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>) {
+        self.st.addBytes(bytes[i..][<span class="tok-number">0</span>..<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>]);
+        self.st.permuteR(rounds);
+    }
+    <span class="tok-kw">const</span> left = bytes.len - i;
+    <span class="tok-kw">if</span> (left &gt; <span class="tok-number">0</span>) {
+        <span class="tok-builtin">@memcpy</span>(self.buf[<span class="tok-number">0</span>..left], bytes[i..][<span class="tok-number">0</span>..left]);
+    }
+    self.offset = left;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.keccak_p.State.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.crypto.keccak_p.State.init">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(bytes: [f / <span class="tok-number">8</span>]<span class="tok-type">u8</span>, delim: <span class="tok-type">u8</span>) <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a></code></pre></div><div class="tldDocs"><p>Initialize the state from a slice of bytes.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>bytes: [f / <span class="tok-number">8</span>]<span class="tok-type">u8</span></code></pre></div><div><pre><code>delim: <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.State.init">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(bytes: [f / <span class="tok-number">8</span>]<span class="tok-type">u8</span>, delim: <span class="tok-type">u8</span>) <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a> {
+    <span class="tok-kw">var</span> st = <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>{ .st = <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">KeccakF</a>(f).init(bytes), .delim = delim };
+    st.transition.to(.initialized);
+    <span class="tok-kw">return</span> st;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.keccak_p.State.permute" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">permute</span><a href="#src.zig-std.crypto.keccak_p.State.permute">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">permute</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Permute the state</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.State.permute">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">permute</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (<a href="builtin.html#builtin.mode">mode</a> == .Debug) {
+        <span class="tok-kw">if</span> (self.transition.op == .absorb <span class="tok-kw">and</span> self.offset &gt; <span class="tok-number">0</span>) {
+            <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;cannot permute with pending input - call fillBlock() or pad() instead&quot;</span>);
+        }
+    }
+    self.transition.to(.updated);
+    self.st.permuteR(rounds);
+    self.offset = <span class="tok-number">0</span>;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.keccak_p.State.fillBlock" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fillBlock</span><a href="#src.zig-std.crypto.keccak_p.State.fillBlock">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fillBlock</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Align the input to the rate boundary and permute.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.State.fillBlock">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fillBlock</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>) <span class="tok-type">void</span> {
+    self.transition.to(.absorb);
+    self.st.addBytes(self.buf[<span class="tok-number">0</span>..self.offset]);
+    self.st.permuteR(rounds);
+    self.offset = <span class="tok-number">0</span>;
+    self.transition.to(.updated);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.keccak_p.State.pad" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">pad</span><a href="#src.zig-std.crypto.keccak_p.State.pad">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">pad</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Mark the end of the input.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.State.pad">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">pad</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>) <span class="tok-type">void</span> {
+    self.transition.to(.absorb);
+    self.st.addBytes(self.buf[<span class="tok-number">0</span>..self.offset]);
+    <span class="tok-kw">if</span> (self.offset == <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>) {
+        self.st.permuteR(rounds);
+        self.offset = <span class="tok-number">0</span>;
+    }
+    self.st.addByte(self.delim, self.offset);
+    self.st.addByte(<span class="tok-number">0x80</span>, <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a> - <span class="tok-number">1</span>);
+    self.st.permuteR(rounds);
+    self.offset = <span class="tok-number">0</span>;
+    self.transition.to(.updated);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.keccak_p.State.squeeze" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">squeeze</span><a href="#src.zig-std.crypto.keccak_p.State.squeeze">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">squeeze</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>, out: []<span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Squeeze a slice of bytes from the sponge.
+The function can be called multiple times.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a></code></pre></div><div><pre><code>out: []<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.keccak_p.State.squeeze">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">squeeze</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>, out: []<span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    self.transition.to(.squeeze);
+    <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">if</span> (self.offset == <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>) {
+        self.st.permuteR(rounds);
+    } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (self.offset &gt; <span class="tok-number">0</span>) {
+        <span class="tok-builtin">@branchHint</span>(.unlikely);
+        <span class="tok-kw">var</span> buf: [<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        self.st.extractBytes(buf[<span class="tok-number">0</span>..]);
+        <span class="tok-kw">const</span> left = <span class="tok-builtin">@min</span>(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a> - self.offset, out.len);
+        <span class="tok-builtin">@memcpy</span>(out[<span class="tok-number">0</span>..left], buf[self.offset..][<span class="tok-number">0</span>..left]);
+        self.offset += left;
+        <span class="tok-kw">if</span> (left == out.len) <span class="tok-kw">return</span>;
+        <span class="tok-kw">if</span> (self.offset == <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>) {
+            self.offset = <span class="tok-number">0</span>;
+            self.st.permuteR(rounds);
+        }
+        i = left;
+    }
+    <span class="tok-kw">while</span> (i + <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a> &lt; out.len) : (i += <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>) {
+        self.st.extractBytes(out[i..][<span class="tok-number">0</span>..<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>]);
+        self.st.permuteR(rounds);
+    }
+    <span class="tok-kw">const</span> left = out.len - i;
+    <span class="tok-kw">if</span> (left &gt; <span class="tok-number">0</span>) {
+        self.st.extractBytes(out[i..][<span class="tok-number">0</span>..left]);
+    }
+    self.offset = left;
+}</code></pre></details></div></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.keccak_p.State">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">State</span>(<span class="tok-kw">comptime</span> f: <span class="tok-type">u11</span>, <span class="tok-kw">comptime</span> capacity: <span class="tok-type">u11</span>, <span class="tok-kw">comptime</span> rounds: <span class="tok-type">u5</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">comptime</span> <a href="std.debug.html#std.debug.assert">assert</a>(f &gt;= <span class="tok-number">200</span> <span class="tok-kw">and</span> f &lt;= <span class="tok-number">1600</span> <span class="tok-kw">and</span> f % <span class="tok-number">200</span> == <span class="tok-number">0</span>);<span class="tok-comment"> // invalid state size
+    </span><span class="tok-kw">comptime</span> <a href="std.debug.html#std.debug.assert">assert</a>(capacity &lt; f <span class="tok-kw">and</span> capacity % <span class="tok-number">8</span> == <span class="tok-number">0</span>);<span class="tok-comment"> // invalid capacity size
+
+    // In debug mode, track transitions to prevent insecure ones.
+    </span><span class="tok-kw">const</span> Op = <span class="tok-kw">enum</span> { uninitialized, initialized, updated, absorb, squeeze };
+    <span class="tok-kw">const</span> TransitionTracker = <span class="tok-kw">if</span> (<a href="builtin.html#builtin.mode">mode</a> == .Debug) <span class="tok-kw">struct</span> {
+        op: Op = .uninitialized,
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">to</span>(tracker: *<span class="tok-builtin">@This</span>(), next_op: Op) <span class="tok-type">void</span> {
+            <span class="tok-kw">switch</span> (next_op) {
+                .updated =&gt; {
+                    <span class="tok-kw">switch</span> (tracker.op) {
+                        .uninitialized =&gt; <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;cannot permute before initializing&quot;</span>),
+                        <span class="tok-kw">else</span> =&gt; {},
+                    }
+                },
+                .absorb =&gt; {
+                    <span class="tok-kw">switch</span> (tracker.op) {
+                        .squeeze =&gt; <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;cannot absorb right after squeezing&quot;</span>),
+                        <span class="tok-kw">else</span> =&gt; {},
+                    }
+                },
+                .squeeze =&gt; {
+                    <span class="tok-kw">switch</span> (tracker.op) {
+                        .uninitialized =&gt; <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;cannot squeeze before initializing&quot;</span>),
+                        .initialized =&gt; <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;cannot squeeze right after initializing&quot;</span>),
+                        .absorb =&gt; <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;cannot squeeze right after absorbing&quot;</span>),
+                        <span class="tok-kw">else</span> =&gt; {},
+                    }
+                },
+                .uninitialized =&gt; <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;cannot transition to uninitialized&quot;</span>),
+                .initialized =&gt; {},
+            }
+            tracker.op = next_op;
+        }
+    } <span class="tok-kw">else</span> <span class="tok-kw">struct</span> {<span class="tok-comment">
+        // No-op in non-debug modes.
+        </span><span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">to</span>(tracker: *<span class="tok-builtin">@This</span>(), next_op: Op) <span class="tok-type">void</span> {
+            _ = tracker;<span class="tok-comment"> // no-op
+            </span>_ = next_op;<span class="tok-comment"> // no-op
+        </span>}
+    };
+
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+
+        <span class="tok-comment">/// The block length, or rate, in bytes.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> rate = <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">KeccakF</a>(f).block_bytes - capacity / <span class="tok-number">8</span>;
+        <span class="tok-comment">/// Keccak does not have any options.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Options = <span class="tok-kw">struct</span> {};
+
+        <span class="tok-comment">/// The input delimiter.</span>
+        delim: <span class="tok-type">u8</span>,
+
+        offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+        buf: [<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>,
+
+        st: <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">KeccakF</a>(f) = .{},
+
+        transition: TransitionTracker = .{},
+
+        <span class="tok-comment">/// Absorb a slice of bytes into the sponge.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">absorb</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            self.transition.to(.absorb);
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">if</span> (self.offset &gt; <span class="tok-number">0</span>) {
+                <span class="tok-kw">const</span> left = <span class="tok-builtin">@min</span>(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a> - self.offset, bytes.len);
+                <span class="tok-builtin">@memcpy</span>(self.buf[self.offset..][<span class="tok-number">0</span>..left], bytes[<span class="tok-number">0</span>..left]);
+                self.offset += left;
+                <span class="tok-kw">if</span> (left == bytes.len) <span class="tok-kw">return</span>;
+                <span class="tok-kw">if</span> (self.offset == <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>) {
+                    self.st.addBytes(self.buf[<span class="tok-number">0</span>..]);
+                    self.st.permuteR(rounds);
+                    self.offset = <span class="tok-number">0</span>;
+                }
+                i = left;
+            }
+            <span class="tok-kw">while</span> (i + <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a> &lt; bytes.len) : (i += <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>) {
+                self.st.addBytes(bytes[i..][<span class="tok-number">0</span>..<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>]);
+                self.st.permuteR(rounds);
+            }
+            <span class="tok-kw">const</span> left = bytes.len - i;
+            <span class="tok-kw">if</span> (left &gt; <span class="tok-number">0</span>) {
+                <span class="tok-builtin">@memcpy</span>(self.buf[<span class="tok-number">0</span>..left], bytes[i..][<span class="tok-number">0</span>..left]);
+            }
+            self.offset = left;
+        }
+
+        <span class="tok-comment">/// Initialize the state from a slice of bytes.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(bytes: [f / <span class="tok-number">8</span>]<span class="tok-type">u8</span>, delim: <span class="tok-type">u8</span>) <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a> {
+            <span class="tok-kw">var</span> st = <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>{ .st = <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">KeccakF</a>(f).init(bytes), .delim = delim };
+            st.transition.to(.initialized);
+            <span class="tok-kw">return</span> st;
+        }
+
+        <span class="tok-comment">/// Permute the state</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">permute</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>) <span class="tok-type">void</span> {
+            <span class="tok-kw">if</span> (<a href="builtin.html#builtin.mode">mode</a> == .Debug) {
+                <span class="tok-kw">if</span> (self.transition.op == .absorb <span class="tok-kw">and</span> self.offset &gt; <span class="tok-number">0</span>) {
+                    <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;cannot permute with pending input - call fillBlock() or pad() instead&quot;</span>);
+                }
+            }
+            self.transition.to(.updated);
+            self.st.permuteR(rounds);
+            self.offset = <span class="tok-number">0</span>;
+        }
+
+        <span class="tok-comment">/// Align the input to the rate boundary and permute.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fillBlock</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>) <span class="tok-type">void</span> {
+            self.transition.to(.absorb);
+            self.st.addBytes(self.buf[<span class="tok-number">0</span>..self.offset]);
+            self.st.permuteR(rounds);
+            self.offset = <span class="tok-number">0</span>;
+            self.transition.to(.updated);
+        }
+
+        <span class="tok-comment">/// Mark the end of the input.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">pad</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>) <span class="tok-type">void</span> {
+            self.transition.to(.absorb);
+            self.st.addBytes(self.buf[<span class="tok-number">0</span>..self.offset]);
+            <span class="tok-kw">if</span> (self.offset == <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>) {
+                self.st.permuteR(rounds);
+                self.offset = <span class="tok-number">0</span>;
+            }
+            self.st.addByte(self.delim, self.offset);
+            self.st.addByte(<span class="tok-number">0x80</span>, <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a> - <span class="tok-number">1</span>);
+            self.st.permuteR(rounds);
+            self.offset = <span class="tok-number">0</span>;
+            self.transition.to(.updated);
+        }
+
+        <span class="tok-comment">/// Squeeze a slice of bytes from the sponge.</span>
+        <span class="tok-comment">/// The function can be called multiple times.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">squeeze</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>, out: []<span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            self.transition.to(.squeeze);
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">if</span> (self.offset == <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>) {
+                self.st.permuteR(rounds);
+            } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (self.offset &gt; <span class="tok-number">0</span>) {
+                <span class="tok-builtin">@branchHint</span>(.unlikely);
+                <span class="tok-kw">var</span> buf: [<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+                self.st.extractBytes(buf[<span class="tok-number">0</span>..]);
+                <span class="tok-kw">const</span> left = <span class="tok-builtin">@min</span>(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a> - self.offset, out.len);
+                <span class="tok-builtin">@memcpy</span>(out[<span class="tok-number">0</span>..left], buf[self.offset..][<span class="tok-number">0</span>..left]);
+                self.offset += left;
+                <span class="tok-kw">if</span> (left == out.len) <span class="tok-kw">return</span>;
+                <span class="tok-kw">if</span> (self.offset == <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>) {
+                    self.offset = <span class="tok-number">0</span>;
+                    self.st.permuteR(rounds);
+                }
+                i = left;
+            }
+            <span class="tok-kw">while</span> (i + <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a> &lt; out.len) : (i += <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>) {
+                self.st.extractBytes(out[i..][<span class="tok-number">0</span>..<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>]);
+                self.st.permuteR(rounds);
+            }
+            <span class="tok-kw">const</span> left = out.len - i;
+            <span class="tok-kw">if</span> (left &gt; <span class="tok-number">0</span>) {
+                self.st.extractBytes(out[i..][<span class="tok-number">0</span>..left]);
+            }
+            self.offset = left;
+        }
+    };
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.crypto.keccak_p">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>);
+<span class="tok-kw">const</span> builtin = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;builtin&quot;</span>);
+<span class="tok-kw">const</span> assert = <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>;
+<span class="tok-kw">const</span> math = <a href="std.html">std</a>.<a href="std.math.html">math</a>;
+<span class="tok-kw">const</span> mem = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>;
+<span class="tok-kw">const</span> native_endian = <a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.cpu">cpu</a>.<a href="#">arch</a>.<a href="#">endian</a>();
+<span class="tok-kw">const</span> mode = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;builtin&quot;</span>).mode;
+
+<span class="tok-comment">/// The Keccak-f permutation.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">KeccakF</span>(<span class="tok-kw">comptime</span> f: <span class="tok-type">u11</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">comptime</span> <a href="std.debug.html#std.debug.assert">assert</a>(f &gt;= <span class="tok-number">200</span> <span class="tok-kw">and</span> f &lt;= <span class="tok-number">1600</span> <span class="tok-kw">and</span> f % <span class="tok-number">200</span> == <span class="tok-number">0</span>);<span class="tok-comment"> // invalid bit size
+    </span><span class="tok-kw">const</span> T = <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.Int">Int</a>(.unsigned, f / <span class="tok-number">25</span>);
+    <span class="tok-kw">const</span> Block = [<span class="tok-number">25</span>]T;
+
+    <span class="tok-kw">const</span> PI = [_]<span class="tok-type">u5</span>{
+        <span class="tok-number">10</span>, <span class="tok-number">7</span>, <span class="tok-number">11</span>, <span class="tok-number">17</span>, <span class="tok-number">18</span>, <span class="tok-number">3</span>, <span class="tok-number">5</span>, <span class="tok-number">16</span>, <span class="tok-number">8</span>, <span class="tok-number">21</span>, <span class="tok-number">24</span>, <span class="tok-number">4</span>, <span class="tok-number">15</span>, <span class="tok-number">23</span>, <span class="tok-number">19</span>, <span class="tok-number">13</span>, <span class="tok-number">12</span>, <span class="tok-number">2</span>, <span class="tok-number">20</span>, <span class="tok-number">14</span>, <span class="tok-number">22</span>, <span class="tok-number">9</span>, <span class="tok-number">6</span>, <span class="tok-number">1</span>,
+    };
+
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+
+        <span class="tok-comment">/// Number of bytes in the state.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> block_bytes = f / <span class="tok-number">8</span>;
+
+        <span class="tok-comment">/// Maximum number of rounds for the given f parameter.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> max_rounds = <span class="tok-number">12</span> + <span class="tok-number">2</span> * <a href="std.math.html">math</a>.<a href="std.math.log2.html#std.math.log2.log2">log2</a>(f / <span class="tok-number">25</span>);<span class="tok-comment">
+
+        // Round constants
+        </span><span class="tok-kw">const</span> RC = rc: {
+            <span class="tok-kw">const</span> RC64 = [_]<span class="tok-type">u64</span>{
+                <span class="tok-number">0x0000000000000001</span>, <span class="tok-number">0x0000000000008082</span>, <span class="tok-number">0x800000000000808a</span>, <span class="tok-number">0x8000000080008000</span>,
+                <span class="tok-number">0x000000000000808b</span>, <span class="tok-number">0x0000000080000001</span>, <span class="tok-number">0x8000000080008081</span>, <span class="tok-number">0x8000000000008009</span>,
+                <span class="tok-number">0x000000000000008a</span>, <span class="tok-number">0x0000000000000088</span>, <span class="tok-number">0x0000000080008009</span>, <span class="tok-number">0x000000008000000a</span>,
+                <span class="tok-number">0x000000008000808b</span>, <span class="tok-number">0x800000000000008b</span>, <span class="tok-number">0x8000000000008089</span>, <span class="tok-number">0x8000000000008003</span>,
+                <span class="tok-number">0x8000000000008002</span>, <span class="tok-number">0x8000000000000080</span>, <span class="tok-number">0x000000000000800a</span>, <span class="tok-number">0x800000008000000a</span>,
+                <span class="tok-number">0x8000000080008081</span>, <span class="tok-number">0x8000000000008080</span>, <span class="tok-number">0x0000000080000001</span>, <span class="tok-number">0x8000000080008008</span>,
+            };
+            <span class="tok-kw">var</span> rc: [<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.max_rounds">max_rounds</a>]T = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">for</span> (&amp;rc, RC64[<span class="tok-number">0</span>..<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.max_rounds">max_rounds</a>]) |*t, c| t.* = <span class="tok-builtin">@as</span>(T, <span class="tok-builtin">@truncate</span>(c));
+            <span class="tok-kw">break</span> :rc rc;
+        };
+
+        st: Block = [_]T{<span class="tok-number">0</span>} ** <span class="tok-number">25</span>,
+
+        <span class="tok-comment">/// Initialize the state from a slice of bytes.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(bytes: [<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.block_bytes">block_bytes</a>]<span class="tok-type">u8</span>) <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a> {
+            <span class="tok-kw">var</span> self: <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (&amp;self.st, <span class="tok-number">0</span>..) |*r, i| {
+                r.* = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, bytes[<span class="tok-builtin">@sizeOf</span>(T) * i ..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(T)], .little);
+            }
+            <span class="tok-kw">return</span> self;
+        }
+
+        <span class="tok-comment">/// A representation of the state as bytes. The byte order is architecture-dependent.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">asBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>) *[<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.block_bytes">block_bytes</a>]<span class="tok-type">u8</span> {
+            <span class="tok-kw">return</span> <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.asBytes">asBytes</a>(&amp;self.st);
+        }
+
+        <span class="tok-comment">/// Byte-swap the entire state if the architecture doesn't match the required endianness.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">endianSwap</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>) <span class="tok-type">void</span> {
+            <span class="tok-kw">for</span> (&amp;self.st) |*w| {
+                w.* = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.littleToNative">littleToNative</a>(T, w.*);
+            }
+        }
+
+        <span class="tok-comment">/// Set bytes starting at the beginning of the state.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (i + <span class="tok-builtin">@sizeOf</span>(T) &lt;= bytes.len) : (i += <span class="tok-builtin">@sizeOf</span>(T)) {
+                self.st[i / <span class="tok-builtin">@sizeOf</span>(T)] = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, bytes[i..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(T)], .little);
+            }
+            <span class="tok-kw">if</span> (i &lt; bytes.len) {
+                <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-builtin">@sizeOf</span>(T);
+                <span class="tok-builtin">@memcpy</span>(padded[<span class="tok-number">0</span> .. bytes.len - i], bytes[i..]);
+                self.st[i / <span class="tok-builtin">@sizeOf</span>(T)] = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, padded[<span class="tok-number">0</span>..], .little);
+            }
+        }
+
+        <span class="tok-comment">/// XOR a byte into the state at a given offset.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addByte</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, byte: <span class="tok-type">u8</span>, offset: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">const</span> z = <span class="tok-builtin">@sizeOf</span>(T) * <span class="tok-builtin">@as</span>(<a href="std.math.html">math</a>.<a href="std.math.html#std.math.Log2Int">Log2Int</a>(T), <span class="tok-builtin">@truncate</span>(offset % <span class="tok-builtin">@sizeOf</span>(T)));
+            self.st[offset / <span class="tok-builtin">@sizeOf</span>(T)] ^= <span class="tok-builtin">@as</span>(T, byte) &lt;&lt; z;
+        }
+
+        <span class="tok-comment">/// XOR bytes into the beginning of the state.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (i + <span class="tok-builtin">@sizeOf</span>(T) &lt;= bytes.len) : (i += <span class="tok-builtin">@sizeOf</span>(T)) {
+                self.st[i / <span class="tok-builtin">@sizeOf</span>(T)] ^= <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, bytes[i..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(T)], .little);
+            }
+            <span class="tok-kw">if</span> (i &lt; bytes.len) {
+                <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-builtin">@sizeOf</span>(T);
+                <span class="tok-builtin">@memcpy</span>(padded[<span class="tok-number">0</span> .. bytes.len - i], bytes[i..]);
+                self.st[i / <span class="tok-builtin">@sizeOf</span>(T)] ^= <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, padded[<span class="tok-number">0</span>..], .little);
+            }
+        }
+
+        <span class="tok-comment">/// Extract the first bytes of the state.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">extractBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, out: []<span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (i + <span class="tok-builtin">@sizeOf</span>(T) &lt;= out.len) : (i += <span class="tok-builtin">@sizeOf</span>(T)) {
+                <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(T, out[i..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(T)], self.st[i / <span class="tok-builtin">@sizeOf</span>(T)], .little);
+            }
+            <span class="tok-kw">if</span> (i &lt; out.len) {
+                <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-builtin">@sizeOf</span>(T);
+                <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(T, padded[<span class="tok-number">0</span>..], self.st[i / <span class="tok-builtin">@sizeOf</span>(T)], .little);
+                <span class="tok-builtin">@memcpy</span>(out[i..], padded[<span class="tok-number">0</span> .. out.len - i]);
+            }
+        }
+
+        <span class="tok-comment">/// XOR the first bytes of the state into a slice of bytes.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">xorBytes</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, out: []<span class="tok-type">u8</span>, in: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            <a href="std.debug.html#std.debug.assert">assert</a>(out.len == in.len);
+
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (i + <span class="tok-builtin">@sizeOf</span>(T) &lt;= in.len) : (i += <span class="tok-builtin">@sizeOf</span>(T)) {
+                <span class="tok-kw">const</span> x = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, in[i..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(T)], <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.native_endian">native_endian</a>) ^ <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeToLittle">nativeToLittle</a>(T, self.st[i / <span class="tok-builtin">@sizeOf</span>(T)]);
+                <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(T, out[i..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(T)], x, <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.native_endian">native_endian</a>);
+            }
+            <span class="tok-kw">if</span> (i &lt; in.len) {
+                <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-builtin">@sizeOf</span>(T);
+                <span class="tok-builtin">@memcpy</span>(padded[<span class="tok-number">0</span> .. in.len - i], in[i..]);
+                <span class="tok-kw">const</span> x = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(T, &amp;padded, <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.native_endian">native_endian</a>) ^ <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeToLittle">nativeToLittle</a>(T, self.st[i / <span class="tok-builtin">@sizeOf</span>(T)]);
+                <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(T, &amp;padded, x, <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.native_endian">native_endian</a>);
+                <span class="tok-builtin">@memcpy</span>(out[i..], padded[<span class="tok-number">0</span> .. in.len - i]);
+            }
+        }
+
+        <span class="tok-comment">/// Set the words storing the bytes of a given range to zero.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">clear</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, from: <span class="tok-type">usize</span>, to: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+            <span class="tok-builtin">@memset</span>(self.st[from / <span class="tok-builtin">@sizeOf</span>(T) .. (to + <span class="tok-builtin">@sizeOf</span>(T) - <span class="tok-number">1</span>) / <span class="tok-builtin">@sizeOf</span>(T)], <span class="tok-number">0</span>);
+        }
+
+        <span class="tok-comment">/// Clear the entire state, disabling compiler optimizations.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">secureZero</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>) <span class="tok-type">void</span> {
+            <a href="std.html">std</a>.<a href="std.crypto.html">crypto</a>.<a href="std.crypto.html#std.crypto.secureZero">secureZero</a>(T, &amp;self.st);
+        }
+
+        <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">round</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, rc: T) <span class="tok-type">void</span> {
+            <span class="tok-kw">const</span> st = &amp;self.st;<span class="tok-comment">
+
+            // theta
+            </span><span class="tok-kw">var</span> t = [_]T{<span class="tok-number">0</span>} ** <span class="tok-number">5</span>;
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-number">0</span>..<span class="tok-number">5</span>) |i| {
+                <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-number">0</span>..<span class="tok-number">5</span>) |j| {
+                    t[i] ^= st[j * <span class="tok-number">5</span> + i];
+                }
+            }
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-number">0</span>..<span class="tok-number">5</span>) |i| {
+                <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-number">0</span>..<span class="tok-number">5</span>) |j| {
+                    st[j * <span class="tok-number">5</span> + i] ^= t[(i + <span class="tok-number">4</span>) % <span class="tok-number">5</span>] ^ <a href="std.math.html">math</a>.<a href="std.math.html#std.math.rotl">rotl</a>(T, t[(i + <span class="tok-number">1</span>) % <span class="tok-number">5</span>], <span class="tok-number">1</span>);
+                }
+            }<span class="tok-comment">
+
+            // rho+pi
+            </span><span class="tok-kw">var</span> last = st[<span class="tok-number">1</span>];
+            <span class="tok-kw">comptime</span> <span class="tok-kw">var</span> rotc = <span class="tok-number">0</span>;
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-number">0</span>..<span class="tok-number">24</span>) |i| {
+                <span class="tok-kw">const</span> x = PI[i];
+                <span class="tok-kw">const</span> tmp = st[x];
+                rotc = (rotc + i + <span class="tok-number">1</span>) % <span class="tok-builtin">@bitSizeOf</span>(T);
+                st[x] = <a href="std.math.html">math</a>.<a href="std.math.html#std.math.rotl">rotl</a>(T, last, rotc);
+                last = tmp;
+            }
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-number">0</span>..<span class="tok-number">5</span>) |i| {
+                <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-number">0</span>..<span class="tok-number">5</span>) |j| {
+                    t[j] = st[i * <span class="tok-number">5</span> + j];
+                }
+                <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-number">0</span>..<span class="tok-number">5</span>) |j| {
+                    st[i * <span class="tok-number">5</span> + j] = t[j] ^ (~t[(j + <span class="tok-number">1</span>) % <span class="tok-number">5</span>] &amp; t[(j + <span class="tok-number">2</span>) % <span class="tok-number">5</span>]);
+                }
+            }<span class="tok-comment">
+
+            // iota
+            </span>st[<span class="tok-number">0</span>] ^= rc;
+        }
+
+        <span class="tok-comment">/// Apply a (possibly) reduced-round permutation to the state.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">permuteR</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>, <span class="tok-kw">comptime</span> rounds: <span class="tok-type">u5</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">var</span> i = <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>.<a href="#">len</a> - rounds;
+            <span class="tok-kw">while</span> (i &lt; <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>.<a href="#">len</a> - <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>.<a href="#">len</a> % <span class="tok-number">3</span>) : (i += <span class="tok-number">3</span>) {
+                self.round(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>[i]);
+                self.round(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>[i + <span class="tok-number">1</span>]);
+                self.round(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>[i + <span class="tok-number">2</span>]);
+            }
+            <span class="tok-kw">while</span> (i &lt; <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>.<a href="#">len</a>) : (i += <span class="tok-number">1</span>) {
+                self.round(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.RC">RC</a>[i]);
+            }
+        }
+
+        <span class="tok-comment">/// Apply a full-round permutation to the state.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">permute</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">Self</a>) <span class="tok-type">void</span> {
+            self.permuteR(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF.max_rounds">max_rounds</a>);
+        }
+    };
+}
+
+<span class="tok-comment">/// A generic Keccak-P state.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">State</span>(<span class="tok-kw">comptime</span> f: <span class="tok-type">u11</span>, <span class="tok-kw">comptime</span> capacity: <span class="tok-type">u11</span>, <span class="tok-kw">comptime</span> rounds: <span class="tok-type">u5</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">comptime</span> <a href="std.debug.html#std.debug.assert">assert</a>(f &gt;= <span class="tok-number">200</span> <span class="tok-kw">and</span> f &lt;= <span class="tok-number">1600</span> <span class="tok-kw">and</span> f % <span class="tok-number">200</span> == <span class="tok-number">0</span>);<span class="tok-comment"> // invalid state size
+    </span><span class="tok-kw">comptime</span> <a href="std.debug.html#std.debug.assert">assert</a>(capacity &lt; f <span class="tok-kw">and</span> capacity % <span class="tok-number">8</span> == <span class="tok-number">0</span>);<span class="tok-comment"> // invalid capacity size
+
+    // In debug mode, track transitions to prevent insecure ones.
+    </span><span class="tok-kw">const</span> Op = <span class="tok-kw">enum</span> { uninitialized, initialized, updated, absorb, squeeze };
+    <span class="tok-kw">const</span> TransitionTracker = <span class="tok-kw">if</span> (<a href="builtin.html#builtin.mode">mode</a> == .Debug) <span class="tok-kw">struct</span> {
+        op: Op = .uninitialized,
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">to</span>(tracker: *<span class="tok-builtin">@This</span>(), next_op: Op) <span class="tok-type">void</span> {
+            <span class="tok-kw">switch</span> (next_op) {
+                .updated =&gt; {
+                    <span class="tok-kw">switch</span> (tracker.op) {
+                        .uninitialized =&gt; <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;cannot permute before initializing&quot;</span>),
+                        <span class="tok-kw">else</span> =&gt; {},
+                    }
+                },
+                .absorb =&gt; {
+                    <span class="tok-kw">switch</span> (tracker.op) {
+                        .squeeze =&gt; <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;cannot absorb right after squeezing&quot;</span>),
+                        <span class="tok-kw">else</span> =&gt; {},
+                    }
+                },
+                .squeeze =&gt; {
+                    <span class="tok-kw">switch</span> (tracker.op) {
+                        .uninitialized =&gt; <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;cannot squeeze before initializing&quot;</span>),
+                        .initialized =&gt; <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;cannot squeeze right after initializing&quot;</span>),
+                        .absorb =&gt; <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;cannot squeeze right after absorbing&quot;</span>),
+                        <span class="tok-kw">else</span> =&gt; {},
+                    }
+                },
+                .uninitialized =&gt; <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;cannot transition to uninitialized&quot;</span>),
+                .initialized =&gt; {},
+            }
+            tracker.op = next_op;
+        }
+    } <span class="tok-kw">else</span> <span class="tok-kw">struct</span> {<span class="tok-comment">
+        // No-op in non-debug modes.
+        </span><span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">to</span>(tracker: *<span class="tok-builtin">@This</span>(), next_op: Op) <span class="tok-type">void</span> {
+            _ = tracker;<span class="tok-comment"> // no-op
+            </span>_ = next_op;<span class="tok-comment"> // no-op
+        </span>}
+    };
+
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+
+        <span class="tok-comment">/// The block length, or rate, in bytes.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> rate = <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">KeccakF</a>(f).block_bytes - capacity / <span class="tok-number">8</span>;
+        <span class="tok-comment">/// Keccak does not have any options.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Options = <span class="tok-kw">struct</span> {};
+
+        <span class="tok-comment">/// The input delimiter.</span>
+        delim: <span class="tok-type">u8</span>,
+
+        offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+        buf: [<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>,
+
+        st: <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">KeccakF</a>(f) = .{},
+
+        transition: TransitionTracker = .{},
+
+        <span class="tok-comment">/// Absorb a slice of bytes into the sponge.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">absorb</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            self.transition.to(.absorb);
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">if</span> (self.offset &gt; <span class="tok-number">0</span>) {
+                <span class="tok-kw">const</span> left = <span class="tok-builtin">@min</span>(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a> - self.offset, bytes.len);
+                <span class="tok-builtin">@memcpy</span>(self.buf[self.offset..][<span class="tok-number">0</span>..left], bytes[<span class="tok-number">0</span>..left]);
+                self.offset += left;
+                <span class="tok-kw">if</span> (left == bytes.len) <span class="tok-kw">return</span>;
+                <span class="tok-kw">if</span> (self.offset == <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>) {
+                    self.st.addBytes(self.buf[<span class="tok-number">0</span>..]);
+                    self.st.permuteR(rounds);
+                    self.offset = <span class="tok-number">0</span>;
+                }
+                i = left;
+            }
+            <span class="tok-kw">while</span> (i + <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a> &lt; bytes.len) : (i += <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>) {
+                self.st.addBytes(bytes[i..][<span class="tok-number">0</span>..<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>]);
+                self.st.permuteR(rounds);
+            }
+            <span class="tok-kw">const</span> left = bytes.len - i;
+            <span class="tok-kw">if</span> (left &gt; <span class="tok-number">0</span>) {
+                <span class="tok-builtin">@memcpy</span>(self.buf[<span class="tok-number">0</span>..left], bytes[i..][<span class="tok-number">0</span>..left]);
+            }
+            self.offset = left;
+        }
+
+        <span class="tok-comment">/// Initialize the state from a slice of bytes.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(bytes: [f / <span class="tok-number">8</span>]<span class="tok-type">u8</span>, delim: <span class="tok-type">u8</span>) <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a> {
+            <span class="tok-kw">var</span> st = <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>{ .st = <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">KeccakF</a>(f).init(bytes), .delim = delim };
+            st.transition.to(.initialized);
+            <span class="tok-kw">return</span> st;
+        }
+
+        <span class="tok-comment">/// Permute the state</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">permute</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>) <span class="tok-type">void</span> {
+            <span class="tok-kw">if</span> (<a href="builtin.html#builtin.mode">mode</a> == .Debug) {
+                <span class="tok-kw">if</span> (self.transition.op == .absorb <span class="tok-kw">and</span> self.offset &gt; <span class="tok-number">0</span>) {
+                    <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;cannot permute with pending input - call fillBlock() or pad() instead&quot;</span>);
+                }
+            }
+            self.transition.to(.updated);
+            self.st.permuteR(rounds);
+            self.offset = <span class="tok-number">0</span>;
+        }
+
+        <span class="tok-comment">/// Align the input to the rate boundary and permute.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fillBlock</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>) <span class="tok-type">void</span> {
+            self.transition.to(.absorb);
+            self.st.addBytes(self.buf[<span class="tok-number">0</span>..self.offset]);
+            self.st.permuteR(rounds);
+            self.offset = <span class="tok-number">0</span>;
+            self.transition.to(.updated);
+        }
+
+        <span class="tok-comment">/// Mark the end of the input.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">pad</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>) <span class="tok-type">void</span> {
+            self.transition.to(.absorb);
+            self.st.addBytes(self.buf[<span class="tok-number">0</span>..self.offset]);
+            <span class="tok-kw">if</span> (self.offset == <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>) {
+                self.st.permuteR(rounds);
+                self.offset = <span class="tok-number">0</span>;
+            }
+            self.st.addByte(self.delim, self.offset);
+            self.st.addByte(<span class="tok-number">0x80</span>, <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a> - <span class="tok-number">1</span>);
+            self.st.permuteR(rounds);
+            self.offset = <span class="tok-number">0</span>;
+            self.transition.to(.updated);
+        }
+
+        <span class="tok-comment">/// Squeeze a slice of bytes from the sponge.</span>
+        <span class="tok-comment">/// The function can be called multiple times.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">squeeze</span>(self: *<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">Self</a>, out: []<span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            self.transition.to(.squeeze);
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">if</span> (self.offset == <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>) {
+                self.st.permuteR(rounds);
+            } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (self.offset &gt; <span class="tok-number">0</span>) {
+                <span class="tok-builtin">@branchHint</span>(.unlikely);
+                <span class="tok-kw">var</span> buf: [<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+                self.st.extractBytes(buf[<span class="tok-number">0</span>..]);
+                <span class="tok-kw">const</span> left = <span class="tok-builtin">@min</span>(<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a> - self.offset, out.len);
+                <span class="tok-builtin">@memcpy</span>(out[<span class="tok-number">0</span>..left], buf[self.offset..][<span class="tok-number">0</span>..left]);
+                self.offset += left;
+                <span class="tok-kw">if</span> (left == out.len) <span class="tok-kw">return</span>;
+                <span class="tok-kw">if</span> (self.offset == <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>) {
+                    self.offset = <span class="tok-number">0</span>;
+                    self.st.permuteR(rounds);
+                }
+                i = left;
+            }
+            <span class="tok-kw">while</span> (i + <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a> &lt; out.len) : (i += <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>) {
+                self.st.extractBytes(out[i..][<span class="tok-number">0</span>..<a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State.rate">rate</a>]);
+                self.st.permuteR(rounds);
+            }
+            <span class="tok-kw">const</span> left = out.len - i;
+            <span class="tok-kw">if</span> (left &gt; <span class="tok-number">0</span>) {
+                self.st.extractBytes(out[i..][<span class="tok-number">0</span>..left]);
+            }
+            self.offset = left;
+        }
+    };
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;Keccak-f800&quot;</span> {
+    <span class="tok-kw">var</span> st: <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.KeccakF">KeccakF</a>(<span class="tok-number">800</span>) = .{
+        .st = .{
+            <span class="tok-number">0xE531D45D</span>, <span class="tok-number">0xF404C6FB</span>, <span class="tok-number">0x23A0BF99</span>, <span class="tok-number">0xF1F8452F</span>, <span class="tok-number">0x51FFD042</span>, <span class="tok-number">0xE539F578</span>, <span class="tok-number">0xF00B80A7</span>,
+            <span class="tok-number">0xAF973664</span>, <span class="tok-number">0xBF5AF34C</span>, <span class="tok-number">0x227A2424</span>, <span class="tok-number">0x88172715</span>, <span class="tok-number">0x9F685884</span>, <span class="tok-number">0xB15CD054</span>, <span class="tok-number">0x1BF4FC0E</span>,
+            <span class="tok-number">0x6166FA91</span>, <span class="tok-number">0x1A9E599A</span>, <span class="tok-number">0xA3970A1F</span>, <span class="tok-number">0xAB659687</span>, <span class="tok-number">0xAFAB8D68</span>, <span class="tok-number">0xE74B1015</span>, <span class="tok-number">0x34001A98</span>,
+            <span class="tok-number">0x4119EFF3</span>, <span class="tok-number">0x930A0E76</span>, <span class="tok-number">0x87B28070</span>, <span class="tok-number">0x11EFE996</span>,
+        },
+    };
+    st.permute();
+    <span class="tok-kw">const</span> expected: [<span class="tok-number">25</span>]<span class="tok-type">u32</span> = .{
+        <span class="tok-number">0x75BF2D0D</span>, <span class="tok-number">0x9B610E89</span>, <span class="tok-number">0xC826AF40</span>, <span class="tok-number">0x64CD84AB</span>, <span class="tok-number">0xF905BDD6</span>, <span class="tok-number">0xBC832835</span>, <span class="tok-number">0x5F8001B9</span>,
+        <span class="tok-number">0x15662CCE</span>, <span class="tok-number">0x8E38C95E</span>, <span class="tok-number">0x701FE543</span>, <span class="tok-number">0x1B544380</span>, <span class="tok-number">0x89ACDEFF</span>, <span class="tok-number">0x51EDB5DE</span>, <span class="tok-number">0x0E9702D9</span>,
+        <span class="tok-number">0x6C19AA16</span>, <span class="tok-number">0xA2913EEE</span>, <span class="tok-number">0x60754E9A</span>, <span class="tok-number">0x9819063C</span>, <span class="tok-number">0xF4709254</span>, <span class="tok-number">0xD09F9084</span>, <span class="tok-number">0x772DA259</span>,
+        <span class="tok-number">0x1DB35DF7</span>, <span class="tok-number">0x5AA60162</span>, <span class="tok-number">0x358825D5</span>, <span class="tok-number">0xB3783BAB</span>,
+    };
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u32</span>, &amp;st.st, &amp;expected);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;squeeze&quot;</span> {
+    <span class="tok-kw">var</span> st = <a href="std.crypto.keccak_p.html#std.crypto.keccak_p.State">State</a>(<span class="tok-number">800</span>, <span class="tok-number">256</span>, <span class="tok-number">22</span>).init([_]<span class="tok-type">u8</span>{<span class="tok-number">0x80</span>} ** <span class="tok-number">100</span>, <span class="tok-number">0x01</span>);
+
+    <span class="tok-kw">var</span> out0: [<span class="tok-number">15</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">var</span> out1: [out0.len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    st.permute();
+    <span class="tok-kw">var</span> st0 = st;
+    st0.squeeze(out0[<span class="tok-number">0</span>..]);
+    <span class="tok-kw">var</span> st1 = st;
+    st1.squeeze(out1[<span class="tok-number">0</span> .. out1.len / <span class="tok-number">2</span>]);
+    st1.squeeze(out1[out1.len / <span class="tok-number">2</span> ..]);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, &amp;out0, &amp;out1);
+
+    <span class="tok-kw">var</span> out2: [<span class="tok-number">100</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">var</span> out3: [out2.len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">var</span> st2 = st;
+    st2.squeeze(out2[<span class="tok-number">0</span>..]);
+    <span class="tok-kw">var</span> st3 = st;
+    st3.squeeze(out3[<span class="tok-number">0</span> .. out2.len / <span class="tok-number">2</span>]);
+    st3.squeeze(out3[out2.len / <span class="tok-number">2</span> ..]);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, &amp;out2, &amp;out3);
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

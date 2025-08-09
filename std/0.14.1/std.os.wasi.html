@@ -1,0 +1,878 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">os</a></li><li><a href="std.os.wasi.html" class="active">wasi</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.os.wasi" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.os.wasi</span><a href="#src.zig-std.os.wasi">[src]</a></h1><div class="tldDocs"><p>wasi_snapshot_preview1 spec available (in witx format) here:</p>
+<ul>
+<li>typenames -- <a href="https://github.com/WebAssembly/WASI/blob/main/legacy/preview1/witx/typenames.witx">https://github.com/WebAssembly/WASI/blob/main/legacy/preview1/witx/typenames.witx</a></li>
+<li>module -- <a href="https://github.com/WebAssembly/WASI/blob/main/legacy/preview1/witx/wasi_snapshot_preview1.witx">https://github.com/WebAssembly/WASI/blob/main/legacy/preview1/witx/wasi_snapshot_preview1.witx</a>
+Note that libc API does <em>not</em> go in this file. wasi libc API goes into std/c.zig instead.</li>
+</ul>
+</div><div class="sectNamespaces"><h2 class="sectionHeader">Namespaces</h2><ul class="listNamespaces columns"><li><a href="std.os.wasi.SOCK.html">std.os.wasi.SOCK</a></li></ul></div><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.posix.iovec.html">std.posix.iovec</a></li><li><a href="std.posix.iovec_const.html">std.posix.iovec_const</a></li><li><a href="std.os.wasi.advice_t.html">std.os.wasi.advice_t</a></li><li><a href="std.os.wasi.clockid_t.html">std.os.wasi.clockid_t</a></li><li><a href="std.os.wasi.dirent_t.html">std.os.wasi.dirent_t</a></li><li><a href="std.os.wasi.errno_t.html">std.os.wasi.errno_t</a></li><li><a href="std.os.wasi.event_t.html">std.os.wasi.event_t</a></li><li><a href="std.os.wasi.eventfdreadwrite_t.html">std.os.wasi.eventfdreadwrite_t</a></li><li><a href="std.os.wasi.eventtype_t.html">std.os.wasi.eventtype_t</a></li><li><a href="std.os.wasi.fdflags_t.html">std.os.wasi.fdflags_t</a></li><li><a href="std.os.wasi.fdstat_t.html">std.os.wasi.fdstat_t</a></li><li><a href="std.os.wasi.filestat_t.html">std.os.wasi.filestat_t</a></li><li><a href="std.os.wasi.filetype_t.html">std.os.wasi.filetype_t</a></li><li><a href="std.os.wasi.fstflags_t.html">std.os.wasi.fstflags_t</a></li><li><a href="std.os.wasi.lookupflags_t.html">std.os.wasi.lookupflags_t</a></li><li><a href="std.os.wasi.oflags_t.html">std.os.wasi.oflags_t</a></li><li><a href="std.os.wasi.prestat_t.html">std.os.wasi.prestat_t</a></li><li><a href="std.os.wasi.prestat_dir_t.html">std.os.wasi.prestat_dir_t</a></li><li><a href="std.os.wasi.prestat_u_t.html">std.os.wasi.prestat_u_t</a></li><li><a href="std.os.wasi.rights_t.html">std.os.wasi.rights_t</a></li><li><a href="std.os.wasi.sdflags_t.html">std.os.wasi.sdflags_t</a></li><li><a href="std.os.wasi.signal_t.html">std.os.wasi.signal_t</a></li><li><a href="std.os.wasi.subscription_t.html">std.os.wasi.subscription_t</a></li><li><a href="std.os.wasi.subscription_clock_t.html">std.os.wasi.subscription_clock_t</a></li><li><a href="std.os.wasi.subscription_fd_readwrite_t.html">std.os.wasi.subscription_fd_readwrite_t</a></li><li><a href="std.os.wasi.subscription_u_t.html">std.os.wasi.subscription_u_t</a></li><li><a href="std.os.wasi.subscription_u_u_t.html">std.os.wasi.subscription_u_u_t</a></li><li><a href="std.os.wasi.whence_t.html">std.os.wasi.whence_t</a></li></ul></div><div class="sectTypes"><h2 class="sectionHeader">Types</h2><div class="listTypes"><div class="decl"><h2 id="std.os.wasi.device_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">device_t</span><a href="#src.zig-std.os.wasi.device_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.device_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> device_t = <span class="tok-type">u64</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.dircookie_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">dircookie_t</span><a href="#src.zig-std.os.wasi.dircookie_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.dircookie_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> dircookie_t = <span class="tok-type">u64</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.dirnamlen_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">dirnamlen_t</span><a href="#src.zig-std.os.wasi.dirnamlen_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.dirnamlen_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> dirnamlen_t = <span class="tok-type">u32</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.eventrwflags_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">eventrwflags_t</span><a href="#src.zig-std.os.wasi.eventrwflags_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.eventrwflags_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> eventrwflags_t = <span class="tok-type">u16</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.exitcode_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">exitcode_t</span><a href="#src.zig-std.os.wasi.exitcode_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.exitcode_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> exitcode_t = <span class="tok-type">u32</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">fd_t</span><a href="#src.zig-std.os.wasi.fd_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> fd_t = <span class="tok-type">i32</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.filedelta_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">filedelta_t</span><a href="#src.zig-std.os.wasi.filedelta_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.filedelta_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> filedelta_t = <span class="tok-type">i64</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.filesize_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">filesize_t</span><a href="#src.zig-std.os.wasi.filesize_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.filesize_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> filesize_t = <span class="tok-type">u64</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.inode_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">inode_t</span><a href="#src.zig-std.os.wasi.inode_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.inode_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> inode_t = <span class="tok-type">u64</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.linkcount_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">linkcount_t</span><a href="#src.zig-std.os.wasi.linkcount_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.linkcount_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> linkcount_t = <span class="tok-type">u64</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.preopentype_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">preopentype_t</span><a href="#src.zig-std.os.wasi.preopentype_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.preopentype_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> preopentype_t = <span class="tok-type">u8</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.riflags_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">riflags_t</span><a href="#src.zig-std.os.wasi.riflags_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.riflags_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> riflags_t = <span class="tok-type">u16</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.roflags_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">roflags_t</span><a href="#src.zig-std.os.wasi.roflags_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.roflags_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> roflags_t = <span class="tok-type">u16</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.siflags_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">siflags_t</span><a href="#src.zig-std.os.wasi.siflags_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.siflags_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> siflags_t = <span class="tok-type">u16</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.subclockflags_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">subclockflags_t</span><a href="#src.zig-std.os.wasi.subclockflags_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.subclockflags_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> subclockflags_t = <span class="tok-type">u16</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.timestamp_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">timestamp_t</span><a href="#src.zig-std.os.wasi.timestamp_t">[src]</a></h2><div class="tldDocs"><p>Nanoseconds.</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.timestamp_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> timestamp_t = <span class="tok-type">u64</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.userdata_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">userdata_t</span><a href="#src.zig-std.os.wasi.userdata_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.userdata_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> userdata_t = <span class="tok-type">u64</span></code></pre></details></div></div></div></div><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.os.wasi.DIRCOOKIE_START" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">DIRCOOKIE_START</span><a href="#src.zig-std.os.wasi.DIRCOOKIE_START">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.DIRCOOKIE_START">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> DIRCOOKIE_START: <a href="std.os.wasi.html#std.os.wasi.dircookie_t">dircookie_t</a> = <span class="tok-number">0</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.EVENT_FD_READWRITE_HANGUP" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">EVENT_FD_READWRITE_HANGUP</span><a href="#src.zig-std.os.wasi.EVENT_FD_READWRITE_HANGUP">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.EVENT_FD_READWRITE_HANGUP">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> EVENT_FD_READWRITE_HANGUP: <a href="std.os.wasi.html#std.os.wasi.eventrwflags_t">eventrwflags_t</a> = <span class="tok-number">0x0001</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.PREOPENTYPE_DIR" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PREOPENTYPE_DIR</span><a href="#src.zig-std.os.wasi.PREOPENTYPE_DIR">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.PREOPENTYPE_DIR">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PREOPENTYPE_DIR: <a href="std.os.wasi.html#std.os.wasi.preopentype_t">preopentype_t</a> = <span class="tok-number">0</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.SUBSCRIPTION_CLOCK_ABSTIME" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SUBSCRIPTION_CLOCK_ABSTIME</span><a href="#src.zig-std.os.wasi.SUBSCRIPTION_CLOCK_ABSTIME">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.SUBSCRIPTION_CLOCK_ABSTIME">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SUBSCRIPTION_CLOCK_ABSTIME: <a href="std.os.wasi.html#std.os.wasi.subclockflags_t">subclockflags_t</a> = <span class="tok-number">0x0001</span></code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.os.wasi.args_get" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">args_get</span><a href="#src.zig-std.os.wasi.args_get">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">args_get</span>(argv: [*][*:<span class="tok-number">0</span>]<span class="tok-type">u8</span>, argv_buf: [*]<span class="tok-type">u8</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>argv: [*][*:<span class="tok-number">0</span>]<span class="tok-type">u8</span></code></pre></div><div><pre><code>argv_buf: [*]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.args_get">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">args_get</span>(argv: [*][*:<span class="tok-number">0</span>]<span class="tok-type">u8</span>, argv_buf: [*]<span class="tok-type">u8</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.args_sizes_get" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">args_sizes_get</span><a href="#src.zig-std.os.wasi.args_sizes_get">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">args_sizes_get</span>(argc: *<span class="tok-type">usize</span>, argv_buf_size: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>argc: *<span class="tok-type">usize</span></code></pre></div><div><pre><code>argv_buf_size: *<span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.args_sizes_get">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">args_sizes_get</span>(argc: *<span class="tok-type">usize</span>, argv_buf_size: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.clock_res_get" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">clock_res_get</span><a href="#src.zig-std.os.wasi.clock_res_get">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">clock_res_get</span>(clock_id: <a href="std.os.wasi.clockid_t.html">clockid_t</a>, resolution: *<a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>clock_id: <a href="std.os.wasi.clockid_t.html">clockid_t</a></code></pre></div><div><pre><code>resolution: *<a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.clock_res_get">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">clock_res_get</span>(clock_id: <a href="std.os.wasi.clockid_t.html">clockid_t</a>, resolution: *<a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.clock_time_get" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">clock_time_get</span><a href="#src.zig-std.os.wasi.clock_time_get">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">clock_time_get</span>(clock_id: <a href="std.os.wasi.clockid_t.html">clockid_t</a>, precision: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>, timestamp: *<a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>clock_id: <a href="std.os.wasi.clockid_t.html">clockid_t</a></code></pre></div><div><pre><code>precision: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a></code></pre></div><div><pre><code>timestamp: *<a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.clock_time_get">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">clock_time_get</span>(clock_id: <a href="std.os.wasi.clockid_t.html">clockid_t</a>, precision: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>, timestamp: *<a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.environ_get" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">environ_get</span><a href="#src.zig-std.os.wasi.environ_get">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">environ_get</span>(environ: [*][*:<span class="tok-number">0</span>]<span class="tok-type">u8</span>, environ_buf: [*]<span class="tok-type">u8</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>environ: [*][*:<span class="tok-number">0</span>]<span class="tok-type">u8</span></code></pre></div><div><pre><code>environ_buf: [*]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.environ_get">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">environ_get</span>(environ: [*][*:<span class="tok-number">0</span>]<span class="tok-type">u8</span>, environ_buf: [*]<span class="tok-type">u8</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.environ_sizes_get" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">environ_sizes_get</span><a href="#src.zig-std.os.wasi.environ_sizes_get">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">environ_sizes_get</span>(environ_count: *<span class="tok-type">usize</span>, environ_buf_size: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>environ_count: *<span class="tok-type">usize</span></code></pre></div><div><pre><code>environ_buf_size: *<span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.environ_sizes_get">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">environ_sizes_get</span>(environ_count: *<span class="tok-type">usize</span>, environ_buf_size: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_advise" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_advise</span><a href="#src.zig-std.os.wasi.fd_advise">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_advise</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, offset: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>, len: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>, advice: <a href="std.os.wasi.advice_t.html">advice_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>offset: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a></code></pre></div><div><pre><code>len: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a></code></pre></div><div><pre><code>advice: <a href="std.os.wasi.advice_t.html">advice_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_advise">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_advise</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, offset: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>, len: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>, advice: <a href="std.os.wasi.advice_t.html">advice_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_allocate" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_allocate</span><a href="#src.zig-std.os.wasi.fd_allocate">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_allocate</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, offset: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>, len: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>offset: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a></code></pre></div><div><pre><code>len: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_allocate">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_allocate</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, offset: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>, len: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_close" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_close</span><a href="#src.zig-std.os.wasi.fd_close">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_close</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_close">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_close</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_datasync" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_datasync</span><a href="#src.zig-std.os.wasi.fd_datasync">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_datasync</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_datasync">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_datasync</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_pread" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_pread</span><a href="#src.zig-std.os.wasi.fd_pread">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_pread</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, iovs: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec.html">iovec_t</a>, iovs_len: <span class="tok-type">usize</span>, offset: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>, nread: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>iovs: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec.html">iovec_t</a></code></pre></div><div><pre><code>iovs_len: <span class="tok-type">usize</span></code></pre></div><div><pre><code>offset: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a></code></pre></div><div><pre><code>nread: *<span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_pread">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_pread</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, iovs: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec.html">iovec_t</a>, iovs_len: <span class="tok-type">usize</span>, offset: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>, nread: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_pwrite" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_pwrite</span><a href="#src.zig-std.os.wasi.fd_pwrite">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_pwrite</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, iovs: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec_const.html">ciovec_t</a>, iovs_len: <span class="tok-type">usize</span>, offset: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>, nwritten: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>iovs: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec_const.html">ciovec_t</a></code></pre></div><div><pre><code>iovs_len: <span class="tok-type">usize</span></code></pre></div><div><pre><code>offset: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a></code></pre></div><div><pre><code>nwritten: *<span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_pwrite">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_pwrite</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, iovs: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec_const.html">ciovec_t</a>, iovs_len: <span class="tok-type">usize</span>, offset: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>, nwritten: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_read" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_read</span><a href="#src.zig-std.os.wasi.fd_read">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_read</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, iovs: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec.html">iovec_t</a>, iovs_len: <span class="tok-type">usize</span>, nread: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>iovs: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec.html">iovec_t</a></code></pre></div><div><pre><code>iovs_len: <span class="tok-type">usize</span></code></pre></div><div><pre><code>nread: *<span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_read">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_read</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, iovs: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec.html">iovec_t</a>, iovs_len: <span class="tok-type">usize</span>, nread: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_readdir" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_readdir</span><a href="#src.zig-std.os.wasi.fd_readdir">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_readdir</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, buf: [*]<span class="tok-type">u8</span>, buf_len: <span class="tok-type">usize</span>, cookie: <a href="std.os.wasi.html#std.os.wasi.dircookie_t">dircookie_t</a>, bufused: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>buf: [*]<span class="tok-type">u8</span></code></pre></div><div><pre><code>buf_len: <span class="tok-type">usize</span></code></pre></div><div><pre><code>cookie: <a href="std.os.wasi.html#std.os.wasi.dircookie_t">dircookie_t</a></code></pre></div><div><pre><code>bufused: *<span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_readdir">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_readdir</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, buf: [*]<span class="tok-type">u8</span>, buf_len: <span class="tok-type">usize</span>, cookie: <a href="std.os.wasi.html#std.os.wasi.dircookie_t">dircookie_t</a>, bufused: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_renumber" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_renumber</span><a href="#src.zig-std.os.wasi.fd_renumber">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_renumber</span>(from: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, to: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>from: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>to: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_renumber">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_renumber</span>(from: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, to: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_seek" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_seek</span><a href="#src.zig-std.os.wasi.fd_seek">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_seek</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, offset: <a href="std.os.wasi.html#std.os.wasi.filedelta_t">filedelta_t</a>, whence: <a href="std.os.wasi.whence_t.html">whence_t</a>, newoffset: *<a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>offset: <a href="std.os.wasi.html#std.os.wasi.filedelta_t">filedelta_t</a></code></pre></div><div><pre><code>whence: <a href="std.os.wasi.whence_t.html">whence_t</a></code></pre></div><div><pre><code>newoffset: *<a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_seek">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_seek</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, offset: <a href="std.os.wasi.html#std.os.wasi.filedelta_t">filedelta_t</a>, whence: <a href="std.os.wasi.whence_t.html">whence_t</a>, newoffset: *<a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_sync" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_sync</span><a href="#src.zig-std.os.wasi.fd_sync">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_sync</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_sync">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_sync</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_tell" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_tell</span><a href="#src.zig-std.os.wasi.fd_tell">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_tell</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, newoffset: *<a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>newoffset: *<a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_tell">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_tell</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, newoffset: *<a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_write" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_write</span><a href="#src.zig-std.os.wasi.fd_write">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_write</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, iovs: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec_const.html">ciovec_t</a>, iovs_len: <span class="tok-type">usize</span>, nwritten: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>iovs: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec_const.html">ciovec_t</a></code></pre></div><div><pre><code>iovs_len: <span class="tok-type">usize</span></code></pre></div><div><pre><code>nwritten: *<span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_write">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_write</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, iovs: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec_const.html">ciovec_t</a>, iovs_len: <span class="tok-type">usize</span>, nwritten: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_fdstat_get" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_fdstat_get</span><a href="#src.zig-std.os.wasi.fd_fdstat_get">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_fdstat_get</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, buf: *<a href="std.os.wasi.fdstat_t.html">fdstat_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>buf: *<a href="std.os.wasi.fdstat_t.html">fdstat_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_fdstat_get">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_fdstat_get</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, buf: *<a href="std.os.wasi.fdstat_t.html">fdstat_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_fdstat_set_flags" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_fdstat_set_flags</span><a href="#src.zig-std.os.wasi.fd_fdstat_set_flags">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_fdstat_set_flags</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, flags: <a href="std.os.wasi.fdflags_t.html">fdflags_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>flags: <a href="std.os.wasi.fdflags_t.html">fdflags_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_fdstat_set_flags">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_fdstat_set_flags</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, flags: <a href="std.os.wasi.fdflags_t.html">fdflags_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_fdstat_set_rights" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_fdstat_set_rights</span><a href="#src.zig-std.os.wasi.fd_fdstat_set_rights">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_fdstat_set_rights</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, fs_rights_base: <a href="std.os.wasi.rights_t.html">rights_t</a>, fs_rights_inheriting: <a href="std.os.wasi.rights_t.html">rights_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>fs_rights_base: <a href="std.os.wasi.rights_t.html">rights_t</a></code></pre></div><div><pre><code>fs_rights_inheriting: <a href="std.os.wasi.rights_t.html">rights_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_fdstat_set_rights">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_fdstat_set_rights</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, fs_rights_base: <a href="std.os.wasi.rights_t.html">rights_t</a>, fs_rights_inheriting: <a href="std.os.wasi.rights_t.html">rights_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_filestat_get" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_filestat_get</span><a href="#src.zig-std.os.wasi.fd_filestat_get">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_filestat_get</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, buf: *<a href="std.os.wasi.filestat_t.html">filestat_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>buf: *<a href="std.os.wasi.filestat_t.html">filestat_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_filestat_get">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_filestat_get</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, buf: *<a href="std.os.wasi.filestat_t.html">filestat_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_filestat_set_size" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_filestat_set_size</span><a href="#src.zig-std.os.wasi.fd_filestat_set_size">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_filestat_set_size</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, st_size: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>st_size: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_filestat_set_size">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_filestat_set_size</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, st_size: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_filestat_set_times" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_filestat_set_times</span><a href="#src.zig-std.os.wasi.fd_filestat_set_times">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_filestat_set_times</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, st_atim: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>, st_mtim: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>, fstflags: <a href="std.os.wasi.fstflags_t.html">fstflags_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>st_atim: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a></code></pre></div><div><pre><code>st_mtim: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a></code></pre></div><div><pre><code>fstflags: <a href="std.os.wasi.fstflags_t.html">fstflags_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_filestat_set_times">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_filestat_set_times</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, st_atim: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>, st_mtim: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>, fstflags: <a href="std.os.wasi.fstflags_t.html">fstflags_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_prestat_get" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_prestat_get</span><a href="#src.zig-std.os.wasi.fd_prestat_get">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_prestat_get</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, buf: *<a href="std.os.wasi.prestat_t.html">prestat_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>buf: *<a href="std.os.wasi.prestat_t.html">prestat_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_prestat_get">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_prestat_get</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, buf: *<a href="std.os.wasi.prestat_t.html">prestat_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.fd_prestat_dir_name" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd_prestat_dir_name</span><a href="#src.zig-std.os.wasi.fd_prestat_dir_name">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_prestat_dir_name</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, path: [*]<span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>path: [*]<span class="tok-type">u8</span></code></pre></div><div><pre><code>path_len: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.fd_prestat_dir_name">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_prestat_dir_name</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, path: [*]<span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.path_create_directory" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">path_create_directory</span><a href="#src.zig-std.os.wasi.path_create_directory">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_create_directory</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>path_len: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.path_create_directory">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_create_directory</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.path_filestat_get" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">path_filestat_get</span><a href="#src.zig-std.os.wasi.path_filestat_get">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_filestat_get</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, flags: <a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>, buf: *<a href="std.os.wasi.filestat_t.html">filestat_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>flags: <a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a></code></pre></div><div><pre><code>path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>path_len: <span class="tok-type">usize</span></code></pre></div><div><pre><code>buf: *<a href="std.os.wasi.filestat_t.html">filestat_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.path_filestat_get">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_filestat_get</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, flags: <a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>, buf: *<a href="std.os.wasi.filestat_t.html">filestat_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.path_filestat_set_times" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">path_filestat_set_times</span><a href="#src.zig-std.os.wasi.path_filestat_set_times">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_filestat_set_times</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, flags: <a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>, st_atim: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>, st_mtim: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>, fstflags: <a href="std.os.wasi.fstflags_t.html">fstflags_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>flags: <a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a></code></pre></div><div><pre><code>path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>path_len: <span class="tok-type">usize</span></code></pre></div><div><pre><code>st_atim: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a></code></pre></div><div><pre><code>st_mtim: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a></code></pre></div><div><pre><code>fstflags: <a href="std.os.wasi.fstflags_t.html">fstflags_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.path_filestat_set_times">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_filestat_set_times</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, flags: <a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>, st_atim: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>, st_mtim: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>, fstflags: <a href="std.os.wasi.fstflags_t.html">fstflags_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.path_link" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">path_link</span><a href="#src.zig-std.os.wasi.path_link">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_link</span>(old_fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, old_flags: <a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a>, old_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, old_path_len: <span class="tok-type">usize</span>, new_fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, new_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, new_path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>old_fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>old_flags: <a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a></code></pre></div><div><pre><code>old_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>old_path_len: <span class="tok-type">usize</span></code></pre></div><div><pre><code>new_fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>new_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>new_path_len: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.path_link">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_link</span>(old_fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, old_flags: <a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a>, old_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, old_path_len: <span class="tok-type">usize</span>, new_fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, new_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, new_path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.path_open" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">path_open</span><a href="#src.zig-std.os.wasi.path_open">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_open</span>(dirfd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, dirflags: <a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>, oflags: <a href="std.os.wasi.oflags_t.html">oflags_t</a>, fs_rights_base: <a href="std.os.wasi.rights_t.html">rights_t</a>, fs_rights_inheriting: <a href="std.os.wasi.rights_t.html">rights_t</a>, fs_flags: <a href="std.os.wasi.fdflags_t.html">fdflags_t</a>, fd: *<a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>dirfd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>dirflags: <a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a></code></pre></div><div><pre><code>path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>path_len: <span class="tok-type">usize</span></code></pre></div><div><pre><code>oflags: <a href="std.os.wasi.oflags_t.html">oflags_t</a></code></pre></div><div><pre><code>fs_rights_base: <a href="std.os.wasi.rights_t.html">rights_t</a></code></pre></div><div><pre><code>fs_rights_inheriting: <a href="std.os.wasi.rights_t.html">rights_t</a></code></pre></div><div><pre><code>fs_flags: <a href="std.os.wasi.fdflags_t.html">fdflags_t</a></code></pre></div><div><pre><code>fd: *<a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.path_open">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_open</span>(dirfd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, dirflags: <a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>, oflags: <a href="std.os.wasi.oflags_t.html">oflags_t</a>, fs_rights_base: <a href="std.os.wasi.rights_t.html">rights_t</a>, fs_rights_inheriting: <a href="std.os.wasi.rights_t.html">rights_t</a>, fs_flags: <a href="std.os.wasi.fdflags_t.html">fdflags_t</a>, fd: *<a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.path_readlink" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">path_readlink</span><a href="#src.zig-std.os.wasi.path_readlink">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_readlink</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>, buf: [*]<span class="tok-type">u8</span>, buf_len: <span class="tok-type">usize</span>, bufused: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>path_len: <span class="tok-type">usize</span></code></pre></div><div><pre><code>buf: [*]<span class="tok-type">u8</span></code></pre></div><div><pre><code>buf_len: <span class="tok-type">usize</span></code></pre></div><div><pre><code>bufused: *<span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.path_readlink">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_readlink</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>, buf: [*]<span class="tok-type">u8</span>, buf_len: <span class="tok-type">usize</span>, bufused: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.path_remove_directory" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">path_remove_directory</span><a href="#src.zig-std.os.wasi.path_remove_directory">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_remove_directory</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>path_len: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.path_remove_directory">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_remove_directory</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.path_rename" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">path_rename</span><a href="#src.zig-std.os.wasi.path_rename">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_rename</span>(old_fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, old_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, old_path_len: <span class="tok-type">usize</span>, new_fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, new_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, new_path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>old_fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>old_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>old_path_len: <span class="tok-type">usize</span></code></pre></div><div><pre><code>new_fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>new_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>new_path_len: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.path_rename">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_rename</span>(old_fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, old_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, old_path_len: <span class="tok-type">usize</span>, new_fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, new_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, new_path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.path_symlink" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">path_symlink</span><a href="#src.zig-std.os.wasi.path_symlink">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_symlink</span>(old_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, old_path_len: <span class="tok-type">usize</span>, fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, new_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, new_path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>old_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>old_path_len: <span class="tok-type">usize</span></code></pre></div><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>new_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>new_path_len: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.path_symlink">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_symlink</span>(old_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, old_path_len: <span class="tok-type">usize</span>, fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, new_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, new_path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.path_unlink_file" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">path_unlink_file</span><a href="#src.zig-std.os.wasi.path_unlink_file">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_unlink_file</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>path_len: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.path_unlink_file">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_unlink_file</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.poll_oneoff" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">poll_oneoff</span><a href="#src.zig-std.os.wasi.poll_oneoff">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">poll_oneoff</span>(in: *<span class="tok-kw">const</span> <a href="std.os.wasi.subscription_t.html">subscription_t</a>, out: *<a href="std.os.wasi.event_t.html">event_t</a>, nsubscriptions: <span class="tok-type">usize</span>, nevents: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>in: *<span class="tok-kw">const</span> <a href="std.os.wasi.subscription_t.html">subscription_t</a></code></pre></div><div><pre><code>out: *<a href="std.os.wasi.event_t.html">event_t</a></code></pre></div><div><pre><code>nsubscriptions: <span class="tok-type">usize</span></code></pre></div><div><pre><code>nevents: *<span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.poll_oneoff">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">poll_oneoff</span>(in: *<span class="tok-kw">const</span> <a href="std.os.wasi.subscription_t.html">subscription_t</a>, out: *<a href="std.os.wasi.event_t.html">event_t</a>, nsubscriptions: <span class="tok-type">usize</span>, nevents: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.proc_exit" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">proc_exit</span><a href="#src.zig-std.os.wasi.proc_exit">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">proc_exit</span>(rval: <a href="std.os.wasi.html#std.os.wasi.exitcode_t">exitcode_t</a>) <span class="tok-type">noreturn</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>rval: <a href="std.os.wasi.html#std.os.wasi.exitcode_t">exitcode_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.proc_exit">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">proc_exit</span>(rval: <a href="std.os.wasi.html#std.os.wasi.exitcode_t">exitcode_t</a>) <span class="tok-type">noreturn</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.random_get" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">random_get</span><a href="#src.zig-std.os.wasi.random_get">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">random_get</span>(buf: [*]<span class="tok-type">u8</span>, buf_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>buf: [*]<span class="tok-type">u8</span></code></pre></div><div><pre><code>buf_len: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.random_get">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">random_get</span>(buf: [*]<span class="tok-type">u8</span>, buf_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.sched_yield" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">sched_yield</span><a href="#src.zig-std.os.wasi.sched_yield">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">sched_yield</span>() <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.sched_yield">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">sched_yield</span>() <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.sock_accept" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">sock_accept</span><a href="#src.zig-std.os.wasi.sock_accept">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">sock_accept</span>(sock: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, flags: <a href="std.os.wasi.fdflags_t.html">fdflags_t</a>, result_fd: *<a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>sock: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>flags: <a href="std.os.wasi.fdflags_t.html">fdflags_t</a></code></pre></div><div><pre><code>result_fd: *<a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.sock_accept">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">sock_accept</span>(sock: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, flags: <a href="std.os.wasi.fdflags_t.html">fdflags_t</a>, result_fd: *<a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.sock_recv" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">sock_recv</span><a href="#src.zig-std.os.wasi.sock_recv">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">sock_recv</span>(sock: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, ri_data: [*]<a href="std.posix.iovec.html">iovec_t</a>, ri_data_len: <span class="tok-type">usize</span>, ri_flags: <a href="std.os.wasi.html#std.os.wasi.riflags_t">riflags_t</a>, ro_datalen: *<span class="tok-type">usize</span>, ro_flags: *<a href="std.os.wasi.html#std.os.wasi.roflags_t">roflags_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>sock: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>ri_data: [*]<a href="std.posix.iovec.html">iovec_t</a></code></pre></div><div><pre><code>ri_data_len: <span class="tok-type">usize</span></code></pre></div><div><pre><code>ri_flags: <a href="std.os.wasi.html#std.os.wasi.riflags_t">riflags_t</a></code></pre></div><div><pre><code>ro_datalen: *<span class="tok-type">usize</span></code></pre></div><div><pre><code>ro_flags: *<a href="std.os.wasi.html#std.os.wasi.roflags_t">roflags_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.sock_recv">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">sock_recv</span>(sock: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, ri_data: [*]<a href="std.posix.iovec.html">iovec_t</a>, ri_data_len: <span class="tok-type">usize</span>, ri_flags: <a href="std.os.wasi.html#std.os.wasi.riflags_t">riflags_t</a>, ro_datalen: *<span class="tok-type">usize</span>, ro_flags: *<a href="std.os.wasi.html#std.os.wasi.roflags_t">roflags_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.sock_send" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">sock_send</span><a href="#src.zig-std.os.wasi.sock_send">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">sock_send</span>(sock: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, si_data: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec_const.html">ciovec_t</a>, si_data_len: <span class="tok-type">usize</span>, si_flags: <a href="std.os.wasi.html#std.os.wasi.siflags_t">siflags_t</a>, so_datalen: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>sock: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>si_data: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec_const.html">ciovec_t</a></code></pre></div><div><pre><code>si_data_len: <span class="tok-type">usize</span></code></pre></div><div><pre><code>si_flags: <a href="std.os.wasi.html#std.os.wasi.siflags_t">siflags_t</a></code></pre></div><div><pre><code>so_datalen: *<span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.sock_send">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">sock_send</span>(sock: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, si_data: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec_const.html">ciovec_t</a>, si_data_len: <span class="tok-type">usize</span>, si_flags: <a href="std.os.wasi.html#std.os.wasi.siflags_t">siflags_t</a>, so_datalen: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.wasi.sock_shutdown" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">sock_shutdown</span><a href="#src.zig-std.os.wasi.sock_shutdown">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">sock_shutdown</span>(sock: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, how: <a href="std.os.wasi.sdflags_t.html">sdflags_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>sock: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a></code></pre></div><div><pre><code>how: <a href="std.os.wasi.sdflags_t.html">sdflags_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.wasi.sock_shutdown">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">sock_shutdown</span>(sock: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, how: <a href="std.os.wasi.sdflags_t.html">sdflags_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a></code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.os.wasi">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-comment">//! wasi_snapshot_preview1 spec available (in witx format) here:</span>
+<span class="tok-comment">//! * typenames -- https://github.com/WebAssembly/WASI/blob/main/legacy/preview1/witx/typenames.witx</span>
+<span class="tok-comment">//! * module -- https://github.com/WebAssembly/WASI/blob/main/legacy/preview1/witx/wasi_snapshot_preview1.witx</span>
+<span class="tok-comment">//! Note that libc API does *not* go in this file. wasi libc API goes into std/c.zig instead.</span>
+<span class="tok-kw">const</span> builtin = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;builtin&quot;</span>);
+<span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>);
+<span class="tok-kw">const</span> assert = <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>;
+
+<span class="tok-kw">comptime</span> {
+    <span class="tok-kw">if</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.os">os</a>.<a href="#">tag</a> == .wasi) {
+        <a href="std.debug.html#std.debug.assert">assert</a>(<span class="tok-builtin">@alignOf</span>(<span class="tok-type">i8</span>) == <span class="tok-number">1</span>);
+        <a href="std.debug.html#std.debug.assert">assert</a>(<span class="tok-builtin">@alignOf</span>(<span class="tok-type">u8</span>) == <span class="tok-number">1</span>);
+        <a href="std.debug.html#std.debug.assert">assert</a>(<span class="tok-builtin">@alignOf</span>(<span class="tok-type">i16</span>) == <span class="tok-number">2</span>);
+        <a href="std.debug.html#std.debug.assert">assert</a>(<span class="tok-builtin">@alignOf</span>(<span class="tok-type">u16</span>) == <span class="tok-number">2</span>);
+        <a href="std.debug.html#std.debug.assert">assert</a>(<span class="tok-builtin">@alignOf</span>(<span class="tok-type">i32</span>) == <span class="tok-number">4</span>);
+        <a href="std.debug.html#std.debug.assert">assert</a>(<span class="tok-builtin">@alignOf</span>(<span class="tok-type">u32</span>) == <span class="tok-number">4</span>);
+        <a href="std.debug.html#std.debug.assert">assert</a>(<span class="tok-builtin">@alignOf</span>(<span class="tok-type">i64</span>) == <span class="tok-number">8</span>);
+        <a href="std.debug.html#std.debug.assert">assert</a>(<span class="tok-builtin">@alignOf</span>(<span class="tok-type">u64</span>) == <span class="tok-number">8</span>);
+    }
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> iovec_t = <a href="std.html">std</a>.<a href="std.posix.html">posix</a>.<a href="std.posix.iovec.html">iovec</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ciovec_t = <a href="std.html">std</a>.<a href="std.posix.html">posix</a>.<a href="std.posix.iovec_const.html">iovec_const</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">args_get</span>(argv: [*][*:<span class="tok-number">0</span>]<span class="tok-type">u8</span>, argv_buf: [*]<span class="tok-type">u8</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">args_sizes_get</span>(argc: *<span class="tok-type">usize</span>, argv_buf_size: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">clock_res_get</span>(clock_id: <a href="std.os.wasi.clockid_t.html">clockid_t</a>, resolution: *<a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">clock_time_get</span>(clock_id: <a href="std.os.wasi.clockid_t.html">clockid_t</a>, precision: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>, timestamp: *<a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">environ_get</span>(environ: [*][*:<span class="tok-number">0</span>]<span class="tok-type">u8</span>, environ_buf: [*]<span class="tok-type">u8</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">environ_sizes_get</span>(environ_count: *<span class="tok-type">usize</span>, environ_buf_size: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_advise</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, offset: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>, len: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>, advice: <a href="std.os.wasi.advice_t.html">advice_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_allocate</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, offset: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>, len: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_close</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_datasync</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_pread</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, iovs: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec.html">iovec_t</a>, iovs_len: <span class="tok-type">usize</span>, offset: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>, nread: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_pwrite</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, iovs: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec_const.html">ciovec_t</a>, iovs_len: <span class="tok-type">usize</span>, offset: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>, nwritten: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_read</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, iovs: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec.html">iovec_t</a>, iovs_len: <span class="tok-type">usize</span>, nread: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_readdir</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, buf: [*]<span class="tok-type">u8</span>, buf_len: <span class="tok-type">usize</span>, cookie: <a href="std.os.wasi.html#std.os.wasi.dircookie_t">dircookie_t</a>, bufused: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_renumber</span>(from: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, to: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_seek</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, offset: <a href="std.os.wasi.html#std.os.wasi.filedelta_t">filedelta_t</a>, whence: <a href="std.os.wasi.whence_t.html">whence_t</a>, newoffset: *<a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_sync</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_tell</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, newoffset: *<a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_write</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, iovs: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec_const.html">ciovec_t</a>, iovs_len: <span class="tok-type">usize</span>, nwritten: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_fdstat_get</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, buf: *<a href="std.os.wasi.fdstat_t.html">fdstat_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_fdstat_set_flags</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, flags: <a href="std.os.wasi.fdflags_t.html">fdflags_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_fdstat_set_rights</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, fs_rights_base: <a href="std.os.wasi.rights_t.html">rights_t</a>, fs_rights_inheriting: <a href="std.os.wasi.rights_t.html">rights_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_filestat_get</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, buf: *<a href="std.os.wasi.filestat_t.html">filestat_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_filestat_set_size</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, st_size: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_filestat_set_times</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, st_atim: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>, st_mtim: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>, fstflags: <a href="std.os.wasi.fstflags_t.html">fstflags_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_prestat_get</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, buf: *<a href="std.os.wasi.prestat_t.html">prestat_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd_prestat_dir_name</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, path: [*]<span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_create_directory</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_filestat_get</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, flags: <a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>, buf: *<a href="std.os.wasi.filestat_t.html">filestat_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_filestat_set_times</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, flags: <a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>, st_atim: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>, st_mtim: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>, fstflags: <a href="std.os.wasi.fstflags_t.html">fstflags_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_link</span>(old_fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, old_flags: <a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a>, old_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, old_path_len: <span class="tok-type">usize</span>, new_fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, new_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, new_path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_open</span>(dirfd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, dirflags: <a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>, oflags: <a href="std.os.wasi.oflags_t.html">oflags_t</a>, fs_rights_base: <a href="std.os.wasi.rights_t.html">rights_t</a>, fs_rights_inheriting: <a href="std.os.wasi.rights_t.html">rights_t</a>, fs_flags: <a href="std.os.wasi.fdflags_t.html">fdflags_t</a>, fd: *<a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_readlink</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>, buf: [*]<span class="tok-type">u8</span>, buf_len: <span class="tok-type">usize</span>, bufused: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_remove_directory</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_rename</span>(old_fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, old_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, old_path_len: <span class="tok-type">usize</span>, new_fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, new_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, new_path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_symlink</span>(old_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, old_path_len: <span class="tok-type">usize</span>, fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, new_path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, new_path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">path_unlink_file</span>(fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, path: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, path_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">poll_oneoff</span>(in: *<span class="tok-kw">const</span> <a href="std.os.wasi.subscription_t.html">subscription_t</a>, out: *<a href="std.os.wasi.event_t.html">event_t</a>, nsubscriptions: <span class="tok-type">usize</span>, nevents: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">proc_exit</span>(rval: <a href="std.os.wasi.html#std.os.wasi.exitcode_t">exitcode_t</a>) <span class="tok-type">noreturn</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">random_get</span>(buf: [*]<span class="tok-type">u8</span>, buf_len: <span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">sched_yield</span>() <a href="std.os.wasi.errno_t.html">errno_t</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">sock_accept</span>(sock: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, flags: <a href="std.os.wasi.fdflags_t.html">fdflags_t</a>, result_fd: *<a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">sock_recv</span>(sock: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, ri_data: [*]<a href="std.posix.iovec.html">iovec_t</a>, ri_data_len: <span class="tok-type">usize</span>, ri_flags: <a href="std.os.wasi.html#std.os.wasi.riflags_t">riflags_t</a>, ro_datalen: *<span class="tok-type">usize</span>, ro_flags: *<a href="std.os.wasi.html#std.os.wasi.roflags_t">roflags_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">sock_send</span>(sock: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, si_data: [*]<span class="tok-kw">const</span> <a href="std.posix.iovec_const.html">ciovec_t</a>, si_data_len: <span class="tok-type">usize</span>, si_flags: <a href="std.os.wasi.html#std.os.wasi.siflags_t">siflags_t</a>, so_datalen: *<span class="tok-type">usize</span>) <a href="std.os.wasi.errno_t.html">errno_t</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;wasi_snapshot_preview1&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">sock_shutdown</span>(sock: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>, how: <a href="std.os.wasi.sdflags_t.html">sdflags_t</a>) <a href="std.os.wasi.errno_t.html">errno_t</a>;<span class="tok-comment">
+
+// As defined in the wasi_snapshot_preview1 spec file:
+// https://github.com/WebAssembly/WASI/blob/master/phases/snapshot/witx/typenames.witx
+</span><span class="tok-kw">pub</span> <span class="tok-kw">const</span> advice_t = <span class="tok-kw">enum</span>(<span class="tok-type">u8</span>) {
+    NORMAL = <span class="tok-number">0</span>,
+    SEQUENTIAL = <span class="tok-number">1</span>,
+    RANDOM = <span class="tok-number">2</span>,
+    WILLNEED = <span class="tok-number">3</span>,
+    DONTNEED = <span class="tok-number">4</span>,
+    NOREUSE = <span class="tok-number">5</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> clockid_t = <span class="tok-kw">enum</span>(<span class="tok-type">u32</span>) {
+    REALTIME = <span class="tok-number">0</span>,
+    MONOTONIC = <span class="tok-number">1</span>,
+    PROCESS_CPUTIME_ID = <span class="tok-number">2</span>,
+    THREAD_CPUTIME_ID = <span class="tok-number">3</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> device_t = <span class="tok-type">u64</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> dircookie_t = <span class="tok-type">u64</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> DIRCOOKIE_START: <a href="std.os.wasi.html#std.os.wasi.dircookie_t">dircookie_t</a> = <span class="tok-number">0</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> dirnamlen_t = <span class="tok-type">u32</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> dirent_t = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    next: <a href="std.os.wasi.html#std.os.wasi.dircookie_t">dircookie_t</a>,
+    ino: <a href="std.os.wasi.html#std.os.wasi.inode_t">inode_t</a>,
+    namlen: <a href="std.os.wasi.html#std.os.wasi.dirnamlen_t">dirnamlen_t</a>,
+    <span class="tok-type">type</span>: <a href="std.os.wasi.filetype_t.html">filetype_t</a>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> errno_t = <span class="tok-kw">enum</span>(<span class="tok-type">u16</span>) {
+    SUCCESS = <span class="tok-number">0</span>,
+    @&quot;2BIG&quot; = <span class="tok-number">1</span>,
+    ACCES = <span class="tok-number">2</span>,
+    ADDRINUSE = <span class="tok-number">3</span>,
+    ADDRNOTAVAIL = <span class="tok-number">4</span>,
+    AFNOSUPPORT = <span class="tok-number">5</span>,
+    <span class="tok-comment">/// This is also the error code used for `WOULDBLOCK`.</span>
+    AGAIN = <span class="tok-number">6</span>,
+    ALREADY = <span class="tok-number">7</span>,
+    BADF = <span class="tok-number">8</span>,
+    BADMSG = <span class="tok-number">9</span>,
+    BUSY = <span class="tok-number">10</span>,
+    CANCELED = <span class="tok-number">11</span>,
+    CHILD = <span class="tok-number">12</span>,
+    CONNABORTED = <span class="tok-number">13</span>,
+    CONNREFUSED = <span class="tok-number">14</span>,
+    CONNRESET = <span class="tok-number">15</span>,
+    DEADLK = <span class="tok-number">16</span>,
+    DESTADDRREQ = <span class="tok-number">17</span>,
+    DOM = <span class="tok-number">18</span>,
+    DQUOT = <span class="tok-number">19</span>,
+    EXIST = <span class="tok-number">20</span>,
+    FAULT = <span class="tok-number">21</span>,
+    FBIG = <span class="tok-number">22</span>,
+    HOSTUNREACH = <span class="tok-number">23</span>,
+    IDRM = <span class="tok-number">24</span>,
+    ILSEQ = <span class="tok-number">25</span>,
+    INPROGRESS = <span class="tok-number">26</span>,
+    INTR = <span class="tok-number">27</span>,
+    INVAL = <span class="tok-number">28</span>,
+    IO = <span class="tok-number">29</span>,
+    ISCONN = <span class="tok-number">30</span>,
+    ISDIR = <span class="tok-number">31</span>,
+    LOOP = <span class="tok-number">32</span>,
+    MFILE = <span class="tok-number">33</span>,
+    MLINK = <span class="tok-number">34</span>,
+    MSGSIZE = <span class="tok-number">35</span>,
+    MULTIHOP = <span class="tok-number">36</span>,
+    NAMETOOLONG = <span class="tok-number">37</span>,
+    NETDOWN = <span class="tok-number">38</span>,
+    NETRESET = <span class="tok-number">39</span>,
+    NETUNREACH = <span class="tok-number">40</span>,
+    NFILE = <span class="tok-number">41</span>,
+    NOBUFS = <span class="tok-number">42</span>,
+    NODEV = <span class="tok-number">43</span>,
+    NOENT = <span class="tok-number">44</span>,
+    NOEXEC = <span class="tok-number">45</span>,
+    NOLCK = <span class="tok-number">46</span>,
+    NOLINK = <span class="tok-number">47</span>,
+    NOMEM = <span class="tok-number">48</span>,
+    NOMSG = <span class="tok-number">49</span>,
+    NOPROTOOPT = <span class="tok-number">50</span>,
+    NOSPC = <span class="tok-number">51</span>,
+    NOSYS = <span class="tok-number">52</span>,
+    NOTCONN = <span class="tok-number">53</span>,
+    NOTDIR = <span class="tok-number">54</span>,
+    NOTEMPTY = <span class="tok-number">55</span>,
+    NOTRECOVERABLE = <span class="tok-number">56</span>,
+    NOTSOCK = <span class="tok-number">57</span>,
+    <span class="tok-comment">/// This is also the code used for `NOTSUP`.</span>
+    OPNOTSUPP = <span class="tok-number">58</span>,
+    NOTTY = <span class="tok-number">59</span>,
+    NXIO = <span class="tok-number">60</span>,
+    OVERFLOW = <span class="tok-number">61</span>,
+    OWNERDEAD = <span class="tok-number">62</span>,
+    PERM = <span class="tok-number">63</span>,
+    PIPE = <span class="tok-number">64</span>,
+    PROTO = <span class="tok-number">65</span>,
+    PROTONOSUPPORT = <span class="tok-number">66</span>,
+    PROTOTYPE = <span class="tok-number">67</span>,
+    RANGE = <span class="tok-number">68</span>,
+    ROFS = <span class="tok-number">69</span>,
+    SPIPE = <span class="tok-number">70</span>,
+    SRCH = <span class="tok-number">71</span>,
+    STALE = <span class="tok-number">72</span>,
+    TIMEDOUT = <span class="tok-number">73</span>,
+    TXTBSY = <span class="tok-number">74</span>,
+    XDEV = <span class="tok-number">75</span>,
+    NOTCAPABLE = <span class="tok-number">76</span>,
+    _,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> event_t = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    userdata: <a href="std.os.wasi.html#std.os.wasi.userdata_t">userdata_t</a>,
+    @&quot;error&quot;: <a href="std.os.wasi.errno_t.html">errno_t</a>,
+    <span class="tok-type">type</span>: <a href="std.os.wasi.eventtype_t.html">eventtype_t</a>,
+    fd_readwrite: <a href="std.os.wasi.eventfdreadwrite_t.html">eventfdreadwrite_t</a>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> eventfdreadwrite_t = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    nbytes: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>,
+    flags: <a href="std.os.wasi.html#std.os.wasi.eventrwflags_t">eventrwflags_t</a>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> eventrwflags_t = <span class="tok-type">u16</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> EVENT_FD_READWRITE_HANGUP: <a href="std.os.wasi.html#std.os.wasi.eventrwflags_t">eventrwflags_t</a> = <span class="tok-number">0x0001</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> eventtype_t = <span class="tok-kw">enum</span>(<span class="tok-type">u8</span>) {
+    CLOCK = <span class="tok-number">0</span>,
+    FD_READ = <span class="tok-number">1</span>,
+    FD_WRITE = <span class="tok-number">2</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> exitcode_t = <span class="tok-type">u32</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> fd_t = <span class="tok-type">i32</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> fdflags_t = <span class="tok-kw">packed</span> <span class="tok-kw">struct</span>(<span class="tok-type">u16</span>) {
+    APPEND: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    DSYNC: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    NONBLOCK: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    RSYNC: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    SYNC: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    _: <span class="tok-type">u11</span> = <span class="tok-number">0</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> fdstat_t = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    fs_filetype: <a href="std.os.wasi.filetype_t.html">filetype_t</a>,
+    fs_flags: <a href="std.os.wasi.fdflags_t.html">fdflags_t</a>,
+    fs_rights_base: <a href="std.os.wasi.rights_t.html">rights_t</a>,
+    fs_rights_inheriting: <a href="std.os.wasi.rights_t.html">rights_t</a>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> filedelta_t = <span class="tok-type">i64</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> filesize_t = <span class="tok-type">u64</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> filestat_t = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    dev: <a href="std.os.wasi.html#std.os.wasi.device_t">device_t</a>,
+    ino: <a href="std.os.wasi.html#std.os.wasi.inode_t">inode_t</a>,
+    filetype: <a href="std.os.wasi.filetype_t.html">filetype_t</a>,
+    nlink: <a href="std.os.wasi.html#std.os.wasi.linkcount_t">linkcount_t</a>,
+    size: <a href="std.os.wasi.html#std.os.wasi.filesize_t">filesize_t</a>,
+    atim: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>,
+    mtim: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>,
+    ctim: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> filetype_t = <span class="tok-kw">enum</span>(<span class="tok-type">u8</span>) {
+    UNKNOWN,
+    BLOCK_DEVICE,
+    CHARACTER_DEVICE,
+    DIRECTORY,
+    REGULAR_FILE,
+    SOCKET_DGRAM,
+    SOCKET_STREAM,
+    SYMBOLIC_LINK,
+    _,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> fstflags_t = <span class="tok-kw">packed</span> <span class="tok-kw">struct</span>(<span class="tok-type">u16</span>) {
+    ATIM: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    ATIM_NOW: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    MTIM: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    MTIM_NOW: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    _: <span class="tok-type">u12</span> = <span class="tok-number">0</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> inode_t = <span class="tok-type">u64</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> linkcount_t = <span class="tok-type">u64</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> lookupflags_t = <span class="tok-kw">packed</span> <span class="tok-kw">struct</span>(<span class="tok-type">u32</span>) {
+    SYMLINK_FOLLOW: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    _: <span class="tok-type">u31</span> = <span class="tok-number">0</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> oflags_t = <span class="tok-kw">packed</span> <span class="tok-kw">struct</span>(<span class="tok-type">u16</span>) {
+    CREAT: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    DIRECTORY: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    EXCL: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    TRUNC: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    _: <span class="tok-type">u12</span> = <span class="tok-number">0</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> preopentype_t = <span class="tok-type">u8</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> PREOPENTYPE_DIR: <a href="std.os.wasi.html#std.os.wasi.preopentype_t">preopentype_t</a> = <span class="tok-number">0</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> prestat_t = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    pr_type: <a href="std.os.wasi.html#std.os.wasi.preopentype_t">preopentype_t</a>,
+    u: <a href="std.os.wasi.prestat_u_t.html">prestat_u_t</a>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> prestat_dir_t = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    pr_name_len: <span class="tok-type">usize</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> prestat_u_t = <span class="tok-kw">extern</span> <span class="tok-kw">union</span> {
+    dir: <a href="std.os.wasi.prestat_dir_t.html">prestat_dir_t</a>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> riflags_t = <span class="tok-type">u16</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> roflags_t = <span class="tok-type">u16</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SOCK = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECV_PEEK: <a href="std.os.wasi.html#std.os.wasi.riflags_t">riflags_t</a> = <span class="tok-number">0x0001</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECV_WAITALL: <a href="std.os.wasi.html#std.os.wasi.riflags_t">riflags_t</a> = <span class="tok-number">0x0002</span>;
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> RECV_DATA_TRUNCATED: <a href="std.os.wasi.html#std.os.wasi.roflags_t">roflags_t</a> = <span class="tok-number">0x0001</span>;
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> rights_t = <span class="tok-kw">packed</span> <span class="tok-kw">struct</span>(<span class="tok-type">u64</span>) {
+    <span class="tok-comment">/// The right to invoke fd_datasync. If PATH_OPEN is set, includes the right to invoke</span>
+    <span class="tok-comment">/// path_open with fdflags_t.dsync.</span>
+    FD_DATASYNC: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke fd_read and sock_recv. If FD_SEEK is set, includes the right to invoke</span>
+    <span class="tok-comment">/// fd_pread.</span>
+    FD_READ: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke fd_seek. This flag implies FD_TELL.</span>
+    FD_SEEK: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke fd_fdstat_set_flags.</span>
+    FD_FDSTAT_SET_FLAGS: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke fd_sync. If PATH_OPEN is set, includes the right to invoke path_open</span>
+    <span class="tok-comment">/// with fdflags_t.RSYNC and fdflags_t.DSYNC.</span>
+    FD_SYNC: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke fd_seek in such a way that the file offset remains unaltered (i.e.</span>
+    <span class="tok-comment">/// whence_t.CUR with offset zero), or to invoke fd_tell.</span>
+    FD_TELL: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke fd_write and sock_send. If FD_SEEK is set, includes the right to invoke</span>
+    <span class="tok-comment">/// fd_pwrite.</span>
+    FD_WRITE: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke fd_advise.</span>
+    FD_ADVISE: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke fd_allocate.</span>
+    FD_ALLOCATE: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke path_create_directory.</span>
+    PATH_CREATE_DIRECTORY: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// If PATH_OPEN is set, the right to invoke path_open with oflags_t.CREAT.</span>
+    PATH_CREATE_FILE: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke path_link with the file descriptor as the source directory.</span>
+    PATH_LINK_SOURCE: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke path_link with the file descriptor as the target directory.</span>
+    PATH_LINK_TARGET: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke path_open.</span>
+    PATH_OPEN: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke fd_readdir.</span>
+    FD_READDIR: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke path_readlink.</span>
+    PATH_READLINK: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke path_rename with the file descriptor as the source directory.</span>
+    PATH_RENAME_SOURCE: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke path_rename with the file descriptor as the target directory.</span>
+    PATH_RENAME_TARGET: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke path_filestat_get.</span>
+    PATH_FILESTAT_GET: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to change a file's size. If PATH_OPEN is set, includes the right to invoke</span>
+    <span class="tok-comment">/// path_open with oflags_t.TRUNC. Note: there is no function named path_filestat_set_size.</span>
+    <span class="tok-comment">/// This follows POSIX design, which only has ftruncate and does not provide ftruncateat. While</span>
+    <span class="tok-comment">/// such function would be desirable from the API design perspective, there are virtually no</span>
+    <span class="tok-comment">/// use cases for it since no code written for POSIX systems would use it. Moreover,</span>
+    <span class="tok-comment">/// implementing it would require multiple syscalls, leading to inferior performance.</span>
+    PATH_FILESTAT_SET_SIZE: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke path_filestat_set_times.</span>
+    PATH_FILESTAT_SET_TIMES: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke fd_filestat_get.</span>
+    FD_FILESTAT_GET: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke fd_filestat_set_size.</span>
+    FD_FILESTAT_SET_SIZE: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke fd_filestat_set_times.</span>
+    FD_FILESTAT_SET_TIMES: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke path_symlink.</span>
+    PATH_SYMLINK: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke path_remove_directory.</span>
+    PATH_REMOVE_DIRECTORY: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke path_unlink_file.</span>
+    PATH_UNLINK_FILE: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// If FD_READ is set, includes the right to invoke poll_oneoff to subscribe to</span>
+    <span class="tok-comment">/// eventtype_t.FD_READ. If FD_WRITE is set, includes the right to invoke poll_oneoff to</span>
+    <span class="tok-comment">/// subscribe to eventtype_t.FD_WRITE.</span>
+    POLL_FD_READWRITE: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke sock_shutdown.</span>
+    SOCK_SHUTDOWN: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// The right to invoke sock_accept.</span>
+    SOCK_ACCEPT: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    _: <span class="tok-type">u34</span> = <span class="tok-number">0</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> sdflags_t = <span class="tok-kw">packed</span> <span class="tok-kw">struct</span>(<span class="tok-type">u8</span>) {
+    RD: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    WR: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    _: <span class="tok-type">u6</span> = <span class="tok-number">0</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> siflags_t = <span class="tok-type">u16</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> signal_t = <span class="tok-kw">enum</span>(<span class="tok-type">u8</span>) {
+    NONE = <span class="tok-number">0</span>,
+    HUP = <span class="tok-number">1</span>,
+    INT = <span class="tok-number">2</span>,
+    QUIT = <span class="tok-number">3</span>,
+    ILL = <span class="tok-number">4</span>,
+    TRAP = <span class="tok-number">5</span>,
+    ABRT = <span class="tok-number">6</span>,
+    BUS = <span class="tok-number">7</span>,
+    FPE = <span class="tok-number">8</span>,
+    KILL = <span class="tok-number">9</span>,
+    USR1 = <span class="tok-number">10</span>,
+    SEGV = <span class="tok-number">11</span>,
+    USR2 = <span class="tok-number">12</span>,
+    PIPE = <span class="tok-number">13</span>,
+    ALRM = <span class="tok-number">14</span>,
+    TERM = <span class="tok-number">15</span>,
+    CHLD = <span class="tok-number">16</span>,
+    CONT = <span class="tok-number">17</span>,
+    STOP = <span class="tok-number">18</span>,
+    TSTP = <span class="tok-number">19</span>,
+    TTIN = <span class="tok-number">20</span>,
+    TTOU = <span class="tok-number">21</span>,
+    URG = <span class="tok-number">22</span>,
+    XCPU = <span class="tok-number">23</span>,
+    XFSZ = <span class="tok-number">24</span>,
+    VTALRM = <span class="tok-number">25</span>,
+    PROF = <span class="tok-number">26</span>,
+    WINCH = <span class="tok-number">27</span>,
+    POLL = <span class="tok-number">28</span>,
+    PWR = <span class="tok-number">29</span>,
+    SYS = <span class="tok-number">30</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> subclockflags_t = <span class="tok-type">u16</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SUBSCRIPTION_CLOCK_ABSTIME: <a href="std.os.wasi.html#std.os.wasi.subclockflags_t">subclockflags_t</a> = <span class="tok-number">0x0001</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> subscription_t = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    userdata: <a href="std.os.wasi.html#std.os.wasi.userdata_t">userdata_t</a>,
+    u: <a href="std.os.wasi.subscription_u_t.html">subscription_u_t</a>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> subscription_clock_t = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    id: <a href="std.os.wasi.clockid_t.html">clockid_t</a>,
+    timeout: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>,
+    precision: <a href="std.os.wasi.html#std.os.wasi.timestamp_t">timestamp_t</a>,
+    flags: <a href="std.os.wasi.html#std.os.wasi.subclockflags_t">subclockflags_t</a>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> subscription_fd_readwrite_t = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    fd: <a href="std.os.wasi.html#std.os.wasi.fd_t">fd_t</a>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> subscription_u_t = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    tag: <a href="std.os.wasi.eventtype_t.html">eventtype_t</a>,
+    u: <a href="std.os.wasi.subscription_u_u_t.html">subscription_u_u_t</a>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> subscription_u_u_t = <span class="tok-kw">extern</span> <span class="tok-kw">union</span> {
+    clock: <a href="std.os.wasi.subscription_clock_t.html">subscription_clock_t</a>,
+    fd_read: <a href="std.os.wasi.subscription_fd_readwrite_t.html">subscription_fd_readwrite_t</a>,
+    fd_write: <a href="std.os.wasi.subscription_fd_readwrite_t.html">subscription_fd_readwrite_t</a>,
+};
+
+<span class="tok-comment">/// Nanoseconds.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> timestamp_t = <span class="tok-type">u64</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> userdata_t = <span class="tok-type">u64</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> whence_t = <span class="tok-kw">enum</span>(<span class="tok-type">u8</span>) { SET, CUR, END };</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

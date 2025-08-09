@@ -1,0 +1,1222 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">compress</a></li><li><a href="std.compress.html" class="">flate</a></li><li><a href="std.compress.flate.deflate.html" class="active">deflate</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.compress.flate.deflate" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.compress.flate.deflate</span><a href="#src.zig-std.compress.flate.deflate">[src]</a></h1><div class="sectNamespaces"><h2 class="sectionHeader">Namespaces</h2><ul class="listNamespaces columns"><li><a href="std.compress.flate.deflate.huffman.html">std.compress.flate.deflate.huffman</a></li><li><a href="std.compress.flate.deflate.store.html">std.compress.flate.deflate.store</a></li></ul></div><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.compress.flate.deflate.Options.html">std.compress.flate.deflate.Options</a></li><li><a href="std.compress.flate.deflate.Level.html">std.compress.flate.deflate.Level</a></li></ul></div><div class="sectTypes"><h2 class="sectionHeader">Types</h2><div class="listTypes"><div class="decl"><h2 id="std.compress.flate.deflate.Compressor" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">Compressor</span><a href="#src.zig-std.compress.flate.deflate.Compressor">[src]</a></h2><div class="tldDocs"><p>Compressor type.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>container: <a href="std.compress.flate.container.Container.html">Container</a></code></pre></div><div><pre><code>WriterType: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectTypes"><h3 class="sectionHeader">Types</h3><div class="listTypes"><div class="decl"><h3 id="std.compress.flate.deflate.Deflate.Writer" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">Writer</span><a href="#src.zig-std.compress.flate.deflate.Deflate.Writer">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.deflate.Deflate.Writer">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Writer = <a href="std.io.html">io</a>.<a href="std.io.html#std.io.GenericWriter">Writer</a>(*<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>, <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate.Error">Error</a>, <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate.write">write</a>)</code></pre></details></div></div></div></div><div class="sectFields"><h3 class="sectionHeader">Fields</h3><div class="listFields"><div><pre><code>lookup: <a href="std.compress.flate.Lookup.html">Lookup</a> = .{}</code></pre></div><div><pre><code>win: <a href="std.compress.flate.SlidingWindow.html">SlidingWindow</a> = .{}</code></pre></div><div><pre><code>tokens: <a href="std.compress.flate.deflate.Tokens.html">Tokens</a> = .{}</code></pre></div><div><pre><code>wrt: WriterType</code></pre></div><div><pre><code>block_writer: BlockWriterType</code></pre></div><div><pre><code>level: <a href="std.compress.flate.deflate.LevelArgs.html">LevelArgs</a></code></pre></div><div><pre><code>hasher: container.Hasher() = .{}</code></pre></div><div><pre><code>prev_match: ?<a href="std.compress.flate.Token.html">Token</a> = <span class="tok-null">null</span></code></pre></div><div><pre><code>prev_literal: ?<span class="tok-type">u8</span> = <span class="tok-null">null</span></code></pre></div></div></div><div class="sectValues"><h3 class="sectionHeader">Values</h3><div class="listValues"><div class="decl"><h3 id="std.compress.flate.deflate.Deflate.Error" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Error</span><a href="#src.zig-std.compress.flate.deflate.Deflate.Error">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.deflate.Deflate.Error">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = BlockWriterType.Error</code></pre></details></div></div></div></div><div class="sectFns"><h3 class="sectionHeader">Functions</h3><div class="listFns"><div class="decl"><h3 id="std.compress.flate.deflate.Deflate.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.compress.flate.deflate.Deflate.init">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(wrt: WriterType, options: <a href="std.compress.flate.deflate.Options.html">Options</a>) !<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>wrt: WriterType</code></pre></div><div><pre><code>options: <a href="std.compress.flate.deflate.Options.html">Options</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.deflate.Deflate.init">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(wrt: WriterType, options: <a href="std.compress.flate.deflate.Options.html">Options</a>) !<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a> {
+    <span class="tok-kw">const</span> self = <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>{
+        .wrt = wrt,
+        .block_writer = BlockWriterType.init(wrt),
+        .level = <a href="std.compress.flate.deflate.LevelArgs.html">LevelArgs</a>.<a href="std.compress.flate.deflate.LevelArgs.html#std.compress.flate.deflate.LevelArgs.get">get</a>(options.level),
+    };
+    <span class="tok-kw">try</span> container.writeHeader(self.wrt);
+    <span class="tok-kw">return</span> self;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.deflate.Deflate.compress" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">compress</span><a href="#src.zig-std.compress.flate.deflate.Deflate.compress">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compress</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>, reader: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Compresses as much data as possible, stops when the reader becomes
+empty. It will introduce some output latency (reading input without
+producing all output) because some data are still in internal
+buffers.</p>
+<p>It is up to the caller to call flush (if needed) or finish (required)
+when is need to output any pending data or complete stream.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.deflate.Deflate.compress">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compress</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>, reader: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {<span class="tok-comment">
+        // Fill window from reader
+        </span><span class="tok-kw">const</span> buf = self.win.writable();
+        <span class="tok-kw">if</span> (buf.len == <span class="tok-number">0</span>) {
+            <span class="tok-kw">try</span> self.tokenize(.none);
+            self.slide();
+            <span class="tok-kw">continue</span>;
+        }
+        <span class="tok-kw">const</span> n = <span class="tok-kw">try</span> reader.readAll(buf);
+        self.hasher.update(buf[<span class="tok-number">0</span>..n]);
+        self.win.written(n);<span class="tok-comment">
+        // Process window
+        </span><span class="tok-kw">try</span> self.tokenize(.none);<span class="tok-comment">
+        // Exit when no more data in reader
+        </span><span class="tok-kw">if</span> (n &lt; buf.len) <span class="tok-kw">break</span>;
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.deflate.Deflate.flush" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">flush</span><a href="#src.zig-std.compress.flate.deflate.Deflate.flush">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">flush</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Flushes internal buffers to the output writer. Outputs empty stored
+block to sync bit stream to the byte boundary, so that the
+decompressor can get all input data available so far.</p>
+<p>It is useful mainly in compressed network protocols, to ensure that
+deflate bit stream can be used as byte stream. May degrade
+compression so it should be used only when necessary.</p>
+<p>Completes the current deflate block and follows it with an empty
+stored block that is three zero bits plus filler bits to the next
+byte, followed by four bytes (00 00 ff ff).</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.deflate.Deflate.flush">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">flush</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">try</span> self.tokenize(.flush);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.deflate.Deflate.finish" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">finish</span><a href="#src.zig-std.compress.flate.deflate.Deflate.finish">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">finish</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Completes deflate bit stream by writing any pending data as deflate
+final deflate block. HAS to be called once all data are written to
+the compressor as a signal that next block has to have final bit
+set.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.deflate.Deflate.finish">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">finish</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">try</span> self.tokenize(.final);
+    <span class="tok-kw">try</span> container.writeFooter(&amp;self.hasher, self.wrt);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.deflate.Deflate.setWriter" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">setWriter</span><a href="#src.zig-std.compress.flate.deflate.Deflate.setWriter">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setWriter</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>, new_writer: WriterType) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Use another writer while preserving history. Most probably flush
+should be called on old writer before setting new.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a></code></pre></div><div><pre><code>new_writer: WriterType</code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.deflate.Deflate.setWriter">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setWriter</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>, new_writer: WriterType) <span class="tok-type">void</span> {
+    self.block_writer.setWriter(new_writer);
+    self.wrt = new_writer;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.deflate.Deflate.write" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">write</span><a href="#src.zig-std.compress.flate.deflate.Deflate.write">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">write</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>, input: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">usize</span></code></pre></div><div class="tldDocs"><p>Write <code>input</code> of uncompressed data.
+See compress.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a></code></pre></div><div><pre><code>input: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.deflate.Deflate.write">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">write</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>, input: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">usize</span> {
+    <span class="tok-kw">var</span> fbs = <a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(input);
+    <span class="tok-kw">try</span> self.compress(fbs.reader());
+    <span class="tok-kw">return</span> input.len;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.deflate.Deflate.writer" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">writer</span><a href="#src.zig-std.compress.flate.deflate.Deflate.writer">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writer</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>) <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate.Writer">Writer</a></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.deflate.Deflate.writer">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writer</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>) <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate.Writer">Writer</a> {
+    <span class="tok-kw">return</span> .{ .context = self };
+}</code></pre></details></div></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.flate.deflate.Compressor">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">Compressor</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, <span class="tok-kw">comptime</span> WriterType: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">const</span> TokenWriterType = <a href="std.compress.flate.block_writer.html#std.compress.flate.block_writer.BlockWriter">BlockWriter</a>(WriterType);
+    <span class="tok-kw">return</span> <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Deflate</a>(container, WriterType, TokenWriterType);
+}</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.compress.flate.deflate.compress" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">compress</span><a href="#src.zig-std.compress.flate.deflate.compress">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compress</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, reader: <span class="tok-kw">anytype</span>, writer: <span class="tok-kw">anytype</span>, options: <a href="std.compress.flate.deflate.Options.html">Options</a>) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Compress plain data from reader into compressed stream written to writer.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>container: <a href="std.compress.flate.container.Container.html">Container</a></code></pre></div><div><pre><code>options: <a href="std.compress.flate.deflate.Options.html">Options</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.flate.deflate.compress">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compress</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, reader: <span class="tok-kw">anytype</span>, writer: <span class="tok-kw">anytype</span>, options: <a href="std.compress.flate.deflate.Options.html">Options</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> c = <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.compressor">compressor</a>(container, writer, options);
+    <span class="tok-kw">try</span> c.compress(reader);
+    <span class="tok-kw">try</span> c.finish();
+}</code></pre></details></div></div><div class="decl"><h2 id="std.compress.flate.deflate.compressor" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">compressor</span><a href="#src.zig-std.compress.flate.deflate.compressor">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compressor</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, writer: <span class="tok-kw">anytype</span>, options: <a href="std.compress.flate.deflate.Options.html">Options</a>) !<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Compressor">Compressor</a>( container, <span class="tok-builtin">@TypeOf</span>(writer), )</code></pre></div><div class="tldDocs"><p>Create compressor for writer type.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>container: <a href="std.compress.flate.container.Container.html">Container</a></code></pre></div><div><pre><code>options: <a href="std.compress.flate.deflate.Options.html">Options</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.flate.deflate.compressor">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compressor</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, writer: <span class="tok-kw">anytype</span>, options: <a href="std.compress.flate.deflate.Options.html">Options</a>) !<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Compressor">Compressor</a>(
+    container,
+    <span class="tok-builtin">@TypeOf</span>(writer),
+) {
+    <span class="tok-kw">return</span> <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Compressor">Compressor</a>(container, <span class="tok-builtin">@TypeOf</span>(writer)).init(writer, options);
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.compress.flate.deflate">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>);
+<span class="tok-kw">const</span> io = <a href="std.html">std</a>.<a href="std.io.html">io</a>;
+<span class="tok-kw">const</span> assert = <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>;
+<span class="tok-kw">const</span> testing = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>;
+<span class="tok-kw">const</span> expect = <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>;
+<span class="tok-kw">const</span> print = <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.print">print</a>;
+
+<span class="tok-kw">const</span> Token = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;Token.zig&quot;</span>);
+<span class="tok-kw">const</span> consts = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;consts.zig&quot;</span>);
+<span class="tok-kw">const</span> BlockWriter = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;block_writer.zig&quot;</span>).BlockWriter;
+<span class="tok-kw">const</span> Container = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;container.zig&quot;</span>).Container;
+<span class="tok-kw">const</span> SlidingWindow = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;SlidingWindow.zig&quot;</span>);
+<span class="tok-kw">const</span> Lookup = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;Lookup.zig&quot;</span>);
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Options = <span class="tok-kw">struct</span> {
+    level: <a href="std.compress.flate.deflate.Level.html">Level</a> = .default,
+};
+
+<span class="tok-comment">/// Trades between speed and compression size.</span>
+<span class="tok-comment">/// Starts with level 4: in [zlib](https://github.com/madler/zlib/blob/abd3d1a28930f89375d4b41408b39f6c1be157b2/deflate.c#L115C1-L117C43)</span>
+<span class="tok-comment">/// levels 1-3 are using different algorithm to perform faster but with less</span>
+<span class="tok-comment">/// compression. That is not implemented here.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Level = <span class="tok-kw">enum</span>(<span class="tok-type">u4</span>) {<span class="tok-comment">
+    // zig fmt: off
+    </span>fast = <span class="tok-number">0xb</span>,         level_4 = <span class="tok-number">4</span>,
+                        level_5 = <span class="tok-number">5</span>,
+    default = <span class="tok-number">0xc</span>,      level_6 = <span class="tok-number">6</span>,
+                        level_7 = <span class="tok-number">7</span>,
+                        level_8 = <span class="tok-number">8</span>,
+    best = <span class="tok-number">0xd</span>,         level_9 = <span class="tok-number">9</span>,<span class="tok-comment">
+    // zig fmt: on
+</span>};
+
+<span class="tok-comment">/// Algorithm knobs for each level.</span>
+<span class="tok-kw">const</span> LevelArgs = <span class="tok-kw">struct</span> {
+    good: <span class="tok-type">u16</span>,<span class="tok-comment"> // Do less lookups if we already have match of this length.
+    </span>nice: <span class="tok-type">u16</span>,<span class="tok-comment"> // Stop looking for better match if we found match with at least this length.
+    </span>lazy: <span class="tok-type">u16</span>,<span class="tok-comment"> // Don't do lazy match find if got match with at least this length.
+    </span>chain: <span class="tok-type">u16</span>,<span class="tok-comment"> // How many lookups for previous match to perform.
+
+    </span><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(level: <a href="std.compress.flate.deflate.Level.html">Level</a>) <a href="std.compress.flate.deflate.LevelArgs.html">LevelArgs</a> {<span class="tok-comment">
+        // zig fmt: off
+        </span><span class="tok-kw">return</span> <span class="tok-kw">switch</span> (level) {
+            .fast,    .level_4 =&gt; .{ .good =  <span class="tok-number">4</span>, .lazy =   <span class="tok-number">4</span>, .nice =  <span class="tok-number">16</span>, .chain =   <span class="tok-number">16</span> },
+                      .level_5 =&gt; .{ .good =  <span class="tok-number">8</span>, .lazy =  <span class="tok-number">16</span>, .nice =  <span class="tok-number">32</span>, .chain =   <span class="tok-number">32</span> },
+            .default, .level_6 =&gt; .{ .good =  <span class="tok-number">8</span>, .lazy =  <span class="tok-number">16</span>, .nice = <span class="tok-number">128</span>, .chain =  <span class="tok-number">128</span> },
+                      .level_7 =&gt; .{ .good =  <span class="tok-number">8</span>, .lazy =  <span class="tok-number">32</span>, .nice = <span class="tok-number">128</span>, .chain =  <span class="tok-number">256</span> },
+                      .level_8 =&gt; .{ .good = <span class="tok-number">32</span>, .lazy = <span class="tok-number">128</span>, .nice = <span class="tok-number">258</span>, .chain = <span class="tok-number">1024</span> },
+            .best,    .level_9 =&gt; .{ .good = <span class="tok-number">32</span>, .lazy = <span class="tok-number">258</span>, .nice = <span class="tok-number">258</span>, .chain = <span class="tok-number">4096</span> },
+        };<span class="tok-comment">
+        // zig fmt: on
+    </span>}
+};
+
+<span class="tok-comment">/// Compress plain data from reader into compressed stream written to writer.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compress</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, reader: <span class="tok-kw">anytype</span>, writer: <span class="tok-kw">anytype</span>, options: <a href="std.compress.flate.deflate.Options.html">Options</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> c = <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.compressor">compressor</a>(container, writer, options);
+    <span class="tok-kw">try</span> c.compress(reader);
+    <span class="tok-kw">try</span> c.finish();
+}
+
+<span class="tok-comment">/// Create compressor for writer type.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compressor</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, writer: <span class="tok-kw">anytype</span>, options: <a href="std.compress.flate.deflate.Options.html">Options</a>) !<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Compressor">Compressor</a>(
+    container,
+    <span class="tok-builtin">@TypeOf</span>(writer),
+) {
+    <span class="tok-kw">return</span> <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Compressor">Compressor</a>(container, <span class="tok-builtin">@TypeOf</span>(writer)).init(writer, options);
+}
+
+<span class="tok-comment">/// Compressor type.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">Compressor</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, <span class="tok-kw">comptime</span> WriterType: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">const</span> TokenWriterType = <a href="std.compress.flate.block_writer.html#std.compress.flate.block_writer.BlockWriter">BlockWriter</a>(WriterType);
+    <span class="tok-kw">return</span> <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Deflate</a>(container, WriterType, TokenWriterType);
+}
+
+<span class="tok-comment">/// Default compression algorithm. Has two steps: tokenization and token</span>
+<span class="tok-comment">/// encoding.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Tokenization takes uncompressed input stream and produces list of tokens.</span>
+<span class="tok-comment">/// Each token can be literal (byte of data) or match (backrefernce to previous</span>
+<span class="tok-comment">/// data with length and distance). Tokenization accumulators 32K tokens, when</span>
+<span class="tok-comment">/// full or `flush` is called tokens are passed to the `block_writer`. Level</span>
+<span class="tok-comment">/// defines how hard (how slow) it tries to find match.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Block writer will decide which type of deflate block to write (stored, fixed,</span>
+<span class="tok-comment">/// dynamic) and encode tokens to the output byte stream. Client has to call</span>
+<span class="tok-comment">/// `finish` to write block with the final bit set.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Container defines type of header and footer which can be gzip, zlib or raw.</span>
+<span class="tok-comment">/// They all share same deflate body. Raw has no header or footer just deflate</span>
+<span class="tok-comment">/// body.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Compression algorithm explained in rfc-1951 (slightly edited for this case):</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">///   The compressor uses a chained hash table `lookup` to find duplicated</span>
+<span class="tok-comment">///   strings, using a hash function that operates on 4-byte sequences. At any</span>
+<span class="tok-comment">///   given point during compression, let XYZW be the next 4 input bytes</span>
+<span class="tok-comment">///   (lookahead) to be examined (not necessarily all different, of course).</span>
+<span class="tok-comment">///   First, the compressor examines the hash chain for XYZW. If the chain is</span>
+<span class="tok-comment">///   empty, the compressor simply writes out X as a literal byte and advances</span>
+<span class="tok-comment">///   one byte in the input. If the hash chain is not empty, indicating that the</span>
+<span class="tok-comment">///   sequence XYZW (or, if we are unlucky, some other 4 bytes with the same</span>
+<span class="tok-comment">///   hash function value) has occurred recently, the compressor compares all</span>
+<span class="tok-comment">///   strings on the XYZW hash chain with the actual input data sequence</span>
+<span class="tok-comment">///   starting at the current point, and selects the longest match.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">///   To improve overall compression, the compressor defers the selection of</span>
+<span class="tok-comment">///   matches (&quot;lazy matching&quot;): after a match of length N has been found, the</span>
+<span class="tok-comment">///   compressor searches for a longer match starting at the next input byte. If</span>
+<span class="tok-comment">///   it finds a longer match, it truncates the previous match to a length of</span>
+<span class="tok-comment">///   one (thus producing a single literal byte) and then emits the longer</span>
+<span class="tok-comment">///   match. Otherwise, it emits the original match, and, as described above,</span>
+<span class="tok-comment">///   advances N bytes before continuing.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Allocates statically ~400K (192K lookup, 128K tokens, 64K window).</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Deflate function accepts BlockWriterType so we can change that in test to test</span>
+<span class="tok-comment">/// just tokenization part.</span>
+<span class="tok-comment">///</span>
+<span class="tok-kw">fn</span> <span class="tok-fn">Deflate</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, <span class="tok-kw">comptime</span> WriterType: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> BlockWriterType: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        lookup: <a href="std.compress.flate.Lookup.html">Lookup</a> = .{},
+        win: <a href="std.compress.flate.SlidingWindow.html">SlidingWindow</a> = .{},
+        tokens: <a href="std.compress.flate.deflate.Tokens.html">Tokens</a> = .{},
+        wrt: WriterType,
+        block_writer: BlockWriterType,
+        level: <a href="std.compress.flate.deflate.LevelArgs.html">LevelArgs</a>,
+        hasher: container.Hasher() = .{},<span class="tok-comment">
+
+        // Match and literal at the previous position.
+        // Used for lazy match finding in processWindow.
+        </span>prev_match: ?<a href="std.compress.flate.Token.html">Token</a> = <span class="tok-null">null</span>,
+        prev_literal: ?<span class="tok-type">u8</span> = <span class="tok-null">null</span>,
+
+        <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(wrt: WriterType, options: <a href="std.compress.flate.deflate.Options.html">Options</a>) !<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a> {
+            <span class="tok-kw">const</span> self = <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>{
+                .wrt = wrt,
+                .block_writer = BlockWriterType.init(wrt),
+                .level = <a href="std.compress.flate.deflate.LevelArgs.html">LevelArgs</a>.<a href="std.compress.flate.deflate.LevelArgs.html#std.compress.flate.deflate.LevelArgs.get">get</a>(options.level),
+            };
+            <span class="tok-kw">try</span> container.writeHeader(self.wrt);
+            <span class="tok-kw">return</span> self;
+        }
+
+        <span class="tok-kw">const</span> FlushOption = <span class="tok-kw">enum</span> { none, <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate.flush">flush</a>, final };<span class="tok-comment">
+
+        // Process data in window and create tokens. If token buffer is full
+        // flush tokens to the token writer. In the case of `flush` or `final`
+        // option it will process all data from the window. In the `none` case
+        // it will preserve some data for the next match.
+        </span><span class="tok-kw">fn</span> <span class="tok-fn">tokenize</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>, flush_opt: <a href="std.compress.flate.deflate.Deflate.FlushOption.html">FlushOption</a>) !<span class="tok-type">void</span> {<span class="tok-comment">
+            // flush - process all data from window
+            </span><span class="tok-kw">const</span> should_flush = (flush_opt != .none);<span class="tok-comment">
+
+            // While there is data in active lookahead buffer.
+            </span><span class="tok-kw">while</span> (self.win.activeLookahead(should_flush)) |lh| {
+                <span class="tok-kw">var</span> step: <span class="tok-type">u16</span> = <span class="tok-number">1</span>;<span class="tok-comment"> // 1 in the case of literal, match length otherwise
+                </span><span class="tok-kw">const</span> pos: <span class="tok-type">u16</span> = self.win.pos();
+                <span class="tok-kw">const</span> literal = lh[<span class="tok-number">0</span>];<span class="tok-comment"> // literal at current position
+                </span><span class="tok-kw">const</span> min_len: <span class="tok-type">u16</span> = <span class="tok-kw">if</span> (self.prev_match) |m| m.length() <span class="tok-kw">else</span> <span class="tok-number">0</span>;<span class="tok-comment">
+
+                // Try to find match at least min_len long.
+                </span><span class="tok-kw">if</span> (self.findMatch(pos, lh, min_len)) |match| {<span class="tok-comment">
+                    // Found better match than previous.
+                    </span><span class="tok-kw">try</span> self.addPrevLiteral();<span class="tok-comment">
+
+                    // Is found match length good enough?
+                    </span><span class="tok-kw">if</span> (match.length() &gt;= self.level.lazy) {<span class="tok-comment">
+                        // Don't try to lazy find better match, use this.
+                        </span>step = <span class="tok-kw">try</span> self.addMatch(match);
+                    } <span class="tok-kw">else</span> {<span class="tok-comment">
+                        // Store this match.
+                        </span>self.prev_literal = literal;
+                        self.prev_match = match;
+                    }
+                } <span class="tok-kw">else</span> {<span class="tok-comment">
+                    // There is no better match at current pos then it was previous.
+                    // Write previous match or literal.
+                    </span><span class="tok-kw">if</span> (self.prev_match) |m| {<span class="tok-comment">
+                        // Write match from previous position.
+                        </span>step = <span class="tok-kw">try</span> self.addMatch(m) - <span class="tok-number">1</span>;<span class="tok-comment"> // we already advanced 1 from previous position
+                    </span>} <span class="tok-kw">else</span> {<span class="tok-comment">
+                        // No match at previous position.
+                        // Write previous literal if any, and remember this literal.
+                        </span><span class="tok-kw">try</span> self.addPrevLiteral();
+                        self.prev_literal = literal;
+                    }
+                }<span class="tok-comment">
+                // Advance window and add hashes.
+                </span>self.windowAdvance(step, lh, pos);
+            }
+
+            <span class="tok-kw">if</span> (should_flush) {<span class="tok-comment">
+                // In the case of flushing, last few lookahead buffers were smaller then min match len.
+                // So only last literal can be unwritten.
+                </span><a href="std.debug.html#std.debug.assert">assert</a>(self.prev_match == <span class="tok-null">null</span>);
+                <span class="tok-kw">try</span> self.addPrevLiteral();
+                self.prev_literal = <span class="tok-null">null</span>;
+
+                <span class="tok-kw">try</span> self.flushTokens(flush_opt);
+            }
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">windowAdvance</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>, step: <span class="tok-type">u16</span>, lh: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, pos: <span class="tok-type">u16</span>) <span class="tok-type">void</span> {<span class="tok-comment">
+            // current position is already added in findMatch
+            </span>self.lookup.bulkAdd(lh[<span class="tok-number">1</span>..], step - <span class="tok-number">1</span>, pos + <span class="tok-number">1</span>);
+            self.win.advance(step);
+        }<span class="tok-comment">
+
+        // Add previous literal (if any) to the tokens list.
+        </span><span class="tok-kw">fn</span> <span class="tok-fn">addPrevLiteral</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">if</span> (self.prev_literal) |l| <span class="tok-kw">try</span> self.addToken(<a href="std.compress.flate.Token.html">Token</a>.<a href="std.compress.flate.Token.html#std.compress.flate.Token.initLiteral">initLiteral</a>(l));
+        }<span class="tok-comment">
+
+        // Add match to the tokens list, reset prev pointers.
+        // Returns length of the added match.
+        </span><span class="tok-kw">fn</span> <span class="tok-fn">addMatch</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>, m: <a href="std.compress.flate.Token.html">Token</a>) !<span class="tok-type">u16</span> {
+            <span class="tok-kw">try</span> self.addToken(m);
+            self.prev_literal = <span class="tok-null">null</span>;
+            self.prev_match = <span class="tok-null">null</span>;
+            <span class="tok-kw">return</span> m.length();
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">addToken</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>, token: <a href="std.compress.flate.Token.html">Token</a>) !<span class="tok-type">void</span> {
+            self.tokens.add(token);
+            <span class="tok-kw">if</span> (self.tokens.full()) <span class="tok-kw">try</span> self.flushTokens(.none);
+        }<span class="tok-comment">
+
+        // Finds largest match in the history window with the data at current pos.
+        </span><span class="tok-kw">fn</span> <span class="tok-fn">findMatch</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>, pos: <span class="tok-type">u16</span>, lh: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, min_len: <span class="tok-type">u16</span>) ?<a href="std.compress.flate.Token.html">Token</a> {
+            <span class="tok-kw">var</span> len: <span class="tok-type">u16</span> = min_len;<span class="tok-comment">
+            // Previous location with the same hash (same 4 bytes).
+            </span><span class="tok-kw">var</span> prev_pos = self.lookup.add(lh, pos);<span class="tok-comment">
+            // Last found match.
+            </span><span class="tok-kw">var</span> match: ?<a href="std.compress.flate.Token.html">Token</a> = <span class="tok-null">null</span>;<span class="tok-comment">
+
+            // How much back-references to try, performance knob.
+            </span><span class="tok-kw">var</span> chain: <span class="tok-type">usize</span> = self.level.chain;
+            <span class="tok-kw">if</span> (len &gt;= self.level.good) {<span class="tok-comment">
+                // If we've got a match that's good enough, only look in 1/4 the chain.
+                </span>chain &gt;&gt;= <span class="tok-number">2</span>;
+            }<span class="tok-comment">
+
+            // Hot path loop!
+            </span><span class="tok-kw">while</span> (prev_pos &gt; <span class="tok-number">0</span> <span class="tok-kw">and</span> chain &gt; <span class="tok-number">0</span>) : (chain -= <span class="tok-number">1</span>) {
+                <span class="tok-kw">const</span> distance = pos - prev_pos;
+                <span class="tok-kw">if</span> (distance &gt; <a href="std.compress.flate.consts.html">consts</a>.<a href="std.compress.flate.consts.match.html">match</a>.<a href="std.compress.flate.consts.match.html#std.compress.flate.consts.match.max_distance">max_distance</a>)
+                    <span class="tok-kw">break</span>;
+
+                <span class="tok-kw">const</span> new_len = self.win.match(prev_pos, pos, len);
+                <span class="tok-kw">if</span> (new_len &gt; len) {
+                    match = <a href="std.compress.flate.Token.html">Token</a>.<a href="std.compress.flate.Token.html#std.compress.flate.Token.initMatch">initMatch</a>(<span class="tok-builtin">@intCast</span>(distance), new_len);
+                    <span class="tok-kw">if</span> (new_len &gt;= self.level.nice) {<span class="tok-comment">
+                        // The match is good enough that we don't try to find a better one.
+                        </span><span class="tok-kw">return</span> match;
+                    }
+                    len = new_len;
+                }
+                prev_pos = self.lookup.prev(prev_pos);
+            }
+
+            <span class="tok-kw">return</span> match;
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">flushTokens</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>, flush_opt: <a href="std.compress.flate.deflate.Deflate.FlushOption.html">FlushOption</a>) !<span class="tok-type">void</span> {<span class="tok-comment">
+            // Pass tokens to the token writer
+            </span><span class="tok-kw">try</span> self.block_writer.write(self.tokens.tokens(), flush_opt == .final, self.win.tokensBuffer());<span class="tok-comment">
+            // Stored block ensures byte alignment.
+            // It has 3 bits (final, block_type) and then padding until byte boundary.
+            // After that everything is aligned to the boundary in the stored block.
+            // Empty stored block is Ob000 + (0-7) bits of padding + 0x00 0x00 0xFF 0xFF.
+            // Last 4 bytes are byte aligned.
+            </span><span class="tok-kw">if</span> (flush_opt == .flush) {
+                <span class="tok-kw">try</span> self.block_writer.storedBlock(<span class="tok-str">&quot;&quot;</span>, <span class="tok-null">false</span>);
+            }
+            <span class="tok-kw">if</span> (flush_opt != .none) {<span class="tok-comment">
+                // Safe to call only when byte aligned or it is OK to add
+                // padding bits (on last byte of the final block).
+                </span><span class="tok-kw">try</span> self.block_writer.flush();
+            }<span class="tok-comment">
+            // Reset internal tokens store.
+            </span>self.tokens.reset();<span class="tok-comment">
+            // Notify win that tokens are flushed.
+            </span>self.win.flush();
+        }<span class="tok-comment">
+
+        // Slide win and if needed lookup tables.
+        </span><span class="tok-kw">fn</span> <span class="tok-fn">slide</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>) <span class="tok-type">void</span> {
+            <span class="tok-kw">const</span> n = self.win.slide();
+            self.lookup.slide(n);
+        }
+
+        <span class="tok-comment">/// Compresses as much data as possible, stops when the reader becomes</span>
+        <span class="tok-comment">/// empty. It will introduce some output latency (reading input without</span>
+        <span class="tok-comment">/// producing all output) because some data are still in internal</span>
+        <span class="tok-comment">/// buffers.</span>
+        <span class="tok-comment">///</span>
+        <span class="tok-comment">/// It is up to the caller to call flush (if needed) or finish (required)</span>
+        <span class="tok-comment">/// when is need to output any pending data or complete stream.</span>
+        <span class="tok-comment">///</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compress</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>, reader: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {<span class="tok-comment">
+                // Fill window from reader
+                </span><span class="tok-kw">const</span> buf = self.win.writable();
+                <span class="tok-kw">if</span> (buf.len == <span class="tok-number">0</span>) {
+                    <span class="tok-kw">try</span> self.tokenize(.none);
+                    self.slide();
+                    <span class="tok-kw">continue</span>;
+                }
+                <span class="tok-kw">const</span> n = <span class="tok-kw">try</span> reader.readAll(buf);
+                self.hasher.update(buf[<span class="tok-number">0</span>..n]);
+                self.win.written(n);<span class="tok-comment">
+                // Process window
+                </span><span class="tok-kw">try</span> self.tokenize(.none);<span class="tok-comment">
+                // Exit when no more data in reader
+                </span><span class="tok-kw">if</span> (n &lt; buf.len) <span class="tok-kw">break</span>;
+            }
+        }
+
+        <span class="tok-comment">/// Flushes internal buffers to the output writer. Outputs empty stored</span>
+        <span class="tok-comment">/// block to sync bit stream to the byte boundary, so that the</span>
+        <span class="tok-comment">/// decompressor can get all input data available so far.</span>
+        <span class="tok-comment">///</span>
+        <span class="tok-comment">/// It is useful mainly in compressed network protocols, to ensure that</span>
+        <span class="tok-comment">/// deflate bit stream can be used as byte stream. May degrade</span>
+        <span class="tok-comment">/// compression so it should be used only when necessary.</span>
+        <span class="tok-comment">///</span>
+        <span class="tok-comment">/// Completes the current deflate block and follows it with an empty</span>
+        <span class="tok-comment">/// stored block that is three zero bits plus filler bits to the next</span>
+        <span class="tok-comment">/// byte, followed by four bytes (00 00 ff ff).</span>
+        <span class="tok-comment">///</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">flush</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">try</span> self.tokenize(.flush);
+        }
+
+        <span class="tok-comment">/// Completes deflate bit stream by writing any pending data as deflate</span>
+        <span class="tok-comment">/// final deflate block. HAS to be called once all data are written to</span>
+        <span class="tok-comment">/// the compressor as a signal that next block has to have final bit</span>
+        <span class="tok-comment">/// set.</span>
+        <span class="tok-comment">///</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">finish</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">try</span> self.tokenize(.final);
+            <span class="tok-kw">try</span> container.writeFooter(&amp;self.hasher, self.wrt);
+        }
+
+        <span class="tok-comment">/// Use another writer while preserving history. Most probably flush</span>
+        <span class="tok-comment">/// should be called on old writer before setting new.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setWriter</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>, new_writer: WriterType) <span class="tok-type">void</span> {
+            self.block_writer.setWriter(new_writer);
+            self.wrt = new_writer;
+        }<span class="tok-comment">
+
+        // Writer interface
+
+        </span><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Writer = <a href="std.io.html">io</a>.<a href="std.io.html#std.io.GenericWriter">Writer</a>(*<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>, <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate.Error">Error</a>, <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate.write">write</a>);
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = BlockWriterType.Error;
+
+        <span class="tok-comment">/// Write `input` of uncompressed data.</span>
+        <span class="tok-comment">/// See compress.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">write</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>, input: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">usize</span> {
+            <span class="tok-kw">var</span> fbs = <a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(input);
+            <span class="tok-kw">try</span> self.compress(fbs.reader());
+            <span class="tok-kw">return</span> input.len;
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writer</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Self</a>) <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate.Writer">Writer</a> {
+            <span class="tok-kw">return</span> .{ .context = self };
+        }
+    };
+}<span class="tok-comment">
+
+// Tokens store
+</span><span class="tok-kw">const</span> Tokens = <span class="tok-kw">struct</span> {
+    list: [<a href="std.compress.flate.consts.html">consts</a>.<a href="std.compress.flate.consts.deflate.html">deflate</a>.<a href="std.compress.flate.consts.deflate.html#std.compress.flate.consts.deflate.tokens">tokens</a>]<a href="std.compress.flate.Token.html">Token</a> = <span class="tok-null">undefined</span>,
+    pos: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">add</span>(self: *<a href="std.compress.flate.deflate.Tokens.html">Tokens</a>, t: <a href="std.compress.flate.Token.html">Token</a>) <span class="tok-type">void</span> {
+        self.list[self.pos] = t;
+        self.pos += <span class="tok-number">1</span>;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">full</span>(self: *<a href="std.compress.flate.deflate.Tokens.html">Tokens</a>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">return</span> self.pos == self.list.len;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">reset</span>(self: *<a href="std.compress.flate.deflate.Tokens.html">Tokens</a>) <span class="tok-type">void</span> {
+        self.pos = <span class="tok-number">0</span>;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">tokens</span>(self: *<a href="std.compress.flate.deflate.Tokens.html">Tokens</a>) []<span class="tok-kw">const</span> <a href="std.compress.flate.Token.html">Token</a> {
+        <span class="tok-kw">return</span> self.list[<span class="tok-number">0</span>..self.pos];
+    }
+};
+
+<span class="tok-comment">/// Creates huffman only deflate blocks. Disables Lempel-Ziv match searching and</span>
+<span class="tok-comment">/// only performs Huffman entropy encoding. Results in faster compression, much</span>
+<span class="tok-comment">/// less memory requirements during compression but bigger compressed sizes.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> huffman = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compress</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, reader: <span class="tok-kw">anytype</span>, writer: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+        <span class="tok-kw">var</span> c = <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.huffman.html">huffman</a>.<a href="std.compress.flate.deflate.huffman.html#std.compress.flate.deflate.huffman.compressor">compressor</a>(container, writer);
+        <span class="tok-kw">try</span> c.compress(reader);
+        <span class="tok-kw">try</span> c.finish();
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">Compressor</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, <span class="tok-kw">comptime</span> WriterType: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+        <span class="tok-kw">return</span> <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.SimpleCompressor">SimpleCompressor</a>(.huffman, container, WriterType);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compressor</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, writer: <span class="tok-kw">anytype</span>) !<a href="std.compress.flate.deflate.huffman.html">huffman</a>.<a href="std.compress.flate.deflate.huffman.html#std.compress.flate.deflate.huffman.Compressor">Compressor</a>(container, <span class="tok-builtin">@TypeOf</span>(writer)) {
+        <span class="tok-kw">return</span> <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.huffman.html">huffman</a>.<a href="std.compress.flate.deflate.huffman.html#std.compress.flate.deflate.huffman.Compressor">Compressor</a>(container, <span class="tok-builtin">@TypeOf</span>(writer)).init(writer);
+    }
+};
+
+<span class="tok-comment">/// Creates store blocks only. Data are not compressed only packed into deflate</span>
+<span class="tok-comment">/// store blocks. That adds 9 bytes of header for each block. Max stored block</span>
+<span class="tok-comment">/// size is 64K. Block is emitted when flush is called on on finish.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> store = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compress</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, reader: <span class="tok-kw">anytype</span>, writer: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+        <span class="tok-kw">var</span> c = <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.store.html">store</a>.<a href="std.compress.flate.deflate.store.html#std.compress.flate.deflate.store.compressor">compressor</a>(container, writer);
+        <span class="tok-kw">try</span> c.compress(reader);
+        <span class="tok-kw">try</span> c.finish();
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">Compressor</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, <span class="tok-kw">comptime</span> WriterType: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+        <span class="tok-kw">return</span> <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.SimpleCompressor">SimpleCompressor</a>(.store, container, WriterType);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compressor</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, writer: <span class="tok-kw">anytype</span>) !<a href="std.compress.flate.deflate.store.html">store</a>.<a href="std.compress.flate.deflate.store.html#std.compress.flate.deflate.store.Compressor">Compressor</a>(container, <span class="tok-builtin">@TypeOf</span>(writer)) {
+        <span class="tok-kw">return</span> <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.store.html">store</a>.<a href="std.compress.flate.deflate.store.html#std.compress.flate.deflate.store.Compressor">Compressor</a>(container, <span class="tok-builtin">@TypeOf</span>(writer)).init(writer);
+    }
+};
+
+<span class="tok-kw">const</span> SimpleCompressorKind = <span class="tok-kw">enum</span> {
+    <a href="std.compress.flate.deflate.huffman.html">huffman</a>,
+    <a href="std.compress.flate.deflate.store.html">store</a>,
+};
+
+<span class="tok-kw">fn</span> <span class="tok-fn">simpleCompressor</span>(
+    <span class="tok-kw">comptime</span> kind: <a href="std.compress.flate.deflate.SimpleCompressorKind.html">SimpleCompressorKind</a>,
+    <span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>,
+    writer: <span class="tok-kw">anytype</span>,
+) !<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.SimpleCompressor">SimpleCompressor</a>(kind, container, <span class="tok-builtin">@TypeOf</span>(writer)) {
+    <span class="tok-kw">return</span> <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.SimpleCompressor">SimpleCompressor</a>(kind, container, <span class="tok-builtin">@TypeOf</span>(writer)).init(writer);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">SimpleCompressor</span>(
+    <span class="tok-kw">comptime</span> kind: <a href="std.compress.flate.deflate.SimpleCompressorKind.html">SimpleCompressorKind</a>,
+    <span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>,
+    <span class="tok-kw">comptime</span> WriterType: <span class="tok-type">type</span>,
+) <span class="tok-type">type</span> {
+    <span class="tok-kw">const</span> BlockWriterType = <a href="std.compress.flate.block_writer.html#std.compress.flate.block_writer.BlockWriter">BlockWriter</a>(WriterType);
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        buffer: [<span class="tok-number">65535</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>,<span class="tok-comment"> // because store blocks are limited to 65535 bytes
+        </span>wp: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+
+        wrt: WriterType,
+        block_writer: BlockWriterType,
+        hasher: container.Hasher() = .{},
+
+        <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(wrt: WriterType) !<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.SimpleCompressor">Self</a> {
+            <span class="tok-kw">const</span> self = <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.SimpleCompressor">Self</a>{
+                .wrt = wrt,
+                .block_writer = BlockWriterType.init(wrt),
+            };
+            <span class="tok-kw">try</span> container.writeHeader(self.wrt);
+            <span class="tok-kw">return</span> self;
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">flush</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.SimpleCompressor">Self</a>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">try</span> self.flushBuffer(<span class="tok-null">false</span>);
+            <span class="tok-kw">try</span> self.block_writer.storedBlock(<span class="tok-str">&quot;&quot;</span>, <span class="tok-null">false</span>);
+            <span class="tok-kw">try</span> self.block_writer.flush();
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">finish</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.SimpleCompressor">Self</a>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">try</span> self.flushBuffer(<span class="tok-null">true</span>);
+            <span class="tok-kw">try</span> self.block_writer.flush();
+            <span class="tok-kw">try</span> container.writeFooter(&amp;self.hasher, self.wrt);
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">flushBuffer</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.SimpleCompressor">Self</a>, final: <span class="tok-type">bool</span>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">const</span> buf = self.buffer[<span class="tok-number">0</span>..self.wp];
+            <span class="tok-kw">switch</span> (kind) {
+                .huffman =&gt; <span class="tok-kw">try</span> self.block_writer.huffmanBlock(buf, final),
+                .store =&gt; <span class="tok-kw">try</span> self.block_writer.storedBlock(buf, final),
+            }
+            self.wp = <span class="tok-number">0</span>;
+        }<span class="tok-comment">
+
+        // Writes all data from the input reader of uncompressed data.
+        // It is up to the caller to call flush or finish if there is need to
+        // output compressed blocks.
+        </span><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compress</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.SimpleCompressor">Self</a>, reader: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {<span class="tok-comment">
+                // read from rdr into buffer
+                </span><span class="tok-kw">const</span> buf = self.buffer[self.wp..];
+                <span class="tok-kw">if</span> (buf.len == <span class="tok-number">0</span>) {
+                    <span class="tok-kw">try</span> self.flushBuffer(<span class="tok-null">false</span>);
+                    <span class="tok-kw">continue</span>;
+                }
+                <span class="tok-kw">const</span> n = <span class="tok-kw">try</span> reader.readAll(buf);
+                self.hasher.update(buf[<span class="tok-number">0</span>..n]);
+                self.wp += n;
+                <span class="tok-kw">if</span> (n &lt; buf.len) <span class="tok-kw">break</span>;<span class="tok-comment"> // no more data in reader
+            </span>}
+        }<span class="tok-comment">
+
+        // Writer interface
+
+        </span><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Writer = <a href="std.io.html">io</a>.<a href="std.io.html#std.io.GenericWriter">Writer</a>(*<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.SimpleCompressor">Self</a>, <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.SimpleCompressor.Error">Error</a>, <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.SimpleCompressor.write">write</a>);
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = BlockWriterType.Error;<span class="tok-comment">
+
+        // Write `input` of uncompressed data.
+        </span><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">write</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.SimpleCompressor">Self</a>, input: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">usize</span> {
+            <span class="tok-kw">var</span> fbs = <a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(input);
+            <span class="tok-kw">try</span> self.compress(fbs.reader());
+            <span class="tok-kw">return</span> input.len;
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writer</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.SimpleCompressor">Self</a>) <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.SimpleCompressor.Writer">Writer</a> {
+            <span class="tok-kw">return</span> .{ .context = self };
+        }
+    };
+}
+
+<span class="tok-kw">const</span> builtin = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;builtin&quot;</span>);
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;tokenization&quot;</span> {
+    <span class="tok-kw">const</span> L = <a href="std.compress.flate.Token.html">Token</a>.<a href="std.compress.flate.Token.html#std.compress.flate.Token.initLiteral">initLiteral</a>;
+    <span class="tok-kw">const</span> M = <a href="std.compress.flate.Token.html">Token</a>.<a href="std.compress.flate.Token.html#std.compress.flate.Token.initMatch">initMatch</a>;
+
+    <span class="tok-kw">const</span> cases = [_]<span class="tok-kw">struct</span> {
+        data: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+        tokens: []<span class="tok-kw">const</span> <a href="std.compress.flate.Token.html">Token</a>,
+    }{
+        .{
+            .data = <span class="tok-str">&quot;Blah blah blah blah blah!&quot;</span>,
+            .tokens = &amp;[_]<a href="std.compress.flate.Token.html">Token</a>{ L(<span class="tok-str">'B'</span>), L(<span class="tok-str">'l'</span>), L(<span class="tok-str">'a'</span>), L(<span class="tok-str">'h'</span>), L(<span class="tok-str">' '</span>), L(<span class="tok-str">'b'</span>), M(<span class="tok-number">5</span>, <span class="tok-number">18</span>), L(<span class="tok-str">'!'</span>) },
+        },
+        .{
+            .data = <span class="tok-str">&quot;ABCDEABCD ABCDEABCD&quot;</span>,
+            .tokens = &amp;[_]<a href="std.compress.flate.Token.html">Token</a>{
+                L(<span class="tok-str">'A'</span>), L(<span class="tok-str">'B'</span>),   L(<span class="tok-str">'C'</span>), L(<span class="tok-str">'D'</span>), L(<span class="tok-str">'E'</span>), L(<span class="tok-str">'A'</span>), L(<span class="tok-str">'B'</span>), L(<span class="tok-str">'C'</span>), L(<span class="tok-str">'D'</span>), L(<span class="tok-str">' '</span>),
+                L(<span class="tok-str">'A'</span>), M(<span class="tok-number">10</span>, <span class="tok-number">8</span>),
+            },
+        },
+    };
+
+    <span class="tok-kw">for</span> (cases) |c| {
+        <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<a href="std.compress.flate.container.Container.html">Container</a>.<a href="std.compress.flate.container.Container.html#std.compress.flate.container.Container.list">list</a>) |container| {<span class="tok-comment"> // for each wrapping
+
+            </span><span class="tok-kw">var</span> cw = <a href="std.io.html">io</a>.<a href="std.io.counting_writer.html#std.io.counting_writer.countingWriter">countingWriter</a>(<a href="std.io.html">io</a>.<a href="std.io.html#std.io.null_writer">null_writer</a>);
+            <span class="tok-kw">const</span> cww = cw.writer();
+            <span class="tok-kw">var</span> df = <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Deflate</a>(container, <span class="tok-builtin">@TypeOf</span>(cww), <a href="std.compress.flate.deflate.TestTokenWriter.html">TestTokenWriter</a>).init(cww, .{});
+
+            _ = <span class="tok-kw">try</span> df.write(c.data);
+            <span class="tok-kw">try</span> df.flush();<span class="tok-comment">
+
+            // df.token_writer.show();
+            </span><span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expect">expect</a>(df.block_writer.pos == c.tokens.len);<span class="tok-comment"> // number of tokens written
+            </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<a href="std.compress.flate.Token.html">Token</a>, df.block_writer.get(), c.tokens);<span class="tok-comment"> // tokens match
+
+            </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(container.headerSize(), cw.bytes_written);
+            <span class="tok-kw">try</span> df.finish();
+            <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(container.size(), cw.bytes_written);
+        }
+    }
+}<span class="tok-comment">
+
+// Tests that tokens written are equal to expected token list.
+</span><span class="tok-kw">const</span> TestTokenWriter = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+
+    pos: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+    actual: [<span class="tok-number">128</span>]<a href="std.compress.flate.Token.html">Token</a> = <span class="tok-null">undefined</span>,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(_: <span class="tok-kw">anytype</span>) <a href="std.compress.flate.deflate.TestTokenWriter.html">Self</a> {
+        <span class="tok-kw">return</span> .{};
+    }
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">write</span>(self: *<a href="std.compress.flate.deflate.TestTokenWriter.html">Self</a>, tokens: []<span class="tok-kw">const</span> <a href="std.compress.flate.Token.html">Token</a>, _: <span class="tok-type">bool</span>, _: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+        <span class="tok-kw">for</span> (tokens) |t| {
+            self.actual[self.pos] = t;
+            self.pos += <span class="tok-number">1</span>;
+        }
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">storedBlock</span>(_: *<a href="std.compress.flate.deflate.TestTokenWriter.html">Self</a>, _: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, _: <span class="tok-type">bool</span>) !<span class="tok-type">void</span> {}
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: *<a href="std.compress.flate.deflate.TestTokenWriter.html">Self</a>) []<a href="std.compress.flate.Token.html">Token</a> {
+        <span class="tok-kw">return</span> self.actual[<span class="tok-number">0</span>..self.pos];
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">show</span>(self: *<a href="std.compress.flate.deflate.TestTokenWriter.html">Self</a>) <span class="tok-type">void</span> {
+        <a href="std.debug.html#std.debug.print">print</a>(<span class="tok-str">&quot;\n&quot;</span>, .{});
+        <span class="tok-kw">for</span> (self.get()) |t| {
+            t.show();
+        }
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">flush</span>(_: *<a href="std.compress.flate.deflate.TestTokenWriter.html">Self</a>) !<span class="tok-type">void</span> {}
+};
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;file tokenization&quot;</span> {
+    <span class="tok-kw">const</span> levels = [_]<a href="std.compress.flate.deflate.Level.html">Level</a>{ .level_4, .level_5, .level_6, .level_7, .level_8, .level_9 };
+    <span class="tok-kw">const</span> cases = [_]<span class="tok-kw">struct</span> {
+        data: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,<span class="tok-comment"> // uncompressed content
+        // expected number of tokens producet in deflate tokenization
+        </span>tokens_count: [levels.len]<span class="tok-type">usize</span> = .{<span class="tok-number">0</span>} ** levels.len,
+    }{
+        .{
+            .data = <span class="tok-builtin">@embedFile</span>(<span class="tok-str">&quot;testdata/rfc1951.txt&quot;</span>),
+            .tokens_count = .{ <span class="tok-number">7675</span>, <span class="tok-number">7672</span>, <span class="tok-number">7599</span>, <span class="tok-number">7594</span>, <span class="tok-number">7598</span>, <span class="tok-number">7599</span> },
+        },
+
+        .{
+            .data = <span class="tok-builtin">@embedFile</span>(<span class="tok-str">&quot;testdata/block_writer/huffman-null-max.input&quot;</span>),
+            .tokens_count = .{ <span class="tok-number">257</span>, <span class="tok-number">257</span>, <span class="tok-number">257</span>, <span class="tok-number">257</span>, <span class="tok-number">257</span>, <span class="tok-number">257</span> },
+        },
+        .{
+            .data = <span class="tok-builtin">@embedFile</span>(<span class="tok-str">&quot;testdata/block_writer/huffman-pi.input&quot;</span>),
+            .tokens_count = .{ <span class="tok-number">2570</span>, <span class="tok-number">2564</span>, <span class="tok-number">2564</span>, <span class="tok-number">2564</span>, <span class="tok-number">2564</span>, <span class="tok-number">2564</span> },
+        },
+        .{
+            .data = <span class="tok-builtin">@embedFile</span>(<span class="tok-str">&quot;testdata/block_writer/huffman-text.input&quot;</span>),
+            .tokens_count = .{ <span class="tok-number">235</span>, <span class="tok-number">234</span>, <span class="tok-number">234</span>, <span class="tok-number">234</span>, <span class="tok-number">234</span>, <span class="tok-number">234</span> },
+        },
+        .{
+            .data = <span class="tok-builtin">@embedFile</span>(<span class="tok-str">&quot;testdata/fuzz/roundtrip1.input&quot;</span>),
+            .tokens_count = .{ <span class="tok-number">333</span>, <span class="tok-number">331</span>, <span class="tok-number">331</span>, <span class="tok-number">331</span>, <span class="tok-number">331</span>, <span class="tok-number">331</span> },
+        },
+        .{
+            .data = <span class="tok-builtin">@embedFile</span>(<span class="tok-str">&quot;testdata/fuzz/roundtrip2.input&quot;</span>),
+            .tokens_count = .{ <span class="tok-number">334</span>, <span class="tok-number">334</span>, <span class="tok-number">334</span>, <span class="tok-number">334</span>, <span class="tok-number">334</span>, <span class="tok-number">334</span> },
+        },
+    };
+
+    <span class="tok-kw">for</span> (cases) |case| {<span class="tok-comment"> // for each case
+        </span><span class="tok-kw">const</span> data = case.data;
+
+        <span class="tok-kw">for</span> (levels, <span class="tok-number">0</span>..) |level, i| {<span class="tok-comment"> // for each compression level
+            </span><span class="tok-kw">var</span> original = <a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(data);<span class="tok-comment">
+
+            // buffer for decompressed data
+            </span><span class="tok-kw">var</span> al = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>).init(<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>);
+            <span class="tok-kw">defer</span> al.deinit();
+            <span class="tok-kw">const</span> writer = al.writer();<span class="tok-comment">
+
+            // create compressor
+            </span><span class="tok-kw">const</span> WriterType = <span class="tok-builtin">@TypeOf</span>(writer);
+            <span class="tok-kw">const</span> TokenWriter = <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.TokenDecoder">TokenDecoder</a>(<span class="tok-builtin">@TypeOf</span>(writer));
+            <span class="tok-kw">var</span> cmp = <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Deflate">Deflate</a>(.raw, WriterType, TokenWriter).init(writer, .{ .level = level });<span class="tok-comment">
+
+            // Stream uncompressed `original` data to the compressor. It will
+            // produce tokens list and pass that list to the TokenDecoder. This
+            // TokenDecoder uses CircularBuffer from inflate to convert list of
+            // tokens back to the uncompressed stream.
+            </span><span class="tok-kw">try</span> cmp.compress(original.reader());
+            <span class="tok-kw">try</span> cmp.flush();
+            <span class="tok-kw">const</span> expected_count = case.tokens_count[i];
+            <span class="tok-kw">const</span> actual = cmp.block_writer.tokens_count;
+            <span class="tok-kw">if</span> (expected_count == <span class="tok-number">0</span>) {
+                <a href="std.debug.html#std.debug.print">print</a>(<span class="tok-str">&quot;actual token count {d}\n&quot;</span>, .{actual});
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(expected_count, actual);
+            }
+
+            <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(data.len, al.items.len);
+            <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, data, al.items);
+        }
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">TokenDecoder</span>(<span class="tok-kw">comptime</span> WriterType: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        <span class="tok-kw">const</span> CircularBuffer = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;CircularBuffer.zig&quot;</span>);
+        hist: <a href="std.compress.flate.CircularBuffer.html">CircularBuffer</a> = .{},
+        wrt: WriterType,
+        tokens_count: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+
+        <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(wrt: WriterType) <a href="std.compress.flate.deflate.html#std.compress.flate.deflate.TokenDecoder">Self</a> {
+            <span class="tok-kw">return</span> .{ .wrt = wrt };
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">write</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.TokenDecoder">Self</a>, tokens: []<span class="tok-kw">const</span> <a href="std.compress.flate.Token.html">Token</a>, _: <span class="tok-type">bool</span>, _: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+            self.tokens_count += tokens.len;
+            <span class="tok-kw">for</span> (tokens) |t| {
+                <span class="tok-kw">switch</span> (t.kind) {
+                    .literal =&gt; self.hist.write(t.literal()),
+                    .match =&gt; <span class="tok-kw">try</span> self.hist.writeMatch(t.length(), t.distance()),
+                }
+                <span class="tok-kw">if</span> (self.hist.free() &lt; <span class="tok-number">285</span>) <span class="tok-kw">try</span> self.flushWin();
+            }
+            <span class="tok-kw">try</span> self.flushWin();
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">storedBlock</span>(_: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.TokenDecoder">Self</a>, _: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, _: <span class="tok-type">bool</span>) !<span class="tok-type">void</span> {}
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">flushWin</span>(self: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.TokenDecoder">Self</a>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+                <span class="tok-kw">const</span> buf = self.hist.read();
+                <span class="tok-kw">if</span> (buf.len == <span class="tok-number">0</span>) <span class="tok-kw">break</span>;
+                <span class="tok-kw">try</span> self.wrt.writeAll(buf);
+            }
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">flush</span>(_: *<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.TokenDecoder">Self</a>) !<span class="tok-type">void</span> {}
+    };
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;store simple compressor&quot;</span> {
+    <span class="tok-kw">const</span> data = <span class="tok-str">&quot;Hello world!&quot;</span>;
+    <span class="tok-kw">const</span> expected = [_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0x1</span>,<span class="tok-comment"> // block type 0, final bit set
+        </span><span class="tok-number">0xc</span>, <span class="tok-number">0x0</span>,<span class="tok-comment"> // len = 12
+        </span><span class="tok-number">0xf3</span>, <span class="tok-number">0xff</span>,<span class="tok-comment"> // ~len
+        </span><span class="tok-str">'H'</span>, <span class="tok-str">'e'</span>, <span class="tok-str">'l'</span>, <span class="tok-str">'l'</span>, <span class="tok-str">'o'</span>, <span class="tok-str">' '</span>, <span class="tok-str">'w'</span>, <span class="tok-str">'o'</span>, <span class="tok-str">'r'</span>, <span class="tok-str">'l'</span>, <span class="tok-str">'d'</span>, <span class="tok-str">'!'</span>,<span class="tok-comment"> //
+        //0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x20, 0x77, 0x6f, 0x72, 0x6c, 0x64, 0x21,
+    </span>};
+
+    <span class="tok-kw">var</span> fbs = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(data);
+    <span class="tok-kw">var</span> al = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>).init(<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>);
+    <span class="tok-kw">defer</span> al.deinit();
+
+    <span class="tok-kw">var</span> cmp = <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.store.html">store</a>.<a href="std.compress.flate.deflate.store.html#std.compress.flate.deflate.store.compressor">compressor</a>(.raw, al.writer());
+    <span class="tok-kw">try</span> cmp.compress(fbs.reader());
+    <span class="tok-kw">try</span> cmp.finish();
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, &amp;expected, al.items);
+
+    fbs.reset();
+    <span class="tok-kw">try</span> al.resize(<span class="tok-number">0</span>);<span class="tok-comment">
+
+    // huffman only compresoor will also emit store block for this small sample
+    </span><span class="tok-kw">var</span> hc = <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.huffman.html">huffman</a>.<a href="std.compress.flate.deflate.huffman.html#std.compress.flate.deflate.huffman.compressor">compressor</a>(.raw, al.writer());
+    <span class="tok-kw">try</span> hc.compress(fbs.reader());
+    <span class="tok-kw">try</span> hc.finish();
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, &amp;expected, al.items);
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

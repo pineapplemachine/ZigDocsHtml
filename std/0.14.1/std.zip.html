@@ -1,0 +1,1775 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.zip.html" class="active">zip</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.zip" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.zip</span><a href="#src.zig-std.zip">[src]</a></h1><div class="tldDocs"><p>The .ZIP File Format Specification is found here:
+<a href="https://pkwaredownloads.blob.core.windows.net/pem/APPNOTE.txt">https://pkwaredownloads.blob.core.windows.net/pem/APPNOTE.txt</a></p>
+<p>Note that this file uses the abbreviation &quot;cd&quot; for &quot;central directory&quot;</p>
+</div><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.zip.CompressionMethod.html">std.zip.CompressionMethod</a></li><li><a href="std.zip.ExtraHeader.html">std.zip.ExtraHeader</a></li><li><a href="std.zip.LocalFileHeader.html">std.zip.LocalFileHeader</a></li><li><a href="std.zip.CentralDirectoryFileHeader.html">std.zip.CentralDirectoryFileHeader</a></li><li><a href="std.zip.EndRecord64.html">std.zip.EndRecord64</a></li><li><a href="std.zip.EndLocator64.html">std.zip.EndLocator64</a></li><li><a href="std.zip.EndRecord.html">std.zip.EndRecord</a></li><li><a href="std.zip.Diagnostics.html">std.zip.Diagnostics</a></li><li><a href="std.zip.ExtractOptions.html">std.zip.ExtractOptions</a></li></ul></div><div class="sectTypes"><h2 class="sectionHeader">Types</h2><div class="listTypes"><div class="decl"><h2 id="std.zip.Iterator" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">Iterator</span><a href="#src.zig-std.zip.Iterator">[src]</a></h2><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>SeekableStream: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectContainers"><h3 class="sectionHeader">Container Types</h3><ul class="listContainers columns"><li><a href="std.zip.Iterator.Entry.html">std.zip.Iterator.Entry</a></li></ul></div><div class="sectFields"><h3 class="sectionHeader">Fields</h3><div class="listFields"><div><pre><code>stream: SeekableStream</code></pre></div><div><pre><code>cd_record_count: <span class="tok-type">u64</span></code></pre></div><div><pre><code>cd_zip_offset: <span class="tok-type">u64</span></code></pre></div><div><pre><code>cd_size: <span class="tok-type">u64</span></code></pre></div><div><pre><code>cd_record_index: <span class="tok-type">u64</span> = <span class="tok-number">0</span></code></pre></div><div><pre><code>cd_record_offset: <span class="tok-type">u64</span> = <span class="tok-number">0</span></code></pre></div></div></div><div class="sectFns"><h3 class="sectionHeader">Functions</h3><div class="listFns"><div class="decl"><h3 id="std.zip.Iterator.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.zip.Iterator.init">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(stream: SeekableStream) !<a href="std.zip.html#std.zip.Iterator">Self</a></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>stream: SeekableStream</code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.zip.Iterator.init">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(stream: SeekableStream) !<a href="std.zip.html#std.zip.Iterator">Self</a> {
+    <span class="tok-kw">const</span> stream_len = <span class="tok-kw">try</span> stream.getEndPos();
+
+    <span class="tok-kw">const</span> end_record = <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.findEndRecord">findEndRecord</a>(stream, stream_len);
+
+    <span class="tok-kw">if</span> (!<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(end_record.record_count_disk) <span class="tok-kw">and</span> end_record.record_count_disk &gt; end_record.record_count_total)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipDiskRecordCountTooLarge;
+
+    <span class="tok-kw">if</span> (end_record.disk_number != <span class="tok-number">0</span> <span class="tok-kw">or</span> end_record.central_directory_disk_number != <span class="tok-number">0</span>)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMultiDiskUnsupported;
+
+    {
+        <span class="tok-kw">const</span> counts_valid = !<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(end_record.record_count_disk) <span class="tok-kw">and</span> !<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(end_record.record_count_total);
+        <span class="tok-kw">if</span> (counts_valid <span class="tok-kw">and</span> end_record.record_count_disk != end_record.record_count_total)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMultiDiskUnsupported;
+    }
+
+    <span class="tok-kw">var</span> result = <a href="std.zip.html#std.zip.Iterator">Self</a>{
+        .stream = stream,
+        .cd_record_count = end_record.record_count_total,
+        .cd_zip_offset = end_record.central_directory_offset,
+        .cd_size = end_record.central_directory_size,
+    };
+    <span class="tok-kw">if</span> (!end_record.need_zip64()) <span class="tok-kw">return</span> result;
+
+    <span class="tok-kw">const</span> locator_end_offset: <span class="tok-type">u64</span> = <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, end_record.comment_len) + <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.EndRecord.html">EndRecord</a>) + <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.EndLocator64.html">EndLocator64</a>);
+    <span class="tok-kw">if</span> (locator_end_offset &gt; stream_len)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipTruncated;
+    <span class="tok-kw">try</span> stream.seekTo(stream_len - locator_end_offset);
+    <span class="tok-kw">const</span> locator = <span class="tok-kw">try</span> stream.context.reader().readStructEndian(<a href="std.zip.EndLocator64.html">EndLocator64</a>, .little);
+    <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, &amp;locator.signature, &amp;<a href="std.zip.html#std.zip.end_locator64_sig">end_locator64_sig</a>))
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadLocatorSig;
+    <span class="tok-kw">if</span> (locator.zip64_disk_count != <span class="tok-number">0</span>)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipUnsupportedZip64DiskCount;
+    <span class="tok-kw">if</span> (locator.total_disk_count != <span class="tok-number">1</span>)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMultiDiskUnsupported;
+
+    <span class="tok-kw">try</span> stream.seekTo(locator.record_file_offset);
+
+    <span class="tok-kw">const</span> record64 = <span class="tok-kw">try</span> stream.context.reader().readStructEndian(<a href="std.zip.EndRecord64.html">EndRecord64</a>, .little);
+
+    <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, &amp;record64.signature, &amp;<a href="std.zip.html#std.zip.end_record64_sig">end_record64_sig</a>))
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadEndRecord64Sig;
+
+    <span class="tok-kw">if</span> (record64.end_record_size &lt; <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.EndRecord64.html">EndRecord64</a>) - <span class="tok-number">12</span>)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipEndRecord64SizeTooSmall;
+    <span class="tok-kw">if</span> (record64.end_record_size &gt; <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.EndRecord64.html">EndRecord64</a>) - <span class="tok-number">12</span>)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipEndRecord64UnhandledExtraData;
+
+    <span class="tok-kw">if</span> (record64.version_needed_to_extract &gt; <span class="tok-number">45</span>)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipUnsupportedVersion;
+
+    {
+        <span class="tok-kw">const</span> is_multidisk = record64.disk_number != <span class="tok-number">0</span> <span class="tok-kw">or</span>
+            record64.central_directory_disk_number != <span class="tok-number">0</span> <span class="tok-kw">or</span>
+            record64.record_count_disk != record64.record_count_total;
+        <span class="tok-kw">if</span> (is_multidisk)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMultiDiskUnsupported;
+    }
+
+    <span class="tok-kw">if</span> (<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(end_record.record_count_total)) {
+        result.cd_record_count = record64.record_count_total;
+    } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (end_record.record_count_total != record64.record_count_total)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Zip64RecordCountTotalMismatch;
+
+    <span class="tok-kw">if</span> (<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(end_record.central_directory_offset)) {
+        result.cd_zip_offset = record64.central_directory_offset;
+    } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (end_record.central_directory_offset != record64.central_directory_offset)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Zip64CentralDirectoryOffsetMismatch;
+
+    <span class="tok-kw">if</span> (<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(end_record.central_directory_size)) {
+        result.cd_size = record64.central_directory_size;
+    } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (end_record.central_directory_size != record64.central_directory_size)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Zip64CentralDirectorySizeMismatch;
+
+    <span class="tok-kw">return</span> result;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.zip.Iterator.next" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">next</span><a href="#src.zig-std.zip.Iterator.next">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">next</span>(self: *<a href="std.zip.html#std.zip.Iterator">Self</a>) !?<a href="std.zip.Iterator.Entry.html">Entry</a></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.zip.html#std.zip.Iterator">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.zip.Iterator.next">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">next</span>(self: *<a href="std.zip.html#std.zip.Iterator">Self</a>) !?<a href="std.zip.Iterator.Entry.html">Entry</a> {
+    <span class="tok-kw">if</span> (self.cd_record_index == self.cd_record_count) {
+        <span class="tok-kw">if</span> (self.cd_record_offset != self.cd_size)
+            <span class="tok-kw">return</span> <span class="tok-kw">if</span> (self.cd_size &gt; self.cd_record_offset)
+                <span class="tok-kw">error</span>.ZipCdOversized
+            <span class="tok-kw">else</span>
+                <span class="tok-kw">error</span>.ZipCdUndersized;
+
+        <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+    }
+
+    <span class="tok-kw">const</span> header_zip_offset = self.cd_zip_offset + self.cd_record_offset;
+    <span class="tok-kw">try</span> self.stream.seekTo(header_zip_offset);
+    <span class="tok-kw">const</span> header = <span class="tok-kw">try</span> self.stream.context.reader().readStructEndian(<a href="std.zip.CentralDirectoryFileHeader.html">CentralDirectoryFileHeader</a>, .little);
+    <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, &amp;header.signature, &amp;<a href="std.zip.html#std.zip.central_file_header_sig">central_file_header_sig</a>))
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadCdOffset;
+
+    self.cd_record_index += <span class="tok-number">1</span>;
+    self.cd_record_offset += <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.CentralDirectoryFileHeader.html">CentralDirectoryFileHeader</a>) + header.filename_len + header.extra_len + header.comment_len;<span class="tok-comment">
+
+    // Note: checking the version_needed_to_extract doesn't seem to be helpful, i.e. the zip file
+    // at https://github.com/ninja-build/ninja/releases/download/v1.12.0/ninja-linux.zip
+    // has an undocumented version 788 but extracts just fine.
+
+    </span><span class="tok-kw">if</span> (header.flags.encrypted)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipEncryptionUnsupported;<span class="tok-comment">
+    // TODO: check/verify more flags
+    </span><span class="tok-kw">if</span> (header.disk_number != <span class="tok-number">0</span>)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMultiDiskUnsupported;
+
+    <span class="tok-kw">var</span> extents: <a href="std.zip.FileExtents.html">FileExtents</a> = .{
+        .uncompressed_size = header.uncompressed_size,
+        .compressed_size = header.compressed_size,
+        .local_file_header_offset = header.local_file_header_offset,
+    };
+
+    <span class="tok-kw">if</span> (header.extra_len &gt; <span class="tok-number">0</span>) {
+        <span class="tok-kw">var</span> extra_buf: [<a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u16</span>)]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">const</span> extra = extra_buf[<span class="tok-number">0</span>..header.extra_len];
+
+        {
+            <span class="tok-kw">try</span> self.stream.seekTo(header_zip_offset + <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.CentralDirectoryFileHeader.html">CentralDirectoryFileHeader</a>) + header.filename_len);
+            <span class="tok-kw">const</span> len = <span class="tok-kw">try</span> self.stream.context.reader().readAll(extra);
+            <span class="tok-kw">if</span> (len != extra.len)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipTruncated;
+        }
+
+        <span class="tok-kw">var</span> extra_offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">while</span> (extra_offset + <span class="tok-number">4</span> &lt;= extra.len) {
+            <span class="tok-kw">const</span> header_id = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u16</span>, extra[extra_offset..][<span class="tok-number">0</span>..<span class="tok-number">2</span>], .little);
+            <span class="tok-kw">const</span> data_size = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u16</span>, extra[extra_offset..][<span class="tok-number">2</span>..<span class="tok-number">4</span>], .little);
+            <span class="tok-kw">const</span> end = extra_offset + <span class="tok-number">4</span> + data_size;
+            <span class="tok-kw">if</span> (end &gt; extra.len)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadExtraFieldSize;
+            <span class="tok-kw">const</span> data = extra[extra_offset + <span class="tok-number">4</span> .. end];
+            <span class="tok-kw">switch</span> (<span class="tok-builtin">@as</span>(<a href="std.zip.ExtraHeader.html">ExtraHeader</a>, <span class="tok-builtin">@enumFromInt</span>(header_id))) {
+                .zip64_info =&gt; <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.readZip64FileExtents">readZip64FileExtents</a>(<a href="std.zip.CentralDirectoryFileHeader.html">CentralDirectoryFileHeader</a>, header, &amp;extents, data),
+                <span class="tok-kw">else</span> =&gt; {},<span class="tok-comment"> // ignore
+            </span>}
+            extra_offset = end;
+        }
+    }
+
+    <span class="tok-kw">return</span> .{
+        .version_needed_to_extract = header.version_needed_to_extract,
+        .flags = header.flags,
+        .compression_method = header.compression_method,
+        .last_modification_time = header.last_modification_time,
+        .last_modification_date = header.last_modification_date,
+        .header_zip_offset = header_zip_offset,
+        .crc32 = header.crc32,
+        .filename_len = header.filename_len,
+        .compressed_size = extents.compressed_size,
+        .uncompressed_size = extents.uncompressed_size,
+        .file_offset = extents.local_file_header_offset,
+    };
+}</code></pre></details></div></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zip.Iterator">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">Iterator</span>(<span class="tok-kw">comptime</span> SeekableStream: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        stream: SeekableStream,
+
+        cd_record_count: <span class="tok-type">u64</span>,
+        cd_zip_offset: <span class="tok-type">u64</span>,
+        cd_size: <span class="tok-type">u64</span>,
+
+        cd_record_index: <span class="tok-type">u64</span> = <span class="tok-number">0</span>,
+        cd_record_offset: <span class="tok-type">u64</span> = <span class="tok-number">0</span>,
+
+        <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(stream: SeekableStream) !<a href="std.zip.html#std.zip.Iterator">Self</a> {
+            <span class="tok-kw">const</span> stream_len = <span class="tok-kw">try</span> stream.getEndPos();
+
+            <span class="tok-kw">const</span> end_record = <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.findEndRecord">findEndRecord</a>(stream, stream_len);
+
+            <span class="tok-kw">if</span> (!<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(end_record.record_count_disk) <span class="tok-kw">and</span> end_record.record_count_disk &gt; end_record.record_count_total)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipDiskRecordCountTooLarge;
+
+            <span class="tok-kw">if</span> (end_record.disk_number != <span class="tok-number">0</span> <span class="tok-kw">or</span> end_record.central_directory_disk_number != <span class="tok-number">0</span>)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMultiDiskUnsupported;
+
+            {
+                <span class="tok-kw">const</span> counts_valid = !<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(end_record.record_count_disk) <span class="tok-kw">and</span> !<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(end_record.record_count_total);
+                <span class="tok-kw">if</span> (counts_valid <span class="tok-kw">and</span> end_record.record_count_disk != end_record.record_count_total)
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMultiDiskUnsupported;
+            }
+
+            <span class="tok-kw">var</span> result = <a href="std.zip.html#std.zip.Iterator">Self</a>{
+                .stream = stream,
+                .cd_record_count = end_record.record_count_total,
+                .cd_zip_offset = end_record.central_directory_offset,
+                .cd_size = end_record.central_directory_size,
+            };
+            <span class="tok-kw">if</span> (!end_record.need_zip64()) <span class="tok-kw">return</span> result;
+
+            <span class="tok-kw">const</span> locator_end_offset: <span class="tok-type">u64</span> = <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, end_record.comment_len) + <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.EndRecord.html">EndRecord</a>) + <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.EndLocator64.html">EndLocator64</a>);
+            <span class="tok-kw">if</span> (locator_end_offset &gt; stream_len)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipTruncated;
+            <span class="tok-kw">try</span> stream.seekTo(stream_len - locator_end_offset);
+            <span class="tok-kw">const</span> locator = <span class="tok-kw">try</span> stream.context.reader().readStructEndian(<a href="std.zip.EndLocator64.html">EndLocator64</a>, .little);
+            <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, &amp;locator.signature, &amp;<a href="std.zip.html#std.zip.end_locator64_sig">end_locator64_sig</a>))
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadLocatorSig;
+            <span class="tok-kw">if</span> (locator.zip64_disk_count != <span class="tok-number">0</span>)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipUnsupportedZip64DiskCount;
+            <span class="tok-kw">if</span> (locator.total_disk_count != <span class="tok-number">1</span>)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMultiDiskUnsupported;
+
+            <span class="tok-kw">try</span> stream.seekTo(locator.record_file_offset);
+
+            <span class="tok-kw">const</span> record64 = <span class="tok-kw">try</span> stream.context.reader().readStructEndian(<a href="std.zip.EndRecord64.html">EndRecord64</a>, .little);
+
+            <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, &amp;record64.signature, &amp;<a href="std.zip.html#std.zip.end_record64_sig">end_record64_sig</a>))
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadEndRecord64Sig;
+
+            <span class="tok-kw">if</span> (record64.end_record_size &lt; <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.EndRecord64.html">EndRecord64</a>) - <span class="tok-number">12</span>)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipEndRecord64SizeTooSmall;
+            <span class="tok-kw">if</span> (record64.end_record_size &gt; <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.EndRecord64.html">EndRecord64</a>) - <span class="tok-number">12</span>)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipEndRecord64UnhandledExtraData;
+
+            <span class="tok-kw">if</span> (record64.version_needed_to_extract &gt; <span class="tok-number">45</span>)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipUnsupportedVersion;
+
+            {
+                <span class="tok-kw">const</span> is_multidisk = record64.disk_number != <span class="tok-number">0</span> <span class="tok-kw">or</span>
+                    record64.central_directory_disk_number != <span class="tok-number">0</span> <span class="tok-kw">or</span>
+                    record64.record_count_disk != record64.record_count_total;
+                <span class="tok-kw">if</span> (is_multidisk)
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMultiDiskUnsupported;
+            }
+
+            <span class="tok-kw">if</span> (<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(end_record.record_count_total)) {
+                result.cd_record_count = record64.record_count_total;
+            } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (end_record.record_count_total != record64.record_count_total)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Zip64RecordCountTotalMismatch;
+
+            <span class="tok-kw">if</span> (<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(end_record.central_directory_offset)) {
+                result.cd_zip_offset = record64.central_directory_offset;
+            } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (end_record.central_directory_offset != record64.central_directory_offset)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Zip64CentralDirectoryOffsetMismatch;
+
+            <span class="tok-kw">if</span> (<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(end_record.central_directory_size)) {
+                result.cd_size = record64.central_directory_size;
+            } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (end_record.central_directory_size != record64.central_directory_size)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Zip64CentralDirectorySizeMismatch;
+
+            <span class="tok-kw">return</span> result;
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">next</span>(self: *<a href="std.zip.html#std.zip.Iterator">Self</a>) !?<a href="std.zip.Iterator.Entry.html">Entry</a> {
+            <span class="tok-kw">if</span> (self.cd_record_index == self.cd_record_count) {
+                <span class="tok-kw">if</span> (self.cd_record_offset != self.cd_size)
+                    <span class="tok-kw">return</span> <span class="tok-kw">if</span> (self.cd_size &gt; self.cd_record_offset)
+                        <span class="tok-kw">error</span>.ZipCdOversized
+                    <span class="tok-kw">else</span>
+                        <span class="tok-kw">error</span>.ZipCdUndersized;
+
+                <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+            }
+
+            <span class="tok-kw">const</span> header_zip_offset = self.cd_zip_offset + self.cd_record_offset;
+            <span class="tok-kw">try</span> self.stream.seekTo(header_zip_offset);
+            <span class="tok-kw">const</span> header = <span class="tok-kw">try</span> self.stream.context.reader().readStructEndian(<a href="std.zip.CentralDirectoryFileHeader.html">CentralDirectoryFileHeader</a>, .little);
+            <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, &amp;header.signature, &amp;<a href="std.zip.html#std.zip.central_file_header_sig">central_file_header_sig</a>))
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadCdOffset;
+
+            self.cd_record_index += <span class="tok-number">1</span>;
+            self.cd_record_offset += <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.CentralDirectoryFileHeader.html">CentralDirectoryFileHeader</a>) + header.filename_len + header.extra_len + header.comment_len;<span class="tok-comment">
+
+            // Note: checking the version_needed_to_extract doesn't seem to be helpful, i.e. the zip file
+            // at https://github.com/ninja-build/ninja/releases/download/v1.12.0/ninja-linux.zip
+            // has an undocumented version 788 but extracts just fine.
+
+            </span><span class="tok-kw">if</span> (header.flags.encrypted)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipEncryptionUnsupported;<span class="tok-comment">
+            // TODO: check/verify more flags
+            </span><span class="tok-kw">if</span> (header.disk_number != <span class="tok-number">0</span>)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMultiDiskUnsupported;
+
+            <span class="tok-kw">var</span> extents: <a href="std.zip.FileExtents.html">FileExtents</a> = .{
+                .uncompressed_size = header.uncompressed_size,
+                .compressed_size = header.compressed_size,
+                .local_file_header_offset = header.local_file_header_offset,
+            };
+
+            <span class="tok-kw">if</span> (header.extra_len &gt; <span class="tok-number">0</span>) {
+                <span class="tok-kw">var</span> extra_buf: [<a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u16</span>)]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+                <span class="tok-kw">const</span> extra = extra_buf[<span class="tok-number">0</span>..header.extra_len];
+
+                {
+                    <span class="tok-kw">try</span> self.stream.seekTo(header_zip_offset + <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.CentralDirectoryFileHeader.html">CentralDirectoryFileHeader</a>) + header.filename_len);
+                    <span class="tok-kw">const</span> len = <span class="tok-kw">try</span> self.stream.context.reader().readAll(extra);
+                    <span class="tok-kw">if</span> (len != extra.len)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipTruncated;
+                }
+
+                <span class="tok-kw">var</span> extra_offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+                <span class="tok-kw">while</span> (extra_offset + <span class="tok-number">4</span> &lt;= extra.len) {
+                    <span class="tok-kw">const</span> header_id = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u16</span>, extra[extra_offset..][<span class="tok-number">0</span>..<span class="tok-number">2</span>], .little);
+                    <span class="tok-kw">const</span> data_size = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u16</span>, extra[extra_offset..][<span class="tok-number">2</span>..<span class="tok-number">4</span>], .little);
+                    <span class="tok-kw">const</span> end = extra_offset + <span class="tok-number">4</span> + data_size;
+                    <span class="tok-kw">if</span> (end &gt; extra.len)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadExtraFieldSize;
+                    <span class="tok-kw">const</span> data = extra[extra_offset + <span class="tok-number">4</span> .. end];
+                    <span class="tok-kw">switch</span> (<span class="tok-builtin">@as</span>(<a href="std.zip.ExtraHeader.html">ExtraHeader</a>, <span class="tok-builtin">@enumFromInt</span>(header_id))) {
+                        .zip64_info =&gt; <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.readZip64FileExtents">readZip64FileExtents</a>(<a href="std.zip.CentralDirectoryFileHeader.html">CentralDirectoryFileHeader</a>, header, &amp;extents, data),
+                        <span class="tok-kw">else</span> =&gt; {},<span class="tok-comment"> // ignore
+                    </span>}
+                    extra_offset = end;
+                }
+            }
+
+            <span class="tok-kw">return</span> .{
+                .version_needed_to_extract = header.version_needed_to_extract,
+                .flags = header.flags,
+                .compression_method = header.compression_method,
+                .last_modification_time = header.last_modification_time,
+                .last_modification_date = header.last_modification_date,
+                .header_zip_offset = header_zip_offset,
+                .crc32 = header.crc32,
+                .filename_len = header.filename_len,
+                .compressed_size = extents.compressed_size,
+                .uncompressed_size = extents.uncompressed_size,
+                .file_offset = extents.local_file_header_offset,
+            };
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Entry = <span class="tok-kw">struct</span> {
+            version_needed_to_extract: <span class="tok-type">u16</span>,
+            flags: <a href="std.zip.GeneralPurposeFlags.html">GeneralPurposeFlags</a>,
+            compression_method: <a href="std.zip.CompressionMethod.html">CompressionMethod</a>,
+            last_modification_time: <span class="tok-type">u16</span>,
+            last_modification_date: <span class="tok-type">u16</span>,
+            header_zip_offset: <span class="tok-type">u64</span>,
+            crc32: <span class="tok-type">u32</span>,
+            filename_len: <span class="tok-type">u32</span>,
+            compressed_size: <span class="tok-type">u64</span>,
+            uncompressed_size: <span class="tok-type">u64</span>,
+            file_offset: <span class="tok-type">u64</span>,
+
+            <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">extract</span>(
+                self: <a href="std.zip.Iterator.Entry.html">Entry</a>,
+                stream: SeekableStream,
+                options: <a href="std.zip.ExtractOptions.html">ExtractOptions</a>,
+                filename_buf: []<span class="tok-type">u8</span>,
+                dest: <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.Dir.html">Dir</a>,
+            ) !<span class="tok-type">u32</span> {
+                <span class="tok-kw">if</span> (filename_buf.len &lt; self.filename_len)
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipInsufficientBuffer;
+                <span class="tok-kw">const</span> filename = filename_buf[<span class="tok-number">0</span>..self.filename_len];
+
+                <span class="tok-kw">try</span> stream.seekTo(self.header_zip_offset + <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.CentralDirectoryFileHeader.html">CentralDirectoryFileHeader</a>));
+
+                {
+                    <span class="tok-kw">const</span> len = <span class="tok-kw">try</span> stream.context.reader().readAll(filename);
+                    <span class="tok-kw">if</span> (len != filename.len)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadFileOffset;
+                }
+
+                <span class="tok-kw">const</span> local_data_header_offset: <span class="tok-type">u64</span> = local_data_header_offset: {
+                    <span class="tok-kw">const</span> local_header = blk: {
+                        <span class="tok-kw">try</span> stream.seekTo(self.file_offset);
+                        <span class="tok-kw">break</span> :blk <span class="tok-kw">try</span> stream.context.reader().readStructEndian(<a href="std.zip.LocalFileHeader.html">LocalFileHeader</a>, .little);
+                    };
+                    <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, &amp;local_header.signature, &amp;<a href="std.zip.html#std.zip.local_file_header_sig">local_file_header_sig</a>))
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadFileOffset;
+                    <span class="tok-kw">if</span> (local_header.version_needed_to_extract != self.version_needed_to_extract)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMismatchVersionNeeded;
+                    <span class="tok-kw">if</span> (local_header.last_modification_time != self.last_modification_time)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMismatchModTime;
+                    <span class="tok-kw">if</span> (local_header.last_modification_date != self.last_modification_date)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMismatchModDate;
+
+                    <span class="tok-kw">if</span> (<span class="tok-builtin">@as</span>(<span class="tok-type">u16</span>, <span class="tok-builtin">@bitCast</span>(local_header.flags)) != <span class="tok-builtin">@as</span>(<span class="tok-type">u16</span>, <span class="tok-builtin">@bitCast</span>(self.flags)))
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMismatchFlags;
+                    <span class="tok-kw">if</span> (local_header.crc32 != <span class="tok-number">0</span> <span class="tok-kw">and</span> local_header.crc32 != self.crc32)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMismatchCrc32;
+                    <span class="tok-kw">var</span> extents: <a href="std.zip.FileExtents.html">FileExtents</a> = .{
+                        .uncompressed_size = local_header.uncompressed_size,
+                        .compressed_size = local_header.compressed_size,
+                        .local_file_header_offset = <span class="tok-number">0</span>,
+                    };
+                    <span class="tok-kw">if</span> (local_header.extra_len &gt; <span class="tok-number">0</span>) {
+                        <span class="tok-kw">var</span> extra_buf: [<a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u16</span>)]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+                        <span class="tok-kw">const</span> extra = extra_buf[<span class="tok-number">0</span>..local_header.extra_len];
+
+                        {
+                            <span class="tok-kw">try</span> stream.seekTo(self.file_offset + <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.LocalFileHeader.html">LocalFileHeader</a>) + local_header.filename_len);
+                            <span class="tok-kw">const</span> len = <span class="tok-kw">try</span> stream.context.reader().readAll(extra);
+                            <span class="tok-kw">if</span> (len != extra.len)
+                                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipTruncated;
+                        }
+
+                        <span class="tok-kw">var</span> extra_offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+                        <span class="tok-kw">while</span> (extra_offset + <span class="tok-number">4</span> &lt;= local_header.extra_len) {
+                            <span class="tok-kw">const</span> header_id = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u16</span>, extra[extra_offset..][<span class="tok-number">0</span>..<span class="tok-number">2</span>], .little);
+                            <span class="tok-kw">const</span> data_size = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u16</span>, extra[extra_offset..][<span class="tok-number">2</span>..<span class="tok-number">4</span>], .little);
+                            <span class="tok-kw">const</span> end = extra_offset + <span class="tok-number">4</span> + data_size;
+                            <span class="tok-kw">if</span> (end &gt; local_header.extra_len)
+                                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadExtraFieldSize;
+                            <span class="tok-kw">const</span> data = extra[extra_offset + <span class="tok-number">4</span> .. end];
+                            <span class="tok-kw">switch</span> (<span class="tok-builtin">@as</span>(<a href="std.zip.ExtraHeader.html">ExtraHeader</a>, <span class="tok-builtin">@enumFromInt</span>(header_id))) {
+                                .zip64_info =&gt; <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.readZip64FileExtents">readZip64FileExtents</a>(<a href="std.zip.LocalFileHeader.html">LocalFileHeader</a>, local_header, &amp;extents, data),
+                                <span class="tok-kw">else</span> =&gt; {},<span class="tok-comment"> // ignore
+                            </span>}
+                            extra_offset = end;
+                        }
+                    }
+
+                    <span class="tok-kw">if</span> (extents.compressed_size != <span class="tok-number">0</span> <span class="tok-kw">and</span>
+                        extents.compressed_size != self.compressed_size)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMismatchCompLen;
+                    <span class="tok-kw">if</span> (extents.uncompressed_size != <span class="tok-number">0</span> <span class="tok-kw">and</span>
+                        extents.uncompressed_size != self.uncompressed_size)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMismatchUncompLen;
+
+                    <span class="tok-kw">if</span> (local_header.filename_len != self.filename_len)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMismatchFilenameLen;
+
+                    <span class="tok-kw">break</span> :local_data_header_offset <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, local_header.filename_len) +
+                        <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, local_header.extra_len);
+                };
+
+                <span class="tok-kw">if</span> (<a href="std.zip.html#std.zip.isBadFilename">isBadFilename</a>(filename))
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadFilename;
+
+                <span class="tok-kw">if</span> (options.allow_backslashes) {
+                    <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.replaceScalar">replaceScalar</a>(<span class="tok-type">u8</span>, filename, <span class="tok-str">'\\'</span>, <span class="tok-str">'/'</span>);
+                } <span class="tok-kw">else</span> {
+                    <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, filename, <span class="tok-str">'\\'</span>)) |_|
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipFilenameHasBackslash;
+                }<span class="tok-comment">
+
+                // All entries that end in '/' are directories
+                </span><span class="tok-kw">if</span> (filename[filename.len - <span class="tok-number">1</span>] == <span class="tok-str">'/'</span>) {
+                    <span class="tok-kw">if</span> (self.uncompressed_size != <span class="tok-number">0</span>)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadDirectorySize;
+                    <span class="tok-kw">try</span> dest.makePath(filename[<span class="tok-number">0</span> .. filename.len - <span class="tok-number">1</span>]);
+                    <span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.hash.html">hash</a>.<a href="std.hash.crc.html#std.hash.crc.Crc32IsoHdlc">Crc32</a>.<a href="#">hash</a>(&amp;.{});
+                }
+
+                <span class="tok-kw">const</span> out_file = blk: {
+                    <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.dirname">dirname</a>(filename)) |dirname| {
+                        <span class="tok-kw">var</span> parent_dir = <span class="tok-kw">try</span> dest.makeOpenPath(dirname, .{});
+                        <span class="tok-kw">defer</span> parent_dir.close();
+
+                        <span class="tok-kw">const</span> basename = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.basename">basename</a>(filename);
+                        <span class="tok-kw">break</span> :blk <span class="tok-kw">try</span> parent_dir.createFile(basename, .{ .exclusive = <span class="tok-null">true</span> });
+                    }
+                    <span class="tok-kw">break</span> :blk <span class="tok-kw">try</span> dest.createFile(filename, .{ .exclusive = <span class="tok-null">true</span> });
+                };
+                <span class="tok-kw">defer</span> out_file.close();
+                <span class="tok-kw">const</span> local_data_file_offset: <span class="tok-type">u64</span> =
+                    <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, self.file_offset) +
+                    <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.LocalFileHeader.html">LocalFileHeader</a>)) +
+                    local_data_header_offset;
+                <span class="tok-kw">try</span> stream.seekTo(local_data_file_offset);
+                <span class="tok-kw">var</span> limited_reader = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.limited_reader.html#std.io.limited_reader.limitedReader">limitedReader</a>(stream.context.reader(), self.compressed_size);
+                <span class="tok-kw">const</span> crc = <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.decompress">decompress</a>(
+                    self.compression_method,
+                    self.uncompressed_size,
+                    limited_reader.reader(),
+                    out_file.writer(),
+                );
+                <span class="tok-kw">if</span> (limited_reader.bytes_left != <span class="tok-number">0</span>)
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipDecompressTruncated;
+                <span class="tok-kw">return</span> crc;
+            }
+        };
+    };
+}</code></pre></details></div></div></div></div><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.zip.testutil" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">testutil</span><a href="#src.zig-std.zip.testutil">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zip.testutil">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> testutil = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;zip/test.zig&quot;</span>)</code></pre></details></div></div><div class="decl"><h2 id="std.zip.central_file_header_sig" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">central_file_header_sig</span><a href="#src.zig-std.zip.central_file_header_sig">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zip.central_file_header_sig">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> central_file_header_sig = [<span class="tok-number">4</span>]<span class="tok-type">u8</span>{ <span class="tok-str">'P'</span>, <span class="tok-str">'K'</span>, <span class="tok-number">1</span>, <span class="tok-number">2</span> }</code></pre></details></div></div><div class="decl"><h2 id="std.zip.local_file_header_sig" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">local_file_header_sig</span><a href="#src.zig-std.zip.local_file_header_sig">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zip.local_file_header_sig">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> local_file_header_sig = [<span class="tok-number">4</span>]<span class="tok-type">u8</span>{ <span class="tok-str">'P'</span>, <span class="tok-str">'K'</span>, <span class="tok-number">3</span>, <span class="tok-number">4</span> }</code></pre></details></div></div><div class="decl"><h2 id="std.zip.end_record_sig" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">end_record_sig</span><a href="#src.zig-std.zip.end_record_sig">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zip.end_record_sig">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> end_record_sig = [<span class="tok-number">4</span>]<span class="tok-type">u8</span>{ <span class="tok-str">'P'</span>, <span class="tok-str">'K'</span>, <span class="tok-number">5</span>, <span class="tok-number">6</span> }</code></pre></details></div></div><div class="decl"><h2 id="std.zip.end_record64_sig" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">end_record64_sig</span><a href="#src.zig-std.zip.end_record64_sig">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zip.end_record64_sig">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> end_record64_sig = [<span class="tok-number">4</span>]<span class="tok-type">u8</span>{ <span class="tok-str">'P'</span>, <span class="tok-str">'K'</span>, <span class="tok-number">6</span>, <span class="tok-number">6</span> }</code></pre></details></div></div><div class="decl"><h2 id="std.zip.end_locator64_sig" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">end_locator64_sig</span><a href="#src.zig-std.zip.end_locator64_sig">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zip.end_locator64_sig">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> end_locator64_sig = [<span class="tok-number">4</span>]<span class="tok-type">u8</span>{ <span class="tok-str">'P'</span>, <span class="tok-str">'K'</span>, <span class="tok-number">6</span>, <span class="tok-number">7</span> }</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.zip.findEndRecord" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">findEndRecord</span><a href="#src.zig-std.zip.findEndRecord">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">findEndRecord</span>(seekable_stream: <span class="tok-kw">anytype</span>, stream_len: <span class="tok-type">u64</span>) !<a href="std.zip.EndRecord.html">EndRecord</a></code></pre></div><div class="tldDocs"><p>Find and return the end record for the given seekable zip stream.
+Note that <code>seekable_stream</code> must be an instance of <code><a href="std.io.seekable_stream.html#std.io.seekable_stream.SeekableStream">std.io.SeekableStream</a></code> and
+its context must also have a <code>.reader()</code> method that returns an instance of
+<code><a href="std.io.html#std.io.GenericReader">std.io.Reader</a></code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>stream_len: <span class="tok-type">u64</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zip.findEndRecord">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">findEndRecord</span>(seekable_stream: <span class="tok-kw">anytype</span>, stream_len: <span class="tok-type">u64</span>) !<a href="std.zip.EndRecord.html">EndRecord</a> {
+    <span class="tok-kw">var</span> buf: [<span class="tok-builtin">@sizeOf</span>(<a href="std.zip.EndRecord.html">EndRecord</a>) + <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u16</span>)]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">const</span> record_len_max = <span class="tok-builtin">@min</span>(stream_len, buf.len);
+    <span class="tok-kw">var</span> loaded_len: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+
+    <span class="tok-kw">var</span> comment_len: <span class="tok-type">u16</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+        <span class="tok-kw">const</span> record_len: <span class="tok-type">u32</span> = <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, comment_len) + <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.EndRecord.html">EndRecord</a>);
+        <span class="tok-kw">if</span> (record_len &gt; record_len_max)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipNoEndRecord;
+
+        <span class="tok-kw">if</span> (record_len &gt; loaded_len) {
+            <span class="tok-kw">const</span> new_loaded_len = <span class="tok-builtin">@min</span>(loaded_len + <span class="tok-number">300</span>, record_len_max);
+            <span class="tok-kw">const</span> read_len = new_loaded_len - loaded_len;
+
+            <span class="tok-kw">try</span> seekable_stream.seekTo(stream_len - <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, new_loaded_len));
+            <span class="tok-kw">const</span> read_buf: []<span class="tok-type">u8</span> = buf[buf.len - new_loaded_len ..][<span class="tok-number">0</span>..read_len];
+            <span class="tok-kw">const</span> len = <span class="tok-kw">try</span> seekable_stream.context.reader().readAll(read_buf);
+            <span class="tok-kw">if</span> (len != read_len)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipTruncated;
+            loaded_len = new_loaded_len;
+        }
+
+        <span class="tok-kw">const</span> record_bytes = buf[buf.len - record_len ..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(<a href="std.zip.EndRecord.html">EndRecord</a>)];
+        <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, record_bytes[<span class="tok-number">0</span>..<span class="tok-number">4</span>], &amp;<a href="std.zip.html#std.zip.end_record_sig">end_record_sig</a>) <span class="tok-kw">and</span>
+            <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u16</span>, record_bytes[<span class="tok-number">20</span>..<span class="tok-number">22</span>], .little) == comment_len)
+        {
+            <span class="tok-kw">const</span> record: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.zip.EndRecord.html">EndRecord</a> = <span class="tok-builtin">@ptrCast</span>(record_bytes.ptr);
+            <span class="tok-kw">if</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.target">target</a>.<a href="#">cpu</a>.<a href="#">arch</a>.<a href="#">endian</a>() != .little) {
+                <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.byteSwapAllFields">byteSwapAllFields</a>(<span class="tok-builtin">@TypeOf</span>(record.*), record);
+            }
+            <span class="tok-kw">return</span> record.*;
+        }
+
+        <span class="tok-kw">if</span> (comment_len == <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u16</span>))
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipNoEndRecord;
+        comment_len += <span class="tok-number">1</span>;
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.zip.decompress" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">decompress</span><a href="#src.zig-std.zip.decompress">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompress</span>( method: <a href="std.zip.CompressionMethod.html">CompressionMethod</a>, uncompressed_size: <span class="tok-type">u64</span>, reader: <span class="tok-kw">anytype</span>, writer: <span class="tok-kw">anytype</span>, ) !<span class="tok-type">u32</span></code></pre></div><div class="tldDocs"><p>Decompresses the given data from <code>reader</code> into <code>writer</code>.  Stops early if more
+than <code>uncompressed_size</code> bytes are processed and verifies that exactly that
+number of bytes are decompressed.  Returns the CRC-32 of the uncompressed data.
+<code>writer</code> can be anything with a <code>writeAll(self: *Self, chunk: []const u8) anyerror!void</code> method.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>method: <a href="std.zip.CompressionMethod.html">CompressionMethod</a></code></pre></div><div><pre><code>uncompressed_size: <span class="tok-type">u64</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zip.decompress">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompress</span>(
+    method: <a href="std.zip.CompressionMethod.html">CompressionMethod</a>,
+    uncompressed_size: <span class="tok-type">u64</span>,
+    reader: <span class="tok-kw">anytype</span>,
+    writer: <span class="tok-kw">anytype</span>,
+) !<span class="tok-type">u32</span> {
+    <span class="tok-kw">var</span> hash = <a href="std.html">std</a>.<a href="std.hash.html">hash</a>.<a href="std.hash.crc.html#std.hash.crc.Crc32IsoHdlc">Crc32</a>.<a href="#">init</a>();
+
+    <span class="tok-kw">var</span> total_uncompressed: <span class="tok-type">u64</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">switch</span> (method) {
+        .store =&gt; {
+            <span class="tok-kw">var</span> buf: [<span class="tok-number">4096</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+                <span class="tok-kw">const</span> len = <span class="tok-kw">try</span> reader.read(&amp;buf);
+                <span class="tok-kw">if</span> (len == <span class="tok-number">0</span>) <span class="tok-kw">break</span>;
+                <span class="tok-kw">try</span> writer.writeAll(buf[<span class="tok-number">0</span>..len]);
+                hash.update(buf[<span class="tok-number">0</span>..len]);
+                total_uncompressed += <span class="tok-builtin">@intCast</span>(len);
+            }
+        },
+        .deflate =&gt; {
+            <span class="tok-kw">var</span> br = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.buffered_reader.html#std.io.buffered_reader.bufferedReader">bufferedReader</a>(reader);
+            <span class="tok-kw">var</span> decompressor = <a href="std.html">std</a>.<a href="std.compress.html">compress</a>.<a href="std.compress.flate.html">flate</a>.<a href="std.compress.flate.html#std.compress.flate.decompressor">decompressor</a>(br.reader());
+            <span class="tok-kw">while</span> (<span class="tok-kw">try</span> decompressor.next()) |chunk| {
+                <span class="tok-kw">try</span> writer.writeAll(chunk);
+                hash.update(chunk);
+                total_uncompressed += <span class="tok-builtin">@intCast</span>(chunk.len);
+                <span class="tok-kw">if</span> (total_uncompressed &gt; uncompressed_size)
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipUncompressSizeTooSmall;
+            }
+            <span class="tok-kw">if</span> (br.end != br.start)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipDeflateTruncated;
+        },
+        _ =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnsupportedCompressionMethod,
+    }
+    <span class="tok-kw">if</span> (total_uncompressed != uncompressed_size)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipUncompressSizeMismatch;
+
+    <span class="tok-kw">return</span> hash.final();
+}</code></pre></details></div></div><div class="decl"><h2 id="std.zip.extract" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">extract</span><a href="#src.zig-std.zip.extract">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">extract</span>(dest: <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.Dir.html">Dir</a>, seekable_stream: <span class="tok-kw">anytype</span>, options: <a href="std.zip.ExtractOptions.html">ExtractOptions</a>) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Extract the zipped files inside <code>seekable_stream</code> to the given <code>dest</code> directory.
+Note that <code>seekable_stream</code> must be an instance of <code><a href="std.io.seekable_stream.html#std.io.seekable_stream.SeekableStream">std.io.SeekableStream</a></code> and
+its context must also have a <code>.reader()</code> method that returns an instance of
+<code><a href="std.io.html#std.io.GenericReader">std.io.Reader</a></code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>dest: <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.Dir.html">Dir</a></code></pre></div><div><pre><code>options: <a href="std.zip.ExtractOptions.html">ExtractOptions</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zip.extract">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">extract</span>(dest: <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.Dir.html">Dir</a>, seekable_stream: <span class="tok-kw">anytype</span>, options: <a href="std.zip.ExtractOptions.html">ExtractOptions</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> SeekableStream = <span class="tok-builtin">@TypeOf</span>(seekable_stream);
+    <span class="tok-kw">var</span> iter = <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.Iterator">Iterator</a>(SeekableStream).init(seekable_stream);
+
+    <span class="tok-kw">var</span> filename_buf: [<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">while</span> (<span class="tok-kw">try</span> iter.next()) |entry| {
+        <span class="tok-kw">const</span> crc32 = <span class="tok-kw">try</span> entry.extract(seekable_stream, options, &amp;filename_buf, dest);
+        <span class="tok-kw">if</span> (crc32 != entry.crc32)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipCrcMismatch;
+        <span class="tok-kw">if</span> (options.diagnostics) |d| {
+            <span class="tok-kw">try</span> d.nextFilename(filename_buf[<span class="tok-number">0</span>..entry.filename_len]);
+        }
+    }
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.zip">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-comment">//! The .ZIP File Format Specification is found here:</span>
+<span class="tok-comment">//!    https://pkwaredownloads.blob.core.windows.net/pem/APPNOTE.txt</span>
+<span class="tok-comment">//!</span>
+<span class="tok-comment">//! Note that this file uses the abbreviation &quot;cd&quot; for &quot;central directory&quot;</span>
+
+<span class="tok-kw">const</span> builtin = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;builtin&quot;</span>);
+<span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>);
+<span class="tok-kw">const</span> testing = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> testutil = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;zip/test.zig&quot;</span>);
+<span class="tok-kw">const</span> File = <a href="std.zip.html#std.zip.testutil">testutil</a>.<a href="#">File</a>;
+<span class="tok-kw">const</span> FileStore = <a href="std.zip.html#std.zip.testutil">testutil</a>.<a href="#">FileStore</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CompressionMethod = <span class="tok-kw">enum</span>(<span class="tok-type">u16</span>) {
+    store = <span class="tok-number">0</span>,
+    deflate = <span class="tok-number">8</span>,
+    _,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> central_file_header_sig = [<span class="tok-number">4</span>]<span class="tok-type">u8</span>{ <span class="tok-str">'P'</span>, <span class="tok-str">'K'</span>, <span class="tok-number">1</span>, <span class="tok-number">2</span> };
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> local_file_header_sig = [<span class="tok-number">4</span>]<span class="tok-type">u8</span>{ <span class="tok-str">'P'</span>, <span class="tok-str">'K'</span>, <span class="tok-number">3</span>, <span class="tok-number">4</span> };
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> end_record_sig = [<span class="tok-number">4</span>]<span class="tok-type">u8</span>{ <span class="tok-str">'P'</span>, <span class="tok-str">'K'</span>, <span class="tok-number">5</span>, <span class="tok-number">6</span> };
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> end_record64_sig = [<span class="tok-number">4</span>]<span class="tok-type">u8</span>{ <span class="tok-str">'P'</span>, <span class="tok-str">'K'</span>, <span class="tok-number">6</span>, <span class="tok-number">6</span> };
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> end_locator64_sig = [<span class="tok-number">4</span>]<span class="tok-type">u8</span>{ <span class="tok-str">'P'</span>, <span class="tok-str">'K'</span>, <span class="tok-number">6</span>, <span class="tok-number">7</span> };
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ExtraHeader = <span class="tok-kw">enum</span>(<span class="tok-type">u16</span>) {
+    zip64_info = <span class="tok-number">0x1</span>,
+    _,
+};
+
+<span class="tok-kw">const</span> GeneralPurposeFlags = <span class="tok-kw">packed</span> <span class="tok-kw">struct</span>(<span class="tok-type">u16</span>) {
+    encrypted: <span class="tok-type">bool</span>,
+    _: <span class="tok-type">u15</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> LocalFileHeader = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    signature: [<span class="tok-number">4</span>]<span class="tok-type">u8</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    version_needed_to_extract: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    flags: <a href="std.zip.GeneralPurposeFlags.html">GeneralPurposeFlags</a> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    compression_method: <a href="std.zip.CompressionMethod.html">CompressionMethod</a> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    last_modification_time: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    last_modification_date: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    crc32: <span class="tok-type">u32</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    compressed_size: <span class="tok-type">u32</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    uncompressed_size: <span class="tok-type">u32</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    filename_len: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    extra_len: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CentralDirectoryFileHeader = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    signature: [<span class="tok-number">4</span>]<span class="tok-type">u8</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    version_made_by: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    version_needed_to_extract: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    flags: <a href="std.zip.GeneralPurposeFlags.html">GeneralPurposeFlags</a> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    compression_method: <a href="std.zip.CompressionMethod.html">CompressionMethod</a> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    last_modification_time: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    last_modification_date: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    crc32: <span class="tok-type">u32</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    compressed_size: <span class="tok-type">u32</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    uncompressed_size: <span class="tok-type">u32</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    filename_len: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    extra_len: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    comment_len: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    disk_number: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    internal_file_attributes: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    external_file_attributes: <span class="tok-type">u32</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    local_file_header_offset: <span class="tok-type">u32</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> EndRecord64 = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    signature: [<span class="tok-number">4</span>]<span class="tok-type">u8</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    end_record_size: <span class="tok-type">u64</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    version_made_by: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    version_needed_to_extract: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    disk_number: <span class="tok-type">u32</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    central_directory_disk_number: <span class="tok-type">u32</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    record_count_disk: <span class="tok-type">u64</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    record_count_total: <span class="tok-type">u64</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    central_directory_size: <span class="tok-type">u64</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    central_directory_offset: <span class="tok-type">u64</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> EndLocator64 = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    signature: [<span class="tok-number">4</span>]<span class="tok-type">u8</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    zip64_disk_count: <span class="tok-type">u32</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    record_file_offset: <span class="tok-type">u64</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    total_disk_count: <span class="tok-type">u32</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> EndRecord = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    signature: [<span class="tok-number">4</span>]<span class="tok-type">u8</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    disk_number: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    central_directory_disk_number: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    record_count_disk: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    record_count_total: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    central_directory_size: <span class="tok-type">u32</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    central_directory_offset: <span class="tok-type">u32</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    comment_len: <span class="tok-type">u16</span> <span class="tok-kw">align</span>(<span class="tok-number">1</span>),
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">need_zip64</span>(self: <a href="std.zip.EndRecord.html">EndRecord</a>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">return</span> <a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(self.record_count_disk) <span class="tok-kw">or</span>
+            <a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(self.record_count_total) <span class="tok-kw">or</span>
+            <a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(self.central_directory_size) <span class="tok-kw">or</span>
+            <a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(self.central_directory_offset);
+    }
+};
+
+<span class="tok-comment">/// Find and return the end record for the given seekable zip stream.</span>
+<span class="tok-comment">/// Note that `seekable_stream` must be an instance of `std.io.SeekableStream` and</span>
+<span class="tok-comment">/// its context must also have a `.reader()` method that returns an instance of</span>
+<span class="tok-comment">/// `std.io.Reader`.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">findEndRecord</span>(seekable_stream: <span class="tok-kw">anytype</span>, stream_len: <span class="tok-type">u64</span>) !<a href="std.zip.EndRecord.html">EndRecord</a> {
+    <span class="tok-kw">var</span> buf: [<span class="tok-builtin">@sizeOf</span>(<a href="std.zip.EndRecord.html">EndRecord</a>) + <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u16</span>)]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">const</span> record_len_max = <span class="tok-builtin">@min</span>(stream_len, buf.len);
+    <span class="tok-kw">var</span> loaded_len: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+
+    <span class="tok-kw">var</span> comment_len: <span class="tok-type">u16</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+        <span class="tok-kw">const</span> record_len: <span class="tok-type">u32</span> = <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, comment_len) + <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.EndRecord.html">EndRecord</a>);
+        <span class="tok-kw">if</span> (record_len &gt; record_len_max)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipNoEndRecord;
+
+        <span class="tok-kw">if</span> (record_len &gt; loaded_len) {
+            <span class="tok-kw">const</span> new_loaded_len = <span class="tok-builtin">@min</span>(loaded_len + <span class="tok-number">300</span>, record_len_max);
+            <span class="tok-kw">const</span> read_len = new_loaded_len - loaded_len;
+
+            <span class="tok-kw">try</span> seekable_stream.seekTo(stream_len - <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, new_loaded_len));
+            <span class="tok-kw">const</span> read_buf: []<span class="tok-type">u8</span> = buf[buf.len - new_loaded_len ..][<span class="tok-number">0</span>..read_len];
+            <span class="tok-kw">const</span> len = <span class="tok-kw">try</span> seekable_stream.context.reader().readAll(read_buf);
+            <span class="tok-kw">if</span> (len != read_len)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipTruncated;
+            loaded_len = new_loaded_len;
+        }
+
+        <span class="tok-kw">const</span> record_bytes = buf[buf.len - record_len ..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(<a href="std.zip.EndRecord.html">EndRecord</a>)];
+        <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, record_bytes[<span class="tok-number">0</span>..<span class="tok-number">4</span>], &amp;<a href="std.zip.html#std.zip.end_record_sig">end_record_sig</a>) <span class="tok-kw">and</span>
+            <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u16</span>, record_bytes[<span class="tok-number">20</span>..<span class="tok-number">22</span>], .little) == comment_len)
+        {
+            <span class="tok-kw">const</span> record: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.zip.EndRecord.html">EndRecord</a> = <span class="tok-builtin">@ptrCast</span>(record_bytes.ptr);
+            <span class="tok-kw">if</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.target">target</a>.<a href="#">cpu</a>.<a href="#">arch</a>.<a href="#">endian</a>() != .little) {
+                <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.byteSwapAllFields">byteSwapAllFields</a>(<span class="tok-builtin">@TypeOf</span>(record.*), record);
+            }
+            <span class="tok-kw">return</span> record.*;
+        }
+
+        <span class="tok-kw">if</span> (comment_len == <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u16</span>))
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipNoEndRecord;
+        comment_len += <span class="tok-number">1</span>;
+    }
+}
+
+<span class="tok-comment">/// Decompresses the given data from `reader` into `writer`.  Stops early if more</span>
+<span class="tok-comment">/// than `uncompressed_size` bytes are processed and verifies that exactly that</span>
+<span class="tok-comment">/// number of bytes are decompressed.  Returns the CRC-32 of the uncompressed data.</span>
+<span class="tok-comment">/// `writer` can be anything with a `writeAll(self: *Self, chunk: []const u8) anyerror!void` method.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompress</span>(
+    method: <a href="std.zip.CompressionMethod.html">CompressionMethod</a>,
+    uncompressed_size: <span class="tok-type">u64</span>,
+    reader: <span class="tok-kw">anytype</span>,
+    writer: <span class="tok-kw">anytype</span>,
+) !<span class="tok-type">u32</span> {
+    <span class="tok-kw">var</span> hash = <a href="std.html">std</a>.<a href="std.hash.html">hash</a>.<a href="std.hash.crc.html#std.hash.crc.Crc32IsoHdlc">Crc32</a>.<a href="#">init</a>();
+
+    <span class="tok-kw">var</span> total_uncompressed: <span class="tok-type">u64</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">switch</span> (method) {
+        .store =&gt; {
+            <span class="tok-kw">var</span> buf: [<span class="tok-number">4096</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+                <span class="tok-kw">const</span> len = <span class="tok-kw">try</span> reader.read(&amp;buf);
+                <span class="tok-kw">if</span> (len == <span class="tok-number">0</span>) <span class="tok-kw">break</span>;
+                <span class="tok-kw">try</span> writer.writeAll(buf[<span class="tok-number">0</span>..len]);
+                hash.update(buf[<span class="tok-number">0</span>..len]);
+                total_uncompressed += <span class="tok-builtin">@intCast</span>(len);
+            }
+        },
+        .deflate =&gt; {
+            <span class="tok-kw">var</span> br = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.buffered_reader.html#std.io.buffered_reader.bufferedReader">bufferedReader</a>(reader);
+            <span class="tok-kw">var</span> decompressor = <a href="std.html">std</a>.<a href="std.compress.html">compress</a>.<a href="std.compress.flate.html">flate</a>.<a href="std.compress.flate.html#std.compress.flate.decompressor">decompressor</a>(br.reader());
+            <span class="tok-kw">while</span> (<span class="tok-kw">try</span> decompressor.next()) |chunk| {
+                <span class="tok-kw">try</span> writer.writeAll(chunk);
+                hash.update(chunk);
+                total_uncompressed += <span class="tok-builtin">@intCast</span>(chunk.len);
+                <span class="tok-kw">if</span> (total_uncompressed &gt; uncompressed_size)
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipUncompressSizeTooSmall;
+            }
+            <span class="tok-kw">if</span> (br.end != br.start)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipDeflateTruncated;
+        },
+        _ =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnsupportedCompressionMethod,
+    }
+    <span class="tok-kw">if</span> (total_uncompressed != uncompressed_size)
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipUncompressSizeMismatch;
+
+    <span class="tok-kw">return</span> hash.final();
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">isBadFilename</span>(filename: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">if</span> (filename.len == <span class="tok-number">0</span> <span class="tok-kw">or</span> filename[<span class="tok-number">0</span>] == <span class="tok-str">'/'</span>)
+        <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+
+    <span class="tok-kw">var</span> it = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, filename, <span class="tok-str">'/'</span>);
+    <span class="tok-kw">while</span> (it.next()) |part| {
+        <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, part, <span class="tok-str">&quot;..&quot;</span>))
+            <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+    }
+
+    <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">isMaxInt</span>(uint: <span class="tok-kw">anytype</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> uint == <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-builtin">@TypeOf</span>(uint));
+}
+
+<span class="tok-kw">const</span> FileExtents = <span class="tok-kw">struct</span> {
+    uncompressed_size: <span class="tok-type">u64</span>,
+    compressed_size: <span class="tok-type">u64</span>,
+    local_file_header_offset: <span class="tok-type">u64</span>,
+};
+
+<span class="tok-kw">fn</span> <span class="tok-fn">readZip64FileExtents</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, header: T, extents: *<a href="std.zip.FileExtents.html">FileExtents</a>, data: []<span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> data_offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">if</span> (<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(header.uncompressed_size)) {
+        <span class="tok-kw">if</span> (data_offset + <span class="tok-number">8</span> &gt; data.len)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadCd64Size;
+        extents.uncompressed_size = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u64</span>, data[data_offset..][<span class="tok-number">0</span>..<span class="tok-number">8</span>], .little);
+        data_offset += <span class="tok-number">8</span>;
+    }
+    <span class="tok-kw">if</span> (<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(header.compressed_size)) {
+        <span class="tok-kw">if</span> (data_offset + <span class="tok-number">8</span> &gt; data.len)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadCd64Size;
+        extents.compressed_size = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u64</span>, data[data_offset..][<span class="tok-number">0</span>..<span class="tok-number">8</span>], .little);
+        data_offset += <span class="tok-number">8</span>;
+    }
+
+    <span class="tok-kw">switch</span> (T) {
+        <a href="std.zip.CentralDirectoryFileHeader.html">CentralDirectoryFileHeader</a> =&gt; {
+            <span class="tok-kw">if</span> (<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(header.local_file_header_offset)) {
+                <span class="tok-kw">if</span> (data_offset + <span class="tok-number">8</span> &gt; data.len)
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadCd64Size;
+                extents.local_file_header_offset = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u64</span>, data[data_offset..][<span class="tok-number">0</span>..<span class="tok-number">8</span>], .little);
+                data_offset += <span class="tok-number">8</span>;
+            }
+            <span class="tok-kw">if</span> (<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(header.disk_number)) {
+                <span class="tok-kw">if</span> (data_offset + <span class="tok-number">4</span> &gt; data.len)
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipInvalid;
+                <span class="tok-kw">const</span> disk_number = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u32</span>, data[data_offset..][<span class="tok-number">0</span>..<span class="tok-number">4</span>], .little);
+                <span class="tok-kw">if</span> (disk_number != <span class="tok-number">0</span>)
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMultiDiskUnsupported;
+                data_offset += <span class="tok-number">4</span>;
+            }
+            <span class="tok-kw">if</span> (data_offset &gt; data.len)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadCd64Size;
+        },
+        <span class="tok-kw">else</span> =&gt; {},
+    }
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">Iterator</span>(<span class="tok-kw">comptime</span> SeekableStream: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        stream: SeekableStream,
+
+        cd_record_count: <span class="tok-type">u64</span>,
+        cd_zip_offset: <span class="tok-type">u64</span>,
+        cd_size: <span class="tok-type">u64</span>,
+
+        cd_record_index: <span class="tok-type">u64</span> = <span class="tok-number">0</span>,
+        cd_record_offset: <span class="tok-type">u64</span> = <span class="tok-number">0</span>,
+
+        <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(stream: SeekableStream) !<a href="std.zip.html#std.zip.Iterator">Self</a> {
+            <span class="tok-kw">const</span> stream_len = <span class="tok-kw">try</span> stream.getEndPos();
+
+            <span class="tok-kw">const</span> end_record = <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.findEndRecord">findEndRecord</a>(stream, stream_len);
+
+            <span class="tok-kw">if</span> (!<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(end_record.record_count_disk) <span class="tok-kw">and</span> end_record.record_count_disk &gt; end_record.record_count_total)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipDiskRecordCountTooLarge;
+
+            <span class="tok-kw">if</span> (end_record.disk_number != <span class="tok-number">0</span> <span class="tok-kw">or</span> end_record.central_directory_disk_number != <span class="tok-number">0</span>)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMultiDiskUnsupported;
+
+            {
+                <span class="tok-kw">const</span> counts_valid = !<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(end_record.record_count_disk) <span class="tok-kw">and</span> !<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(end_record.record_count_total);
+                <span class="tok-kw">if</span> (counts_valid <span class="tok-kw">and</span> end_record.record_count_disk != end_record.record_count_total)
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMultiDiskUnsupported;
+            }
+
+            <span class="tok-kw">var</span> result = <a href="std.zip.html#std.zip.Iterator">Self</a>{
+                .stream = stream,
+                .cd_record_count = end_record.record_count_total,
+                .cd_zip_offset = end_record.central_directory_offset,
+                .cd_size = end_record.central_directory_size,
+            };
+            <span class="tok-kw">if</span> (!end_record.need_zip64()) <span class="tok-kw">return</span> result;
+
+            <span class="tok-kw">const</span> locator_end_offset: <span class="tok-type">u64</span> = <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, end_record.comment_len) + <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.EndRecord.html">EndRecord</a>) + <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.EndLocator64.html">EndLocator64</a>);
+            <span class="tok-kw">if</span> (locator_end_offset &gt; stream_len)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipTruncated;
+            <span class="tok-kw">try</span> stream.seekTo(stream_len - locator_end_offset);
+            <span class="tok-kw">const</span> locator = <span class="tok-kw">try</span> stream.context.reader().readStructEndian(<a href="std.zip.EndLocator64.html">EndLocator64</a>, .little);
+            <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, &amp;locator.signature, &amp;<a href="std.zip.html#std.zip.end_locator64_sig">end_locator64_sig</a>))
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadLocatorSig;
+            <span class="tok-kw">if</span> (locator.zip64_disk_count != <span class="tok-number">0</span>)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipUnsupportedZip64DiskCount;
+            <span class="tok-kw">if</span> (locator.total_disk_count != <span class="tok-number">1</span>)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMultiDiskUnsupported;
+
+            <span class="tok-kw">try</span> stream.seekTo(locator.record_file_offset);
+
+            <span class="tok-kw">const</span> record64 = <span class="tok-kw">try</span> stream.context.reader().readStructEndian(<a href="std.zip.EndRecord64.html">EndRecord64</a>, .little);
+
+            <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, &amp;record64.signature, &amp;<a href="std.zip.html#std.zip.end_record64_sig">end_record64_sig</a>))
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadEndRecord64Sig;
+
+            <span class="tok-kw">if</span> (record64.end_record_size &lt; <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.EndRecord64.html">EndRecord64</a>) - <span class="tok-number">12</span>)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipEndRecord64SizeTooSmall;
+            <span class="tok-kw">if</span> (record64.end_record_size &gt; <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.EndRecord64.html">EndRecord64</a>) - <span class="tok-number">12</span>)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipEndRecord64UnhandledExtraData;
+
+            <span class="tok-kw">if</span> (record64.version_needed_to_extract &gt; <span class="tok-number">45</span>)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipUnsupportedVersion;
+
+            {
+                <span class="tok-kw">const</span> is_multidisk = record64.disk_number != <span class="tok-number">0</span> <span class="tok-kw">or</span>
+                    record64.central_directory_disk_number != <span class="tok-number">0</span> <span class="tok-kw">or</span>
+                    record64.record_count_disk != record64.record_count_total;
+                <span class="tok-kw">if</span> (is_multidisk)
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMultiDiskUnsupported;
+            }
+
+            <span class="tok-kw">if</span> (<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(end_record.record_count_total)) {
+                result.cd_record_count = record64.record_count_total;
+            } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (end_record.record_count_total != record64.record_count_total)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Zip64RecordCountTotalMismatch;
+
+            <span class="tok-kw">if</span> (<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(end_record.central_directory_offset)) {
+                result.cd_zip_offset = record64.central_directory_offset;
+            } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (end_record.central_directory_offset != record64.central_directory_offset)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Zip64CentralDirectoryOffsetMismatch;
+
+            <span class="tok-kw">if</span> (<a href="std.zip.html#std.zip.isMaxInt">isMaxInt</a>(end_record.central_directory_size)) {
+                result.cd_size = record64.central_directory_size;
+            } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (end_record.central_directory_size != record64.central_directory_size)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Zip64CentralDirectorySizeMismatch;
+
+            <span class="tok-kw">return</span> result;
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">next</span>(self: *<a href="std.zip.html#std.zip.Iterator">Self</a>) !?<a href="std.zip.Iterator.Entry.html">Entry</a> {
+            <span class="tok-kw">if</span> (self.cd_record_index == self.cd_record_count) {
+                <span class="tok-kw">if</span> (self.cd_record_offset != self.cd_size)
+                    <span class="tok-kw">return</span> <span class="tok-kw">if</span> (self.cd_size &gt; self.cd_record_offset)
+                        <span class="tok-kw">error</span>.ZipCdOversized
+                    <span class="tok-kw">else</span>
+                        <span class="tok-kw">error</span>.ZipCdUndersized;
+
+                <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+            }
+
+            <span class="tok-kw">const</span> header_zip_offset = self.cd_zip_offset + self.cd_record_offset;
+            <span class="tok-kw">try</span> self.stream.seekTo(header_zip_offset);
+            <span class="tok-kw">const</span> header = <span class="tok-kw">try</span> self.stream.context.reader().readStructEndian(<a href="std.zip.CentralDirectoryFileHeader.html">CentralDirectoryFileHeader</a>, .little);
+            <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, &amp;header.signature, &amp;<a href="std.zip.html#std.zip.central_file_header_sig">central_file_header_sig</a>))
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadCdOffset;
+
+            self.cd_record_index += <span class="tok-number">1</span>;
+            self.cd_record_offset += <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.CentralDirectoryFileHeader.html">CentralDirectoryFileHeader</a>) + header.filename_len + header.extra_len + header.comment_len;<span class="tok-comment">
+
+            // Note: checking the version_needed_to_extract doesn't seem to be helpful, i.e. the zip file
+            // at https://github.com/ninja-build/ninja/releases/download/v1.12.0/ninja-linux.zip
+            // has an undocumented version 788 but extracts just fine.
+
+            </span><span class="tok-kw">if</span> (header.flags.encrypted)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipEncryptionUnsupported;<span class="tok-comment">
+            // TODO: check/verify more flags
+            </span><span class="tok-kw">if</span> (header.disk_number != <span class="tok-number">0</span>)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMultiDiskUnsupported;
+
+            <span class="tok-kw">var</span> extents: <a href="std.zip.FileExtents.html">FileExtents</a> = .{
+                .uncompressed_size = header.uncompressed_size,
+                .compressed_size = header.compressed_size,
+                .local_file_header_offset = header.local_file_header_offset,
+            };
+
+            <span class="tok-kw">if</span> (header.extra_len &gt; <span class="tok-number">0</span>) {
+                <span class="tok-kw">var</span> extra_buf: [<a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u16</span>)]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+                <span class="tok-kw">const</span> extra = extra_buf[<span class="tok-number">0</span>..header.extra_len];
+
+                {
+                    <span class="tok-kw">try</span> self.stream.seekTo(header_zip_offset + <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.CentralDirectoryFileHeader.html">CentralDirectoryFileHeader</a>) + header.filename_len);
+                    <span class="tok-kw">const</span> len = <span class="tok-kw">try</span> self.stream.context.reader().readAll(extra);
+                    <span class="tok-kw">if</span> (len != extra.len)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipTruncated;
+                }
+
+                <span class="tok-kw">var</span> extra_offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+                <span class="tok-kw">while</span> (extra_offset + <span class="tok-number">4</span> &lt;= extra.len) {
+                    <span class="tok-kw">const</span> header_id = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u16</span>, extra[extra_offset..][<span class="tok-number">0</span>..<span class="tok-number">2</span>], .little);
+                    <span class="tok-kw">const</span> data_size = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u16</span>, extra[extra_offset..][<span class="tok-number">2</span>..<span class="tok-number">4</span>], .little);
+                    <span class="tok-kw">const</span> end = extra_offset + <span class="tok-number">4</span> + data_size;
+                    <span class="tok-kw">if</span> (end &gt; extra.len)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadExtraFieldSize;
+                    <span class="tok-kw">const</span> data = extra[extra_offset + <span class="tok-number">4</span> .. end];
+                    <span class="tok-kw">switch</span> (<span class="tok-builtin">@as</span>(<a href="std.zip.ExtraHeader.html">ExtraHeader</a>, <span class="tok-builtin">@enumFromInt</span>(header_id))) {
+                        .zip64_info =&gt; <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.readZip64FileExtents">readZip64FileExtents</a>(<a href="std.zip.CentralDirectoryFileHeader.html">CentralDirectoryFileHeader</a>, header, &amp;extents, data),
+                        <span class="tok-kw">else</span> =&gt; {},<span class="tok-comment"> // ignore
+                    </span>}
+                    extra_offset = end;
+                }
+            }
+
+            <span class="tok-kw">return</span> .{
+                .version_needed_to_extract = header.version_needed_to_extract,
+                .flags = header.flags,
+                .compression_method = header.compression_method,
+                .last_modification_time = header.last_modification_time,
+                .last_modification_date = header.last_modification_date,
+                .header_zip_offset = header_zip_offset,
+                .crc32 = header.crc32,
+                .filename_len = header.filename_len,
+                .compressed_size = extents.compressed_size,
+                .uncompressed_size = extents.uncompressed_size,
+                .file_offset = extents.local_file_header_offset,
+            };
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Entry = <span class="tok-kw">struct</span> {
+            version_needed_to_extract: <span class="tok-type">u16</span>,
+            flags: <a href="std.zip.GeneralPurposeFlags.html">GeneralPurposeFlags</a>,
+            compression_method: <a href="std.zip.CompressionMethod.html">CompressionMethod</a>,
+            last_modification_time: <span class="tok-type">u16</span>,
+            last_modification_date: <span class="tok-type">u16</span>,
+            header_zip_offset: <span class="tok-type">u64</span>,
+            crc32: <span class="tok-type">u32</span>,
+            filename_len: <span class="tok-type">u32</span>,
+            compressed_size: <span class="tok-type">u64</span>,
+            uncompressed_size: <span class="tok-type">u64</span>,
+            file_offset: <span class="tok-type">u64</span>,
+
+            <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">extract</span>(
+                self: <a href="std.zip.Iterator.Entry.html">Entry</a>,
+                stream: SeekableStream,
+                options: <a href="std.zip.ExtractOptions.html">ExtractOptions</a>,
+                filename_buf: []<span class="tok-type">u8</span>,
+                dest: <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.Dir.html">Dir</a>,
+            ) !<span class="tok-type">u32</span> {
+                <span class="tok-kw">if</span> (filename_buf.len &lt; self.filename_len)
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipInsufficientBuffer;
+                <span class="tok-kw">const</span> filename = filename_buf[<span class="tok-number">0</span>..self.filename_len];
+
+                <span class="tok-kw">try</span> stream.seekTo(self.header_zip_offset + <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.CentralDirectoryFileHeader.html">CentralDirectoryFileHeader</a>));
+
+                {
+                    <span class="tok-kw">const</span> len = <span class="tok-kw">try</span> stream.context.reader().readAll(filename);
+                    <span class="tok-kw">if</span> (len != filename.len)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadFileOffset;
+                }
+
+                <span class="tok-kw">const</span> local_data_header_offset: <span class="tok-type">u64</span> = local_data_header_offset: {
+                    <span class="tok-kw">const</span> local_header = blk: {
+                        <span class="tok-kw">try</span> stream.seekTo(self.file_offset);
+                        <span class="tok-kw">break</span> :blk <span class="tok-kw">try</span> stream.context.reader().readStructEndian(<a href="std.zip.LocalFileHeader.html">LocalFileHeader</a>, .little);
+                    };
+                    <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, &amp;local_header.signature, &amp;<a href="std.zip.html#std.zip.local_file_header_sig">local_file_header_sig</a>))
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadFileOffset;
+                    <span class="tok-kw">if</span> (local_header.version_needed_to_extract != self.version_needed_to_extract)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMismatchVersionNeeded;
+                    <span class="tok-kw">if</span> (local_header.last_modification_time != self.last_modification_time)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMismatchModTime;
+                    <span class="tok-kw">if</span> (local_header.last_modification_date != self.last_modification_date)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMismatchModDate;
+
+                    <span class="tok-kw">if</span> (<span class="tok-builtin">@as</span>(<span class="tok-type">u16</span>, <span class="tok-builtin">@bitCast</span>(local_header.flags)) != <span class="tok-builtin">@as</span>(<span class="tok-type">u16</span>, <span class="tok-builtin">@bitCast</span>(self.flags)))
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMismatchFlags;
+                    <span class="tok-kw">if</span> (local_header.crc32 != <span class="tok-number">0</span> <span class="tok-kw">and</span> local_header.crc32 != self.crc32)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMismatchCrc32;
+                    <span class="tok-kw">var</span> extents: <a href="std.zip.FileExtents.html">FileExtents</a> = .{
+                        .uncompressed_size = local_header.uncompressed_size,
+                        .compressed_size = local_header.compressed_size,
+                        .local_file_header_offset = <span class="tok-number">0</span>,
+                    };
+                    <span class="tok-kw">if</span> (local_header.extra_len &gt; <span class="tok-number">0</span>) {
+                        <span class="tok-kw">var</span> extra_buf: [<a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u16</span>)]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+                        <span class="tok-kw">const</span> extra = extra_buf[<span class="tok-number">0</span>..local_header.extra_len];
+
+                        {
+                            <span class="tok-kw">try</span> stream.seekTo(self.file_offset + <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.LocalFileHeader.html">LocalFileHeader</a>) + local_header.filename_len);
+                            <span class="tok-kw">const</span> len = <span class="tok-kw">try</span> stream.context.reader().readAll(extra);
+                            <span class="tok-kw">if</span> (len != extra.len)
+                                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipTruncated;
+                        }
+
+                        <span class="tok-kw">var</span> extra_offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+                        <span class="tok-kw">while</span> (extra_offset + <span class="tok-number">4</span> &lt;= local_header.extra_len) {
+                            <span class="tok-kw">const</span> header_id = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u16</span>, extra[extra_offset..][<span class="tok-number">0</span>..<span class="tok-number">2</span>], .little);
+                            <span class="tok-kw">const</span> data_size = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u16</span>, extra[extra_offset..][<span class="tok-number">2</span>..<span class="tok-number">4</span>], .little);
+                            <span class="tok-kw">const</span> end = extra_offset + <span class="tok-number">4</span> + data_size;
+                            <span class="tok-kw">if</span> (end &gt; local_header.extra_len)
+                                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadExtraFieldSize;
+                            <span class="tok-kw">const</span> data = extra[extra_offset + <span class="tok-number">4</span> .. end];
+                            <span class="tok-kw">switch</span> (<span class="tok-builtin">@as</span>(<a href="std.zip.ExtraHeader.html">ExtraHeader</a>, <span class="tok-builtin">@enumFromInt</span>(header_id))) {
+                                .zip64_info =&gt; <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.readZip64FileExtents">readZip64FileExtents</a>(<a href="std.zip.LocalFileHeader.html">LocalFileHeader</a>, local_header, &amp;extents, data),
+                                <span class="tok-kw">else</span> =&gt; {},<span class="tok-comment"> // ignore
+                            </span>}
+                            extra_offset = end;
+                        }
+                    }
+
+                    <span class="tok-kw">if</span> (extents.compressed_size != <span class="tok-number">0</span> <span class="tok-kw">and</span>
+                        extents.compressed_size != self.compressed_size)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMismatchCompLen;
+                    <span class="tok-kw">if</span> (extents.uncompressed_size != <span class="tok-number">0</span> <span class="tok-kw">and</span>
+                        extents.uncompressed_size != self.uncompressed_size)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMismatchUncompLen;
+
+                    <span class="tok-kw">if</span> (local_header.filename_len != self.filename_len)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipMismatchFilenameLen;
+
+                    <span class="tok-kw">break</span> :local_data_header_offset <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, local_header.filename_len) +
+                        <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, local_header.extra_len);
+                };
+
+                <span class="tok-kw">if</span> (<a href="std.zip.html#std.zip.isBadFilename">isBadFilename</a>(filename))
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadFilename;
+
+                <span class="tok-kw">if</span> (options.allow_backslashes) {
+                    <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.replaceScalar">replaceScalar</a>(<span class="tok-type">u8</span>, filename, <span class="tok-str">'\\'</span>, <span class="tok-str">'/'</span>);
+                } <span class="tok-kw">else</span> {
+                    <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, filename, <span class="tok-str">'\\'</span>)) |_|
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipFilenameHasBackslash;
+                }<span class="tok-comment">
+
+                // All entries that end in '/' are directories
+                </span><span class="tok-kw">if</span> (filename[filename.len - <span class="tok-number">1</span>] == <span class="tok-str">'/'</span>) {
+                    <span class="tok-kw">if</span> (self.uncompressed_size != <span class="tok-number">0</span>)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipBadDirectorySize;
+                    <span class="tok-kw">try</span> dest.makePath(filename[<span class="tok-number">0</span> .. filename.len - <span class="tok-number">1</span>]);
+                    <span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.hash.html">hash</a>.<a href="std.hash.crc.html#std.hash.crc.Crc32IsoHdlc">Crc32</a>.<a href="#">hash</a>(&amp;.{});
+                }
+
+                <span class="tok-kw">const</span> out_file = blk: {
+                    <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.dirname">dirname</a>(filename)) |dirname| {
+                        <span class="tok-kw">var</span> parent_dir = <span class="tok-kw">try</span> dest.makeOpenPath(dirname, .{});
+                        <span class="tok-kw">defer</span> parent_dir.close();
+
+                        <span class="tok-kw">const</span> basename = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.basename">basename</a>(filename);
+                        <span class="tok-kw">break</span> :blk <span class="tok-kw">try</span> parent_dir.createFile(basename, .{ .exclusive = <span class="tok-null">true</span> });
+                    }
+                    <span class="tok-kw">break</span> :blk <span class="tok-kw">try</span> dest.createFile(filename, .{ .exclusive = <span class="tok-null">true</span> });
+                };
+                <span class="tok-kw">defer</span> out_file.close();
+                <span class="tok-kw">const</span> local_data_file_offset: <span class="tok-type">u64</span> =
+                    <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, self.file_offset) +
+                    <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, <span class="tok-builtin">@sizeOf</span>(<a href="std.zip.LocalFileHeader.html">LocalFileHeader</a>)) +
+                    local_data_header_offset;
+                <span class="tok-kw">try</span> stream.seekTo(local_data_file_offset);
+                <span class="tok-kw">var</span> limited_reader = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.limited_reader.html#std.io.limited_reader.limitedReader">limitedReader</a>(stream.context.reader(), self.compressed_size);
+                <span class="tok-kw">const</span> crc = <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.decompress">decompress</a>(
+                    self.compression_method,
+                    self.uncompressed_size,
+                    limited_reader.reader(),
+                    out_file.writer(),
+                );
+                <span class="tok-kw">if</span> (limited_reader.bytes_left != <span class="tok-number">0</span>)
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipDecompressTruncated;
+                <span class="tok-kw">return</span> crc;
+            }
+        };
+    };
+}<span class="tok-comment">
+
+// returns true if `filename` starts with `root` followed by a forward slash
+</span><span class="tok-kw">fn</span> <span class="tok-fn">filenameInRoot</span>(filename: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, root: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> (filename.len &gt;= root.len + <span class="tok-number">1</span>) <span class="tok-kw">and</span>
+        (filename[root.len] == <span class="tok-str">'/'</span>) <span class="tok-kw">and</span>
+        <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, filename[<span class="tok-number">0</span>..root.len], root);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Diagnostics = <span class="tok-kw">struct</span> {
+    allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>,
+
+    <span class="tok-comment">/// The common root directory for all extracted files if there is one.</span>
+    root_dir: []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-str">&quot;&quot;</span>,
+
+    saw_first_file: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: *<a href="std.zip.Diagnostics.html">Diagnostics</a>) <span class="tok-type">void</span> {
+        self.allocator.free(self.root_dir);
+        self.* = <span class="tok-null">undefined</span>;
+    }<span class="tok-comment">
+
+    // This function assumes name is a filename from a zip file which has already been verified to
+    // not start with a slash, backslashes have been normalized to forward slashes, and directories
+    // always end in a slash.
+    </span><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">nextFilename</span>(self: *<a href="std.zip.Diagnostics.html">Diagnostics</a>, name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-kw">error</span>{OutOfMemory}!<span class="tok-type">void</span> {
+        <span class="tok-kw">if</span> (!self.saw_first_file) {
+            self.saw_first_file = <span class="tok-null">true</span>;
+            <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(self.root_dir.len == <span class="tok-number">0</span>);
+            <span class="tok-kw">const</span> root_len = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, name, <span class="tok-str">'/'</span>) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span>;
+            <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(root_len &gt; <span class="tok-number">0</span>);
+            self.root_dir = <span class="tok-kw">try</span> self.allocator.dupe(<span class="tok-type">u8</span>, name[<span class="tok-number">0</span>..root_len]);
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (self.root_dir.len &gt; <span class="tok-number">0</span>) {
+            <span class="tok-kw">if</span> (!<a href="std.zip.html#std.zip.filenameInRoot">filenameInRoot</a>(name, self.root_dir)) {
+                self.allocator.free(self.root_dir);
+                self.root_dir = <span class="tok-str">&quot;&quot;</span>;
+            }
+        }
+    }
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ExtractOptions = <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Allow filenames within the zip to use backslashes.  Back slashes are normalized</span>
+    <span class="tok-comment">/// to forward slashes before forwarding them to platform APIs.</span>
+    allow_backslashes: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+
+    diagnostics: ?*<a href="std.zip.Diagnostics.html">Diagnostics</a> = <span class="tok-null">null</span>,
+};
+
+<span class="tok-comment">/// Extract the zipped files inside `seekable_stream` to the given `dest` directory.</span>
+<span class="tok-comment">/// Note that `seekable_stream` must be an instance of `std.io.SeekableStream` and</span>
+<span class="tok-comment">/// its context must also have a `.reader()` method that returns an instance of</span>
+<span class="tok-comment">/// `std.io.Reader`.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">extract</span>(dest: <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.Dir.html">Dir</a>, seekable_stream: <span class="tok-kw">anytype</span>, options: <a href="std.zip.ExtractOptions.html">ExtractOptions</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> SeekableStream = <span class="tok-builtin">@TypeOf</span>(seekable_stream);
+    <span class="tok-kw">var</span> iter = <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.Iterator">Iterator</a>(SeekableStream).init(seekable_stream);
+
+    <span class="tok-kw">var</span> filename_buf: [<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">while</span> (<span class="tok-kw">try</span> iter.next()) |entry| {
+        <span class="tok-kw">const</span> crc32 = <span class="tok-kw">try</span> entry.extract(seekable_stream, options, &amp;filename_buf, dest);
+        <span class="tok-kw">if</span> (crc32 != entry.crc32)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ZipCrcMismatch;
+        <span class="tok-kw">if</span> (options.diagnostics) |d| {
+            <span class="tok-kw">try</span> d.nextFilename(filename_buf[<span class="tok-number">0</span>..entry.filename_len]);
+        }
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">testZip</span>(options: <a href="std.zip.ExtractOptions.html">ExtractOptions</a>, <span class="tok-kw">comptime</span> files: []<span class="tok-kw">const</span> <a href="std.zip.html#std.zip.File">File</a>, write_opt: <a href="std.zip.html#std.zip.testutil">testutil</a>.<a href="#">WriteZipOptions</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> store: [files.len]<a href="std.zip.html#std.zip.FileStore">FileStore</a> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testZipWithStore">testZipWithStore</a>(options, files, write_opt, &amp;store);
+}
+<span class="tok-kw">fn</span> <span class="tok-fn">testZipWithStore</span>(
+    options: <a href="std.zip.ExtractOptions.html">ExtractOptions</a>,
+    test_files: []<span class="tok-kw">const</span> <a href="std.zip.html#std.zip.File">File</a>,
+    write_opt: <a href="std.zip.html#std.zip.testutil">testutil</a>.<a href="#">WriteZipOptions</a>,
+    store: []<a href="std.zip.html#std.zip.FileStore">FileStore</a>,
+) !<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> zip_buf: [<span class="tok-number">4096</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">var</span> fbs = <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testutil">testutil</a>.<a href="#">makeZipWithStore</a>(&amp;zip_buf, test_files, write_opt, store);
+
+    <span class="tok-kw">var</span> tmp = <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.tmpDir">tmpDir</a>(.{ .no_follow = <span class="tok-null">true</span> });
+    <span class="tok-kw">defer</span> tmp.cleanup();
+    <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.extract">extract</a>(tmp.dir, fbs.seekableStream(), options);
+    <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testutil">testutil</a>.<a href="#">expectFiles</a>(test_files, tmp.dir, .{});
+}
+<span class="tok-kw">fn</span> <span class="tok-fn">testZipError</span>(expected_error: <span class="tok-type">anyerror</span>, file: <a href="std.zip.html#std.zip.File">File</a>, options: <a href="std.zip.ExtractOptions.html">ExtractOptions</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> zip_buf: [<span class="tok-number">4096</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">var</span> store: [<span class="tok-number">1</span>]<a href="std.zip.html#std.zip.FileStore">FileStore</a> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">var</span> fbs = <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testutil">testutil</a>.<a href="#">makeZipWithStore</a>(&amp;zip_buf, &amp;[_]<a href="std.zip.html#std.zip.File">File</a>{file}, .{}, &amp;store);
+    <span class="tok-kw">var</span> tmp = <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.tmpDir">tmpDir</a>(.{ .no_follow = <span class="tok-null">true</span> });
+    <span class="tok-kw">defer</span> tmp.cleanup();
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(expected_error, <a href="std.zip.html#std.zip.extract">extract</a>(tmp.dir, fbs.seekableStream(), options));
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;zip one file&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testZip">testZip</a>(.{}, &amp;[_]<a href="std.zip.html#std.zip.File">File</a>{
+        .{ .name = <span class="tok-str">&quot;onefile.txt&quot;</span>, .content = <span class="tok-str">&quot;Just a single file\n&quot;</span>, .compression = .store },
+    }, .{});
+}
+<span class="tok-kw">test</span> <span class="tok-str">&quot;zip multiple files&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testZip">testZip</a>(.{ .allow_backslashes = <span class="tok-null">true</span> }, &amp;[_]<a href="std.zip.html#std.zip.File">File</a>{
+        .{ .name = <span class="tok-str">&quot;foo&quot;</span>, .content = <span class="tok-str">&quot;a foo file\n&quot;</span>, .compression = .store },
+        .{ .name = <span class="tok-str">&quot;subdir/bar&quot;</span>, .content = <span class="tok-str">&quot;bar is this right?\nanother newline\n&quot;</span>, .compression = .store },
+        .{ .name = <span class="tok-str">&quot;subdir\\whoa&quot;</span>, .content = <span class="tok-str">&quot;you can do backslashes&quot;</span>, .compression = .store },
+        .{ .name = <span class="tok-str">&quot;subdir/another/baz&quot;</span>, .content = <span class="tok-str">&quot;bazzy mc bazzerson&quot;</span>, .compression = .store },
+    }, .{});
+}
+<span class="tok-kw">test</span> <span class="tok-str">&quot;zip deflated&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testZip">testZip</a>(.{}, &amp;[_]<a href="std.zip.html#std.zip.File">File</a>{
+        .{ .name = <span class="tok-str">&quot;deflateme&quot;</span>, .content = <span class="tok-str">&quot;This is a deflated file.\nIt should be smaller in the Zip file1\n&quot;</span>, .compression = .deflate },<span class="tok-comment">
+        // TODO: re-enable this if/when we add support for deflate64
+        //.{ .name = &quot;deflateme64&quot;, .content = &quot;The 64k version of deflate!\n&quot;, .compression = .deflate64 },
+        </span>.{ .name = <span class="tok-str">&quot;raw&quot;</span>, .content = <span class="tok-str">&quot;Not all files need to be deflated in the same Zip.\n&quot;</span>, .compression = .store },
+    }, .{});
+}
+<span class="tok-kw">test</span> <span class="tok-str">&quot;zip verify filenames&quot;</span> {<span class="tok-comment">
+    // no empty filenames
+    </span><span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testZipError">testZipError</a>(<span class="tok-kw">error</span>.ZipBadFilename, .{ .name = <span class="tok-str">&quot;&quot;</span>, .content = <span class="tok-str">&quot;&quot;</span>, .compression = .store }, .{});<span class="tok-comment">
+    // no absolute paths
+    </span><span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testZipError">testZipError</a>(<span class="tok-kw">error</span>.ZipBadFilename, .{ .name = <span class="tok-str">&quot;/&quot;</span>, .content = <span class="tok-str">&quot;&quot;</span>, .compression = .store }, .{});
+    <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testZipError">testZipError</a>(<span class="tok-kw">error</span>.ZipBadFilename, .{ .name = <span class="tok-str">&quot;/foo&quot;</span>, .content = <span class="tok-str">&quot;&quot;</span>, .compression = .store }, .{});
+    <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testZipError">testZipError</a>(<span class="tok-kw">error</span>.ZipBadFilename, .{ .name = <span class="tok-str">&quot;/foo/bar&quot;</span>, .content = <span class="tok-str">&quot;&quot;</span>, .compression = .store }, .{});<span class="tok-comment">
+    // no '..' components
+    </span><span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testZipError">testZipError</a>(<span class="tok-kw">error</span>.ZipBadFilename, .{ .name = <span class="tok-str">&quot;..&quot;</span>, .content = <span class="tok-str">&quot;&quot;</span>, .compression = .store }, .{});
+    <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testZipError">testZipError</a>(<span class="tok-kw">error</span>.ZipBadFilename, .{ .name = <span class="tok-str">&quot;foo/..&quot;</span>, .content = <span class="tok-str">&quot;&quot;</span>, .compression = .store }, .{});
+    <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testZipError">testZipError</a>(<span class="tok-kw">error</span>.ZipBadFilename, .{ .name = <span class="tok-str">&quot;foo/bar/..&quot;</span>, .content = <span class="tok-str">&quot;&quot;</span>, .compression = .store }, .{});
+    <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testZipError">testZipError</a>(<span class="tok-kw">error</span>.ZipBadFilename, .{ .name = <span class="tok-str">&quot;foo/bar/../&quot;</span>, .content = <span class="tok-str">&quot;&quot;</span>, .compression = .store }, .{});<span class="tok-comment">
+    // no backslashes
+    </span><span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testZipError">testZipError</a>(<span class="tok-kw">error</span>.ZipFilenameHasBackslash, .{ .name = <span class="tok-str">&quot;foo\\bar&quot;</span>, .content = <span class="tok-str">&quot;&quot;</span>, .compression = .store }, .{});
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;zip64&quot;</span> {
+    <span class="tok-kw">const</span> test_files = [_]<a href="std.zip.html#std.zip.File">File</a>{
+        .{ .name = <span class="tok-str">&quot;fram&quot;</span>, .content = <span class="tok-str">&quot;fram foo fro fraba&quot;</span>, .compression = .store },
+        .{ .name = <span class="tok-str">&quot;subdir/barro&quot;</span>, .content = <span class="tok-str">&quot;aljdk;jal;jfd;lajkf&quot;</span>, .compression = .store },
+    };
+
+    <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testZip">testZip</a>(.{}, &amp;test_files, .{
+        .end = .{
+            .zip64 = .{},
+            .record_count_disk = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u16</span>),<span class="tok-comment"> // trigger zip64
+        </span>},
+    });
+    <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testZip">testZip</a>(.{}, &amp;test_files, .{
+        .end = .{
+            .zip64 = .{},
+            .record_count_total = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u16</span>),<span class="tok-comment"> // trigger zip64
+        </span>},
+    });
+    <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testZip">testZip</a>(.{}, &amp;test_files, .{
+        .end = .{
+            .zip64 = .{},
+            .record_count_disk = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u16</span>),<span class="tok-comment"> // trigger zip64
+            </span>.record_count_total = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u16</span>),<span class="tok-comment"> // trigger zip64
+        </span>},
+    });
+    <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testZip">testZip</a>(.{}, &amp;test_files, .{
+        .end = .{
+            .zip64 = .{},
+            .central_directory_size = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u32</span>),<span class="tok-comment"> // trigger zip64
+        </span>},
+    });
+    <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testZip">testZip</a>(.{}, &amp;test_files, .{
+        .end = .{
+            .zip64 = .{},
+            .central_directory_offset = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u32</span>),<span class="tok-comment"> // trigger zip64
+        </span>},
+    });
+    <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testZip">testZip</a>(.{}, &amp;test_files, .{
+        .end = .{
+            .zip64 = .{},
+            .central_directory_offset = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u32</span>),<span class="tok-comment"> // trigger zip64
+        </span>},
+        .local_header = .{
+            .zip64 = .{<span class="tok-comment"> // trigger local header zip64
+                </span>.data_size = <span class="tok-number">16</span>,
+            },
+            .compressed_size = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u32</span>),
+            .uncompressed_size = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u32</span>),
+            .extra_len = <span class="tok-number">20</span>,
+        },
+    });
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;bad zip files&quot;</span> {
+    <span class="tok-kw">var</span> tmp = <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.tmpDir">tmpDir</a>(.{ .no_follow = <span class="tok-null">true</span> });
+    <span class="tok-kw">defer</span> tmp.cleanup();
+    <span class="tok-kw">var</span> zip_buf: [<span class="tok-number">4096</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+
+    <span class="tok-kw">const</span> file_a = [_]<a href="std.zip.html#std.zip.File">File</a>{.{ .name = <span class="tok-str">&quot;a&quot;</span>, .content = <span class="tok-str">&quot;&quot;</span>, .compression = .store }};
+
+    {
+        <span class="tok-kw">var</span> fbs = <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testutil">testutil</a>.<a href="#">makeZip</a>(&amp;zip_buf, &amp;.{}, .{ .end = .{ .sig = [_]<span class="tok-type">u8</span>{ <span class="tok-number">1</span>, <span class="tok-number">2</span>, <span class="tok-number">3</span>, <span class="tok-number">4</span> } } });
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.ZipNoEndRecord, <a href="std.zip.html#std.zip.extract">extract</a>(tmp.dir, fbs.seekableStream(), .{}));
+    }
+    {
+        <span class="tok-kw">var</span> fbs = <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testutil">testutil</a>.<a href="#">makeZip</a>(&amp;zip_buf, &amp;.{}, .{ .end = .{ .comment_len = <span class="tok-number">1</span> } });
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.ZipNoEndRecord, <a href="std.zip.html#std.zip.extract">extract</a>(tmp.dir, fbs.seekableStream(), .{}));
+    }
+    {
+        <span class="tok-kw">var</span> fbs = <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testutil">testutil</a>.<a href="#">makeZip</a>(&amp;zip_buf, &amp;.{}, .{ .end = .{ .comment = <span class="tok-str">&quot;a&quot;</span>, .comment_len = <span class="tok-number">0</span> } });
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.ZipNoEndRecord, <a href="std.zip.html#std.zip.extract">extract</a>(tmp.dir, fbs.seekableStream(), .{}));
+    }
+    {
+        <span class="tok-kw">var</span> fbs = <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testutil">testutil</a>.<a href="#">makeZip</a>(&amp;zip_buf, &amp;.{}, .{ .end = .{ .disk_number = <span class="tok-number">1</span> } });
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.ZipMultiDiskUnsupported, <a href="std.zip.html#std.zip.extract">extract</a>(tmp.dir, fbs.seekableStream(), .{}));
+    }
+    {
+        <span class="tok-kw">var</span> fbs = <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testutil">testutil</a>.<a href="#">makeZip</a>(&amp;zip_buf, &amp;.{}, .{ .end = .{ .central_directory_disk_number = <span class="tok-number">1</span> } });
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.ZipMultiDiskUnsupported, <a href="std.zip.html#std.zip.extract">extract</a>(tmp.dir, fbs.seekableStream(), .{}));
+    }
+    {
+        <span class="tok-kw">var</span> fbs = <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testutil">testutil</a>.<a href="#">makeZip</a>(&amp;zip_buf, &amp;.{}, .{ .end = .{ .record_count_disk = <span class="tok-number">1</span> } });
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.ZipDiskRecordCountTooLarge, <a href="std.zip.html#std.zip.extract">extract</a>(tmp.dir, fbs.seekableStream(), .{}));
+    }
+    {
+        <span class="tok-kw">var</span> fbs = <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testutil">testutil</a>.<a href="#">makeZip</a>(&amp;zip_buf, &amp;.{}, .{ .end = .{ .central_directory_size = <span class="tok-number">1</span> } });
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.ZipCdOversized, <a href="std.zip.html#std.zip.extract">extract</a>(tmp.dir, fbs.seekableStream(), .{}));
+    }
+    {
+        <span class="tok-kw">var</span> fbs = <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testutil">testutil</a>.<a href="#">makeZip</a>(&amp;zip_buf, &amp;file_a, .{ .end = .{ .central_directory_size = <span class="tok-number">0</span> } });
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.ZipCdUndersized, <a href="std.zip.html#std.zip.extract">extract</a>(tmp.dir, fbs.seekableStream(), .{}));
+    }
+    {
+        <span class="tok-kw">var</span> fbs = <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testutil">testutil</a>.<a href="#">makeZip</a>(&amp;zip_buf, &amp;file_a, .{ .end = .{ .central_directory_offset = <span class="tok-number">0</span> } });
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.ZipBadCdOffset, <a href="std.zip.html#std.zip.extract">extract</a>(tmp.dir, fbs.seekableStream(), .{}));
+    }
+    {
+        <span class="tok-kw">var</span> fbs = <span class="tok-kw">try</span> <a href="std.zip.html#std.zip.testutil">testutil</a>.<a href="#">makeZip</a>(&amp;zip_buf, &amp;file_a, .{
+            .end = .{
+                .zip64 = .{ .locator_sig = [_]<span class="tok-type">u8</span>{ <span class="tok-number">1</span>, <span class="tok-number">2</span>, <span class="tok-number">3</span>, <span class="tok-number">4</span> } },
+                .central_directory_size = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u32</span>),<span class="tok-comment"> // trigger 64
+            </span>},
+        });
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.ZipBadLocatorSig, <a href="std.zip.html#std.zip.extract">extract</a>(tmp.dir, fbs.seekableStream(), .{}));
+    }
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

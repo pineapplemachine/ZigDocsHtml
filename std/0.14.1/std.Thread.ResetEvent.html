@@ -1,0 +1,710 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">Thread</a></li><li><a href="std.Thread.ResetEvent.html" class="active">ResetEvent</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.Thread.ResetEvent" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.Thread.ResetEvent</span><a href="#src.zig-std.Thread.ResetEvent">[src]</a></h1><div class="tldDocs"><p>ResetEvent is a thread-safe bool which can be set to true/false (&quot;set&quot;/&quot;unset&quot;).
+It can also block threads until the &quot;bool&quot; is set with cancellation via timed waits.
+ResetEvent can be statically initialized and is at most <code>@sizeOf(u64)</code> large.</p>
+</div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>impl: <a href="std.Thread.ResetEvent.html#std.Thread.ResetEvent.Impl">Impl</a> = .{}</code></pre></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.Thread.ResetEvent.isSet" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">isSet</span><a href="#src.zig-std.Thread.ResetEvent.isSet">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isSet</span>(self: *<span class="tok-kw">const</span> <a href="std.Thread.ResetEvent.html">ResetEvent</a>) <span class="tok-type">bool</span></code></pre></div><div class="tldDocs"><p>Returns if the ResetEvent was set().
+Once reset() is called, this returns false until the next set().
+The memory accesses before the set() can be said to happen before isSet() returns true.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.Thread.ResetEvent.html">ResetEvent</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Thread.ResetEvent.isSet">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isSet</span>(self: *<span class="tok-kw">const</span> <a href="std.Thread.ResetEvent.html">ResetEvent</a>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> self.impl.isSet();
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Thread.ResetEvent.wait" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">wait</span><a href="#src.zig-std.Thread.ResetEvent.wait">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">wait</span>(self: *<a href="std.Thread.ResetEvent.html">ResetEvent</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Block's the callers thread until the ResetEvent is set().
+This is effectively a more efficient version of <code>while (!isSet()) {}</code>.
+The memory accesses before the set() can be said to happen before wait() returns.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.Thread.ResetEvent.html">ResetEvent</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Thread.ResetEvent.wait">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">wait</span>(self: *<a href="std.Thread.ResetEvent.html">ResetEvent</a>) <span class="tok-type">void</span> {
+    self.impl.wait(<span class="tok-null">null</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+        <span class="tok-kw">error</span>.Timeout =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // no timeout provided so we shouldn't have timed-out
+    </span>};
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Thread.ResetEvent.timedWait" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">timedWait</span><a href="#src.zig-std.Thread.ResetEvent.timedWait">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">timedWait</span>(self: *<a href="std.Thread.ResetEvent.html">ResetEvent</a>, timeout_ns: <span class="tok-type">u64</span>) <span class="tok-kw">error</span>{Timeout}!<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Block's the callers thread until the ResetEvent is set(), or until the corresponding timeout expires.
+If the timeout expires before the ResetEvent is set, <code>error.Timeout</code> is returned.
+This is effectively a more efficient version of <code>while (!isSet()) {}</code>.
+The memory accesses before the set() can be said to happen before timedWait() returns without error.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.Thread.ResetEvent.html">ResetEvent</a></code></pre></div><div><pre><code>timeout_ns: <span class="tok-type">u64</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Thread.ResetEvent.timedWait">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">timedWait</span>(self: *<a href="std.Thread.ResetEvent.html">ResetEvent</a>, timeout_ns: <span class="tok-type">u64</span>) <span class="tok-kw">error</span>{Timeout}!<span class="tok-type">void</span> {
+    <span class="tok-kw">return</span> self.impl.wait(timeout_ns);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Thread.ResetEvent.set" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">set</span><a href="#src.zig-std.Thread.ResetEvent.set">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">set</span>(self: *<a href="std.Thread.ResetEvent.html">ResetEvent</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Marks the ResetEvent as &quot;set&quot; and unblocks any threads in <code>wait()</code> or <code>timedWait()</code> to observe the new state.
+The ResetEvent says &quot;set&quot; until reset() is called, making future set() calls do nothing semantically.
+The memory accesses before set() can be said to happen before isSet() returns true or wait()/timedWait() return successfully.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.Thread.ResetEvent.html">ResetEvent</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Thread.ResetEvent.set">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">set</span>(self: *<a href="std.Thread.ResetEvent.html">ResetEvent</a>) <span class="tok-type">void</span> {
+    self.impl.set();
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Thread.ResetEvent.reset" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">reset</span><a href="#src.zig-std.Thread.ResetEvent.reset">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">reset</span>(self: *<a href="std.Thread.ResetEvent.html">ResetEvent</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Unmarks the ResetEvent from its &quot;set&quot; state if set() was called previously.
+It is undefined behavior is reset() is called while threads are blocked in wait() or timedWait().
+Concurrent calls to set(), isSet() and reset() are allowed.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.Thread.ResetEvent.html">ResetEvent</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Thread.ResetEvent.reset">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">reset</span>(self: *<a href="std.Thread.ResetEvent.html">ResetEvent</a>) <span class="tok-type">void</span> {
+    self.impl.reset();
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.Thread.ResetEvent">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-comment">//! ResetEvent is a thread-safe bool which can be set to true/false (&quot;set&quot;/&quot;unset&quot;).</span>
+<span class="tok-comment">//! It can also block threads until the &quot;bool&quot; is set with cancellation via timed waits.</span>
+<span class="tok-comment">//! ResetEvent can be statically initialized and is at most `@sizeOf(u64)` large.</span>
+
+<span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;../std.zig&quot;</span>);
+<span class="tok-kw">const</span> builtin = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;builtin&quot;</span>);
+<span class="tok-kw">const</span> ResetEvent = <span class="tok-builtin">@This</span>();
+
+<span class="tok-kw">const</span> os = <a href="std.html">std</a>.<a href="std.os.html">os</a>;
+<span class="tok-kw">const</span> assert = <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>;
+<span class="tok-kw">const</span> testing = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>;
+<span class="tok-kw">const</span> Futex = <a href="std.html">std</a>.<a href="std.Thread.html">Thread</a>.<a href="std.Thread.Futex.html">Futex</a>;
+
+impl: <a href="std.Thread.ResetEvent.html#std.Thread.ResetEvent.Impl">Impl</a> = .{},
+
+<span class="tok-comment">/// Returns if the ResetEvent was set().</span>
+<span class="tok-comment">/// Once reset() is called, this returns false until the next set().</span>
+<span class="tok-comment">/// The memory accesses before the set() can be said to happen before isSet() returns true.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isSet</span>(self: *<span class="tok-kw">const</span> <a href="std.Thread.ResetEvent.html">ResetEvent</a>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> self.impl.isSet();
+}
+
+<span class="tok-comment">/// Block's the callers thread until the ResetEvent is set().</span>
+<span class="tok-comment">/// This is effectively a more efficient version of `while (!isSet()) {}`.</span>
+<span class="tok-comment">/// The memory accesses before the set() can be said to happen before wait() returns.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">wait</span>(self: *<a href="std.Thread.ResetEvent.html">ResetEvent</a>) <span class="tok-type">void</span> {
+    self.impl.wait(<span class="tok-null">null</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+        <span class="tok-kw">error</span>.Timeout =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // no timeout provided so we shouldn't have timed-out
+    </span>};
+}
+
+<span class="tok-comment">/// Block's the callers thread until the ResetEvent is set(), or until the corresponding timeout expires.</span>
+<span class="tok-comment">/// If the timeout expires before the ResetEvent is set, `error.Timeout` is returned.</span>
+<span class="tok-comment">/// This is effectively a more efficient version of `while (!isSet()) {}`.</span>
+<span class="tok-comment">/// The memory accesses before the set() can be said to happen before timedWait() returns without error.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">timedWait</span>(self: *<a href="std.Thread.ResetEvent.html">ResetEvent</a>, timeout_ns: <span class="tok-type">u64</span>) <span class="tok-kw">error</span>{Timeout}!<span class="tok-type">void</span> {
+    <span class="tok-kw">return</span> self.impl.wait(timeout_ns);
+}
+
+<span class="tok-comment">/// Marks the ResetEvent as &quot;set&quot; and unblocks any threads in `wait()` or `timedWait()` to observe the new state.</span>
+<span class="tok-comment">/// The ResetEvent says &quot;set&quot; until reset() is called, making future set() calls do nothing semantically.</span>
+<span class="tok-comment">/// The memory accesses before set() can be said to happen before isSet() returns true or wait()/timedWait() return successfully.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">set</span>(self: *<a href="std.Thread.ResetEvent.html">ResetEvent</a>) <span class="tok-type">void</span> {
+    self.impl.set();
+}
+
+<span class="tok-comment">/// Unmarks the ResetEvent from its &quot;set&quot; state if set() was called previously.</span>
+<span class="tok-comment">/// It is undefined behavior is reset() is called while threads are blocked in wait() or timedWait().</span>
+<span class="tok-comment">/// Concurrent calls to set(), isSet() and reset() are allowed.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">reset</span>(self: *<a href="std.Thread.ResetEvent.html">ResetEvent</a>) <span class="tok-type">void</span> {
+    self.impl.reset();
+}
+
+<span class="tok-kw">const</span> Impl = <span class="tok-kw">if</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.single_threaded">single_threaded</a>)
+    <a href="std.Thread.ResetEvent.SingleThreadedImpl.html">SingleThreadedImpl</a>
+<span class="tok-kw">else</span>
+    <a href="std.Thread.ResetEvent.FutexImpl.html">FutexImpl</a>;
+
+<span class="tok-kw">const</span> SingleThreadedImpl = <span class="tok-kw">struct</span> {
+    is_set: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">isSet</span>(self: *<span class="tok-kw">const</span> <a href="std.Thread.ResetEvent.html#std.Thread.ResetEvent.Impl">Impl</a>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">return</span> self.is_set;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">wait</span>(self: *<a href="std.Thread.ResetEvent.html#std.Thread.ResetEvent.Impl">Impl</a>, timeout: ?<span class="tok-type">u64</span>) <span class="tok-kw">error</span>{Timeout}!<span class="tok-type">void</span> {
+        <span class="tok-kw">if</span> (self.isSet()) {
+            <span class="tok-kw">return</span>;
+        }<span class="tok-comment">
+
+        // There are no other threads to wake us up.
+        // So if we wait without a timeout we would never wake up.
+        </span><span class="tok-kw">const</span> timeout_ns = timeout <span class="tok-kw">orelse</span> {
+            <span class="tok-kw">unreachable</span>;<span class="tok-comment"> // deadlock detected
+        </span>};
+
+        <a href="std.html">std</a>.<a href="std.time.html">time</a>.<a href="std.Thread.html#std.Thread.sleep">sleep</a>(timeout_ns);
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Timeout;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">set</span>(self: *<a href="std.Thread.ResetEvent.html#std.Thread.ResetEvent.Impl">Impl</a>) <span class="tok-type">void</span> {
+        self.is_set = <span class="tok-null">true</span>;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">reset</span>(self: *<a href="std.Thread.ResetEvent.html#std.Thread.ResetEvent.Impl">Impl</a>) <span class="tok-type">void</span> {
+        self.is_set = <span class="tok-null">false</span>;
+    }
+};
+
+<span class="tok-kw">const</span> FutexImpl = <span class="tok-kw">struct</span> {
+    state: <a href="std.html">std</a>.<a href="std.atomic.html">atomic</a>.<a href="std.atomic.html#std.atomic.Value">Value</a>(<span class="tok-type">u32</span>) = <a href="std.html">std</a>.<a href="std.atomic.html">atomic</a>.<a href="std.atomic.html#std.atomic.Value">Value</a>(<span class="tok-type">u32</span>).init(<a href="std.Thread.ResetEvent.FutexImpl.html#std.Thread.ResetEvent.FutexImpl.unset">unset</a>),
+
+    <span class="tok-kw">const</span> unset = <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> waiting = <span class="tok-number">1</span>;
+    <span class="tok-kw">const</span> is_set = <span class="tok-number">2</span>;
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">isSet</span>(self: *<span class="tok-kw">const</span> <a href="std.Thread.ResetEvent.html#std.Thread.ResetEvent.Impl">Impl</a>) <span class="tok-type">bool</span> {<span class="tok-comment">
+        // Acquire barrier ensures memory accesses before set() happen before we return true.
+        </span><span class="tok-kw">return</span> self.state.load(.acquire) == <a href="std.Thread.ResetEvent.FutexImpl.html#std.Thread.ResetEvent.FutexImpl.is_set">is_set</a>;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">wait</span>(self: *<a href="std.Thread.ResetEvent.html#std.Thread.ResetEvent.Impl">Impl</a>, timeout: ?<span class="tok-type">u64</span>) <span class="tok-kw">error</span>{Timeout}!<span class="tok-type">void</span> {<span class="tok-comment">
+        // Outline the slow path to allow isSet() to be inlined
+        </span><span class="tok-kw">if</span> (!self.isSet()) {
+            <span class="tok-kw">return</span> self.waitUntilSet(timeout);
+        }
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">waitUntilSet</span>(self: *<a href="std.Thread.ResetEvent.html#std.Thread.ResetEvent.Impl">Impl</a>, timeout: ?<span class="tok-type">u64</span>) <span class="tok-kw">error</span>{Timeout}!<span class="tok-type">void</span> {
+        <span class="tok-builtin">@branchHint</span>(.cold);<span class="tok-comment">
+
+        // Try to set the state from `unset` to `waiting` to indicate
+        // to the set() thread that others are blocked on the ResetEvent.
+        // We avoid using any strict barriers until the end when we know the ResetEvent is set.
+        </span><span class="tok-kw">var</span> state = self.state.load(.acquire);
+        <span class="tok-kw">if</span> (state == <a href="std.Thread.ResetEvent.FutexImpl.html#std.Thread.ResetEvent.FutexImpl.unset">unset</a>) {
+            state = self.state.cmpxchgStrong(state, <a href="std.Thread.ResetEvent.FutexImpl.html#std.Thread.ResetEvent.FutexImpl.waiting">waiting</a>, .acquire, .acquire) <span class="tok-kw">orelse</span> <a href="std.Thread.ResetEvent.FutexImpl.html#std.Thread.ResetEvent.FutexImpl.waiting">waiting</a>;
+        }<span class="tok-comment">
+
+        // Wait until the ResetEvent is set since the state is waiting.
+        </span><span class="tok-kw">if</span> (state == <a href="std.Thread.ResetEvent.FutexImpl.html#std.Thread.ResetEvent.FutexImpl.waiting">waiting</a>) {
+            <span class="tok-kw">var</span> futex_deadline = <a href="std.Thread.Futex.html">Futex</a>.<a href="std.Thread.Futex.Deadline.html">Deadline</a>.<a href="std.Thread.Futex.Deadline.html#std.Thread.Futex.Deadline.init">init</a>(timeout);
+            <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+                <span class="tok-kw">const</span> wait_result = futex_deadline.wait(&amp;self.state, <a href="std.Thread.ResetEvent.FutexImpl.html#std.Thread.ResetEvent.FutexImpl.waiting">waiting</a>);<span class="tok-comment">
+
+                // Check if the ResetEvent was set before possibly reporting error.Timeout below.
+                </span>state = self.state.load(.acquire);
+                <span class="tok-kw">if</span> (state != <a href="std.Thread.ResetEvent.FutexImpl.html#std.Thread.ResetEvent.FutexImpl.waiting">waiting</a>) {
+                    <span class="tok-kw">break</span>;
+                }
+
+                <span class="tok-kw">try</span> wait_result;
+            }
+        }
+
+        <a href="std.debug.html#std.debug.assert">assert</a>(state == <a href="std.Thread.ResetEvent.FutexImpl.html#std.Thread.ResetEvent.FutexImpl.is_set">is_set</a>);
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">set</span>(self: *<a href="std.Thread.ResetEvent.html#std.Thread.ResetEvent.Impl">Impl</a>) <span class="tok-type">void</span> {<span class="tok-comment">
+        // Quick check if the ResetEvent is already set before doing the atomic swap below.
+        // set() could be getting called quite often and multiple threads calling swap() increases contention unnecessarily.
+        </span><span class="tok-kw">if</span> (self.state.load(.monotonic) == <a href="std.Thread.ResetEvent.FutexImpl.html#std.Thread.ResetEvent.FutexImpl.is_set">is_set</a>) {
+            <span class="tok-kw">return</span>;
+        }<span class="tok-comment">
+
+        // Mark the ResetEvent as set and unblock all waiters waiting on it if any.
+        // Release barrier ensures memory accesses before set() happen before the ResetEvent is observed to be &quot;set&quot;.
+        </span><span class="tok-kw">if</span> (self.state.swap(<a href="std.Thread.ResetEvent.FutexImpl.html#std.Thread.ResetEvent.FutexImpl.is_set">is_set</a>, .release) == <a href="std.Thread.ResetEvent.FutexImpl.html#std.Thread.ResetEvent.FutexImpl.waiting">waiting</a>) {
+            <a href="std.Thread.Futex.html">Futex</a>.<a href="std.Thread.Futex.html#std.Thread.Futex.wake">wake</a>(&amp;self.state, <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u32</span>));
+        }
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">reset</span>(self: *<a href="std.Thread.ResetEvent.html#std.Thread.ResetEvent.Impl">Impl</a>) <span class="tok-type">void</span> {
+        self.state.store(<a href="std.Thread.ResetEvent.FutexImpl.html#std.Thread.ResetEvent.FutexImpl.unset">unset</a>, .monotonic);
+    }
+};
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;smoke test&quot;</span> {<span class="tok-comment">
+    // make sure the event is unset
+    </span><span class="tok-kw">var</span> event = <a href="std.Thread.ResetEvent.html">ResetEvent</a>{};
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-null">false</span>, event.isSet());<span class="tok-comment">
+
+    // make sure the event gets set
+    </span>event.set();
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-null">true</span>, event.isSet());<span class="tok-comment">
+
+    // make sure the event gets unset again
+    </span>event.reset();
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-null">false</span>, event.isSet());<span class="tok-comment">
+
+    // waits should timeout as there's no other thread to set the event
+    </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.Timeout, event.timedWait(<span class="tok-number">0</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.Timeout, event.timedWait(<a href="std.html">std</a>.<a href="std.time.html">time</a>.<a href="std.time.html#std.time.ns_per_ms">ns_per_ms</a>));<span class="tok-comment">
+
+    // set the event again and make sure waits complete
+    </span>event.set();
+    event.wait();
+    <span class="tok-kw">try</span> event.timedWait(<a href="std.html">std</a>.<a href="std.time.html">time</a>.<a href="std.time.html#std.time.ns_per_ms">ns_per_ms</a>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-null">true</span>, event.isSet());
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;signaling&quot;</span> {<span class="tok-comment">
+    // This test requires spawning threads
+    </span><span class="tok-kw">if</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.single_threaded">single_threaded</a>) {
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SkipZigTest;
+    }
+
+    <span class="tok-kw">const</span> Context = <span class="tok-kw">struct</span> {
+        in: <a href="std.Thread.ResetEvent.html">ResetEvent</a> = .{},
+        out: <a href="std.Thread.ResetEvent.html">ResetEvent</a> = .{},
+        value: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">input</span>(self: *<span class="tok-builtin">@This</span>()) !<span class="tok-type">void</span> {<span class="tok-comment">
+            // wait for the value to become 1
+            </span>self.in.wait();
+            self.in.reset();
+            <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(self.value, <span class="tok-number">1</span>);<span class="tok-comment">
+
+            // bump the value and wake up output()
+            </span>self.value = <span class="tok-number">2</span>;
+            self.out.set();<span class="tok-comment">
+
+            // wait for output to receive 2, bump the value and wake us up with 3
+            </span>self.in.wait();
+            self.in.reset();
+            <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(self.value, <span class="tok-number">3</span>);<span class="tok-comment">
+
+            // bump the value and wake up output() for it to see 4
+            </span>self.value = <span class="tok-number">4</span>;
+            self.out.set();
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">output</span>(self: *<span class="tok-builtin">@This</span>()) !<span class="tok-type">void</span> {<span class="tok-comment">
+            // start with 0 and bump the value for input to see 1
+            </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(self.value, <span class="tok-number">0</span>);
+            self.value = <span class="tok-number">1</span>;
+            self.in.set();<span class="tok-comment">
+
+            // wait for input to receive 1, bump the value to 2 and wake us up
+            </span>self.out.wait();
+            self.out.reset();
+            <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(self.value, <span class="tok-number">2</span>);<span class="tok-comment">
+
+            // bump the value to 3 for input to see (rhymes)
+            </span>self.value = <span class="tok-number">3</span>;
+            self.in.set();<span class="tok-comment">
+
+            // wait for input to bump the value to 4 and receive no more (rhymes)
+            </span>self.out.wait();
+            self.out.reset();
+            <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(self.value, <span class="tok-number">4</span>);
+        }
+    };
+
+    <span class="tok-kw">var</span> ctx = Context{};
+
+    <span class="tok-kw">const</span> thread = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.Thread.html">Thread</a>.<a href="std.Thread.html#std.Thread.spawn">spawn</a>(.{}, Context.output, .{&amp;ctx});
+    <span class="tok-kw">defer</span> thread.join();
+
+    <span class="tok-kw">try</span> ctx.input();
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;broadcast&quot;</span> {<span class="tok-comment">
+    // This test requires spawning threads
+    </span><span class="tok-kw">if</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.single_threaded">single_threaded</a>) {
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SkipZigTest;
+    }
+
+    <span class="tok-kw">const</span> num_threads = <span class="tok-number">10</span>;
+    <span class="tok-kw">const</span> Barrier = <span class="tok-kw">struct</span> {
+        event: <a href="std.Thread.ResetEvent.html">ResetEvent</a> = .{},
+        counter: <a href="std.html">std</a>.<a href="std.atomic.html">atomic</a>.<a href="std.atomic.html#std.atomic.Value">Value</a>(<span class="tok-type">usize</span>) = <a href="std.html">std</a>.<a href="std.atomic.html">atomic</a>.<a href="std.atomic.html#std.atomic.Value">Value</a>(<span class="tok-type">usize</span>).init(num_threads),
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">wait</span>(self: *<span class="tok-builtin">@This</span>()) <span class="tok-type">void</span> {
+            <span class="tok-kw">if</span> (self.counter.fetchSub(<span class="tok-number">1</span>, .acq_rel) == <span class="tok-number">1</span>) {
+                self.event.set();
+            }
+        }
+    };
+
+    <span class="tok-kw">const</span> Context = <span class="tok-kw">struct</span> {
+        start_barrier: Barrier = .{},
+        finish_barrier: Barrier = .{},
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">run</span>(self: *<span class="tok-builtin">@This</span>()) <span class="tok-type">void</span> {
+            self.start_barrier.wait();
+            self.finish_barrier.wait();
+        }
+    };
+
+    <span class="tok-kw">var</span> ctx = Context{};
+    <span class="tok-kw">var</span> threads: [num_threads - <span class="tok-number">1</span>]<a href="std.html">std</a>.<a href="std.Thread.html">Thread</a> = <span class="tok-null">undefined</span>;
+
+    <span class="tok-kw">for</span> (&amp;threads) |*t| t.* = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.Thread.html">Thread</a>.<a href="std.Thread.html#std.Thread.spawn">spawn</a>(.{}, Context.run, .{&amp;ctx});
+    <span class="tok-kw">defer</span> <span class="tok-kw">for</span> (threads) |t| t.join();
+
+    ctx.run();
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

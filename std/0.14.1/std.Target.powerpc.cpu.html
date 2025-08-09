@@ -1,0 +1,1627 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">Target</a></li><li><a href="std.Target.powerpc.html" class="">powerpc</a></li><li><a href="std.Target.powerpc.cpu.html" class="active">cpu</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.Target.powerpc.cpu" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.Target.powerpc.cpu</span><a href="#src.zig-std.Target.powerpc.cpu">[src]</a></h1><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.Target.powerpc.cpu.@%22440%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"440"</span><a href="#src.zig-std.Target.powerpc.cpu.@%22440%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.@%22440%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;440&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;440&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;440&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .fres,
+        .frsqrte,
+        .isel,
+        .msync,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.@%22450%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"450"</span><a href="#src.zig-std.Target.powerpc.cpu.@%22450%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.@%22450%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;450&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;450&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;450&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .fres,
+        .frsqrte,
+        .isel,
+        .msync,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.@%22601%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"601"</span><a href="#src.zig-std.Target.powerpc.cpu.@%22601%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.@%22601%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;601&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;601&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;601&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .fpu,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.@%22602%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"602"</span><a href="#src.zig-std.Target.powerpc.cpu.@%22602%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.@%22602%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;602&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;602&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;602&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .fpu,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.@%22603%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"603"</span><a href="#src.zig-std.Target.powerpc.cpu.@%22603%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.@%22603%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;603&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;603&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;603&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .fres,
+        .frsqrte,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.@%22603e%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"603e"</span><a href="#src.zig-std.Target.powerpc.cpu.@%22603e%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.@%22603e%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;603e&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;603e&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;603e&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .fres,
+        .frsqrte,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.@%22603ev%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"603ev"</span><a href="#src.zig-std.Target.powerpc.cpu.@%22603ev%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.@%22603ev%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;603ev&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;603ev&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;603ev&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .fres,
+        .frsqrte,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.@%22604%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"604"</span><a href="#src.zig-std.Target.powerpc.cpu.@%22604%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.@%22604%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;604&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;604&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;604&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .fres,
+        .frsqrte,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.@%22604e%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"604e"</span><a href="#src.zig-std.Target.powerpc.cpu.@%22604e%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.@%22604e%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;604e&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;604e&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;604e&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .fres,
+        .frsqrte,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.@%22620%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"620"</span><a href="#src.zig-std.Target.powerpc.cpu.@%22620%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.@%22620%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;620&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;620&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;620&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .fres,
+        .frsqrte,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.@%227400%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"7400"</span><a href="#src.zig-std.Target.powerpc.cpu.@%227400%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.@%227400%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;7400&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;7400&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;7400&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .altivec,
+        .fres,
+        .frsqrte,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.@%227450%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"7450"</span><a href="#src.zig-std.Target.powerpc.cpu.@%227450%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.@%227450%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;7450&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;7450&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;7450&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .altivec,
+        .fres,
+        .frsqrte,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.@%22750%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"750"</span><a href="#src.zig-std.Target.powerpc.cpu.@%22750%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.@%22750%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;750&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;750&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;750&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .fres,
+        .frsqrte,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.@%22970%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"970"</span><a href="#src.zig-std.Target.powerpc.cpu.@%22970%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.@%22970%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;970&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;970&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;970&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .@&quot;64bit&quot;,
+        .altivec,
+        .fres,
+        .frsqrte,
+        .fsqrt,
+        .mfocrf,
+        .stfiwx,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.a2" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">a2</span><a href="#src.zig-std.Target.powerpc.cpu.a2">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.a2">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> a2: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;a2&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;a2&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .@&quot;64bit&quot;,
+        .booke,
+        .cmpb,
+        .fcpsgn,
+        .fpcvt,
+        .fprnd,
+        .fre,
+        .fres,
+        .frsqrte,
+        .frsqrtes,
+        .fsqrt,
+        .isa_v206_instructions,
+        .isel,
+        .ldbrx,
+        .lfiwax,
+        .mfocrf,
+        .recipprec,
+        .slow_popcntd,
+        .stfiwx,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.e500" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">e500</span><a href="#src.zig-std.Target.powerpc.cpu.e500">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.e500">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> e500: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;e500&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;e500&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .isel,
+        .msync,
+        .spe,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.e500mc" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">e500mc</span><a href="#src.zig-std.Target.powerpc.cpu.e500mc">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.e500mc">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> e500mc: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;e500mc&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;e500mc&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .booke,
+        .isel,
+        .stfiwx,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.e5500" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">e5500</span><a href="#src.zig-std.Target.powerpc.cpu.e5500">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.e5500">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> e5500: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;e5500&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;e5500&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .@&quot;64bit&quot;,
+        .booke,
+        .isel,
+        .mfocrf,
+        .stfiwx,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.future" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">future</span><a href="#src.zig-std.Target.powerpc.cpu.future">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.future">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> future: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;future&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;future&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .@&quot;64bit&quot;,
+        .allow_unaligned_fp_access,
+        .bpermd,
+        .cmpb,
+        .crbits,
+        .crypto,
+        .direct_move,
+        .extdiv,
+        .fast_MFLR,
+        .fcpsgn,
+        .fpcvt,
+        .fprnd,
+        .fre,
+        .fres,
+        .frsqrte,
+        .frsqrtes,
+        .fsqrt,
+        .fuse_add_logical,
+        .fuse_arith_add,
+        .fuse_logical,
+        .fuse_logical_add,
+        .fuse_sha3,
+        .fuse_store,
+        .htm,
+        .icbt,
+        .isa_future_instructions,
+        .isa_v206_instructions,
+        .isel,
+        .ldbrx,
+        .lfiwax,
+        .mfocrf,
+        .mma,
+        .partword_atomics,
+        .pcrelative_memops,
+        .popcntd,
+        .power10_vector,
+        .ppc_postra_sched,
+        .ppc_prera_sched,
+        .predictable_select_expensive,
+        .quadword_atomics,
+        .recipprec,
+        .stfiwx,
+        .two_const_nr,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.g3" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">g3</span><a href="#src.zig-std.Target.powerpc.cpu.g3">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.g3">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> g3: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;g3&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;g3&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .fres,
+        .frsqrte,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.g4" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">g4</span><a href="#src.zig-std.Target.powerpc.cpu.g4">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.g4">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> g4: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;g4&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;g4&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .altivec,
+        .fres,
+        .frsqrte,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.@%22g4+%22" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">@"g4+"</span><a href="#src.zig-std.Target.powerpc.cpu.@%22g4+%22">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.@%22g4+%22">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;g4+&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;g4+&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;g4+&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .altivec,
+        .fres,
+        .frsqrte,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.g5" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">g5</span><a href="#src.zig-std.Target.powerpc.cpu.g5">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.g5">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> g5: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;g5&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;g5&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .@&quot;64bit&quot;,
+        .altivec,
+        .fres,
+        .frsqrte,
+        .fsqrt,
+        .mfocrf,
+        .stfiwx,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.generic" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">generic</span><a href="#src.zig-std.Target.powerpc.cpu.generic">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.generic">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> generic: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;generic&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;generic&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .hard_float,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.ppc" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ppc</span><a href="#src.zig-std.Target.powerpc.cpu.ppc">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.ppc">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ppc: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;ppc&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;ppc&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .hard_float,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.ppc64" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ppc64</span><a href="#src.zig-std.Target.powerpc.cpu.ppc64">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.ppc64">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ppc64: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;ppc64&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;ppc64&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .@&quot;64bit&quot;,
+        .altivec,
+        .fres,
+        .frsqrte,
+        .fsqrt,
+        .mfocrf,
+        .stfiwx,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.ppc64le" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ppc64le</span><a href="#src.zig-std.Target.powerpc.cpu.ppc64le">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.ppc64le">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ppc64le: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;ppc64le&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;ppc64le&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .@&quot;64bit&quot;,
+        .allow_unaligned_fp_access,
+        .bpermd,
+        .cmpb,
+        .crbits,
+        .crypto,
+        .direct_move,
+        .extdiv,
+        .fcpsgn,
+        .fpcvt,
+        .fprnd,
+        .fre,
+        .fres,
+        .frsqrte,
+        .frsqrtes,
+        .fsqrt,
+        .fuse_addi_load,
+        .fuse_addis_load,
+        .htm,
+        .icbt,
+        .isa_v206_instructions,
+        .isa_v207_instructions,
+        .isel,
+        .ldbrx,
+        .lfiwax,
+        .mfocrf,
+        .partword_atomics,
+        .popcntd,
+        .power8_vector,
+        .predictable_select_expensive,
+        .quadword_atomics,
+        .recipprec,
+        .stfiwx,
+        .two_const_nr,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.pwr10" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">pwr10</span><a href="#src.zig-std.Target.powerpc.cpu.pwr10">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.pwr10">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr10: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;pwr10&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;pwr10&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .@&quot;64bit&quot;,
+        .allow_unaligned_fp_access,
+        .bpermd,
+        .cmpb,
+        .crbits,
+        .crypto,
+        .direct_move,
+        .extdiv,
+        .fast_MFLR,
+        .fcpsgn,
+        .fpcvt,
+        .fprnd,
+        .fre,
+        .fres,
+        .frsqrte,
+        .frsqrtes,
+        .fsqrt,
+        .fuse_add_logical,
+        .fuse_arith_add,
+        .fuse_logical,
+        .fuse_logical_add,
+        .fuse_sha3,
+        .fuse_store,
+        .htm,
+        .icbt,
+        .isa_v206_instructions,
+        .isel,
+        .ldbrx,
+        .lfiwax,
+        .mfocrf,
+        .mma,
+        .partword_atomics,
+        .pcrelative_memops,
+        .popcntd,
+        .power10_vector,
+        .ppc_postra_sched,
+        .ppc_prera_sched,
+        .predictable_select_expensive,
+        .quadword_atomics,
+        .recipprec,
+        .stfiwx,
+        .two_const_nr,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.pwr11" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">pwr11</span><a href="#src.zig-std.Target.powerpc.cpu.pwr11">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.pwr11">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr11: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;pwr11&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;pwr11&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .@&quot;64bit&quot;,
+        .allow_unaligned_fp_access,
+        .bpermd,
+        .cmpb,
+        .crbits,
+        .crypto,
+        .direct_move,
+        .extdiv,
+        .fast_MFLR,
+        .fcpsgn,
+        .fpcvt,
+        .fprnd,
+        .fre,
+        .fres,
+        .frsqrte,
+        .frsqrtes,
+        .fsqrt,
+        .fuse_add_logical,
+        .fuse_arith_add,
+        .fuse_logical,
+        .fuse_logical_add,
+        .fuse_sha3,
+        .fuse_store,
+        .htm,
+        .icbt,
+        .isa_v206_instructions,
+        .isel,
+        .ldbrx,
+        .lfiwax,
+        .mfocrf,
+        .mma,
+        .partword_atomics,
+        .pcrelative_memops,
+        .popcntd,
+        .power10_vector,
+        .ppc_postra_sched,
+        .ppc_prera_sched,
+        .predictable_select_expensive,
+        .quadword_atomics,
+        .recipprec,
+        .stfiwx,
+        .two_const_nr,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.pwr3" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">pwr3</span><a href="#src.zig-std.Target.powerpc.cpu.pwr3">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.pwr3">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr3: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;pwr3&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;pwr3&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .@&quot;64bit&quot;,
+        .altivec,
+        .fres,
+        .frsqrte,
+        .mfocrf,
+        .stfiwx,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.pwr4" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">pwr4</span><a href="#src.zig-std.Target.powerpc.cpu.pwr4">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.pwr4">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr4: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;pwr4&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;pwr4&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .@&quot;64bit&quot;,
+        .altivec,
+        .fres,
+        .frsqrte,
+        .fsqrt,
+        .mfocrf,
+        .stfiwx,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.pwr5" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">pwr5</span><a href="#src.zig-std.Target.powerpc.cpu.pwr5">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.pwr5">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr5: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;pwr5&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;pwr5&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .@&quot;64bit&quot;,
+        .altivec,
+        .fre,
+        .fres,
+        .frsqrte,
+        .frsqrtes,
+        .fsqrt,
+        .mfocrf,
+        .stfiwx,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.pwr5x" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">pwr5x</span><a href="#src.zig-std.Target.powerpc.cpu.pwr5x">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.pwr5x">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr5x: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;pwr5x&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;pwr5x&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .@&quot;64bit&quot;,
+        .altivec,
+        .fprnd,
+        .fre,
+        .fres,
+        .frsqrte,
+        .frsqrtes,
+        .fsqrt,
+        .mfocrf,
+        .stfiwx,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.pwr6" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">pwr6</span><a href="#src.zig-std.Target.powerpc.cpu.pwr6">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.pwr6">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr6: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;pwr6&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;pwr6&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .@&quot;64bit&quot;,
+        .altivec,
+        .cmpb,
+        .fcpsgn,
+        .fprnd,
+        .fre,
+        .fres,
+        .frsqrte,
+        .frsqrtes,
+        .fsqrt,
+        .lfiwax,
+        .mfocrf,
+        .recipprec,
+        .stfiwx,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.pwr6x" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">pwr6x</span><a href="#src.zig-std.Target.powerpc.cpu.pwr6x">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.pwr6x">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr6x: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;pwr6x&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;pwr6x&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .@&quot;64bit&quot;,
+        .altivec,
+        .cmpb,
+        .fcpsgn,
+        .fprnd,
+        .fre,
+        .fres,
+        .frsqrte,
+        .frsqrtes,
+        .fsqrt,
+        .lfiwax,
+        .mfocrf,
+        .recipprec,
+        .stfiwx,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.pwr7" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">pwr7</span><a href="#src.zig-std.Target.powerpc.cpu.pwr7">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.pwr7">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr7: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;pwr7&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;pwr7&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .@&quot;64bit&quot;,
+        .allow_unaligned_fp_access,
+        .bpermd,
+        .cmpb,
+        .extdiv,
+        .fcpsgn,
+        .fpcvt,
+        .fprnd,
+        .fre,
+        .fres,
+        .frsqrte,
+        .frsqrtes,
+        .fsqrt,
+        .isa_v206_instructions,
+        .isel,
+        .ldbrx,
+        .lfiwax,
+        .mfocrf,
+        .popcntd,
+        .recipprec,
+        .stfiwx,
+        .two_const_nr,
+        .vsx,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.pwr8" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">pwr8</span><a href="#src.zig-std.Target.powerpc.cpu.pwr8">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.pwr8">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr8: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;pwr8&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;pwr8&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .@&quot;64bit&quot;,
+        .allow_unaligned_fp_access,
+        .bpermd,
+        .cmpb,
+        .crbits,
+        .crypto,
+        .direct_move,
+        .extdiv,
+        .fcpsgn,
+        .fpcvt,
+        .fprnd,
+        .fre,
+        .fres,
+        .frsqrte,
+        .frsqrtes,
+        .fsqrt,
+        .fuse_addi_load,
+        .fuse_addis_load,
+        .htm,
+        .icbt,
+        .isa_v206_instructions,
+        .isa_v207_instructions,
+        .isel,
+        .ldbrx,
+        .lfiwax,
+        .mfocrf,
+        .partword_atomics,
+        .popcntd,
+        .power8_vector,
+        .predictable_select_expensive,
+        .quadword_atomics,
+        .recipprec,
+        .stfiwx,
+        .two_const_nr,
+    }),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Target.powerpc.cpu.pwr9" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">pwr9</span><a href="#src.zig-std.Target.powerpc.cpu.pwr9">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu.pwr9">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr9: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+    .name = <span class="tok-str">&quot;pwr9&quot;</span>,
+    .llvm_name = <span class="tok-str">&quot;pwr9&quot;</span>,
+    .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+        .@&quot;64bit&quot;,
+        .allow_unaligned_fp_access,
+        .bpermd,
+        .cmpb,
+        .crbits,
+        .crypto,
+        .direct_move,
+        .extdiv,
+        .fcpsgn,
+        .fpcvt,
+        .fprnd,
+        .fre,
+        .fres,
+        .frsqrte,
+        .frsqrtes,
+        .fsqrt,
+        .htm,
+        .icbt,
+        .isa_v206_instructions,
+        .isel,
+        .ldbrx,
+        .lfiwax,
+        .mfocrf,
+        .partword_atomics,
+        .popcntd,
+        .power9_vector,
+        .ppc_postra_sched,
+        .ppc_prera_sched,
+        .predictable_select_expensive,
+        .quadword_atomics,
+        .recipprec,
+        .stfiwx,
+        .two_const_nr,
+        .vectors_use_two_units,
+    }),
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.Target.powerpc.cpu">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> cpu = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;440&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;440&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;440&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .fres,
+            .frsqrte,
+            .isel,
+            .msync,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;450&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;450&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;450&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .fres,
+            .frsqrte,
+            .isel,
+            .msync,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;601&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;601&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;601&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .fpu,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;602&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;602&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;602&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .fpu,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;603&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;603&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;603&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .fres,
+            .frsqrte,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;603e&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;603e&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;603e&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .fres,
+            .frsqrte,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;603ev&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;603ev&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;603ev&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .fres,
+            .frsqrte,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;604&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;604&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;604&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .fres,
+            .frsqrte,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;604e&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;604e&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;604e&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .fres,
+            .frsqrte,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;620&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;620&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;620&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .fres,
+            .frsqrte,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;7400&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;7400&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;7400&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .altivec,
+            .fres,
+            .frsqrte,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;7450&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;7450&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;7450&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .altivec,
+            .fres,
+            .frsqrte,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;750&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;750&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;750&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .fres,
+            .frsqrte,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;970&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;970&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;970&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .@&quot;64bit&quot;,
+            .altivec,
+            .fres,
+            .frsqrte,
+            .fsqrt,
+            .mfocrf,
+            .stfiwx,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> a2: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;a2&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;a2&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .@&quot;64bit&quot;,
+            .booke,
+            .cmpb,
+            .fcpsgn,
+            .fpcvt,
+            .fprnd,
+            .fre,
+            .fres,
+            .frsqrte,
+            .frsqrtes,
+            .fsqrt,
+            .isa_v206_instructions,
+            .isel,
+            .ldbrx,
+            .lfiwax,
+            .mfocrf,
+            .recipprec,
+            .slow_popcntd,
+            .stfiwx,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> e500: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;e500&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;e500&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .isel,
+            .msync,
+            .spe,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> e500mc: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;e500mc&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;e500mc&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .booke,
+            .isel,
+            .stfiwx,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> e5500: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;e5500&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;e5500&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .@&quot;64bit&quot;,
+            .booke,
+            .isel,
+            .mfocrf,
+            .stfiwx,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> future: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;future&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;future&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .@&quot;64bit&quot;,
+            .allow_unaligned_fp_access,
+            .bpermd,
+            .cmpb,
+            .crbits,
+            .crypto,
+            .direct_move,
+            .extdiv,
+            .fast_MFLR,
+            .fcpsgn,
+            .fpcvt,
+            .fprnd,
+            .fre,
+            .fres,
+            .frsqrte,
+            .frsqrtes,
+            .fsqrt,
+            .fuse_add_logical,
+            .fuse_arith_add,
+            .fuse_logical,
+            .fuse_logical_add,
+            .fuse_sha3,
+            .fuse_store,
+            .htm,
+            .icbt,
+            .isa_future_instructions,
+            .isa_v206_instructions,
+            .isel,
+            .ldbrx,
+            .lfiwax,
+            .mfocrf,
+            .mma,
+            .partword_atomics,
+            .pcrelative_memops,
+            .popcntd,
+            .power10_vector,
+            .ppc_postra_sched,
+            .ppc_prera_sched,
+            .predictable_select_expensive,
+            .quadword_atomics,
+            .recipprec,
+            .stfiwx,
+            .two_const_nr,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> g3: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;g3&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;g3&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .fres,
+            .frsqrte,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> g4: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;g4&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;g4&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .altivec,
+            .fres,
+            .frsqrte,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> @&quot;g4+&quot;: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;g4+&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;g4+&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .altivec,
+            .fres,
+            .frsqrte,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> g5: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;g5&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;g5&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .@&quot;64bit&quot;,
+            .altivec,
+            .fres,
+            .frsqrte,
+            .fsqrt,
+            .mfocrf,
+            .stfiwx,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> generic: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;generic&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;generic&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .hard_float,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ppc: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;ppc&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;ppc&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .hard_float,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ppc64: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;ppc64&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;ppc64&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .@&quot;64bit&quot;,
+            .altivec,
+            .fres,
+            .frsqrte,
+            .fsqrt,
+            .mfocrf,
+            .stfiwx,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ppc64le: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;ppc64le&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;ppc64le&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .@&quot;64bit&quot;,
+            .allow_unaligned_fp_access,
+            .bpermd,
+            .cmpb,
+            .crbits,
+            .crypto,
+            .direct_move,
+            .extdiv,
+            .fcpsgn,
+            .fpcvt,
+            .fprnd,
+            .fre,
+            .fres,
+            .frsqrte,
+            .frsqrtes,
+            .fsqrt,
+            .fuse_addi_load,
+            .fuse_addis_load,
+            .htm,
+            .icbt,
+            .isa_v206_instructions,
+            .isa_v207_instructions,
+            .isel,
+            .ldbrx,
+            .lfiwax,
+            .mfocrf,
+            .partword_atomics,
+            .popcntd,
+            .power8_vector,
+            .predictable_select_expensive,
+            .quadword_atomics,
+            .recipprec,
+            .stfiwx,
+            .two_const_nr,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr10: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;pwr10&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;pwr10&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .@&quot;64bit&quot;,
+            .allow_unaligned_fp_access,
+            .bpermd,
+            .cmpb,
+            .crbits,
+            .crypto,
+            .direct_move,
+            .extdiv,
+            .fast_MFLR,
+            .fcpsgn,
+            .fpcvt,
+            .fprnd,
+            .fre,
+            .fres,
+            .frsqrte,
+            .frsqrtes,
+            .fsqrt,
+            .fuse_add_logical,
+            .fuse_arith_add,
+            .fuse_logical,
+            .fuse_logical_add,
+            .fuse_sha3,
+            .fuse_store,
+            .htm,
+            .icbt,
+            .isa_v206_instructions,
+            .isel,
+            .ldbrx,
+            .lfiwax,
+            .mfocrf,
+            .mma,
+            .partword_atomics,
+            .pcrelative_memops,
+            .popcntd,
+            .power10_vector,
+            .ppc_postra_sched,
+            .ppc_prera_sched,
+            .predictable_select_expensive,
+            .quadword_atomics,
+            .recipprec,
+            .stfiwx,
+            .two_const_nr,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr11: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;pwr11&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;pwr11&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .@&quot;64bit&quot;,
+            .allow_unaligned_fp_access,
+            .bpermd,
+            .cmpb,
+            .crbits,
+            .crypto,
+            .direct_move,
+            .extdiv,
+            .fast_MFLR,
+            .fcpsgn,
+            .fpcvt,
+            .fprnd,
+            .fre,
+            .fres,
+            .frsqrte,
+            .frsqrtes,
+            .fsqrt,
+            .fuse_add_logical,
+            .fuse_arith_add,
+            .fuse_logical,
+            .fuse_logical_add,
+            .fuse_sha3,
+            .fuse_store,
+            .htm,
+            .icbt,
+            .isa_v206_instructions,
+            .isel,
+            .ldbrx,
+            .lfiwax,
+            .mfocrf,
+            .mma,
+            .partword_atomics,
+            .pcrelative_memops,
+            .popcntd,
+            .power10_vector,
+            .ppc_postra_sched,
+            .ppc_prera_sched,
+            .predictable_select_expensive,
+            .quadword_atomics,
+            .recipprec,
+            .stfiwx,
+            .two_const_nr,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr3: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;pwr3&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;pwr3&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .@&quot;64bit&quot;,
+            .altivec,
+            .fres,
+            .frsqrte,
+            .mfocrf,
+            .stfiwx,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr4: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;pwr4&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;pwr4&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .@&quot;64bit&quot;,
+            .altivec,
+            .fres,
+            .frsqrte,
+            .fsqrt,
+            .mfocrf,
+            .stfiwx,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr5: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;pwr5&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;pwr5&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .@&quot;64bit&quot;,
+            .altivec,
+            .fre,
+            .fres,
+            .frsqrte,
+            .frsqrtes,
+            .fsqrt,
+            .mfocrf,
+            .stfiwx,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr5x: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;pwr5x&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;pwr5x&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .@&quot;64bit&quot;,
+            .altivec,
+            .fprnd,
+            .fre,
+            .fres,
+            .frsqrte,
+            .frsqrtes,
+            .fsqrt,
+            .mfocrf,
+            .stfiwx,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr6: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;pwr6&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;pwr6&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .@&quot;64bit&quot;,
+            .altivec,
+            .cmpb,
+            .fcpsgn,
+            .fprnd,
+            .fre,
+            .fres,
+            .frsqrte,
+            .frsqrtes,
+            .fsqrt,
+            .lfiwax,
+            .mfocrf,
+            .recipprec,
+            .stfiwx,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr6x: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;pwr6x&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;pwr6x&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .@&quot;64bit&quot;,
+            .altivec,
+            .cmpb,
+            .fcpsgn,
+            .fprnd,
+            .fre,
+            .fres,
+            .frsqrte,
+            .frsqrtes,
+            .fsqrt,
+            .lfiwax,
+            .mfocrf,
+            .recipprec,
+            .stfiwx,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr7: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;pwr7&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;pwr7&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .@&quot;64bit&quot;,
+            .allow_unaligned_fp_access,
+            .bpermd,
+            .cmpb,
+            .extdiv,
+            .fcpsgn,
+            .fpcvt,
+            .fprnd,
+            .fre,
+            .fres,
+            .frsqrte,
+            .frsqrtes,
+            .fsqrt,
+            .isa_v206_instructions,
+            .isel,
+            .ldbrx,
+            .lfiwax,
+            .mfocrf,
+            .popcntd,
+            .recipprec,
+            .stfiwx,
+            .two_const_nr,
+            .vsx,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr8: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;pwr8&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;pwr8&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .@&quot;64bit&quot;,
+            .allow_unaligned_fp_access,
+            .bpermd,
+            .cmpb,
+            .crbits,
+            .crypto,
+            .direct_move,
+            .extdiv,
+            .fcpsgn,
+            .fpcvt,
+            .fprnd,
+            .fre,
+            .fres,
+            .frsqrte,
+            .frsqrtes,
+            .fsqrt,
+            .fuse_addi_load,
+            .fuse_addis_load,
+            .htm,
+            .icbt,
+            .isa_v206_instructions,
+            .isa_v207_instructions,
+            .isel,
+            .ldbrx,
+            .lfiwax,
+            .mfocrf,
+            .partword_atomics,
+            .popcntd,
+            .power8_vector,
+            .predictable_select_expensive,
+            .quadword_atomics,
+            .recipprec,
+            .stfiwx,
+            .two_const_nr,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwr9: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;pwr9&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;pwr9&quot;</span>,
+        .features = <a href="std.Target.powerpc.html#std.Target.powerpc.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.powerpc.Feature.html">Feature</a>{
+            .@&quot;64bit&quot;,
+            .allow_unaligned_fp_access,
+            .bpermd,
+            .cmpb,
+            .crbits,
+            .crypto,
+            .direct_move,
+            .extdiv,
+            .fcpsgn,
+            .fpcvt,
+            .fprnd,
+            .fre,
+            .fres,
+            .frsqrte,
+            .frsqrtes,
+            .fsqrt,
+            .htm,
+            .icbt,
+            .isa_v206_instructions,
+            .isel,
+            .ldbrx,
+            .lfiwax,
+            .mfocrf,
+            .partword_atomics,
+            .popcntd,
+            .power9_vector,
+            .ppc_postra_sched,
+            .ppc_prera_sched,
+            .predictable_select_expensive,
+            .quadword_atomics,
+            .recipprec,
+            .stfiwx,
+            .two_const_nr,
+            .vectors_use_two_units,
+        }),
+    };
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

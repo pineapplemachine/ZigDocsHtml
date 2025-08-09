@@ -1,0 +1,573 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">os</a></li><li><a href="std.os.windows.html" class="">windows</a></li><li><a href="std.os.windows.PEB.html" class="active">PEB</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.os.windows.PEB" class="declHeader"><span class="declHeaderCategory">extern struct</span><span class="declHeaderIdentifier">std.os.windows.PEB</span><a href="#src.zig-std.os.windows.PEB">[src]</a></h1><div class="tldDocs"><p>Process Environment Block
+Microsoft documentation of this is incomplete, the fields here are taken from various resources including:</p>
+<ul>
+<li><a href="https://github.com/wine-mirror/wine/blob/1aff1e6a370ee8c0213a0fd4b220d121da8527aa/include/winternl.h#L269">https://github.com/wine-mirror/wine/blob/1aff1e6a370ee8c0213a0fd4b220d121da8527aa/include/winternl.h#L269</a></li>
+<li><a href="https://www.geoffchappell.com/studies/windows/win32/ntdll/structs/peb/index.htm">https://www.geoffchappell.com/studies/windows/win32/ntdll/structs/peb/index.htm</a></li>
+</ul>
+</div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>InheritedAddressSpace: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a></code></pre></div><div><pre><code>ReadImageFileExecOptions: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a></code></pre></div><div><pre><code>BeingDebugged: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a></code></pre></div><div><pre><code>BitField: <a href="std.os.windows.html#std.os.windows.UCHAR">UCHAR</a></code></pre></div><div><pre><code>Mutant: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>ImageBaseAddress: <a href="std.os.windows.html#std.os.windows.HMODULE">HMODULE</a></code></pre></div><div><pre><code>Ldr: *<a href="std.os.windows.PEB_LDR_DATA.html">PEB_LDR_DATA</a></code></pre></div><div><pre><code>ProcessParameters: *<a href="std.os.windows.RTL_USER_PROCESS_PARAMETERS.html">RTL_USER_PROCESS_PARAMETERS</a></code></pre></div><div><pre><code>SubSystemData: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>ProcessHeap: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>FastPebLock: *<a href="std.os.windows.RTL_CRITICAL_SECTION.html">RTL_CRITICAL_SECTION</a></code></pre></div><div><pre><code>AtlThunkSListPtr: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>IFEOKey: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>CrossProcessFlags: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre><div class="fieldDocs"><p><a href="https://www.geoffchappell.com/studies/windows/win32/ntdll/structs/peb/crossprocessflags.htm">https://www.geoffchappell.com/studies/windows/win32/ntdll/structs/peb/crossprocessflags.htm</a></p>
+</div></div><div><pre><code>union1: <span class="tok-kw">extern</span> <span class="tok-kw">union</span> {
+    KernelCallbackTable: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    UserSharedInfoPtr: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+}</code></pre></div><div><pre><code>SystemReserved: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>AtlThunkSListPtr32: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>ApiSetMap: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>TlsExpansionCounter: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>TlsBitmap: *<a href="std.os.windows.RTL_BITMAP.html">RTL_BITMAP</a></code></pre></div><div><pre><code>TlsBitmapBits: [<span class="tok-number">2</span>]<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>ReadOnlySharedMemoryBase: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>SharedData: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>ReadOnlyStaticServerData: *<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>AnsiCodePageData: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>OemCodePageData: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>UnicodeCaseTableData: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>NumberOfProcessors: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>NtGlobalFlag: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>CriticalSectionTimeout: <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a></code></pre></div><div><pre><code>HeapSegmentReserve: <a href="std.os.windows.html#std.os.windows.ULONG_PTR">ULONG_PTR</a></code></pre></div><div><pre><code>HeapSegmentCommit: <a href="std.os.windows.html#std.os.windows.ULONG_PTR">ULONG_PTR</a></code></pre></div><div><pre><code>HeapDeCommitTotalFreeThreshold: <a href="std.os.windows.html#std.os.windows.ULONG_PTR">ULONG_PTR</a></code></pre></div><div><pre><code>HeapDeCommitFreeBlockThreshold: <a href="std.os.windows.html#std.os.windows.ULONG_PTR">ULONG_PTR</a></code></pre></div><div><pre><code>NumberOfHeaps: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>MaximumNumberOfHeaps: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>ProcessHeaps: *<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>GdiSharedHandleTable: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>ProcessStarterHelper: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>GdiDCAttributeList: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>LoaderLock: *<a href="std.os.windows.RTL_CRITICAL_SECTION.html">RTL_CRITICAL_SECTION</a></code></pre></div><div><pre><code>OSMajorVersion: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>OSMinorVersion: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>OSBuildNumber: <a href="std.os.windows.html#std.os.windows.USHORT">USHORT</a></code></pre></div><div><pre><code>OSCSDVersion: <a href="std.os.windows.html#std.os.windows.USHORT">USHORT</a></code></pre></div><div><pre><code>OSPlatformId: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>ImageSubSystem: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>ImageSubSystemMajorVersion: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>ImageSubSystemMinorVersion: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>ActiveProcessAffinityMask: <a href="std.os.windows.html#std.os.windows.KAFFINITY">KAFFINITY</a></code></pre></div><div><pre><code>GdiHandleBuffer: [
+    <span class="tok-kw">switch</span> (<span class="tok-builtin">@sizeOf</span>(<span class="tok-type">usize</span>)) {
+        <span class="tok-number">4</span> =&gt; <span class="tok-number">0x22</span>,
+        <span class="tok-number">8</span> =&gt; <span class="tok-number">0x3C</span>,
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+    }
+]<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>PostProcessInitRoutine: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>TlsExpansionBitmap: *<a href="std.os.windows.RTL_BITMAP.html">RTL_BITMAP</a></code></pre></div><div><pre><code>TlsExpansionBitmapBits: [<span class="tok-number">32</span>]<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>SessionId: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>AppCompatFlags: <a href="std.os.windows.html#std.os.windows.ULARGE_INTEGER">ULARGE_INTEGER</a></code></pre></div><div><pre><code>AppCompatFlagsUser: <a href="std.os.windows.html#std.os.windows.ULARGE_INTEGER">ULARGE_INTEGER</a></code></pre></div><div><pre><code>ShimData: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>AppCompatInfo: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>CSDVersion: <a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a></code></pre></div><div><pre><code>ActivationContextData: *<span class="tok-kw">const</span> <a href="std.os.windows.ACTIVATION_CONTEXT_DATA.html">ACTIVATION_CONTEXT_DATA</a></code></pre></div><div><pre><code>ProcessAssemblyStorageMap: *<a href="std.os.windows.ASSEMBLY_STORAGE_MAP.html">ASSEMBLY_STORAGE_MAP</a></code></pre></div><div><pre><code>SystemDefaultActivationData: *<span class="tok-kw">const</span> <a href="std.os.windows.ACTIVATION_CONTEXT_DATA.html">ACTIVATION_CONTEXT_DATA</a></code></pre></div><div><pre><code>SystemAssemblyStorageMap: *<a href="std.os.windows.ASSEMBLY_STORAGE_MAP.html">ASSEMBLY_STORAGE_MAP</a></code></pre></div><div><pre><code>MinimumStackCommit: <a href="std.os.windows.html#std.os.windows.ULONG_PTR">ULONG_PTR</a></code></pre></div><div><pre><code>FlsCallback: *<a href="std.os.windows.FLS_CALLBACK_INFO.html">FLS_CALLBACK_INFO</a></code></pre></div><div><pre><code>FlsListHead: <a href="std.os.windows.LIST_ENTRY.html">LIST_ENTRY</a></code></pre></div><div><pre><code>FlsBitmap: *<a href="std.os.windows.RTL_BITMAP.html">RTL_BITMAP</a></code></pre></div><div><pre><code>FlsBitmapBits: [<span class="tok-number">4</span>]<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>FlsHighIndex: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>WerRegistrationData: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>WerShipAssertPtr: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>pUnused: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>pImageHeaderHash: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>TracingFlags: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre><div class="fieldDocs"><p>TODO: <a href="https://www.geoffchappell.com/studies/windows/win32/ntdll/structs/peb/tracingflags.htm">https://www.geoffchappell.com/studies/windows/win32/ntdll/structs/peb/tracingflags.htm</a></p>
+</div></div><div><pre><code>CsrServerReadOnlySharedMemoryBase: <a href="std.os.windows.html#std.os.windows.ULONGLONG">ULONGLONG</a></code></pre></div><div><pre><code>TppWorkerpListLock: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>TppWorkerpList: <a href="std.os.windows.LIST_ENTRY.html">LIST_ENTRY</a></code></pre></div><div><pre><code>WaitOnAddressHashTable: [<span class="tok-number">0x80</span>]<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>TelemetryCoverageHeader: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>CloudFileFlags: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.os.windows.PEB">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PEB = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {<span class="tok-comment">
+    // Versions: All
+    </span>InheritedAddressSpace: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>,<span class="tok-comment">
+
+    // Versions: 3.51+
+    </span>ReadImageFileExecOptions: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>,
+    BeingDebugged: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>,<span class="tok-comment">
+
+    // Versions: 5.2+ (previously was padding)
+    </span>BitField: <a href="std.os.windows.html#std.os.windows.UCHAR">UCHAR</a>,<span class="tok-comment">
+
+    // Versions: all
+    </span>Mutant: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    ImageBaseAddress: <a href="std.os.windows.html#std.os.windows.HMODULE">HMODULE</a>,
+    Ldr: *<a href="std.os.windows.PEB_LDR_DATA.html">PEB_LDR_DATA</a>,
+    ProcessParameters: *<a href="std.os.windows.RTL_USER_PROCESS_PARAMETERS.html">RTL_USER_PROCESS_PARAMETERS</a>,
+    SubSystemData: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    ProcessHeap: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,<span class="tok-comment">
+
+    // Versions: 5.1+
+    </span>FastPebLock: *<a href="std.os.windows.RTL_CRITICAL_SECTION.html">RTL_CRITICAL_SECTION</a>,<span class="tok-comment">
+
+    // Versions: 5.2+
+    </span>AtlThunkSListPtr: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    IFEOKey: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,<span class="tok-comment">
+
+    // Versions: 6.0+
+
+    </span><span class="tok-comment">/// https://www.geoffchappell.com/studies/windows/win32/ntdll/structs/peb/crossprocessflags.htm</span>
+    CrossProcessFlags: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,<span class="tok-comment">
+
+    // Versions: 6.0+
+    </span>union1: <span class="tok-kw">extern</span> <span class="tok-kw">union</span> {
+        KernelCallbackTable: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+        UserSharedInfoPtr: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    },<span class="tok-comment">
+
+    // Versions: 5.1+
+    </span>SystemReserved: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,<span class="tok-comment">
+
+    // Versions: 5.1, (not 5.2, not 6.0), 6.1+
+    </span>AtlThunkSListPtr32: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,<span class="tok-comment">
+
+    // Versions: 6.1+
+    </span>ApiSetMap: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,<span class="tok-comment">
+
+    // Versions: all
+    </span>TlsExpansionCounter: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,<span class="tok-comment">
+    // note: there is padding here on 64 bit
+    </span>TlsBitmap: *<a href="std.os.windows.RTL_BITMAP.html">RTL_BITMAP</a>,
+    TlsBitmapBits: [<span class="tok-number">2</span>]<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    ReadOnlySharedMemoryBase: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,<span class="tok-comment">
+
+    // Versions: 1703+
+    </span>SharedData: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,<span class="tok-comment">
+
+    // Versions: all
+    </span>ReadOnlyStaticServerData: *<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    AnsiCodePageData: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    OemCodePageData: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    UnicodeCaseTableData: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,<span class="tok-comment">
+
+    // Versions: 3.51+
+    </span>NumberOfProcessors: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    NtGlobalFlag: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,<span class="tok-comment">
+
+    // Versions: all
+    </span>CriticalSectionTimeout: <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,<span class="tok-comment">
+
+    // End of Original PEB size
+
+    // Fields appended in 3.51:
+    </span>HeapSegmentReserve: <a href="std.os.windows.html#std.os.windows.ULONG_PTR">ULONG_PTR</a>,
+    HeapSegmentCommit: <a href="std.os.windows.html#std.os.windows.ULONG_PTR">ULONG_PTR</a>,
+    HeapDeCommitTotalFreeThreshold: <a href="std.os.windows.html#std.os.windows.ULONG_PTR">ULONG_PTR</a>,
+    HeapDeCommitFreeBlockThreshold: <a href="std.os.windows.html#std.os.windows.ULONG_PTR">ULONG_PTR</a>,
+    NumberOfHeaps: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    MaximumNumberOfHeaps: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    ProcessHeaps: *<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,<span class="tok-comment">
+
+    // Fields appended in 4.0:
+    </span>GdiSharedHandleTable: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    ProcessStarterHelper: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    GdiDCAttributeList: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,<span class="tok-comment">
+    // note: there is padding here on 64 bit
+    </span>LoaderLock: *<a href="std.os.windows.RTL_CRITICAL_SECTION.html">RTL_CRITICAL_SECTION</a>,
+    OSMajorVersion: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    OSMinorVersion: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    OSBuildNumber: <a href="std.os.windows.html#std.os.windows.USHORT">USHORT</a>,
+    OSCSDVersion: <a href="std.os.windows.html#std.os.windows.USHORT">USHORT</a>,
+    OSPlatformId: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    ImageSubSystem: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    ImageSubSystemMajorVersion: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    ImageSubSystemMinorVersion: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,<span class="tok-comment">
+    // note: there is padding here on 64 bit
+    </span>ActiveProcessAffinityMask: <a href="std.os.windows.html#std.os.windows.KAFFINITY">KAFFINITY</a>,
+    GdiHandleBuffer: [
+        <span class="tok-kw">switch</span> (<span class="tok-builtin">@sizeOf</span>(<span class="tok-type">usize</span>)) {
+            <span class="tok-number">4</span> =&gt; <span class="tok-number">0x22</span>,
+            <span class="tok-number">8</span> =&gt; <span class="tok-number">0x3C</span>,
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+        }
+    ]<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,<span class="tok-comment">
+
+    // Fields appended in 5.0 (Windows 2000):
+    </span>PostProcessInitRoutine: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    TlsExpansionBitmap: *<a href="std.os.windows.RTL_BITMAP.html">RTL_BITMAP</a>,
+    TlsExpansionBitmapBits: [<span class="tok-number">32</span>]<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    SessionId: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,<span class="tok-comment">
+    // note: there is padding here on 64 bit
+    // Versions: 5.1+
+    </span>AppCompatFlags: <a href="std.os.windows.html#std.os.windows.ULARGE_INTEGER">ULARGE_INTEGER</a>,
+    AppCompatFlagsUser: <a href="std.os.windows.html#std.os.windows.ULARGE_INTEGER">ULARGE_INTEGER</a>,
+    ShimData: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,<span class="tok-comment">
+    // Versions: 5.0+
+    </span>AppCompatInfo: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    CSDVersion: <a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>,<span class="tok-comment">
+
+    // Fields appended in 5.1 (Windows XP):
+    </span>ActivationContextData: *<span class="tok-kw">const</span> <a href="std.os.windows.ACTIVATION_CONTEXT_DATA.html">ACTIVATION_CONTEXT_DATA</a>,
+    ProcessAssemblyStorageMap: *<a href="std.os.windows.ASSEMBLY_STORAGE_MAP.html">ASSEMBLY_STORAGE_MAP</a>,
+    SystemDefaultActivationData: *<span class="tok-kw">const</span> <a href="std.os.windows.ACTIVATION_CONTEXT_DATA.html">ACTIVATION_CONTEXT_DATA</a>,
+    SystemAssemblyStorageMap: *<a href="std.os.windows.ASSEMBLY_STORAGE_MAP.html">ASSEMBLY_STORAGE_MAP</a>,
+    MinimumStackCommit: <a href="std.os.windows.html#std.os.windows.ULONG_PTR">ULONG_PTR</a>,<span class="tok-comment">
+
+    // Fields appended in 5.2 (Windows Server 2003):
+    </span>FlsCallback: *<a href="std.os.windows.FLS_CALLBACK_INFO.html">FLS_CALLBACK_INFO</a>,
+    FlsListHead: <a href="std.os.windows.LIST_ENTRY.html">LIST_ENTRY</a>,
+    FlsBitmap: *<a href="std.os.windows.RTL_BITMAP.html">RTL_BITMAP</a>,
+    FlsBitmapBits: [<span class="tok-number">4</span>]<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    FlsHighIndex: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,<span class="tok-comment">
+
+    // Fields appended in 6.0 (Windows Vista):
+    </span>WerRegistrationData: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    WerShipAssertPtr: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,<span class="tok-comment">
+
+    // Fields appended in 6.1 (Windows 7):
+    </span>pUnused: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,<span class="tok-comment"> // previously pContextData
+    </span>pImageHeaderHash: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+
+    <span class="tok-comment">/// TODO: https://www.geoffchappell.com/studies/windows/win32/ntdll/structs/peb/tracingflags.htm</span>
+    TracingFlags: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,<span class="tok-comment">
+
+    // Fields appended in 6.2 (Windows 8):
+    </span>CsrServerReadOnlySharedMemoryBase: <a href="std.os.windows.html#std.os.windows.ULONGLONG">ULONGLONG</a>,<span class="tok-comment">
+
+    // Fields appended in 1511:
+    </span>TppWorkerpListLock: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    TppWorkerpList: <a href="std.os.windows.LIST_ENTRY.html">LIST_ENTRY</a>,
+    WaitOnAddressHashTable: [<span class="tok-number">0x80</span>]<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,<span class="tok-comment">
+
+    // Fields appended in 1709:
+    </span>TelemetryCoverageHeader: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    CloudFileFlags: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

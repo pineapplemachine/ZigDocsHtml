@@ -1,0 +1,2085 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">compress</a></li><li><a href="std.compress.html" class="">zstandard</a></li><li><a href="std.compress.zstandard.html" class="">decode</a></li><li><a href="std.compress.zstandard.decode.block.html" class="active">block</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.compress.zstandard.decode.block" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.compress.zstandard.decode.block</span><a href="#src.zig-std.compress.zstandard.decode.block">[src]</a></h1><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.compress.zstandard.decode.block.DecodeState.html">std.compress.zstandard.decode.block.DecodeState</a></li></ul></div><div class="sectErrSets"><h2 class="sectionHeader">Error Sets</h2><div class="listErrSets"><div class="decl"><h2 id="std.compress.zstandard.decode.block.Error" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">Error</span><a href="#src.zig-std.compress.zstandard.decode.block.Error">[src]</a></h2><div class="sectFnErrors"><h3 class="sectionHeader">Errors</h3><div class="fnErrorsAnyError"><p><span class="tok-type">anyerror</span> means the error set is known only at runtime.</p></div><div class="tableFnErrors"><dl class="listFnErrors"><div><dt>BlockSizeOverMaximum</dt></div><div><dt>MalformedBlockSize</dt></div><div><dt>MalformedCompressedBlock</dt></div><div><dt>MalformedRleBlock</dt></div><div><dt>ReservedBlock</dt></div></dl></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.zstandard.decode.block.Error">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = <span class="tok-kw">error</span>{
+    BlockSizeOverMaximum,
+    MalformedBlockSize,
+    ReservedBlock,
+    MalformedRleBlock,
+    MalformedCompressedBlock,
+}</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.compress.zstandard.decode.block.decodeBlock" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">decodeBlock</span><a href="#src.zig-std.compress.zstandard.decode.block.decodeBlock">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeBlock</span>( dest: []<span class="tok-type">u8</span>, src: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, block_header: <a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Header.html">Header</a>, decode_state: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>, consumed_count: *<span class="tok-type">usize</span>, block_size_max: <span class="tok-type">usize</span>, written_count: <span class="tok-type">usize</span>, ) (<span class="tok-kw">error</span>{DestTooSmall} || <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.Error">Error</a>)!<span class="tok-type">usize</span></code></pre></div><div class="tldDocs"><p>Decode a single block from <code>src</code> into <code>dest</code>. The beginning of <code>src</code> must be
+the start of the block content (i.e. directly after the block header).
+Increments <code>consumed_count</code> by the number of bytes read from <code>src</code> to decode
+the block and returns the decompressed size of the block.</p>
+<p>Errors returned:</p>
+<ul>
+<li><code>error.BlockSizeOverMaximum</code> if block's size is larger than 1 &lt;&lt; 17 or
+<code>dest[written_count..].len</code></li>
+<li><code>error.MalformedBlockSize</code> if <code>src.len</code> is smaller than the block size
+and the block is a raw or compressed block</li>
+<li><code>error.ReservedBlock</code> if the block is a reserved block</li>
+<li><code>error.MalformedRleBlock</code> if the block is an RLE block and <code>src.len &lt; 1</code></li>
+<li><code>error.MalformedCompressedBlock</code> if there are errors decoding a
+compressed block</li>
+<li><code>error.DestTooSmall</code> is <code>dest</code> is not large enough to hold the
+decompressed block</li>
+</ul>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>dest: []<span class="tok-type">u8</span></code></pre></div><div><pre><code>src: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>block_header: <a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Header.html">Header</a></code></pre></div><div><pre><code>decode_state: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a></code></pre></div><div><pre><code>consumed_count: *<span class="tok-type">usize</span></code></pre></div><div><pre><code>block_size_max: <span class="tok-type">usize</span></code></pre></div><div><pre><code>written_count: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.zstandard.decode.block.decodeBlock">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeBlock</span>(
+    dest: []<span class="tok-type">u8</span>,
+    src: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    block_header: <a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Header.html">Header</a>,
+    decode_state: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>,
+    consumed_count: *<span class="tok-type">usize</span>,
+    block_size_max: <span class="tok-type">usize</span>,
+    written_count: <span class="tok-type">usize</span>,
+) (<span class="tok-kw">error</span>{DestTooSmall} || <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.Error">Error</a>)!<span class="tok-type">usize</span> {
+    <span class="tok-kw">const</span> block_size = block_header.block_size;
+    <span class="tok-kw">if</span> (block_size_max &lt; block_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.BlockSizeOverMaximum;
+    <span class="tok-kw">switch</span> (block_header.block_type) {
+        .raw =&gt; {
+            <span class="tok-kw">if</span> (src.len &lt; block_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedBlockSize;
+            <span class="tok-kw">if</span> (dest[written_count..].len &lt; block_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.DestTooSmall;
+            <span class="tok-builtin">@memcpy</span>(dest[written_count..][<span class="tok-number">0</span>..block_size], src[<span class="tok-number">0</span>..block_size]);
+            consumed_count.* += block_size;
+            decode_state.written_count += block_size;
+            <span class="tok-kw">return</span> block_size;
+        },
+        .rle =&gt; {
+            <span class="tok-kw">if</span> (src.len &lt; <span class="tok-number">1</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedRleBlock;
+            <span class="tok-kw">if</span> (dest[written_count..].len &lt; block_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.DestTooSmall;
+            <span class="tok-kw">for</span> (written_count..block_size + written_count) |write_pos| {
+                dest[write_pos] = src[<span class="tok-number">0</span>];
+            }
+            consumed_count.* += <span class="tok-number">1</span>;
+            decode_state.written_count += block_size;
+            <span class="tok-kw">return</span> block_size;
+        },
+        .compressed =&gt; {
+            <span class="tok-kw">if</span> (src.len &lt; block_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedBlockSize;
+            <span class="tok-kw">var</span> bytes_read: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">const</span> literals = <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeLiteralsSectionSlice">decodeLiteralsSectionSlice</a>(src[<span class="tok-number">0</span>..block_size], &amp;bytes_read) <span class="tok-kw">catch</span>
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+            <span class="tok-kw">var</span> fbs = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(src[bytes_read..block_size]);
+            <span class="tok-kw">const</span> fbs_reader = fbs.reader();
+            <span class="tok-kw">const</span> sequences_header = <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeSequencesHeader">decodeSequencesHeader</a>(fbs_reader) <span class="tok-kw">catch</span>
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+
+            decode_state.prepare(fbs_reader, literals, sequences_header) <span class="tok-kw">catch</span>
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+
+            bytes_read += fbs.pos;
+
+            <span class="tok-kw">var</span> bytes_written: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            {
+                <span class="tok-kw">const</span> bit_stream_bytes = src[bytes_read..block_size];
+                <span class="tok-kw">var</span> bit_stream: <a href="std.compress.zstandard.readers.html">readers</a>.<a href="std.compress.zstandard.readers.ReverseBitReader.html">ReverseBitReader</a> = <span class="tok-null">undefined</span>;
+                bit_stream.init(bit_stream_bytes) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+
+                <span class="tok-kw">if</span> (sequences_header.sequence_count &gt; <span class="tok-number">0</span>) {
+                    decode_state.readInitialFseState(&amp;bit_stream) <span class="tok-kw">catch</span>
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+
+                    <span class="tok-kw">var</span> sequence_size_limit = block_size_max;
+                    <span class="tok-kw">for</span> (<span class="tok-number">0</span>..sequences_header.sequence_count) |i| {
+                        <span class="tok-kw">const</span> write_pos = written_count + bytes_written;
+                        <span class="tok-kw">const</span> decompressed_size = decode_state.decodeSequenceSlice(
+                            dest,
+                            write_pos,
+                            &amp;bit_stream,
+                            sequence_size_limit,
+                            i == sequences_header.sequence_count - <span class="tok-number">1</span>,
+                        ) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                            <span class="tok-kw">error</span>.DestTooSmall =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.DestTooSmall,
+                            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock,
+                        };
+                        bytes_written += decompressed_size;
+                        sequence_size_limit -= decompressed_size;
+                    }
+                }
+
+                <span class="tok-kw">if</span> (!bit_stream.isEmpty()) {
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                }
+            }
+
+            <span class="tok-kw">if</span> (decode_state.literal_written_count &lt; literals.header.regenerated_size) {
+                <span class="tok-kw">const</span> len = literals.header.regenerated_size - decode_state.literal_written_count;
+                <span class="tok-kw">if</span> (len &gt; dest[written_count + bytes_written ..].len) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.DestTooSmall;
+                decode_state.decodeLiteralsSlice(dest[written_count + bytes_written ..], len) <span class="tok-kw">catch</span>
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                bytes_written += len;
+            }
+
+            <span class="tok-kw">switch</span> (decode_state.literal_header.block_type) {
+                .treeless, .compressed =&gt; {
+                    <span class="tok-kw">if</span> (!decode_state.isLiteralStreamEmpty()) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                },
+                .raw, .rle =&gt; {},
+            }
+
+            consumed_count.* += block_size;
+            <span class="tok-kw">return</span> bytes_written;
+        },
+        .reserved =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ReservedBlock,
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.compress.zstandard.decode.block.decodeBlockRingBuffer" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">decodeBlockRingBuffer</span><a href="#src.zig-std.compress.zstandard.decode.block.decodeBlockRingBuffer">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeBlockRingBuffer</span>( dest: *<a href="std.RingBuffer.html">RingBuffer</a>, src: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, block_header: <a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Header.html">Header</a>, decode_state: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>, consumed_count: *<span class="tok-type">usize</span>, block_size_max: <span class="tok-type">usize</span>, ) <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.Error">Error</a>!<span class="tok-type">usize</span></code></pre></div><div class="tldDocs"><p>Decode a single block from <code>src</code> into <code>dest</code>; see <code>decodeBlock()</code>. Returns
+the size of the decompressed block, which can be used with <code>dest.sliceLast()</code>
+to get the decompressed bytes. <code>error.BlockSizeOverMaximum</code> is returned if
+the block's compressed or decompressed size is larger than <code>block_size_max</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>dest: *<a href="std.RingBuffer.html">RingBuffer</a></code></pre></div><div><pre><code>src: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>block_header: <a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Header.html">Header</a></code></pre></div><div><pre><code>decode_state: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a></code></pre></div><div><pre><code>consumed_count: *<span class="tok-type">usize</span></code></pre></div><div><pre><code>block_size_max: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.zstandard.decode.block.decodeBlockRingBuffer">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeBlockRingBuffer</span>(
+    dest: *<a href="std.RingBuffer.html">RingBuffer</a>,
+    src: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    block_header: <a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Header.html">Header</a>,
+    decode_state: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>,
+    consumed_count: *<span class="tok-type">usize</span>,
+    block_size_max: <span class="tok-type">usize</span>,
+) <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.Error">Error</a>!<span class="tok-type">usize</span> {
+    <span class="tok-kw">const</span> block_size = block_header.block_size;
+    <span class="tok-kw">if</span> (block_size_max &lt; block_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.BlockSizeOverMaximum;
+    <span class="tok-kw">switch</span> (block_header.block_type) {
+        .raw =&gt; {
+            <span class="tok-kw">if</span> (src.len &lt; block_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedBlockSize;<span class="tok-comment">
+            // dest may have length zero if block_size == 0, causing division by zero in
+            // writeSliceAssumeCapacity()
+            </span><span class="tok-kw">if</span> (block_size &gt; <span class="tok-number">0</span>) {
+                <span class="tok-kw">const</span> data = src[<span class="tok-number">0</span>..block_size];
+                dest.writeSliceAssumeCapacity(data);
+                consumed_count.* += block_size;
+                decode_state.written_count += block_size;
+            }
+            <span class="tok-kw">return</span> block_size;
+        },
+        .rle =&gt; {
+            <span class="tok-kw">if</span> (src.len &lt; <span class="tok-number">1</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedRleBlock;
+            <span class="tok-kw">for</span> (<span class="tok-number">0</span>..block_size) |_| {
+                dest.writeAssumeCapacity(src[<span class="tok-number">0</span>]);
+            }
+            consumed_count.* += <span class="tok-number">1</span>;
+            decode_state.written_count += block_size;
+            <span class="tok-kw">return</span> block_size;
+        },
+        .compressed =&gt; {
+            <span class="tok-kw">if</span> (src.len &lt; block_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedBlockSize;
+            <span class="tok-kw">var</span> bytes_read: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">const</span> literals = <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeLiteralsSectionSlice">decodeLiteralsSectionSlice</a>(src[<span class="tok-number">0</span>..block_size], &amp;bytes_read) <span class="tok-kw">catch</span>
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+            <span class="tok-kw">var</span> fbs = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(src[bytes_read..block_size]);
+            <span class="tok-kw">const</span> fbs_reader = fbs.reader();
+            <span class="tok-kw">const</span> sequences_header = <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeSequencesHeader">decodeSequencesHeader</a>(fbs_reader) <span class="tok-kw">catch</span>
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+
+            decode_state.prepare(fbs_reader, literals, sequences_header) <span class="tok-kw">catch</span>
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+
+            bytes_read += fbs.pos;
+
+            <span class="tok-kw">var</span> bytes_written: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            {
+                <span class="tok-kw">const</span> bit_stream_bytes = src[bytes_read..block_size];
+                <span class="tok-kw">var</span> bit_stream: <a href="std.compress.zstandard.readers.html">readers</a>.<a href="std.compress.zstandard.readers.ReverseBitReader.html">ReverseBitReader</a> = <span class="tok-null">undefined</span>;
+                bit_stream.init(bit_stream_bytes) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+
+                <span class="tok-kw">if</span> (sequences_header.sequence_count &gt; <span class="tok-number">0</span>) {
+                    decode_state.readInitialFseState(&amp;bit_stream) <span class="tok-kw">catch</span>
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+
+                    <span class="tok-kw">var</span> sequence_size_limit = block_size_max;
+                    <span class="tok-kw">for</span> (<span class="tok-number">0</span>..sequences_header.sequence_count) |i| {
+                        <span class="tok-kw">const</span> decompressed_size = decode_state.decodeSequenceRingBuffer(
+                            dest,
+                            &amp;bit_stream,
+                            sequence_size_limit,
+                            i == sequences_header.sequence_count - <span class="tok-number">1</span>,
+                        ) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                        bytes_written += decompressed_size;
+                        sequence_size_limit -= decompressed_size;
+                    }
+                }
+
+                <span class="tok-kw">if</span> (!bit_stream.isEmpty()) {
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                }
+            }
+
+            <span class="tok-kw">if</span> (decode_state.literal_written_count &lt; literals.header.regenerated_size) {
+                <span class="tok-kw">const</span> len = literals.header.regenerated_size - decode_state.literal_written_count;
+                decode_state.decodeLiteralsRingBuffer(dest, len) <span class="tok-kw">catch</span>
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                bytes_written += len;
+            }
+
+            <span class="tok-kw">switch</span> (decode_state.literal_header.block_type) {
+                .treeless, .compressed =&gt; {
+                    <span class="tok-kw">if</span> (!decode_state.isLiteralStreamEmpty()) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                },
+                .raw, .rle =&gt; {},
+            }
+
+            consumed_count.* += block_size;
+            <span class="tok-kw">if</span> (bytes_written &gt; block_size_max) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.BlockSizeOverMaximum;
+            <span class="tok-kw">return</span> bytes_written;
+        },
+        .reserved =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ReservedBlock,
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.compress.zstandard.decode.block.decodeBlockReader" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">decodeBlockReader</span><a href="#src.zig-std.compress.zstandard.decode.block.decodeBlockReader">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeBlockReader</span>( dest: *<a href="std.RingBuffer.html">RingBuffer</a>, source: <span class="tok-kw">anytype</span>, block_header: <a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Header.html">Header</a>, decode_state: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>, block_size_max: <span class="tok-type">usize</span>, literals_buffer: []<span class="tok-type">u8</span>, sequence_buffer: []<span class="tok-type">u8</span>, ) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Decode a single block from <code>source</code> into <code>dest</code>. Literal and sequence data
+from the block is copied into <code>literals_buffer</code> and <code>sequence_buffer</code>, which
+must be large enough or <code>error.LiteralsBufferTooSmall</code> and
+<code>error.SequenceBufferTooSmall</code> are returned (the maximum block size is an
+upper bound for the size of both buffers). See <code><a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeBlock">decodeBlock</a></code>
+and <code><a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeBlockRingBuffer">decodeBlockRingBuffer</a></code> for function that can decode a block without
+these extra copies. <code>error.EndOfStream</code> is returned if <code>source</code> does not
+contain enough bytes.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>dest: *<a href="std.RingBuffer.html">RingBuffer</a></code></pre></div><div><pre><code>block_header: <a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Header.html">Header</a></code></pre></div><div><pre><code>decode_state: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a></code></pre></div><div><pre><code>block_size_max: <span class="tok-type">usize</span></code></pre></div><div><pre><code>literals_buffer: []<span class="tok-type">u8</span></code></pre></div><div><pre><code>sequence_buffer: []<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.zstandard.decode.block.decodeBlockReader">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeBlockReader</span>(
+    dest: *<a href="std.RingBuffer.html">RingBuffer</a>,
+    source: <span class="tok-kw">anytype</span>,
+    block_header: <a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Header.html">Header</a>,
+    decode_state: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>,
+    block_size_max: <span class="tok-type">usize</span>,
+    literals_buffer: []<span class="tok-type">u8</span>,
+    sequence_buffer: []<span class="tok-type">u8</span>,
+) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> block_size = block_header.block_size;
+    <span class="tok-kw">var</span> block_reader_limited = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.limited_reader.html#std.io.limited_reader.limitedReader">limitedReader</a>(source, block_size);
+    <span class="tok-kw">const</span> block_reader = block_reader_limited.reader();
+    <span class="tok-kw">if</span> (block_size_max &lt; block_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.BlockSizeOverMaximum;
+    <span class="tok-kw">switch</span> (block_header.block_type) {
+        .raw =&gt; {
+            <span class="tok-kw">if</span> (block_size == <span class="tok-number">0</span>) <span class="tok-kw">return</span>;
+            <span class="tok-kw">const</span> slice = dest.sliceAt(dest.write_index, block_size);
+            <span class="tok-kw">try</span> source.readNoEof(slice.first);
+            <span class="tok-kw">try</span> source.readNoEof(slice.second);
+            dest.write_index = dest.mask2(dest.write_index + block_size);
+            decode_state.written_count += block_size;
+        },
+        .rle =&gt; {
+            <span class="tok-kw">const</span> byte = <span class="tok-kw">try</span> source.readByte();
+            <span class="tok-kw">for</span> (<span class="tok-number">0</span>..block_size) |_| {
+                dest.writeAssumeCapacity(byte);
+            }
+            decode_state.written_count += block_size;
+        },
+        .compressed =&gt; {
+            <span class="tok-kw">const</span> literals = <span class="tok-kw">try</span> <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeLiteralsSection">decodeLiteralsSection</a>(block_reader, literals_buffer);
+            <span class="tok-kw">const</span> sequences_header = <span class="tok-kw">try</span> <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeSequencesHeader">decodeSequencesHeader</a>(block_reader);
+
+            <span class="tok-kw">try</span> decode_state.prepare(block_reader, literals, sequences_header);
+
+            <span class="tok-kw">var</span> bytes_written: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            {
+                <span class="tok-kw">const</span> size = <span class="tok-kw">try</span> block_reader.readAll(sequence_buffer);
+                <span class="tok-kw">var</span> bit_stream: <a href="std.compress.zstandard.readers.html">readers</a>.<a href="std.compress.zstandard.readers.ReverseBitReader.html">ReverseBitReader</a> = <span class="tok-null">undefined</span>;
+                <span class="tok-kw">try</span> bit_stream.init(sequence_buffer[<span class="tok-number">0</span>..size]);
+
+                <span class="tok-kw">if</span> (sequences_header.sequence_count &gt; <span class="tok-number">0</span>) {
+                    <span class="tok-kw">if</span> (sequence_buffer.len &lt; block_reader_limited.bytes_left)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SequenceBufferTooSmall;
+
+                    decode_state.readInitialFseState(&amp;bit_stream) <span class="tok-kw">catch</span>
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+
+                    <span class="tok-kw">var</span> sequence_size_limit = block_size_max;
+                    <span class="tok-kw">for</span> (<span class="tok-number">0</span>..sequences_header.sequence_count) |i| {
+                        <span class="tok-kw">const</span> decompressed_size = decode_state.decodeSequenceRingBuffer(
+                            dest,
+                            &amp;bit_stream,
+                            sequence_size_limit,
+                            i == sequences_header.sequence_count - <span class="tok-number">1</span>,
+                        ) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                        sequence_size_limit -= decompressed_size;
+                        bytes_written += decompressed_size;
+                    }
+                }
+
+                <span class="tok-kw">if</span> (!bit_stream.isEmpty()) {
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                }
+            }
+
+            <span class="tok-kw">if</span> (decode_state.literal_written_count &lt; literals.header.regenerated_size) {
+                <span class="tok-kw">const</span> len = literals.header.regenerated_size - decode_state.literal_written_count;
+                decode_state.decodeLiteralsRingBuffer(dest, len) <span class="tok-kw">catch</span>
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                bytes_written += len;
+            }
+
+            <span class="tok-kw">switch</span> (decode_state.literal_header.block_type) {
+                .treeless, .compressed =&gt; {
+                    <span class="tok-kw">if</span> (!decode_state.isLiteralStreamEmpty()) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                },
+                .raw, .rle =&gt; {},
+            }
+
+            <span class="tok-kw">if</span> (bytes_written &gt; block_size_max) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.BlockSizeOverMaximum;
+            <span class="tok-kw">if</span> (block_reader_limited.bytes_left != <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+            decode_state.literal_written_count = <span class="tok-number">0</span>;
+        },
+        .reserved =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ReservedBlock,
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.compress.zstandard.decode.block.decodeBlockHeader" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">decodeBlockHeader</span><a href="#src.zig-std.compress.zstandard.decode.block.decodeBlockHeader">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeBlockHeader</span>(src: *<span class="tok-kw">const</span> [<span class="tok-number">3</span>]<span class="tok-type">u8</span>) <a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Header.html">Header</a></code></pre></div><div class="tldDocs"><p>Decode the header of a block.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>src: *<span class="tok-kw">const</span> [<span class="tok-number">3</span>]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.zstandard.decode.block.decodeBlockHeader">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeBlockHeader</span>(src: *<span class="tok-kw">const</span> [<span class="tok-number">3</span>]<span class="tok-type">u8</span>) <a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Header.html">Header</a> {
+    <span class="tok-kw">const</span> last_block = src[<span class="tok-number">0</span>] &amp; <span class="tok-number">1</span> == <span class="tok-number">1</span>;
+    <span class="tok-kw">const</span> block_type = <span class="tok-builtin">@as</span>(<a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Type.html">Type</a>, <span class="tok-builtin">@enumFromInt</span>((src[<span class="tok-number">0</span>] &amp; <span class="tok-number">0b110</span>) &gt;&gt; <span class="tok-number">1</span>));
+    <span class="tok-kw">const</span> block_size = ((src[<span class="tok-number">0</span>] &amp; <span class="tok-number">0b11111000</span>) &gt;&gt; <span class="tok-number">3</span>) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u21</span>, src[<span class="tok-number">1</span>]) &lt;&lt; <span class="tok-number">5</span>) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u21</span>, src[<span class="tok-number">2</span>]) &lt;&lt; <span class="tok-number">13</span>);
+    <span class="tok-kw">return</span> .{
+        .last_block = last_block,
+        .block_type = block_type,
+        .block_size = block_size,
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.compress.zstandard.decode.block.decodeBlockHeaderSlice" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">decodeBlockHeaderSlice</span><a href="#src.zig-std.compress.zstandard.decode.block.decodeBlockHeaderSlice">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeBlockHeaderSlice</span>(src: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-kw">error</span>{EndOfStream}!<a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Header.html">Header</a></code></pre></div><div class="tldDocs"><p>Decode the header of a block.</p>
+<p>Errors returned:</p>
+<ul>
+<li><code>error.EndOfStream</code> if <code>src.len &lt; 3</code></li>
+</ul>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>src: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.zstandard.decode.block.decodeBlockHeaderSlice">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeBlockHeaderSlice</span>(src: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-kw">error</span>{EndOfStream}!<a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Header.html">Header</a> {
+    <span class="tok-kw">if</span> (src.len &lt; <span class="tok-number">3</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.EndOfStream;
+    <span class="tok-kw">return</span> <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeBlockHeader">decodeBlockHeader</a>(src[<span class="tok-number">0</span>..<span class="tok-number">3</span>]);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.compress.zstandard.decode.block.decodeLiteralsSectionSlice" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">decodeLiteralsSectionSlice</span><a href="#src.zig-std.compress.zstandard.decode.block.decodeLiteralsSectionSlice">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeLiteralsSectionSlice</span>( src: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, consumed_count: *<span class="tok-type">usize</span>, ) (<span class="tok-kw">error</span>{ MalformedLiteralsHeader, MalformedLiteralsSection, EndOfStream } || <a href="std.compress.zstandard.decode.huffman.html">huffman</a>.<a href="std.compress.zstandard.decode.huffman.html#std.compress.zstandard.decode.huffman.Error">Error</a>)!<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a></code></pre></div><div class="tldDocs"><p>Decode a <code><a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a></code> from <code>src</code>, incrementing <code>consumed_count</code> by the
+number of bytes the section uses.</p>
+<p>Errors returned:</p>
+<ul>
+<li><code>error.MalformedLiteralsHeader</code> if the header is invalid</li>
+<li><code>error.MalformedLiteralsSection</code> if there are decoding errors</li>
+<li><code>error.MalformedAccuracyLog</code> if compressed literals have invalid
+accuracy</li>
+<li><code>error.MalformedFseTable</code> if compressed literals have invalid FSE table</li>
+<li><code>error.MalformedHuffmanTree</code> if there are errors decoding a Huffamn tree</li>
+<li><code>error.EndOfStream</code> if there are not enough bytes in <code>src</code></li>
+</ul>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>src: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>consumed_count: *<span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.zstandard.decode.block.decodeLiteralsSectionSlice">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeLiteralsSectionSlice</span>(
+    src: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    consumed_count: *<span class="tok-type">usize</span>,
+) (<span class="tok-kw">error</span>{ MalformedLiteralsHeader, MalformedLiteralsSection, EndOfStream } || <a href="std.compress.zstandard.decode.huffman.html">huffman</a>.<a href="std.compress.zstandard.decode.huffman.html#std.compress.zstandard.decode.huffman.Error">Error</a>)!<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a> {
+    <span class="tok-kw">var</span> bytes_read: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> header = header: {
+        <span class="tok-kw">var</span> fbs = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(src);
+        <span class="tok-kw">defer</span> bytes_read = fbs.pos;
+        <span class="tok-kw">break</span> :header <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeLiteralsHeader">decodeLiteralsHeader</a>(fbs.reader()) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedLiteralsHeader;
+    };
+    <span class="tok-kw">switch</span> (header.block_type) {
+        .raw =&gt; {
+            <span class="tok-kw">if</span> (src.len &lt; bytes_read + header.regenerated_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedLiteralsSection;
+            <span class="tok-kw">const</span> stream = src[bytes_read..][<span class="tok-number">0</span>..header.regenerated_size];
+            consumed_count.* += header.regenerated_size + bytes_read;
+            <span class="tok-kw">return</span> <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>{
+                .header = header,
+                .huffman_tree = <span class="tok-null">null</span>,
+                .streams = .{ .one = stream },
+            };
+        },
+        .rle =&gt; {
+            <span class="tok-kw">if</span> (src.len &lt; bytes_read + <span class="tok-number">1</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedLiteralsSection;
+            <span class="tok-kw">const</span> stream = src[bytes_read..][<span class="tok-number">0</span>..<span class="tok-number">1</span>];
+            consumed_count.* += <span class="tok-number">1</span> + bytes_read;
+            <span class="tok-kw">return</span> <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>{
+                .header = header,
+                .huffman_tree = <span class="tok-null">null</span>,
+                .streams = .{ .one = stream },
+            };
+        },
+        .compressed, .treeless =&gt; {
+            <span class="tok-kw">const</span> huffman_tree_start = bytes_read;
+            <span class="tok-kw">const</span> huffman_tree = <span class="tok-kw">if</span> (header.block_type == .compressed)
+                <span class="tok-kw">try</span> <a href="std.compress.zstandard.decode.huffman.html">huffman</a>.<a href="std.compress.zstandard.decode.huffman.html#std.compress.zstandard.decode.huffman.decodeHuffmanTreeSlice">decodeHuffmanTreeSlice</a>(src[bytes_read..], &amp;bytes_read)
+            <span class="tok-kw">else</span>
+                <span class="tok-null">null</span>;
+            <span class="tok-kw">const</span> huffman_tree_size = bytes_read - huffman_tree_start;
+            <span class="tok-kw">const</span> total_streams_size = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.sub">sub</a>(<span class="tok-type">usize</span>, header.compressed_size.?, huffman_tree_size) <span class="tok-kw">catch</span>
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedLiteralsSection;
+
+            <span class="tok-kw">if</span> (src.len &lt; bytes_read + total_streams_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedLiteralsSection;
+            <span class="tok-kw">const</span> stream_data = src[bytes_read .. bytes_read + total_streams_size];
+
+            <span class="tok-kw">const</span> streams = <span class="tok-kw">try</span> <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeStreams">decodeStreams</a>(header.size_format, stream_data);
+            consumed_count.* += bytes_read + total_streams_size;
+            <span class="tok-kw">return</span> <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>{
+                .header = header,
+                .huffman_tree = huffman_tree,
+                .streams = streams,
+            };
+        },
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.compress.zstandard.decode.block.decodeLiteralsSection" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">decodeLiteralsSection</span><a href="#src.zig-std.compress.zstandard.decode.block.decodeLiteralsSection">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeLiteralsSection</span>( source: <span class="tok-kw">anytype</span>, buffer: []<span class="tok-type">u8</span>, ) !<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a></code></pre></div><div class="tldDocs"><p>Decode a <code><a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a></code> from <code>src</code>, incrementing <code>consumed_count</code> by the
+number of bytes the section uses. See <code>decodeLiterasSectionSlice()</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>buffer: []<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.zstandard.decode.block.decodeLiteralsSection">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeLiteralsSection</span>(
+    source: <span class="tok-kw">anytype</span>,
+    buffer: []<span class="tok-type">u8</span>,
+) !<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a> {
+    <span class="tok-kw">const</span> header = <span class="tok-kw">try</span> <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeLiteralsHeader">decodeLiteralsHeader</a>(source);
+    <span class="tok-kw">switch</span> (header.block_type) {
+        .raw =&gt; {
+            <span class="tok-kw">if</span> (buffer.len &lt; header.regenerated_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.LiteralsBufferTooSmall;
+            <span class="tok-kw">try</span> source.readNoEof(buffer[<span class="tok-number">0</span>..header.regenerated_size]);
+            <span class="tok-kw">return</span> <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>{
+                .header = header,
+                .huffman_tree = <span class="tok-null">null</span>,
+                .streams = .{ .one = buffer },
+            };
+        },
+        .rle =&gt; {
+            buffer[<span class="tok-number">0</span>] = <span class="tok-kw">try</span> source.readByte();
+            <span class="tok-kw">return</span> <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>{
+                .header = header,
+                .huffman_tree = <span class="tok-null">null</span>,
+                .streams = .{ .one = buffer[<span class="tok-number">0</span>..<span class="tok-number">1</span>] },
+            };
+        },
+        .compressed, .treeless =&gt; {
+            <span class="tok-kw">var</span> counting_reader = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.counting_reader.html#std.io.counting_reader.countingReader">countingReader</a>(source);
+            <span class="tok-kw">const</span> huffman_tree = <span class="tok-kw">if</span> (header.block_type == .compressed)
+                <span class="tok-kw">try</span> <a href="std.compress.zstandard.decode.huffman.html">huffman</a>.<a href="std.compress.zstandard.decode.huffman.html#std.compress.zstandard.decode.huffman.decodeHuffmanTree">decodeHuffmanTree</a>(counting_reader.reader(), buffer)
+            <span class="tok-kw">else</span>
+                <span class="tok-null">null</span>;
+            <span class="tok-kw">const</span> huffman_tree_size = <span class="tok-builtin">@as</span>(<span class="tok-type">usize</span>, <span class="tok-builtin">@intCast</span>(counting_reader.bytes_read));
+            <span class="tok-kw">const</span> total_streams_size = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.sub">sub</a>(<span class="tok-type">usize</span>, header.compressed_size.?, huffman_tree_size) <span class="tok-kw">catch</span>
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedLiteralsSection;
+
+            <span class="tok-kw">if</span> (total_streams_size &gt; buffer.len) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.LiteralsBufferTooSmall;
+            <span class="tok-kw">try</span> source.readNoEof(buffer[<span class="tok-number">0</span>..total_streams_size]);
+            <span class="tok-kw">const</span> stream_data = buffer[<span class="tok-number">0</span>..total_streams_size];
+
+            <span class="tok-kw">const</span> streams = <span class="tok-kw">try</span> <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeStreams">decodeStreams</a>(header.size_format, stream_data);
+            <span class="tok-kw">return</span> <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>{
+                .header = header,
+                .huffman_tree = huffman_tree,
+                .streams = streams,
+            };
+        },
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.compress.zstandard.decode.block.decodeLiteralsHeader" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">decodeLiteralsHeader</span><a href="#src.zig-std.compress.zstandard.decode.block.decodeLiteralsHeader">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeLiteralsHeader</span>(source: <span class="tok-kw">anytype</span>) !<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.Header.html">Header</a></code></pre></div><div class="tldDocs"><p>Decode a literals section header.</p>
+<p>Errors returned:</p>
+<ul>
+<li><code>error.EndOfStream</code> if there are not enough bytes in <code>source</code></li>
+</ul>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.zstandard.decode.block.decodeLiteralsHeader">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeLiteralsHeader</span>(source: <span class="tok-kw">anytype</span>) !<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.Header.html">Header</a> {
+    <span class="tok-kw">const</span> byte0 = <span class="tok-kw">try</span> source.readByte();
+    <span class="tok-kw">const</span> block_type = <span class="tok-builtin">@as</span>(<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.BlockType.html">BlockType</a>, <span class="tok-builtin">@enumFromInt</span>(byte0 &amp; <span class="tok-number">0b11</span>));
+    <span class="tok-kw">const</span> size_format = <span class="tok-builtin">@as</span>(<span class="tok-type">u2</span>, <span class="tok-builtin">@intCast</span>((byte0 &amp; <span class="tok-number">0b1100</span>) &gt;&gt; <span class="tok-number">2</span>));
+    <span class="tok-kw">var</span> regenerated_size: <span class="tok-type">u20</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">var</span> compressed_size: ?<span class="tok-type">u18</span> = <span class="tok-null">null</span>;
+    <span class="tok-kw">switch</span> (block_type) {
+        .raw, .rle =&gt; {
+            <span class="tok-kw">switch</span> (size_format) {
+                <span class="tok-number">0</span>, <span class="tok-number">2</span> =&gt; {
+                    regenerated_size = byte0 &gt;&gt; <span class="tok-number">3</span>;
+                },
+                <span class="tok-number">1</span> =&gt; regenerated_size = (byte0 &gt;&gt; <span class="tok-number">4</span>) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u20</span>, <span class="tok-kw">try</span> source.readByte()) &lt;&lt; <span class="tok-number">4</span>),
+                <span class="tok-number">3</span> =&gt; regenerated_size = (byte0 &gt;&gt; <span class="tok-number">4</span>) +
+                    (<span class="tok-builtin">@as</span>(<span class="tok-type">u20</span>, <span class="tok-kw">try</span> source.readByte()) &lt;&lt; <span class="tok-number">4</span>) +
+                    (<span class="tok-builtin">@as</span>(<span class="tok-type">u20</span>, <span class="tok-kw">try</span> source.readByte()) &lt;&lt; <span class="tok-number">12</span>),
+            }
+        },
+        .compressed, .treeless =&gt; {
+            <span class="tok-kw">const</span> byte1 = <span class="tok-kw">try</span> source.readByte();
+            <span class="tok-kw">const</span> byte2 = <span class="tok-kw">try</span> source.readByte();
+            <span class="tok-kw">switch</span> (size_format) {
+                <span class="tok-number">0</span>, <span class="tok-number">1</span> =&gt; {
+                    regenerated_size = (byte0 &gt;&gt; <span class="tok-number">4</span>) + ((<span class="tok-builtin">@as</span>(<span class="tok-type">u20</span>, byte1) &amp; <span class="tok-number">0b00111111</span>) &lt;&lt; <span class="tok-number">4</span>);
+                    compressed_size = ((byte1 &amp; <span class="tok-number">0b11000000</span>) &gt;&gt; <span class="tok-number">6</span>) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u18</span>, byte2) &lt;&lt; <span class="tok-number">2</span>);
+                },
+                <span class="tok-number">2</span> =&gt; {
+                    <span class="tok-kw">const</span> byte3 = <span class="tok-kw">try</span> source.readByte();
+                    regenerated_size = (byte0 &gt;&gt; <span class="tok-number">4</span>) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u20</span>, byte1) &lt;&lt; <span class="tok-number">4</span>) + ((<span class="tok-builtin">@as</span>(<span class="tok-type">u20</span>, byte2) &amp; <span class="tok-number">0b00000011</span>) &lt;&lt; <span class="tok-number">12</span>);
+                    compressed_size = ((byte2 &amp; <span class="tok-number">0b11111100</span>) &gt;&gt; <span class="tok-number">2</span>) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u18</span>, byte3) &lt;&lt; <span class="tok-number">6</span>);
+                },
+                <span class="tok-number">3</span> =&gt; {
+                    <span class="tok-kw">const</span> byte3 = <span class="tok-kw">try</span> source.readByte();
+                    <span class="tok-kw">const</span> byte4 = <span class="tok-kw">try</span> source.readByte();
+                    regenerated_size = (byte0 &gt;&gt; <span class="tok-number">4</span>) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u20</span>, byte1) &lt;&lt; <span class="tok-number">4</span>) + ((<span class="tok-builtin">@as</span>(<span class="tok-type">u20</span>, byte2) &amp; <span class="tok-number">0b00111111</span>) &lt;&lt; <span class="tok-number">12</span>);
+                    compressed_size = ((byte2 &amp; <span class="tok-number">0b11000000</span>) &gt;&gt; <span class="tok-number">6</span>) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u18</span>, byte3) &lt;&lt; <span class="tok-number">2</span>) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u18</span>, byte4) &lt;&lt; <span class="tok-number">10</span>);
+                },
+            }
+        },
+    }
+    <span class="tok-kw">return</span> <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.Header.html">Header</a>{
+        .block_type = block_type,
+        .size_format = size_format,
+        .regenerated_size = regenerated_size,
+        .compressed_size = compressed_size,
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.compress.zstandard.decode.block.decodeSequencesHeader" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">decodeSequencesHeader</span><a href="#src.zig-std.compress.zstandard.decode.block.decodeSequencesHeader">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeSequencesHeader</span>( source: <span class="tok-kw">anytype</span>, ) !<a href="std.compress.zstandard.types.compressed_block.SequencesSection.html">SequencesSection</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.html">Header</a></code></pre></div><div class="tldDocs"><p>Decode a sequences section header.</p>
+<p>Errors returned:</p>
+<ul>
+<li><code>error.ReservedBitSet</code> if the reserved bit is set</li>
+<li><code>error.EndOfStream</code> if there are not enough bytes in <code>source</code></li>
+</ul>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.zstandard.decode.block.decodeSequencesHeader">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeSequencesHeader</span>(
+    source: <span class="tok-kw">anytype</span>,
+) !<a href="std.compress.zstandard.types.compressed_block.SequencesSection.html">SequencesSection</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.html">Header</a> {
+    <span class="tok-kw">var</span> sequence_count: <span class="tok-type">u24</span> = <span class="tok-null">undefined</span>;
+
+    <span class="tok-kw">const</span> byte0 = <span class="tok-kw">try</span> source.readByte();
+    <span class="tok-kw">if</span> (byte0 == <span class="tok-number">0</span>) {
+        <span class="tok-kw">return</span> <a href="std.compress.zstandard.types.compressed_block.SequencesSection.html">SequencesSection</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.html">Header</a>{
+            .sequence_count = <span class="tok-number">0</span>,
+            .offsets = <span class="tok-null">undefined</span>,
+            .match_lengths = <span class="tok-null">undefined</span>,
+            .literal_lengths = <span class="tok-null">undefined</span>,
+        };
+    } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (byte0 &lt; <span class="tok-number">128</span>) {
+        sequence_count = byte0;
+    } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (byte0 &lt; <span class="tok-number">255</span>) {
+        sequence_count = (<span class="tok-builtin">@as</span>(<span class="tok-type">u24</span>, (byte0 - <span class="tok-number">128</span>)) &lt;&lt; <span class="tok-number">8</span>) + <span class="tok-kw">try</span> source.readByte();
+    } <span class="tok-kw">else</span> {
+        sequence_count = (<span class="tok-kw">try</span> source.readByte()) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u24</span>, <span class="tok-kw">try</span> source.readByte()) &lt;&lt; <span class="tok-number">8</span>) + <span class="tok-number">0x7F00</span>;
+    }
+
+    <span class="tok-kw">const</span> compression_modes = <span class="tok-kw">try</span> source.readByte();
+
+    <span class="tok-kw">const</span> matches_mode = <span class="tok-builtin">@as</span>(<a href="std.compress.zstandard.types.compressed_block.SequencesSection.html">SequencesSection</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.html">Header</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.Mode.html">Mode</a>, <span class="tok-builtin">@enumFromInt</span>((compression_modes &amp; <span class="tok-number">0b00001100</span>) &gt;&gt; <span class="tok-number">2</span>));
+    <span class="tok-kw">const</span> offsets_mode = <span class="tok-builtin">@as</span>(<a href="std.compress.zstandard.types.compressed_block.SequencesSection.html">SequencesSection</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.html">Header</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.Mode.html">Mode</a>, <span class="tok-builtin">@enumFromInt</span>((compression_modes &amp; <span class="tok-number">0b00110000</span>) &gt;&gt; <span class="tok-number">4</span>));
+    <span class="tok-kw">const</span> literal_mode = <span class="tok-builtin">@as</span>(<a href="std.compress.zstandard.types.compressed_block.SequencesSection.html">SequencesSection</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.html">Header</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.Mode.html">Mode</a>, <span class="tok-builtin">@enumFromInt</span>((compression_modes &amp; <span class="tok-number">0b11000000</span>) &gt;&gt; <span class="tok-number">6</span>));
+    <span class="tok-kw">if</span> (compression_modes &amp; <span class="tok-number">0b11</span> != <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ReservedBitSet;
+
+    <span class="tok-kw">return</span> <a href="std.compress.zstandard.types.compressed_block.SequencesSection.html">SequencesSection</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.html">Header</a>{
+        .sequence_count = sequence_count,
+        .offsets = offsets_mode,
+        .match_lengths = matches_mode,
+        .literal_lengths = literal_mode,
+    };
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.compress.zstandard.decode.block">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>);
+<span class="tok-kw">const</span> assert = <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>;
+<span class="tok-kw">const</span> RingBuffer = <a href="std.html">std</a>.<a href="std.RingBuffer.html">RingBuffer</a>;
+
+<span class="tok-kw">const</span> types = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;../types.zig&quot;</span>);
+<span class="tok-kw">const</span> frame = <a href="std.compress.zstandard.types.html">types</a>.<a href="std.compress.zstandard.types.frame.html">frame</a>;
+<span class="tok-kw">const</span> Table = <a href="std.compress.zstandard.types.html">types</a>.<a href="std.compress.zstandard.types.compressed_block.html">compressed_block</a>.<a href="std.compress.zstandard.types.compressed_block.Table.html">Table</a>;
+<span class="tok-kw">const</span> LiteralsSection = <a href="std.compress.zstandard.types.html">types</a>.<a href="std.compress.zstandard.types.compressed_block.html">compressed_block</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>;
+<span class="tok-kw">const</span> SequencesSection = <a href="std.compress.zstandard.types.html">types</a>.<a href="std.compress.zstandard.types.compressed_block.html">compressed_block</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.html">SequencesSection</a>;
+
+<span class="tok-kw">const</span> huffman = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;huffman.zig&quot;</span>);
+<span class="tok-kw">const</span> readers = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;../readers.zig&quot;</span>);
+
+<span class="tok-kw">const</span> decodeFseTable = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;fse.zig&quot;</span>).decodeFseTable;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = <span class="tok-kw">error</span>{
+    BlockSizeOverMaximum,
+    MalformedBlockSize,
+    ReservedBlock,
+    MalformedRleBlock,
+    MalformedCompressedBlock,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> DecodeState = <span class="tok-kw">struct</span> {
+    repeat_offsets: [<span class="tok-number">3</span>]<span class="tok-type">u32</span>,
+
+    offset: <a href="std.compress.zstandard.decode.block.DecodeState.html#std.compress.zstandard.decode.block.DecodeState.StateData">StateData</a>(<span class="tok-number">8</span>),
+    match: <a href="std.compress.zstandard.decode.block.DecodeState.html#std.compress.zstandard.decode.block.DecodeState.StateData">StateData</a>(<span class="tok-number">9</span>),
+    literal: <a href="std.compress.zstandard.decode.block.DecodeState.html#std.compress.zstandard.decode.block.DecodeState.StateData">StateData</a>(<span class="tok-number">9</span>),
+
+    offset_fse_buffer: []<a href="std.compress.zstandard.types.compressed_block.Table.html">Table</a>.<a href="std.compress.zstandard.types.compressed_block.Table.Fse.html">Fse</a>,
+    match_fse_buffer: []<a href="std.compress.zstandard.types.compressed_block.Table.html">Table</a>.<a href="std.compress.zstandard.types.compressed_block.Table.Fse.html">Fse</a>,
+    literal_fse_buffer: []<a href="std.compress.zstandard.types.compressed_block.Table.html">Table</a>.<a href="std.compress.zstandard.types.compressed_block.Table.Fse.html">Fse</a>,
+
+    fse_tables_undefined: <span class="tok-type">bool</span>,
+
+    literal_stream_reader: <a href="std.compress.zstandard.readers.html">readers</a>.<a href="std.compress.zstandard.readers.ReverseBitReader.html">ReverseBitReader</a>,
+    literal_stream_index: <span class="tok-type">usize</span>,
+    literal_streams: <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.Streams.html">Streams</a>,
+    literal_header: <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.Header.html">Header</a>,
+    huffman_tree: ?<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.HuffmanTree.html">HuffmanTree</a>,
+
+    literal_written_count: <span class="tok-type">usize</span>,
+    written_count: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">StateData</span>(<span class="tok-kw">comptime</span> max_accuracy_log: <span class="tok-type">comptime_int</span>) <span class="tok-type">type</span> {
+        <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+            state: <a href="std.compress.zstandard.decode.block.DecodeState.html#std.compress.zstandard.decode.block.DecodeState.StateData.State">State</a>,
+            table: <a href="std.compress.zstandard.types.compressed_block.Table.html">Table</a>,
+            accuracy_log: <span class="tok-type">u8</span>,
+
+            <span class="tok-kw">const</span> State = <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.Int">Int</a>(.unsigned, max_accuracy_log);
+        };
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(
+        literal_fse_buffer: []<a href="std.compress.zstandard.types.compressed_block.Table.html">Table</a>.<a href="std.compress.zstandard.types.compressed_block.Table.Fse.html">Fse</a>,
+        match_fse_buffer: []<a href="std.compress.zstandard.types.compressed_block.Table.html">Table</a>.<a href="std.compress.zstandard.types.compressed_block.Table.Fse.html">Fse</a>,
+        offset_fse_buffer: []<a href="std.compress.zstandard.types.compressed_block.Table.html">Table</a>.<a href="std.compress.zstandard.types.compressed_block.Table.Fse.html">Fse</a>,
+    ) <a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a> {
+        <span class="tok-kw">return</span> <a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>{
+            .repeat_offsets = .{
+                <a href="std.compress.zstandard.types.html">types</a>.<a href="std.compress.zstandard.types.compressed_block.html">compressed_block</a>.<a href="std.compress.zstandard.types.compressed_block.html#std.compress.zstandard.types.compressed_block.start_repeated_offset_1">start_repeated_offset_1</a>,
+                <a href="std.compress.zstandard.types.html">types</a>.<a href="std.compress.zstandard.types.compressed_block.html">compressed_block</a>.<a href="std.compress.zstandard.types.compressed_block.html#std.compress.zstandard.types.compressed_block.start_repeated_offset_2">start_repeated_offset_2</a>,
+                <a href="std.compress.zstandard.types.html">types</a>.<a href="std.compress.zstandard.types.compressed_block.html">compressed_block</a>.<a href="std.compress.zstandard.types.compressed_block.html#std.compress.zstandard.types.compressed_block.start_repeated_offset_3">start_repeated_offset_3</a>,
+            },
+
+            .offset = <span class="tok-null">undefined</span>,
+            .match = <span class="tok-null">undefined</span>,
+            .literal = <span class="tok-null">undefined</span>,
+
+            .literal_fse_buffer = literal_fse_buffer,
+            .match_fse_buffer = match_fse_buffer,
+            .offset_fse_buffer = offset_fse_buffer,
+
+            .fse_tables_undefined = <span class="tok-null">true</span>,
+
+            .literal_written_count = <span class="tok-number">0</span>,
+            .literal_header = <span class="tok-null">undefined</span>,
+            .literal_streams = <span class="tok-null">undefined</span>,
+            .literal_stream_reader = <span class="tok-null">undefined</span>,
+            .literal_stream_index = <span class="tok-null">undefined</span>,
+            .huffman_tree = <span class="tok-null">null</span>,
+
+            .written_count = <span class="tok-number">0</span>,
+        };
+    }
+
+    <span class="tok-comment">/// Prepare the decoder to decode a compressed block. Loads the literals</span>
+    <span class="tok-comment">/// stream and Huffman tree from `literals` and reads the FSE tables from</span>
+    <span class="tok-comment">/// `source`.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// Errors returned:</span>
+    <span class="tok-comment">///   - `error.BitStreamHasNoStartBit` if the (reversed) literal bitstream's</span>
+    <span class="tok-comment">///     first byte does not have any bits set</span>
+    <span class="tok-comment">///   - `error.TreelessLiteralsFirst` `literals` is a treeless literals</span>
+    <span class="tok-comment">///     section and the decode state does not have a Huffman tree from a</span>
+    <span class="tok-comment">///     previous block</span>
+    <span class="tok-comment">///   - `error.RepeatModeFirst` on the first call if one of the sequence FSE</span>
+    <span class="tok-comment">///     tables is set to repeat mode</span>
+    <span class="tok-comment">///   - `error.MalformedAccuracyLog` if an FSE table has an invalid accuracy</span>
+    <span class="tok-comment">///   - `error.MalformedFseTable` if there are errors decoding an FSE table</span>
+    <span class="tok-comment">///   - `error.EndOfStream` if `source` ends before all FSE tables are read</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">prepare</span>(
+        self: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>,
+        source: <span class="tok-kw">anytype</span>,
+        literals: <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>,
+        sequences_header: <a href="std.compress.zstandard.types.compressed_block.SequencesSection.html">SequencesSection</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.html">Header</a>,
+    ) !<span class="tok-type">void</span> {
+        self.literal_written_count = <span class="tok-number">0</span>;
+        self.literal_header = literals.header;
+        self.literal_streams = literals.streams;
+
+        <span class="tok-kw">if</span> (literals.huffman_tree) |tree| {
+            self.huffman_tree = tree;
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (literals.header.block_type == .treeless <span class="tok-kw">and</span> self.huffman_tree == <span class="tok-null">null</span>) {
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TreelessLiteralsFirst;
+        }
+
+        <span class="tok-kw">switch</span> (literals.header.block_type) {
+            .raw, .rle =&gt; {},
+            .compressed, .treeless =&gt; {
+                self.literal_stream_index = <span class="tok-number">0</span>;
+                <span class="tok-kw">switch</span> (literals.streams) {
+                    .one =&gt; |slice| <span class="tok-kw">try</span> self.initLiteralStream(slice),
+                    .four =&gt; |streams| <span class="tok-kw">try</span> self.initLiteralStream(streams[<span class="tok-number">0</span>]),
+                }
+            },
+        }
+
+        <span class="tok-kw">if</span> (sequences_header.sequence_count &gt; <span class="tok-number">0</span>) {
+            <span class="tok-kw">try</span> self.updateFseTable(source, .literal, sequences_header.literal_lengths);
+            <span class="tok-kw">try</span> self.updateFseTable(source, .offset, sequences_header.offsets);
+            <span class="tok-kw">try</span> self.updateFseTable(source, .match, sequences_header.match_lengths);
+            self.fse_tables_undefined = <span class="tok-null">false</span>;
+        }
+    }
+
+    <span class="tok-comment">/// Read initial FSE states for sequence decoding.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// Errors returned:</span>
+    <span class="tok-comment">///   - `error.EndOfStream` if `bit_reader` does not contain enough bits.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">readInitialFseState</span>(self: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>, bit_reader: *<a href="std.compress.zstandard.readers.html">readers</a>.<a href="std.compress.zstandard.readers.ReverseBitReader.html">ReverseBitReader</a>) <span class="tok-kw">error</span>{EndOfStream}!<span class="tok-type">void</span> {
+        self.literal.state = <span class="tok-kw">try</span> bit_reader.readBitsNoEof(<span class="tok-type">u9</span>, self.literal.accuracy_log);
+        self.offset.state = <span class="tok-kw">try</span> bit_reader.readBitsNoEof(<span class="tok-type">u8</span>, self.offset.accuracy_log);
+        self.match.state = <span class="tok-kw">try</span> bit_reader.readBitsNoEof(<span class="tok-type">u9</span>, self.match.accuracy_log);
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">updateRepeatOffset</span>(self: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>, offset: <span class="tok-type">u32</span>) <span class="tok-type">void</span> {
+        self.repeat_offsets[<span class="tok-number">2</span>] = self.repeat_offsets[<span class="tok-number">1</span>];
+        self.repeat_offsets[<span class="tok-number">1</span>] = self.repeat_offsets[<span class="tok-number">0</span>];
+        self.repeat_offsets[<span class="tok-number">0</span>] = offset;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">useRepeatOffset</span>(self: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>, index: <span class="tok-type">usize</span>) <span class="tok-type">u32</span> {
+        <span class="tok-kw">if</span> (index == <span class="tok-number">1</span>)
+            <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.swap">swap</a>(<span class="tok-type">u32</span>, &amp;self.repeat_offsets[<span class="tok-number">0</span>], &amp;self.repeat_offsets[<span class="tok-number">1</span>])
+        <span class="tok-kw">else</span> <span class="tok-kw">if</span> (index == <span class="tok-number">2</span>) {
+            <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.swap">swap</a>(<span class="tok-type">u32</span>, &amp;self.repeat_offsets[<span class="tok-number">0</span>], &amp;self.repeat_offsets[<span class="tok-number">2</span>]);
+            <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.swap">swap</a>(<span class="tok-type">u32</span>, &amp;self.repeat_offsets[<span class="tok-number">1</span>], &amp;self.repeat_offsets[<span class="tok-number">2</span>]);
+        }
+        <span class="tok-kw">return</span> self.repeat_offsets[<span class="tok-number">0</span>];
+    }
+
+    <span class="tok-kw">const</span> DataType = <span class="tok-kw">enum</span> { offset, match, literal };
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">updateState</span>(
+        self: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>,
+        <span class="tok-kw">comptime</span> choice: <a href="std.compress.zstandard.decode.block.DecodeState.DataType.html">DataType</a>,
+        bit_reader: *<a href="std.compress.zstandard.readers.html">readers</a>.<a href="std.compress.zstandard.readers.ReverseBitReader.html">ReverseBitReader</a>,
+    ) <span class="tok-kw">error</span>{ MalformedFseBits, EndOfStream }!<span class="tok-type">void</span> {
+        <span class="tok-kw">switch</span> (<span class="tok-builtin">@field</span>(self, <span class="tok-builtin">@tagName</span>(choice)).table) {
+            .rle =&gt; {},
+            .fse =&gt; |table| {
+                <span class="tok-kw">const</span> data = table[<span class="tok-builtin">@field</span>(self, <span class="tok-builtin">@tagName</span>(choice)).state];
+                <span class="tok-kw">const</span> T = <span class="tok-builtin">@TypeOf</span>(<span class="tok-builtin">@field</span>(self, <span class="tok-builtin">@tagName</span>(choice))).State;
+                <span class="tok-kw">const</span> bits_summand = <span class="tok-kw">try</span> bit_reader.readBitsNoEof(T, data.bits);
+                <span class="tok-kw">const</span> next_state = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.cast">cast</a>(
+                    <span class="tok-builtin">@TypeOf</span>(<span class="tok-builtin">@field</span>(self, <span class="tok-builtin">@tagName</span>(choice))).State,
+                    data.baseline + bits_summand,
+                ) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedFseBits;
+                <span class="tok-builtin">@field</span>(self, <span class="tok-builtin">@tagName</span>(choice)).state = next_state;
+            },
+        }
+    }
+
+    <span class="tok-kw">const</span> FseTableError = <span class="tok-kw">error</span>{
+        MalformedFseTable,
+        MalformedAccuracyLog,
+        RepeatModeFirst,
+        EndOfStream,
+    };
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">updateFseTable</span>(
+        self: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>,
+        source: <span class="tok-kw">anytype</span>,
+        <span class="tok-kw">comptime</span> choice: <a href="std.compress.zstandard.decode.block.DecodeState.DataType.html">DataType</a>,
+        mode: <a href="std.compress.zstandard.types.compressed_block.SequencesSection.html">SequencesSection</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.html">Header</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.Mode.html">Mode</a>,
+    ) !<span class="tok-type">void</span> {
+        <span class="tok-kw">const</span> field_name = <span class="tok-builtin">@tagName</span>(choice);
+        <span class="tok-kw">switch</span> (mode) {
+            .predefined =&gt; {
+                <span class="tok-builtin">@field</span>(self, field_name).accuracy_log =
+                    <span class="tok-builtin">@field</span>(<a href="std.compress.zstandard.types.html">types</a>.<a href="std.compress.zstandard.types.compressed_block.html">compressed_block</a>.<a href="std.compress.zstandard.types.compressed_block.default_accuracy_log.html">default_accuracy_log</a>, field_name);
+
+                <span class="tok-builtin">@field</span>(self, field_name).table =
+                    <span class="tok-builtin">@field</span>(<a href="std.compress.zstandard.types.html">types</a>.<a href="std.compress.zstandard.types.compressed_block.html">compressed_block</a>, <span class="tok-str">&quot;predefined_&quot;</span> ++ field_name ++ <span class="tok-str">&quot;_fse_table&quot;</span>);
+            },
+            .rle =&gt; {
+                <span class="tok-builtin">@field</span>(self, field_name).accuracy_log = <span class="tok-number">0</span>;
+                <span class="tok-builtin">@field</span>(self, field_name).table = .{ .rle = <span class="tok-kw">try</span> source.readByte() };
+            },
+            .fse =&gt; {
+                <span class="tok-kw">var</span> bit_reader = <a href="std.compress.zstandard.readers.html">readers</a>.<a href="std.compress.zstandard.readers.html#std.compress.zstandard.readers.bitReader">bitReader</a>(source);
+
+                <span class="tok-kw">const</span> table_size = <span class="tok-kw">try</span> <a href="std.compress.zstandard.decode.fse.html#std.compress.zstandard.decode.fse.decodeFseTable">decodeFseTable</a>(
+                    &amp;bit_reader,
+                    <span class="tok-builtin">@field</span>(<a href="std.compress.zstandard.types.html">types</a>.<a href="std.compress.zstandard.types.compressed_block.html">compressed_block</a>.<a href="std.compress.zstandard.types.compressed_block.table_symbol_count_max.html">table_symbol_count_max</a>, field_name),
+                    <span class="tok-builtin">@field</span>(<a href="std.compress.zstandard.types.html">types</a>.<a href="std.compress.zstandard.types.compressed_block.html">compressed_block</a>.<a href="std.compress.zstandard.types.compressed_block.table_accuracy_log_max.html">table_accuracy_log_max</a>, field_name),
+                    <span class="tok-builtin">@field</span>(self, field_name ++ <span class="tok-str">&quot;_fse_buffer&quot;</span>),
+                );
+                <span class="tok-builtin">@field</span>(self, field_name).table = .{
+                    .fse = <span class="tok-builtin">@field</span>(self, field_name ++ <span class="tok-str">&quot;_fse_buffer&quot;</span>)[<span class="tok-number">0</span>..table_size],
+                };
+                <span class="tok-builtin">@field</span>(self, field_name).accuracy_log = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.log2_int_ceil">log2_int_ceil</a>(<span class="tok-type">usize</span>, table_size);
+            },
+            .repeat =&gt; <span class="tok-kw">if</span> (self.fse_tables_undefined) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.RepeatModeFirst,
+        }
+    }
+
+    <span class="tok-kw">const</span> Sequence = <span class="tok-kw">struct</span> {
+        literal_length: <span class="tok-type">u32</span>,
+        match_length: <span class="tok-type">u32</span>,
+        offset: <span class="tok-type">u32</span>,
+    };
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">nextSequence</span>(
+        self: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>,
+        bit_reader: *<a href="std.compress.zstandard.readers.html">readers</a>.<a href="std.compress.zstandard.readers.ReverseBitReader.html">ReverseBitReader</a>,
+    ) <span class="tok-kw">error</span>{ InvalidBitStream, EndOfStream }!<a href="std.compress.zstandard.decode.block.DecodeState.Sequence.html">Sequence</a> {
+        <span class="tok-kw">const</span> raw_code = self.getCode(.offset);
+        <span class="tok-kw">const</span> offset_code = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.cast">cast</a>(<span class="tok-type">u5</span>, raw_code) <span class="tok-kw">orelse</span> {
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidBitStream;
+        };
+        <span class="tok-kw">const</span> offset_value = (<span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-number">1</span>) &lt;&lt; offset_code) + <span class="tok-kw">try</span> bit_reader.readBitsNoEof(<span class="tok-type">u32</span>, offset_code);
+
+        <span class="tok-kw">const</span> match_code = self.getCode(.match);
+        <span class="tok-kw">if</span> (match_code &gt;= <a href="std.compress.zstandard.types.html">types</a>.<a href="std.compress.zstandard.types.compressed_block.html">compressed_block</a>.<a href="std.compress.zstandard.types.compressed_block.html#std.compress.zstandard.types.compressed_block.match_length_code_table">match_length_code_table</a>.<a href="#">len</a>)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidBitStream;
+        <span class="tok-kw">const</span> match = <a href="std.compress.zstandard.types.html">types</a>.<a href="std.compress.zstandard.types.compressed_block.html">compressed_block</a>.<a href="std.compress.zstandard.types.compressed_block.html#std.compress.zstandard.types.compressed_block.match_length_code_table">match_length_code_table</a>[match_code];
+        <span class="tok-kw">const</span> match_length = match[<span class="tok-number">0</span>] + <span class="tok-kw">try</span> bit_reader.readBitsNoEof(<span class="tok-type">u32</span>, match[<span class="tok-number">1</span>]);
+
+        <span class="tok-kw">const</span> literal_code = self.getCode(.literal);
+        <span class="tok-kw">if</span> (literal_code &gt;= <a href="std.compress.zstandard.types.html">types</a>.<a href="std.compress.zstandard.types.compressed_block.html">compressed_block</a>.<a href="std.compress.zstandard.types.compressed_block.html#std.compress.zstandard.types.compressed_block.literals_length_code_table">literals_length_code_table</a>.<a href="#">len</a>)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidBitStream;
+        <span class="tok-kw">const</span> literal = <a href="std.compress.zstandard.types.html">types</a>.<a href="std.compress.zstandard.types.compressed_block.html">compressed_block</a>.<a href="std.compress.zstandard.types.compressed_block.html#std.compress.zstandard.types.compressed_block.literals_length_code_table">literals_length_code_table</a>[literal_code];
+        <span class="tok-kw">const</span> literal_length = literal[<span class="tok-number">0</span>] + <span class="tok-kw">try</span> bit_reader.readBitsNoEof(<span class="tok-type">u32</span>, literal[<span class="tok-number">1</span>]);
+
+        <span class="tok-kw">const</span> offset = <span class="tok-kw">if</span> (offset_value &gt; <span class="tok-number">3</span>) offset: {
+            <span class="tok-kw">const</span> offset = offset_value - <span class="tok-number">3</span>;
+            self.updateRepeatOffset(offset);
+            <span class="tok-kw">break</span> :offset offset;
+        } <span class="tok-kw">else</span> offset: {
+            <span class="tok-kw">if</span> (literal_length == <span class="tok-number">0</span>) {
+                <span class="tok-kw">if</span> (offset_value == <span class="tok-number">3</span>) {
+                    <span class="tok-kw">const</span> offset = self.repeat_offsets[<span class="tok-number">0</span>] - <span class="tok-number">1</span>;
+                    self.updateRepeatOffset(offset);
+                    <span class="tok-kw">break</span> :offset offset;
+                }
+                <span class="tok-kw">break</span> :offset self.useRepeatOffset(offset_value);
+            }
+            <span class="tok-kw">break</span> :offset self.useRepeatOffset(offset_value - <span class="tok-number">1</span>);
+        };
+
+        <span class="tok-kw">if</span> (offset == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidBitStream;
+
+        <span class="tok-kw">return</span> .{
+            .literal_length = literal_length,
+            .match_length = match_length,
+            .offset = offset,
+        };
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">executeSequenceSlice</span>(
+        self: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>,
+        dest: []<span class="tok-type">u8</span>,
+        write_pos: <span class="tok-type">usize</span>,
+        sequence: <a href="std.compress.zstandard.decode.block.DecodeState.Sequence.html">Sequence</a>,
+    ) (<span class="tok-kw">error</span>{MalformedSequence} || <a href="std.compress.zstandard.decode.block.DecodeState.html#std.compress.zstandard.decode.block.DecodeState.DecodeLiteralsError">DecodeLiteralsError</a>)!<span class="tok-type">void</span> {
+        <span class="tok-kw">if</span> (sequence.offset &gt; write_pos + sequence.literal_length) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedSequence;
+
+        <span class="tok-kw">try</span> self.decodeLiteralsSlice(dest[write_pos..], sequence.literal_length);
+        <span class="tok-kw">const</span> copy_start = write_pos + sequence.literal_length - sequence.offset;
+        <span class="tok-kw">for</span> (
+            dest[write_pos + sequence.literal_length ..][<span class="tok-number">0</span>..sequence.match_length],
+            dest[copy_start..][<span class="tok-number">0</span>..sequence.match_length],
+        ) |*d, s| d.* = s;
+        self.written_count += sequence.match_length;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">executeSequenceRingBuffer</span>(
+        self: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>,
+        dest: *<a href="std.RingBuffer.html">RingBuffer</a>,
+        sequence: <a href="std.compress.zstandard.decode.block.DecodeState.Sequence.html">Sequence</a>,
+    ) (<span class="tok-kw">error</span>{MalformedSequence} || <a href="std.compress.zstandard.decode.block.DecodeState.html#std.compress.zstandard.decode.block.DecodeState.DecodeLiteralsError">DecodeLiteralsError</a>)!<span class="tok-type">void</span> {
+        <span class="tok-kw">if</span> (sequence.offset &gt; <span class="tok-builtin">@min</span>(dest.data.len, self.written_count + sequence.literal_length))
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedSequence;
+
+        <span class="tok-kw">try</span> self.decodeLiteralsRingBuffer(dest, sequence.literal_length);
+        <span class="tok-kw">const</span> copy_start = dest.write_index + dest.data.len - sequence.offset;
+        <span class="tok-kw">const</span> copy_slice = dest.sliceAt(copy_start, sequence.match_length);
+        dest.writeSliceForwardsAssumeCapacity(copy_slice.first);
+        dest.writeSliceForwardsAssumeCapacity(copy_slice.second);
+        self.written_count += sequence.match_length;
+    }
+
+    <span class="tok-kw">const</span> DecodeSequenceError = <span class="tok-kw">error</span>{
+        InvalidBitStream,
+        EndOfStream,
+        MalformedSequence,
+        MalformedFseBits,
+    } || <a href="std.compress.zstandard.decode.block.DecodeState.html#std.compress.zstandard.decode.block.DecodeState.DecodeLiteralsError">DecodeLiteralsError</a>;
+
+    <span class="tok-comment">/// Decode one sequence from `bit_reader` into `dest`, written starting at</span>
+    <span class="tok-comment">/// `write_pos` and update FSE states if `last_sequence` is `false`.</span>
+    <span class="tok-comment">/// `prepare()` must be called for the block before attempting to decode</span>
+    <span class="tok-comment">/// sequences.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// Errors returned:</span>
+    <span class="tok-comment">///   - `error.MalformedSequence` if the decompressed sequence would be</span>
+    <span class="tok-comment">///     longer than `sequence_size_limit` or the sequence's offset is too</span>
+    <span class="tok-comment">///     large</span>
+    <span class="tok-comment">///   - `error.UnexpectedEndOfLiteralStream` if the decoder state's literal</span>
+    <span class="tok-comment">///     streams do not contain enough literals for the sequence (this may</span>
+    <span class="tok-comment">///     mean the literal stream or the sequence is malformed).</span>
+    <span class="tok-comment">///   - `error.InvalidBitStream` if the FSE sequence bitstream is malformed</span>
+    <span class="tok-comment">///   - `error.EndOfStream` if `bit_reader` does not contain enough bits</span>
+    <span class="tok-comment">///   - `error.DestTooSmall` if `dest` is not large enough to holde the</span>
+    <span class="tok-comment">///     decompressed sequence</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeSequenceSlice</span>(
+        self: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>,
+        dest: []<span class="tok-type">u8</span>,
+        write_pos: <span class="tok-type">usize</span>,
+        bit_reader: *<a href="std.compress.zstandard.readers.html">readers</a>.<a href="std.compress.zstandard.readers.ReverseBitReader.html">ReverseBitReader</a>,
+        sequence_size_limit: <span class="tok-type">usize</span>,
+        last_sequence: <span class="tok-type">bool</span>,
+    ) (<span class="tok-kw">error</span>{DestTooSmall} || <a href="std.compress.zstandard.decode.block.DecodeState.html#std.compress.zstandard.decode.block.DecodeState.DecodeSequenceError">DecodeSequenceError</a>)!<span class="tok-type">usize</span> {
+        <span class="tok-kw">const</span> sequence = <span class="tok-kw">try</span> self.nextSequence(bit_reader);
+        <span class="tok-kw">const</span> sequence_length = <span class="tok-builtin">@as</span>(<span class="tok-type">usize</span>, sequence.literal_length) + sequence.match_length;
+        <span class="tok-kw">if</span> (sequence_length &gt; sequence_size_limit) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedSequence;
+        <span class="tok-kw">if</span> (sequence_length &gt; dest[write_pos..].len) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.DestTooSmall;
+
+        <span class="tok-kw">try</span> self.executeSequenceSlice(dest, write_pos, sequence);
+        <span class="tok-kw">if</span> (!last_sequence) {
+            <span class="tok-kw">try</span> self.updateState(.literal, bit_reader);
+            <span class="tok-kw">try</span> self.updateState(.match, bit_reader);
+            <span class="tok-kw">try</span> self.updateState(.offset, bit_reader);
+        }
+        <span class="tok-kw">return</span> sequence_length;
+    }
+
+    <span class="tok-comment">/// Decode one sequence from `bit_reader` into `dest`; see</span>
+    <span class="tok-comment">/// `decodeSequenceSlice`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeSequenceRingBuffer</span>(
+        self: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>,
+        dest: *<a href="std.RingBuffer.html">RingBuffer</a>,
+        bit_reader: <span class="tok-kw">anytype</span>,
+        sequence_size_limit: <span class="tok-type">usize</span>,
+        last_sequence: <span class="tok-type">bool</span>,
+    ) <a href="std.compress.zstandard.decode.block.DecodeState.html#std.compress.zstandard.decode.block.DecodeState.DecodeSequenceError">DecodeSequenceError</a>!<span class="tok-type">usize</span> {
+        <span class="tok-kw">const</span> sequence = <span class="tok-kw">try</span> self.nextSequence(bit_reader);
+        <span class="tok-kw">const</span> sequence_length = <span class="tok-builtin">@as</span>(<span class="tok-type">usize</span>, sequence.literal_length) + sequence.match_length;
+        <span class="tok-kw">if</span> (sequence_length &gt; sequence_size_limit) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedSequence;
+
+        <span class="tok-kw">try</span> self.executeSequenceRingBuffer(dest, sequence);
+        <span class="tok-kw">if</span> (!last_sequence) {
+            <span class="tok-kw">try</span> self.updateState(.literal, bit_reader);
+            <span class="tok-kw">try</span> self.updateState(.match, bit_reader);
+            <span class="tok-kw">try</span> self.updateState(.offset, bit_reader);
+        }
+        <span class="tok-kw">return</span> sequence_length;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">nextLiteralMultiStream</span>(
+        self: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>,
+    ) <span class="tok-kw">error</span>{BitStreamHasNoStartBit}!<span class="tok-type">void</span> {
+        self.literal_stream_index += <span class="tok-number">1</span>;
+        <span class="tok-kw">try</span> self.initLiteralStream(self.literal_streams.four[self.literal_stream_index]);
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">initLiteralStream</span>(self: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-kw">error</span>{BitStreamHasNoStartBit}!<span class="tok-type">void</span> {
+        <span class="tok-kw">try</span> self.literal_stream_reader.init(bytes);
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">isLiteralStreamEmpty</span>(self: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">switch</span> (self.literal_streams) {
+            .one =&gt; <span class="tok-kw">return</span> self.literal_stream_reader.isEmpty(),
+            .four =&gt; <span class="tok-kw">return</span> self.literal_stream_index == <span class="tok-number">3</span> <span class="tok-kw">and</span> self.literal_stream_reader.isEmpty(),
+        }
+    }
+
+    <span class="tok-kw">const</span> LiteralBitsError = <span class="tok-kw">error</span>{
+        BitStreamHasNoStartBit,
+        UnexpectedEndOfLiteralStream,
+    };
+    <span class="tok-kw">fn</span> <span class="tok-fn">readLiteralsBits</span>(
+        self: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>,
+        bit_count_to_read: <span class="tok-type">u16</span>,
+    ) <a href="std.compress.zstandard.decode.block.DecodeState.html#std.compress.zstandard.decode.block.DecodeState.LiteralBitsError">LiteralBitsError</a>!<span class="tok-type">u16</span> {
+        <span class="tok-kw">return</span> self.literal_stream_reader.readBitsNoEof(<span class="tok-type">u16</span>, bit_count_to_read) <span class="tok-kw">catch</span> bits: {
+            <span class="tok-kw">if</span> (self.literal_streams == .four <span class="tok-kw">and</span> self.literal_stream_index &lt; <span class="tok-number">3</span>) {
+                <span class="tok-kw">try</span> self.nextLiteralMultiStream();
+                <span class="tok-kw">break</span> :bits self.literal_stream_reader.readBitsNoEof(<span class="tok-type">u16</span>, bit_count_to_read) <span class="tok-kw">catch</span>
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnexpectedEndOfLiteralStream;
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnexpectedEndOfLiteralStream;
+            }
+        };
+    }
+
+    <span class="tok-kw">const</span> DecodeLiteralsError = <span class="tok-kw">error</span>{
+        MalformedLiteralsLength,
+        NotFound,
+    } || <a href="std.compress.zstandard.decode.block.DecodeState.html#std.compress.zstandard.decode.block.DecodeState.LiteralBitsError">LiteralBitsError</a>;
+
+    <span class="tok-comment">/// Decode `len` bytes of literals into `dest`.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// Errors returned:</span>
+    <span class="tok-comment">///   - `error.MalformedLiteralsLength` if the number of literal bytes</span>
+    <span class="tok-comment">///     decoded by `self` plus `len` is greater than the regenerated size of</span>
+    <span class="tok-comment">///     `literals`</span>
+    <span class="tok-comment">///   - `error.UnexpectedEndOfLiteralStream` and `error.NotFound` if there</span>
+    <span class="tok-comment">///     are problems decoding Huffman compressed literals</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeLiteralsSlice</span>(
+        self: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>,
+        dest: []<span class="tok-type">u8</span>,
+        len: <span class="tok-type">usize</span>,
+    ) <a href="std.compress.zstandard.decode.block.DecodeState.html#std.compress.zstandard.decode.block.DecodeState.DecodeLiteralsError">DecodeLiteralsError</a>!<span class="tok-type">void</span> {
+        <span class="tok-kw">if</span> (self.literal_written_count + len &gt; self.literal_header.regenerated_size)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedLiteralsLength;
+
+        <span class="tok-kw">switch</span> (self.literal_header.block_type) {
+            .raw =&gt; {
+                <span class="tok-kw">const</span> literal_data = self.literal_streams.one[self.literal_written_count..][<span class="tok-number">0</span>..len];
+                <span class="tok-builtin">@memcpy</span>(dest[<span class="tok-number">0</span>..len], literal_data);
+                self.literal_written_count += len;
+                self.written_count += len;
+            },
+            .rle =&gt; {
+                <span class="tok-kw">for</span> (<span class="tok-number">0</span>..len) |i| {
+                    dest[i] = self.literal_streams.one[<span class="tok-number">0</span>];
+                }
+                self.literal_written_count += len;
+                self.written_count += len;
+            },
+            .compressed, .treeless =&gt; {<span class="tok-comment">
+                // const written_bytes_per_stream = (literals.header.regenerated_size + 3) / 4;
+                </span><span class="tok-kw">const</span> huffman_tree = self.huffman_tree <span class="tok-kw">orelse</span> <span class="tok-kw">unreachable</span>;
+                <span class="tok-kw">const</span> max_bit_count = huffman_tree.max_bit_count;
+                <span class="tok-kw">const</span> starting_bit_count = <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.HuffmanTree.html">HuffmanTree</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.HuffmanTree.html#std.compress.zstandard.types.compressed_block.LiteralsSection.HuffmanTree.weightToBitCount">weightToBitCount</a>(
+                    huffman_tree.nodes[huffman_tree.symbol_count_minus_one].weight,
+                    max_bit_count,
+                );
+                <span class="tok-kw">var</span> bits_read: <span class="tok-type">u4</span> = <span class="tok-number">0</span>;
+                <span class="tok-kw">var</span> huffman_tree_index: <span class="tok-type">usize</span> = huffman_tree.symbol_count_minus_one;
+                <span class="tok-kw">var</span> bit_count_to_read: <span class="tok-type">u4</span> = starting_bit_count;
+                <span class="tok-kw">for</span> (<span class="tok-number">0</span>..len) |i| {
+                    <span class="tok-kw">var</span> prefix: <span class="tok-type">u16</span> = <span class="tok-number">0</span>;
+                    <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+                        <span class="tok-kw">const</span> new_bits = self.readLiteralsBits(bit_count_to_read) <span class="tok-kw">catch</span> |err| {
+                            <span class="tok-kw">return</span> err;
+                        };
+                        prefix &lt;&lt;= bit_count_to_read;
+                        prefix |= new_bits;
+                        bits_read += bit_count_to_read;
+                        <span class="tok-kw">const</span> result = huffman_tree.query(huffman_tree_index, prefix) <span class="tok-kw">catch</span> |err| {
+                            <span class="tok-kw">return</span> err;
+                        };
+
+                        <span class="tok-kw">switch</span> (result) {
+                            .symbol =&gt; |sym| {
+                                dest[i] = sym;
+                                bit_count_to_read = starting_bit_count;
+                                bits_read = <span class="tok-number">0</span>;
+                                huffman_tree_index = huffman_tree.symbol_count_minus_one;
+                                <span class="tok-kw">break</span>;
+                            },
+                            .index =&gt; |index| {
+                                huffman_tree_index = index;
+                                <span class="tok-kw">const</span> bit_count = <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.HuffmanTree.html">HuffmanTree</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.HuffmanTree.html#std.compress.zstandard.types.compressed_block.LiteralsSection.HuffmanTree.weightToBitCount">weightToBitCount</a>(
+                                    huffman_tree.nodes[index].weight,
+                                    max_bit_count,
+                                );
+                                bit_count_to_read = bit_count - bits_read;
+                            },
+                        }
+                    }
+                }
+                self.literal_written_count += len;
+                self.written_count += len;
+            },
+        }
+    }
+
+    <span class="tok-comment">/// Decode literals into `dest`; see `decodeLiteralsSlice()`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeLiteralsRingBuffer</span>(
+        self: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>,
+        dest: *<a href="std.RingBuffer.html">RingBuffer</a>,
+        len: <span class="tok-type">usize</span>,
+    ) <a href="std.compress.zstandard.decode.block.DecodeState.html#std.compress.zstandard.decode.block.DecodeState.DecodeLiteralsError">DecodeLiteralsError</a>!<span class="tok-type">void</span> {
+        <span class="tok-kw">if</span> (self.literal_written_count + len &gt; self.literal_header.regenerated_size)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedLiteralsLength;
+
+        <span class="tok-kw">switch</span> (self.literal_header.block_type) {
+            .raw =&gt; {
+                <span class="tok-kw">const</span> literals_end = self.literal_written_count + len;
+                <span class="tok-kw">const</span> literal_data = self.literal_streams.one[self.literal_written_count..literals_end];
+                dest.writeSliceAssumeCapacity(literal_data);
+                self.literal_written_count += len;
+                self.written_count += len;
+            },
+            .rle =&gt; {
+                <span class="tok-kw">for</span> (<span class="tok-number">0</span>..len) |_| {
+                    dest.writeAssumeCapacity(self.literal_streams.one[<span class="tok-number">0</span>]);
+                }
+                self.literal_written_count += len;
+                self.written_count += len;
+            },
+            .compressed, .treeless =&gt; {<span class="tok-comment">
+                // const written_bytes_per_stream = (literals.header.regenerated_size + 3) / 4;
+                </span><span class="tok-kw">const</span> huffman_tree = self.huffman_tree <span class="tok-kw">orelse</span> <span class="tok-kw">unreachable</span>;
+                <span class="tok-kw">const</span> max_bit_count = huffman_tree.max_bit_count;
+                <span class="tok-kw">const</span> starting_bit_count = <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.HuffmanTree.html">HuffmanTree</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.HuffmanTree.html#std.compress.zstandard.types.compressed_block.LiteralsSection.HuffmanTree.weightToBitCount">weightToBitCount</a>(
+                    huffman_tree.nodes[huffman_tree.symbol_count_minus_one].weight,
+                    max_bit_count,
+                );
+                <span class="tok-kw">var</span> bits_read: <span class="tok-type">u4</span> = <span class="tok-number">0</span>;
+                <span class="tok-kw">var</span> huffman_tree_index: <span class="tok-type">usize</span> = huffman_tree.symbol_count_minus_one;
+                <span class="tok-kw">var</span> bit_count_to_read: <span class="tok-type">u4</span> = starting_bit_count;
+                <span class="tok-kw">for</span> (<span class="tok-number">0</span>..len) |_| {
+                    <span class="tok-kw">var</span> prefix: <span class="tok-type">u16</span> = <span class="tok-number">0</span>;
+                    <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+                        <span class="tok-kw">const</span> new_bits = <span class="tok-kw">try</span> self.readLiteralsBits(bit_count_to_read);
+                        prefix &lt;&lt;= bit_count_to_read;
+                        prefix |= new_bits;
+                        bits_read += bit_count_to_read;
+                        <span class="tok-kw">const</span> result = <span class="tok-kw">try</span> huffman_tree.query(huffman_tree_index, prefix);
+
+                        <span class="tok-kw">switch</span> (result) {
+                            .symbol =&gt; |sym| {
+                                dest.writeAssumeCapacity(sym);
+                                bit_count_to_read = starting_bit_count;
+                                bits_read = <span class="tok-number">0</span>;
+                                huffman_tree_index = huffman_tree.symbol_count_minus_one;
+                                <span class="tok-kw">break</span>;
+                            },
+                            .index =&gt; |index| {
+                                huffman_tree_index = index;
+                                <span class="tok-kw">const</span> bit_count = <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.HuffmanTree.html">HuffmanTree</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.HuffmanTree.html#std.compress.zstandard.types.compressed_block.LiteralsSection.HuffmanTree.weightToBitCount">weightToBitCount</a>(
+                                    huffman_tree.nodes[index].weight,
+                                    max_bit_count,
+                                );
+                                bit_count_to_read = bit_count - bits_read;
+                            },
+                        }
+                    }
+                }
+                self.literal_written_count += len;
+                self.written_count += len;
+            },
+        }
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">getCode</span>(self: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>, <span class="tok-kw">comptime</span> choice: <a href="std.compress.zstandard.decode.block.DecodeState.DataType.html">DataType</a>) <span class="tok-type">u32</span> {
+        <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (<span class="tok-builtin">@field</span>(self, <span class="tok-builtin">@tagName</span>(choice)).table) {
+            .rle =&gt; |value| value,
+            .fse =&gt; |table| table[<span class="tok-builtin">@field</span>(self, <span class="tok-builtin">@tagName</span>(choice)).state].symbol,
+        };
+    }
+};
+
+<span class="tok-comment">/// Decode a single block from `src` into `dest`. The beginning of `src` must be</span>
+<span class="tok-comment">/// the start of the block content (i.e. directly after the block header).</span>
+<span class="tok-comment">/// Increments `consumed_count` by the number of bytes read from `src` to decode</span>
+<span class="tok-comment">/// the block and returns the decompressed size of the block.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Errors returned:</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">///   - `error.BlockSizeOverMaximum` if block's size is larger than 1 &lt;&lt; 17 or</span>
+<span class="tok-comment">///     `dest[written_count..].len`</span>
+<span class="tok-comment">///   - `error.MalformedBlockSize` if `src.len` is smaller than the block size</span>
+<span class="tok-comment">///     and the block is a raw or compressed block</span>
+<span class="tok-comment">///   - `error.ReservedBlock` if the block is a reserved block</span>
+<span class="tok-comment">///   - `error.MalformedRleBlock` if the block is an RLE block and `src.len &lt; 1`</span>
+<span class="tok-comment">///   - `error.MalformedCompressedBlock` if there are errors decoding a</span>
+<span class="tok-comment">///     compressed block</span>
+<span class="tok-comment">///   - `error.DestTooSmall` is `dest` is not large enough to hold the</span>
+<span class="tok-comment">///     decompressed block</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeBlock</span>(
+    dest: []<span class="tok-type">u8</span>,
+    src: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    block_header: <a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Header.html">Header</a>,
+    decode_state: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>,
+    consumed_count: *<span class="tok-type">usize</span>,
+    block_size_max: <span class="tok-type">usize</span>,
+    written_count: <span class="tok-type">usize</span>,
+) (<span class="tok-kw">error</span>{DestTooSmall} || <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.Error">Error</a>)!<span class="tok-type">usize</span> {
+    <span class="tok-kw">const</span> block_size = block_header.block_size;
+    <span class="tok-kw">if</span> (block_size_max &lt; block_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.BlockSizeOverMaximum;
+    <span class="tok-kw">switch</span> (block_header.block_type) {
+        .raw =&gt; {
+            <span class="tok-kw">if</span> (src.len &lt; block_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedBlockSize;
+            <span class="tok-kw">if</span> (dest[written_count..].len &lt; block_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.DestTooSmall;
+            <span class="tok-builtin">@memcpy</span>(dest[written_count..][<span class="tok-number">0</span>..block_size], src[<span class="tok-number">0</span>..block_size]);
+            consumed_count.* += block_size;
+            decode_state.written_count += block_size;
+            <span class="tok-kw">return</span> block_size;
+        },
+        .rle =&gt; {
+            <span class="tok-kw">if</span> (src.len &lt; <span class="tok-number">1</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedRleBlock;
+            <span class="tok-kw">if</span> (dest[written_count..].len &lt; block_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.DestTooSmall;
+            <span class="tok-kw">for</span> (written_count..block_size + written_count) |write_pos| {
+                dest[write_pos] = src[<span class="tok-number">0</span>];
+            }
+            consumed_count.* += <span class="tok-number">1</span>;
+            decode_state.written_count += block_size;
+            <span class="tok-kw">return</span> block_size;
+        },
+        .compressed =&gt; {
+            <span class="tok-kw">if</span> (src.len &lt; block_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedBlockSize;
+            <span class="tok-kw">var</span> bytes_read: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">const</span> literals = <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeLiteralsSectionSlice">decodeLiteralsSectionSlice</a>(src[<span class="tok-number">0</span>..block_size], &amp;bytes_read) <span class="tok-kw">catch</span>
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+            <span class="tok-kw">var</span> fbs = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(src[bytes_read..block_size]);
+            <span class="tok-kw">const</span> fbs_reader = fbs.reader();
+            <span class="tok-kw">const</span> sequences_header = <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeSequencesHeader">decodeSequencesHeader</a>(fbs_reader) <span class="tok-kw">catch</span>
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+
+            decode_state.prepare(fbs_reader, literals, sequences_header) <span class="tok-kw">catch</span>
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+
+            bytes_read += fbs.pos;
+
+            <span class="tok-kw">var</span> bytes_written: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            {
+                <span class="tok-kw">const</span> bit_stream_bytes = src[bytes_read..block_size];
+                <span class="tok-kw">var</span> bit_stream: <a href="std.compress.zstandard.readers.html">readers</a>.<a href="std.compress.zstandard.readers.ReverseBitReader.html">ReverseBitReader</a> = <span class="tok-null">undefined</span>;
+                bit_stream.init(bit_stream_bytes) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+
+                <span class="tok-kw">if</span> (sequences_header.sequence_count &gt; <span class="tok-number">0</span>) {
+                    decode_state.readInitialFseState(&amp;bit_stream) <span class="tok-kw">catch</span>
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+
+                    <span class="tok-kw">var</span> sequence_size_limit = block_size_max;
+                    <span class="tok-kw">for</span> (<span class="tok-number">0</span>..sequences_header.sequence_count) |i| {
+                        <span class="tok-kw">const</span> write_pos = written_count + bytes_written;
+                        <span class="tok-kw">const</span> decompressed_size = decode_state.decodeSequenceSlice(
+                            dest,
+                            write_pos,
+                            &amp;bit_stream,
+                            sequence_size_limit,
+                            i == sequences_header.sequence_count - <span class="tok-number">1</span>,
+                        ) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                            <span class="tok-kw">error</span>.DestTooSmall =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.DestTooSmall,
+                            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock,
+                        };
+                        bytes_written += decompressed_size;
+                        sequence_size_limit -= decompressed_size;
+                    }
+                }
+
+                <span class="tok-kw">if</span> (!bit_stream.isEmpty()) {
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                }
+            }
+
+            <span class="tok-kw">if</span> (decode_state.literal_written_count &lt; literals.header.regenerated_size) {
+                <span class="tok-kw">const</span> len = literals.header.regenerated_size - decode_state.literal_written_count;
+                <span class="tok-kw">if</span> (len &gt; dest[written_count + bytes_written ..].len) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.DestTooSmall;
+                decode_state.decodeLiteralsSlice(dest[written_count + bytes_written ..], len) <span class="tok-kw">catch</span>
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                bytes_written += len;
+            }
+
+            <span class="tok-kw">switch</span> (decode_state.literal_header.block_type) {
+                .treeless, .compressed =&gt; {
+                    <span class="tok-kw">if</span> (!decode_state.isLiteralStreamEmpty()) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                },
+                .raw, .rle =&gt; {},
+            }
+
+            consumed_count.* += block_size;
+            <span class="tok-kw">return</span> bytes_written;
+        },
+        .reserved =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ReservedBlock,
+    }
+}
+
+<span class="tok-comment">/// Decode a single block from `src` into `dest`; see `decodeBlock()`. Returns</span>
+<span class="tok-comment">/// the size of the decompressed block, which can be used with `dest.sliceLast()`</span>
+<span class="tok-comment">/// to get the decompressed bytes. `error.BlockSizeOverMaximum` is returned if</span>
+<span class="tok-comment">/// the block's compressed or decompressed size is larger than `block_size_max`.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeBlockRingBuffer</span>(
+    dest: *<a href="std.RingBuffer.html">RingBuffer</a>,
+    src: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    block_header: <a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Header.html">Header</a>,
+    decode_state: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>,
+    consumed_count: *<span class="tok-type">usize</span>,
+    block_size_max: <span class="tok-type">usize</span>,
+) <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.Error">Error</a>!<span class="tok-type">usize</span> {
+    <span class="tok-kw">const</span> block_size = block_header.block_size;
+    <span class="tok-kw">if</span> (block_size_max &lt; block_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.BlockSizeOverMaximum;
+    <span class="tok-kw">switch</span> (block_header.block_type) {
+        .raw =&gt; {
+            <span class="tok-kw">if</span> (src.len &lt; block_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedBlockSize;<span class="tok-comment">
+            // dest may have length zero if block_size == 0, causing division by zero in
+            // writeSliceAssumeCapacity()
+            </span><span class="tok-kw">if</span> (block_size &gt; <span class="tok-number">0</span>) {
+                <span class="tok-kw">const</span> data = src[<span class="tok-number">0</span>..block_size];
+                dest.writeSliceAssumeCapacity(data);
+                consumed_count.* += block_size;
+                decode_state.written_count += block_size;
+            }
+            <span class="tok-kw">return</span> block_size;
+        },
+        .rle =&gt; {
+            <span class="tok-kw">if</span> (src.len &lt; <span class="tok-number">1</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedRleBlock;
+            <span class="tok-kw">for</span> (<span class="tok-number">0</span>..block_size) |_| {
+                dest.writeAssumeCapacity(src[<span class="tok-number">0</span>]);
+            }
+            consumed_count.* += <span class="tok-number">1</span>;
+            decode_state.written_count += block_size;
+            <span class="tok-kw">return</span> block_size;
+        },
+        .compressed =&gt; {
+            <span class="tok-kw">if</span> (src.len &lt; block_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedBlockSize;
+            <span class="tok-kw">var</span> bytes_read: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">const</span> literals = <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeLiteralsSectionSlice">decodeLiteralsSectionSlice</a>(src[<span class="tok-number">0</span>..block_size], &amp;bytes_read) <span class="tok-kw">catch</span>
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+            <span class="tok-kw">var</span> fbs = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(src[bytes_read..block_size]);
+            <span class="tok-kw">const</span> fbs_reader = fbs.reader();
+            <span class="tok-kw">const</span> sequences_header = <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeSequencesHeader">decodeSequencesHeader</a>(fbs_reader) <span class="tok-kw">catch</span>
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+
+            decode_state.prepare(fbs_reader, literals, sequences_header) <span class="tok-kw">catch</span>
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+
+            bytes_read += fbs.pos;
+
+            <span class="tok-kw">var</span> bytes_written: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            {
+                <span class="tok-kw">const</span> bit_stream_bytes = src[bytes_read..block_size];
+                <span class="tok-kw">var</span> bit_stream: <a href="std.compress.zstandard.readers.html">readers</a>.<a href="std.compress.zstandard.readers.ReverseBitReader.html">ReverseBitReader</a> = <span class="tok-null">undefined</span>;
+                bit_stream.init(bit_stream_bytes) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+
+                <span class="tok-kw">if</span> (sequences_header.sequence_count &gt; <span class="tok-number">0</span>) {
+                    decode_state.readInitialFseState(&amp;bit_stream) <span class="tok-kw">catch</span>
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+
+                    <span class="tok-kw">var</span> sequence_size_limit = block_size_max;
+                    <span class="tok-kw">for</span> (<span class="tok-number">0</span>..sequences_header.sequence_count) |i| {
+                        <span class="tok-kw">const</span> decompressed_size = decode_state.decodeSequenceRingBuffer(
+                            dest,
+                            &amp;bit_stream,
+                            sequence_size_limit,
+                            i == sequences_header.sequence_count - <span class="tok-number">1</span>,
+                        ) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                        bytes_written += decompressed_size;
+                        sequence_size_limit -= decompressed_size;
+                    }
+                }
+
+                <span class="tok-kw">if</span> (!bit_stream.isEmpty()) {
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                }
+            }
+
+            <span class="tok-kw">if</span> (decode_state.literal_written_count &lt; literals.header.regenerated_size) {
+                <span class="tok-kw">const</span> len = literals.header.regenerated_size - decode_state.literal_written_count;
+                decode_state.decodeLiteralsRingBuffer(dest, len) <span class="tok-kw">catch</span>
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                bytes_written += len;
+            }
+
+            <span class="tok-kw">switch</span> (decode_state.literal_header.block_type) {
+                .treeless, .compressed =&gt; {
+                    <span class="tok-kw">if</span> (!decode_state.isLiteralStreamEmpty()) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                },
+                .raw, .rle =&gt; {},
+            }
+
+            consumed_count.* += block_size;
+            <span class="tok-kw">if</span> (bytes_written &gt; block_size_max) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.BlockSizeOverMaximum;
+            <span class="tok-kw">return</span> bytes_written;
+        },
+        .reserved =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ReservedBlock,
+    }
+}
+
+<span class="tok-comment">/// Decode a single block from `source` into `dest`. Literal and sequence data</span>
+<span class="tok-comment">/// from the block is copied into `literals_buffer` and `sequence_buffer`, which</span>
+<span class="tok-comment">/// must be large enough or `error.LiteralsBufferTooSmall` and</span>
+<span class="tok-comment">/// `error.SequenceBufferTooSmall` are returned (the maximum block size is an</span>
+<span class="tok-comment">/// upper bound for the size of both buffers). See `decodeBlock`</span>
+<span class="tok-comment">/// and `decodeBlockRingBuffer` for function that can decode a block without</span>
+<span class="tok-comment">/// these extra copies. `error.EndOfStream` is returned if `source` does not</span>
+<span class="tok-comment">/// contain enough bytes.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeBlockReader</span>(
+    dest: *<a href="std.RingBuffer.html">RingBuffer</a>,
+    source: <span class="tok-kw">anytype</span>,
+    block_header: <a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Header.html">Header</a>,
+    decode_state: *<a href="std.compress.zstandard.decode.block.DecodeState.html">DecodeState</a>,
+    block_size_max: <span class="tok-type">usize</span>,
+    literals_buffer: []<span class="tok-type">u8</span>,
+    sequence_buffer: []<span class="tok-type">u8</span>,
+) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> block_size = block_header.block_size;
+    <span class="tok-kw">var</span> block_reader_limited = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.limited_reader.html#std.io.limited_reader.limitedReader">limitedReader</a>(source, block_size);
+    <span class="tok-kw">const</span> block_reader = block_reader_limited.reader();
+    <span class="tok-kw">if</span> (block_size_max &lt; block_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.BlockSizeOverMaximum;
+    <span class="tok-kw">switch</span> (block_header.block_type) {
+        .raw =&gt; {
+            <span class="tok-kw">if</span> (block_size == <span class="tok-number">0</span>) <span class="tok-kw">return</span>;
+            <span class="tok-kw">const</span> slice = dest.sliceAt(dest.write_index, block_size);
+            <span class="tok-kw">try</span> source.readNoEof(slice.first);
+            <span class="tok-kw">try</span> source.readNoEof(slice.second);
+            dest.write_index = dest.mask2(dest.write_index + block_size);
+            decode_state.written_count += block_size;
+        },
+        .rle =&gt; {
+            <span class="tok-kw">const</span> byte = <span class="tok-kw">try</span> source.readByte();
+            <span class="tok-kw">for</span> (<span class="tok-number">0</span>..block_size) |_| {
+                dest.writeAssumeCapacity(byte);
+            }
+            decode_state.written_count += block_size;
+        },
+        .compressed =&gt; {
+            <span class="tok-kw">const</span> literals = <span class="tok-kw">try</span> <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeLiteralsSection">decodeLiteralsSection</a>(block_reader, literals_buffer);
+            <span class="tok-kw">const</span> sequences_header = <span class="tok-kw">try</span> <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeSequencesHeader">decodeSequencesHeader</a>(block_reader);
+
+            <span class="tok-kw">try</span> decode_state.prepare(block_reader, literals, sequences_header);
+
+            <span class="tok-kw">var</span> bytes_written: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            {
+                <span class="tok-kw">const</span> size = <span class="tok-kw">try</span> block_reader.readAll(sequence_buffer);
+                <span class="tok-kw">var</span> bit_stream: <a href="std.compress.zstandard.readers.html">readers</a>.<a href="std.compress.zstandard.readers.ReverseBitReader.html">ReverseBitReader</a> = <span class="tok-null">undefined</span>;
+                <span class="tok-kw">try</span> bit_stream.init(sequence_buffer[<span class="tok-number">0</span>..size]);
+
+                <span class="tok-kw">if</span> (sequences_header.sequence_count &gt; <span class="tok-number">0</span>) {
+                    <span class="tok-kw">if</span> (sequence_buffer.len &lt; block_reader_limited.bytes_left)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SequenceBufferTooSmall;
+
+                    decode_state.readInitialFseState(&amp;bit_stream) <span class="tok-kw">catch</span>
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+
+                    <span class="tok-kw">var</span> sequence_size_limit = block_size_max;
+                    <span class="tok-kw">for</span> (<span class="tok-number">0</span>..sequences_header.sequence_count) |i| {
+                        <span class="tok-kw">const</span> decompressed_size = decode_state.decodeSequenceRingBuffer(
+                            dest,
+                            &amp;bit_stream,
+                            sequence_size_limit,
+                            i == sequences_header.sequence_count - <span class="tok-number">1</span>,
+                        ) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                        sequence_size_limit -= decompressed_size;
+                        bytes_written += decompressed_size;
+                    }
+                }
+
+                <span class="tok-kw">if</span> (!bit_stream.isEmpty()) {
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                }
+            }
+
+            <span class="tok-kw">if</span> (decode_state.literal_written_count &lt; literals.header.regenerated_size) {
+                <span class="tok-kw">const</span> len = literals.header.regenerated_size - decode_state.literal_written_count;
+                decode_state.decodeLiteralsRingBuffer(dest, len) <span class="tok-kw">catch</span>
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                bytes_written += len;
+            }
+
+            <span class="tok-kw">switch</span> (decode_state.literal_header.block_type) {
+                .treeless, .compressed =&gt; {
+                    <span class="tok-kw">if</span> (!decode_state.isLiteralStreamEmpty()) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+                },
+                .raw, .rle =&gt; {},
+            }
+
+            <span class="tok-kw">if</span> (bytes_written &gt; block_size_max) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.BlockSizeOverMaximum;
+            <span class="tok-kw">if</span> (block_reader_limited.bytes_left != <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedCompressedBlock;
+            decode_state.literal_written_count = <span class="tok-number">0</span>;
+        },
+        .reserved =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ReservedBlock,
+    }
+}
+
+<span class="tok-comment">/// Decode the header of a block.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeBlockHeader</span>(src: *<span class="tok-kw">const</span> [<span class="tok-number">3</span>]<span class="tok-type">u8</span>) <a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Header.html">Header</a> {
+    <span class="tok-kw">const</span> last_block = src[<span class="tok-number">0</span>] &amp; <span class="tok-number">1</span> == <span class="tok-number">1</span>;
+    <span class="tok-kw">const</span> block_type = <span class="tok-builtin">@as</span>(<a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Type.html">Type</a>, <span class="tok-builtin">@enumFromInt</span>((src[<span class="tok-number">0</span>] &amp; <span class="tok-number">0b110</span>) &gt;&gt; <span class="tok-number">1</span>));
+    <span class="tok-kw">const</span> block_size = ((src[<span class="tok-number">0</span>] &amp; <span class="tok-number">0b11111000</span>) &gt;&gt; <span class="tok-number">3</span>) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u21</span>, src[<span class="tok-number">1</span>]) &lt;&lt; <span class="tok-number">5</span>) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u21</span>, src[<span class="tok-number">2</span>]) &lt;&lt; <span class="tok-number">13</span>);
+    <span class="tok-kw">return</span> .{
+        .last_block = last_block,
+        .block_type = block_type,
+        .block_size = block_size,
+    };
+}
+
+<span class="tok-comment">/// Decode the header of a block.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Errors returned:</span>
+<span class="tok-comment">///   - `error.EndOfStream` if `src.len &lt; 3`</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeBlockHeaderSlice</span>(src: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-kw">error</span>{EndOfStream}!<a href="std.compress.zstandard.types.frame.html">frame</a>.<a href="std.compress.zstandard.types.frame.Zstandard.html">Zstandard</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.html">Block</a>.<a href="std.compress.zstandard.types.frame.Zstandard.Block.Header.html">Header</a> {
+    <span class="tok-kw">if</span> (src.len &lt; <span class="tok-number">3</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.EndOfStream;
+    <span class="tok-kw">return</span> <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeBlockHeader">decodeBlockHeader</a>(src[<span class="tok-number">0</span>..<span class="tok-number">3</span>]);
+}
+
+<span class="tok-comment">/// Decode a `LiteralsSection` from `src`, incrementing `consumed_count` by the</span>
+<span class="tok-comment">/// number of bytes the section uses.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Errors returned:</span>
+<span class="tok-comment">///   - `error.MalformedLiteralsHeader` if the header is invalid</span>
+<span class="tok-comment">///   - `error.MalformedLiteralsSection` if there are decoding errors</span>
+<span class="tok-comment">///   - `error.MalformedAccuracyLog` if compressed literals have invalid</span>
+<span class="tok-comment">///     accuracy</span>
+<span class="tok-comment">///   - `error.MalformedFseTable` if compressed literals have invalid FSE table</span>
+<span class="tok-comment">///   - `error.MalformedHuffmanTree` if there are errors decoding a Huffamn tree</span>
+<span class="tok-comment">///   - `error.EndOfStream` if there are not enough bytes in `src`</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeLiteralsSectionSlice</span>(
+    src: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    consumed_count: *<span class="tok-type">usize</span>,
+) (<span class="tok-kw">error</span>{ MalformedLiteralsHeader, MalformedLiteralsSection, EndOfStream } || <a href="std.compress.zstandard.decode.huffman.html">huffman</a>.<a href="std.compress.zstandard.decode.huffman.html#std.compress.zstandard.decode.huffman.Error">Error</a>)!<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a> {
+    <span class="tok-kw">var</span> bytes_read: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> header = header: {
+        <span class="tok-kw">var</span> fbs = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(src);
+        <span class="tok-kw">defer</span> bytes_read = fbs.pos;
+        <span class="tok-kw">break</span> :header <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeLiteralsHeader">decodeLiteralsHeader</a>(fbs.reader()) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedLiteralsHeader;
+    };
+    <span class="tok-kw">switch</span> (header.block_type) {
+        .raw =&gt; {
+            <span class="tok-kw">if</span> (src.len &lt; bytes_read + header.regenerated_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedLiteralsSection;
+            <span class="tok-kw">const</span> stream = src[bytes_read..][<span class="tok-number">0</span>..header.regenerated_size];
+            consumed_count.* += header.regenerated_size + bytes_read;
+            <span class="tok-kw">return</span> <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>{
+                .header = header,
+                .huffman_tree = <span class="tok-null">null</span>,
+                .streams = .{ .one = stream },
+            };
+        },
+        .rle =&gt; {
+            <span class="tok-kw">if</span> (src.len &lt; bytes_read + <span class="tok-number">1</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedLiteralsSection;
+            <span class="tok-kw">const</span> stream = src[bytes_read..][<span class="tok-number">0</span>..<span class="tok-number">1</span>];
+            consumed_count.* += <span class="tok-number">1</span> + bytes_read;
+            <span class="tok-kw">return</span> <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>{
+                .header = header,
+                .huffman_tree = <span class="tok-null">null</span>,
+                .streams = .{ .one = stream },
+            };
+        },
+        .compressed, .treeless =&gt; {
+            <span class="tok-kw">const</span> huffman_tree_start = bytes_read;
+            <span class="tok-kw">const</span> huffman_tree = <span class="tok-kw">if</span> (header.block_type == .compressed)
+                <span class="tok-kw">try</span> <a href="std.compress.zstandard.decode.huffman.html">huffman</a>.<a href="std.compress.zstandard.decode.huffman.html#std.compress.zstandard.decode.huffman.decodeHuffmanTreeSlice">decodeHuffmanTreeSlice</a>(src[bytes_read..], &amp;bytes_read)
+            <span class="tok-kw">else</span>
+                <span class="tok-null">null</span>;
+            <span class="tok-kw">const</span> huffman_tree_size = bytes_read - huffman_tree_start;
+            <span class="tok-kw">const</span> total_streams_size = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.sub">sub</a>(<span class="tok-type">usize</span>, header.compressed_size.?, huffman_tree_size) <span class="tok-kw">catch</span>
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedLiteralsSection;
+
+            <span class="tok-kw">if</span> (src.len &lt; bytes_read + total_streams_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedLiteralsSection;
+            <span class="tok-kw">const</span> stream_data = src[bytes_read .. bytes_read + total_streams_size];
+
+            <span class="tok-kw">const</span> streams = <span class="tok-kw">try</span> <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeStreams">decodeStreams</a>(header.size_format, stream_data);
+            consumed_count.* += bytes_read + total_streams_size;
+            <span class="tok-kw">return</span> <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>{
+                .header = header,
+                .huffman_tree = huffman_tree,
+                .streams = streams,
+            };
+        },
+    }
+}
+
+<span class="tok-comment">/// Decode a `LiteralsSection` from `src`, incrementing `consumed_count` by the</span>
+<span class="tok-comment">/// number of bytes the section uses. See `decodeLiterasSectionSlice()`.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeLiteralsSection</span>(
+    source: <span class="tok-kw">anytype</span>,
+    buffer: []<span class="tok-type">u8</span>,
+) !<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a> {
+    <span class="tok-kw">const</span> header = <span class="tok-kw">try</span> <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeLiteralsHeader">decodeLiteralsHeader</a>(source);
+    <span class="tok-kw">switch</span> (header.block_type) {
+        .raw =&gt; {
+            <span class="tok-kw">if</span> (buffer.len &lt; header.regenerated_size) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.LiteralsBufferTooSmall;
+            <span class="tok-kw">try</span> source.readNoEof(buffer[<span class="tok-number">0</span>..header.regenerated_size]);
+            <span class="tok-kw">return</span> <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>{
+                .header = header,
+                .huffman_tree = <span class="tok-null">null</span>,
+                .streams = .{ .one = buffer },
+            };
+        },
+        .rle =&gt; {
+            buffer[<span class="tok-number">0</span>] = <span class="tok-kw">try</span> source.readByte();
+            <span class="tok-kw">return</span> <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>{
+                .header = header,
+                .huffman_tree = <span class="tok-null">null</span>,
+                .streams = .{ .one = buffer[<span class="tok-number">0</span>..<span class="tok-number">1</span>] },
+            };
+        },
+        .compressed, .treeless =&gt; {
+            <span class="tok-kw">var</span> counting_reader = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.counting_reader.html#std.io.counting_reader.countingReader">countingReader</a>(source);
+            <span class="tok-kw">const</span> huffman_tree = <span class="tok-kw">if</span> (header.block_type == .compressed)
+                <span class="tok-kw">try</span> <a href="std.compress.zstandard.decode.huffman.html">huffman</a>.<a href="std.compress.zstandard.decode.huffman.html#std.compress.zstandard.decode.huffman.decodeHuffmanTree">decodeHuffmanTree</a>(counting_reader.reader(), buffer)
+            <span class="tok-kw">else</span>
+                <span class="tok-null">null</span>;
+            <span class="tok-kw">const</span> huffman_tree_size = <span class="tok-builtin">@as</span>(<span class="tok-type">usize</span>, <span class="tok-builtin">@intCast</span>(counting_reader.bytes_read));
+            <span class="tok-kw">const</span> total_streams_size = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.sub">sub</a>(<span class="tok-type">usize</span>, header.compressed_size.?, huffman_tree_size) <span class="tok-kw">catch</span>
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedLiteralsSection;
+
+            <span class="tok-kw">if</span> (total_streams_size &gt; buffer.len) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.LiteralsBufferTooSmall;
+            <span class="tok-kw">try</span> source.readNoEof(buffer[<span class="tok-number">0</span>..total_streams_size]);
+            <span class="tok-kw">const</span> stream_data = buffer[<span class="tok-number">0</span>..total_streams_size];
+
+            <span class="tok-kw">const</span> streams = <span class="tok-kw">try</span> <a href="std.compress.zstandard.decode.block.html#std.compress.zstandard.decode.block.decodeStreams">decodeStreams</a>(header.size_format, stream_data);
+            <span class="tok-kw">return</span> <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>{
+                .header = header,
+                .huffman_tree = huffman_tree,
+                .streams = streams,
+            };
+        },
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">decodeStreams</span>(size_format: <span class="tok-type">u2</span>, stream_data: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.Streams.html">Streams</a> {
+    <span class="tok-kw">if</span> (size_format == <span class="tok-number">0</span>) {
+        <span class="tok-kw">return</span> .{ .one = stream_data };
+    }
+
+    <span class="tok-kw">if</span> (stream_data.len &lt; <span class="tok-number">6</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedLiteralsSection;
+
+    <span class="tok-kw">const</span> stream_1_length: <span class="tok-type">usize</span> = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u16</span>, stream_data[<span class="tok-number">0</span>..<span class="tok-number">2</span>], .little);
+    <span class="tok-kw">const</span> stream_2_length: <span class="tok-type">usize</span> = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u16</span>, stream_data[<span class="tok-number">2</span>..<span class="tok-number">4</span>], .little);
+    <span class="tok-kw">const</span> stream_3_length: <span class="tok-type">usize</span> = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u16</span>, stream_data[<span class="tok-number">4</span>..<span class="tok-number">6</span>], .little);
+
+    <span class="tok-kw">const</span> stream_1_start = <span class="tok-number">6</span>;
+    <span class="tok-kw">const</span> stream_2_start = stream_1_start + stream_1_length;
+    <span class="tok-kw">const</span> stream_3_start = stream_2_start + stream_2_length;
+    <span class="tok-kw">const</span> stream_4_start = stream_3_start + stream_3_length;
+
+    <span class="tok-kw">if</span> (stream_data.len &lt; stream_4_start) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MalformedLiteralsSection;
+
+    <span class="tok-kw">return</span> .{ .four = .{
+        stream_data[stream_1_start .. stream_1_start + stream_1_length],
+        stream_data[stream_2_start .. stream_2_start + stream_2_length],
+        stream_data[stream_3_start .. stream_3_start + stream_3_length],
+        stream_data[stream_4_start..],
+    } };
+}
+
+<span class="tok-comment">/// Decode a literals section header.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Errors returned:</span>
+<span class="tok-comment">///   - `error.EndOfStream` if there are not enough bytes in `source`</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeLiteralsHeader</span>(source: <span class="tok-kw">anytype</span>) !<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.Header.html">Header</a> {
+    <span class="tok-kw">const</span> byte0 = <span class="tok-kw">try</span> source.readByte();
+    <span class="tok-kw">const</span> block_type = <span class="tok-builtin">@as</span>(<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.BlockType.html">BlockType</a>, <span class="tok-builtin">@enumFromInt</span>(byte0 &amp; <span class="tok-number">0b11</span>));
+    <span class="tok-kw">const</span> size_format = <span class="tok-builtin">@as</span>(<span class="tok-type">u2</span>, <span class="tok-builtin">@intCast</span>((byte0 &amp; <span class="tok-number">0b1100</span>) &gt;&gt; <span class="tok-number">2</span>));
+    <span class="tok-kw">var</span> regenerated_size: <span class="tok-type">u20</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">var</span> compressed_size: ?<span class="tok-type">u18</span> = <span class="tok-null">null</span>;
+    <span class="tok-kw">switch</span> (block_type) {
+        .raw, .rle =&gt; {
+            <span class="tok-kw">switch</span> (size_format) {
+                <span class="tok-number">0</span>, <span class="tok-number">2</span> =&gt; {
+                    regenerated_size = byte0 &gt;&gt; <span class="tok-number">3</span>;
+                },
+                <span class="tok-number">1</span> =&gt; regenerated_size = (byte0 &gt;&gt; <span class="tok-number">4</span>) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u20</span>, <span class="tok-kw">try</span> source.readByte()) &lt;&lt; <span class="tok-number">4</span>),
+                <span class="tok-number">3</span> =&gt; regenerated_size = (byte0 &gt;&gt; <span class="tok-number">4</span>) +
+                    (<span class="tok-builtin">@as</span>(<span class="tok-type">u20</span>, <span class="tok-kw">try</span> source.readByte()) &lt;&lt; <span class="tok-number">4</span>) +
+                    (<span class="tok-builtin">@as</span>(<span class="tok-type">u20</span>, <span class="tok-kw">try</span> source.readByte()) &lt;&lt; <span class="tok-number">12</span>),
+            }
+        },
+        .compressed, .treeless =&gt; {
+            <span class="tok-kw">const</span> byte1 = <span class="tok-kw">try</span> source.readByte();
+            <span class="tok-kw">const</span> byte2 = <span class="tok-kw">try</span> source.readByte();
+            <span class="tok-kw">switch</span> (size_format) {
+                <span class="tok-number">0</span>, <span class="tok-number">1</span> =&gt; {
+                    regenerated_size = (byte0 &gt;&gt; <span class="tok-number">4</span>) + ((<span class="tok-builtin">@as</span>(<span class="tok-type">u20</span>, byte1) &amp; <span class="tok-number">0b00111111</span>) &lt;&lt; <span class="tok-number">4</span>);
+                    compressed_size = ((byte1 &amp; <span class="tok-number">0b11000000</span>) &gt;&gt; <span class="tok-number">6</span>) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u18</span>, byte2) &lt;&lt; <span class="tok-number">2</span>);
+                },
+                <span class="tok-number">2</span> =&gt; {
+                    <span class="tok-kw">const</span> byte3 = <span class="tok-kw">try</span> source.readByte();
+                    regenerated_size = (byte0 &gt;&gt; <span class="tok-number">4</span>) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u20</span>, byte1) &lt;&lt; <span class="tok-number">4</span>) + ((<span class="tok-builtin">@as</span>(<span class="tok-type">u20</span>, byte2) &amp; <span class="tok-number">0b00000011</span>) &lt;&lt; <span class="tok-number">12</span>);
+                    compressed_size = ((byte2 &amp; <span class="tok-number">0b11111100</span>) &gt;&gt; <span class="tok-number">2</span>) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u18</span>, byte3) &lt;&lt; <span class="tok-number">6</span>);
+                },
+                <span class="tok-number">3</span> =&gt; {
+                    <span class="tok-kw">const</span> byte3 = <span class="tok-kw">try</span> source.readByte();
+                    <span class="tok-kw">const</span> byte4 = <span class="tok-kw">try</span> source.readByte();
+                    regenerated_size = (byte0 &gt;&gt; <span class="tok-number">4</span>) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u20</span>, byte1) &lt;&lt; <span class="tok-number">4</span>) + ((<span class="tok-builtin">@as</span>(<span class="tok-type">u20</span>, byte2) &amp; <span class="tok-number">0b00111111</span>) &lt;&lt; <span class="tok-number">12</span>);
+                    compressed_size = ((byte2 &amp; <span class="tok-number">0b11000000</span>) &gt;&gt; <span class="tok-number">6</span>) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u18</span>, byte3) &lt;&lt; <span class="tok-number">2</span>) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u18</span>, byte4) &lt;&lt; <span class="tok-number">10</span>);
+                },
+            }
+        },
+    }
+    <span class="tok-kw">return</span> <a href="std.compress.zstandard.types.compressed_block.LiteralsSection.html">LiteralsSection</a>.<a href="std.compress.zstandard.types.compressed_block.LiteralsSection.Header.html">Header</a>{
+        .block_type = block_type,
+        .size_format = size_format,
+        .regenerated_size = regenerated_size,
+        .compressed_size = compressed_size,
+    };
+}
+
+<span class="tok-comment">/// Decode a sequences section header.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Errors returned:</span>
+<span class="tok-comment">///   - `error.ReservedBitSet` if the reserved bit is set</span>
+<span class="tok-comment">///   - `error.EndOfStream` if there are not enough bytes in `source`</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeSequencesHeader</span>(
+    source: <span class="tok-kw">anytype</span>,
+) !<a href="std.compress.zstandard.types.compressed_block.SequencesSection.html">SequencesSection</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.html">Header</a> {
+    <span class="tok-kw">var</span> sequence_count: <span class="tok-type">u24</span> = <span class="tok-null">undefined</span>;
+
+    <span class="tok-kw">const</span> byte0 = <span class="tok-kw">try</span> source.readByte();
+    <span class="tok-kw">if</span> (byte0 == <span class="tok-number">0</span>) {
+        <span class="tok-kw">return</span> <a href="std.compress.zstandard.types.compressed_block.SequencesSection.html">SequencesSection</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.html">Header</a>{
+            .sequence_count = <span class="tok-number">0</span>,
+            .offsets = <span class="tok-null">undefined</span>,
+            .match_lengths = <span class="tok-null">undefined</span>,
+            .literal_lengths = <span class="tok-null">undefined</span>,
+        };
+    } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (byte0 &lt; <span class="tok-number">128</span>) {
+        sequence_count = byte0;
+    } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (byte0 &lt; <span class="tok-number">255</span>) {
+        sequence_count = (<span class="tok-builtin">@as</span>(<span class="tok-type">u24</span>, (byte0 - <span class="tok-number">128</span>)) &lt;&lt; <span class="tok-number">8</span>) + <span class="tok-kw">try</span> source.readByte();
+    } <span class="tok-kw">else</span> {
+        sequence_count = (<span class="tok-kw">try</span> source.readByte()) + (<span class="tok-builtin">@as</span>(<span class="tok-type">u24</span>, <span class="tok-kw">try</span> source.readByte()) &lt;&lt; <span class="tok-number">8</span>) + <span class="tok-number">0x7F00</span>;
+    }
+
+    <span class="tok-kw">const</span> compression_modes = <span class="tok-kw">try</span> source.readByte();
+
+    <span class="tok-kw">const</span> matches_mode = <span class="tok-builtin">@as</span>(<a href="std.compress.zstandard.types.compressed_block.SequencesSection.html">SequencesSection</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.html">Header</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.Mode.html">Mode</a>, <span class="tok-builtin">@enumFromInt</span>((compression_modes &amp; <span class="tok-number">0b00001100</span>) &gt;&gt; <span class="tok-number">2</span>));
+    <span class="tok-kw">const</span> offsets_mode = <span class="tok-builtin">@as</span>(<a href="std.compress.zstandard.types.compressed_block.SequencesSection.html">SequencesSection</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.html">Header</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.Mode.html">Mode</a>, <span class="tok-builtin">@enumFromInt</span>((compression_modes &amp; <span class="tok-number">0b00110000</span>) &gt;&gt; <span class="tok-number">4</span>));
+    <span class="tok-kw">const</span> literal_mode = <span class="tok-builtin">@as</span>(<a href="std.compress.zstandard.types.compressed_block.SequencesSection.html">SequencesSection</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.html">Header</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.Mode.html">Mode</a>, <span class="tok-builtin">@enumFromInt</span>((compression_modes &amp; <span class="tok-number">0b11000000</span>) &gt;&gt; <span class="tok-number">6</span>));
+    <span class="tok-kw">if</span> (compression_modes &amp; <span class="tok-number">0b11</span> != <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ReservedBitSet;
+
+    <span class="tok-kw">return</span> <a href="std.compress.zstandard.types.compressed_block.SequencesSection.html">SequencesSection</a>.<a href="std.compress.zstandard.types.compressed_block.SequencesSection.Header.html">Header</a>{
+        .sequence_count = sequence_count,
+        .offsets = offsets_mode,
+        .match_lengths = matches_mode,
+        .literal_lengths = literal_mode,
+    };
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

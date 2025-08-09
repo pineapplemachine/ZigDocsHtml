@@ -1,0 +1,1555 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">zig</a></li><li><a href="std.zig.AstRlAnnotate.html" class="active">AstRlAnnotate</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.zig.AstRlAnnotate" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.zig.AstRlAnnotate</span><a href="#src.zig-std.zig.AstRlAnnotate">[src]</a></h1><div class="tldDocs"><p>AstRlAnnotate is a simple pass which runs over the AST before AstGen to
+determine which expressions require result locations.</p>
+<p>In some cases, AstGen can choose whether to provide a result pointer or to
+just use standard <code>break</code> instructions from a block. The latter choice can
+result in more efficient ZIR and runtime code, but does not allow for RLS to
+occur. Thus, we want to provide a real result pointer (from an alloc) only
+when necessary.</p>
+<p>To achieve this, we need to determine which expressions require a result
+pointer. This pass is responsible for analyzing all syntax forms which may
+provide a result location and, if sub-expressions consume this result
+pointer non-trivially (e.g. writing through field pointers), marking the
+node as requiring a result location.</p>
+</div><div class="sectTypes"><h2 class="sectionHeader">Types</h2><div class="listTypes"><div class="decl"><h2 id="std.zig.AstRlAnnotate.RlNeededSet" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">RlNeededSet</span><a href="#src.zig-std.zig.AstRlAnnotate.RlNeededSet">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.AstRlAnnotate.RlNeededSet">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> RlNeededSet = <a href="std.hash_map.html#std.hash_map.AutoHashMapUnmanaged">AutoHashMapUnmanaged</a>(<a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.Node.html">Node</a>.<a href="std.zig.Ast.Node.html#std.zig.Ast.Node.Index">Index</a>, <span class="tok-type">void</span>)</code></pre></details></div></div></div></div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>gpa: <a href="std.mem.Allocator.html">Allocator</a></code></pre></div><div><pre><code>arena: <a href="std.mem.Allocator.html">Allocator</a></code></pre></div><div><pre><code>tree: *<span class="tok-kw">const</span> <a href="std.zig.Ast.html">Ast</a></code></pre></div><div><pre><code>nodes_need_rl: <a href="std.zig.AstRlAnnotate.html#std.zig.AstRlAnnotate.RlNeededSet">RlNeededSet</a> = .{}</code></pre><div class="fieldDocs"><p>Certain nodes are placed in this set under the following conditions:</p>
+<ul>
+<li>if-else: either branch consumes the result location</li>
+<li>labeled block: any break consumes the result location</li>
+<li>switch: any prong consumes the result location</li>
+<li>orelse/catch: the RHS expression consumes the result location</li>
+<li>while/for: any break consumes the result location</li>
+<li>@as: the second operand consumes the result location</li>
+<li>const: the init expression consumes the result location</li>
+<li>return: the return expression consumes the result location</li>
+</ul>
+</div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.zig.AstRlAnnotate.annotate" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">annotate</span><a href="#src.zig-std.zig.AstRlAnnotate.annotate">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">annotate</span>(gpa: <a href="std.mem.Allocator.html">Allocator</a>, arena: <a href="std.mem.Allocator.html">Allocator</a>, tree: <a href="std.zig.Ast.html">Ast</a>) <a href="std.mem.Allocator.html">Allocator</a>.<a href="std.mem.Allocator.html#std.mem.Allocator.Error">Error</a>!<a href="std.zig.AstRlAnnotate.html#std.zig.AstRlAnnotate.RlNeededSet">RlNeededSet</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>gpa: <a href="std.mem.Allocator.html">Allocator</a></code></pre></div><div><pre><code>arena: <a href="std.mem.Allocator.html">Allocator</a></code></pre></div><div><pre><code>tree: <a href="std.zig.Ast.html">Ast</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.AstRlAnnotate.annotate">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">annotate</span>(gpa: <a href="std.mem.Allocator.html">Allocator</a>, arena: <a href="std.mem.Allocator.html">Allocator</a>, tree: <a href="std.zig.Ast.html">Ast</a>) <a href="std.mem.Allocator.html">Allocator</a>.<a href="std.mem.Allocator.html#std.mem.Allocator.Error">Error</a>!<a href="std.zig.AstRlAnnotate.html#std.zig.AstRlAnnotate.RlNeededSet">RlNeededSet</a> {
+    <span class="tok-kw">var</span> astrl: <a href="std.zig.AstRlAnnotate.html">AstRlAnnotate</a> = .{
+        .gpa = gpa,
+        .arena = arena,
+        .tree = &amp;tree,
+    };
+    <span class="tok-kw">defer</span> astrl.deinit(gpa);
+
+    <span class="tok-kw">if</span> (tree.errors.len != <span class="tok-number">0</span>) {<span class="tok-comment">
+        // We can't perform analysis on a broken AST. AstGen will not run in
+        // this case.
+        </span><span class="tok-kw">return</span> .{};
+    }
+
+    <span class="tok-kw">for</span> (tree.containerDeclRoot().ast.members) |member_node| {
+        _ = <span class="tok-kw">try</span> astrl.expr(member_node, <span class="tok-null">null</span>, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+    }
+
+    <span class="tok-kw">return</span> astrl.nodes_need_rl.move();
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.zig.AstRlAnnotate">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-comment">//! AstRlAnnotate is a simple pass which runs over the AST before AstGen to</span>
+<span class="tok-comment">//! determine which expressions require result locations.</span>
+<span class="tok-comment">//!</span>
+<span class="tok-comment">//! In some cases, AstGen can choose whether to provide a result pointer or to</span>
+<span class="tok-comment">//! just use standard `break` instructions from a block. The latter choice can</span>
+<span class="tok-comment">//! result in more efficient ZIR and runtime code, but does not allow for RLS to</span>
+<span class="tok-comment">//! occur. Thus, we want to provide a real result pointer (from an alloc) only</span>
+<span class="tok-comment">//! when necessary.</span>
+<span class="tok-comment">//!</span>
+<span class="tok-comment">//! To achieve this, we need to determine which expressions require a result</span>
+<span class="tok-comment">//! pointer. This pass is responsible for analyzing all syntax forms which may</span>
+<span class="tok-comment">//! provide a result location and, if sub-expressions consume this result</span>
+<span class="tok-comment">//! pointer non-trivially (e.g. writing through field pointers), marking the</span>
+<span class="tok-comment">//! node as requiring a result location.</span>
+
+<span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>);
+<span class="tok-kw">const</span> AstRlAnnotate = <span class="tok-builtin">@This</span>();
+<span class="tok-kw">const</span> Ast = <a href="std.html">std</a>.<a href="std.zig.html">zig</a>.<a href="std.zig.Ast.html">Ast</a>;
+<span class="tok-kw">const</span> Allocator = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>;
+<span class="tok-kw">const</span> AutoHashMapUnmanaged = <a href="std.html">std</a>.<a href="std.hash_map.html#std.hash_map.AutoHashMapUnmanaged">AutoHashMapUnmanaged</a>;
+<span class="tok-kw">const</span> BuiltinFn = <a href="std.html">std</a>.<a href="std.zig.html">zig</a>.<a href="std.zig.BuiltinFn.html">BuiltinFn</a>;
+<span class="tok-kw">const</span> assert = <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>;
+
+gpa: <a href="std.mem.Allocator.html">Allocator</a>,
+arena: <a href="std.mem.Allocator.html">Allocator</a>,
+tree: *<span class="tok-kw">const</span> <a href="std.zig.Ast.html">Ast</a>,
+
+<span class="tok-comment">/// Certain nodes are placed in this set under the following conditions:</span>
+<span class="tok-comment">/// * if-else: either branch consumes the result location</span>
+<span class="tok-comment">/// * labeled block: any break consumes the result location</span>
+<span class="tok-comment">/// * switch: any prong consumes the result location</span>
+<span class="tok-comment">/// * orelse/catch: the RHS expression consumes the result location</span>
+<span class="tok-comment">/// * while/for: any break consumes the result location</span>
+<span class="tok-comment">/// * @as: the second operand consumes the result location</span>
+<span class="tok-comment">/// * const: the init expression consumes the result location</span>
+<span class="tok-comment">/// * return: the return expression consumes the result location</span>
+nodes_need_rl: <a href="std.zig.AstRlAnnotate.html#std.zig.AstRlAnnotate.RlNeededSet">RlNeededSet</a> = .{},
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> RlNeededSet = <a href="std.hash_map.html#std.hash_map.AutoHashMapUnmanaged">AutoHashMapUnmanaged</a>(<a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.Node.html">Node</a>.<a href="std.zig.Ast.Node.html#std.zig.Ast.Node.Index">Index</a>, <span class="tok-type">void</span>);
+
+<span class="tok-kw">const</span> ResultInfo = <span class="tok-kw">packed</span> <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Do we have a known result type?</span>
+    have_type: <span class="tok-type">bool</span>,
+    <span class="tok-comment">/// Do we (potentially) have a result pointer? Note that this pointer's type</span>
+    <span class="tok-comment">/// may not be known due to it being an inferred alloc.</span>
+    have_ptr: <span class="tok-type">bool</span>,
+
+    <span class="tok-kw">const</span> none: <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a> = .{ .have_type = <span class="tok-null">false</span>, .have_ptr = <span class="tok-null">false</span> };
+    <span class="tok-kw">const</span> typed_ptr: <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a> = .{ .have_type = <span class="tok-null">true</span>, .have_ptr = <span class="tok-null">true</span> };
+    <span class="tok-kw">const</span> inferred_ptr: <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a> = .{ .have_type = <span class="tok-null">false</span>, .have_ptr = <span class="tok-null">true</span> };
+    <span class="tok-kw">const</span> type_only: <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a> = .{ .have_type = <span class="tok-null">true</span>, .have_ptr = <span class="tok-null">false</span> };
+};
+
+<span class="tok-comment">/// A labeled block or a loop. When this block is broken from, `consumes_res_ptr`</span>
+<span class="tok-comment">/// should be set if the break expression consumed the result pointer.</span>
+<span class="tok-kw">const</span> Block = <span class="tok-kw">struct</span> {
+    parent: ?*<a href="std.zig.AstRlAnnotate.Block.html">Block</a>,
+    label: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    is_loop: <span class="tok-type">bool</span>,
+    ri: <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>,
+    consumes_res_ptr: <span class="tok-type">bool</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">annotate</span>(gpa: <a href="std.mem.Allocator.html">Allocator</a>, arena: <a href="std.mem.Allocator.html">Allocator</a>, tree: <a href="std.zig.Ast.html">Ast</a>) <a href="std.mem.Allocator.html">Allocator</a>.<a href="std.mem.Allocator.html#std.mem.Allocator.Error">Error</a>!<a href="std.zig.AstRlAnnotate.html#std.zig.AstRlAnnotate.RlNeededSet">RlNeededSet</a> {
+    <span class="tok-kw">var</span> astrl: <a href="std.zig.AstRlAnnotate.html">AstRlAnnotate</a> = .{
+        .gpa = gpa,
+        .arena = arena,
+        .tree = &amp;tree,
+    };
+    <span class="tok-kw">defer</span> astrl.deinit(gpa);
+
+    <span class="tok-kw">if</span> (tree.errors.len != <span class="tok-number">0</span>) {<span class="tok-comment">
+        // We can't perform analysis on a broken AST. AstGen will not run in
+        // this case.
+        </span><span class="tok-kw">return</span> .{};
+    }
+
+    <span class="tok-kw">for</span> (tree.containerDeclRoot().ast.members) |member_node| {
+        _ = <span class="tok-kw">try</span> astrl.expr(member_node, <span class="tok-null">null</span>, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+    }
+
+    <span class="tok-kw">return</span> astrl.nodes_need_rl.move();
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(astrl: *<a href="std.zig.AstRlAnnotate.html">AstRlAnnotate</a>, gpa: <a href="std.mem.Allocator.html">Allocator</a>) <span class="tok-type">void</span> {
+    astrl.nodes_need_rl.deinit(gpa);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">containerDecl</span>(
+    astrl: *<a href="std.zig.AstRlAnnotate.html">AstRlAnnotate</a>,
+    block: ?*<a href="std.zig.AstRlAnnotate.Block.html">Block</a>,
+    full: <a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.full.html">full</a>.<a href="std.zig.Ast.full.ContainerDecl.html">ContainerDecl</a>,
+) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> tree = astrl.tree;
+    <span class="tok-kw">const</span> token_tags = tree.tokens.items(.tag);
+    <span class="tok-kw">switch</span> (token_tags[full.ast.main_token]) {
+        .keyword_struct =&gt; {
+            <span class="tok-kw">if</span> (full.ast.arg != <span class="tok-number">0</span>) {
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.arg, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            }
+            <span class="tok-kw">for</span> (full.ast.members) |member_node| {
+                _ = <span class="tok-kw">try</span> astrl.expr(member_node, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            }
+        },
+        .keyword_union =&gt; {
+            <span class="tok-kw">if</span> (full.ast.arg != <span class="tok-number">0</span>) {
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.arg, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            }
+            <span class="tok-kw">for</span> (full.ast.members) |member_node| {
+                _ = <span class="tok-kw">try</span> astrl.expr(member_node, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            }
+        },
+        .keyword_enum =&gt; {
+            <span class="tok-kw">if</span> (full.ast.arg != <span class="tok-number">0</span>) {
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.arg, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            }
+            <span class="tok-kw">for</span> (full.ast.members) |member_node| {
+                _ = <span class="tok-kw">try</span> astrl.expr(member_node, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            }
+        },
+        .keyword_opaque =&gt; {
+            <span class="tok-kw">for</span> (full.ast.members) |member_node| {
+                _ = <span class="tok-kw">try</span> astrl.expr(member_node, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            }
+        },
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+    }
+}
+
+<span class="tok-comment">/// Returns true if `rl` provides a result pointer and the expression consumes it.</span>
+<span class="tok-kw">fn</span> <span class="tok-fn">expr</span>(astrl: *<a href="std.zig.AstRlAnnotate.html">AstRlAnnotate</a>, node: <a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.Node.html">Node</a>.<a href="std.zig.Ast.Node.html#std.zig.Ast.Node.Index">Index</a>, block: ?*<a href="std.zig.AstRlAnnotate.Block.html">Block</a>, ri: <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>) <a href="std.mem.Allocator.html">Allocator</a>.<a href="std.mem.Allocator.html#std.mem.Allocator.Error">Error</a>!<span class="tok-type">bool</span> {
+    <span class="tok-kw">const</span> tree = astrl.tree;
+    <span class="tok-kw">const</span> token_tags = tree.tokens.items(.tag);
+    <span class="tok-kw">const</span> node_datas = tree.nodes.items(.data);
+    <span class="tok-kw">const</span> node_tags = tree.nodes.items(.tag);
+    <span class="tok-kw">switch</span> (node_tags[node]) {
+        .root,
+        .switch_case_one,
+        .switch_case_inline_one,
+        .switch_case,
+        .switch_case_inline,
+        .switch_range,
+        .for_range,
+        .asm_output,
+        .asm_input,
+        =&gt; <span class="tok-kw">unreachable</span>,
+
+        .@&quot;errdefer&quot;, .@&quot;defer&quot; =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].rhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+
+        .container_field_init,
+        .container_field_align,
+        .container_field,
+        =&gt; {
+            <span class="tok-kw">const</span> full = tree.fullContainerField(node).?;
+            _ = <span class="tok-kw">try</span> astrl.expr(full.ast.type_expr, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">if</span> (full.ast.align_expr != <span class="tok-number">0</span>) {
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.align_expr, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            }
+            <span class="tok-kw">if</span> (full.ast.value_expr != <span class="tok-number">0</span>) {
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.value_expr, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            }
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .@&quot;usingnamespace&quot; =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .test_decl =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].rhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .global_var_decl,
+        .local_var_decl,
+        .simple_var_decl,
+        .aligned_var_decl,
+        =&gt; {
+            <span class="tok-kw">const</span> full = tree.fullVarDecl(node).?;
+            <span class="tok-kw">const</span> init_ri = <span class="tok-kw">if</span> (full.ast.type_node != <span class="tok-number">0</span>) init_ri: {
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.type_node, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+                <span class="tok-kw">break</span> :init_ri <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.typed_ptr">typed_ptr</a>;
+            } <span class="tok-kw">else</span> <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.inferred_ptr">inferred_ptr</a>;
+            <span class="tok-kw">if</span> (full.ast.init_node == <span class="tok-number">0</span>) {<span class="tok-comment">
+                // No init node, so we're done.
+                </span><span class="tok-kw">return</span> <span class="tok-null">false</span>;
+            }
+            <span class="tok-kw">switch</span> (token_tags[full.ast.mut_token]) {
+                .keyword_const =&gt; {
+                    <span class="tok-kw">const</span> init_consumes_rl = <span class="tok-kw">try</span> astrl.expr(full.ast.init_node, block, init_ri);
+                    <span class="tok-kw">if</span> (init_consumes_rl) {
+                        <span class="tok-kw">try</span> astrl.nodes_need_rl.putNoClobber(astrl.gpa, node, {});
+                    }
+                    <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+                },
+                .keyword_var =&gt; {<span class="tok-comment">
+                    // We'll create an alloc either way, so don't care if the
+                    // result pointer is consumed.
+                    </span>_ = <span class="tok-kw">try</span> astrl.expr(full.ast.init_node, block, init_ri);
+                    <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+                },
+                <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+            }
+        },
+        .assign_destructure =&gt; {
+            <span class="tok-kw">const</span> full = tree.assignDestructure(node);
+            <span class="tok-kw">for</span> (full.ast.variables) |variable_node| {
+                _ = <span class="tok-kw">try</span> astrl.expr(variable_node, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            }<span class="tok-comment">
+            // We don't need to gather any meaningful data here, because destructures always use RLS
+            </span>_ = <span class="tok-kw">try</span> astrl.expr(full.ast.value_expr, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .assign =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].rhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.typed_ptr">typed_ptr</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .assign_shl,
+        .assign_shl_sat,
+        .assign_shr,
+        .assign_bit_and,
+        .assign_bit_or,
+        .assign_bit_xor,
+        .assign_div,
+        .assign_sub,
+        .assign_sub_wrap,
+        .assign_sub_sat,
+        .assign_mod,
+        .assign_add,
+        .assign_add_wrap,
+        .assign_add_sat,
+        .assign_mul,
+        .assign_mul_wrap,
+        .assign_mul_sat,
+        =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].rhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .shl, .shr =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].rhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .add,
+        .add_wrap,
+        .add_sat,
+        .sub,
+        .sub_wrap,
+        .sub_sat,
+        .mul,
+        .mul_wrap,
+        .mul_sat,
+        .div,
+        .mod,
+        .shl_sat,
+        .bit_and,
+        .bit_or,
+        .bit_xor,
+        .bang_equal,
+        .equal_equal,
+        .greater_than,
+        .greater_or_equal,
+        .less_than,
+        .less_or_equal,
+        .array_cat,
+        =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].rhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .array_mult =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].rhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .error_union, .merge_error_sets =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].rhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .bool_and,
+        .bool_or,
+        =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].rhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .bool_not =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .bit_not, .negation, .negation_wrap =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },<span class="tok-comment">
+
+        // These nodes are leaves and never consume a result location.
+        </span>.identifier,
+        .string_literal,
+        .multiline_string_literal,
+        .number_literal,
+        .unreachable_literal,
+        .asm_simple,
+        .@&quot;asm&quot;,
+        .enum_literal,
+        .error_value,
+        .anyframe_literal,
+        .@&quot;continue&quot;,
+        .char_literal,
+        .error_set_decl,
+        =&gt; <span class="tok-kw">return</span> <span class="tok-null">false</span>,
+
+        .builtin_call_two, .builtin_call_two_comma =&gt; {
+            <span class="tok-kw">if</span> (node_datas[node].lhs == <span class="tok-number">0</span>) {
+                <span class="tok-kw">return</span> astrl.builtinCall(block, ri, node, &amp;.{});
+            } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (node_datas[node].rhs == <span class="tok-number">0</span>) {
+                <span class="tok-kw">return</span> astrl.builtinCall(block, ri, node, &amp;.{node_datas[node].lhs});
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">return</span> astrl.builtinCall(block, ri, node, &amp;.{ node_datas[node].lhs, node_datas[node].rhs });
+            }
+        },
+        .builtin_call, .builtin_call_comma =&gt; {
+            <span class="tok-kw">const</span> params = tree.extra_data[node_datas[node].lhs..node_datas[node].rhs];
+            <span class="tok-kw">return</span> astrl.builtinCall(block, ri, node, params);
+        },
+
+        .call_one,
+        .call_one_comma,
+        .async_call_one,
+        .async_call_one_comma,
+        .call,
+        .call_comma,
+        .async_call,
+        .async_call_comma,
+        =&gt; {
+            <span class="tok-kw">var</span> buf: [<span class="tok-number">1</span>]<a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.Node.html">Node</a>.<a href="std.zig.Ast.Node.html#std.zig.Ast.Node.Index">Index</a> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> full = tree.fullCall(&amp;buf, node).?;
+            _ = <span class="tok-kw">try</span> astrl.expr(full.ast.fn_expr, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">for</span> (full.ast.params) |param_node| {
+                _ = <span class="tok-kw">try</span> astrl.expr(param_node, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            }
+            <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (node_tags[node]) {
+                .call_one,
+                .call_one_comma,
+                .call,
+                .call_comma,
+                =&gt; <span class="tok-null">false</span>,<span class="tok-comment"> // TODO: once function calls are passed result locations this will change
+                </span>.async_call_one,
+                .async_call_one_comma,
+                .async_call,
+                .async_call_comma,
+                =&gt; ri.have_ptr,<span class="tok-comment"> // always use result ptr for frames
+                </span><span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+            };
+        },
+
+        .@&quot;return&quot; =&gt; {
+            <span class="tok-kw">if</span> (node_datas[node].lhs != <span class="tok-number">0</span>) {
+                <span class="tok-kw">const</span> ret_val_consumes_rl = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.typed_ptr">typed_ptr</a>);
+                <span class="tok-kw">if</span> (ret_val_consumes_rl) {
+                    <span class="tok-kw">try</span> astrl.nodes_need_rl.putNoClobber(astrl.gpa, node, {});
+                }
+            }
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+
+        .field_access =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+
+        .if_simple, .@&quot;if&quot; =&gt; {
+            <span class="tok-kw">const</span> full = tree.fullIf(node).?;
+            <span class="tok-kw">if</span> (full.error_token != <span class="tok-null">null</span> <span class="tok-kw">or</span> full.payload_token != <span class="tok-null">null</span>) {
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.cond_expr, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            } <span class="tok-kw">else</span> {
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.cond_expr, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);<span class="tok-comment"> // bool
+            </span>}
+
+            <span class="tok-kw">if</span> (full.ast.else_expr == <span class="tok-number">0</span>) {
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.then_expr, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+                <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">const</span> then_uses_rl = <span class="tok-kw">try</span> astrl.expr(full.ast.then_expr, block, ri);
+                <span class="tok-kw">const</span> else_uses_rl = <span class="tok-kw">try</span> astrl.expr(full.ast.else_expr, block, ri);
+                <span class="tok-kw">const</span> uses_rl = then_uses_rl <span class="tok-kw">or</span> else_uses_rl;
+                <span class="tok-kw">if</span> (uses_rl) <span class="tok-kw">try</span> astrl.nodes_need_rl.putNoClobber(astrl.gpa, node, {});
+                <span class="tok-kw">return</span> uses_rl;
+            }
+        },
+
+        .while_simple, .while_cont, .@&quot;while&quot; =&gt; {
+            <span class="tok-kw">const</span> full = tree.fullWhile(node).?;
+            <span class="tok-kw">const</span> label: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-kw">if</span> (full.label_token) |label_token| label: {
+                <span class="tok-kw">break</span> :label <span class="tok-kw">try</span> astrl.identString(label_token);
+            } <span class="tok-kw">else</span> <span class="tok-null">null</span>;
+            <span class="tok-kw">if</span> (full.error_token != <span class="tok-null">null</span> <span class="tok-kw">or</span> full.payload_token != <span class="tok-null">null</span>) {
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.cond_expr, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            } <span class="tok-kw">else</span> {
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.cond_expr, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);<span class="tok-comment"> // bool
+            </span>}
+            <span class="tok-kw">var</span> new_block: <a href="std.zig.AstRlAnnotate.Block.html">Block</a> = .{
+                .parent = block,
+                .label = label,
+                .is_loop = <span class="tok-null">true</span>,
+                .ri = ri,
+                .consumes_res_ptr = <span class="tok-null">false</span>,
+            };
+            <span class="tok-kw">if</span> (full.ast.cont_expr != <span class="tok-number">0</span>) {
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.cont_expr, &amp;new_block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            }
+            _ = <span class="tok-kw">try</span> astrl.expr(full.ast.then_expr, &amp;new_block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">const</span> else_consumes_rl = <span class="tok-kw">if</span> (full.ast.else_expr != <span class="tok-number">0</span>) else_rl: {
+                <span class="tok-kw">break</span> :else_rl <span class="tok-kw">try</span> astrl.expr(full.ast.else_expr, block, ri);
+            } <span class="tok-kw">else</span> <span class="tok-null">false</span>;
+            <span class="tok-kw">if</span> (new_block.consumes_res_ptr <span class="tok-kw">or</span> else_consumes_rl) {
+                <span class="tok-kw">try</span> astrl.nodes_need_rl.putNoClobber(astrl.gpa, node, {});
+                <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+            }
+        },
+
+        .for_simple, .@&quot;for&quot; =&gt; {
+            <span class="tok-kw">const</span> full = tree.fullFor(node).?;
+            <span class="tok-kw">const</span> label: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-kw">if</span> (full.label_token) |label_token| label: {
+                <span class="tok-kw">break</span> :label <span class="tok-kw">try</span> astrl.identString(label_token);
+            } <span class="tok-kw">else</span> <span class="tok-null">null</span>;
+            <span class="tok-kw">for</span> (full.ast.inputs) |input| {
+                <span class="tok-kw">if</span> (node_tags[input] == .for_range) {
+                    _ = <span class="tok-kw">try</span> astrl.expr(node_datas[input].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+                    <span class="tok-kw">if</span> (node_datas[input].rhs != <span class="tok-number">0</span>) {
+                        _ = <span class="tok-kw">try</span> astrl.expr(node_datas[input].rhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+                    }
+                } <span class="tok-kw">else</span> {
+                    _ = <span class="tok-kw">try</span> astrl.expr(input, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+                }
+            }
+            <span class="tok-kw">var</span> new_block: <a href="std.zig.AstRlAnnotate.Block.html">Block</a> = .{
+                .parent = block,
+                .label = label,
+                .is_loop = <span class="tok-null">true</span>,
+                .ri = ri,
+                .consumes_res_ptr = <span class="tok-null">false</span>,
+            };
+            _ = <span class="tok-kw">try</span> astrl.expr(full.ast.then_expr, &amp;new_block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">const</span> else_consumes_rl = <span class="tok-kw">if</span> (full.ast.else_expr != <span class="tok-number">0</span>) else_rl: {
+                <span class="tok-kw">break</span> :else_rl <span class="tok-kw">try</span> astrl.expr(full.ast.else_expr, block, ri);
+            } <span class="tok-kw">else</span> <span class="tok-null">false</span>;
+            <span class="tok-kw">if</span> (new_block.consumes_res_ptr <span class="tok-kw">or</span> else_consumes_rl) {
+                <span class="tok-kw">try</span> astrl.nodes_need_rl.putNoClobber(astrl.gpa, node, {});
+                <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+            }
+        },
+
+        .slice_open =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].rhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .slice =&gt; {
+            <span class="tok-kw">const</span> extra = tree.extraData(node_datas[node].rhs, <a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.Node.html">Node</a>.<a href="std.zig.Ast.Node.Slice.html">Slice</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(extra.start, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(extra.end, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .slice_sentinel =&gt; {
+            <span class="tok-kw">const</span> extra = tree.extraData(node_datas[node].rhs, <a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.Node.html">Node</a>.<a href="std.zig.Ast.Node.SliceSentinel.html">SliceSentinel</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(extra.start, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">if</span> (extra.end != <span class="tok-number">0</span>) {
+                _ = <span class="tok-kw">try</span> astrl.expr(extra.end, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            }
+            _ = <span class="tok-kw">try</span> astrl.expr(extra.sentinel, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .deref =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .address_of =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .optional_type =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .grouped_expression,
+        .@&quot;try&quot;,
+        .@&quot;await&quot;,
+        .@&quot;nosuspend&quot;,
+        .unwrap_optional,
+        =&gt; <span class="tok-kw">return</span> astrl.expr(node_datas[node].lhs, block, ri),
+
+        .block_two, .block_two_semicolon =&gt; {
+            <span class="tok-kw">if</span> (node_datas[node].lhs == <span class="tok-number">0</span>) {
+                <span class="tok-kw">return</span> astrl.blockExpr(block, ri, node, &amp;.{});
+            } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (node_datas[node].rhs == <span class="tok-number">0</span>) {
+                <span class="tok-kw">return</span> astrl.blockExpr(block, ri, node, &amp;.{node_datas[node].lhs});
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">return</span> astrl.blockExpr(block, ri, node, &amp;.{ node_datas[node].lhs, node_datas[node].rhs });
+            }
+        },
+        .block, .block_semicolon =&gt; {
+            <span class="tok-kw">const</span> statements = tree.extra_data[node_datas[node].lhs..node_datas[node].rhs];
+            <span class="tok-kw">return</span> astrl.blockExpr(block, ri, node, statements);
+        },
+        .anyframe_type =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].rhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .@&quot;catch&quot;, .@&quot;orelse&quot; =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">const</span> rhs_consumes_rl = <span class="tok-kw">try</span> astrl.expr(node_datas[node].rhs, block, ri);
+            <span class="tok-kw">if</span> (rhs_consumes_rl) {
+                <span class="tok-kw">try</span> astrl.nodes_need_rl.putNoClobber(astrl.gpa, node, {});
+            }
+            <span class="tok-kw">return</span> rhs_consumes_rl;
+        },
+
+        .ptr_type_aligned,
+        .ptr_type_sentinel,
+        .ptr_type,
+        .ptr_type_bit_range,
+        =&gt; {
+            <span class="tok-kw">const</span> full = tree.fullPtrType(node).?;
+            _ = <span class="tok-kw">try</span> astrl.expr(full.ast.child_type, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">if</span> (full.ast.sentinel != <span class="tok-number">0</span>) {
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.sentinel, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            }
+            <span class="tok-kw">if</span> (full.ast.addrspace_node != <span class="tok-number">0</span>) {
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.addrspace_node, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            }
+            <span class="tok-kw">if</span> (full.ast.align_node != <span class="tok-number">0</span>) {
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.align_node, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            }
+            <span class="tok-kw">if</span> (full.ast.bit_range_start != <span class="tok-number">0</span>) {
+                <a href="std.debug.html#std.debug.assert">assert</a>(full.ast.bit_range_end != <span class="tok-number">0</span>);
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.bit_range_start, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.bit_range_end, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            }
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+
+        .container_decl,
+        .container_decl_trailing,
+        .container_decl_arg,
+        .container_decl_arg_trailing,
+        .container_decl_two,
+        .container_decl_two_trailing,
+        .tagged_union,
+        .tagged_union_trailing,
+        .tagged_union_enum_tag,
+        .tagged_union_enum_tag_trailing,
+        .tagged_union_two,
+        .tagged_union_two_trailing,
+        =&gt; {
+            <span class="tok-kw">var</span> buf: [<span class="tok-number">2</span>]<a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.Node.html">Node</a>.<a href="std.zig.Ast.Node.html#std.zig.Ast.Node.Index">Index</a> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">try</span> astrl.containerDecl(block, tree.fullContainerDecl(&amp;buf, node).?);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+
+        .@&quot;break&quot; =&gt; {
+            <span class="tok-kw">if</span> (node_datas[node].rhs == <span class="tok-number">0</span>) {<span class="tok-comment">
+                // Breaks with void are not interesting
+                </span><span class="tok-kw">return</span> <span class="tok-null">false</span>;
+            }
+
+            <span class="tok-kw">var</span> opt_cur_block = block;
+            <span class="tok-kw">if</span> (node_datas[node].lhs == <span class="tok-number">0</span>) {<span class="tok-comment">
+                // No label - we're breaking from a loop.
+                </span><span class="tok-kw">while</span> (opt_cur_block) |cur_block| : (opt_cur_block = cur_block.parent) {
+                    <span class="tok-kw">if</span> (cur_block.is_loop) <span class="tok-kw">break</span>;
+                }
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">const</span> break_label = <span class="tok-kw">try</span> astrl.identString(node_datas[node].lhs);
+                <span class="tok-kw">while</span> (opt_cur_block) |cur_block| : (opt_cur_block = cur_block.parent) {
+                    <span class="tok-kw">const</span> block_label = cur_block.label <span class="tok-kw">orelse</span> <span class="tok-kw">continue</span>;
+                    <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, block_label, break_label)) <span class="tok-kw">break</span>;
+                }
+            }
+
+            <span class="tok-kw">if</span> (opt_cur_block) |target_block| {
+                <span class="tok-kw">const</span> consumes_break_rl = <span class="tok-kw">try</span> astrl.expr(node_datas[node].rhs, block, target_block.ri);
+                <span class="tok-kw">if</span> (consumes_break_rl) target_block.consumes_res_ptr = <span class="tok-null">true</span>;
+            } <span class="tok-kw">else</span> {<span class="tok-comment">
+                // No corresponding scope to break from - AstGen will emit an error.
+                </span>_ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].rhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            }
+
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+
+        .array_type =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].rhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .array_type_sentinel =&gt; {
+            <span class="tok-kw">const</span> extra = tree.extraData(node_datas[node].rhs, <a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.Node.html">Node</a>.<a href="std.zig.Ast.Node.ArrayTypeSentinel.html">ArrayTypeSentinel</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(extra.elem_type, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(extra.sentinel, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .array_access =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].rhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .@&quot;comptime&quot; =&gt; {<span class="tok-comment">
+            // AstGen will emit an error if the scope is already comptime, so we can assume it is
+            // not. This means the result location is not forwarded.
+            </span>_ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .@&quot;switch&quot;, .switch_comma =&gt; {
+            <span class="tok-kw">const</span> operand_node = node_datas[node].lhs;
+            <span class="tok-kw">const</span> extra = tree.extraData(node_datas[node].rhs, <a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.Node.html">Node</a>.<a href="std.zig.Ast.Node.SubRange.html">SubRange</a>);
+            <span class="tok-kw">const</span> case_nodes = tree.extra_data[extra.start..extra.end];
+
+            _ = <span class="tok-kw">try</span> astrl.expr(operand_node, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+
+            <span class="tok-kw">var</span> any_prong_consumed_rl = <span class="tok-null">false</span>;
+            <span class="tok-kw">for</span> (case_nodes) |case_node| {
+                <span class="tok-kw">const</span> case = tree.fullSwitchCase(case_node).?;
+                <span class="tok-kw">for</span> (case.ast.values) |item_node| {
+                    <span class="tok-kw">if</span> (node_tags[item_node] == .switch_range) {
+                        _ = <span class="tok-kw">try</span> astrl.expr(node_datas[item_node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+                        _ = <span class="tok-kw">try</span> astrl.expr(node_datas[item_node].rhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+                    } <span class="tok-kw">else</span> {
+                        _ = <span class="tok-kw">try</span> astrl.expr(item_node, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+                    }
+                }
+                <span class="tok-kw">if</span> (<span class="tok-kw">try</span> astrl.expr(case.ast.target_expr, block, ri)) {
+                    any_prong_consumed_rl = <span class="tok-null">true</span>;
+                }
+            }
+            <span class="tok-kw">if</span> (any_prong_consumed_rl) {
+                <span class="tok-kw">try</span> astrl.nodes_need_rl.putNoClobber(astrl.gpa, node, {});
+            }
+            <span class="tok-kw">return</span> any_prong_consumed_rl;
+        },
+        .@&quot;suspend&quot; =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .@&quot;resume&quot; =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(node_datas[node].lhs, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+
+        .array_init_one,
+        .array_init_one_comma,
+        .array_init_dot_two,
+        .array_init_dot_two_comma,
+        .array_init_dot,
+        .array_init_dot_comma,
+        .array_init,
+        .array_init_comma,
+        =&gt; {
+            <span class="tok-kw">var</span> buf: [<span class="tok-number">2</span>]<a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.Node.html">Node</a>.<a href="std.zig.Ast.Node.html#std.zig.Ast.Node.Index">Index</a> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> full = tree.fullArrayInit(&amp;buf, node).?;
+
+            <span class="tok-kw">if</span> (full.ast.type_expr != <span class="tok-number">0</span>) {<span class="tok-comment">
+                // Explicitly typed init does not participate in RLS
+                </span>_ = <span class="tok-kw">try</span> astrl.expr(full.ast.type_expr, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+                <span class="tok-kw">for</span> (full.ast.elements) |elem_init| {
+                    _ = <span class="tok-kw">try</span> astrl.expr(elem_init, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+                }
+                <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+            }
+
+            <span class="tok-kw">if</span> (ri.have_type) {<span class="tok-comment">
+                // Always forward type information
+                // If we have a result pointer, we use and forward it
+                </span><span class="tok-kw">for</span> (full.ast.elements) |elem_init| {
+                    _ = <span class="tok-kw">try</span> astrl.expr(elem_init, block, ri);
+                }
+                <span class="tok-kw">return</span> ri.have_ptr;
+            } <span class="tok-kw">else</span> {<span class="tok-comment">
+                // Untyped init does not consume result location
+                </span><span class="tok-kw">for</span> (full.ast.elements) |elem_init| {
+                    _ = <span class="tok-kw">try</span> astrl.expr(elem_init, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+                }
+                <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+            }
+        },
+
+        .struct_init_one,
+        .struct_init_one_comma,
+        .struct_init_dot_two,
+        .struct_init_dot_two_comma,
+        .struct_init_dot,
+        .struct_init_dot_comma,
+        .struct_init,
+        .struct_init_comma,
+        =&gt; {
+            <span class="tok-kw">var</span> buf: [<span class="tok-number">2</span>]<a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.Node.html">Node</a>.<a href="std.zig.Ast.Node.html#std.zig.Ast.Node.Index">Index</a> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> full = tree.fullStructInit(&amp;buf, node).?;
+
+            <span class="tok-kw">if</span> (full.ast.type_expr != <span class="tok-number">0</span>) {<span class="tok-comment">
+                // Explicitly typed init does not participate in RLS
+                </span>_ = <span class="tok-kw">try</span> astrl.expr(full.ast.type_expr, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+                <span class="tok-kw">for</span> (full.ast.fields) |field_init| {
+                    _ = <span class="tok-kw">try</span> astrl.expr(field_init, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+                }
+                <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+            }
+
+            <span class="tok-kw">if</span> (ri.have_type) {<span class="tok-comment">
+                // Always forward type information
+                // If we have a result pointer, we use and forward it
+                </span><span class="tok-kw">for</span> (full.ast.fields) |field_init| {
+                    _ = <span class="tok-kw">try</span> astrl.expr(field_init, block, ri);
+                }
+                <span class="tok-kw">return</span> ri.have_ptr;
+            } <span class="tok-kw">else</span> {<span class="tok-comment">
+                // Untyped init does not consume result location
+                </span><span class="tok-kw">for</span> (full.ast.fields) |field_init| {
+                    _ = <span class="tok-kw">try</span> astrl.expr(field_init, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+                }
+                <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+            }
+        },
+
+        .fn_proto_simple,
+        .fn_proto_multi,
+        .fn_proto_one,
+        .fn_proto,
+        .fn_decl,
+        =&gt; {
+            <span class="tok-kw">var</span> buf: [<span class="tok-number">1</span>]<a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.Node.html">Node</a>.<a href="std.zig.Ast.Node.html#std.zig.Ast.Node.Index">Index</a> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> full = tree.fullFnProto(&amp;buf, node).?;
+            <span class="tok-kw">const</span> body_node = <span class="tok-kw">if</span> (node_tags[node] == .fn_decl) node_datas[node].rhs <span class="tok-kw">else</span> <span class="tok-number">0</span>;
+            {
+                <span class="tok-kw">var</span> it = full.iterate(tree);
+                <span class="tok-kw">while</span> (it.next()) |param| {
+                    <span class="tok-kw">if</span> (param.anytype_ellipsis3 == <span class="tok-null">null</span>) {
+                        _ = <span class="tok-kw">try</span> astrl.expr(param.type_expr, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+                    }
+                }
+            }
+            <span class="tok-kw">if</span> (full.ast.align_expr != <span class="tok-number">0</span>) {
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.align_expr, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            }
+            <span class="tok-kw">if</span> (full.ast.addrspace_expr != <span class="tok-number">0</span>) {
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.addrspace_expr, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            }
+            <span class="tok-kw">if</span> (full.ast.section_expr != <span class="tok-number">0</span>) {
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.section_expr, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            }
+            <span class="tok-kw">if</span> (full.ast.callconv_expr != <span class="tok-number">0</span>) {
+                _ = <span class="tok-kw">try</span> astrl.expr(full.ast.callconv_expr, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            }
+            _ = <span class="tok-kw">try</span> astrl.expr(full.ast.return_type, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">if</span> (body_node != <span class="tok-number">0</span>) {
+                _ = <span class="tok-kw">try</span> astrl.expr(body_node, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            }
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">identString</span>(astrl: *<a href="std.zig.AstRlAnnotate.html">AstRlAnnotate</a>, token: <a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.html#std.zig.Ast.TokenIndex">TokenIndex</a>) ![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">const</span> tree = astrl.tree;
+    <span class="tok-kw">const</span> token_tags = tree.tokens.items(.tag);
+    <a href="std.debug.html#std.debug.assert">assert</a>(token_tags[token] == .identifier);
+    <span class="tok-kw">const</span> ident_name = tree.tokenSlice(token);
+    <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.startsWith">startsWith</a>(<span class="tok-type">u8</span>, ident_name, <span class="tok-str">&quot;@&quot;</span>)) {
+        <span class="tok-kw">return</span> ident_name;
+    }
+    <span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.zig.html">zig</a>.<a href="std.zig.string_literal.html">string_literal</a>.<a href="std.zig.string_literal.html#std.zig.string_literal.parseAlloc">parseAlloc</a>(astrl.arena, ident_name[<span class="tok-number">1</span>..]) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+        <span class="tok-kw">error</span>.OutOfMemory =&gt; <span class="tok-kw">error</span>.OutOfMemory,
+        <span class="tok-kw">error</span>.InvalidLiteral =&gt; <span class="tok-str">&quot;&quot;</span>,<span class="tok-comment"> // This pass can safely return garbage on invalid AST
+    </span>};
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">blockExpr</span>(astrl: *<a href="std.zig.AstRlAnnotate.html">AstRlAnnotate</a>, parent_block: ?*<a href="std.zig.AstRlAnnotate.Block.html">Block</a>, ri: <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>, node: <a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.Node.html">Node</a>.<a href="std.zig.Ast.Node.html#std.zig.Ast.Node.Index">Index</a>, statements: []<span class="tok-kw">const</span> <a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.Node.html">Node</a>.<a href="std.zig.Ast.Node.html#std.zig.Ast.Node.Index">Index</a>) !<span class="tok-type">bool</span> {
+    <span class="tok-kw">const</span> tree = astrl.tree;
+    <span class="tok-kw">const</span> token_tags = tree.tokens.items(.tag);
+    <span class="tok-kw">const</span> main_tokens = tree.nodes.items(.main_token);
+
+    <span class="tok-kw">const</span> lbrace = main_tokens[node];
+    <span class="tok-kw">if</span> (token_tags[lbrace - <span class="tok-number">1</span>] == .colon <span class="tok-kw">and</span>
+        token_tags[lbrace - <span class="tok-number">2</span>] == .identifier)
+    {<span class="tok-comment">
+        // Labeled block
+        </span><span class="tok-kw">var</span> new_block: <a href="std.zig.AstRlAnnotate.Block.html">Block</a> = .{
+            .parent = parent_block,
+            .label = <span class="tok-kw">try</span> astrl.identString(lbrace - <span class="tok-number">2</span>),
+            .is_loop = <span class="tok-null">false</span>,
+            .ri = ri,
+            .consumes_res_ptr = <span class="tok-null">false</span>,
+        };
+        <span class="tok-kw">for</span> (statements) |statement| {
+            _ = <span class="tok-kw">try</span> astrl.expr(statement, &amp;new_block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+        }
+        <span class="tok-kw">if</span> (new_block.consumes_res_ptr) {
+            <span class="tok-kw">try</span> astrl.nodes_need_rl.putNoClobber(astrl.gpa, node, {});
+        }
+        <span class="tok-kw">return</span> new_block.consumes_res_ptr;
+    } <span class="tok-kw">else</span> {<span class="tok-comment">
+        // Unlabeled block
+        </span><span class="tok-kw">for</span> (statements) |statement| {
+            _ = <span class="tok-kw">try</span> astrl.expr(statement, parent_block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+        }
+        <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">builtinCall</span>(astrl: *<a href="std.zig.AstRlAnnotate.html">AstRlAnnotate</a>, block: ?*<a href="std.zig.AstRlAnnotate.Block.html">Block</a>, ri: <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>, node: <a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.Node.html">Node</a>.<a href="std.zig.Ast.Node.html#std.zig.Ast.Node.Index">Index</a>, args: []<span class="tok-kw">const</span> <a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.Node.html">Node</a>.<a href="std.zig.Ast.Node.html#std.zig.Ast.Node.Index">Index</a>) !<span class="tok-type">bool</span> {
+    _ = ri;<span class="tok-comment"> // Currently, no builtin consumes its result location.
+
+    </span><span class="tok-kw">const</span> tree = astrl.tree;
+    <span class="tok-kw">const</span> main_tokens = tree.nodes.items(.main_token);
+    <span class="tok-kw">const</span> builtin_token = main_tokens[node];
+    <span class="tok-kw">const</span> builtin_name = tree.tokenSlice(builtin_token);
+    <span class="tok-kw">const</span> info = <a href="std.zig.BuiltinFn.html">BuiltinFn</a>.<a href="std.zig.BuiltinFn.html#std.zig.BuiltinFn.list">list</a>.<a href="#">get</a>(builtin_name) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+    <span class="tok-kw">if</span> (info.param_count) |expected| {
+        <span class="tok-kw">if</span> (expected != args.len) <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+    }
+    <span class="tok-kw">switch</span> (info.tag) {
+        .import =&gt; <span class="tok-kw">return</span> <span class="tok-null">false</span>,
+        .branch_hint =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .compile_log, .TypeOf =&gt; {
+            <span class="tok-kw">for</span> (args) |arg_node| {
+                _ = <span class="tok-kw">try</span> astrl.expr(arg_node, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            }
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .as =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .bit_cast =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .union_init =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">2</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .c_import =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .min, .max =&gt; {
+            <span class="tok-kw">for</span> (args) |arg_node| {
+                _ = <span class="tok-kw">try</span> astrl.expr(arg_node, block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            }
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .@&quot;export&quot; =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .@&quot;extern&quot; =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },<span class="tok-comment">
+        // These builtins take no args and do not consume the result pointer.
+        </span>.src,
+        .This,
+        .return_address,
+        .error_return_trace,
+        .frame,
+        .breakpoint,
+        .disable_instrumentation,
+        .disable_intrinsics,
+        .in_comptime,
+        .panic,
+        .trap,
+        .c_va_start,
+        =&gt; <span class="tok-kw">return</span> <span class="tok-null">false</span>,<span class="tok-comment">
+        // TODO: this is a workaround for llvm/llvm-project#68409
+        // Zig tracking issue: #16876
+        </span>.frame_address =&gt; <span class="tok-kw">return</span> <span class="tok-null">true</span>,<span class="tok-comment">
+        // These builtins take a single argument with a known result type, but do not consume their
+        // result pointer.
+        </span>.size_of,
+        .bit_size_of,
+        .align_of,
+        .compile_error,
+        .set_eval_branch_quota,
+        .int_from_bool,
+        .int_from_error,
+        .error_from_int,
+        .embed_file,
+        .error_name,
+        .set_runtime_safety,
+        .Type,
+        .c_undef,
+        .c_include,
+        .wasm_memory_size,
+        .splat,
+        .set_float_mode,
+        .type_info,
+        .work_item_id,
+        .work_group_size,
+        .work_group_id,
+        =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },<span class="tok-comment">
+        // These builtins take a single argument with no result information and do not consume their
+        // result pointer.
+        </span>.int_from_ptr,
+        .int_from_enum,
+        .sqrt,
+        .sin,
+        .cos,
+        .tan,
+        .exp,
+        .exp2,
+        .log,
+        .log2,
+        .log10,
+        .abs,
+        .floor,
+        .ceil,
+        .trunc,
+        .round,
+        .tag_name,
+        .type_name,
+        .Frame,
+        .frame_size,
+        .int_from_float,
+        .float_from_int,
+        .ptr_from_int,
+        .enum_from_int,
+        .float_cast,
+        .int_cast,
+        .truncate,
+        .error_cast,
+        .ptr_cast,
+        .align_cast,
+        .addrspace_cast,
+        .const_cast,
+        .volatile_cast,
+        .clz,
+        .ctz,
+        .pop_count,
+        .byte_swap,
+        .bit_reverse,
+        =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .div_exact,
+        .div_floor,
+        .div_trunc,
+        .mod,
+        .rem,
+        =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .shl_exact, .shr_exact =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .bit_offset_of,
+        .offset_of,
+        .has_decl,
+        .has_field,
+        .field,
+        .FieldType,
+        =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .field_parent_ptr =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .wasm_memory_grow =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .c_define =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .reduce =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .add_with_overflow, .sub_with_overflow, .mul_with_overflow, .shl_with_overflow =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .atomic_load =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">2</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .atomic_rmw =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">2</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">3</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">4</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .atomic_store =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">2</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">3</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .mul_add =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">2</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .call =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">2</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .memcpy =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .memset =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .shuffle =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">2</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">3</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .select =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">2</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">3</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .async_call =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">2</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">3</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;<span class="tok-comment"> // buffer passed as arg for frame data
+        </span>},
+        .Vector =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .prefetch =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .c_va_arg =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .c_va_copy =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .c_va_end =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+        .cmpxchg_strong, .cmpxchg_weak =&gt; {
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">0</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.none">none</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">1</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">2</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">3</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            _ = <span class="tok-kw">try</span> astrl.expr(args[<span class="tok-number">4</span>], block, <a href="std.zig.AstRlAnnotate.ResultInfo.html">ResultInfo</a>.<a href="std.zig.AstRlAnnotate.ResultInfo.html#std.zig.AstRlAnnotate.ResultInfo.type_only">type_only</a>);
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        },
+    }
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

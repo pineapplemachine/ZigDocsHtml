@@ -1,0 +1,1559 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">Build</a></li><li><a href="std.Build.html" class="">Step</a></li><li><a href="std.Build.Step.ConfigHeader.html" class="active">ConfigHeader</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.Build.Step.ConfigHeader" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.Build.Step.ConfigHeader</span><a href="#src.zig-std.Build.Step.ConfigHeader">[src]</a></h1><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.Build.Step.ConfigHeader.Style.html">std.Build.Step.ConfigHeader.Style</a></li><li><a href="std.Build.Step.ConfigHeader.Value.html">std.Build.Step.ConfigHeader.Value</a></li><li><a href="std.Build.Step.ConfigHeader.Options.html">std.Build.Step.ConfigHeader.Options</a></li></ul></div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>step: <a href="std.Build.Step.html">Step</a></code></pre></div><div><pre><code>values: <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMap">StringArrayHashMap</a>(<a href="std.Build.Step.ConfigHeader.Value.html">Value</a>)</code></pre></div><div><pre><code>output_file: <a href="std.html">std</a>.<a href="std.Build.html">Build</a>.<a href="std.Build.GeneratedFile.html">GeneratedFile</a></code></pre></div><div><pre><code>style: <a href="std.Build.Step.ConfigHeader.Style.html">Style</a></code></pre></div><div><pre><code>max_bytes: <span class="tok-type">usize</span></code></pre></div><div><pre><code>include_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>include_guard_override: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.Build.Step.ConfigHeader.base_id" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">base_id</span><a href="#src.zig-std.Build.Step.ConfigHeader.base_id">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Step.ConfigHeader.base_id">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> base_id: <a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.Id.html">Id</a> = .config_header</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.Build.Step.ConfigHeader.create" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">create</span><a href="#src.zig-std.Build.Step.ConfigHeader.create">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">create</span>(owner: *<a href="std.html">std</a>.<a href="std.Build.html">Build</a>, options: <a href="std.Build.Step.ConfigHeader.Options.html">Options</a>) *<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>owner: *<a href="std.html">std</a>.<a href="std.Build.html">Build</a></code></pre></div><div><pre><code>options: <a href="std.Build.Step.ConfigHeader.Options.html">Options</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Step.ConfigHeader.create">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">create</span>(owner: *<a href="std.html">std</a>.<a href="std.Build.html">Build</a>, options: <a href="std.Build.Step.ConfigHeader.Options.html">Options</a>) *<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a> {
+    <span class="tok-kw">const</span> config_header = owner.allocator.create(<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a>) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+
+    <span class="tok-kw">var</span> include_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-str">&quot;config.h&quot;</span>;
+
+    <span class="tok-kw">if</span> (options.style.getPath()) |s| default_include_path: {
+        <span class="tok-kw">const</span> sub_path = <span class="tok-kw">switch</span> (s) {
+            .src_path =&gt; |sp| sp.sub_path,
+            .generated =&gt; <span class="tok-kw">break</span> :default_include_path,
+            .cwd_relative =&gt; |sub_path| sub_path,
+            .dependency =&gt; |dependency| dependency.sub_path,
+        };
+        <span class="tok-kw">const</span> basename = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.basename">basename</a>(sub_path);
+        <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.endsWith">endsWith</a>(<span class="tok-type">u8</span>, basename, <span class="tok-str">&quot;.h.in&quot;</span>)) {
+            include_path = basename[<span class="tok-number">0</span> .. basename.len - <span class="tok-number">3</span>];
+        }
+    }
+
+    <span class="tok-kw">if</span> (options.include_path) |p| {
+        include_path = p;
+    }
+
+    <span class="tok-kw">const</span> name = <span class="tok-kw">if</span> (options.style.getPath()) |s|
+        owner.fmt(<span class="tok-str">&quot;configure {s} header {s} to {s}&quot;</span>, .{
+            <span class="tok-builtin">@tagName</span>(options.style), s.getDisplayName(), include_path,
+        })
+    <span class="tok-kw">else</span>
+        owner.fmt(<span class="tok-str">&quot;configure {s} header to {s}&quot;</span>, .{ <span class="tok-builtin">@tagName</span>(options.style), include_path });
+
+    config_header.* = .{
+        .step = <a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.html#std.Build.Step.init">init</a>(.{
+            .id = <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.base_id">base_id</a>,
+            .name = name,
+            .owner = owner,
+            .makeFn = <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.make">make</a>,
+            .first_ret_addr = options.first_ret_addr <span class="tok-kw">orelse</span> <span class="tok-builtin">@returnAddress</span>(),
+        }),
+        .style = options.style,
+        .values = <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMap">StringArrayHashMap</a>(<a href="std.Build.Step.ConfigHeader.Value.html">Value</a>).init(owner.allocator),
+
+        .max_bytes = options.max_bytes,
+        .include_path = include_path,
+        .include_guard_override = options.include_guard_override,
+        .output_file = .{ .step = &amp;config_header.step },
+    };
+
+    <span class="tok-kw">return</span> config_header;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Step.ConfigHeader.addValue" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addValue</span><a href="#src.zig-std.Build.Step.ConfigHeader.addValue">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addValue</span>(config_header: *<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a>, name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, <span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, value: T) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>config_header: *<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a></code></pre></div><div><pre><code>name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>T: <span class="tok-type">type</span></code></pre></div><div><pre><code>value: T</code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Step.ConfigHeader.addValue">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addValue</span>(config_header: *<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a>, name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, <span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, value: T) <span class="tok-type">void</span> {
+    <span class="tok-kw">return</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.addValueInner">addValueInner</a>(config_header, name, T, value) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Step.ConfigHeader.addValues" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addValues</span><a href="#src.zig-std.Build.Step.ConfigHeader.addValues">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addValues</span>(config_header: *<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a>, values: <span class="tok-kw">anytype</span>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>config_header: *<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Step.ConfigHeader.addValues">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addValues</span>(config_header: *<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a>, values: <span class="tok-kw">anytype</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(values)).@&quot;struct&quot;.fields) |field| {
+        <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.addValue">addValue</a>(config_header, field.name, field.<span class="tok-type">type</span>, <span class="tok-builtin">@field</span>(values, field.name));
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Step.ConfigHeader.getOutput" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getOutput</span><a href="#src.zig-std.Build.Step.ConfigHeader.getOutput">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getOutput</span>(config_header: *<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a>) <a href="std.html">std</a>.<a href="std.Build.html">Build</a>.<a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>config_header: *<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Step.ConfigHeader.getOutput">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getOutput</span>(config_header: *<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a>) <a href="std.html">std</a>.<a href="std.Build.html">Build</a>.<a href="std.Build.LazyPath.html">LazyPath</a> {
+    <span class="tok-kw">return</span> .{ .generated = .{ .file = &amp;config_header.output_file } };
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.Build.Step.ConfigHeader">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>);
+<span class="tok-kw">const</span> ConfigHeader = <span class="tok-builtin">@This</span>();
+<span class="tok-kw">const</span> Step = <a href="std.html">std</a>.<a href="std.Build.html">Build</a>.<a href="std.Build.Step.html">Step</a>;
+<span class="tok-kw">const</span> Allocator = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Style = <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) {
+    <span class="tok-comment">/// A configure format supported by autotools that uses `#undef foo` to</span>
+    <span class="tok-comment">/// mark lines that can be substituted with different values.</span>
+    autoconf_undef: <a href="std.html">std</a>.<a href="std.Build.html">Build</a>.<a href="std.Build.LazyPath.html">LazyPath</a>,
+    <span class="tok-comment">/// Deprecated. Renamed to `autoconf_undef`.</span>
+    <span class="tok-comment">/// To be removed after 0.14.0 is tagged.</span>
+    autoconf: <a href="std.html">std</a>.<a href="std.Build.html">Build</a>.<a href="std.Build.LazyPath.html">LazyPath</a>,
+    <span class="tok-comment">/// A configure format supported by autotools that uses `@FOO@` output variables.</span>
+    autoconf_at: <a href="std.html">std</a>.<a href="std.Build.html">Build</a>.<a href="std.Build.LazyPath.html">LazyPath</a>,
+    <span class="tok-comment">/// The configure format supported by CMake. It uses `@FOO@`, `${}` and</span>
+    <span class="tok-comment">/// `#cmakedefine` for template substitution.</span>
+    cmake: <a href="std.html">std</a>.<a href="std.Build.html">Build</a>.<a href="std.Build.LazyPath.html">LazyPath</a>,
+    <span class="tok-comment">/// Instead of starting with an input file, start with nothing.</span>
+    blank,
+    <span class="tok-comment">/// Start with nothing, like blank, and output a nasm .asm file.</span>
+    nasm,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPath</span>(style: <a href="std.Build.Step.ConfigHeader.Style.html">Style</a>) ?<a href="std.html">std</a>.<a href="std.Build.html">Build</a>.<a href="std.Build.LazyPath.html">LazyPath</a> {
+        <span class="tok-kw">switch</span> (style) {
+            .autoconf_undef, .autoconf, .autoconf_at, .cmake =&gt; |s| <span class="tok-kw">return</span> s,
+            .blank, .nasm =&gt; <span class="tok-kw">return</span> <span class="tok-null">null</span>,
+        }
+    }
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Value = <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) {
+    undef,
+    defined,
+    boolean: <span class="tok-type">bool</span>,
+    int: <span class="tok-type">i64</span>,
+    ident: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    string: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+};
+
+step: <a href="std.Build.Step.html">Step</a>,
+values: <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMap">StringArrayHashMap</a>(<a href="std.Build.Step.ConfigHeader.Value.html">Value</a>),
+output_file: <a href="std.html">std</a>.<a href="std.Build.html">Build</a>.<a href="std.Build.GeneratedFile.html">GeneratedFile</a>,
+
+style: <a href="std.Build.Step.ConfigHeader.Style.html">Style</a>,
+max_bytes: <span class="tok-type">usize</span>,
+include_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+include_guard_override: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> base_id: <a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.Id.html">Id</a> = .config_header;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Options = <span class="tok-kw">struct</span> {
+    style: <a href="std.Build.Step.ConfigHeader.Style.html">Style</a> = .blank,
+    max_bytes: <span class="tok-type">usize</span> = <span class="tok-number">2</span> * <span class="tok-number">1024</span> * <span class="tok-number">1024</span>,
+    include_path: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-null">null</span>,
+    first_ret_addr: ?<span class="tok-type">usize</span> = <span class="tok-null">null</span>,
+    include_guard_override: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-null">null</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">create</span>(owner: *<a href="std.html">std</a>.<a href="std.Build.html">Build</a>, options: <a href="std.Build.Step.ConfigHeader.Options.html">Options</a>) *<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a> {
+    <span class="tok-kw">const</span> config_header = owner.allocator.create(<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a>) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+
+    <span class="tok-kw">var</span> include_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-str">&quot;config.h&quot;</span>;
+
+    <span class="tok-kw">if</span> (options.style.getPath()) |s| default_include_path: {
+        <span class="tok-kw">const</span> sub_path = <span class="tok-kw">switch</span> (s) {
+            .src_path =&gt; |sp| sp.sub_path,
+            .generated =&gt; <span class="tok-kw">break</span> :default_include_path,
+            .cwd_relative =&gt; |sub_path| sub_path,
+            .dependency =&gt; |dependency| dependency.sub_path,
+        };
+        <span class="tok-kw">const</span> basename = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.basename">basename</a>(sub_path);
+        <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.endsWith">endsWith</a>(<span class="tok-type">u8</span>, basename, <span class="tok-str">&quot;.h.in&quot;</span>)) {
+            include_path = basename[<span class="tok-number">0</span> .. basename.len - <span class="tok-number">3</span>];
+        }
+    }
+
+    <span class="tok-kw">if</span> (options.include_path) |p| {
+        include_path = p;
+    }
+
+    <span class="tok-kw">const</span> name = <span class="tok-kw">if</span> (options.style.getPath()) |s|
+        owner.fmt(<span class="tok-str">&quot;configure {s} header {s} to {s}&quot;</span>, .{
+            <span class="tok-builtin">@tagName</span>(options.style), s.getDisplayName(), include_path,
+        })
+    <span class="tok-kw">else</span>
+        owner.fmt(<span class="tok-str">&quot;configure {s} header to {s}&quot;</span>, .{ <span class="tok-builtin">@tagName</span>(options.style), include_path });
+
+    config_header.* = .{
+        .step = <a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.html#std.Build.Step.init">init</a>(.{
+            .id = <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.base_id">base_id</a>,
+            .name = name,
+            .owner = owner,
+            .makeFn = <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.make">make</a>,
+            .first_ret_addr = options.first_ret_addr <span class="tok-kw">orelse</span> <span class="tok-builtin">@returnAddress</span>(),
+        }),
+        .style = options.style,
+        .values = <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMap">StringArrayHashMap</a>(<a href="std.Build.Step.ConfigHeader.Value.html">Value</a>).init(owner.allocator),
+
+        .max_bytes = options.max_bytes,
+        .include_path = include_path,
+        .include_guard_override = options.include_guard_override,
+        .output_file = .{ .step = &amp;config_header.step },
+    };
+
+    <span class="tok-kw">return</span> config_header;
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addValue</span>(config_header: *<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a>, name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, <span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, value: T) <span class="tok-type">void</span> {
+    <span class="tok-kw">return</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.addValueInner">addValueInner</a>(config_header, name, T, value) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addValues</span>(config_header: *<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a>, values: <span class="tok-kw">anytype</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(values)).@&quot;struct&quot;.fields) |field| {
+        <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.addValue">addValue</a>(config_header, field.name, field.<span class="tok-type">type</span>, <span class="tok-builtin">@field</span>(values, field.name));
+    }
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getOutput</span>(config_header: *<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a>) <a href="std.html">std</a>.<a href="std.Build.html">Build</a>.<a href="std.Build.LazyPath.html">LazyPath</a> {
+    <span class="tok-kw">return</span> .{ .generated = .{ .file = &amp;config_header.output_file } };
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">addValueInner</span>(config_header: *<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a>, name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, <span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, value: T) !<span class="tok-type">void</span> {
+    <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(T)) {
+        .<span class="tok-null">null</span> =&gt; {
+            <span class="tok-kw">try</span> config_header.values.put(name, .undef);
+        },
+        .<span class="tok-type">void</span> =&gt; {
+            <span class="tok-kw">try</span> config_header.values.put(name, .defined);
+        },
+        .<span class="tok-type">bool</span> =&gt; {
+            <span class="tok-kw">try</span> config_header.values.put(name, .{ .boolean = value });
+        },
+        .int =&gt; {
+            <span class="tok-kw">try</span> config_header.values.put(name, .{ .int = value });
+        },
+        .<span class="tok-type">comptime_int</span> =&gt; {
+            <span class="tok-kw">try</span> config_header.values.put(name, .{ .int = value });
+        },
+        .@&quot;enum&quot;, .enum_literal =&gt; {
+            <span class="tok-kw">try</span> config_header.values.put(name, .{ .ident = <span class="tok-builtin">@tagName</span>(value) });
+        },
+        .optional =&gt; {
+            <span class="tok-kw">if</span> (value) |x| {
+                <span class="tok-kw">return</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.addValueInner">addValueInner</a>(config_header, name, <span class="tok-builtin">@TypeOf</span>(x), x);
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">try</span> config_header.values.put(name, .undef);
+            }
+        },
+        .pointer =&gt; |ptr| {
+            <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(ptr.child)) {
+                .array =&gt; |array| {
+                    <span class="tok-kw">if</span> (ptr.size == .one <span class="tok-kw">and</span> array.child == <span class="tok-type">u8</span>) {
+                        <span class="tok-kw">try</span> config_header.values.put(name, .{ .string = value });
+                        <span class="tok-kw">return</span>;
+                    }
+                },
+                .int =&gt; {
+                    <span class="tok-kw">if</span> (ptr.size == .slice <span class="tok-kw">and</span> ptr.child == <span class="tok-type">u8</span>) {
+                        <span class="tok-kw">try</span> config_header.values.put(name, .{ .string = value });
+                        <span class="tok-kw">return</span>;
+                    }
+                },
+                <span class="tok-kw">else</span> =&gt; {},
+            }
+
+            <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;unsupported ConfigHeader value type: &quot;</span> ++ <span class="tok-builtin">@typeName</span>(T));
+        },
+        <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;unsupported ConfigHeader value type: &quot;</span> ++ <span class="tok-builtin">@typeName</span>(T)),
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">make</span>(step: *<a href="std.Build.Step.html">Step</a>, options: <a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.MakeOptions.html">MakeOptions</a>) !<span class="tok-type">void</span> {
+    _ = options;
+    <span class="tok-kw">const</span> b = step.owner;
+    <span class="tok-kw">const</span> config_header: *<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a> = <span class="tok-builtin">@fieldParentPtr</span>(<span class="tok-str">&quot;step&quot;</span>, step);
+    <span class="tok-kw">if</span> (config_header.style.getPath()) |lp| <span class="tok-kw">try</span> step.singleUnchangingWatchInput(lp);
+
+    <span class="tok-kw">const</span> gpa = b.allocator;
+    <span class="tok-kw">const</span> arena = b.allocator;
+
+    <span class="tok-kw">var</span> man = b.graph.cache.obtain();
+    <span class="tok-kw">defer</span> man.deinit();<span class="tok-comment">
+
+    // Random bytes to make ConfigHeader unique. Refresh this with new
+    // random bytes when ConfigHeader implementation is modified in a
+    // non-backwards-compatible way.
+    </span>man.hash.add(<span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-number">0xdef08d23</span>));
+    man.hash.addBytes(config_header.include_path);
+    man.hash.addOptionalBytes(config_header.include_guard_override);
+
+    <span class="tok-kw">var</span> output = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>).init(gpa);
+    <span class="tok-kw">defer</span> output.deinit();
+
+    <span class="tok-kw">const</span> header_text = <span class="tok-str">&quot;This file was generated by ConfigHeader using the Zig Build System.&quot;</span>;
+    <span class="tok-kw">const</span> c_generated_line = <span class="tok-str">&quot;/* &quot;</span> ++ header_text ++ <span class="tok-str">&quot; */\n&quot;</span>;
+    <span class="tok-kw">const</span> asm_generated_line = <span class="tok-str">&quot;; &quot;</span> ++ header_text ++ <span class="tok-str">&quot;\n&quot;</span>;
+
+    <span class="tok-kw">switch</span> (config_header.style) {
+        .autoconf_undef, .autoconf, .autoconf_at =&gt; |file_source| {
+            <span class="tok-kw">try</span> output.appendSlice(c_generated_line);
+            <span class="tok-kw">const</span> src_path = file_source.getPath2(b, step);
+            <span class="tok-kw">const</span> contents = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.cwd">cwd</a>().readFileAlloc(arena, src_path, config_header.max_bytes) <span class="tok-kw">catch</span> |err| {
+                <span class="tok-kw">return</span> step.fail(<span class="tok-str">&quot;unable to read autoconf input file '{s}': {s}&quot;</span>, .{
+                    src_path, <span class="tok-builtin">@errorName</span>(err),
+                });
+            };
+            <span class="tok-kw">switch</span> (config_header.style) {
+                .autoconf_undef, .autoconf =&gt; <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.render_autoconf_undef">render_autoconf_undef</a>(step, contents, &amp;output, config_header.values, src_path),
+                .autoconf_at =&gt; <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.render_autoconf_at">render_autoconf_at</a>(step, contents, &amp;output, config_header.values, src_path),
+                <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+            }
+        },
+        .cmake =&gt; |file_source| {
+            <span class="tok-kw">try</span> output.appendSlice(c_generated_line);
+            <span class="tok-kw">const</span> src_path = file_source.getPath2(b, step);
+            <span class="tok-kw">const</span> contents = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.cwd">cwd</a>().readFileAlloc(arena, src_path, config_header.max_bytes) <span class="tok-kw">catch</span> |err| {
+                <span class="tok-kw">return</span> step.fail(<span class="tok-str">&quot;unable to read cmake input file '{s}': {s}&quot;</span>, .{
+                    src_path, <span class="tok-builtin">@errorName</span>(err),
+                });
+            };
+            <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.render_cmake">render_cmake</a>(step, contents, &amp;output, config_header.values, src_path);
+        },
+        .blank =&gt; {
+            <span class="tok-kw">try</span> output.appendSlice(c_generated_line);
+            <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.render_blank">render_blank</a>(&amp;output, config_header.values, config_header.include_path, config_header.include_guard_override);
+        },
+        .nasm =&gt; {
+            <span class="tok-kw">try</span> output.appendSlice(asm_generated_line);
+            <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.render_nasm">render_nasm</a>(&amp;output, config_header.values);
+        },
+    }
+
+    man.hash.addBytes(output.items);
+
+    <span class="tok-kw">if</span> (<span class="tok-kw">try</span> step.cacheHit(&amp;man)) {
+        <span class="tok-kw">const</span> digest = man.final();
+        config_header.output_file.path = <span class="tok-kw">try</span> b.cache_root.join(arena, &amp;.{
+            <span class="tok-str">&quot;o&quot;</span>, &amp;digest, config_header.include_path,
+        });
+        <span class="tok-kw">return</span>;
+    }
+
+    <span class="tok-kw">const</span> digest = man.final();<span class="tok-comment">
+
+    // If output_path has directory parts, deal with them.  Example:
+    // output_dir is zig-cache/o/HASH
+    // output_path is libavutil/avconfig.h
+    // We want to open directory zig-cache/o/HASH/libavutil/
+    // but keep output_dir as zig-cache/o/HASH for -I include
+    </span><span class="tok-kw">const</span> sub_path = b.pathJoin(&amp;.{ <span class="tok-str">&quot;o&quot;</span>, &amp;digest, config_header.include_path });
+    <span class="tok-kw">const</span> sub_path_dirname = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.dirname">dirname</a>(sub_path).?;
+
+    b.cache_root.handle.makePath(sub_path_dirname) <span class="tok-kw">catch</span> |err| {
+        <span class="tok-kw">return</span> step.fail(<span class="tok-str">&quot;unable to make path '{}{s}': {s}&quot;</span>, .{
+            b.cache_root, sub_path_dirname, <span class="tok-builtin">@errorName</span>(err),
+        });
+    };
+
+    b.cache_root.handle.writeFile(.{ .sub_path = sub_path, .data = output.items }) <span class="tok-kw">catch</span> |err| {
+        <span class="tok-kw">return</span> step.fail(<span class="tok-str">&quot;unable to write file '{}{s}': {s}&quot;</span>, .{
+            b.cache_root, sub_path, <span class="tok-builtin">@errorName</span>(err),
+        });
+    };
+
+    config_header.output_file.path = <span class="tok-kw">try</span> b.cache_root.join(arena, &amp;.{sub_path});
+    <span class="tok-kw">try</span> man.writeManifest();
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">render_autoconf_undef</span>(
+    step: *<a href="std.Build.Step.html">Step</a>,
+    contents: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    output: *<a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>),
+    values: <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMap">StringArrayHashMap</a>(<a href="std.Build.Step.ConfigHeader.Value.html">Value</a>),
+    src_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> build = step.owner;
+    <span class="tok-kw">const</span> allocator = build.allocator;
+
+    <span class="tok-kw">var</span> is_used: <a href="std.html">std</a>.<a href="std.bit_set.DynamicBitSetUnmanaged.html">DynamicBitSetUnmanaged</a> = <span class="tok-kw">try</span> .initEmpty(allocator, values.count());
+    <span class="tok-kw">defer</span> is_used.deinit(allocator);
+
+    <span class="tok-kw">var</span> any_errors = <span class="tok-null">false</span>;
+    <span class="tok-kw">var</span> line_index: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">var</span> line_it = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, contents, <span class="tok-str">'\n'</span>);
+    <span class="tok-kw">while</span> (line_it.next()) |line| : (line_index += <span class="tok-number">1</span>) {
+        <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.startsWith">startsWith</a>(<span class="tok-type">u8</span>, line, <span class="tok-str">&quot;#&quot;</span>)) {
+            <span class="tok-kw">try</span> output.appendSlice(line);
+            <span class="tok-kw">try</span> output.appendSlice(<span class="tok-str">&quot;\n&quot;</span>);
+            <span class="tok-kw">continue</span>;
+        }
+        <span class="tok-kw">var</span> it = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.tokenizeAny">tokenizeAny</a>(<span class="tok-type">u8</span>, line[<span class="tok-number">1</span>..], <span class="tok-str">&quot; \t\r&quot;</span>);
+        <span class="tok-kw">const</span> undef = it.next().?;
+        <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, undef, <span class="tok-str">&quot;undef&quot;</span>)) {
+            <span class="tok-kw">try</span> output.appendSlice(line);
+            <span class="tok-kw">try</span> output.appendSlice(<span class="tok-str">&quot;\n&quot;</span>);
+            <span class="tok-kw">continue</span>;
+        }
+        <span class="tok-kw">const</span> name = it.next().?;
+        <span class="tok-kw">const</span> index = values.getIndex(name) <span class="tok-kw">orelse</span> {
+            <span class="tok-kw">try</span> step.addError(<span class="tok-str">&quot;{s}:{d}: error: unspecified config header value: '{s}'&quot;</span>, .{
+                src_path, line_index + <span class="tok-number">1</span>, name,
+            });
+            any_errors = <span class="tok-null">true</span>;
+            <span class="tok-kw">continue</span>;
+        };
+        is_used.set(index);
+        <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.renderValueC">renderValueC</a>(output, name, values.values()[index]);
+    }
+
+    <span class="tok-kw">var</span> unused_value_it = is_used.iterator(.{ .kind = .unset });
+    <span class="tok-kw">while</span> (unused_value_it.next()) |index| {
+        <span class="tok-kw">try</span> step.addError(<span class="tok-str">&quot;{s}: error: config header value unused: '{s}'&quot;</span>, .{ src_path, values.keys()[index] });
+        any_errors = <span class="tok-null">true</span>;
+    }
+
+    <span class="tok-kw">if</span> (any_errors) {
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MakeFailed;
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">render_autoconf_at</span>(
+    step: *<a href="std.Build.Step.html">Step</a>,
+    contents: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    output: *<a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>),
+    values: <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMap">StringArrayHashMap</a>(<a href="std.Build.Step.ConfigHeader.Value.html">Value</a>),
+    src_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> build = step.owner;
+    <span class="tok-kw">const</span> allocator = build.allocator;
+
+    <span class="tok-kw">const</span> used = allocator.alloc(<span class="tok-type">bool</span>, values.count()) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+    <span class="tok-kw">for</span> (used) |*u| u.* = <span class="tok-null">false</span>;
+    <span class="tok-kw">defer</span> allocator.free(used);
+
+    <span class="tok-kw">var</span> any_errors = <span class="tok-null">false</span>;
+    <span class="tok-kw">var</span> line_index: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">var</span> line_it = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, contents, <span class="tok-str">'\n'</span>);
+    <span class="tok-kw">while</span> (line_it.next()) |line| : (line_index += <span class="tok-number">1</span>) {
+        <span class="tok-kw">const</span> last_line = line_it.index == line_it.buffer.len;
+
+        <span class="tok-kw">const</span> old_len = output.items.len;
+        <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.expand_variables_autoconf_at">expand_variables_autoconf_at</a>(output, line, values, used) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.MissingValue =&gt; {
+                <span class="tok-kw">const</span> name = output.items[old_len..];
+                <span class="tok-kw">defer</span> output.shrinkRetainingCapacity(old_len);
+                <span class="tok-kw">try</span> step.addError(<span class="tok-str">&quot;{s}:{d}: error: unspecified config header value: '{s}'&quot;</span>, .{
+                    src_path, line_index + <span class="tok-number">1</span>, name,
+                });
+                any_errors = <span class="tok-null">true</span>;
+                <span class="tok-kw">continue</span>;
+            },
+            <span class="tok-kw">else</span> =&gt; {
+                <span class="tok-kw">try</span> step.addError(<span class="tok-str">&quot;{s}:{d}: unable to substitute variable: error: {s}&quot;</span>, .{
+                    src_path, line_index + <span class="tok-number">1</span>, <span class="tok-builtin">@errorName</span>(err),
+                });
+                any_errors = <span class="tok-null">true</span>;
+                <span class="tok-kw">continue</span>;
+            },
+        };
+        <span class="tok-kw">if</span> (!last_line) {
+            <span class="tok-kw">try</span> output.append(<span class="tok-str">'\n'</span>);
+        }
+    }
+
+    <span class="tok-kw">for</span> (values.unmanaged.entries.slice().items(.key), used) |name, u| {
+        <span class="tok-kw">if</span> (!u) {
+            <span class="tok-kw">try</span> step.addError(<span class="tok-str">&quot;{s}: error: config header value unused: '{s}'&quot;</span>, .{ src_path, name });
+            any_errors = <span class="tok-null">true</span>;
+        }
+    }
+
+    <span class="tok-kw">if</span> (any_errors) {
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MakeFailed;
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">render_cmake</span>(
+    step: *<a href="std.Build.Step.html">Step</a>,
+    contents: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    output: *<a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>),
+    values: <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMap">StringArrayHashMap</a>(<a href="std.Build.Step.ConfigHeader.Value.html">Value</a>),
+    src_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> build = step.owner;
+    <span class="tok-kw">const</span> allocator = build.allocator;
+
+    <span class="tok-kw">var</span> values_copy = <span class="tok-kw">try</span> values.clone();
+    <span class="tok-kw">defer</span> values_copy.deinit();
+
+    <span class="tok-kw">var</span> any_errors = <span class="tok-null">false</span>;
+    <span class="tok-kw">var</span> line_index: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">var</span> line_it = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, contents, <span class="tok-str">'\n'</span>);
+    <span class="tok-kw">while</span> (line_it.next()) |raw_line| : (line_index += <span class="tok-number">1</span>) {
+        <span class="tok-kw">const</span> last_line = line_it.index == line_it.buffer.len;
+
+        <span class="tok-kw">const</span> line = <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.expand_variables_cmake">expand_variables_cmake</a>(allocator, raw_line, values) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.InvalidCharacter =&gt; {
+                <span class="tok-kw">try</span> step.addError(<span class="tok-str">&quot;{s}:{d}: error: invalid character in a variable name&quot;</span>, .{
+                    src_path, line_index + <span class="tok-number">1</span>,
+                });
+                any_errors = <span class="tok-null">true</span>;
+                <span class="tok-kw">continue</span>;
+            },
+            <span class="tok-kw">else</span> =&gt; {
+                <span class="tok-kw">try</span> step.addError(<span class="tok-str">&quot;{s}:{d}: unable to substitute variable: error: {s}&quot;</span>, .{
+                    src_path, line_index + <span class="tok-number">1</span>, <span class="tok-builtin">@errorName</span>(err),
+                });
+                any_errors = <span class="tok-null">true</span>;
+                <span class="tok-kw">continue</span>;
+            },
+        };
+        <span class="tok-kw">defer</span> allocator.free(line);
+
+        <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.startsWith">startsWith</a>(<span class="tok-type">u8</span>, line, <span class="tok-str">&quot;#&quot;</span>)) {
+            <span class="tok-kw">try</span> output.appendSlice(line);
+            <span class="tok-kw">if</span> (!last_line) {
+                <span class="tok-kw">try</span> output.appendSlice(<span class="tok-str">&quot;\n&quot;</span>);
+            }
+            <span class="tok-kw">continue</span>;
+        }
+        <span class="tok-kw">var</span> it = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.tokenizeAny">tokenizeAny</a>(<span class="tok-type">u8</span>, line[<span class="tok-number">1</span>..], <span class="tok-str">&quot; \t\r&quot;</span>);
+        <span class="tok-kw">const</span> cmakedefine = it.next().?;
+        <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, cmakedefine, <span class="tok-str">&quot;cmakedefine&quot;</span>) <span class="tok-kw">and</span>
+            !<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, cmakedefine, <span class="tok-str">&quot;cmakedefine01&quot;</span>))
+        {
+            <span class="tok-kw">try</span> output.appendSlice(line);
+            <span class="tok-kw">if</span> (!last_line) {
+                <span class="tok-kw">try</span> output.appendSlice(<span class="tok-str">&quot;\n&quot;</span>);
+            }
+            <span class="tok-kw">continue</span>;
+        }
+
+        <span class="tok-kw">const</span> booldefine = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, cmakedefine, <span class="tok-str">&quot;cmakedefine01&quot;</span>);
+
+        <span class="tok-kw">const</span> name = it.next() <span class="tok-kw">orelse</span> {
+            <span class="tok-kw">try</span> step.addError(<span class="tok-str">&quot;{s}:{d}: error: missing define name&quot;</span>, .{
+                src_path, line_index + <span class="tok-number">1</span>,
+            });
+            any_errors = <span class="tok-null">true</span>;
+            <span class="tok-kw">continue</span>;
+        };
+        <span class="tok-kw">var</span> value = values_copy.get(name) <span class="tok-kw">orelse</span> blk: {
+            <span class="tok-kw">if</span> (booldefine) {
+                <span class="tok-kw">break</span> :blk <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .int = <span class="tok-number">0</span> };
+            }
+            <span class="tok-kw">break</span> :blk <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>.<a href="#">undef</a>;
+        };
+
+        value = blk: {
+            <span class="tok-kw">switch</span> (value) {
+                .boolean =&gt; |b| {
+                    <span class="tok-kw">if</span> (!b) {
+                        <span class="tok-kw">break</span> :blk <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>.<a href="#">undef</a>;
+                    }
+                },
+                .int =&gt; |i| {
+                    <span class="tok-kw">if</span> (i == <span class="tok-number">0</span>) {
+                        <span class="tok-kw">break</span> :blk <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>.<a href="#">undef</a>;
+                    }
+                },
+                .string =&gt; |string| {
+                    <span class="tok-kw">if</span> (string.len == <span class="tok-number">0</span>) {
+                        <span class="tok-kw">break</span> :blk <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>.<a href="#">undef</a>;
+                    }
+                },
+
+                <span class="tok-kw">else</span> =&gt; {},
+            }
+            <span class="tok-kw">break</span> :blk value;
+        };
+
+        <span class="tok-kw">if</span> (booldefine) {
+            value = blk: {
+                <span class="tok-kw">switch</span> (value) {
+                    .undef =&gt; {
+                        <span class="tok-kw">break</span> :blk <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .boolean = <span class="tok-null">false</span> };
+                    },
+                    .defined =&gt; {
+                        <span class="tok-kw">break</span> :blk <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .boolean = <span class="tok-null">false</span> };
+                    },
+                    .boolean =&gt; |b| {
+                        <span class="tok-kw">break</span> :blk <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .boolean = b };
+                    },
+                    .int =&gt; |i| {
+                        <span class="tok-kw">break</span> :blk <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .boolean = i != <span class="tok-number">0</span> };
+                    },
+                    .string =&gt; |string| {
+                        <span class="tok-kw">break</span> :blk <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .boolean = string.len != <span class="tok-number">0</span> };
+                    },
+
+                    <span class="tok-kw">else</span> =&gt; {
+                        <span class="tok-kw">break</span> :blk <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .boolean = <span class="tok-null">false</span> };
+                    },
+                }
+            };
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (value != <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>.<a href="#">undef</a>) {
+            value = <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .ident = it.rest() };
+        }
+
+        <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.renderValueC">renderValueC</a>(output, name, value);
+    }
+
+    <span class="tok-kw">if</span> (any_errors) {
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.HeaderConfigFailed;
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">render_blank</span>(
+    output: *<a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>),
+    defines: <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMap">StringArrayHashMap</a>(<a href="std.Build.Step.ConfigHeader.Value.html">Value</a>),
+    include_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    include_guard_override: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> include_guard_name = include_guard_override <span class="tok-kw">orelse</span> blk: {
+        <span class="tok-kw">const</span> name = <span class="tok-kw">try</span> output.allocator.dupe(<span class="tok-type">u8</span>, include_path);
+        <span class="tok-kw">for</span> (name) |*byte| {
+            <span class="tok-kw">switch</span> (byte.*) {
+                <span class="tok-str">'a'</span>...<span class="tok-str">'z'</span> =&gt; byte.* = byte.* - <span class="tok-str">'a'</span> + <span class="tok-str">'A'</span>,
+                <span class="tok-str">'A'</span>...<span class="tok-str">'Z'</span>, <span class="tok-str">'0'</span>...<span class="tok-str">'9'</span> =&gt; <span class="tok-kw">continue</span>,
+                <span class="tok-kw">else</span> =&gt; byte.* = <span class="tok-str">'_'</span>,
+            }
+        }
+        <span class="tok-kw">break</span> :blk name;
+    };
+
+    <span class="tok-kw">try</span> output.appendSlice(<span class="tok-str">&quot;#ifndef &quot;</span>);
+    <span class="tok-kw">try</span> output.appendSlice(include_guard_name);
+    <span class="tok-kw">try</span> output.appendSlice(<span class="tok-str">&quot;\n#define &quot;</span>);
+    <span class="tok-kw">try</span> output.appendSlice(include_guard_name);
+    <span class="tok-kw">try</span> output.appendSlice(<span class="tok-str">&quot;\n&quot;</span>);
+
+    <span class="tok-kw">const</span> values = defines.values();
+    <span class="tok-kw">for</span> (defines.keys(), <span class="tok-number">0</span>..) |name, i| {
+        <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.renderValueC">renderValueC</a>(output, name, values[i]);
+    }
+
+    <span class="tok-kw">try</span> output.appendSlice(<span class="tok-str">&quot;#endif /* &quot;</span>);
+    <span class="tok-kw">try</span> output.appendSlice(include_guard_name);
+    <span class="tok-kw">try</span> output.appendSlice(<span class="tok-str">&quot; */\n&quot;</span>);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">render_nasm</span>(output: *<a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>), defines: <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMap">StringArrayHashMap</a>(<a href="std.Build.Step.ConfigHeader.Value.html">Value</a>)) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> values = defines.values();
+    <span class="tok-kw">for</span> (defines.keys(), <span class="tok-number">0</span>..) |name, i| {
+        <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.renderValueNasm">renderValueNasm</a>(output, name, values[i]);
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">renderValueC</span>(output: *<a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>), name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, value: <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">switch</span> (value) {
+        .undef =&gt; {
+            <span class="tok-kw">try</span> output.appendSlice(<span class="tok-str">&quot;/* #undef &quot;</span>);
+            <span class="tok-kw">try</span> output.appendSlice(name);
+            <span class="tok-kw">try</span> output.appendSlice(<span class="tok-str">&quot; */\n&quot;</span>);
+        },
+        .defined =&gt; {
+            <span class="tok-kw">try</span> output.appendSlice(<span class="tok-str">&quot;#define &quot;</span>);
+            <span class="tok-kw">try</span> output.appendSlice(name);
+            <span class="tok-kw">try</span> output.appendSlice(<span class="tok-str">&quot;\n&quot;</span>);
+        },
+        .boolean =&gt; |b| {
+            <span class="tok-kw">try</span> output.appendSlice(<span class="tok-str">&quot;#define &quot;</span>);
+            <span class="tok-kw">try</span> output.appendSlice(name);
+            <span class="tok-kw">try</span> output.appendSlice(<span class="tok-kw">if</span> (b) <span class="tok-str">&quot; 1\n&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot; 0\n&quot;</span>);
+        },
+        .int =&gt; |i| {
+            <span class="tok-kw">try</span> output.writer().print(<span class="tok-str">&quot;#define {s} {d}\n&quot;</span>, .{ name, i });
+        },
+        .ident =&gt; |ident| {
+            <span class="tok-kw">try</span> output.writer().print(<span class="tok-str">&quot;#define {s} {s}\n&quot;</span>, .{ name, ident });
+        },
+        .string =&gt; |string| {<span class="tok-comment">
+            // TODO: use C-specific escaping instead of zig string literals
+            </span><span class="tok-kw">try</span> output.writer().print(<span class="tok-str">&quot;#define {s} \&quot;{}\&quot;\n&quot;</span>, .{ name, <a href="std.html">std</a>.<a href="std.zig.html">zig</a>.<a href="std.zig.html#std.zig.fmtEscapes">fmtEscapes</a>(string) });
+        },
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">renderValueNasm</span>(output: *<a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>), name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, value: <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">switch</span> (value) {
+        .undef =&gt; {
+            <span class="tok-kw">try</span> output.appendSlice(<span class="tok-str">&quot;; %undef &quot;</span>);
+            <span class="tok-kw">try</span> output.appendSlice(name);
+            <span class="tok-kw">try</span> output.appendSlice(<span class="tok-str">&quot;\n&quot;</span>);
+        },
+        .defined =&gt; {
+            <span class="tok-kw">try</span> output.appendSlice(<span class="tok-str">&quot;%define &quot;</span>);
+            <span class="tok-kw">try</span> output.appendSlice(name);
+            <span class="tok-kw">try</span> output.appendSlice(<span class="tok-str">&quot;\n&quot;</span>);
+        },
+        .boolean =&gt; |b| {
+            <span class="tok-kw">try</span> output.appendSlice(<span class="tok-str">&quot;%define &quot;</span>);
+            <span class="tok-kw">try</span> output.appendSlice(name);
+            <span class="tok-kw">try</span> output.appendSlice(<span class="tok-kw">if</span> (b) <span class="tok-str">&quot; 1\n&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot; 0\n&quot;</span>);
+        },
+        .int =&gt; |i| {
+            <span class="tok-kw">try</span> output.writer().print(<span class="tok-str">&quot;%define {s} {d}\n&quot;</span>, .{ name, i });
+        },
+        .ident =&gt; |ident| {
+            <span class="tok-kw">try</span> output.writer().print(<span class="tok-str">&quot;%define {s} {s}\n&quot;</span>, .{ name, ident });
+        },
+        .string =&gt; |string| {<span class="tok-comment">
+            // TODO: use nasm-specific escaping instead of zig string literals
+            </span><span class="tok-kw">try</span> output.writer().print(<span class="tok-str">&quot;%define {s} \&quot;{}\&quot;\n&quot;</span>, .{ name, <a href="std.html">std</a>.<a href="std.zig.html">zig</a>.<a href="std.zig.html#std.zig.fmtEscapes">fmtEscapes</a>(string) });
+        },
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">expand_variables_autoconf_at</span>(
+    output: *<a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>),
+    contents: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    values: <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMap">StringArrayHashMap</a>(<a href="std.Build.Step.ConfigHeader.Value.html">Value</a>),
+    used: []<span class="tok-type">bool</span>,
+) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> valid_varname_chars = <span class="tok-str">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_&quot;</span>;
+
+    <span class="tok-kw">var</span> curr: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">var</span> source_offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (curr &lt; contents.len) : (curr += <span class="tok-number">1</span>) {
+        <span class="tok-kw">if</span> (contents[curr] != <span class="tok-str">'@'</span>) <span class="tok-kw">continue</span>;
+        <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalarPos">indexOfScalarPos</a>(<span class="tok-type">u8</span>, contents, curr + <span class="tok-number">1</span>, <span class="tok-str">'@'</span>)) |close_pos| {
+            <span class="tok-kw">if</span> (close_pos == curr + <span class="tok-number">1</span>) {<span class="tok-comment">
+                // closed immediately, preserve as a literal
+                </span><span class="tok-kw">continue</span>;
+            }
+            <span class="tok-kw">const</span> valid_varname_end = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfNonePos">indexOfNonePos</a>(<span class="tok-type">u8</span>, contents, curr + <span class="tok-number">1</span>, valid_varname_chars) <span class="tok-kw">orelse</span> <span class="tok-number">0</span>;
+            <span class="tok-kw">if</span> (valid_varname_end != close_pos) {<span class="tok-comment">
+                // contains invalid characters, preserve as a literal
+                </span><span class="tok-kw">continue</span>;
+            }
+
+            <span class="tok-kw">const</span> key = contents[curr + <span class="tok-number">1</span> .. close_pos];
+            <span class="tok-kw">const</span> index = values.getIndex(key) <span class="tok-kw">orelse</span> {<span class="tok-comment">
+                // Report the missing key to the caller.
+                </span><span class="tok-kw">try</span> output.appendSlice(key);
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MissingValue;
+            };
+            <span class="tok-kw">const</span> value = values.unmanaged.entries.slice().items(.value)[index];
+            used[index] = <span class="tok-null">true</span>;
+            <span class="tok-kw">try</span> output.appendSlice(contents[source_offset..curr]);
+            <span class="tok-kw">switch</span> (value) {
+                .undef, .defined =&gt; {},
+                .boolean =&gt; |b| {
+                    <span class="tok-kw">try</span> output.append(<span class="tok-kw">if</span> (b) <span class="tok-str">'1'</span> <span class="tok-kw">else</span> <span class="tok-str">'0'</span>);
+                },
+                .int =&gt; |i| {
+                    <span class="tok-kw">try</span> output.writer().print(<span class="tok-str">&quot;{d}&quot;</span>, .{i});
+                },
+                .ident, .string =&gt; |s| {
+                    <span class="tok-kw">try</span> output.appendSlice(s);
+                },
+            }
+
+            curr = close_pos;
+            source_offset = close_pos + <span class="tok-number">1</span>;
+        }
+    }
+
+    <span class="tok-kw">try</span> output.appendSlice(contents[source_offset..]);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">expand_variables_cmake</span>(
+    allocator: <a href="std.mem.Allocator.html">Allocator</a>,
+    contents: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    values: <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMap">StringArrayHashMap</a>(<a href="std.Build.Step.ConfigHeader.Value.html">Value</a>),
+) ![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">var</span> result = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>).init(allocator);
+    <span class="tok-kw">errdefer</span> result.deinit();
+
+    <span class="tok-kw">const</span> valid_varname_chars = <span class="tok-str">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/_.+-&quot;</span>;
+    <span class="tok-kw">const</span> open_var = <span class="tok-str">&quot;${&quot;</span>;
+
+    <span class="tok-kw">var</span> curr: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">var</span> source_offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> Position = <span class="tok-kw">struct</span> {
+        source: <span class="tok-type">usize</span>,
+        target: <span class="tok-type">usize</span>,
+    };
+    <span class="tok-kw">var</span> var_stack = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(Position).init(allocator);
+    <span class="tok-kw">defer</span> var_stack.deinit();
+    loop: <span class="tok-kw">while</span> (curr &lt; contents.len) : (curr += <span class="tok-number">1</span>) {
+        <span class="tok-kw">switch</span> (contents[curr]) {
+            <span class="tok-str">'@'</span> =&gt; blk: {
+                <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalarPos">indexOfScalarPos</a>(<span class="tok-type">u8</span>, contents, curr + <span class="tok-number">1</span>, <span class="tok-str">'@'</span>)) |close_pos| {
+                    <span class="tok-kw">if</span> (close_pos == curr + <span class="tok-number">1</span>) {<span class="tok-comment">
+                        // closed immediately, preserve as a literal
+                        </span><span class="tok-kw">break</span> :blk;
+                    }
+                    <span class="tok-kw">const</span> valid_varname_end = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfNonePos">indexOfNonePos</a>(<span class="tok-type">u8</span>, contents, curr + <span class="tok-number">1</span>, valid_varname_chars) <span class="tok-kw">orelse</span> <span class="tok-number">0</span>;
+                    <span class="tok-kw">if</span> (valid_varname_end != close_pos) {<span class="tok-comment">
+                        // contains invalid characters, preserve as a literal
+                        </span><span class="tok-kw">break</span> :blk;
+                    }
+
+                    <span class="tok-kw">const</span> key = contents[curr + <span class="tok-number">1</span> .. close_pos];
+                    <span class="tok-kw">const</span> value = values.get(key) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MissingValue;
+                    <span class="tok-kw">const</span> missing = contents[source_offset..curr];
+                    <span class="tok-kw">try</span> result.appendSlice(missing);
+                    <span class="tok-kw">switch</span> (value) {
+                        .undef, .defined =&gt; {},
+                        .boolean =&gt; |b| {
+                            <span class="tok-kw">try</span> result.append(<span class="tok-kw">if</span> (b) <span class="tok-str">'1'</span> <span class="tok-kw">else</span> <span class="tok-str">'0'</span>);
+                        },
+                        .int =&gt; |i| {
+                            <span class="tok-kw">try</span> result.writer().print(<span class="tok-str">&quot;{d}&quot;</span>, .{i});
+                        },
+                        .ident, .string =&gt; |s| {
+                            <span class="tok-kw">try</span> result.appendSlice(s);
+                        },
+                    }
+
+                    curr = close_pos;
+                    source_offset = close_pos + <span class="tok-number">1</span>;
+
+                    <span class="tok-kw">continue</span> :loop;
+                }
+            },
+            <span class="tok-str">'</code></pre></details></div></span> =&gt; blk: {
+                <span class="tok-kw">const</span> next = curr + <span class="tok-number">1</span>;
+                <span class="tok-kw">if</span> (next == contents.len <span class="tok-kw">or</span> contents[next] != <span class="tok-str">'{'</span>) {<span class="tok-comment">
+                    // no open bracket detected, preserve as a literal
+                    </span><span class="tok-kw">break</span> :blk;
+                }
+                <span class="tok-kw">const</span> missing = contents[source_offset..curr];
+                <span class="tok-kw">try</span> result.appendSlice(missing);
+                <span class="tok-kw">try</span> result.appendSlice(open_var);
+
+                source_offset = curr + open_var.len;
+                curr = next;
+                <span class="tok-kw">try</span> var_stack.append(Position{
+                    .source = curr,
+                    .target = result.items.len - open_var.len,
+                });
+
+                <span class="tok-kw">continue</span> :loop;
+            },
+            <span class="tok-str">'}'</span> =&gt; blk: {
+                <span class="tok-kw">if</span> (var_stack.items.len == <span class="tok-number">0</span>) {<span class="tok-comment">
+                    // no open bracket, preserve as a literal
+                    </span><span class="tok-kw">break</span> :blk;
+                }
+                <span class="tok-kw">const</span> open_pos = var_stack.pop().?;
+                <span class="tok-kw">if</span> (source_offset == open_pos.source) {
+                    source_offset += open_var.len;
+                }
+                <span class="tok-kw">const</span> missing = contents[source_offset..curr];
+                <span class="tok-kw">try</span> result.appendSlice(missing);
+
+                <span class="tok-kw">const</span> key_start = open_pos.target + open_var.len;
+                <span class="tok-kw">const</span> key = result.items[key_start..];
+                <span class="tok-kw">if</span> (key.len == <span class="tok-number">0</span>) {
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MissingKey;
+                }
+                <span class="tok-kw">const</span> value = values.get(key) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MissingValue;
+                result.shrinkRetainingCapacity(result.items.len - key.len - open_var.len);
+                <span class="tok-kw">switch</span> (value) {
+                    .undef, .defined =&gt; {},
+                    .boolean =&gt; |b| {
+                        <span class="tok-kw">try</span> result.append(<span class="tok-kw">if</span> (b) <span class="tok-str">'1'</span> <span class="tok-kw">else</span> <span class="tok-str">'0'</span>);
+                    },
+                    .int =&gt; |i| {
+                        <span class="tok-kw">try</span> result.writer().print(<span class="tok-str">&quot;{d}&quot;</span>, .{i});
+                    },
+                    .ident, .string =&gt; |s| {
+                        <span class="tok-kw">try</span> result.appendSlice(s);
+                    },
+                }
+
+                source_offset = curr + <span class="tok-number">1</span>;
+
+                <span class="tok-kw">continue</span> :loop;
+            },
+            <span class="tok-str">'\\'</span> =&gt; {<span class="tok-comment">
+                // backslash is not considered a special character
+                </span><span class="tok-kw">continue</span> :loop;
+            },
+            <span class="tok-kw">else</span> =&gt; {},
+        }
+
+        <span class="tok-kw">if</span> (var_stack.items.len &gt; <span class="tok-number">0</span> <span class="tok-kw">and</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, valid_varname_chars, contents[curr]) == <span class="tok-null">null</span>) {
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidCharacter;
+        }
+    }
+
+    <span class="tok-kw">if</span> (source_offset != contents.len) {
+        <span class="tok-kw">const</span> missing = contents[source_offset..];
+        <span class="tok-kw">try</span> result.appendSlice(missing);
+    }
+
+    <span class="tok-kw">return</span> result.toOwnedSlice();
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">testReplaceVariablesAutoconfAt</span>(
+    allocator: <a href="std.mem.Allocator.html">Allocator</a>,
+    contents: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    expected: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    values: <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMap">StringArrayHashMap</a>(<a href="std.Build.Step.ConfigHeader.Value.html">Value</a>),
+) !<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> output = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>).init(allocator);
+    <span class="tok-kw">defer</span> output.deinit();
+
+    <span class="tok-kw">const</span> used = <span class="tok-kw">try</span> allocator.alloc(<span class="tok-type">bool</span>, values.count());
+    <span class="tok-kw">for</span> (used) |*u| u.* = <span class="tok-null">false</span>;
+    <span class="tok-kw">defer</span> allocator.free(used);
+
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.expand_variables_autoconf_at">expand_variables_autoconf_at</a>(&amp;output, contents, values, used);
+
+    <span class="tok-kw">for</span> (used) |u| <span class="tok-kw">if</span> (!u) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnusedValue;
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(expected, output.items);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">testReplaceVariablesCMake</span>(
+    allocator: <a href="std.mem.Allocator.html">Allocator</a>,
+    contents: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    expected: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    values: <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMap">StringArrayHashMap</a>(<a href="std.Build.Step.ConfigHeader.Value.html">Value</a>),
+) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> actual = <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.expand_variables_cmake">expand_variables_cmake</a>(allocator, contents, values);
+    <span class="tok-kw">defer</span> allocator.free(actual);
+
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(expected, actual);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;expand_variables_autoconf_at simple cases&quot;</span> {
+    <span class="tok-kw">const</span> allocator = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>;
+    <span class="tok-kw">var</span> values = <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMap">StringArrayHashMap</a>(<a href="std.Build.Step.ConfigHeader.Value.html">Value</a>).init(allocator);
+    <span class="tok-kw">defer</span> values.deinit();<span class="tok-comment">
+
+    // empty strings are preserved
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values);<span class="tok-comment">
+
+    // line with misc content is preserved
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;no substitution&quot;</span>, <span class="tok-str">&quot;no substitution&quot;</span>, values);<span class="tok-comment">
+
+    // empty @ sigils are preserved
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@&quot;</span>, <span class="tok-str">&quot;@&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@@&quot;</span>, <span class="tok-str">&quot;@@&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@@@&quot;</span>, <span class="tok-str">&quot;@@@&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@@@@&quot;</span>, <span class="tok-str">&quot;@@@@&quot;</span>, values);<span class="tok-comment">
+
+    // simple substitution
+    </span><span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;undef&quot;</span>, .undef);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@undef@&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values);
+    values.clearRetainingCapacity();
+
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;defined&quot;</span>, .defined);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@defined@&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values);
+    values.clearRetainingCapacity();
+
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;true&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .boolean = <span class="tok-null">true</span> });
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@true@&quot;</span>, <span class="tok-str">&quot;1&quot;</span>, values);
+    values.clearRetainingCapacity();
+
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;false&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .boolean = <span class="tok-null">false</span> });
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@false@&quot;</span>, <span class="tok-str">&quot;0&quot;</span>, values);
+    values.clearRetainingCapacity();
+
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;int&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .int = <span class="tok-number">42</span> });
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@int@&quot;</span>, <span class="tok-str">&quot;42&quot;</span>, values);
+    values.clearRetainingCapacity();
+
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;ident&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .string = <span class="tok-str">&quot;value&quot;</span> });
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@ident@&quot;</span>, <span class="tok-str">&quot;value&quot;</span>, values);
+    values.clearRetainingCapacity();
+
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;string&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .string = <span class="tok-str">&quot;text&quot;</span> });
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@string@&quot;</span>, <span class="tok-str">&quot;text&quot;</span>, values);
+    values.clearRetainingCapacity();<span class="tok-comment">
+
+    // double packed substitution
+    </span><span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;string&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .string = <span class="tok-str">&quot;text&quot;</span> });
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@string@@string@&quot;</span>, <span class="tok-str">&quot;texttext&quot;</span>, values);
+    values.clearRetainingCapacity();<span class="tok-comment">
+
+    // triple packed substitution
+    </span><span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;int&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .int = <span class="tok-number">42</span> });
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;string&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .string = <span class="tok-str">&quot;text&quot;</span> });
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@string@@int@@string@&quot;</span>, <span class="tok-str">&quot;text42text&quot;</span>, values);
+    values.clearRetainingCapacity();<span class="tok-comment">
+
+    // double separated substitution
+    </span><span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;int&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .int = <span class="tok-number">42</span> });
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@int@.@int@&quot;</span>, <span class="tok-str">&quot;42.42&quot;</span>, values);
+    values.clearRetainingCapacity();<span class="tok-comment">
+
+    // triple separated substitution
+    </span><span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;true&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .boolean = <span class="tok-null">true</span> });
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;int&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .int = <span class="tok-number">42</span> });
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@int@.@true@.@int@&quot;</span>, <span class="tok-str">&quot;42.1.42&quot;</span>, values);
+    values.clearRetainingCapacity();<span class="tok-comment">
+
+    // misc prefix is preserved
+    </span><span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;false&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .boolean = <span class="tok-null">false</span> });
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;false is @false@&quot;</span>, <span class="tok-str">&quot;false is 0&quot;</span>, values);
+    values.clearRetainingCapacity();<span class="tok-comment">
+
+    // misc suffix is preserved
+    </span><span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;true&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .boolean = <span class="tok-null">true</span> });
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@true@ is true&quot;</span>, <span class="tok-str">&quot;1 is true&quot;</span>, values);
+    values.clearRetainingCapacity();<span class="tok-comment">
+
+    // surrounding content is preserved
+    </span><span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;int&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .int = <span class="tok-number">42</span> });
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;what is 6*7? @int@!&quot;</span>, <span class="tok-str">&quot;what is 6*7? 42!&quot;</span>, values);
+    values.clearRetainingCapacity();<span class="tok-comment">
+
+    // incomplete key is preserved
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@undef&quot;</span>, <span class="tok-str">&quot;@undef&quot;</span>, values);<span class="tok-comment">
+
+    // unknown key leads to an error
+    </span><span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.MissingValue, <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@bad@&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values));<span class="tok-comment">
+
+    // unused key leads to an error
+    </span><span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;int&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .int = <span class="tok-number">42</span> });
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;false&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .boolean = <span class="tok-null">false</span> });
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.UnusedValue, <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@int&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values));
+    values.clearRetainingCapacity();
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;expand_variables_autoconf_at edge cases&quot;</span> {
+    <span class="tok-kw">const</span> allocator = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>;
+    <span class="tok-kw">var</span> values = <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMap">StringArrayHashMap</a>(<a href="std.Build.Step.ConfigHeader.Value.html">Value</a>).init(allocator);
+    <span class="tok-kw">defer</span> values.deinit();<span class="tok-comment">
+
+    // @-vars resolved only when they wrap valid characters, otherwise considered literals
+    </span><span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;string&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .string = <span class="tok-str">&quot;text&quot;</span> });
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@@string@@&quot;</span>, <span class="tok-str">&quot;@text@&quot;</span>, values);
+    values.clearRetainingCapacity();<span class="tok-comment">
+
+    // expanded variables are considered strings after expansion
+    </span><span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;string_at&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .string = <span class="tok-str">&quot;@string@&quot;</span> });
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesAutoconfAt">testReplaceVariablesAutoconfAt</a>(allocator, <span class="tok-str">&quot;@string_at@&quot;</span>, <span class="tok-str">&quot;@string@&quot;</span>, values);
+    values.clearRetainingCapacity();
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;expand_variables_cmake simple cases&quot;</span> {
+    <span class="tok-kw">const</span> allocator = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>;
+    <span class="tok-kw">var</span> values = <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMap">StringArrayHashMap</a>(<a href="std.Build.Step.ConfigHeader.Value.html">Value</a>).init(allocator);
+    <span class="tok-kw">defer</span> values.deinit();
+
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;undef&quot;</span>, .undef);
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;defined&quot;</span>, .defined);
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;true&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .boolean = <span class="tok-null">true</span> });
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;false&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .boolean = <span class="tok-null">false</span> });
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;int&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .int = <span class="tok-number">42</span> });
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;ident&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .string = <span class="tok-str">&quot;value&quot;</span> });
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;string&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .string = <span class="tok-str">&quot;text&quot;</span> });<span class="tok-comment">
+
+    // empty strings are preserved
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values);<span class="tok-comment">
+
+    // line with misc content is preserved
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;no substitution&quot;</span>, <span class="tok-str">&quot;no substitution&quot;</span>, values);<span class="tok-comment">
+
+    // empty ${} wrapper leads to an error
+    </span><span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.MissingKey, <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${}&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values));<span class="tok-comment">
+
+    // empty @ sigils are preserved
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@&quot;</span>, <span class="tok-str">&quot;@&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@@&quot;</span>, <span class="tok-str">&quot;@@&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@@@&quot;</span>, <span class="tok-str">&quot;@@@&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@@@@&quot;</span>, <span class="tok-str">&quot;@@@@&quot;</span>, values);<span class="tok-comment">
+
+    // simple substitution
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@undef@&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${undef}&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@defined@&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${defined}&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@true@&quot;</span>, <span class="tok-str">&quot;1&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${true}&quot;</span>, <span class="tok-str">&quot;1&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@false@&quot;</span>, <span class="tok-str">&quot;0&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${false}&quot;</span>, <span class="tok-str">&quot;0&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@int@&quot;</span>, <span class="tok-str">&quot;42&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${int}&quot;</span>, <span class="tok-str">&quot;42&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@ident@&quot;</span>, <span class="tok-str">&quot;value&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${ident}&quot;</span>, <span class="tok-str">&quot;value&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@string@&quot;</span>, <span class="tok-str">&quot;text&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${string}&quot;</span>, <span class="tok-str">&quot;text&quot;</span>, values);<span class="tok-comment">
+
+    // double packed substitution
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@string@@string@&quot;</span>, <span class="tok-str">&quot;texttext&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${string}${string}&quot;</span>, <span class="tok-str">&quot;texttext&quot;</span>, values);<span class="tok-comment">
+
+    // triple packed substitution
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@string@@int@@string@&quot;</span>, <span class="tok-str">&quot;text42text&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@string@${int}@string@&quot;</span>, <span class="tok-str">&quot;text42text&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${string}@int@${string}&quot;</span>, <span class="tok-str">&quot;text42text&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${string}${int}${string}&quot;</span>, <span class="tok-str">&quot;text42text&quot;</span>, values);<span class="tok-comment">
+
+    // double separated substitution
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@int@.@int@&quot;</span>, <span class="tok-str">&quot;42.42&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${int}.${int}&quot;</span>, <span class="tok-str">&quot;42.42&quot;</span>, values);<span class="tok-comment">
+
+    // triple separated substitution
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@int@.@true@.@int@&quot;</span>, <span class="tok-str">&quot;42.1.42&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@int@.${true}.@int@&quot;</span>, <span class="tok-str">&quot;42.1.42&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${int}.@true@.${int}&quot;</span>, <span class="tok-str">&quot;42.1.42&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${int}.${true}.${int}&quot;</span>, <span class="tok-str">&quot;42.1.42&quot;</span>, values);<span class="tok-comment">
+
+    // misc prefix is preserved
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;false is @false@&quot;</span>, <span class="tok-str">&quot;false is 0&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;false is ${false}&quot;</span>, <span class="tok-str">&quot;false is 0&quot;</span>, values);<span class="tok-comment">
+
+    // misc suffix is preserved
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@true@ is true&quot;</span>, <span class="tok-str">&quot;1 is true&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${true} is true&quot;</span>, <span class="tok-str">&quot;1 is true&quot;</span>, values);<span class="tok-comment">
+
+    // surrounding content is preserved
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;what is 6*7? @int@!&quot;</span>, <span class="tok-str">&quot;what is 6*7? 42!&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;what is 6*7? ${int}!&quot;</span>, <span class="tok-str">&quot;what is 6*7? 42!&quot;</span>, values);<span class="tok-comment">
+
+    // incomplete key is preserved
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@undef&quot;</span>, <span class="tok-str">&quot;@undef&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${undef&quot;</span>, <span class="tok-str">&quot;${undef&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;{undef}&quot;</span>, <span class="tok-str">&quot;{undef}&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;undef@&quot;</span>, <span class="tok-str">&quot;undef@&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;undef}&quot;</span>, <span class="tok-str">&quot;undef}&quot;</span>, values);<span class="tok-comment">
+
+    // unknown key leads to an error
+    </span><span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.MissingValue, <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@bad@&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values));
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.MissingValue, <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${bad}&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values));
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;expand_variables_cmake edge cases&quot;</span> {
+    <span class="tok-kw">const</span> allocator = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>;
+    <span class="tok-kw">var</span> values = <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMap">StringArrayHashMap</a>(<a href="std.Build.Step.ConfigHeader.Value.html">Value</a>).init(allocator);
+    <span class="tok-kw">defer</span> values.deinit();<span class="tok-comment">
+
+    // special symbols
+    </span><span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;at&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .string = <span class="tok-str">&quot;@&quot;</span> });
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;dollar&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .string = <span class="tok-str">&quot;{{CONTENT}}quot;</span> });
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;underscore&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .string = <span class="tok-str">&quot;_&quot;</span> });<span class="tok-comment">
+
+    // basic value
+    </span><span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;string&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .string = <span class="tok-str">&quot;text&quot;</span> });<span class="tok-comment">
+
+    // proxy case values
+    </span><span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;string_proxy&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .string = <span class="tok-str">&quot;string&quot;</span> });
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;string_at&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .string = <span class="tok-str">&quot;@string@&quot;</span> });
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;string_curly&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .string = <span class="tok-str">&quot;{string}&quot;</span> });
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;string_var&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .string = <span class="tok-str">&quot;${string}&quot;</span> });<span class="tok-comment">
+
+    // stack case values
+    </span><span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;nest_underscore_proxy&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .string = <span class="tok-str">&quot;underscore&quot;</span> });
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;nest_proxy&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .string = <span class="tok-str">&quot;nest_underscore_proxy&quot;</span> });<span class="tok-comment">
+
+    // @-vars resolved only when they wrap valid characters, otherwise considered literals
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@@string@@&quot;</span>, <span class="tok-str">&quot;@text@&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@${string}@&quot;</span>, <span class="tok-str">&quot;@text@&quot;</span>, values);<span class="tok-comment">
+
+    // @-vars are resolved inside ${}-vars
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${@string_proxy@}&quot;</span>, <span class="tok-str">&quot;text&quot;</span>, values);<span class="tok-comment">
+
+    // expanded variables are considered strings after expansion
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@string_at@&quot;</span>, <span class="tok-str">&quot;@string@&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${string_at}&quot;</span>, <span class="tok-str">&quot;@string@&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;$@string_curly@&quot;</span>, <span class="tok-str">&quot;${string}&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${string_curly}&quot;</span>, <span class="tok-str">&quot;${string}&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${string_var}&quot;</span>, <span class="tok-str">&quot;${string}&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@string_var@&quot;</span>, <span class="tok-str">&quot;${string}&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${dollar}{${string}}&quot;</span>, <span class="tok-str">&quot;${text}&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@dollar@{${string}}&quot;</span>, <span class="tok-str">&quot;${text}&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@dollar@{@string@}&quot;</span>, <span class="tok-str">&quot;${text}&quot;</span>, values);<span class="tok-comment">
+
+    // when expanded variables contain invalid characters, they prevent further expansion
+    </span><span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.MissingValue, <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${${string_var}}&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values));
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.MissingValue, <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${@string_var@}&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values));<span class="tok-comment">
+
+    // nested expanded variables are expanded from the inside out
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${string${underscore}proxy}&quot;</span>, <span class="tok-str">&quot;string&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${string@underscore@proxy}&quot;</span>, <span class="tok-str">&quot;string&quot;</span>, values);<span class="tok-comment">
+
+    // nested vars are only expanded when ${} is closed
+    </span><span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.MissingValue, <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@nest@underscore@proxy@&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values));
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${nest${underscore}proxy}&quot;</span>, <span class="tok-str">&quot;nest_underscore_proxy&quot;</span>, values);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.MissingValue, <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;@nest@@nest_underscore@underscore@proxy@@proxy@&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values));
+    <span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${nest${${nest_underscore${underscore}proxy}}proxy}&quot;</span>, <span class="tok-str">&quot;nest_underscore_proxy&quot;</span>, values);<span class="tok-comment">
+
+    // invalid characters lead to an error
+    </span><span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.InvalidCharacter, <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${str*ing}&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values));
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.InvalidCharacter, <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${str$ing}&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values));
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.InvalidCharacter, <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${str@ing}&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values));
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;expand_variables_cmake escaped characters&quot;</span> {
+    <span class="tok-kw">const</span> allocator = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>;
+    <span class="tok-kw">var</span> values = <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMap">StringArrayHashMap</a>(<a href="std.Build.Step.ConfigHeader.Value.html">Value</a>).init(allocator);
+    <span class="tok-kw">defer</span> values.deinit();
+
+    <span class="tok-kw">try</span> values.putNoClobber(<span class="tok-str">&quot;string&quot;</span>, <a href="std.Build.Step.ConfigHeader.Value.html">Value</a>{ .string = <span class="tok-str">&quot;text&quot;</span> });<span class="tok-comment">
+
+    // backslash is an invalid character for @ lookup
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;\\@string\\@&quot;</span>, <span class="tok-str">&quot;\\@string\\@&quot;</span>, values);<span class="tok-comment">
+
+    // backslash is preserved, but doesn't affect ${} variable expansion
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;\\${string}&quot;</span>, <span class="tok-str">&quot;\\text&quot;</span>, values);<span class="tok-comment">
+
+    // backslash breaks ${} opening bracket identification
+    </span><span class="tok-kw">try</span> <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;$\\{string}&quot;</span>, <span class="tok-str">&quot;$\\{string}&quot;</span>, values);<span class="tok-comment">
+
+    // backslash is skipped when checking for invalid characters, yet it mangles the key
+    </span><span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.MissingValue, <a href="std.Build.Step.ConfigHeader.html#std.Build.Step.ConfigHeader.testReplaceVariablesCMake">testReplaceVariablesCMake</a>(allocator, <span class="tok-str">&quot;${string\\}&quot;</span>, <span class="tok-str">&quot;&quot;</span>, values));
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

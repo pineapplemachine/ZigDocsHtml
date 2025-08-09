@@ -1,0 +1,2067 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.testing.html" class="active">testing</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.testing" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.testing</span><a href="#src.zig-std.testing">[src]</a></h1><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.testing.FailingAllocator.html">std.testing.FailingAllocator</a></li><li><a href="std.testing.TmpDir.html">std.testing.TmpDir</a></li><li><a href="std.testing.FuzzInputOptions.html">std.testing.FuzzInputOptions</a></li></ul></div><div class="sectGlobalVars"><h2 class="sectionHeader">Global Variables</h2><div class="listGlobalVars"><div class="decl"><h2 id="std.testing.random_seed" class="declHeader"><span class="declHeaderCategory">Global Variable</span><span class="declHeaderIdentifier">random_seed</span><a href="#src.zig-std.testing.random_seed">[src]</a></h2><div class="tldDocs"><p>Provides deterministic randomness in unit tests.
+Initialized on startup. Read-only after that.</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.random_seed">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">var</span> random_seed: <span class="tok-type">u32</span> = <span class="tok-number">0</span></code></pre></details></div></div><div class="decl"><h2 id="std.testing.allocator_instance" class="declHeader"><span class="declHeaderCategory">Global Variable</span><span class="declHeaderIdentifier">allocator_instance</span><a href="#src.zig-std.testing.allocator_instance">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.allocator_instance">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">var</span> allocator_instance: <a href="std.html">std</a>.<a href="std.heap.html">heap</a>.<a href="std.heap.debug_allocator.html#std.heap.debug_allocator.DebugAllocator">GeneralPurposeAllocator</a>(.{
+    .stack_trace_frames = <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.sys_can_stack_trace">sys_can_stack_trace</a>) <span class="tok-number">10</span> <span class="tok-kw">else</span> <span class="tok-number">0</span>,
+    .resize_stack_traces = <span class="tok-null">true</span>,<span class="tok-comment">
+    // A unique value so that when a default-constructed
+    // GeneralPurposeAllocator is incorrectly passed to testing allocator, or
+    // vice versa, panic occurs.
+    </span>.canary = <span class="tok-builtin">@truncate</span>(<span class="tok-number">0x2731e675c3a701ba</span>),
+}) = b: {
+    <span class="tok-kw">if</span> (!<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.is_test">is_test</a>) <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;testing allocator used when not testing&quot;</span>);
+    <span class="tok-kw">break</span> :b .init;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.testing.log_level" class="declHeader"><span class="declHeaderCategory">Global Variable</span><span class="declHeaderIdentifier">log_level</span><a href="#src.zig-std.testing.log_level">[src]</a></h2><div class="tldDocs"><p>TODO <a href="https://github.com/ziglang/zig/issues/5738">https://github.com/ziglang/zig/issues/5738</a></p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.log_level">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">var</span> log_level = <a href="std.html">std</a>.<a href="std.log.html">log</a>.<a href="std.log.Level.html">Level</a>.<a href="#">warn</a></code></pre></details></div></div></div></div><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.testing.failing_allocator" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">failing_allocator</span><a href="#src.zig-std.testing.failing_allocator">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.failing_allocator">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> failing_allocator = <a href="std.testing.html#std.testing.failing_allocator_instance">failing_allocator_instance</a>.<a href="#">allocator</a>()</code></pre></details></div></div><div class="decl"><h2 id="std.testing.allocator" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">allocator</span><a href="#src.zig-std.testing.allocator">[src]</a></h2><div class="tldDocs"><p>This should only be used in temporary test programs.</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.allocator">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> allocator = <a href="std.testing.html#std.testing.allocator_instance">allocator_instance</a>.<a href="#">allocator</a>()</code></pre></details></div></div><div class="decl"><h2 id="std.testing.backend_can_print" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">backend_can_print</span><a href="#src.zig-std.testing.backend_can_print">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.backend_can_print">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> backend_can_print = !(<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.zig_backend">zig_backend</a> == .stage2_spirv64 <span class="tok-kw">or</span> <a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.zig_backend">zig_backend</a> == .stage2_riscv64)</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.testing.expectError" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">expectError</span><a href="#src.zig-std.testing.expectError">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectError</span>(expected_error: <span class="tok-type">anyerror</span>, actual_error_union: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>This function is intended to be used only in tests. It prints diagnostics to stderr
+and then returns a test failure error when actual_error_union is not expected_error.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>expected_error: <span class="tok-type">anyerror</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.expectError">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectError</span>(expected_error: <span class="tok-type">anyerror</span>, actual_error_union: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (actual_error_union) |actual_payload| {
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected error.{s}, found {any}\n&quot;</span>, .{ <span class="tok-builtin">@errorName</span>(expected_error), actual_payload });
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedError;
+    } <span class="tok-kw">else</span> |actual_error| {
+        <span class="tok-kw">if</span> (expected_error != actual_error) {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected error.{s}, found error.{s}\n&quot;</span>, .{
+                <span class="tok-builtin">@errorName</span>(expected_error),
+                <span class="tok-builtin">@errorName</span>(actual_error),
+            });
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestUnexpectedError;
+        }
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.testing.expectEqual" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">expectEqual</span><a href="#src.zig-std.testing.expectEqual">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectEqual</span>(expected: <span class="tok-kw">anytype</span>, actual: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>This function is intended to be used only in tests. When the two values are not
+equal, prints diagnostics to stderr to show exactly how they are not equal,
+then returns a test failure error.
+<code>actual</code> and <code>expected</code> are coerced to a common type using peer type resolution.</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.expectEqual">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectEqual</span>(expected: <span class="tok-kw">anytype</span>, actual: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> T = <span class="tok-builtin">@TypeOf</span>(expected, actual);
+    <span class="tok-kw">return</span> <a href="std.testing.html#std.testing.expectEqualInner">expectEqualInner</a>(T, expected, actual);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.testing.expectFmt" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">expectFmt</span><a href="#src.zig-std.testing.expectFmt">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectFmt</span>(expected: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, <span class="tok-kw">comptime</span> template: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, args: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>This function is intended to be used only in tests. When the formatted result of the template
+and its arguments does not equal the expected text, it prints diagnostics to stderr to show how
+they are not equal, then returns an error. It depends on <code>expectEqualStrings()</code> for printing
+diagnostics.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>expected: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>template: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.expectFmt">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectFmt</span>(expected: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, <span class="tok-kw">comptime</span> template: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, args: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> actual = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.allocPrint">allocPrint</a>(<a href="std.testing.html#std.testing.allocator">allocator</a>, template, args);
+    <span class="tok-kw">defer</span> <a href="std.testing.html#std.testing.allocator">allocator</a>.<a href="#">free</a>(actual);
+    <span class="tok-kw">return</span> <a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(expected, actual);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.testing.expectApproxEqAbs" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">expectApproxEqAbs</span><a href="#src.zig-std.testing.expectApproxEqAbs">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectApproxEqAbs</span>(expected: <span class="tok-kw">anytype</span>, actual: <span class="tok-kw">anytype</span>, tolerance: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>This function is intended to be used only in tests. When the actual value is
+not approximately equal to the expected value, prints diagnostics to stderr
+to show exactly how they are not equal, then returns a test failure error.
+See <code><a href="std.math.html#std.math.approxEqAbs">math.approxEqAbs</a></code> for more information on the tolerance parameter.
+The types must be floating-point.
+<code>actual</code> and <code>expected</code> are coerced to a common type using peer type resolution.</p>
+</div><div class="sectDocTests"><h3 class="sectionHeader">Example Usage</h3><pre><code class="docTestsCode"><span class="tok-kw">test</span> expectApproxEqAbs {
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> ([_]<span class="tok-type">type</span>{ <span class="tok-type">f16</span>, <span class="tok-type">f32</span>, <span class="tok-type">f64</span>, <span class="tok-type">f128</span> }) |T| {
+        <span class="tok-kw">const</span> pos_x: T = <span class="tok-number">12.0</span>;
+        <span class="tok-kw">const</span> pos_y: T = <span class="tok-number">12.06</span>;
+        <span class="tok-kw">const</span> neg_x: T = -<span class="tok-number">12.0</span>;
+        <span class="tok-kw">const</span> neg_y: T = -<span class="tok-number">12.06</span>;
+
+        <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectApproxEqAbs">expectApproxEqAbs</a>(pos_x, pos_y, <span class="tok-number">0.1</span>);
+        <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectApproxEqAbs">expectApproxEqAbs</a>(neg_x, neg_y, <span class="tok-number">0.1</span>);
+    }
+}</code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.expectApproxEqAbs">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectApproxEqAbs</span>(expected: <span class="tok-kw">anytype</span>, actual: <span class="tok-kw">anytype</span>, tolerance: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> T = <span class="tok-builtin">@TypeOf</span>(expected, actual, tolerance);
+    <span class="tok-kw">return</span> <a href="std.testing.html#std.testing.expectApproxEqAbsInner">expectApproxEqAbsInner</a>(T, expected, actual, tolerance);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.testing.expectApproxEqRel" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">expectApproxEqRel</span><a href="#src.zig-std.testing.expectApproxEqRel">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectApproxEqRel</span>(expected: <span class="tok-kw">anytype</span>, actual: <span class="tok-kw">anytype</span>, tolerance: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>This function is intended to be used only in tests. When the actual value is
+not approximately equal to the expected value, prints diagnostics to stderr
+to show exactly how they are not equal, then returns a test failure error.
+See <code><a href="std.math.html#std.math.approxEqRel">math.approxEqRel</a></code> for more information on the tolerance parameter.
+The types must be floating-point.
+<code>actual</code> and <code>expected</code> are coerced to a common type using peer type resolution.</p>
+</div><div class="sectDocTests"><h3 class="sectionHeader">Example Usage</h3><pre><code class="docTestsCode"><span class="tok-kw">test</span> expectApproxEqRel {
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> ([_]<span class="tok-type">type</span>{ <span class="tok-type">f16</span>, <span class="tok-type">f32</span>, <span class="tok-type">f64</span>, <span class="tok-type">f128</span> }) |T| {
+        <span class="tok-kw">const</span> eps_value = <span class="tok-kw">comptime</span> <a href="std.math.html">math</a>.<a href="std.math.float.html#std.math.float.floatEps">floatEps</a>(T);
+        <span class="tok-kw">const</span> sqrt_eps_value = <span class="tok-kw">comptime</span> <span class="tok-builtin">@sqrt</span>(eps_value);
+
+        <span class="tok-kw">const</span> pos_x: T = <span class="tok-number">12.0</span>;
+        <span class="tok-kw">const</span> pos_y: T = pos_x + <span class="tok-number">2</span> * eps_value;
+        <span class="tok-kw">const</span> neg_x: T = -<span class="tok-number">12.0</span>;
+        <span class="tok-kw">const</span> neg_y: T = neg_x - <span class="tok-number">2</span> * eps_value;
+
+        <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectApproxEqRel">expectApproxEqRel</a>(pos_x, pos_y, sqrt_eps_value);
+        <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectApproxEqRel">expectApproxEqRel</a>(neg_x, neg_y, sqrt_eps_value);
+    }
+}</code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.expectApproxEqRel">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectApproxEqRel</span>(expected: <span class="tok-kw">anytype</span>, actual: <span class="tok-kw">anytype</span>, tolerance: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> T = <span class="tok-builtin">@TypeOf</span>(expected, actual, tolerance);
+    <span class="tok-kw">return</span> <a href="std.testing.html#std.testing.expectApproxEqRelInner">expectApproxEqRelInner</a>(T, expected, actual, tolerance);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.testing.expectEqualSlices" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">expectEqualSlices</span><a href="#src.zig-std.testing.expectEqualSlices">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectEqualSlices</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, expected: []<span class="tok-kw">const</span> T, actual: []<span class="tok-kw">const</span> T) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>This function is intended to be used only in tests. When the two slices are not
+equal, prints diagnostics to stderr to show exactly how they are not equal (with
+the differences highlighted in red), then returns a test failure error.
+The colorized output is optional and controlled by the return of <code>std.io.tty.detectConfig()</code>.
+If your inputs are UTF-8 encoded strings, consider calling <code><a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a></code> instead.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>T: <span class="tok-type">type</span></code></pre></div><div><pre><code>expected: []<span class="tok-kw">const</span> T</code></pre></div><div><pre><code>actual: []<span class="tok-kw">const</span> T</code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.expectEqualSlices">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectEqualSlices</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, expected: []<span class="tok-kw">const</span> T, actual: []<span class="tok-kw">const</span> T) !<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (expected.ptr == actual.ptr <span class="tok-kw">and</span> expected.len == actual.len) {
+        <span class="tok-kw">return</span>;
+    }
+    <span class="tok-kw">const</span> diff_index: <span class="tok-type">usize</span> = diff_index: {
+        <span class="tok-kw">const</span> shortest = <span class="tok-builtin">@min</span>(expected.len, actual.len);
+        <span class="tok-kw">var</span> index: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">while</span> (index &lt; shortest) : (index += <span class="tok-number">1</span>) {
+            <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.eql">eql</a>(actual[index], expected[index])) <span class="tok-kw">break</span> :diff_index index;
+        }
+        <span class="tok-kw">break</span> :diff_index <span class="tok-kw">if</span> (expected.len == actual.len) <span class="tok-kw">return</span> <span class="tok-kw">else</span> shortest;
+    };
+
+    <span class="tok-kw">if</span> (!<a href="std.testing.html#std.testing.backend_can_print">backend_can_print</a>) {
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+    }
+
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;slices differ. first difference occurs at index {d} (0x{X})\n&quot;</span>, .{ diff_index, diff_index });<span class="tok-comment">
+
+    // TODO: Should this be configurable by the caller?
+    </span><span class="tok-kw">const</span> max_lines: <span class="tok-type">usize</span> = <span class="tok-number">16</span>;
+    <span class="tok-kw">const</span> max_window_size: <span class="tok-type">usize</span> = <span class="tok-kw">if</span> (T == <span class="tok-type">u8</span>) max_lines * <span class="tok-number">16</span> <span class="tok-kw">else</span> max_lines;<span class="tok-comment">
+
+    // Print a maximum of max_window_size items of each input, starting just before the
+    // first difference to give a bit of context.
+    </span><span class="tok-kw">var</span> window_start: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">if</span> (<span class="tok-builtin">@max</span>(actual.len, expected.len) &gt; max_window_size) {
+        <span class="tok-kw">const</span> alignment = <span class="tok-kw">if</span> (T == <span class="tok-type">u8</span>) <span class="tok-number">16</span> <span class="tok-kw">else</span> <span class="tok-number">2</span>;
+        window_start = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.alignBackward">alignBackward</a>(<span class="tok-type">usize</span>, diff_index - <span class="tok-builtin">@min</span>(diff_index, alignment), alignment);
+    }
+    <span class="tok-kw">const</span> expected_window = expected[window_start..<span class="tok-builtin">@min</span>(expected.len, window_start + max_window_size)];
+    <span class="tok-kw">const</span> expected_truncated = window_start + expected_window.len &lt; expected.len;
+    <span class="tok-kw">const</span> actual_window = actual[window_start..<span class="tok-builtin">@min</span>(actual.len, window_start + max_window_size)];
+    <span class="tok-kw">const</span> actual_truncated = window_start + actual_window.len &lt; actual.len;
+
+    <span class="tok-kw">const</span> stderr = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.html#std.io.getStdErr">getStdErr</a>();
+    <span class="tok-kw">const</span> ttyconf = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.tty.html">tty</a>.<a href="std.io.tty.html#std.io.tty.detectConfig">detectConfig</a>(stderr);
+    <span class="tok-kw">var</span> differ = <span class="tok-kw">if</span> (T == <span class="tok-type">u8</span>) <a href="std.testing.BytesDiffer.html">BytesDiffer</a>{
+        .expected = expected_window,
+        .actual = actual_window,
+        .ttyconf = ttyconf,
+    } <span class="tok-kw">else</span> <a href="std.testing.html#std.testing.SliceDiffer">SliceDiffer</a>(T){
+        .start_index = window_start,
+        .expected = expected_window,
+        .actual = actual_window,
+        .ttyconf = ttyconf,
+    };<span class="tok-comment">
+
+    // Print indexes as hex for slices of u8 since it's more likely to be binary data where
+    // that is usually useful.
+    </span><span class="tok-kw">const</span> index_fmt = <span class="tok-kw">if</span> (T == <span class="tok-type">u8</span>) <span class="tok-str">&quot;0x{X}&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;{}&quot;</span>;
+
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n============ expected this output: =============  len: {} (0x{X})\n\n&quot;</span>, .{ expected.len, expected.len });
+    <span class="tok-kw">if</span> (window_start &gt; <span class="tok-number">0</span>) {
+        <span class="tok-kw">if</span> (T == <span class="tok-type">u8</span>) {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;... truncated, start index: &quot;</span> ++ index_fmt ++ <span class="tok-str">&quot; ...\n&quot;</span>, .{window_start});
+        } <span class="tok-kw">else</span> {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;... truncated ...\n&quot;</span>, .{});
+        }
+    }
+    differ.write(stderr.writer()) <span class="tok-kw">catch</span> {};
+    <span class="tok-kw">if</span> (expected_truncated) {
+        <span class="tok-kw">const</span> end_offset = window_start + expected_window.len;
+        <span class="tok-kw">const</span> num_missing_items = expected.len - (window_start + expected_window.len);
+        <span class="tok-kw">if</span> (T == <span class="tok-type">u8</span>) {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;... truncated, indexes [&quot;</span> ++ index_fmt ++ <span class="tok-str">&quot;..] not shown, remaining bytes: &quot;</span> ++ index_fmt ++ <span class="tok-str">&quot; ...\n&quot;</span>, .{ end_offset, num_missing_items });
+        } <span class="tok-kw">else</span> {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;... truncated, remaining items: &quot;</span> ++ index_fmt ++ <span class="tok-str">&quot; ...\n&quot;</span>, .{num_missing_items});
+        }
+    }<span class="tok-comment">
+
+    // now reverse expected/actual and print again
+    </span>differ.expected = actual_window;
+    differ.actual = expected_window;
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n============= instead found this: ==============  len: {} (0x{X})\n\n&quot;</span>, .{ actual.len, actual.len });
+    <span class="tok-kw">if</span> (window_start &gt; <span class="tok-number">0</span>) {
+        <span class="tok-kw">if</span> (T == <span class="tok-type">u8</span>) {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;... truncated, start index: &quot;</span> ++ index_fmt ++ <span class="tok-str">&quot; ...\n&quot;</span>, .{window_start});
+        } <span class="tok-kw">else</span> {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;... truncated ...\n&quot;</span>, .{});
+        }
+    }
+    differ.write(stderr.writer()) <span class="tok-kw">catch</span> {};
+    <span class="tok-kw">if</span> (actual_truncated) {
+        <span class="tok-kw">const</span> end_offset = window_start + actual_window.len;
+        <span class="tok-kw">const</span> num_missing_items = actual.len - (window_start + actual_window.len);
+        <span class="tok-kw">if</span> (T == <span class="tok-type">u8</span>) {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;... truncated, indexes [&quot;</span> ++ index_fmt ++ <span class="tok-str">&quot;..] not shown, remaining bytes: &quot;</span> ++ index_fmt ++ <span class="tok-str">&quot; ...\n&quot;</span>, .{ end_offset, num_missing_items });
+        } <span class="tok-kw">else</span> {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;... truncated, remaining items: &quot;</span> ++ index_fmt ++ <span class="tok-str">&quot; ...\n&quot;</span>, .{num_missing_items});
+        }
+    }
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n================================================\n\n&quot;</span>, .{});
+
+    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.testing.expectEqualSentinel" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">expectEqualSentinel</span><a href="#src.zig-std.testing.expectEqualSentinel">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectEqualSentinel</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> sentinel: T, expected: [:sentinel]<span class="tok-kw">const</span> T, actual: [:sentinel]<span class="tok-kw">const</span> T) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>This function is intended to be used only in tests. Checks that two slices or two arrays are equal,
+including that their sentinel (if any) are the same. Will error if given another type.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>T: <span class="tok-type">type</span></code></pre></div><div><pre><code>sentinel: T</code></pre></div><div><pre><code>expected: [:sentinel]<span class="tok-kw">const</span> T</code></pre></div><div><pre><code>actual: [:sentinel]<span class="tok-kw">const</span> T</code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.expectEqualSentinel">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectEqualSentinel</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> sentinel: T, expected: [:sentinel]<span class="tok-kw">const</span> T, actual: [:sentinel]<span class="tok-kw">const</span> T) !<span class="tok-type">void</span> {
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(T, expected, actual);
+
+    <span class="tok-kw">const</span> expected_value_sentinel = blk: {
+        <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(expected))) {
+            .pointer =&gt; {
+                <span class="tok-kw">break</span> :blk expected[expected.len];
+            },
+            .array =&gt; |array_info| {
+                <span class="tok-kw">const</span> indexable_outside_of_bounds = <span class="tok-builtin">@as</span>([]<span class="tok-kw">const</span> array_info.child, &amp;expected);
+                <span class="tok-kw">break</span> :blk indexable_outside_of_bounds[indexable_outside_of_bounds.len];
+            },
+            <span class="tok-kw">else</span> =&gt; {},
+        }
+    };
+
+    <span class="tok-kw">const</span> actual_value_sentinel = blk: {
+        <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(actual))) {
+            .pointer =&gt; {
+                <span class="tok-kw">break</span> :blk actual[actual.len];
+            },
+            .array =&gt; |array_info| {
+                <span class="tok-kw">const</span> indexable_outside_of_bounds = <span class="tok-builtin">@as</span>([]<span class="tok-kw">const</span> array_info.child, &amp;actual);
+                <span class="tok-kw">break</span> :blk indexable_outside_of_bounds[indexable_outside_of_bounds.len];
+            },
+            <span class="tok-kw">else</span> =&gt; {},
+        }
+    };
+
+    <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.eql">eql</a>(sentinel, expected_value_sentinel)) {
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expectEqualSentinel: 'expected' sentinel in memory is different from its type sentinel. type sentinel {}, in memory sentinel {}\n&quot;</span>, .{ sentinel, expected_value_sentinel });
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+    }
+
+    <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.eql">eql</a>(sentinel, actual_value_sentinel)) {
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expectEqualSentinel: 'actual' sentinel in memory is different from its type sentinel. type sentinel {}, in memory sentinel {}\n&quot;</span>, .{ sentinel, actual_value_sentinel });
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.testing.expect" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">expect</span><a href="#src.zig-std.testing.expect">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expect</span>(ok: <span class="tok-type">bool</span>) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>This function is intended to be used only in tests.
+When <code>ok</code> is false, returns a test failure error.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>ok: <span class="tok-type">bool</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.expect">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expect</span>(ok: <span class="tok-type">bool</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (!ok) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestUnexpectedResult;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.testing.tmpDir" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">tmpDir</span><a href="#src.zig-std.testing.tmpDir">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">tmpDir</span>(opts: <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.Dir.html">Dir</a>.<a href="std.fs.Dir.OpenOptions.html">OpenOptions</a>) <a href="std.testing.TmpDir.html">TmpDir</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>opts: <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.Dir.html">Dir</a>.<a href="std.fs.Dir.OpenOptions.html">OpenOptions</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.tmpDir">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">tmpDir</span>(opts: <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.Dir.html">Dir</a>.<a href="std.fs.Dir.OpenOptions.html">OpenOptions</a>) <a href="std.testing.TmpDir.html">TmpDir</a> {
+    <span class="tok-kw">var</span> random_bytes: [<a href="std.testing.TmpDir.html">TmpDir</a>.<a href="std.testing.TmpDir.html#std.testing.TmpDir.random_bytes_count">random_bytes_count</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <a href="std.html">std</a>.<a href="std.crypto.html">crypto</a>.<a href="std.crypto.tlcsprng.html#std.crypto.tlcsprng.interface">random</a>.<a href="#">bytes</a>(&amp;random_bytes);
+    <span class="tok-kw">var</span> sub_path: [<a href="std.testing.TmpDir.html">TmpDir</a>.<a href="std.testing.TmpDir.html#std.testing.TmpDir.sub_path_len">sub_path_len</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    _ = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.base64_encoder">base64_encoder</a>.<a href="#">encode</a>(&amp;sub_path, &amp;random_bytes);
+
+    <span class="tok-kw">const</span> cwd = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.cwd">cwd</a>();
+    <span class="tok-kw">var</span> cache_dir = cwd.makeOpenPath(<span class="tok-str">&quot;.zig-cache&quot;</span>, .{}) <span class="tok-kw">catch</span>
+        <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;unable to make tmp dir for testing: unable to make and open .zig-cache dir&quot;</span>);
+    <span class="tok-kw">defer</span> cache_dir.close();
+    <span class="tok-kw">const</span> parent_dir = cache_dir.makeOpenPath(<span class="tok-str">&quot;tmp&quot;</span>, .{}) <span class="tok-kw">catch</span>
+        <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;unable to make tmp dir for testing: unable to make and open .zig-cache/tmp dir&quot;</span>);
+    <span class="tok-kw">const</span> dir = parent_dir.makeOpenPath(&amp;sub_path, opts) <span class="tok-kw">catch</span>
+        <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;unable to make tmp dir for testing: unable to make and open the tmp dir&quot;</span>);
+
+    <span class="tok-kw">return</span> .{
+        .dir = dir,
+        .parent_dir = parent_dir,
+        .sub_path = sub_path,
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.testing.expectEqualStrings" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">expectEqualStrings</span><a href="#src.zig-std.testing.expectEqualStrings">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectEqualStrings</span>(expected: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, actual: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>expected: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>actual: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.expectEqualStrings">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectEqualStrings</span>(expected: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, actual: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfDiff">indexOfDiff</a>(<span class="tok-type">u8</span>, actual, expected)) |diff_index| {
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n====== expected this output: =========\n&quot;</span>, .{});
+        <a href="std.testing.html#std.testing.printWithVisibleNewlines">printWithVisibleNewlines</a>(expected);
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n======== instead found this: =========\n&quot;</span>, .{});
+        <a href="std.testing.html#std.testing.printWithVisibleNewlines">printWithVisibleNewlines</a>(actual);
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n======================================\n&quot;</span>, .{});
+
+        <span class="tok-kw">var</span> diff_line_number: <span class="tok-type">usize</span> = <span class="tok-number">1</span>;
+        <span class="tok-kw">for</span> (expected[<span class="tok-number">0</span>..diff_index]) |value| {
+            <span class="tok-kw">if</span> (value == <span class="tok-str">'\n'</span>) diff_line_number += <span class="tok-number">1</span>;
+        }
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;First difference occurs on line {d}:\n&quot;</span>, .{diff_line_number});
+
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected:\n&quot;</span>, .{});
+        <a href="std.testing.html#std.testing.printIndicatorLine">printIndicatorLine</a>(expected, diff_index);
+
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;found:\n&quot;</span>, .{});
+        <a href="std.testing.html#std.testing.printIndicatorLine">printIndicatorLine</a>(actual, diff_index);
+
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.testing.expectStringStartsWith" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">expectStringStartsWith</span><a href="#src.zig-std.testing.expectStringStartsWith">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectStringStartsWith</span>(actual: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, expected_starts_with: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>actual: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>expected_starts_with: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.expectStringStartsWith">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectStringStartsWith</span>(actual: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, expected_starts_with: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.startsWith">startsWith</a>(<span class="tok-type">u8</span>, actual, expected_starts_with))
+        <span class="tok-kw">return</span>;
+
+    <span class="tok-kw">const</span> shortened_actual = <span class="tok-kw">if</span> (actual.len &gt;= expected_starts_with.len)
+        actual[<span class="tok-number">0</span>..expected_starts_with.len]
+    <span class="tok-kw">else</span>
+        actual;
+
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n====== expected to start with: =========\n&quot;</span>, .{});
+    <a href="std.testing.html#std.testing.printWithVisibleNewlines">printWithVisibleNewlines</a>(expected_starts_with);
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n====== instead started with: ===========\n&quot;</span>, .{});
+    <a href="std.testing.html#std.testing.printWithVisibleNewlines">printWithVisibleNewlines</a>(shortened_actual);
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n========= full output: ==============\n&quot;</span>, .{});
+    <a href="std.testing.html#std.testing.printWithVisibleNewlines">printWithVisibleNewlines</a>(actual);
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n======================================\n&quot;</span>, .{});
+
+    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedStartsWith;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.testing.expectStringEndsWith" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">expectStringEndsWith</span><a href="#src.zig-std.testing.expectStringEndsWith">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectStringEndsWith</span>(actual: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, expected_ends_with: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>actual: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>expected_ends_with: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.expectStringEndsWith">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectStringEndsWith</span>(actual: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, expected_ends_with: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.endsWith">endsWith</a>(<span class="tok-type">u8</span>, actual, expected_ends_with))
+        <span class="tok-kw">return</span>;
+
+    <span class="tok-kw">const</span> shortened_actual = <span class="tok-kw">if</span> (actual.len &gt;= expected_ends_with.len)
+        actual[(actual.len - expected_ends_with.len)..]
+    <span class="tok-kw">else</span>
+        actual;
+
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n====== expected to end with: =========\n&quot;</span>, .{});
+    <a href="std.testing.html#std.testing.printWithVisibleNewlines">printWithVisibleNewlines</a>(expected_ends_with);
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n====== instead ended with: ===========\n&quot;</span>, .{});
+    <a href="std.testing.html#std.testing.printWithVisibleNewlines">printWithVisibleNewlines</a>(shortened_actual);
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n========= full output: ==============\n&quot;</span>, .{});
+    <a href="std.testing.html#std.testing.printWithVisibleNewlines">printWithVisibleNewlines</a>(actual);
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n======================================\n&quot;</span>, .{});
+
+    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEndsWith;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.testing.expectEqualDeep" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">expectEqualDeep</span><a href="#src.zig-std.testing.expectEqualDeep">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectEqualDeep</span>(expected: <span class="tok-kw">anytype</span>, actual: <span class="tok-kw">anytype</span>) <span class="tok-kw">error</span>{TestExpectedEqual}!<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>This function is intended to be used only in tests. When the two values are not
+deeply equal, prints diagnostics to stderr to show exactly how they are not equal,
+then returns a test failure error.
+<code>actual</code> and <code>expected</code> are coerced to a common type using peer type resolution.</p>
+<p>Deeply equal is defined as follows:
+Primitive types are deeply equal if they are equal using <code>==</code> operator.
+Struct values are deeply equal if their corresponding fields are deeply equal.
+Container types(like Array/Slice/Vector) deeply equal when their corresponding elements are deeply equal.
+Pointer values are deeply equal if values they point to are deeply equal.</p>
+<p>Note: Self-referential structs are supported (e.g. things like std.SinglyLinkedList)
+but may cause infinite recursion or stack overflow when a container has a pointer to itself.</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.expectEqualDeep">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectEqualDeep</span>(expected: <span class="tok-kw">anytype</span>, actual: <span class="tok-kw">anytype</span>) <span class="tok-kw">error</span>{TestExpectedEqual}!<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> T = <span class="tok-builtin">@TypeOf</span>(expected, actual);
+    <span class="tok-kw">return</span> <a href="std.testing.html#std.testing.expectEqualDeepInner">expectEqualDeepInner</a>(T, expected, actual);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.testing.checkAllAllocationFailures" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">checkAllAllocationFailures</span><a href="#src.zig-std.testing.checkAllAllocationFailures">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">checkAllAllocationFailures</span>(backing_allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, <span class="tok-kw">comptime</span> test_fn: <span class="tok-kw">anytype</span>, extra_args: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Exhaustively check that allocation failures within <code>test_fn</code> are handled without
+introducing memory leaks. If used with the <code>testing.allocator</code> as the <code>backing_allocator</code>,
+it will also be able to detect double frees, etc (when runtime safety is enabled).</p>
+<p>The provided <code>test_fn</code> must have a <code><a href="std.mem.Allocator.html">std.mem.Allocator</a></code> as its first argument,
+and must have a return type of <code>!void</code>. Any extra arguments of <code>test_fn</code> can
+be provided via the <code>extra_args</code> tuple.</p>
+<p>Any relevant state shared between runs of <code>test_fn</code> <em>must</em> be reset within <code>test_fn</code>.</p>
+<p>The strategy employed is to:</p>
+<ul>
+<li>Run the test function once to get the total number of allocations.</li>
+<li>Then, iterate and run the function X more times, incrementing
+the failing index each iteration (where X is the total number of
+allocations determined previously)</li>
+</ul>
+<p>Expects that <code>test_fn</code> has a deterministic number of memory allocations:</p>
+<ul>
+<li>If an allocation was made to fail during a run of <code>test_fn</code>, but <code>test_fn</code>
+didn't return <code>error.OutOfMemory</code>, then <code>error.SwallowedOutOfMemoryError</code>
+is returned from <code><a href="std.testing.html#std.testing.checkAllAllocationFailures">checkAllAllocationFailures</a></code>. You may want to ignore this
+depending on whether or not the code you're testing includes some strategies
+for recovering from <code>error.OutOfMemory</code>.</li>
+<li>If a run of <code>test_fn</code> with an expected allocation failure executes without
+an allocation failure being induced, then <code>error.NondeterministicMemoryUsage</code>
+is returned. This error means that there are allocation points that won't be
+tested by the strategy this function employs (that is, there are sometimes more
+points of allocation than the initial run of <code>test_fn</code> detects).</li>
+</ul>
+<hr />
+<p>Here's an example using a simple test case that will cause a leak when the
+allocation of <code>bar</code> fails (but will pass normally):</p>
+<pre><code>test {
+    const length: usize = 10;
+    const allocator = std.testing.allocator;
+    var foo = try allocator.alloc(u8, length);
+    var bar = try allocator.alloc(u8, length);
+
+    allocator.free(foo);
+    allocator.free(bar);
+}
+</code></pre>
+<p>The test case can be converted to something that this function can use by
+doing:</p>
+<pre><code>fn testImpl(allocator: std.mem.Allocator, length: usize) !void {
+    var foo = try allocator.alloc(u8, length);
+    var bar = try allocator.alloc(u8, length);
+
+    allocator.free(foo);
+    allocator.free(bar);
+}
+
+test {
+    const length: usize = 10;
+    const allocator = std.testing.allocator;
+    try std.testing.checkAllAllocationFailures(allocator, testImpl, .{length});
+}
+</code></pre>
+<p>Running this test will show that <code>foo</code> is leaked when the allocation of
+<code>bar</code> fails. The simplest fix, in this case, would be to use defer like so:</p>
+<pre><code>fn testImpl(allocator: std.mem.Allocator, length: usize) !void {
+    var foo = try allocator.alloc(u8, length);
+    defer allocator.free(foo);
+    var bar = try allocator.alloc(u8, length);
+    defer allocator.free(bar);
+}
+</code></pre>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>backing_allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.checkAllAllocationFailures">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">checkAllAllocationFailures</span>(backing_allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, <span class="tok-kw">comptime</span> test_fn: <span class="tok-kw">anytype</span>, extra_args: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(test_fn)).@&quot;fn&quot;.return_type.?)) {
+        .error_union =&gt; |info| {
+            <span class="tok-kw">if</span> (info.payload != <span class="tok-type">void</span>) {
+                <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Return type must be !void&quot;</span>);
+            }
+        },
+        <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Return type must be !void&quot;</span>),
+    }
+    <span class="tok-kw">if</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(extra_args)) != .@&quot;struct&quot;) {
+        <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Expected tuple or struct argument, found &quot;</span> ++ <span class="tok-builtin">@typeName</span>(<span class="tok-builtin">@TypeOf</span>(extra_args)));
+    }
+
+    <span class="tok-kw">const</span> ArgsTuple = <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.ArgsTuple">ArgsTuple</a>(<span class="tok-builtin">@TypeOf</span>(test_fn));
+    <span class="tok-kw">const</span> fn_args_fields = <span class="tok-builtin">@typeInfo</span>(ArgsTuple).@&quot;struct&quot;.fields;
+    <span class="tok-kw">if</span> (fn_args_fields.len == <span class="tok-number">0</span> <span class="tok-kw">or</span> fn_args_fields[<span class="tok-number">0</span>].<span class="tok-type">type</span> != <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) {
+        <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;The provided function must have an &quot;</span> ++ <span class="tok-builtin">@typeName</span>(<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) ++ <span class="tok-str">&quot; as its first argument&quot;</span>);
+    }
+    <span class="tok-kw">const</span> expected_args_tuple_len = fn_args_fields.len - <span class="tok-number">1</span>;
+    <span class="tok-kw">if</span> (extra_args.len != expected_args_tuple_len) {
+        <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;The provided function expects &quot;</span> ++ <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.comptimePrint">comptimePrint</a>(<span class="tok-str">&quot;{d}&quot;</span>, .{expected_args_tuple_len}) ++ <span class="tok-str">&quot; extra arguments, but the provided tuple contains &quot;</span> ++ <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.comptimePrint">comptimePrint</a>(<span class="tok-str">&quot;{d}&quot;</span>, .{extra_args.len}));
+    }<span class="tok-comment">
+
+    // Setup the tuple that will actually be used with @call (we'll need to insert
+    // the failing allocator in field @&quot;0&quot; before each @call)
+    </span><span class="tok-kw">var</span> args: ArgsTuple = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(extra_args)).@&quot;struct&quot;.fields, <span class="tok-number">0</span>..) |field, i| {
+        <span class="tok-kw">const</span> arg_i_str = <span class="tok-kw">comptime</span> str: {
+            <span class="tok-kw">var</span> str_buf: [<span class="tok-number">100</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> args_i = i + <span class="tok-number">1</span>;
+            <span class="tok-kw">const</span> str_len = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.formatIntBuf">formatIntBuf</a>(&amp;str_buf, args_i, <span class="tok-number">10</span>, .lower, .{});
+            <span class="tok-kw">break</span> :str str_buf[<span class="tok-number">0</span>..str_len];
+        };
+        <span class="tok-builtin">@field</span>(args, arg_i_str) = <span class="tok-builtin">@field</span>(extra_args, field.name);
+    }<span class="tok-comment">
+
+    // Try it once with unlimited memory, make sure it works
+    </span><span class="tok-kw">const</span> needed_alloc_count = x: {
+        <span class="tok-kw">var</span> failing_allocator_inst = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.FailingAllocator.html">FailingAllocator</a>.<a href="std.testing.FailingAllocator.html#std.testing.FailingAllocator.init">init</a>(backing_allocator, .{});
+        args.@&quot;0&quot; = failing_allocator_inst.allocator();
+
+        <span class="tok-kw">try</span> <span class="tok-builtin">@call</span>(.auto, test_fn, args);
+        <span class="tok-kw">break</span> :x failing_allocator_inst.alloc_index;
+    };
+
+    <span class="tok-kw">var</span> fail_index: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (fail_index &lt; needed_alloc_count) : (fail_index += <span class="tok-number">1</span>) {
+        <span class="tok-kw">var</span> failing_allocator_inst = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.FailingAllocator.html">FailingAllocator</a>.<a href="std.testing.FailingAllocator.html#std.testing.FailingAllocator.init">init</a>(backing_allocator, .{ .fail_index = fail_index });
+        args.@&quot;0&quot; = failing_allocator_inst.allocator();
+
+        <span class="tok-kw">if</span> (<span class="tok-builtin">@call</span>(.auto, test_fn, args)) |_| {
+            <span class="tok-kw">if</span> (failing_allocator_inst.has_induced_failure) {
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SwallowedOutOfMemoryError;
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NondeterministicMemoryUsage;
+            }
+        } <span class="tok-kw">else</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.OutOfMemory =&gt; {
+                <span class="tok-kw">if</span> (failing_allocator_inst.allocated_bytes != failing_allocator_inst.freed_bytes) {
+                    <a href="std.testing.html#std.testing.print">print</a>(
+                        <span class="tok-str">&quot;\nfail_index: {d}/{d}\nallocated bytes: {d}\nfreed bytes: {d}\nallocations: {d}\ndeallocations: {d}\nallocation that was made to fail: {}&quot;</span>,
+                        .{
+                            fail_index,
+                            needed_alloc_count,
+                            failing_allocator_inst.allocated_bytes,
+                            failing_allocator_inst.freed_bytes,
+                            failing_allocator_inst.allocations,
+                            failing_allocator_inst.deallocations,
+                            failing_allocator_inst.getStackTrace(),
+                        },
+                    );
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MemoryLeakDetected;
+                }
+            },
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> err,
+        }
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.testing.refAllDecls" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">refAllDecls</span><a href="#src.zig-std.testing.refAllDecls">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">refAllDecls</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Given a type, references all the declarations inside, so that the semantic analyzer sees them.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>T: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.refAllDecls">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">refAllDecls</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (!<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.is_test">is_test</a>) <span class="tok-kw">return</span>;
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.declarations">declarations</a>(T)) |decl| {
+        _ = &amp;<span class="tok-builtin">@field</span>(T, decl.name);
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.testing.refAllDeclsRecursive" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">refAllDeclsRecursive</span><a href="#src.zig-std.testing.refAllDeclsRecursive">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">refAllDeclsRecursive</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Given a type, recursively references all the declarations inside, so that the semantic analyzer sees them.
+For deep types, you may use <code>@setEvalBranchQuota</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>T: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.refAllDeclsRecursive">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">refAllDeclsRecursive</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (!<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.is_test">is_test</a>) <span class="tok-kw">return</span>;
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.declarations">declarations</a>(T)) |decl| {
+        <span class="tok-kw">if</span> (<span class="tok-builtin">@TypeOf</span>(<span class="tok-builtin">@field</span>(T, decl.name)) == <span class="tok-type">type</span>) {
+            <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@field</span>(T, decl.name))) {
+                .@&quot;struct&quot;, .@&quot;enum&quot;, .@&quot;union&quot;, .@&quot;opaque&quot; =&gt; <a href="std.testing.html#std.testing.refAllDeclsRecursive">refAllDeclsRecursive</a>(<span class="tok-builtin">@field</span>(T, decl.name)),
+                <span class="tok-kw">else</span> =&gt; {},
+            }
+        }
+        _ = &amp;<span class="tok-builtin">@field</span>(T, decl.name);
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.testing.fuzz" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fuzz</span><a href="#src.zig-std.testing.fuzz">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">fuzz</span>( context: <span class="tok-kw">anytype</span>, <span class="tok-kw">comptime</span> testOne: <span class="tok-kw">fn</span> (context: <span class="tok-builtin">@TypeOf</span>(context), input: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">anyerror</span>!<span class="tok-type">void</span>, options: <a href="std.testing.FuzzInputOptions.html">FuzzInputOptions</a>, ) <span class="tok-type">anyerror</span>!<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Inline to avoid coverage instrumentation.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>testOne: <span class="tok-kw">fn</span> (context: <span class="tok-builtin">@TypeOf</span>(context), input: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">anyerror</span>!<span class="tok-type">void</span></code></pre></div><div><pre><code>options: <a href="std.testing.FuzzInputOptions.html">FuzzInputOptions</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.testing.fuzz">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">fuzz</span>(
+    context: <span class="tok-kw">anytype</span>,
+    <span class="tok-kw">comptime</span> testOne: <span class="tok-kw">fn</span> (context: <span class="tok-builtin">@TypeOf</span>(context), input: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">anyerror</span>!<span class="tok-type">void</span>,
+    options: <a href="std.testing.FuzzInputOptions.html">FuzzInputOptions</a>,
+) <span class="tok-type">anyerror</span>!<span class="tok-type">void</span> {
+    <span class="tok-kw">return</span> <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;root&quot;</span>).fuzz(context, testOne, options);
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.testing">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std.zig&quot;</span>);
+<span class="tok-kw">const</span> builtin = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;builtin&quot;</span>);
+<span class="tok-kw">const</span> assert = <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>;
+<span class="tok-kw">const</span> math = <a href="std.html">std</a>.<a href="std.math.html">math</a>;
+
+<span class="tok-comment">/// Provides deterministic randomness in unit tests.</span>
+<span class="tok-comment">/// Initialized on startup. Read-only after that.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">var</span> random_seed: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> FailingAllocator = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;testing/FailingAllocator.zig&quot;</span>);
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> failing_allocator = <a href="std.testing.html#std.testing.failing_allocator_instance">failing_allocator_instance</a>.<a href="#">allocator</a>();
+<span class="tok-kw">var</span> failing_allocator_instance = <a href="std.testing.FailingAllocator.html">FailingAllocator</a>.<a href="std.testing.FailingAllocator.html#std.testing.FailingAllocator.init">init</a>(<a href="std.testing.html#std.testing.base_allocator_instance">base_allocator_instance</a>.<a href="#">allocator</a>(), .{
+    .fail_index = <span class="tok-number">0</span>,
+});
+<span class="tok-kw">var</span> base_allocator_instance = <a href="std.html">std</a>.<a href="std.heap.html">heap</a>.<a href="std.heap.FixedBufferAllocator.html">FixedBufferAllocator</a>.<a href="std.heap.FixedBufferAllocator.html#std.heap.FixedBufferAllocator.init">init</a>(<span class="tok-str">&quot;&quot;</span>);
+
+<span class="tok-comment">/// This should only be used in temporary test programs.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> allocator = <a href="std.testing.html#std.testing.allocator_instance">allocator_instance</a>.<a href="#">allocator</a>();
+<span class="tok-kw">pub</span> <span class="tok-kw">var</span> allocator_instance: <a href="std.html">std</a>.<a href="std.heap.html">heap</a>.<a href="std.heap.debug_allocator.html#std.heap.debug_allocator.DebugAllocator">GeneralPurposeAllocator</a>(.{
+    .stack_trace_frames = <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.sys_can_stack_trace">sys_can_stack_trace</a>) <span class="tok-number">10</span> <span class="tok-kw">else</span> <span class="tok-number">0</span>,
+    .resize_stack_traces = <span class="tok-null">true</span>,<span class="tok-comment">
+    // A unique value so that when a default-constructed
+    // GeneralPurposeAllocator is incorrectly passed to testing allocator, or
+    // vice versa, panic occurs.
+    </span>.canary = <span class="tok-builtin">@truncate</span>(<span class="tok-number">0x2731e675c3a701ba</span>),
+}) = b: {
+    <span class="tok-kw">if</span> (!<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.is_test">is_test</a>) <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;testing allocator used when not testing&quot;</span>);
+    <span class="tok-kw">break</span> :b .init;
+};
+
+<span class="tok-comment">/// TODO https://github.com/ziglang/zig/issues/5738</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">var</span> log_level = <a href="std.html">std</a>.<a href="std.log.html">log</a>.<a href="std.log.Level.html">Level</a>.<a href="#">warn</a>;<span class="tok-comment">
+
+// Disable printing in tests for simple backends.
+</span><span class="tok-kw">pub</span> <span class="tok-kw">const</span> backend_can_print = !(<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.zig_backend">zig_backend</a> == .stage2_spirv64 <span class="tok-kw">or</span> <a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.zig_backend">zig_backend</a> == .stage2_riscv64);
+
+<span class="tok-kw">fn</span> <span class="tok-fn">print</span>(<span class="tok-kw">comptime</span> fmt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, args: <span class="tok-kw">anytype</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (<span class="tok-builtin">@inComptime</span>()) {
+        <span class="tok-builtin">@compileError</span>(<a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.comptimePrint">comptimePrint</a>(fmt, args));
+    } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.testing.html#std.testing.backend_can_print">backend_can_print</a>) {
+        <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.print">print</a>(fmt, args);
+    }
+}
+
+<span class="tok-comment">/// This function is intended to be used only in tests. It prints diagnostics to stderr</span>
+<span class="tok-comment">/// and then returns a test failure error when actual_error_union is not expected_error.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectError</span>(expected_error: <span class="tok-type">anyerror</span>, actual_error_union: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (actual_error_union) |actual_payload| {
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected error.{s}, found {any}\n&quot;</span>, .{ <span class="tok-builtin">@errorName</span>(expected_error), actual_payload });
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedError;
+    } <span class="tok-kw">else</span> |actual_error| {
+        <span class="tok-kw">if</span> (expected_error != actual_error) {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected error.{s}, found error.{s}\n&quot;</span>, .{
+                <span class="tok-builtin">@errorName</span>(expected_error),
+                <span class="tok-builtin">@errorName</span>(actual_error),
+            });
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestUnexpectedError;
+        }
+    }
+}
+
+<span class="tok-comment">/// This function is intended to be used only in tests. When the two values are not</span>
+<span class="tok-comment">/// equal, prints diagnostics to stderr to show exactly how they are not equal,</span>
+<span class="tok-comment">/// then returns a test failure error.</span>
+<span class="tok-comment">/// `actual` and `expected` are coerced to a common type using peer type resolution.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectEqual</span>(expected: <span class="tok-kw">anytype</span>, actual: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> T = <span class="tok-builtin">@TypeOf</span>(expected, actual);
+    <span class="tok-kw">return</span> <a href="std.testing.html#std.testing.expectEqualInner">expectEqualInner</a>(T, expected, actual);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">expectEqualInner</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, expected: T, actual: T) !<span class="tok-type">void</span> {
+    <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(actual))) {
+        .<span class="tok-type">noreturn</span>,
+        .@&quot;opaque&quot;,
+        .frame,
+        .@&quot;anyframe&quot;,
+        =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;value of type &quot;</span> ++ <span class="tok-builtin">@typeName</span>(<span class="tok-builtin">@TypeOf</span>(actual)) ++ <span class="tok-str">&quot; encountered&quot;</span>),
+
+        .<span class="tok-null">undefined</span>,
+        .<span class="tok-null">null</span>,
+        .<span class="tok-type">void</span>,
+        =&gt; <span class="tok-kw">return</span>,
+
+        .<span class="tok-type">type</span> =&gt; {
+            <span class="tok-kw">if</span> (actual != expected) {
+                <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected type {s}, found type {s}\n&quot;</span>, .{ <span class="tok-builtin">@typeName</span>(expected), <span class="tok-builtin">@typeName</span>(actual) });
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+            }
+        },
+
+        .<span class="tok-type">bool</span>,
+        .int,
+        .float,
+        .<span class="tok-type">comptime_float</span>,
+        .<span class="tok-type">comptime_int</span>,
+        .enum_literal,
+        .@&quot;enum&quot;,
+        .@&quot;fn&quot;,
+        .error_set,
+        =&gt; {
+            <span class="tok-kw">if</span> (actual != expected) {
+                <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected {}, found {}\n&quot;</span>, .{ expected, actual });
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+            }
+        },
+
+        .pointer =&gt; |pointer| {
+            <span class="tok-kw">switch</span> (pointer.size) {
+                .one, .many, .c =&gt; {
+                    <span class="tok-kw">if</span> (actual != expected) {
+                        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected {*}, found {*}\n&quot;</span>, .{ expected, actual });
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+                    }
+                },
+                .slice =&gt; {
+                    <span class="tok-kw">if</span> (actual.ptr != expected.ptr) {
+                        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected slice ptr {*}, found {*}\n&quot;</span>, .{ expected.ptr, actual.ptr });
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+                    }
+                    <span class="tok-kw">if</span> (actual.len != expected.len) {
+                        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected slice len {}, found {}\n&quot;</span>, .{ expected.len, actual.len });
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+                    }
+                },
+            }
+        },
+
+        .array =&gt; |array| <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(array.child, &amp;expected, &amp;actual),
+
+        .vector =&gt; |info| {
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (i &lt; info.len) : (i += <span class="tok-number">1</span>) {
+                <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.eql">eql</a>(expected[i], actual[i])) {
+                    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;index {d} incorrect. expected {any}, found {any}\n&quot;</span>, .{
+                        i, expected[i], actual[i],
+                    });
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+                }
+            }
+        },
+
+        .@&quot;struct&quot; =&gt; |structType| {
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (structType.fields) |field| {
+                <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@field</span>(expected, field.name), <span class="tok-builtin">@field</span>(actual, field.name));
+            }
+        },
+
+        .@&quot;union&quot; =&gt; |union_info| {
+            <span class="tok-kw">if</span> (union_info.tag_type == <span class="tok-null">null</span>) {
+                <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Unable to compare untagged union values for type &quot;</span> ++ <span class="tok-builtin">@typeName</span>(<span class="tok-builtin">@TypeOf</span>(actual)));
+            }
+
+            <span class="tok-kw">const</span> Tag = <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.Tag">Tag</a>(<span class="tok-builtin">@TypeOf</span>(expected));
+
+            <span class="tok-kw">const</span> expectedTag = <span class="tok-builtin">@as</span>(Tag, expected);
+            <span class="tok-kw">const</span> actualTag = <span class="tok-builtin">@as</span>(Tag, actual);
+
+            <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(expectedTag, actualTag);<span class="tok-comment">
+
+            // we only reach this switch if the tags are equal
+            </span><span class="tok-kw">switch</span> (expected) {
+                <span class="tok-kw">inline</span> <span class="tok-kw">else</span> =&gt; |val, tag| <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(val, <span class="tok-builtin">@field</span>(actual, <span class="tok-builtin">@tagName</span>(tag))),
+            }
+        },
+
+        .optional =&gt; {
+            <span class="tok-kw">if</span> (expected) |expected_payload| {
+                <span class="tok-kw">if</span> (actual) |actual_payload| {
+                    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(expected_payload, actual_payload);
+                } <span class="tok-kw">else</span> {
+                    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected {any}, found null\n&quot;</span>, .{expected_payload});
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+                }
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">if</span> (actual) |actual_payload| {
+                    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected null, found {any}\n&quot;</span>, .{actual_payload});
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+                }
+            }
+        },
+
+        .error_union =&gt; {
+            <span class="tok-kw">if</span> (expected) |expected_payload| {
+                <span class="tok-kw">if</span> (actual) |actual_payload| {
+                    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(expected_payload, actual_payload);
+                } <span class="tok-kw">else</span> |actual_err| {
+                    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected {any}, found {}\n&quot;</span>, .{ expected_payload, actual_err });
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+                }
+            } <span class="tok-kw">else</span> |expected_err| {
+                <span class="tok-kw">if</span> (actual) |actual_payload| {
+                    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected {}, found {any}\n&quot;</span>, .{ expected_err, actual_payload });
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+                } <span class="tok-kw">else</span> |actual_err| {
+                    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(expected_err, actual_err);
+                }
+            }
+        },
+    }
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;expectEqual.union(enum)&quot;</span> {
+    <span class="tok-kw">const</span> T = <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) {
+        a: <span class="tok-type">i32</span>,
+        b: <span class="tok-type">f32</span>,
+    };
+
+    <span class="tok-kw">const</span> a10 = T{ .a = <span class="tok-number">10</span> };
+
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(a10, a10);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;expectEqual union with comptime-only field&quot;</span> {
+    <span class="tok-kw">const</span> U = <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) {
+        a: <span class="tok-type">void</span>,
+        b: <span class="tok-type">void</span>,
+        c: <span class="tok-type">comptime_int</span>,
+    };
+
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(U{ .a = {} }, .a);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;expectEqual nested array&quot;</span> {
+    <span class="tok-kw">const</span> a = [<span class="tok-number">2</span>][<span class="tok-number">2</span>]<span class="tok-type">f32</span>{
+        [_]<span class="tok-type">f32</span>{ <span class="tok-number">1.0</span>, <span class="tok-number">0.0</span> },
+        [_]<span class="tok-type">f32</span>{ <span class="tok-number">0.0</span>, <span class="tok-number">1.0</span> },
+    };
+
+    <span class="tok-kw">const</span> b = [<span class="tok-number">2</span>][<span class="tok-number">2</span>]<span class="tok-type">f32</span>{
+        [_]<span class="tok-type">f32</span>{ <span class="tok-number">1.0</span>, <span class="tok-number">0.0</span> },
+        [_]<span class="tok-type">f32</span>{ <span class="tok-number">0.0</span>, <span class="tok-number">1.0</span> },
+    };
+
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(a, b);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;expectEqual vector&quot;</span> {
+    <span class="tok-kw">const</span> a: <span class="tok-builtin">@Vector</span>(<span class="tok-number">4</span>, <span class="tok-type">u32</span>) = <span class="tok-builtin">@splat</span>(<span class="tok-number">4</span>);
+    <span class="tok-kw">const</span> b: <span class="tok-builtin">@Vector</span>(<span class="tok-number">4</span>, <span class="tok-type">u32</span>) = <span class="tok-builtin">@splat</span>(<span class="tok-number">4</span>);
+
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(a, b);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;expectEqual null&quot;</span> {
+    <span class="tok-kw">const</span> a = .{<span class="tok-null">null</span>};
+    <span class="tok-kw">const</span> b = <span class="tok-builtin">@Vector</span>(<span class="tok-number">1</span>, ?*<span class="tok-type">u8</span>){<span class="tok-null">null</span>};
+
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(a, b);
+}
+
+<span class="tok-comment">/// This function is intended to be used only in tests. When the formatted result of the template</span>
+<span class="tok-comment">/// and its arguments does not equal the expected text, it prints diagnostics to stderr to show how</span>
+<span class="tok-comment">/// they are not equal, then returns an error. It depends on `expectEqualStrings()` for printing</span>
+<span class="tok-comment">/// diagnostics.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectFmt</span>(expected: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, <span class="tok-kw">comptime</span> template: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, args: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> actual = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.allocPrint">allocPrint</a>(<a href="std.testing.html#std.testing.allocator">allocator</a>, template, args);
+    <span class="tok-kw">defer</span> <a href="std.testing.html#std.testing.allocator">allocator</a>.<a href="#">free</a>(actual);
+    <span class="tok-kw">return</span> <a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(expected, actual);
+}
+
+<span class="tok-comment">/// This function is intended to be used only in tests. When the actual value is</span>
+<span class="tok-comment">/// not approximately equal to the expected value, prints diagnostics to stderr</span>
+<span class="tok-comment">/// to show exactly how they are not equal, then returns a test failure error.</span>
+<span class="tok-comment">/// See `math.approxEqAbs` for more information on the tolerance parameter.</span>
+<span class="tok-comment">/// The types must be floating-point.</span>
+<span class="tok-comment">/// `actual` and `expected` are coerced to a common type using peer type resolution.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectApproxEqAbs</span>(expected: <span class="tok-kw">anytype</span>, actual: <span class="tok-kw">anytype</span>, tolerance: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> T = <span class="tok-builtin">@TypeOf</span>(expected, actual, tolerance);
+    <span class="tok-kw">return</span> <a href="std.testing.html#std.testing.expectApproxEqAbsInner">expectApproxEqAbsInner</a>(T, expected, actual, tolerance);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">expectApproxEqAbsInner</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, expected: T, actual: T, tolerance: T) !<span class="tok-type">void</span> {
+    <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(T)) {
+        .float =&gt; <span class="tok-kw">if</span> (!<a href="std.math.html">math</a>.<a href="std.math.html#std.math.approxEqAbs">approxEqAbs</a>(T, expected, actual, tolerance)) {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;actual {}, not within absolute tolerance {} of expected {}\n&quot;</span>, .{ actual, tolerance, expected });
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedApproxEqAbs;
+        },
+
+        .<span class="tok-type">comptime_float</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Cannot approximately compare two comptime_float values&quot;</span>),
+
+        <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Unable to compare non floating point values&quot;</span>),
+    }
+}
+
+<span class="tok-kw">test</span> expectApproxEqAbs {
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> ([_]<span class="tok-type">type</span>{ <span class="tok-type">f16</span>, <span class="tok-type">f32</span>, <span class="tok-type">f64</span>, <span class="tok-type">f128</span> }) |T| {
+        <span class="tok-kw">const</span> pos_x: T = <span class="tok-number">12.0</span>;
+        <span class="tok-kw">const</span> pos_y: T = <span class="tok-number">12.06</span>;
+        <span class="tok-kw">const</span> neg_x: T = -<span class="tok-number">12.0</span>;
+        <span class="tok-kw">const</span> neg_y: T = -<span class="tok-number">12.06</span>;
+
+        <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectApproxEqAbs">expectApproxEqAbs</a>(pos_x, pos_y, <span class="tok-number">0.1</span>);
+        <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectApproxEqAbs">expectApproxEqAbs</a>(neg_x, neg_y, <span class="tok-number">0.1</span>);
+    }
+}
+
+<span class="tok-comment">/// This function is intended to be used only in tests. When the actual value is</span>
+<span class="tok-comment">/// not approximately equal to the expected value, prints diagnostics to stderr</span>
+<span class="tok-comment">/// to show exactly how they are not equal, then returns a test failure error.</span>
+<span class="tok-comment">/// See `math.approxEqRel` for more information on the tolerance parameter.</span>
+<span class="tok-comment">/// The types must be floating-point.</span>
+<span class="tok-comment">/// `actual` and `expected` are coerced to a common type using peer type resolution.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectApproxEqRel</span>(expected: <span class="tok-kw">anytype</span>, actual: <span class="tok-kw">anytype</span>, tolerance: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> T = <span class="tok-builtin">@TypeOf</span>(expected, actual, tolerance);
+    <span class="tok-kw">return</span> <a href="std.testing.html#std.testing.expectApproxEqRelInner">expectApproxEqRelInner</a>(T, expected, actual, tolerance);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">expectApproxEqRelInner</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, expected: T, actual: T, tolerance: T) !<span class="tok-type">void</span> {
+    <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(T)) {
+        .float =&gt; <span class="tok-kw">if</span> (!<a href="std.math.html">math</a>.<a href="std.math.html#std.math.approxEqRel">approxEqRel</a>(T, expected, actual, tolerance)) {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;actual {}, not within relative tolerance {} of expected {}\n&quot;</span>, .{ actual, tolerance, expected });
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedApproxEqRel;
+        },
+
+        .<span class="tok-type">comptime_float</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Cannot approximately compare two comptime_float values&quot;</span>),
+
+        <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Unable to compare non floating point values&quot;</span>),
+    }
+}
+
+<span class="tok-kw">test</span> expectApproxEqRel {
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> ([_]<span class="tok-type">type</span>{ <span class="tok-type">f16</span>, <span class="tok-type">f32</span>, <span class="tok-type">f64</span>, <span class="tok-type">f128</span> }) |T| {
+        <span class="tok-kw">const</span> eps_value = <span class="tok-kw">comptime</span> <a href="std.math.html">math</a>.<a href="std.math.float.html#std.math.float.floatEps">floatEps</a>(T);
+        <span class="tok-kw">const</span> sqrt_eps_value = <span class="tok-kw">comptime</span> <span class="tok-builtin">@sqrt</span>(eps_value);
+
+        <span class="tok-kw">const</span> pos_x: T = <span class="tok-number">12.0</span>;
+        <span class="tok-kw">const</span> pos_y: T = pos_x + <span class="tok-number">2</span> * eps_value;
+        <span class="tok-kw">const</span> neg_x: T = -<span class="tok-number">12.0</span>;
+        <span class="tok-kw">const</span> neg_y: T = neg_x - <span class="tok-number">2</span> * eps_value;
+
+        <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectApproxEqRel">expectApproxEqRel</a>(pos_x, pos_y, sqrt_eps_value);
+        <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectApproxEqRel">expectApproxEqRel</a>(neg_x, neg_y, sqrt_eps_value);
+    }
+}
+
+<span class="tok-comment">/// This function is intended to be used only in tests. When the two slices are not</span>
+<span class="tok-comment">/// equal, prints diagnostics to stderr to show exactly how they are not equal (with</span>
+<span class="tok-comment">/// the differences highlighted in red), then returns a test failure error.</span>
+<span class="tok-comment">/// The colorized output is optional and controlled by the return of `std.io.tty.detectConfig()`.</span>
+<span class="tok-comment">/// If your inputs are UTF-8 encoded strings, consider calling `expectEqualStrings` instead.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectEqualSlices</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, expected: []<span class="tok-kw">const</span> T, actual: []<span class="tok-kw">const</span> T) !<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (expected.ptr == actual.ptr <span class="tok-kw">and</span> expected.len == actual.len) {
+        <span class="tok-kw">return</span>;
+    }
+    <span class="tok-kw">const</span> diff_index: <span class="tok-type">usize</span> = diff_index: {
+        <span class="tok-kw">const</span> shortest = <span class="tok-builtin">@min</span>(expected.len, actual.len);
+        <span class="tok-kw">var</span> index: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">while</span> (index &lt; shortest) : (index += <span class="tok-number">1</span>) {
+            <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.eql">eql</a>(actual[index], expected[index])) <span class="tok-kw">break</span> :diff_index index;
+        }
+        <span class="tok-kw">break</span> :diff_index <span class="tok-kw">if</span> (expected.len == actual.len) <span class="tok-kw">return</span> <span class="tok-kw">else</span> shortest;
+    };
+
+    <span class="tok-kw">if</span> (!<a href="std.testing.html#std.testing.backend_can_print">backend_can_print</a>) {
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+    }
+
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;slices differ. first difference occurs at index {d} (0x{X})\n&quot;</span>, .{ diff_index, diff_index });<span class="tok-comment">
+
+    // TODO: Should this be configurable by the caller?
+    </span><span class="tok-kw">const</span> max_lines: <span class="tok-type">usize</span> = <span class="tok-number">16</span>;
+    <span class="tok-kw">const</span> max_window_size: <span class="tok-type">usize</span> = <span class="tok-kw">if</span> (T == <span class="tok-type">u8</span>) max_lines * <span class="tok-number">16</span> <span class="tok-kw">else</span> max_lines;<span class="tok-comment">
+
+    // Print a maximum of max_window_size items of each input, starting just before the
+    // first difference to give a bit of context.
+    </span><span class="tok-kw">var</span> window_start: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">if</span> (<span class="tok-builtin">@max</span>(actual.len, expected.len) &gt; max_window_size) {
+        <span class="tok-kw">const</span> alignment = <span class="tok-kw">if</span> (T == <span class="tok-type">u8</span>) <span class="tok-number">16</span> <span class="tok-kw">else</span> <span class="tok-number">2</span>;
+        window_start = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.alignBackward">alignBackward</a>(<span class="tok-type">usize</span>, diff_index - <span class="tok-builtin">@min</span>(diff_index, alignment), alignment);
+    }
+    <span class="tok-kw">const</span> expected_window = expected[window_start..<span class="tok-builtin">@min</span>(expected.len, window_start + max_window_size)];
+    <span class="tok-kw">const</span> expected_truncated = window_start + expected_window.len &lt; expected.len;
+    <span class="tok-kw">const</span> actual_window = actual[window_start..<span class="tok-builtin">@min</span>(actual.len, window_start + max_window_size)];
+    <span class="tok-kw">const</span> actual_truncated = window_start + actual_window.len &lt; actual.len;
+
+    <span class="tok-kw">const</span> stderr = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.html#std.io.getStdErr">getStdErr</a>();
+    <span class="tok-kw">const</span> ttyconf = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.tty.html">tty</a>.<a href="std.io.tty.html#std.io.tty.detectConfig">detectConfig</a>(stderr);
+    <span class="tok-kw">var</span> differ = <span class="tok-kw">if</span> (T == <span class="tok-type">u8</span>) <a href="std.testing.BytesDiffer.html">BytesDiffer</a>{
+        .expected = expected_window,
+        .actual = actual_window,
+        .ttyconf = ttyconf,
+    } <span class="tok-kw">else</span> <a href="std.testing.html#std.testing.SliceDiffer">SliceDiffer</a>(T){
+        .start_index = window_start,
+        .expected = expected_window,
+        .actual = actual_window,
+        .ttyconf = ttyconf,
+    };<span class="tok-comment">
+
+    // Print indexes as hex for slices of u8 since it's more likely to be binary data where
+    // that is usually useful.
+    </span><span class="tok-kw">const</span> index_fmt = <span class="tok-kw">if</span> (T == <span class="tok-type">u8</span>) <span class="tok-str">&quot;0x{X}&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;{}&quot;</span>;
+
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n============ expected this output: =============  len: {} (0x{X})\n\n&quot;</span>, .{ expected.len, expected.len });
+    <span class="tok-kw">if</span> (window_start &gt; <span class="tok-number">0</span>) {
+        <span class="tok-kw">if</span> (T == <span class="tok-type">u8</span>) {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;... truncated, start index: &quot;</span> ++ index_fmt ++ <span class="tok-str">&quot; ...\n&quot;</span>, .{window_start});
+        } <span class="tok-kw">else</span> {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;... truncated ...\n&quot;</span>, .{});
+        }
+    }
+    differ.write(stderr.writer()) <span class="tok-kw">catch</span> {};
+    <span class="tok-kw">if</span> (expected_truncated) {
+        <span class="tok-kw">const</span> end_offset = window_start + expected_window.len;
+        <span class="tok-kw">const</span> num_missing_items = expected.len - (window_start + expected_window.len);
+        <span class="tok-kw">if</span> (T == <span class="tok-type">u8</span>) {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;... truncated, indexes [&quot;</span> ++ index_fmt ++ <span class="tok-str">&quot;..] not shown, remaining bytes: &quot;</span> ++ index_fmt ++ <span class="tok-str">&quot; ...\n&quot;</span>, .{ end_offset, num_missing_items });
+        } <span class="tok-kw">else</span> {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;... truncated, remaining items: &quot;</span> ++ index_fmt ++ <span class="tok-str">&quot; ...\n&quot;</span>, .{num_missing_items});
+        }
+    }<span class="tok-comment">
+
+    // now reverse expected/actual and print again
+    </span>differ.expected = actual_window;
+    differ.actual = expected_window;
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n============= instead found this: ==============  len: {} (0x{X})\n\n&quot;</span>, .{ actual.len, actual.len });
+    <span class="tok-kw">if</span> (window_start &gt; <span class="tok-number">0</span>) {
+        <span class="tok-kw">if</span> (T == <span class="tok-type">u8</span>) {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;... truncated, start index: &quot;</span> ++ index_fmt ++ <span class="tok-str">&quot; ...\n&quot;</span>, .{window_start});
+        } <span class="tok-kw">else</span> {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;... truncated ...\n&quot;</span>, .{});
+        }
+    }
+    differ.write(stderr.writer()) <span class="tok-kw">catch</span> {};
+    <span class="tok-kw">if</span> (actual_truncated) {
+        <span class="tok-kw">const</span> end_offset = window_start + actual_window.len;
+        <span class="tok-kw">const</span> num_missing_items = actual.len - (window_start + actual_window.len);
+        <span class="tok-kw">if</span> (T == <span class="tok-type">u8</span>) {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;... truncated, indexes [&quot;</span> ++ index_fmt ++ <span class="tok-str">&quot;..] not shown, remaining bytes: &quot;</span> ++ index_fmt ++ <span class="tok-str">&quot; ...\n&quot;</span>, .{ end_offset, num_missing_items });
+        } <span class="tok-kw">else</span> {
+            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;... truncated, remaining items: &quot;</span> ++ index_fmt ++ <span class="tok-str">&quot; ...\n&quot;</span>, .{num_missing_items});
+        }
+    }
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n================================================\n\n&quot;</span>, .{});
+
+    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">SliceDiffer</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        start_index: <span class="tok-type">usize</span>,
+        expected: []<span class="tok-kw">const</span> T,
+        actual: []<span class="tok-kw">const</span> T,
+        ttyconf: <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.tty.html">tty</a>.<a href="std.io.tty.Config.html">Config</a>,
+
+        <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">write</span>(self: <a href="std.testing.html#std.testing.SliceDiffer">Self</a>, writer: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">for</span> (self.expected, <span class="tok-number">0</span>..) |value, i| {
+                <span class="tok-kw">const</span> full_index = self.start_index + i;
+                <span class="tok-kw">const</span> diff = <span class="tok-kw">if</span> (i &lt; self.actual.len) !<a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.eql">eql</a>(self.actual[i], value) <span class="tok-kw">else</span> <span class="tok-null">true</span>;
+                <span class="tok-kw">if</span> (diff) <span class="tok-kw">try</span> self.ttyconf.setColor(writer, .red);
+                <span class="tok-kw">if</span> (<span class="tok-builtin">@typeInfo</span>(T) == .pointer) {
+                    <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;[{}]{*}: {any}\n&quot;</span>, .{ full_index, value, value });
+                } <span class="tok-kw">else</span> {
+                    <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;[{}]: {any}\n&quot;</span>, .{ full_index, value });
+                }
+                <span class="tok-kw">if</span> (diff) <span class="tok-kw">try</span> self.ttyconf.setColor(writer, .reset);
+            }
+        }
+    };
+}
+
+<span class="tok-kw">const</span> BytesDiffer = <span class="tok-kw">struct</span> {
+    expected: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    actual: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    ttyconf: <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.tty.html">tty</a>.<a href="std.io.tty.Config.html">Config</a>,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">write</span>(self: <a href="std.testing.BytesDiffer.html">BytesDiffer</a>, writer: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+        <span class="tok-kw">var</span> expected_iterator = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.window">window</a>(<span class="tok-type">u8</span>, self.expected, <span class="tok-number">16</span>, <span class="tok-number">16</span>);
+        <span class="tok-kw">var</span> row: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">while</span> (expected_iterator.next()) |chunk| {<span class="tok-comment">
+            // to avoid having to calculate diffs twice per chunk
+            </span><span class="tok-kw">var</span> diffs: <a href="std.html">std</a>.<a href="std.bit_set.html">bit_set</a>.<a href="std.bit_set.html#std.bit_set.IntegerBitSet">IntegerBitSet</a>(<span class="tok-number">16</span>) = .{ .mask = <span class="tok-number">0</span> };
+            <span class="tok-kw">for</span> (chunk, <span class="tok-number">0</span>..) |byte, col| {
+                <span class="tok-kw">const</span> absolute_byte_index = col + row * <span class="tok-number">16</span>;
+                <span class="tok-kw">const</span> diff = <span class="tok-kw">if</span> (absolute_byte_index &lt; self.actual.len) self.actual[absolute_byte_index] != byte <span class="tok-kw">else</span> <span class="tok-null">true</span>;
+                <span class="tok-kw">if</span> (diff) diffs.set(col);
+                <span class="tok-kw">try</span> self.writeDiff(writer, <span class="tok-str">&quot;{X:0&gt;2} &quot;</span>, .{byte}, diff);
+                <span class="tok-kw">if</span> (col == <span class="tok-number">7</span>) <span class="tok-kw">try</span> writer.writeByte(<span class="tok-str">' '</span>);
+            }
+            <span class="tok-kw">try</span> writer.writeByte(<span class="tok-str">' '</span>);
+            <span class="tok-kw">if</span> (chunk.len &lt; <span class="tok-number">16</span>) {
+                <span class="tok-kw">var</span> missing_columns = (<span class="tok-number">16</span> - chunk.len) * <span class="tok-number">3</span>;
+                <span class="tok-kw">if</span> (chunk.len &lt; <span class="tok-number">8</span>) missing_columns += <span class="tok-number">1</span>;
+                <span class="tok-kw">try</span> writer.writeByteNTimes(<span class="tok-str">' '</span>, missing_columns);
+            }
+            <span class="tok-kw">for</span> (chunk, <span class="tok-number">0</span>..) |byte, col| {
+                <span class="tok-kw">const</span> diff = diffs.isSet(col);
+                <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.ascii.html">ascii</a>.<a href="std.ascii.html#std.ascii.isPrint">isPrint</a>(byte)) {
+                    <span class="tok-kw">try</span> self.writeDiff(writer, <span class="tok-str">&quot;{c}&quot;</span>, .{byte}, diff);
+                } <span class="tok-kw">else</span> {<span class="tok-comment">
+                    // TODO: remove this `if` when https://github.com/ziglang/zig/issues/7600 is fixed
+                    </span><span class="tok-kw">if</span> (self.ttyconf == .windows_api) {
+                        <span class="tok-kw">try</span> self.writeDiff(writer, <span class="tok-str">&quot;.&quot;</span>, .{}, diff);
+                        <span class="tok-kw">continue</span>;
+                    }<span class="tok-comment">
+
+                    // Let's print some common control codes as graphical Unicode symbols.
+                    // We don't want to do this for all control codes because most control codes apart from
+                    // the ones that Zig has escape sequences for are likely not very useful to print as symbols.
+                    </span><span class="tok-kw">switch</span> (byte) {
+                        <span class="tok-str">'\n'</span> =&gt; <span class="tok-kw">try</span> self.writeDiff(writer, <span class="tok-str">&quot;␊&quot;</span>, .{}, diff),
+                        <span class="tok-str">'\r'</span> =&gt; <span class="tok-kw">try</span> self.writeDiff(writer, <span class="tok-str">&quot;␍&quot;</span>, .{}, diff),
+                        <span class="tok-str">'\t'</span> =&gt; <span class="tok-kw">try</span> self.writeDiff(writer, <span class="tok-str">&quot;␉&quot;</span>, .{}, diff),
+                        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">try</span> self.writeDiff(writer, <span class="tok-str">&quot;.&quot;</span>, .{}, diff),
+                    }
+                }
+            }
+            <span class="tok-kw">try</span> writer.writeByte(<span class="tok-str">'\n'</span>);
+            row += <span class="tok-number">1</span>;
+        }
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">writeDiff</span>(self: <a href="std.testing.BytesDiffer.html">BytesDiffer</a>, writer: <span class="tok-kw">anytype</span>, <span class="tok-kw">comptime</span> fmt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, args: <span class="tok-kw">anytype</span>, diff: <span class="tok-type">bool</span>) !<span class="tok-type">void</span> {
+        <span class="tok-kw">if</span> (diff) <span class="tok-kw">try</span> self.ttyconf.setColor(writer, .red);
+        <span class="tok-kw">try</span> writer.print(fmt, args);
+        <span class="tok-kw">if</span> (diff) <span class="tok-kw">try</span> self.ttyconf.setColor(writer, .reset);
+    }
+};
+
+<span class="tok-kw">test</span> {
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, <span class="tok-str">&quot;foo\x00&quot;</span>, <span class="tok-str">&quot;foo\x00&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u16</span>, &amp;[_]<span class="tok-type">u16</span>{ <span class="tok-number">100</span>, <span class="tok-number">200</span>, <span class="tok-number">300</span>, <span class="tok-number">400</span> }, &amp;[_]<span class="tok-type">u16</span>{ <span class="tok-number">100</span>, <span class="tok-number">200</span>, <span class="tok-number">300</span>, <span class="tok-number">400</span> });
+    <span class="tok-kw">const</span> E = <span class="tok-kw">enum</span> { foo, bar };
+    <span class="tok-kw">const</span> S = <span class="tok-kw">struct</span> {
+        v: E,
+    };
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(
+        S,
+        &amp;[_]S{ .{ .v = .foo }, .{ .v = .bar }, .{ .v = .foo }, .{ .v = .bar } },
+        &amp;[_]S{ .{ .v = .foo }, .{ .v = .bar }, .{ .v = .foo }, .{ .v = .bar } },
+    );
+}
+
+<span class="tok-comment">/// This function is intended to be used only in tests. Checks that two slices or two arrays are equal,</span>
+<span class="tok-comment">/// including that their sentinel (if any) are the same. Will error if given another type.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectEqualSentinel</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> sentinel: T, expected: [:sentinel]<span class="tok-kw">const</span> T, actual: [:sentinel]<span class="tok-kw">const</span> T) !<span class="tok-type">void</span> {
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(T, expected, actual);
+
+    <span class="tok-kw">const</span> expected_value_sentinel = blk: {
+        <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(expected))) {
+            .pointer =&gt; {
+                <span class="tok-kw">break</span> :blk expected[expected.len];
+            },
+            .array =&gt; |array_info| {
+                <span class="tok-kw">const</span> indexable_outside_of_bounds = <span class="tok-builtin">@as</span>([]<span class="tok-kw">const</span> array_info.child, &amp;expected);
+                <span class="tok-kw">break</span> :blk indexable_outside_of_bounds[indexable_outside_of_bounds.len];
+            },
+            <span class="tok-kw">else</span> =&gt; {},
+        }
+    };
+
+    <span class="tok-kw">const</span> actual_value_sentinel = blk: {
+        <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(actual))) {
+            .pointer =&gt; {
+                <span class="tok-kw">break</span> :blk actual[actual.len];
+            },
+            .array =&gt; |array_info| {
+                <span class="tok-kw">const</span> indexable_outside_of_bounds = <span class="tok-builtin">@as</span>([]<span class="tok-kw">const</span> array_info.child, &amp;actual);
+                <span class="tok-kw">break</span> :blk indexable_outside_of_bounds[indexable_outside_of_bounds.len];
+            },
+            <span class="tok-kw">else</span> =&gt; {},
+        }
+    };
+
+    <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.eql">eql</a>(sentinel, expected_value_sentinel)) {
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expectEqualSentinel: 'expected' sentinel in memory is different from its type sentinel. type sentinel {}, in memory sentinel {}\n&quot;</span>, .{ sentinel, expected_value_sentinel });
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+    }
+
+    <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.eql">eql</a>(sentinel, actual_value_sentinel)) {
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expectEqualSentinel: 'actual' sentinel in memory is different from its type sentinel. type sentinel {}, in memory sentinel {}\n&quot;</span>, .{ sentinel, actual_value_sentinel });
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+    }
+}
+
+<span class="tok-comment">/// This function is intended to be used only in tests.</span>
+<span class="tok-comment">/// When `ok` is false, returns a test failure error.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expect</span>(ok: <span class="tok-type">bool</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (!ok) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestUnexpectedResult;
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> TmpDir = <span class="tok-kw">struct</span> {
+    dir: <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.Dir.html">Dir</a>,
+    parent_dir: <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.Dir.html">Dir</a>,
+    sub_path: [<a href="std.testing.TmpDir.html#std.testing.TmpDir.sub_path_len">sub_path_len</a>]<span class="tok-type">u8</span>,
+
+    <span class="tok-kw">const</span> random_bytes_count = <span class="tok-number">12</span>;
+    <span class="tok-kw">const</span> sub_path_len = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.base64_encoder">base64_encoder</a>.<a href="#">calcSize</a>(<a href="std.testing.TmpDir.html#std.testing.TmpDir.random_bytes_count">random_bytes_count</a>);
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">cleanup</span>(self: *<a href="std.testing.TmpDir.html">TmpDir</a>) <span class="tok-type">void</span> {
+        self.dir.close();
+        self.parent_dir.deleteTree(&amp;self.sub_path) <span class="tok-kw">catch</span> {};
+        self.parent_dir.close();
+        self.* = <span class="tok-null">undefined</span>;
+    }
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">tmpDir</span>(opts: <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.Dir.html">Dir</a>.<a href="std.fs.Dir.OpenOptions.html">OpenOptions</a>) <a href="std.testing.TmpDir.html">TmpDir</a> {
+    <span class="tok-kw">var</span> random_bytes: [<a href="std.testing.TmpDir.html">TmpDir</a>.<a href="std.testing.TmpDir.html#std.testing.TmpDir.random_bytes_count">random_bytes_count</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <a href="std.html">std</a>.<a href="std.crypto.html">crypto</a>.<a href="std.crypto.tlcsprng.html#std.crypto.tlcsprng.interface">random</a>.<a href="#">bytes</a>(&amp;random_bytes);
+    <span class="tok-kw">var</span> sub_path: [<a href="std.testing.TmpDir.html">TmpDir</a>.<a href="std.testing.TmpDir.html#std.testing.TmpDir.sub_path_len">sub_path_len</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    _ = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.base64_encoder">base64_encoder</a>.<a href="#">encode</a>(&amp;sub_path, &amp;random_bytes);
+
+    <span class="tok-kw">const</span> cwd = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.cwd">cwd</a>();
+    <span class="tok-kw">var</span> cache_dir = cwd.makeOpenPath(<span class="tok-str">&quot;.zig-cache&quot;</span>, .{}) <span class="tok-kw">catch</span>
+        <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;unable to make tmp dir for testing: unable to make and open .zig-cache dir&quot;</span>);
+    <span class="tok-kw">defer</span> cache_dir.close();
+    <span class="tok-kw">const</span> parent_dir = cache_dir.makeOpenPath(<span class="tok-str">&quot;tmp&quot;</span>, .{}) <span class="tok-kw">catch</span>
+        <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;unable to make tmp dir for testing: unable to make and open .zig-cache/tmp dir&quot;</span>);
+    <span class="tok-kw">const</span> dir = parent_dir.makeOpenPath(&amp;sub_path, opts) <span class="tok-kw">catch</span>
+        <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;unable to make tmp dir for testing: unable to make and open the tmp dir&quot;</span>);
+
+    <span class="tok-kw">return</span> .{
+        .dir = dir,
+        .parent_dir = parent_dir,
+        .sub_path = sub_path,
+    };
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectEqualStrings</span>(expected: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, actual: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfDiff">indexOfDiff</a>(<span class="tok-type">u8</span>, actual, expected)) |diff_index| {
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n====== expected this output: =========\n&quot;</span>, .{});
+        <a href="std.testing.html#std.testing.printWithVisibleNewlines">printWithVisibleNewlines</a>(expected);
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n======== instead found this: =========\n&quot;</span>, .{});
+        <a href="std.testing.html#std.testing.printWithVisibleNewlines">printWithVisibleNewlines</a>(actual);
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n======================================\n&quot;</span>, .{});
+
+        <span class="tok-kw">var</span> diff_line_number: <span class="tok-type">usize</span> = <span class="tok-number">1</span>;
+        <span class="tok-kw">for</span> (expected[<span class="tok-number">0</span>..diff_index]) |value| {
+            <span class="tok-kw">if</span> (value == <span class="tok-str">'\n'</span>) diff_line_number += <span class="tok-number">1</span>;
+        }
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;First difference occurs on line {d}:\n&quot;</span>, .{diff_line_number});
+
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected:\n&quot;</span>, .{});
+        <a href="std.testing.html#std.testing.printIndicatorLine">printIndicatorLine</a>(expected, diff_index);
+
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;found:\n&quot;</span>, .{});
+        <a href="std.testing.html#std.testing.printIndicatorLine">printIndicatorLine</a>(actual, diff_index);
+
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+    }
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectStringStartsWith</span>(actual: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, expected_starts_with: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.startsWith">startsWith</a>(<span class="tok-type">u8</span>, actual, expected_starts_with))
+        <span class="tok-kw">return</span>;
+
+    <span class="tok-kw">const</span> shortened_actual = <span class="tok-kw">if</span> (actual.len &gt;= expected_starts_with.len)
+        actual[<span class="tok-number">0</span>..expected_starts_with.len]
+    <span class="tok-kw">else</span>
+        actual;
+
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n====== expected to start with: =========\n&quot;</span>, .{});
+    <a href="std.testing.html#std.testing.printWithVisibleNewlines">printWithVisibleNewlines</a>(expected_starts_with);
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n====== instead started with: ===========\n&quot;</span>, .{});
+    <a href="std.testing.html#std.testing.printWithVisibleNewlines">printWithVisibleNewlines</a>(shortened_actual);
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n========= full output: ==============\n&quot;</span>, .{});
+    <a href="std.testing.html#std.testing.printWithVisibleNewlines">printWithVisibleNewlines</a>(actual);
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n======================================\n&quot;</span>, .{});
+
+    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedStartsWith;
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectStringEndsWith</span>(actual: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, expected_ends_with: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.endsWith">endsWith</a>(<span class="tok-type">u8</span>, actual, expected_ends_with))
+        <span class="tok-kw">return</span>;
+
+    <span class="tok-kw">const</span> shortened_actual = <span class="tok-kw">if</span> (actual.len &gt;= expected_ends_with.len)
+        actual[(actual.len - expected_ends_with.len)..]
+    <span class="tok-kw">else</span>
+        actual;
+
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n====== expected to end with: =========\n&quot;</span>, .{});
+    <a href="std.testing.html#std.testing.printWithVisibleNewlines">printWithVisibleNewlines</a>(expected_ends_with);
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n====== instead ended with: ===========\n&quot;</span>, .{});
+    <a href="std.testing.html#std.testing.printWithVisibleNewlines">printWithVisibleNewlines</a>(shortened_actual);
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n========= full output: ==============\n&quot;</span>, .{});
+    <a href="std.testing.html#std.testing.printWithVisibleNewlines">printWithVisibleNewlines</a>(actual);
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;\n======================================\n&quot;</span>, .{});
+
+    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEndsWith;
+}
+
+<span class="tok-comment">/// This function is intended to be used only in tests. When the two values are not</span>
+<span class="tok-comment">/// deeply equal, prints diagnostics to stderr to show exactly how they are not equal,</span>
+<span class="tok-comment">/// then returns a test failure error.</span>
+<span class="tok-comment">/// `actual` and `expected` are coerced to a common type using peer type resolution.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Deeply equal is defined as follows:</span>
+<span class="tok-comment">/// Primitive types are deeply equal if they are equal using `==` operator.</span>
+<span class="tok-comment">/// Struct values are deeply equal if their corresponding fields are deeply equal.</span>
+<span class="tok-comment">/// Container types(like Array/Slice/Vector) deeply equal when their corresponding elements are deeply equal.</span>
+<span class="tok-comment">/// Pointer values are deeply equal if values they point to are deeply equal.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Note: Self-referential structs are supported (e.g. things like std.SinglyLinkedList)</span>
+<span class="tok-comment">/// but may cause infinite recursion or stack overflow when a container has a pointer to itself.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">expectEqualDeep</span>(expected: <span class="tok-kw">anytype</span>, actual: <span class="tok-kw">anytype</span>) <span class="tok-kw">error</span>{TestExpectedEqual}!<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> T = <span class="tok-builtin">@TypeOf</span>(expected, actual);
+    <span class="tok-kw">return</span> <a href="std.testing.html#std.testing.expectEqualDeepInner">expectEqualDeepInner</a>(T, expected, actual);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">expectEqualDeepInner</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, expected: T, actual: T) <span class="tok-kw">error</span>{TestExpectedEqual}!<span class="tok-type">void</span> {
+    <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(actual))) {
+        .<span class="tok-type">noreturn</span>,
+        .@&quot;opaque&quot;,
+        .frame,
+        .@&quot;anyframe&quot;,
+        =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;value of type &quot;</span> ++ <span class="tok-builtin">@typeName</span>(<span class="tok-builtin">@TypeOf</span>(actual)) ++ <span class="tok-str">&quot; encountered&quot;</span>),
+
+        .<span class="tok-null">undefined</span>,
+        .<span class="tok-null">null</span>,
+        .<span class="tok-type">void</span>,
+        =&gt; <span class="tok-kw">return</span>,
+
+        .<span class="tok-type">type</span> =&gt; {
+            <span class="tok-kw">if</span> (actual != expected) {
+                <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected type {s}, found type {s}\n&quot;</span>, .{ <span class="tok-builtin">@typeName</span>(expected), <span class="tok-builtin">@typeName</span>(actual) });
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+            }
+        },
+
+        .<span class="tok-type">bool</span>,
+        .int,
+        .float,
+        .<span class="tok-type">comptime_float</span>,
+        .<span class="tok-type">comptime_int</span>,
+        .enum_literal,
+        .@&quot;enum&quot;,
+        .@&quot;fn&quot;,
+        .error_set,
+        =&gt; {
+            <span class="tok-kw">if</span> (actual != expected) {
+                <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected {}, found {}\n&quot;</span>, .{ expected, actual });
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+            }
+        },
+
+        .pointer =&gt; |pointer| {
+            <span class="tok-kw">switch</span> (pointer.size) {<span class="tok-comment">
+                // We have no idea what is behind those pointers, so the best we can do is `==` check.
+                </span>.c, .many =&gt; {
+                    <span class="tok-kw">if</span> (actual != expected) {
+                        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected {*}, found {*}\n&quot;</span>, .{ expected, actual });
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+                    }
+                },
+                .one =&gt; {<span class="tok-comment">
+                    // Length of those pointers are runtime value, so the best we can do is `==` check.
+                    </span><span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(pointer.child)) {
+                        .@&quot;fn&quot;, .@&quot;opaque&quot; =&gt; {
+                            <span class="tok-kw">if</span> (actual != expected) {
+                                <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected {*}, found {*}\n&quot;</span>, .{ expected, actual });
+                                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+                            }
+                        },
+                        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(expected.*, actual.*),
+                    }
+                },
+                .slice =&gt; {
+                    <span class="tok-kw">if</span> (expected.len != actual.len) {
+                        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;Slice len not the same, expected {d}, found {d}\n&quot;</span>, .{ expected.len, actual.len });
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+                    }
+                    <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+                    <span class="tok-kw">while</span> (i &lt; expected.len) : (i += <span class="tok-number">1</span>) {
+                        <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(expected[i], actual[i]) <span class="tok-kw">catch</span> |e| {
+                            <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;index {d} incorrect. expected {any}, found {any}\n&quot;</span>, .{
+                                i, expected[i], actual[i],
+                            });
+                            <span class="tok-kw">return</span> e;
+                        };
+                    }
+                },
+            }
+        },
+
+        .array =&gt; |_| {
+            <span class="tok-kw">if</span> (expected.len != actual.len) {
+                <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;Array len not the same, expected {d}, found {d}\n&quot;</span>, .{ expected.len, actual.len });
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+            }
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (i &lt; expected.len) : (i += <span class="tok-number">1</span>) {
+                <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(expected[i], actual[i]) <span class="tok-kw">catch</span> |e| {
+                    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;index {d} incorrect. expected {any}, found {any}\n&quot;</span>, .{
+                        i, expected[i], actual[i],
+                    });
+                    <span class="tok-kw">return</span> e;
+                };
+            }
+        },
+
+        .vector =&gt; |info| {
+            <span class="tok-kw">if</span> (info.len != <span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(actual)).vector.len) {
+                <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;Vector len not the same, expected {d}, found {d}\n&quot;</span>, .{ info.len, <span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(actual)).vector.len });
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+            }
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (i &lt; info.len) : (i += <span class="tok-number">1</span>) {
+                <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(expected[i], actual[i]) <span class="tok-kw">catch</span> |e| {
+                    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;index {d} incorrect. expected {any}, found {any}\n&quot;</span>, .{
+                        i, expected[i], actual[i],
+                    });
+                    <span class="tok-kw">return</span> e;
+                };
+            }
+        },
+
+        .@&quot;struct&quot; =&gt; |structType| {
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (structType.fields) |field| {
+                <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(<span class="tok-builtin">@field</span>(expected, field.name), <span class="tok-builtin">@field</span>(actual, field.name)) <span class="tok-kw">catch</span> |e| {
+                    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;Field {s} incorrect. expected {any}, found {any}\n&quot;</span>, .{ field.name, <span class="tok-builtin">@field</span>(expected, field.name), <span class="tok-builtin">@field</span>(actual, field.name) });
+                    <span class="tok-kw">return</span> e;
+                };
+            }
+        },
+
+        .@&quot;union&quot; =&gt; |union_info| {
+            <span class="tok-kw">if</span> (union_info.tag_type == <span class="tok-null">null</span>) {
+                <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Unable to compare untagged union values for type &quot;</span> ++ <span class="tok-builtin">@typeName</span>(<span class="tok-builtin">@TypeOf</span>(actual)));
+            }
+
+            <span class="tok-kw">const</span> Tag = <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.Tag">Tag</a>(<span class="tok-builtin">@TypeOf</span>(expected));
+
+            <span class="tok-kw">const</span> expectedTag = <span class="tok-builtin">@as</span>(Tag, expected);
+            <span class="tok-kw">const</span> actualTag = <span class="tok-builtin">@as</span>(Tag, actual);
+
+            <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(expectedTag, actualTag);<span class="tok-comment">
+
+            // we only reach this switch if the tags are equal
+            </span><span class="tok-kw">switch</span> (expected) {
+                <span class="tok-kw">inline</span> <span class="tok-kw">else</span> =&gt; |val, tag| {
+                    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(val, <span class="tok-builtin">@field</span>(actual, <span class="tok-builtin">@tagName</span>(tag)));
+                },
+            }
+        },
+
+        .optional =&gt; {
+            <span class="tok-kw">if</span> (expected) |expected_payload| {
+                <span class="tok-kw">if</span> (actual) |actual_payload| {
+                    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(expected_payload, actual_payload);
+                } <span class="tok-kw">else</span> {
+                    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected {any}, found null\n&quot;</span>, .{expected_payload});
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+                }
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">if</span> (actual) |actual_payload| {
+                    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected null, found {any}\n&quot;</span>, .{actual_payload});
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+                }
+            }
+        },
+
+        .error_union =&gt; {
+            <span class="tok-kw">if</span> (expected) |expected_payload| {
+                <span class="tok-kw">if</span> (actual) |actual_payload| {
+                    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(expected_payload, actual_payload);
+                } <span class="tok-kw">else</span> |actual_err| {
+                    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected {any}, found {any}\n&quot;</span>, .{ expected_payload, actual_err });
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+                }
+            } <span class="tok-kw">else</span> |expected_err| {
+                <span class="tok-kw">if</span> (actual) |actual_payload| {
+                    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;expected {any}, found {any}\n&quot;</span>, .{ expected_err, actual_payload });
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TestExpectedEqual;
+                } <span class="tok-kw">else</span> |actual_err| {
+                    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(expected_err, actual_err);
+                }
+            }
+        },
+    }
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;expectEqualDeep primitive type&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(<span class="tok-number">1</span>, <span class="tok-number">1</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(<span class="tok-null">true</span>, <span class="tok-null">true</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(<span class="tok-number">1.5</span>, <span class="tok-number">1.5</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(<span class="tok-type">u8</span>, <span class="tok-type">u8</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(<span class="tok-kw">error</span>.Bad, <span class="tok-kw">error</span>.Bad);<span class="tok-comment">
+
+    // optional
+    </span>{
+        <span class="tok-kw">const</span> foo: ?<span class="tok-type">u32</span> = <span class="tok-number">1</span>;
+        <span class="tok-kw">const</span> bar: ?<span class="tok-type">u32</span> = <span class="tok-number">1</span>;
+        <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(foo, bar);
+        <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(?<span class="tok-type">u32</span>, ?<span class="tok-type">u32</span>);
+    }<span class="tok-comment">
+    // function type
+    </span>{
+        <span class="tok-kw">const</span> fnType = <span class="tok-kw">struct</span> {
+            <span class="tok-kw">fn</span> <span class="tok-fn">foo</span>() <span class="tok-type">void</span> {
+                <span class="tok-kw">unreachable</span>;
+            }
+        }.foo;
+        <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(fnType, fnType);
+    }
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;expectEqualDeep pointer&quot;</span> {
+    <span class="tok-kw">const</span> a = <span class="tok-number">1</span>;
+    <span class="tok-kw">const</span> b = <span class="tok-number">1</span>;
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(&amp;a, &amp;b);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;expectEqualDeep composite type&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(<span class="tok-str">&quot;abc&quot;</span>, <span class="tok-str">&quot;abc&quot;</span>);
+    <span class="tok-kw">const</span> s1: []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-str">&quot;abc&quot;</span>;
+    <span class="tok-kw">const</span> s2 = <span class="tok-str">&quot;abcd&quot;</span>;
+    <span class="tok-kw">const</span> s3: []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = s2[<span class="tok-number">0</span>..<span class="tok-number">3</span>];
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(s1, s3);
+
+    <span class="tok-kw">const</span> TestStruct = <span class="tok-kw">struct</span> { s: []<span class="tok-kw">const</span> <span class="tok-type">u8</span> };
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(TestStruct{ .s = <span class="tok-str">&quot;abc&quot;</span> }, TestStruct{ .s = <span class="tok-str">&quot;abc&quot;</span> });
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>([_][]<span class="tok-kw">const</span> <span class="tok-type">u8</span>{ <span class="tok-str">&quot;a&quot;</span>, <span class="tok-str">&quot;b&quot;</span>, <span class="tok-str">&quot;c&quot;</span> }, [_][]<span class="tok-kw">const</span> <span class="tok-type">u8</span>{ <span class="tok-str">&quot;a&quot;</span>, <span class="tok-str">&quot;b&quot;</span>, <span class="tok-str">&quot;c&quot;</span> });<span class="tok-comment">
+
+    // vector
+    </span><span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(<span class="tok-builtin">@as</span>(<span class="tok-builtin">@Vector</span>(<span class="tok-number">4</span>, <span class="tok-type">u32</span>), <span class="tok-builtin">@splat</span>(<span class="tok-number">4</span>)), <span class="tok-builtin">@as</span>(<span class="tok-builtin">@Vector</span>(<span class="tok-number">4</span>, <span class="tok-type">u32</span>), <span class="tok-builtin">@splat</span>(<span class="tok-number">4</span>)));<span class="tok-comment">
+
+    // nested array
+    </span>{
+        <span class="tok-kw">const</span> a = [<span class="tok-number">2</span>][<span class="tok-number">2</span>]<span class="tok-type">f32</span>{
+            [_]<span class="tok-type">f32</span>{ <span class="tok-number">1.0</span>, <span class="tok-number">0.0</span> },
+            [_]<span class="tok-type">f32</span>{ <span class="tok-number">0.0</span>, <span class="tok-number">1.0</span> },
+        };
+
+        <span class="tok-kw">const</span> b = [<span class="tok-number">2</span>][<span class="tok-number">2</span>]<span class="tok-type">f32</span>{
+            [_]<span class="tok-type">f32</span>{ <span class="tok-number">1.0</span>, <span class="tok-number">0.0</span> },
+            [_]<span class="tok-type">f32</span>{ <span class="tok-number">0.0</span>, <span class="tok-number">1.0</span> },
+        };
+
+        <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(a, b);
+        <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(&amp;a, &amp;b);
+    }<span class="tok-comment">
+
+    // inferred union
+    </span><span class="tok-kw">const</span> TestStruct2 = <span class="tok-kw">struct</span> {
+        <span class="tok-kw">const</span> A = <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) { b: <a href="std.testing.B.html">B</a>, c: <a href="std.testing.C.html">C</a> };
+        <span class="tok-kw">const</span> B = <span class="tok-kw">struct</span> {};
+        <span class="tok-kw">const</span> C = <span class="tok-kw">struct</span> { a: *<span class="tok-kw">const</span> <a href="std.testing.A.html">A</a> };
+    };
+
+    <span class="tok-kw">const</span> union1 = TestStruct2.A{ .b = .{} };
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualDeep">expectEqualDeep</a>(
+        TestStruct2.A{ .c = .{ .a = &amp;union1 } },
+        TestStruct2.A{ .c = .{ .a = &amp;union1 } },
+    );
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">printIndicatorLine</span>(source: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, indicator_index: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> line_begin_index = <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.lastIndexOfScalar">lastIndexOfScalar</a>(<span class="tok-type">u8</span>, source[<span class="tok-number">0</span>..indicator_index], <span class="tok-str">'\n'</span>)) |line_begin|
+        line_begin + <span class="tok-number">1</span>
+    <span class="tok-kw">else</span>
+        <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> line_end_index = <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, source[indicator_index..], <span class="tok-str">'\n'</span>)) |line_end|
+        (indicator_index + line_end)
+    <span class="tok-kw">else</span>
+        source.len;
+
+    <a href="std.testing.html#std.testing.printLine">printLine</a>(source[line_begin_index..line_end_index]);
+    <span class="tok-kw">for</span> (line_begin_index..indicator_index) |_|
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot; &quot;</span>, .{});
+    <span class="tok-kw">if</span> (indicator_index &gt;= source.len)
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;^ (end of string)\n&quot;</span>, .{})
+    <span class="tok-kw">else</span>
+        <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;^ ('\\x{x:0&gt;2}')\n&quot;</span>, .{source[indicator_index]});
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">printWithVisibleNewlines</span>(source: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, source[i..], <span class="tok-str">'\n'</span>)) |nl| : (i += nl + <span class="tok-number">1</span>) {
+        <a href="std.testing.html#std.testing.printLine">printLine</a>(source[i..][<span class="tok-number">0</span>..nl]);
+    }
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;{s}␃\n&quot;</span>, .{source[i..]});<span class="tok-comment"> // End of Text symbol (ETX)
+</span>}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">printLine</span>(line: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (line.len != <span class="tok-number">0</span>) <span class="tok-kw">switch</span> (line[line.len - <span class="tok-number">1</span>]) {
+        <span class="tok-str">' '</span>, <span class="tok-str">'\t'</span> =&gt; <span class="tok-kw">return</span> <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;{s}⏎\n&quot;</span>, .{line}),<span class="tok-comment"> // Return symbol
+        </span><span class="tok-kw">else</span> =&gt; {},
+    };
+    <a href="std.testing.html#std.testing.print">print</a>(<span class="tok-str">&quot;{s}\n&quot;</span>, .{line});
+}
+
+<span class="tok-kw">test</span> {
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;foo&quot;</span>, <span class="tok-str">&quot;foo&quot;</span>);
+}
+
+<span class="tok-comment">/// Exhaustively check that allocation failures within `test_fn` are handled without</span>
+<span class="tok-comment">/// introducing memory leaks. If used with the `testing.allocator` as the `backing_allocator`,</span>
+<span class="tok-comment">/// it will also be able to detect double frees, etc (when runtime safety is enabled).</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// The provided `test_fn` must have a `std.mem.Allocator` as its first argument,</span>
+<span class="tok-comment">/// and must have a return type of `!void`. Any extra arguments of `test_fn` can</span>
+<span class="tok-comment">/// be provided via the `extra_args` tuple.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Any relevant state shared between runs of `test_fn` *must* be reset within `test_fn`.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// The strategy employed is to:</span>
+<span class="tok-comment">/// - Run the test function once to get the total number of allocations.</span>
+<span class="tok-comment">/// - Then, iterate and run the function X more times, incrementing</span>
+<span class="tok-comment">///   the failing index each iteration (where X is the total number of</span>
+<span class="tok-comment">///   allocations determined previously)</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Expects that `test_fn` has a deterministic number of memory allocations:</span>
+<span class="tok-comment">/// - If an allocation was made to fail during a run of `test_fn`, but `test_fn`</span>
+<span class="tok-comment">///   didn't return `error.OutOfMemory`, then `error.SwallowedOutOfMemoryError`</span>
+<span class="tok-comment">///   is returned from `checkAllAllocationFailures`. You may want to ignore this</span>
+<span class="tok-comment">///   depending on whether or not the code you're testing includes some strategies</span>
+<span class="tok-comment">///   for recovering from `error.OutOfMemory`.</span>
+<span class="tok-comment">/// - If a run of `test_fn` with an expected allocation failure executes without</span>
+<span class="tok-comment">///   an allocation failure being induced, then `error.NondeterministicMemoryUsage`</span>
+<span class="tok-comment">///   is returned. This error means that there are allocation points that won't be</span>
+<span class="tok-comment">///   tested by the strategy this function employs (that is, there are sometimes more</span>
+<span class="tok-comment">///   points of allocation than the initial run of `test_fn` detects).</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// ---</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Here's an example using a simple test case that will cause a leak when the</span>
+<span class="tok-comment">/// allocation of `bar` fails (but will pass normally):</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// ```zig</span>
+<span class="tok-comment">/// test {</span>
+<span class="tok-comment">///     const length: usize = 10;</span>
+<span class="tok-comment">///     const allocator = std.testing.allocator;</span>
+<span class="tok-comment">///     var foo = try allocator.alloc(u8, length);</span>
+<span class="tok-comment">///     var bar = try allocator.alloc(u8, length);</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">///     allocator.free(foo);</span>
+<span class="tok-comment">///     allocator.free(bar);</span>
+<span class="tok-comment">/// }</span>
+<span class="tok-comment">/// ```</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// The test case can be converted to something that this function can use by</span>
+<span class="tok-comment">/// doing:</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// ```zig</span>
+<span class="tok-comment">/// fn testImpl(allocator: std.mem.Allocator, length: usize) !void {</span>
+<span class="tok-comment">///     var foo = try allocator.alloc(u8, length);</span>
+<span class="tok-comment">///     var bar = try allocator.alloc(u8, length);</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">///     allocator.free(foo);</span>
+<span class="tok-comment">///     allocator.free(bar);</span>
+<span class="tok-comment">/// }</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// test {</span>
+<span class="tok-comment">///     const length: usize = 10;</span>
+<span class="tok-comment">///     const allocator = std.testing.allocator;</span>
+<span class="tok-comment">///     try std.testing.checkAllAllocationFailures(allocator, testImpl, .{length});</span>
+<span class="tok-comment">/// }</span>
+<span class="tok-comment">/// ```</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Running this test will show that `foo` is leaked when the allocation of</span>
+<span class="tok-comment">/// `bar` fails. The simplest fix, in this case, would be to use defer like so:</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// ```zig</span>
+<span class="tok-comment">/// fn testImpl(allocator: std.mem.Allocator, length: usize) !void {</span>
+<span class="tok-comment">///     var foo = try allocator.alloc(u8, length);</span>
+<span class="tok-comment">///     defer allocator.free(foo);</span>
+<span class="tok-comment">///     var bar = try allocator.alloc(u8, length);</span>
+<span class="tok-comment">///     defer allocator.free(bar);</span>
+<span class="tok-comment">/// }</span>
+<span class="tok-comment">/// ```</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">checkAllAllocationFailures</span>(backing_allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, <span class="tok-kw">comptime</span> test_fn: <span class="tok-kw">anytype</span>, extra_args: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(test_fn)).@&quot;fn&quot;.return_type.?)) {
+        .error_union =&gt; |info| {
+            <span class="tok-kw">if</span> (info.payload != <span class="tok-type">void</span>) {
+                <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Return type must be !void&quot;</span>);
+            }
+        },
+        <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Return type must be !void&quot;</span>),
+    }
+    <span class="tok-kw">if</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(extra_args)) != .@&quot;struct&quot;) {
+        <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Expected tuple or struct argument, found &quot;</span> ++ <span class="tok-builtin">@typeName</span>(<span class="tok-builtin">@TypeOf</span>(extra_args)));
+    }
+
+    <span class="tok-kw">const</span> ArgsTuple = <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.ArgsTuple">ArgsTuple</a>(<span class="tok-builtin">@TypeOf</span>(test_fn));
+    <span class="tok-kw">const</span> fn_args_fields = <span class="tok-builtin">@typeInfo</span>(ArgsTuple).@&quot;struct&quot;.fields;
+    <span class="tok-kw">if</span> (fn_args_fields.len == <span class="tok-number">0</span> <span class="tok-kw">or</span> fn_args_fields[<span class="tok-number">0</span>].<span class="tok-type">type</span> != <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) {
+        <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;The provided function must have an &quot;</span> ++ <span class="tok-builtin">@typeName</span>(<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) ++ <span class="tok-str">&quot; as its first argument&quot;</span>);
+    }
+    <span class="tok-kw">const</span> expected_args_tuple_len = fn_args_fields.len - <span class="tok-number">1</span>;
+    <span class="tok-kw">if</span> (extra_args.len != expected_args_tuple_len) {
+        <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;The provided function expects &quot;</span> ++ <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.comptimePrint">comptimePrint</a>(<span class="tok-str">&quot;{d}&quot;</span>, .{expected_args_tuple_len}) ++ <span class="tok-str">&quot; extra arguments, but the provided tuple contains &quot;</span> ++ <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.comptimePrint">comptimePrint</a>(<span class="tok-str">&quot;{d}&quot;</span>, .{extra_args.len}));
+    }<span class="tok-comment">
+
+    // Setup the tuple that will actually be used with @call (we'll need to insert
+    // the failing allocator in field @&quot;0&quot; before each @call)
+    </span><span class="tok-kw">var</span> args: ArgsTuple = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(extra_args)).@&quot;struct&quot;.fields, <span class="tok-number">0</span>..) |field, i| {
+        <span class="tok-kw">const</span> arg_i_str = <span class="tok-kw">comptime</span> str: {
+            <span class="tok-kw">var</span> str_buf: [<span class="tok-number">100</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> args_i = i + <span class="tok-number">1</span>;
+            <span class="tok-kw">const</span> str_len = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.formatIntBuf">formatIntBuf</a>(&amp;str_buf, args_i, <span class="tok-number">10</span>, .lower, .{});
+            <span class="tok-kw">break</span> :str str_buf[<span class="tok-number">0</span>..str_len];
+        };
+        <span class="tok-builtin">@field</span>(args, arg_i_str) = <span class="tok-builtin">@field</span>(extra_args, field.name);
+    }<span class="tok-comment">
+
+    // Try it once with unlimited memory, make sure it works
+    </span><span class="tok-kw">const</span> needed_alloc_count = x: {
+        <span class="tok-kw">var</span> failing_allocator_inst = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.FailingAllocator.html">FailingAllocator</a>.<a href="std.testing.FailingAllocator.html#std.testing.FailingAllocator.init">init</a>(backing_allocator, .{});
+        args.@&quot;0&quot; = failing_allocator_inst.allocator();
+
+        <span class="tok-kw">try</span> <span class="tok-builtin">@call</span>(.auto, test_fn, args);
+        <span class="tok-kw">break</span> :x failing_allocator_inst.alloc_index;
+    };
+
+    <span class="tok-kw">var</span> fail_index: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (fail_index &lt; needed_alloc_count) : (fail_index += <span class="tok-number">1</span>) {
+        <span class="tok-kw">var</span> failing_allocator_inst = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.FailingAllocator.html">FailingAllocator</a>.<a href="std.testing.FailingAllocator.html#std.testing.FailingAllocator.init">init</a>(backing_allocator, .{ .fail_index = fail_index });
+        args.@&quot;0&quot; = failing_allocator_inst.allocator();
+
+        <span class="tok-kw">if</span> (<span class="tok-builtin">@call</span>(.auto, test_fn, args)) |_| {
+            <span class="tok-kw">if</span> (failing_allocator_inst.has_induced_failure) {
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SwallowedOutOfMemoryError;
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NondeterministicMemoryUsage;
+            }
+        } <span class="tok-kw">else</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.OutOfMemory =&gt; {
+                <span class="tok-kw">if</span> (failing_allocator_inst.allocated_bytes != failing_allocator_inst.freed_bytes) {
+                    <a href="std.testing.html#std.testing.print">print</a>(
+                        <span class="tok-str">&quot;\nfail_index: {d}/{d}\nallocated bytes: {d}\nfreed bytes: {d}\nallocations: {d}\ndeallocations: {d}\nallocation that was made to fail: {}&quot;</span>,
+                        .{
+                            fail_index,
+                            needed_alloc_count,
+                            failing_allocator_inst.allocated_bytes,
+                            failing_allocator_inst.freed_bytes,
+                            failing_allocator_inst.allocations,
+                            failing_allocator_inst.deallocations,
+                            failing_allocator_inst.getStackTrace(),
+                        },
+                    );
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MemoryLeakDetected;
+                }
+            },
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> err,
+        }
+    }
+}
+
+<span class="tok-comment">/// Given a type, references all the declarations inside, so that the semantic analyzer sees them.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">refAllDecls</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (!<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.is_test">is_test</a>) <span class="tok-kw">return</span>;
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.declarations">declarations</a>(T)) |decl| {
+        _ = &amp;<span class="tok-builtin">@field</span>(T, decl.name);
+    }
+}
+
+<span class="tok-comment">/// Given a type, recursively references all the declarations inside, so that the semantic analyzer sees them.</span>
+<span class="tok-comment">/// For deep types, you may use `@setEvalBranchQuota`.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">refAllDeclsRecursive</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (!<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.is_test">is_test</a>) <span class="tok-kw">return</span>;
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.declarations">declarations</a>(T)) |decl| {
+        <span class="tok-kw">if</span> (<span class="tok-builtin">@TypeOf</span>(<span class="tok-builtin">@field</span>(T, decl.name)) == <span class="tok-type">type</span>) {
+            <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@field</span>(T, decl.name))) {
+                .@&quot;struct&quot;, .@&quot;enum&quot;, .@&quot;union&quot;, .@&quot;opaque&quot; =&gt; <a href="std.testing.html#std.testing.refAllDeclsRecursive">refAllDeclsRecursive</a>(<span class="tok-builtin">@field</span>(T, decl.name)),
+                <span class="tok-kw">else</span> =&gt; {},
+            }
+        }
+        _ = &amp;<span class="tok-builtin">@field</span>(T, decl.name);
+    }
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> FuzzInputOptions = <span class="tok-kw">struct</span> {
+    corpus: []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = &amp;.{},
+};
+
+<span class="tok-comment">/// Inline to avoid coverage instrumentation.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">fuzz</span>(
+    context: <span class="tok-kw">anytype</span>,
+    <span class="tok-kw">comptime</span> testOne: <span class="tok-kw">fn</span> (context: <span class="tok-builtin">@TypeOf</span>(context), input: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">anyerror</span>!<span class="tok-type">void</span>,
+    options: <a href="std.testing.FuzzInputOptions.html">FuzzInputOptions</a>,
+) <span class="tok-type">anyerror</span>!<span class="tok-type">void</span> {
+    <span class="tok-kw">return</span> <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;root&quot;</span>).fuzz(context, testOne, options);
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

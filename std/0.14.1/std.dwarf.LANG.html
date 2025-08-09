@@ -1,0 +1,473 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">dwarf</a></li><li><a href="std.dwarf.LANG.html" class="active">LANG</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.dwarf.LANG" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.dwarf.LANG</span><a href="#src.zig-std.dwarf.LANG">[src]</a></h1><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.dwarf.LANG.C89" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">C89</span><a href="#src.zig-std.dwarf.LANG.C89">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.C89">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> C89 = <span class="tok-number">0x0001</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.C" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">C</span><a href="#src.zig-std.dwarf.LANG.C">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.C">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> C = <span class="tok-number">0x0002</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Ada83" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Ada83</span><a href="#src.zig-std.dwarf.LANG.Ada83">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Ada83">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Ada83 = <span class="tok-number">0x0003</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.C_plus_plus" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">C_plus_plus</span><a href="#src.zig-std.dwarf.LANG.C_plus_plus">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.C_plus_plus">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> C_plus_plus = <span class="tok-number">0x0004</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Cobol74" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Cobol74</span><a href="#src.zig-std.dwarf.LANG.Cobol74">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Cobol74">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Cobol74 = <span class="tok-number">0x0005</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Cobol85" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Cobol85</span><a href="#src.zig-std.dwarf.LANG.Cobol85">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Cobol85">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Cobol85 = <span class="tok-number">0x0006</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Fortran77" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Fortran77</span><a href="#src.zig-std.dwarf.LANG.Fortran77">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Fortran77">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Fortran77 = <span class="tok-number">0x0007</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Fortran90" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Fortran90</span><a href="#src.zig-std.dwarf.LANG.Fortran90">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Fortran90">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Fortran90 = <span class="tok-number">0x0008</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Pascal83" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Pascal83</span><a href="#src.zig-std.dwarf.LANG.Pascal83">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Pascal83">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Pascal83 = <span class="tok-number">0x0009</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Modula2" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Modula2</span><a href="#src.zig-std.dwarf.LANG.Modula2">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Modula2">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Modula2 = <span class="tok-number">0x000a</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Java" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Java</span><a href="#src.zig-std.dwarf.LANG.Java">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Java">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Java = <span class="tok-number">0x000b</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.C99" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">C99</span><a href="#src.zig-std.dwarf.LANG.C99">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.C99">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> C99 = <span class="tok-number">0x000c</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Ada95" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Ada95</span><a href="#src.zig-std.dwarf.LANG.Ada95">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Ada95">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Ada95 = <span class="tok-number">0x000d</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Fortran95" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Fortran95</span><a href="#src.zig-std.dwarf.LANG.Fortran95">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Fortran95">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Fortran95 = <span class="tok-number">0x000e</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.PLI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PLI</span><a href="#src.zig-std.dwarf.LANG.PLI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.PLI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PLI = <span class="tok-number">0x000f</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.ObjC" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ObjC</span><a href="#src.zig-std.dwarf.LANG.ObjC">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.ObjC">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ObjC = <span class="tok-number">0x0010</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.ObjC_plus_plus" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ObjC_plus_plus</span><a href="#src.zig-std.dwarf.LANG.ObjC_plus_plus">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.ObjC_plus_plus">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ObjC_plus_plus = <span class="tok-number">0x0011</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.UPC" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">UPC</span><a href="#src.zig-std.dwarf.LANG.UPC">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.UPC">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> UPC = <span class="tok-number">0x0012</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.D" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">D</span><a href="#src.zig-std.dwarf.LANG.D">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.D">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> D = <span class="tok-number">0x0013</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Python" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Python</span><a href="#src.zig-std.dwarf.LANG.Python">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Python">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Python = <span class="tok-number">0x0014</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.OpenCL" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">OpenCL</span><a href="#src.zig-std.dwarf.LANG.OpenCL">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.OpenCL">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> OpenCL = <span class="tok-number">0x0015</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Go" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Go</span><a href="#src.zig-std.dwarf.LANG.Go">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Go">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Go = <span class="tok-number">0x0016</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Modula3" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Modula3</span><a href="#src.zig-std.dwarf.LANG.Modula3">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Modula3">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Modula3 = <span class="tok-number">0x0017</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Haskell" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Haskell</span><a href="#src.zig-std.dwarf.LANG.Haskell">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Haskell">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Haskell = <span class="tok-number">0x0018</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.C_plus_plus_03" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">C_plus_plus_03</span><a href="#src.zig-std.dwarf.LANG.C_plus_plus_03">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.C_plus_plus_03">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> C_plus_plus_03 = <span class="tok-number">0x0019</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.C_plus_plus_11" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">C_plus_plus_11</span><a href="#src.zig-std.dwarf.LANG.C_plus_plus_11">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.C_plus_plus_11">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> C_plus_plus_11 = <span class="tok-number">0x001a</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.OCaml" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">OCaml</span><a href="#src.zig-std.dwarf.LANG.OCaml">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.OCaml">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> OCaml = <span class="tok-number">0x001b</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Rust" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Rust</span><a href="#src.zig-std.dwarf.LANG.Rust">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Rust">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Rust = <span class="tok-number">0x001c</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.C11" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">C11</span><a href="#src.zig-std.dwarf.LANG.C11">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.C11">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> C11 = <span class="tok-number">0x001d</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Swift" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Swift</span><a href="#src.zig-std.dwarf.LANG.Swift">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Swift">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Swift = <span class="tok-number">0x001e</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Julia" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Julia</span><a href="#src.zig-std.dwarf.LANG.Julia">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Julia">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Julia = <span class="tok-number">0x001f</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Dylan" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Dylan</span><a href="#src.zig-std.dwarf.LANG.Dylan">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Dylan">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Dylan = <span class="tok-number">0x0020</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.C_plus_plus_14" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">C_plus_plus_14</span><a href="#src.zig-std.dwarf.LANG.C_plus_plus_14">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.C_plus_plus_14">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> C_plus_plus_14 = <span class="tok-number">0x0021</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Fortran03" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Fortran03</span><a href="#src.zig-std.dwarf.LANG.Fortran03">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Fortran03">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Fortran03 = <span class="tok-number">0x0022</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Fortran08" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Fortran08</span><a href="#src.zig-std.dwarf.LANG.Fortran08">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Fortran08">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Fortran08 = <span class="tok-number">0x0023</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.RenderScript" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">RenderScript</span><a href="#src.zig-std.dwarf.LANG.RenderScript">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.RenderScript">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> RenderScript = <span class="tok-number">0x0024</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.BLISS" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">BLISS</span><a href="#src.zig-std.dwarf.LANG.BLISS">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.BLISS">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> BLISS = <span class="tok-number">0x0025</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Kotlin" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Kotlin</span><a href="#src.zig-std.dwarf.LANG.Kotlin">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Kotlin">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Kotlin = <span class="tok-number">0x0026</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Zig" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Zig</span><a href="#src.zig-std.dwarf.LANG.Zig">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Zig">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Zig = <span class="tok-number">0x0027</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Crystal" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Crystal</span><a href="#src.zig-std.dwarf.LANG.Crystal">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Crystal">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Crystal = <span class="tok-number">0x0028</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.C_plus_plus_17" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">C_plus_plus_17</span><a href="#src.zig-std.dwarf.LANG.C_plus_plus_17">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.C_plus_plus_17">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> C_plus_plus_17 = <span class="tok-number">0x002a</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.C_plus_plus_20" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">C_plus_plus_20</span><a href="#src.zig-std.dwarf.LANG.C_plus_plus_20">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.C_plus_plus_20">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> C_plus_plus_20 = <span class="tok-number">0x002b</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.C17" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">C17</span><a href="#src.zig-std.dwarf.LANG.C17">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.C17">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> C17 = <span class="tok-number">0x002c</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Fortran18" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Fortran18</span><a href="#src.zig-std.dwarf.LANG.Fortran18">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Fortran18">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Fortran18 = <span class="tok-number">0x002d</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Ada2005" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Ada2005</span><a href="#src.zig-std.dwarf.LANG.Ada2005">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Ada2005">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Ada2005 = <span class="tok-number">0x002e</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Ada2012" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Ada2012</span><a href="#src.zig-std.dwarf.LANG.Ada2012">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Ada2012">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Ada2012 = <span class="tok-number">0x002f</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.HIP" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">HIP</span><a href="#src.zig-std.dwarf.LANG.HIP">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.HIP">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> HIP = <span class="tok-number">0x0030</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Assembly" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Assembly</span><a href="#src.zig-std.dwarf.LANG.Assembly">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Assembly">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Assembly = <span class="tok-number">0x0031</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.C_sharp" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">C_sharp</span><a href="#src.zig-std.dwarf.LANG.C_sharp">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.C_sharp">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> C_sharp = <span class="tok-number">0x0032</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Mojo" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Mojo</span><a href="#src.zig-std.dwarf.LANG.Mojo">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Mojo">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Mojo = <span class="tok-number">0x0033</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.GLSL" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">GLSL</span><a href="#src.zig-std.dwarf.LANG.GLSL">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.GLSL">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> GLSL = <span class="tok-number">0x0034</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.GLSL_ES" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">GLSL_ES</span><a href="#src.zig-std.dwarf.LANG.GLSL_ES">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.GLSL_ES">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> GLSL_ES = <span class="tok-number">0x0035</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.HLSL" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">HLSL</span><a href="#src.zig-std.dwarf.LANG.HLSL">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.HLSL">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> HLSL = <span class="tok-number">0x0036</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.OpenCL_CPP" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">OpenCL_CPP</span><a href="#src.zig-std.dwarf.LANG.OpenCL_CPP">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.OpenCL_CPP">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> OpenCL_CPP = <span class="tok-number">0x0037</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.CPP_for_OpenCL" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">CPP_for_OpenCL</span><a href="#src.zig-std.dwarf.LANG.CPP_for_OpenCL">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.CPP_for_OpenCL">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> CPP_for_OpenCL = <span class="tok-number">0x0038</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.SYCL" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SYCL</span><a href="#src.zig-std.dwarf.LANG.SYCL">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.SYCL">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SYCL = <span class="tok-number">0x0039</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.C_plus_plus_23" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">C_plus_plus_23</span><a href="#src.zig-std.dwarf.LANG.C_plus_plus_23">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.C_plus_plus_23">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> C_plus_plus_23 = <span class="tok-number">0x003a</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Odin" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Odin</span><a href="#src.zig-std.dwarf.LANG.Odin">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Odin">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Odin = <span class="tok-number">0x003b</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Ruby" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Ruby</span><a href="#src.zig-std.dwarf.LANG.Ruby">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Ruby">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Ruby = <span class="tok-number">0x0040</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Move" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Move</span><a href="#src.zig-std.dwarf.LANG.Move">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Move">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Move = <span class="tok-number">0x0041</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Hylo" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Hylo</span><a href="#src.zig-std.dwarf.LANG.Hylo">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Hylo">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Hylo = <span class="tok-number">0x0042</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.lo_user" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">lo_user</span><a href="#src.zig-std.dwarf.LANG.lo_user">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.lo_user">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> lo_user = <span class="tok-number">0x8000</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.hi_user" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">hi_user</span><a href="#src.zig-std.dwarf.LANG.hi_user">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.hi_user">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> hi_user = <span class="tok-number">0xffff</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Mips_Assembler" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Mips_Assembler</span><a href="#src.zig-std.dwarf.LANG.Mips_Assembler">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Mips_Assembler">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Mips_Assembler = <span class="tok-number">0x8001</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.Upc" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Upc</span><a href="#src.zig-std.dwarf.LANG.Upc">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.Upc">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Upc = <span class="tok-number">0x8765</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.HP_Bliss" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">HP_Bliss</span><a href="#src.zig-std.dwarf.LANG.HP_Bliss">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.HP_Bliss">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> HP_Bliss = <span class="tok-number">0x8003</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.HP_Basic91" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">HP_Basic91</span><a href="#src.zig-std.dwarf.LANG.HP_Basic91">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.HP_Basic91">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> HP_Basic91 = <span class="tok-number">0x8004</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.HP_Pascal91" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">HP_Pascal91</span><a href="#src.zig-std.dwarf.LANG.HP_Pascal91">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.HP_Pascal91">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> HP_Pascal91 = <span class="tok-number">0x8005</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.HP_IMacro" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">HP_IMacro</span><a href="#src.zig-std.dwarf.LANG.HP_IMacro">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.HP_IMacro">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> HP_IMacro = <span class="tok-number">0x8006</span></code></pre></details></div></div><div class="decl"><h2 id="std.dwarf.LANG.HP_Assembler" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">HP_Assembler</span><a href="#src.zig-std.dwarf.LANG.HP_Assembler">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.dwarf.LANG.HP_Assembler">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> HP_Assembler = <span class="tok-number">0x8007</span></code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.dwarf.LANG">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> C89 = <span class="tok-number">0x0001</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> C = <span class="tok-number">0x0002</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Ada83 = <span class="tok-number">0x0003</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> C_plus_plus = <span class="tok-number">0x0004</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Cobol74 = <span class="tok-number">0x0005</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Cobol85 = <span class="tok-number">0x0006</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Fortran77 = <span class="tok-number">0x0007</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Fortran90 = <span class="tok-number">0x0008</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Pascal83 = <span class="tok-number">0x0009</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Modula2 = <span class="tok-number">0x000a</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Java = <span class="tok-number">0x000b</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> C99 = <span class="tok-number">0x000c</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Ada95 = <span class="tok-number">0x000d</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Fortran95 = <span class="tok-number">0x000e</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> PLI = <span class="tok-number">0x000f</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ObjC = <span class="tok-number">0x0010</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ObjC_plus_plus = <span class="tok-number">0x0011</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> UPC = <span class="tok-number">0x0012</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> D = <span class="tok-number">0x0013</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Python = <span class="tok-number">0x0014</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> OpenCL = <span class="tok-number">0x0015</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Go = <span class="tok-number">0x0016</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Modula3 = <span class="tok-number">0x0017</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Haskell = <span class="tok-number">0x0018</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> C_plus_plus_03 = <span class="tok-number">0x0019</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> C_plus_plus_11 = <span class="tok-number">0x001a</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> OCaml = <span class="tok-number">0x001b</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Rust = <span class="tok-number">0x001c</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> C11 = <span class="tok-number">0x001d</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Swift = <span class="tok-number">0x001e</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Julia = <span class="tok-number">0x001f</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Dylan = <span class="tok-number">0x0020</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> C_plus_plus_14 = <span class="tok-number">0x0021</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Fortran03 = <span class="tok-number">0x0022</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Fortran08 = <span class="tok-number">0x0023</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> RenderScript = <span class="tok-number">0x0024</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> BLISS = <span class="tok-number">0x0025</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Kotlin = <span class="tok-number">0x0026</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Zig = <span class="tok-number">0x0027</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Crystal = <span class="tok-number">0x0028</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> C_plus_plus_17 = <span class="tok-number">0x002a</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> C_plus_plus_20 = <span class="tok-number">0x002b</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> C17 = <span class="tok-number">0x002c</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Fortran18 = <span class="tok-number">0x002d</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Ada2005 = <span class="tok-number">0x002e</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Ada2012 = <span class="tok-number">0x002f</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> HIP = <span class="tok-number">0x0030</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Assembly = <span class="tok-number">0x0031</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> C_sharp = <span class="tok-number">0x0032</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Mojo = <span class="tok-number">0x0033</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> GLSL = <span class="tok-number">0x0034</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> GLSL_ES = <span class="tok-number">0x0035</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> HLSL = <span class="tok-number">0x0036</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> OpenCL_CPP = <span class="tok-number">0x0037</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CPP_for_OpenCL = <span class="tok-number">0x0038</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SYCL = <span class="tok-number">0x0039</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> C_plus_plus_23 = <span class="tok-number">0x003a</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Odin = <span class="tok-number">0x003b</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Ruby = <span class="tok-number">0x0040</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Move = <span class="tok-number">0x0041</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Hylo = <span class="tok-number">0x0042</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> lo_user = <span class="tok-number">0x8000</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> hi_user = <span class="tok-number">0xffff</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Mips_Assembler = <span class="tok-number">0x8001</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Upc = <span class="tok-number">0x8765</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> HP_Bliss = <span class="tok-number">0x8003</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> HP_Basic91 = <span class="tok-number">0x8004</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> HP_Pascal91 = <span class="tok-number">0x8005</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> HP_IMacro = <span class="tok-number">0x8006</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> HP_Assembler = <span class="tok-number">0x8007</span>;</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

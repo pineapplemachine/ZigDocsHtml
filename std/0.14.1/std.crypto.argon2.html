@@ -1,0 +1,1403 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">crypto</a></li><li><a href="std.crypto.argon2.html" class="active">argon2</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.crypto.argon2" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.crypto.argon2</span><a href="#src.zig-std.crypto.argon2">[src]</a></h1><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.crypto.argon2.Mode.html">std.crypto.argon2.Mode</a></li><li><a href="std.crypto.argon2.Params.html">std.crypto.argon2.Params</a></li><li><a href="std.crypto.argon2.HashOptions.html">std.crypto.argon2.HashOptions</a></li><li><a href="std.crypto.argon2.VerifyOptions.html">std.crypto.argon2.VerifyOptions</a></li></ul></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.crypto.argon2.kdf" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">kdf</span><a href="#src.zig-std.crypto.argon2.kdf">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">kdf</span>( allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, derived_key: []<span class="tok-type">u8</span>, password: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, salt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, params: <a href="std.crypto.argon2.Params.html">Params</a>, mode: <a href="std.crypto.argon2.Mode.html">Mode</a>, ) <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a>!<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Derives a key from the password, salt, and argon2 parameters.</p>
+<p>Derived key has to be at least 4 bytes length.</p>
+<p>Salt has to be at least 8 bytes length.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a></code></pre></div><div><pre><code>derived_key: []<span class="tok-type">u8</span></code></pre></div><div><pre><code>password: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>salt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>params: <a href="std.crypto.argon2.Params.html">Params</a></code></pre></div><div><pre><code>mode: <a href="std.crypto.argon2.Mode.html">Mode</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.argon2.kdf">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">kdf</span>(
+    allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>,
+    derived_key: []<span class="tok-type">u8</span>,
+    password: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    salt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    params: <a href="std.crypto.argon2.Params.html">Params</a>,
+    mode: <a href="std.crypto.argon2.Mode.html">Mode</a>,
+) <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a>!<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (derived_key.len &lt; <span class="tok-number">4</span>) <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a>.<a href="#">WeakParameters</a>;
+    <span class="tok-kw">if</span> (derived_key.len &gt; <a href="std.crypto.argon2.html#std.crypto.argon2.max_int">max_int</a>) <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a>.<a href="#">OutputTooLong</a>;
+
+    <span class="tok-kw">if</span> (password.len &gt; <a href="std.crypto.argon2.html#std.crypto.argon2.max_int">max_int</a>) <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a>.<a href="#">WeakParameters</a>;
+    <span class="tok-kw">if</span> (salt.len &lt; <span class="tok-number">8</span> <span class="tok-kw">or</span> salt.len &gt; <a href="std.crypto.argon2.html#std.crypto.argon2.max_int">max_int</a>) <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a>.<a href="#">WeakParameters</a>;
+    <span class="tok-kw">if</span> (params.t &lt; <span class="tok-number">1</span> <span class="tok-kw">or</span> params.p &lt; <span class="tok-number">1</span>) <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a>.<a href="#">WeakParameters</a>;
+    <span class="tok-kw">if</span> (params.m / <span class="tok-number">8</span> &lt; params.p) <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a>.<a href="#">WeakParameters</a>;
+
+    <span class="tok-kw">var</span> h0 = <a href="std.crypto.argon2.html#std.crypto.argon2.initHash">initHash</a>(password, salt, params, derived_key.len, mode);
+    <span class="tok-kw">const</span> memory = <span class="tok-builtin">@max</span>(
+        params.m / (<a href="std.crypto.argon2.html#std.crypto.argon2.sync_points">sync_points</a> * params.p) * (<a href="std.crypto.argon2.html#std.crypto.argon2.sync_points">sync_points</a> * params.p),
+        <span class="tok-number">2</span> * <a href="std.crypto.argon2.html#std.crypto.argon2.sync_points">sync_points</a> * params.p,
+    );
+
+    <span class="tok-kw">var</span> blocks = <span class="tok-kw">try</span> <a href="std.crypto.argon2.html#std.crypto.argon2.Blocks">Blocks</a>.<a href="#">initCapacity</a>(allocator, memory);
+    <span class="tok-kw">defer</span> blocks.deinit();
+
+    blocks.appendNTimesAssumeCapacity([_]<span class="tok-type">u64</span>{<span class="tok-number">0</span>} ** <a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a>, memory);
+
+    <a href="std.crypto.argon2.html#std.crypto.argon2.initBlocks">initBlocks</a>(&amp;blocks, &amp;h0, memory, params.p);
+    <span class="tok-kw">try</span> <a href="std.crypto.argon2.html#std.crypto.argon2.processBlocks">processBlocks</a>(allocator, &amp;blocks, params.t, memory, params.p, mode);
+    <a href="std.crypto.argon2.html#std.crypto.argon2.finalize">finalize</a>(&amp;blocks, memory, params.p, derived_key);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.argon2.strHash" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">strHash</span><a href="#src.zig-std.crypto.argon2.strHash">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">strHash</span>( password: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, options: <a href="std.crypto.argon2.HashOptions.html">HashOptions</a>, out: []<span class="tok-type">u8</span>, ) <a href="std.crypto.pwhash.html#std.crypto.pwhash.Error">Error</a>![]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>Compute a hash of a password using the argon2 key derivation function.
+The function returns a string that includes all the parameters required for verification.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>password: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>options: <a href="std.crypto.argon2.HashOptions.html">HashOptions</a></code></pre></div><div><pre><code>out: []<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.argon2.strHash">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">strHash</span>(
+    password: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    options: <a href="std.crypto.argon2.HashOptions.html">HashOptions</a>,
+    out: []<span class="tok-type">u8</span>,
+) <a href="std.crypto.pwhash.html#std.crypto.pwhash.Error">Error</a>![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">const</span> allocator = options.allocator <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.Error">Error</a>.<a href="#">AllocatorRequired</a>;
+    <span class="tok-kw">switch</span> (options.encoding) {
+        .phc =&gt; <span class="tok-kw">return</span> <a href="std.crypto.argon2.PhcFormatHasher.html">PhcFormatHasher</a>.<a href="std.crypto.argon2.PhcFormatHasher.html#std.crypto.argon2.PhcFormatHasher.create">create</a>(
+            allocator,
+            password,
+            options.params,
+            options.mode,
+            out,
+        ),
+        .crypt =&gt; <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.Error">Error</a>.<a href="#">InvalidEncoding</a>,
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.argon2.strVerify" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">strVerify</span><a href="#src.zig-std.crypto.argon2.strVerify">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">strVerify</span>( str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, password: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, options: <a href="std.crypto.argon2.VerifyOptions.html">VerifyOptions</a>, ) <a href="std.crypto.pwhash.html#std.crypto.pwhash.Error">Error</a>!<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Verify that a previously computed hash is valid for a given password.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>password: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>options: <a href="std.crypto.argon2.VerifyOptions.html">VerifyOptions</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.argon2.strVerify">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">strVerify</span>(
+    str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    password: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    options: <a href="std.crypto.argon2.VerifyOptions.html">VerifyOptions</a>,
+) <a href="std.crypto.pwhash.html#std.crypto.pwhash.Error">Error</a>!<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> allocator = options.allocator <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.Error">Error</a>.<a href="#">AllocatorRequired</a>;
+    <span class="tok-kw">return</span> <a href="std.crypto.argon2.PhcFormatHasher.html">PhcFormatHasher</a>.<a href="std.crypto.argon2.PhcFormatHasher.html#std.crypto.argon2.PhcFormatHasher.verify">verify</a>(allocator, str, password);
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.crypto.argon2">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>);
+<span class="tok-kw">const</span> builtin = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;builtin&quot;</span>);
+
+<span class="tok-kw">const</span> blake2 = <a href="std.crypto.html">crypto</a>.<a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.blake2.html">blake2</a>;
+<span class="tok-kw">const</span> crypto = <a href="std.html">std</a>.<a href="std.crypto.html">crypto</a>;
+<span class="tok-kw">const</span> math = <a href="std.html">std</a>.<a href="std.math.html">math</a>;
+<span class="tok-kw">const</span> mem = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>;
+<span class="tok-kw">const</span> phc_format = <a href="std.crypto.pwhash.html">pwhash</a>.<a href="std.crypto.phc_encoding.html">phc_format</a>;
+<span class="tok-kw">const</span> pwhash = <a href="std.crypto.html">crypto</a>.<a href="std.crypto.pwhash.html">pwhash</a>;
+
+<span class="tok-kw">const</span> Thread = <a href="std.html">std</a>.<a href="std.Thread.html">Thread</a>;
+<span class="tok-kw">const</span> Blake2b512 = <a href="std.crypto.blake2.html">blake2</a>.<a href="std.crypto.blake2.html#std.crypto.blake2.Blake2b512">Blake2b512</a>;
+<span class="tok-kw">const</span> Blocks = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayListAligned">ArrayListAligned</a>([<a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a>]<span class="tok-type">u64</span>, <span class="tok-number">16</span>);
+<span class="tok-kw">const</span> H0 = [<a href="std.crypto.blake2.html#std.crypto.blake2.Blake2b512">Blake2b512</a>.<a href="#">digest_length</a> + <span class="tok-number">8</span>]<span class="tok-type">u8</span>;
+
+<span class="tok-kw">const</span> EncodingError = <a href="std.crypto.html">crypto</a>.<a href="std.crypto.errors.html">errors</a>.<a href="std.crypto.errors.html#std.crypto.errors.EncodingError">EncodingError</a>;
+<span class="tok-kw">const</span> KdfError = <a href="std.crypto.pwhash.html">pwhash</a>.<a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a>;
+<span class="tok-kw">const</span> HasherError = <a href="std.crypto.pwhash.html">pwhash</a>.<a href="std.crypto.pwhash.html#std.crypto.pwhash.HasherError">HasherError</a>;
+<span class="tok-kw">const</span> Error = <a href="std.crypto.pwhash.html">pwhash</a>.<a href="std.crypto.pwhash.html#std.crypto.pwhash.Error">Error</a>;
+
+<span class="tok-kw">const</span> version = <span class="tok-number">0x13</span>;
+<span class="tok-kw">const</span> block_length = <span class="tok-number">128</span>;
+<span class="tok-kw">const</span> sync_points = <span class="tok-number">4</span>;
+<span class="tok-kw">const</span> max_int = <span class="tok-number">0xffff_ffff</span>;
+
+<span class="tok-kw">const</span> default_salt_len = <span class="tok-number">32</span>;
+<span class="tok-kw">const</span> default_hash_len = <span class="tok-number">32</span>;
+<span class="tok-kw">const</span> max_salt_len = <span class="tok-number">64</span>;
+<span class="tok-kw">const</span> max_hash_len = <span class="tok-number">64</span>;
+
+<span class="tok-comment">/// Argon2 type</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Mode = <span class="tok-kw">enum</span> {
+    <span class="tok-comment">/// Argon2d is faster and uses data-depending memory access, which makes it highly resistant</span>
+    <span class="tok-comment">/// against GPU cracking attacks and suitable for applications with no threats from side-channel</span>
+    <span class="tok-comment">/// timing attacks (eg. cryptocurrencies).</span>
+    argon2d,
+
+    <span class="tok-comment">/// Argon2i instead uses data-independent memory access, which is preferred for password</span>
+    <span class="tok-comment">/// hashing and password-based key derivation, but it is slower as it makes more passes over</span>
+    <span class="tok-comment">/// the memory to protect from tradeoff attacks.</span>
+    argon2i,
+
+    <span class="tok-comment">/// Argon2id is a hybrid of Argon2i and Argon2d, using a combination of data-depending and</span>
+    <span class="tok-comment">/// data-independent memory accesses, which gives some of Argon2i's resistance to side-channel</span>
+    <span class="tok-comment">/// cache timing attacks and much of Argon2d's resistance to GPU cracking attacks.</span>
+    argon2id,
+};
+
+<span class="tok-comment">/// Argon2 parameters</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Params = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+
+    <span class="tok-comment">/// A [t]ime cost, which defines the amount of computation realized and therefore the execution</span>
+    <span class="tok-comment">/// time, given in number of iterations.</span>
+    t: <span class="tok-type">u32</span>,
+
+    <span class="tok-comment">/// A [m]emory cost, which defines the memory usage, given in kibibytes.</span>
+    m: <span class="tok-type">u32</span>,
+
+    <span class="tok-comment">/// A [p]arallelism degree, which defines the number of parallel threads.</span>
+    p: <span class="tok-type">u24</span>,
+
+    <span class="tok-comment">/// The [secret] parameter, which is used for keyed hashing. This allows a secret key to be input</span>
+    <span class="tok-comment">/// at hashing time (from some external location) and be folded into the value of the hash. This</span>
+    <span class="tok-comment">/// means that even if your salts and hashes are compromised, an attacker cannot brute-force to</span>
+    <span class="tok-comment">/// find the password without the key.</span>
+    secret: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-null">null</span>,
+
+    <span class="tok-comment">/// The [ad] parameter, which is used to fold any additional data into the hash value. Functionally,</span>
+    <span class="tok-comment">/// this behaves almost exactly like the secret or salt parameters; the ad parameter is folding</span>
+    <span class="tok-comment">/// into the value of the hash. However, this parameter is used for different data. The salt</span>
+    <span class="tok-comment">/// should be a random string stored alongside your password. The secret should be a random key</span>
+    <span class="tok-comment">/// only usable at hashing time. The ad is for any other data.</span>
+    ad: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-null">null</span>,
+
+    <span class="tok-comment">/// Baseline parameters for interactive logins using argon2i type</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> interactive_2i = <a href="std.crypto.argon2.Params.html">Self</a>.<a href="std.crypto.argon2.Params.html#std.crypto.argon2.Params.fromLimits">fromLimits</a>(<span class="tok-number">4</span>, <span class="tok-number">33554432</span>);
+    <span class="tok-comment">/// Baseline parameters for normal usage using argon2i type</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> moderate_2i = <a href="std.crypto.argon2.Params.html">Self</a>.<a href="std.crypto.argon2.Params.html#std.crypto.argon2.Params.fromLimits">fromLimits</a>(<span class="tok-number">6</span>, <span class="tok-number">134217728</span>);
+    <span class="tok-comment">/// Baseline parameters for offline usage using argon2i type</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sensitive_2i = <a href="std.crypto.argon2.Params.html">Self</a>.<a href="std.crypto.argon2.Params.html#std.crypto.argon2.Params.fromLimits">fromLimits</a>(<span class="tok-number">8</span>, <span class="tok-number">536870912</span>);
+
+    <span class="tok-comment">/// Baseline parameters for interactive logins using argon2id type</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> interactive_2id = <a href="std.crypto.argon2.Params.html">Self</a>.<a href="std.crypto.argon2.Params.html#std.crypto.argon2.Params.fromLimits">fromLimits</a>(<span class="tok-number">2</span>, <span class="tok-number">67108864</span>);
+    <span class="tok-comment">/// Baseline parameters for normal usage using argon2id type</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> moderate_2id = <a href="std.crypto.argon2.Params.html">Self</a>.<a href="std.crypto.argon2.Params.html#std.crypto.argon2.Params.fromLimits">fromLimits</a>(<span class="tok-number">3</span>, <span class="tok-number">268435456</span>);
+    <span class="tok-comment">/// Baseline parameters for offline usage using argon2id type</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sensitive_2id = <a href="std.crypto.argon2.Params.html">Self</a>.<a href="std.crypto.argon2.Params.html#std.crypto.argon2.Params.fromLimits">fromLimits</a>(<span class="tok-number">4</span>, <span class="tok-number">1073741824</span>);
+
+    <span class="tok-comment">/// Recommended parameters for argon2id type according to the</span>
+    <span class="tok-comment">/// [OWASP cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html).</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> owasp_2id = <a href="std.crypto.argon2.Params.html">Self</a>{ .t = <span class="tok-number">2</span>, .m = <span class="tok-number">19</span> * <span class="tok-number">1024</span>, .p = <span class="tok-number">1</span> };
+
+    <span class="tok-comment">/// Create parameters from ops and mem limits, where mem_limit given in bytes</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fromLimits</span>(ops_limit: <span class="tok-type">u32</span>, mem_limit: <span class="tok-type">usize</span>) <a href="std.crypto.argon2.Params.html">Self</a> {
+        <span class="tok-kw">const</span> m = mem_limit / <span class="tok-number">1024</span>;
+        <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(m &lt;= <a href="std.crypto.argon2.html#std.crypto.argon2.max_int">max_int</a>);
+        <span class="tok-kw">return</span> .{ .t = ops_limit, .m = <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-builtin">@intCast</span>(m)), .p = <span class="tok-number">1</span> };
+    }
+};
+
+<span class="tok-kw">fn</span> <span class="tok-fn">initHash</span>(
+    password: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    salt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    params: <a href="std.crypto.argon2.Params.html">Params</a>,
+    dk_len: <span class="tok-type">usize</span>,
+    mode: <a href="std.crypto.argon2.Mode.html">Mode</a>,
+) <a href="std.crypto.argon2.html#std.crypto.argon2.H0">H0</a> {
+    <span class="tok-kw">var</span> h0: <a href="std.crypto.argon2.html#std.crypto.argon2.H0">H0</a> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">var</span> parameters: [<span class="tok-number">24</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">var</span> tmp: [<span class="tok-number">4</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">var</span> b2 = <a href="std.crypto.blake2.html#std.crypto.blake2.Blake2b512">Blake2b512</a>.<a href="#">init</a>(.{});
+    <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u32</span>, parameters[<span class="tok-number">0</span>..<span class="tok-number">4</span>], params.p, .little);
+    <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u32</span>, parameters[<span class="tok-number">4</span>..<span class="tok-number">8</span>], <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-builtin">@intCast</span>(dk_len)), .little);
+    <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u32</span>, parameters[<span class="tok-number">8</span>..<span class="tok-number">12</span>], params.m, .little);
+    <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u32</span>, parameters[<span class="tok-number">12</span>..<span class="tok-number">16</span>], params.t, .little);
+    <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u32</span>, parameters[<span class="tok-number">16</span>..<span class="tok-number">20</span>], <a href="std.crypto.argon2.html#std.crypto.argon2.version">version</a>, .little);
+    <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u32</span>, parameters[<span class="tok-number">20</span>..<span class="tok-number">24</span>], <span class="tok-builtin">@intFromEnum</span>(mode), .little);
+    b2.update(&amp;parameters);
+    <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u32</span>, &amp;tmp, <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-builtin">@intCast</span>(password.len)), .little);
+    b2.update(&amp;tmp);
+    b2.update(password);
+    <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u32</span>, &amp;tmp, <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-builtin">@intCast</span>(salt.len)), .little);
+    b2.update(&amp;tmp);
+    b2.update(salt);
+    <span class="tok-kw">const</span> secret = params.secret <span class="tok-kw">orelse</span> <span class="tok-str">&quot;&quot;</span>;
+    <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(secret.len &lt;= <a href="std.crypto.argon2.html#std.crypto.argon2.max_int">max_int</a>);
+    <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u32</span>, &amp;tmp, <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-builtin">@intCast</span>(secret.len)), .little);
+    b2.update(&amp;tmp);
+    b2.update(secret);
+    <span class="tok-kw">const</span> ad = params.ad <span class="tok-kw">orelse</span> <span class="tok-str">&quot;&quot;</span>;
+    <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(ad.len &lt;= <a href="std.crypto.argon2.html#std.crypto.argon2.max_int">max_int</a>);
+    <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u32</span>, &amp;tmp, <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-builtin">@intCast</span>(ad.len)), .little);
+    b2.update(&amp;tmp);
+    b2.update(ad);
+    b2.final(h0[<span class="tok-number">0</span>..<a href="std.crypto.blake2.html#std.crypto.blake2.Blake2b512">Blake2b512</a>.<a href="#">digest_length</a>]);
+    <span class="tok-kw">return</span> h0;
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">blake2bLong</span>(out: []<span class="tok-type">u8</span>, in: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> H = <a href="std.crypto.blake2.html#std.crypto.blake2.Blake2b512">Blake2b512</a>;
+    <span class="tok-kw">var</span> outlen_bytes: [<span class="tok-number">4</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u32</span>, &amp;outlen_bytes, <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-builtin">@intCast</span>(out.len)), .little);
+
+    <span class="tok-kw">var</span> out_buf: [H.digest_length]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+
+    <span class="tok-kw">if</span> (out.len &lt;= H.digest_length) {
+        <span class="tok-kw">var</span> h = H.init(.{ .expected_out_bits = out.len * <span class="tok-number">8</span> });
+        h.update(&amp;outlen_bytes);
+        h.update(in);
+        h.final(&amp;out_buf);
+        <span class="tok-builtin">@memcpy</span>(out, out_buf[<span class="tok-number">0</span>..out.len]);
+        <span class="tok-kw">return</span>;
+    }
+
+    <span class="tok-kw">var</span> h = H.init(.{});
+    h.update(&amp;outlen_bytes);
+    h.update(in);
+    h.final(&amp;out_buf);
+    <span class="tok-kw">var</span> out_slice = out;
+    out_slice[<span class="tok-number">0</span> .. H.digest_length / <span class="tok-number">2</span>].* = out_buf[<span class="tok-number">0</span> .. H.digest_length / <span class="tok-number">2</span>].*;
+    out_slice = out_slice[H.digest_length / <span class="tok-number">2</span> ..];
+
+    <span class="tok-kw">var</span> in_buf: [H.digest_length]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">while</span> (out_slice.len &gt; H.digest_length) {
+        in_buf = out_buf;
+        H.hash(&amp;in_buf, &amp;out_buf, .{});
+        out_slice[<span class="tok-number">0</span> .. H.digest_length / <span class="tok-number">2</span>].* = out_buf[<span class="tok-number">0</span> .. H.digest_length / <span class="tok-number">2</span>].*;
+        out_slice = out_slice[H.digest_length / <span class="tok-number">2</span> ..];
+    }
+    in_buf = out_buf;
+    H.hash(&amp;in_buf, &amp;out_buf, .{ .expected_out_bits = out_slice.len * <span class="tok-number">8</span> });
+    <span class="tok-builtin">@memcpy</span>(out_slice, out_buf[<span class="tok-number">0</span>..out_slice.len]);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">initBlocks</span>(
+    blocks: *<a href="std.crypto.argon2.html#std.crypto.argon2.Blocks">Blocks</a>,
+    h0: *<a href="std.crypto.argon2.html#std.crypto.argon2.H0">H0</a>,
+    memory: <span class="tok-type">u32</span>,
+    threads: <span class="tok-type">u24</span>,
+) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> block0: [<span class="tok-number">1024</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">var</span> lane: <span class="tok-type">u24</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (lane &lt; threads) : (lane += <span class="tok-number">1</span>) {
+        <span class="tok-kw">const</span> j = lane * (memory / threads);
+        <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u32</span>, h0[<a href="std.crypto.blake2.html#std.crypto.blake2.Blake2b512">Blake2b512</a>.<a href="#">digest_length</a> + <span class="tok-number">4</span> ..][<span class="tok-number">0</span>..<span class="tok-number">4</span>], lane, .little);
+
+        <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u32</span>, h0[<a href="std.crypto.blake2.html#std.crypto.blake2.Blake2b512">Blake2b512</a>.<a href="#">digest_length</a>..][<span class="tok-number">0</span>..<span class="tok-number">4</span>], <span class="tok-number">0</span>, .little);
+        <a href="std.crypto.argon2.html#std.crypto.argon2.blake2bLong">blake2bLong</a>(&amp;block0, h0);
+        <span class="tok-kw">for</span> (&amp;blocks.items[j + <span class="tok-number">0</span>], <span class="tok-number">0</span>..) |*v, i| {
+            v.* = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u64</span>, block0[i * <span class="tok-number">8</span> ..][<span class="tok-number">0</span>..<span class="tok-number">8</span>], .little);
+        }
+
+        <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u32</span>, h0[<a href="std.crypto.blake2.html#std.crypto.blake2.Blake2b512">Blake2b512</a>.<a href="#">digest_length</a>..][<span class="tok-number">0</span>..<span class="tok-number">4</span>], <span class="tok-number">1</span>, .little);
+        <a href="std.crypto.argon2.html#std.crypto.argon2.blake2bLong">blake2bLong</a>(&amp;block0, h0);
+        <span class="tok-kw">for</span> (&amp;blocks.items[j + <span class="tok-number">1</span>], <span class="tok-number">0</span>..) |*v, i| {
+            v.* = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u64</span>, block0[i * <span class="tok-number">8</span> ..][<span class="tok-number">0</span>..<span class="tok-number">8</span>], .little);
+        }
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">processBlocks</span>(
+    allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>,
+    blocks: *<a href="std.crypto.argon2.html#std.crypto.argon2.Blocks">Blocks</a>,
+    time: <span class="tok-type">u32</span>,
+    memory: <span class="tok-type">u32</span>,
+    threads: <span class="tok-type">u24</span>,
+    mode: <a href="std.crypto.argon2.Mode.html">Mode</a>,
+) <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a>!<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> lanes = memory / threads;
+    <span class="tok-kw">const</span> segments = lanes / <a href="std.crypto.argon2.html#std.crypto.argon2.sync_points">sync_points</a>;
+
+    <span class="tok-kw">if</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.single_threaded">single_threaded</a> <span class="tok-kw">or</span> threads == <span class="tok-number">1</span>) {
+        <a href="std.crypto.argon2.html#std.crypto.argon2.processBlocksSt">processBlocksSt</a>(blocks, time, memory, threads, mode, lanes, segments);
+    } <span class="tok-kw">else</span> {
+        <span class="tok-kw">try</span> <a href="std.crypto.argon2.html#std.crypto.argon2.processBlocksMt">processBlocksMt</a>(allocator, blocks, time, memory, threads, mode, lanes, segments);
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">processBlocksSt</span>(
+    blocks: *<a href="std.crypto.argon2.html#std.crypto.argon2.Blocks">Blocks</a>,
+    time: <span class="tok-type">u32</span>,
+    memory: <span class="tok-type">u32</span>,
+    threads: <span class="tok-type">u24</span>,
+    mode: <a href="std.crypto.argon2.Mode.html">Mode</a>,
+    lanes: <span class="tok-type">u32</span>,
+    segments: <span class="tok-type">u32</span>,
+) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> n: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (n &lt; time) : (n += <span class="tok-number">1</span>) {
+        <span class="tok-kw">var</span> slice: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">while</span> (slice &lt; <a href="std.crypto.argon2.html#std.crypto.argon2.sync_points">sync_points</a>) : (slice += <span class="tok-number">1</span>) {
+            <span class="tok-kw">var</span> lane: <span class="tok-type">u24</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (lane &lt; threads) : (lane += <span class="tok-number">1</span>) {
+                <a href="std.crypto.argon2.html#std.crypto.argon2.processSegment">processSegment</a>(blocks, time, memory, threads, mode, lanes, segments, n, slice, lane);
+            }
+        }
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">processBlocksMt</span>(
+    allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>,
+    blocks: *<a href="std.crypto.argon2.html#std.crypto.argon2.Blocks">Blocks</a>,
+    time: <span class="tok-type">u32</span>,
+    memory: <span class="tok-type">u32</span>,
+    threads: <span class="tok-type">u24</span>,
+    mode: <a href="std.crypto.argon2.Mode.html">Mode</a>,
+    lanes: <span class="tok-type">u32</span>,
+    segments: <span class="tok-type">u32</span>,
+) <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a>!<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> threads_list = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<a href="std.Thread.html">Thread</a>).initCapacity(allocator, threads);
+    <span class="tok-kw">defer</span> threads_list.deinit();
+
+    <span class="tok-kw">var</span> n: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (n &lt; time) : (n += <span class="tok-number">1</span>) {
+        <span class="tok-kw">var</span> slice: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">while</span> (slice &lt; <a href="std.crypto.argon2.html#std.crypto.argon2.sync_points">sync_points</a>) : (slice += <span class="tok-number">1</span>) {
+            <span class="tok-kw">var</span> lane: <span class="tok-type">u24</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (lane &lt; threads) : (lane += <span class="tok-number">1</span>) {
+                <span class="tok-kw">const</span> thread = <span class="tok-kw">try</span> <a href="std.Thread.html">Thread</a>.<a href="std.Thread.html#std.Thread.spawn">spawn</a>(.{}, <a href="std.crypto.argon2.html#std.crypto.argon2.processSegment">processSegment</a>, .{
+                    blocks, time, memory, threads, mode, lanes, segments, n, slice, lane,
+                });
+                threads_list.appendAssumeCapacity(thread);
+            }
+            lane = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (lane &lt; threads) : (lane += <span class="tok-number">1</span>) {
+                threads_list.items[lane].join();
+            }
+            threads_list.clearRetainingCapacity();
+        }
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">processSegment</span>(
+    blocks: *<a href="std.crypto.argon2.html#std.crypto.argon2.Blocks">Blocks</a>,
+    passes: <span class="tok-type">u32</span>,
+    memory: <span class="tok-type">u32</span>,
+    threads: <span class="tok-type">u24</span>,
+    mode: <a href="std.crypto.argon2.Mode.html">Mode</a>,
+    lanes: <span class="tok-type">u32</span>,
+    segments: <span class="tok-type">u32</span>,
+    n: <span class="tok-type">u32</span>,
+    slice: <span class="tok-type">u32</span>,
+    lane: <span class="tok-type">u24</span>,
+) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> addresses <span class="tok-kw">align</span>(<span class="tok-number">16</span>) = [_]<span class="tok-type">u64</span>{<span class="tok-number">0</span>} ** <a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a>;
+    <span class="tok-kw">var</span> in <span class="tok-kw">align</span>(<span class="tok-number">16</span>) = [_]<span class="tok-type">u64</span>{<span class="tok-number">0</span>} ** <a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a>;
+    <span class="tok-kw">const</span> zero <span class="tok-kw">align</span>(<span class="tok-number">16</span>) = [_]<span class="tok-type">u64</span>{<span class="tok-number">0</span>} ** <a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a>;
+    <span class="tok-kw">if</span> (mode == .argon2i <span class="tok-kw">or</span> (mode == .argon2id <span class="tok-kw">and</span> n == <span class="tok-number">0</span> <span class="tok-kw">and</span> slice &lt; <a href="std.crypto.argon2.html#std.crypto.argon2.sync_points">sync_points</a> / <span class="tok-number">2</span>)) {
+        in[<span class="tok-number">0</span>] = n;
+        in[<span class="tok-number">1</span>] = lane;
+        in[<span class="tok-number">2</span>] = slice;
+        in[<span class="tok-number">3</span>] = memory;
+        in[<span class="tok-number">4</span>] = passes;
+        in[<span class="tok-number">5</span>] = <span class="tok-builtin">@intFromEnum</span>(mode);
+    }
+    <span class="tok-kw">var</span> index: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">if</span> (n == <span class="tok-number">0</span> <span class="tok-kw">and</span> slice == <span class="tok-number">0</span>) {
+        index = <span class="tok-number">2</span>;
+        <span class="tok-kw">if</span> (mode == .argon2i <span class="tok-kw">or</span> mode == .argon2id) {
+            in[<span class="tok-number">6</span>] += <span class="tok-number">1</span>;
+            <a href="std.crypto.argon2.html#std.crypto.argon2.processBlock">processBlock</a>(&amp;addresses, &amp;in, &amp;zero);
+            <a href="std.crypto.argon2.html#std.crypto.argon2.processBlock">processBlock</a>(&amp;addresses, &amp;addresses, &amp;zero);
+        }
+    }
+    <span class="tok-kw">var</span> offset = lane * lanes + slice * segments + index;
+    <span class="tok-kw">var</span> random: <span class="tok-type">u64</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (index &lt; segments) : ({
+        index += <span class="tok-number">1</span>;
+        offset += <span class="tok-number">1</span>;
+    }) {
+        <span class="tok-kw">var</span> prev = offset -% <span class="tok-number">1</span>;
+        <span class="tok-kw">if</span> (index == <span class="tok-number">0</span> <span class="tok-kw">and</span> slice == <span class="tok-number">0</span>) {
+            prev +%= lanes;
+        }
+        <span class="tok-kw">if</span> (mode == .argon2i <span class="tok-kw">or</span> (mode == .argon2id <span class="tok-kw">and</span> n == <span class="tok-number">0</span> <span class="tok-kw">and</span> slice &lt; <a href="std.crypto.argon2.html#std.crypto.argon2.sync_points">sync_points</a> / <span class="tok-number">2</span>)) {
+            <span class="tok-kw">if</span> (index % <a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a> == <span class="tok-number">0</span>) {
+                in[<span class="tok-number">6</span>] += <span class="tok-number">1</span>;
+                <a href="std.crypto.argon2.html#std.crypto.argon2.processBlock">processBlock</a>(&amp;addresses, &amp;in, &amp;zero);
+                <a href="std.crypto.argon2.html#std.crypto.argon2.processBlock">processBlock</a>(&amp;addresses, &amp;addresses, &amp;zero);
+            }
+            random = addresses[index % <a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a>];
+        } <span class="tok-kw">else</span> {
+            random = blocks.items[prev][<span class="tok-number">0</span>];
+        }
+        <span class="tok-kw">const</span> new_offset = <a href="std.crypto.argon2.html#std.crypto.argon2.indexAlpha">indexAlpha</a>(random, lanes, segments, threads, n, slice, lane, index);
+        <a href="std.crypto.argon2.html#std.crypto.argon2.processBlockXor">processBlockXor</a>(&amp;blocks.items[offset], &amp;blocks.items[prev], &amp;blocks.items[new_offset]);
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">processBlock</span>(
+    out: *<span class="tok-kw">align</span>(<span class="tok-number">16</span>) [<a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a>]<span class="tok-type">u64</span>,
+    in1: *<span class="tok-kw">align</span>(<span class="tok-number">16</span>) <span class="tok-kw">const</span> [<a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a>]<span class="tok-type">u64</span>,
+    in2: *<span class="tok-kw">align</span>(<span class="tok-number">16</span>) <span class="tok-kw">const</span> [<a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a>]<span class="tok-type">u64</span>,
+) <span class="tok-type">void</span> {
+    <a href="std.crypto.argon2.html#std.crypto.argon2.processBlockGeneric">processBlockGeneric</a>(out, in1, in2, <span class="tok-null">false</span>);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">processBlockXor</span>(
+    out: *[<a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a>]<span class="tok-type">u64</span>,
+    in1: *<span class="tok-kw">const</span> [<a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a>]<span class="tok-type">u64</span>,
+    in2: *<span class="tok-kw">const</span> [<a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a>]<span class="tok-type">u64</span>,
+) <span class="tok-type">void</span> {
+    <a href="std.crypto.argon2.html#std.crypto.argon2.processBlockGeneric">processBlockGeneric</a>(out, in1, in2, <span class="tok-null">true</span>);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">processBlockGeneric</span>(
+    out: *[<a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a>]<span class="tok-type">u64</span>,
+    in1: *<span class="tok-kw">const</span> [<a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a>]<span class="tok-type">u64</span>,
+    in2: *<span class="tok-kw">const</span> [<a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a>]<span class="tok-type">u64</span>,
+    <span class="tok-kw">comptime</span> xor: <span class="tok-type">bool</span>,
+) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> t: [<a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a>]<span class="tok-type">u64</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">for</span> (&amp;t, <span class="tok-number">0</span>..) |*v, i| {
+        v.* = in1[i] ^ in2[i];
+    }
+    <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (i &lt; <a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a>) : (i += <span class="tok-number">16</span>) {
+        <a href="std.crypto.argon2.html#std.crypto.argon2.blamkaGeneric">blamkaGeneric</a>(t[i..][<span class="tok-number">0</span>..<span class="tok-number">16</span>]);
+    }
+    i = <span class="tok-number">0</span>;
+    <span class="tok-kw">var</span> buffer: [<span class="tok-number">16</span>]<span class="tok-type">u64</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">while</span> (i &lt; <a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a> / <span class="tok-number">8</span>) : (i += <span class="tok-number">2</span>) {
+        <span class="tok-kw">var</span> j: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">while</span> (j &lt; <a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a> / <span class="tok-number">8</span>) : (j += <span class="tok-number">2</span>) {
+            buffer[j] = t[j * <span class="tok-number">8</span> + i];
+            buffer[j + <span class="tok-number">1</span>] = t[j * <span class="tok-number">8</span> + i + <span class="tok-number">1</span>];
+        }
+        <a href="std.crypto.argon2.html#std.crypto.argon2.blamkaGeneric">blamkaGeneric</a>(&amp;buffer);
+        j = <span class="tok-number">0</span>;
+        <span class="tok-kw">while</span> (j &lt; <a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a> / <span class="tok-number">8</span>) : (j += <span class="tok-number">2</span>) {
+            t[j * <span class="tok-number">8</span> + i] = buffer[j];
+            t[j * <span class="tok-number">8</span> + i + <span class="tok-number">1</span>] = buffer[j + <span class="tok-number">1</span>];
+        }
+    }
+    <span class="tok-kw">if</span> (xor) {
+        <span class="tok-kw">for</span> (t, <span class="tok-number">0</span>..) |v, j| {
+            out[j] ^= in1[j] ^ in2[j] ^ v;
+        }
+    } <span class="tok-kw">else</span> {
+        <span class="tok-kw">for</span> (t, <span class="tok-number">0</span>..) |v, j| {
+            out[j] = in1[j] ^ in2[j] ^ v;
+        }
+    }
+}
+
+<span class="tok-kw">const</span> QuarterRound = <span class="tok-kw">struct</span> { a: <span class="tok-type">usize</span>, b: <span class="tok-type">usize</span>, c: <span class="tok-type">usize</span>, d: <span class="tok-type">usize</span> };
+
+<span class="tok-kw">fn</span> <span class="tok-fn">Rp</span>(a: <span class="tok-type">usize</span>, b: <span class="tok-type">usize</span>, c: <span class="tok-type">usize</span>, d: <span class="tok-type">usize</span>) <a href="std.crypto.argon2.QuarterRound.html">QuarterRound</a> {
+    <span class="tok-kw">return</span> .{ .a = a, .b = b, .c = c, .d = d };
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">fBlaMka</span>(x: <span class="tok-type">u64</span>, y: <span class="tok-type">u64</span>) <span class="tok-type">u64</span> {
+    <span class="tok-kw">const</span> xy = <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-builtin">@truncate</span>(x))) * <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-builtin">@truncate</span>(y)));
+    <span class="tok-kw">return</span> x +% y +% <span class="tok-number">2</span> *% xy;
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">blamkaGeneric</span>(x: *[<span class="tok-number">16</span>]<span class="tok-type">u64</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> rounds = <span class="tok-kw">comptime</span> [_]<a href="std.crypto.argon2.QuarterRound.html">QuarterRound</a>{
+        <a href="std.crypto.argon2.html#std.crypto.argon2.Rp">Rp</a>(<span class="tok-number">0</span>, <span class="tok-number">4</span>, <span class="tok-number">8</span>, <span class="tok-number">12</span>),
+        <a href="std.crypto.argon2.html#std.crypto.argon2.Rp">Rp</a>(<span class="tok-number">1</span>, <span class="tok-number">5</span>, <span class="tok-number">9</span>, <span class="tok-number">13</span>),
+        <a href="std.crypto.argon2.html#std.crypto.argon2.Rp">Rp</a>(<span class="tok-number">2</span>, <span class="tok-number">6</span>, <span class="tok-number">10</span>, <span class="tok-number">14</span>),
+        <a href="std.crypto.argon2.html#std.crypto.argon2.Rp">Rp</a>(<span class="tok-number">3</span>, <span class="tok-number">7</span>, <span class="tok-number">11</span>, <span class="tok-number">15</span>),
+        <a href="std.crypto.argon2.html#std.crypto.argon2.Rp">Rp</a>(<span class="tok-number">0</span>, <span class="tok-number">5</span>, <span class="tok-number">10</span>, <span class="tok-number">15</span>),
+        <a href="std.crypto.argon2.html#std.crypto.argon2.Rp">Rp</a>(<span class="tok-number">1</span>, <span class="tok-number">6</span>, <span class="tok-number">11</span>, <span class="tok-number">12</span>),
+        <a href="std.crypto.argon2.html#std.crypto.argon2.Rp">Rp</a>(<span class="tok-number">2</span>, <span class="tok-number">7</span>, <span class="tok-number">8</span>, <span class="tok-number">13</span>),
+        <a href="std.crypto.argon2.html#std.crypto.argon2.Rp">Rp</a>(<span class="tok-number">3</span>, <span class="tok-number">4</span>, <span class="tok-number">9</span>, <span class="tok-number">14</span>),
+    };
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (rounds) |r| {
+        x[r.a] = <a href="std.crypto.argon2.html#std.crypto.argon2.fBlaMka">fBlaMka</a>(x[r.a], x[r.b]);
+        x[r.d] = <a href="std.math.html">math</a>.<a href="std.math.html#std.math.rotr">rotr</a>(<span class="tok-type">u64</span>, x[r.d] ^ x[r.a], <span class="tok-number">32</span>);
+        x[r.c] = <a href="std.crypto.argon2.html#std.crypto.argon2.fBlaMka">fBlaMka</a>(x[r.c], x[r.d]);
+        x[r.b] = <a href="std.math.html">math</a>.<a href="std.math.html#std.math.rotr">rotr</a>(<span class="tok-type">u64</span>, x[r.b] ^ x[r.c], <span class="tok-number">24</span>);
+        x[r.a] = <a href="std.crypto.argon2.html#std.crypto.argon2.fBlaMka">fBlaMka</a>(x[r.a], x[r.b]);
+        x[r.d] = <a href="std.math.html">math</a>.<a href="std.math.html#std.math.rotr">rotr</a>(<span class="tok-type">u64</span>, x[r.d] ^ x[r.a], <span class="tok-number">16</span>);
+        x[r.c] = <a href="std.crypto.argon2.html#std.crypto.argon2.fBlaMka">fBlaMka</a>(x[r.c], x[r.d]);
+        x[r.b] = <a href="std.math.html">math</a>.<a href="std.math.html#std.math.rotr">rotr</a>(<span class="tok-type">u64</span>, x[r.b] ^ x[r.c], <span class="tok-number">63</span>);
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">finalize</span>(
+    blocks: *<a href="std.crypto.argon2.html#std.crypto.argon2.Blocks">Blocks</a>,
+    memory: <span class="tok-type">u32</span>,
+    threads: <span class="tok-type">u24</span>,
+    out: []<span class="tok-type">u8</span>,
+) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> lanes = memory / threads;
+    <span class="tok-kw">var</span> lane: <span class="tok-type">u24</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (lane &lt; threads - <span class="tok-number">1</span>) : (lane += <span class="tok-number">1</span>) {
+        <span class="tok-kw">for</span> (blocks.items[(lane * lanes) + lanes - <span class="tok-number">1</span>], <span class="tok-number">0</span>..) |v, i| {
+            blocks.items[memory - <span class="tok-number">1</span>][i] ^= v;
+        }
+    }
+    <span class="tok-kw">var</span> block: [<span class="tok-number">1024</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">for</span> (blocks.items[memory - <span class="tok-number">1</span>], <span class="tok-number">0</span>..) |v, i| {
+        <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u64</span>, block[i * <span class="tok-number">8</span> ..][<span class="tok-number">0</span>..<span class="tok-number">8</span>], v, .little);
+    }
+    <a href="std.crypto.argon2.html#std.crypto.argon2.blake2bLong">blake2bLong</a>(out, &amp;block);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">indexAlpha</span>(
+    rand: <span class="tok-type">u64</span>,
+    lanes: <span class="tok-type">u32</span>,
+    segments: <span class="tok-type">u32</span>,
+    threads: <span class="tok-type">u24</span>,
+    n: <span class="tok-type">u32</span>,
+    slice: <span class="tok-type">u32</span>,
+    lane: <span class="tok-type">u24</span>,
+    index: <span class="tok-type">u32</span>,
+) <span class="tok-type">u32</span> {
+    <span class="tok-kw">var</span> ref_lane = <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-builtin">@intCast</span>(rand &gt;&gt; <span class="tok-number">32</span>)) % threads;
+    <span class="tok-kw">if</span> (n == <span class="tok-number">0</span> <span class="tok-kw">and</span> slice == <span class="tok-number">0</span>) {
+        ref_lane = lane;
+    }
+    <span class="tok-kw">var</span> m = <span class="tok-number">3</span> * segments;
+    <span class="tok-kw">var</span> s = ((slice + <span class="tok-number">1</span>) % <a href="std.crypto.argon2.html#std.crypto.argon2.sync_points">sync_points</a>) * segments;
+    <span class="tok-kw">if</span> (lane == ref_lane) {
+        m += index;
+    }
+    <span class="tok-kw">if</span> (n == <span class="tok-number">0</span>) {
+        m = slice * segments;
+        s = <span class="tok-number">0</span>;
+        <span class="tok-kw">if</span> (slice == <span class="tok-number">0</span> <span class="tok-kw">or</span> lane == ref_lane) {
+            m += index;
+        }
+    }
+    <span class="tok-kw">if</span> (index == <span class="tok-number">0</span> <span class="tok-kw">or</span> lane == ref_lane) {
+        m -= <span class="tok-number">1</span>;
+    }
+    <span class="tok-kw">var</span> p = <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-builtin">@truncate</span>(rand)));
+    p = (p * p) &gt;&gt; <span class="tok-number">32</span>;
+    p = (p * m) &gt;&gt; <span class="tok-number">32</span>;
+    <span class="tok-kw">return</span> ref_lane * lanes + <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-builtin">@intCast</span>(((s + m - (p + <span class="tok-number">1</span>)) % lanes)));
+}
+
+<span class="tok-comment">/// Derives a key from the password, salt, and argon2 parameters.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Derived key has to be at least 4 bytes length.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Salt has to be at least 8 bytes length.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">kdf</span>(
+    allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>,
+    derived_key: []<span class="tok-type">u8</span>,
+    password: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    salt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    params: <a href="std.crypto.argon2.Params.html">Params</a>,
+    mode: <a href="std.crypto.argon2.Mode.html">Mode</a>,
+) <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a>!<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (derived_key.len &lt; <span class="tok-number">4</span>) <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a>.<a href="#">WeakParameters</a>;
+    <span class="tok-kw">if</span> (derived_key.len &gt; <a href="std.crypto.argon2.html#std.crypto.argon2.max_int">max_int</a>) <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a>.<a href="#">OutputTooLong</a>;
+
+    <span class="tok-kw">if</span> (password.len &gt; <a href="std.crypto.argon2.html#std.crypto.argon2.max_int">max_int</a>) <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a>.<a href="#">WeakParameters</a>;
+    <span class="tok-kw">if</span> (salt.len &lt; <span class="tok-number">8</span> <span class="tok-kw">or</span> salt.len &gt; <a href="std.crypto.argon2.html#std.crypto.argon2.max_int">max_int</a>) <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a>.<a href="#">WeakParameters</a>;
+    <span class="tok-kw">if</span> (params.t &lt; <span class="tok-number">1</span> <span class="tok-kw">or</span> params.p &lt; <span class="tok-number">1</span>) <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a>.<a href="#">WeakParameters</a>;
+    <span class="tok-kw">if</span> (params.m / <span class="tok-number">8</span> &lt; params.p) <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a>.<a href="#">WeakParameters</a>;
+
+    <span class="tok-kw">var</span> h0 = <a href="std.crypto.argon2.html#std.crypto.argon2.initHash">initHash</a>(password, salt, params, derived_key.len, mode);
+    <span class="tok-kw">const</span> memory = <span class="tok-builtin">@max</span>(
+        params.m / (<a href="std.crypto.argon2.html#std.crypto.argon2.sync_points">sync_points</a> * params.p) * (<a href="std.crypto.argon2.html#std.crypto.argon2.sync_points">sync_points</a> * params.p),
+        <span class="tok-number">2</span> * <a href="std.crypto.argon2.html#std.crypto.argon2.sync_points">sync_points</a> * params.p,
+    );
+
+    <span class="tok-kw">var</span> blocks = <span class="tok-kw">try</span> <a href="std.crypto.argon2.html#std.crypto.argon2.Blocks">Blocks</a>.<a href="#">initCapacity</a>(allocator, memory);
+    <span class="tok-kw">defer</span> blocks.deinit();
+
+    blocks.appendNTimesAssumeCapacity([_]<span class="tok-type">u64</span>{<span class="tok-number">0</span>} ** <a href="std.crypto.argon2.html#std.crypto.argon2.block_length">block_length</a>, memory);
+
+    <a href="std.crypto.argon2.html#std.crypto.argon2.initBlocks">initBlocks</a>(&amp;blocks, &amp;h0, memory, params.p);
+    <span class="tok-kw">try</span> <a href="std.crypto.argon2.html#std.crypto.argon2.processBlocks">processBlocks</a>(allocator, &amp;blocks, params.t, memory, params.p, mode);
+    <a href="std.crypto.argon2.html#std.crypto.argon2.finalize">finalize</a>(&amp;blocks, memory, params.p, derived_key);
+}
+
+<span class="tok-kw">const</span> PhcFormatHasher = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">const</span> BinValue = <a href="std.crypto.phc_encoding.html">phc_format</a>.<a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>;
+
+    <span class="tok-kw">const</span> HashResult = <span class="tok-kw">struct</span> {
+        alg_id: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+        alg_version: ?<span class="tok-type">u32</span>,
+        m: <span class="tok-type">u32</span>,
+        t: <span class="tok-type">u32</span>,
+        p: <span class="tok-type">u24</span>,
+        salt: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>(<a href="std.crypto.argon2.html#std.crypto.argon2.max_salt_len">max_salt_len</a>),
+        hash: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>(<a href="std.crypto.argon2.html#std.crypto.argon2.max_hash_len">max_hash_len</a>),
+    };
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">create</span>(
+        allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>,
+        password: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+        params: <a href="std.crypto.argon2.Params.html">Params</a>,
+        mode: <a href="std.crypto.argon2.Mode.html">Mode</a>,
+        buf: []<span class="tok-type">u8</span>,
+    ) <a href="std.crypto.pwhash.html#std.crypto.pwhash.HasherError">HasherError</a>![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">if</span> (params.secret != <span class="tok-null">null</span> <span class="tok-kw">or</span> params.ad != <span class="tok-null">null</span>) <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.HasherError">HasherError</a>.<a href="#">InvalidEncoding</a>;
+
+        <span class="tok-kw">var</span> salt: [<a href="std.crypto.argon2.html#std.crypto.argon2.default_salt_len">default_salt_len</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <a href="std.crypto.html">crypto</a>.<a href="std.crypto.tlcsprng.html#std.crypto.tlcsprng.interface">random</a>.<a href="#">bytes</a>(&amp;salt);
+
+        <span class="tok-kw">var</span> hash: [<a href="std.crypto.argon2.html#std.crypto.argon2.default_hash_len">default_hash_len</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">try</span> <a href="std.crypto.argon2.html#std.crypto.argon2.kdf">kdf</a>(allocator, &amp;hash, password, &amp;salt, params, mode);
+
+        <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html">phc_format</a>.<a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.serialize">serialize</a>(<a href="std.crypto.argon2.PhcFormatHasher.HashResult.html">HashResult</a>{
+            .alg_id = <span class="tok-builtin">@tagName</span>(mode),
+            .alg_version = <a href="std.crypto.argon2.html#std.crypto.argon2.version">version</a>,
+            .m = params.m,
+            .t = params.t,
+            .p = params.p,
+            .salt = <span class="tok-kw">try</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>(<a href="std.crypto.argon2.html#std.crypto.argon2.max_salt_len">max_salt_len</a>).fromSlice(&amp;salt),
+            .hash = <span class="tok-kw">try</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>(<a href="std.crypto.argon2.html#std.crypto.argon2.max_hash_len">max_hash_len</a>).fromSlice(&amp;hash),
+        }, buf);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">verify</span>(
+        allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>,
+        str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+        password: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    ) <a href="std.crypto.pwhash.html#std.crypto.pwhash.HasherError">HasherError</a>!<span class="tok-type">void</span> {
+        <span class="tok-kw">const</span> hash_result = <span class="tok-kw">try</span> <a href="std.crypto.phc_encoding.html">phc_format</a>.<a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.deserialize">deserialize</a>(<a href="std.crypto.argon2.PhcFormatHasher.HashResult.html">HashResult</a>, str);
+
+        <span class="tok-kw">const</span> mode = <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.stringToEnum">stringToEnum</a>(<a href="std.crypto.argon2.Mode.html">Mode</a>, hash_result.alg_id) <span class="tok-kw">orelse</span>
+            <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.HasherError">HasherError</a>.<a href="#">PasswordVerificationFailed</a>;
+        <span class="tok-kw">if</span> (hash_result.alg_version) |v| {
+            <span class="tok-kw">if</span> (v != <a href="std.crypto.argon2.html#std.crypto.argon2.version">version</a>) <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.HasherError">HasherError</a>.<a href="#">InvalidEncoding</a>;
+        }
+        <span class="tok-kw">const</span> params = <a href="std.crypto.argon2.Params.html">Params</a>{ .t = hash_result.t, .m = hash_result.m, .p = hash_result.p };
+
+        <span class="tok-kw">const</span> expected_hash = hash_result.hash.constSlice();
+        <span class="tok-kw">var</span> hash_buf: [<a href="std.crypto.argon2.html#std.crypto.argon2.max_hash_len">max_hash_len</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">if</span> (expected_hash.len &gt; hash_buf.len) <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.HasherError">HasherError</a>.<a href="#">InvalidEncoding</a>;
+        <span class="tok-kw">const</span> hash = hash_buf[<span class="tok-number">0</span>..expected_hash.len];
+
+        <span class="tok-kw">try</span> <a href="std.crypto.argon2.html#std.crypto.argon2.kdf">kdf</a>(allocator, hash, password, hash_result.salt.constSlice(), params, mode);
+        <span class="tok-kw">if</span> (!<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, hash, expected_hash)) <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.HasherError">HasherError</a>.<a href="#">PasswordVerificationFailed</a>;
+    }
+};
+
+<span class="tok-comment">/// Options for hashing a password.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Allocator is required for argon2.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Only phc encoding is supported.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> HashOptions = <span class="tok-kw">struct</span> {
+    allocator: ?<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>,
+    params: <a href="std.crypto.argon2.Params.html">Params</a>,
+    mode: <a href="std.crypto.argon2.Mode.html">Mode</a> = .argon2id,
+    encoding: <a href="std.crypto.pwhash.html">pwhash</a>.<a href="std.crypto.pwhash.Encoding.html">Encoding</a> = .phc,
+};
+
+<span class="tok-comment">/// Compute a hash of a password using the argon2 key derivation function.</span>
+<span class="tok-comment">/// The function returns a string that includes all the parameters required for verification.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">strHash</span>(
+    password: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    options: <a href="std.crypto.argon2.HashOptions.html">HashOptions</a>,
+    out: []<span class="tok-type">u8</span>,
+) <a href="std.crypto.pwhash.html#std.crypto.pwhash.Error">Error</a>![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">const</span> allocator = options.allocator <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.Error">Error</a>.<a href="#">AllocatorRequired</a>;
+    <span class="tok-kw">switch</span> (options.encoding) {
+        .phc =&gt; <span class="tok-kw">return</span> <a href="std.crypto.argon2.PhcFormatHasher.html">PhcFormatHasher</a>.<a href="std.crypto.argon2.PhcFormatHasher.html#std.crypto.argon2.PhcFormatHasher.create">create</a>(
+            allocator,
+            password,
+            options.params,
+            options.mode,
+            out,
+        ),
+        .crypt =&gt; <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.Error">Error</a>.<a href="#">InvalidEncoding</a>,
+    }
+}
+
+<span class="tok-comment">/// Options for hash verification.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Allocator is required for argon2.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> VerifyOptions = <span class="tok-kw">struct</span> {
+    allocator: ?<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>,
+};
+
+<span class="tok-comment">/// Verify that a previously computed hash is valid for a given password.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">strVerify</span>(
+    str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    password: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    options: <a href="std.crypto.argon2.VerifyOptions.html">VerifyOptions</a>,
+) <a href="std.crypto.pwhash.html#std.crypto.pwhash.Error">Error</a>!<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> allocator = options.allocator <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <a href="std.crypto.pwhash.html#std.crypto.pwhash.Error">Error</a>.<a href="#">AllocatorRequired</a>;
+    <span class="tok-kw">return</span> <a href="std.crypto.argon2.PhcFormatHasher.html">PhcFormatHasher</a>.<a href="std.crypto.argon2.PhcFormatHasher.html#std.crypto.argon2.PhcFormatHasher.verify">verify</a>(allocator, str, password);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;argon2d&quot;</span> {
+    <span class="tok-kw">const</span> password = [_]<span class="tok-type">u8</span>{<span class="tok-number">0x01</span>} ** <span class="tok-number">32</span>;
+    <span class="tok-kw">const</span> salt = [_]<span class="tok-type">u8</span>{<span class="tok-number">0x02</span>} ** <span class="tok-number">16</span>;
+    <span class="tok-kw">const</span> secret = [_]<span class="tok-type">u8</span>{<span class="tok-number">0x03</span>} ** <span class="tok-number">8</span>;
+    <span class="tok-kw">const</span> ad = [_]<span class="tok-type">u8</span>{<span class="tok-number">0x04</span>} ** <span class="tok-number">12</span>;
+
+    <span class="tok-kw">var</span> dk: [<span class="tok-number">32</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">try</span> <a href="std.crypto.argon2.html#std.crypto.argon2.kdf">kdf</a>(
+        <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>,
+        &amp;dk,
+        &amp;password,
+        &amp;salt,
+        .{ .t = <span class="tok-number">3</span>, .m = <span class="tok-number">32</span>, .p = <span class="tok-number">4</span>, .secret = &amp;secret, .ad = &amp;ad },
+        .argon2d,
+    );
+
+    <span class="tok-kw">const</span> want = [_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0x51</span>, <span class="tok-number">0x2b</span>, <span class="tok-number">0x39</span>, <span class="tok-number">0x1b</span>, <span class="tok-number">0x6f</span>, <span class="tok-number">0x11</span>, <span class="tok-number">0x62</span>, <span class="tok-number">0x97</span>,
+        <span class="tok-number">0x53</span>, <span class="tok-number">0x71</span>, <span class="tok-number">0xd3</span>, <span class="tok-number">0x09</span>, <span class="tok-number">0x19</span>, <span class="tok-number">0x73</span>, <span class="tok-number">0x42</span>, <span class="tok-number">0x94</span>,
+        <span class="tok-number">0xf8</span>, <span class="tok-number">0x68</span>, <span class="tok-number">0xe3</span>, <span class="tok-number">0xbe</span>, <span class="tok-number">0x39</span>, <span class="tok-number">0x84</span>, <span class="tok-number">0xf3</span>, <span class="tok-number">0xc1</span>,
+        <span class="tok-number">0xa1</span>, <span class="tok-number">0x3a</span>, <span class="tok-number">0x4d</span>, <span class="tok-number">0xb9</span>, <span class="tok-number">0xfa</span>, <span class="tok-number">0xbe</span>, <span class="tok-number">0x4a</span>, <span class="tok-number">0xcb</span>,
+    };
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, &amp;dk, &amp;want);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;argon2i&quot;</span> {
+    <span class="tok-kw">const</span> password = [_]<span class="tok-type">u8</span>{<span class="tok-number">0x01</span>} ** <span class="tok-number">32</span>;
+    <span class="tok-kw">const</span> salt = [_]<span class="tok-type">u8</span>{<span class="tok-number">0x02</span>} ** <span class="tok-number">16</span>;
+    <span class="tok-kw">const</span> secret = [_]<span class="tok-type">u8</span>{<span class="tok-number">0x03</span>} ** <span class="tok-number">8</span>;
+    <span class="tok-kw">const</span> ad = [_]<span class="tok-type">u8</span>{<span class="tok-number">0x04</span>} ** <span class="tok-number">12</span>;
+
+    <span class="tok-kw">var</span> dk: [<span class="tok-number">32</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">try</span> <a href="std.crypto.argon2.html#std.crypto.argon2.kdf">kdf</a>(
+        <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>,
+        &amp;dk,
+        &amp;password,
+        &amp;salt,
+        .{ .t = <span class="tok-number">3</span>, .m = <span class="tok-number">32</span>, .p = <span class="tok-number">4</span>, .secret = &amp;secret, .ad = &amp;ad },
+        .argon2i,
+    );
+
+    <span class="tok-kw">const</span> want = [_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0xc8</span>, <span class="tok-number">0x14</span>, <span class="tok-number">0xd9</span>, <span class="tok-number">0xd1</span>, <span class="tok-number">0xdc</span>, <span class="tok-number">0x7f</span>, <span class="tok-number">0x37</span>, <span class="tok-number">0xaa</span>,
+        <span class="tok-number">0x13</span>, <span class="tok-number">0xf0</span>, <span class="tok-number">0xd7</span>, <span class="tok-number">0x7f</span>, <span class="tok-number">0x24</span>, <span class="tok-number">0x94</span>, <span class="tok-number">0xbd</span>, <span class="tok-number">0xa1</span>,
+        <span class="tok-number">0xc8</span>, <span class="tok-number">0xde</span>, <span class="tok-number">0x6b</span>, <span class="tok-number">0x01</span>, <span class="tok-number">0x6d</span>, <span class="tok-number">0xd3</span>, <span class="tok-number">0x88</span>, <span class="tok-number">0xd2</span>,
+        <span class="tok-number">0x99</span>, <span class="tok-number">0x52</span>, <span class="tok-number">0xa4</span>, <span class="tok-number">0xc4</span>, <span class="tok-number">0x67</span>, <span class="tok-number">0x2b</span>, <span class="tok-number">0x6c</span>, <span class="tok-number">0xe8</span>,
+    };
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, &amp;dk, &amp;want);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;argon2id&quot;</span> {
+    <span class="tok-kw">const</span> password = [_]<span class="tok-type">u8</span>{<span class="tok-number">0x01</span>} ** <span class="tok-number">32</span>;
+    <span class="tok-kw">const</span> salt = [_]<span class="tok-type">u8</span>{<span class="tok-number">0x02</span>} ** <span class="tok-number">16</span>;
+    <span class="tok-kw">const</span> secret = [_]<span class="tok-type">u8</span>{<span class="tok-number">0x03</span>} ** <span class="tok-number">8</span>;
+    <span class="tok-kw">const</span> ad = [_]<span class="tok-type">u8</span>{<span class="tok-number">0x04</span>} ** <span class="tok-number">12</span>;
+
+    <span class="tok-kw">var</span> dk: [<span class="tok-number">32</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">try</span> <a href="std.crypto.argon2.html#std.crypto.argon2.kdf">kdf</a>(
+        <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>,
+        &amp;dk,
+        &amp;password,
+        &amp;salt,
+        .{ .t = <span class="tok-number">3</span>, .m = <span class="tok-number">32</span>, .p = <span class="tok-number">4</span>, .secret = &amp;secret, .ad = &amp;ad },
+        .argon2id,
+    );
+
+    <span class="tok-kw">const</span> want = [_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0x0d</span>, <span class="tok-number">0x64</span>, <span class="tok-number">0x0d</span>, <span class="tok-number">0xf5</span>, <span class="tok-number">0x8d</span>, <span class="tok-number">0x78</span>, <span class="tok-number">0x76</span>, <span class="tok-number">0x6c</span>,
+        <span class="tok-number">0x08</span>, <span class="tok-number">0xc0</span>, <span class="tok-number">0x37</span>, <span class="tok-number">0xa3</span>, <span class="tok-number">0x4a</span>, <span class="tok-number">0x8b</span>, <span class="tok-number">0x53</span>, <span class="tok-number">0xc9</span>,
+        <span class="tok-number">0xd0</span>, <span class="tok-number">0x1e</span>, <span class="tok-number">0xf0</span>, <span class="tok-number">0x45</span>, <span class="tok-number">0x2d</span>, <span class="tok-number">0x75</span>, <span class="tok-number">0xb6</span>, <span class="tok-number">0x5e</span>,
+        <span class="tok-number">0xb5</span>, <span class="tok-number">0x25</span>, <span class="tok-number">0x20</span>, <span class="tok-number">0xe9</span>, <span class="tok-number">0x6b</span>, <span class="tok-number">0x01</span>, <span class="tok-number">0xe6</span>, <span class="tok-number">0x59</span>,
+    };
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, &amp;dk, &amp;want);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;kdf&quot;</span> {
+    <span class="tok-kw">const</span> password = <span class="tok-str">&quot;password&quot;</span>;
+    <span class="tok-kw">const</span> salt = <span class="tok-str">&quot;somesalt&quot;</span>;
+
+    <span class="tok-kw">const</span> TestVector = <span class="tok-kw">struct</span> {
+        mode: <a href="std.crypto.argon2.Mode.html">Mode</a>,
+        time: <span class="tok-type">u32</span>,
+        memory: <span class="tok-type">u32</span>,
+        threads: <span class="tok-type">u8</span>,
+        hash: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    };
+    <span class="tok-kw">const</span> test_vectors = [_]TestVector{
+        .{
+            .mode = .argon2i,
+            .time = <span class="tok-number">1</span>,
+            .memory = <span class="tok-number">64</span>,
+            .threads = <span class="tok-number">1</span>,
+            .hash = <span class="tok-str">&quot;b9c401d1844a67d50eae3967dc28870b22e508092e861a37&quot;</span>,
+        },
+        .{
+            .mode = .argon2d,
+            .time = <span class="tok-number">1</span>,
+            .memory = <span class="tok-number">64</span>,
+            .threads = <span class="tok-number">1</span>,
+            .hash = <span class="tok-str">&quot;8727405fd07c32c78d64f547f24150d3f2e703a89f981a19&quot;</span>,
+        },
+        .{
+            .mode = .argon2id,
+            .time = <span class="tok-number">1</span>,
+            .memory = <span class="tok-number">64</span>,
+            .threads = <span class="tok-number">1</span>,
+            .hash = <span class="tok-str">&quot;655ad15eac652dc59f7170a7332bf49b8469be1fdb9c28bb&quot;</span>,
+        },
+        .{
+            .mode = .argon2i,
+            .time = <span class="tok-number">2</span>,
+            .memory = <span class="tok-number">64</span>,
+            .threads = <span class="tok-number">1</span>,
+            .hash = <span class="tok-str">&quot;8cf3d8f76a6617afe35fac48eb0b7433a9a670ca4a07ed64&quot;</span>,
+        },
+        .{
+            .mode = .argon2d,
+            .time = <span class="tok-number">2</span>,
+            .memory = <span class="tok-number">64</span>,
+            .threads = <span class="tok-number">1</span>,
+            .hash = <span class="tok-str">&quot;3be9ec79a69b75d3752acb59a1fbb8b295a46529c48fbb75&quot;</span>,
+        },
+        .{
+            .mode = .argon2id,
+            .time = <span class="tok-number">2</span>,
+            .memory = <span class="tok-number">64</span>,
+            .threads = <span class="tok-number">1</span>,
+            .hash = <span class="tok-str">&quot;068d62b26455936aa6ebe60060b0a65870dbfa3ddf8d41f7&quot;</span>,
+        },
+        .{
+            .mode = .argon2i,
+            .time = <span class="tok-number">2</span>,
+            .memory = <span class="tok-number">64</span>,
+            .threads = <span class="tok-number">2</span>,
+            .hash = <span class="tok-str">&quot;2089f3e78a799720f80af806553128f29b132cafe40d059f&quot;</span>,
+        },
+        .{
+            .mode = .argon2d,
+            .time = <span class="tok-number">2</span>,
+            .memory = <span class="tok-number">64</span>,
+            .threads = <span class="tok-number">2</span>,
+            .hash = <span class="tok-str">&quot;68e2462c98b8bc6bb60ec68db418ae2c9ed24fc6748a40e9&quot;</span>,
+        },
+        .{
+            .mode = .argon2id,
+            .time = <span class="tok-number">2</span>,
+            .memory = <span class="tok-number">64</span>,
+            .threads = <span class="tok-number">2</span>,
+            .hash = <span class="tok-str">&quot;350ac37222f436ccb5c0972f1ebd3bf6b958bf2071841362&quot;</span>,
+        },
+        .{
+            .mode = .argon2i,
+            .time = <span class="tok-number">3</span>,
+            .memory = <span class="tok-number">256</span>,
+            .threads = <span class="tok-number">2</span>,
+            .hash = <span class="tok-str">&quot;f5bbf5d4c3836af13193053155b73ec7476a6a2eb93fd5e6&quot;</span>,
+        },
+        .{
+            .mode = .argon2d,
+            .time = <span class="tok-number">3</span>,
+            .memory = <span class="tok-number">256</span>,
+            .threads = <span class="tok-number">2</span>,
+            .hash = <span class="tok-str">&quot;f4f0669218eaf3641f39cc97efb915721102f4b128211ef2&quot;</span>,
+        },
+        .{
+            .mode = .argon2id,
+            .time = <span class="tok-number">3</span>,
+            .memory = <span class="tok-number">256</span>,
+            .threads = <span class="tok-number">2</span>,
+            .hash = <span class="tok-str">&quot;4668d30ac4187e6878eedeacf0fd83c5a0a30db2cc16ef0b&quot;</span>,
+        },
+        .{
+            .mode = .argon2i,
+            .time = <span class="tok-number">4</span>,
+            .memory = <span class="tok-number">4096</span>,
+            .threads = <span class="tok-number">4</span>,
+            .hash = <span class="tok-str">&quot;a11f7b7f3f93f02ad4bddb59ab62d121e278369288a0d0e7&quot;</span>,
+        },
+        .{
+            .mode = .argon2d,
+            .time = <span class="tok-number">4</span>,
+            .memory = <span class="tok-number">4096</span>,
+            .threads = <span class="tok-number">4</span>,
+            .hash = <span class="tok-str">&quot;935598181aa8dc2b720914aa6435ac8d3e3a4210c5b0fb2d&quot;</span>,
+        },
+        .{
+            .mode = .argon2id,
+            .time = <span class="tok-number">4</span>,
+            .memory = <span class="tok-number">4096</span>,
+            .threads = <span class="tok-number">4</span>,
+            .hash = <span class="tok-str">&quot;145db9733a9f4ee43edf33c509be96b934d505a4efb33c5a&quot;</span>,
+        },
+        .{
+            .mode = .argon2i,
+            .time = <span class="tok-number">4</span>,
+            .memory = <span class="tok-number">1024</span>,
+            .threads = <span class="tok-number">8</span>,
+            .hash = <span class="tok-str">&quot;0cdd3956aa35e6b475a7b0c63488822f774f15b43f6e6e17&quot;</span>,
+        },
+        .{
+            .mode = .argon2d,
+            .time = <span class="tok-number">4</span>,
+            .memory = <span class="tok-number">1024</span>,
+            .threads = <span class="tok-number">8</span>,
+            .hash = <span class="tok-str">&quot;83604fc2ad0589b9d055578f4d3cc55bc616df3578a896e9&quot;</span>,
+        },
+        .{
+            .mode = .argon2id,
+            .time = <span class="tok-number">4</span>,
+            .memory = <span class="tok-number">1024</span>,
+            .threads = <span class="tok-number">8</span>,
+            .hash = <span class="tok-str">&quot;8dafa8e004f8ea96bf7c0f93eecf67a6047476143d15577f&quot;</span>,
+        },
+        .{
+            .mode = .argon2i,
+            .time = <span class="tok-number">2</span>,
+            .memory = <span class="tok-number">64</span>,
+            .threads = <span class="tok-number">3</span>,
+            .hash = <span class="tok-str">&quot;5cab452fe6b8479c8661def8cd703b611a3905a6d5477fe6&quot;</span>,
+        },
+        .{
+            .mode = .argon2d,
+            .time = <span class="tok-number">2</span>,
+            .memory = <span class="tok-number">64</span>,
+            .threads = <span class="tok-number">3</span>,
+            .hash = <span class="tok-str">&quot;22474a423bda2ccd36ec9afd5119e5c8949798cadf659f51&quot;</span>,
+        },
+        .{
+            .mode = .argon2id,
+            .time = <span class="tok-number">2</span>,
+            .memory = <span class="tok-number">64</span>,
+            .threads = <span class="tok-number">3</span>,
+            .hash = <span class="tok-str">&quot;4a15b31aec7c2590b87d1f520be7d96f56658172deaa3079&quot;</span>,
+        },
+        .{
+            .mode = .argon2i,
+            .time = <span class="tok-number">3</span>,
+            .memory = <span class="tok-number">1024</span>,
+            .threads = <span class="tok-number">6</span>,
+            .hash = <span class="tok-str">&quot;d236b29c2b2a09babee842b0dec6aa1e83ccbdea8023dced&quot;</span>,
+        },
+        .{
+            .mode = .argon2d,
+            .time = <span class="tok-number">3</span>,
+            .memory = <span class="tok-number">1024</span>,
+            .threads = <span class="tok-number">6</span>,
+            .hash = <span class="tok-str">&quot;a3351b0319a53229152023d9206902f4ef59661cdca89481&quot;</span>,
+        },
+        .{
+            .mode = .argon2id,
+            .time = <span class="tok-number">3</span>,
+            .memory = <span class="tok-number">1024</span>,
+            .threads = <span class="tok-number">6</span>,
+            .hash = <span class="tok-str">&quot;1640b932f4b60e272f5d2207b9a9c626ffa1bd88d2349016&quot;</span>,
+        },
+    };
+    <span class="tok-kw">for</span> (test_vectors) |v| {
+        <span class="tok-kw">var</span> want: [<span class="tok-number">24</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        _ = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.hexToBytes">hexToBytes</a>(&amp;want, v.hash);
+
+        <span class="tok-kw">var</span> dk: [<span class="tok-number">24</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">try</span> <a href="std.crypto.argon2.html#std.crypto.argon2.kdf">kdf</a>(
+            <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>,
+            &amp;dk,
+            password,
+            salt,
+            .{ .t = v.time, .m = v.memory, .p = v.threads },
+            v.mode,
+        );
+
+        <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, &amp;dk, &amp;want);
+    }
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;phc format hasher&quot;</span> {
+    <span class="tok-kw">const</span> allocator = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>;
+    <span class="tok-kw">const</span> password = <span class="tok-str">&quot;testpass&quot;</span>;
+
+    <span class="tok-kw">var</span> buf: [<span class="tok-number">128</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">const</span> hash = <span class="tok-kw">try</span> <a href="std.crypto.argon2.PhcFormatHasher.html">PhcFormatHasher</a>.<a href="std.crypto.argon2.PhcFormatHasher.html#std.crypto.argon2.PhcFormatHasher.create">create</a>(
+        allocator,
+        password,
+        .{ .t = <span class="tok-number">3</span>, .m = <span class="tok-number">32</span>, .p = <span class="tok-number">4</span> },
+        .argon2id,
+        &amp;buf,
+    );
+    <span class="tok-kw">try</span> <a href="std.crypto.argon2.PhcFormatHasher.html">PhcFormatHasher</a>.<a href="std.crypto.argon2.PhcFormatHasher.html#std.crypto.argon2.PhcFormatHasher.verify">verify</a>(allocator, hash, password);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;password hash and password verify&quot;</span> {
+    <span class="tok-kw">const</span> allocator = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>;
+    <span class="tok-kw">const</span> password = <span class="tok-str">&quot;testpass&quot;</span>;
+
+    <span class="tok-kw">var</span> buf: [<span class="tok-number">128</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">const</span> hash = <span class="tok-kw">try</span> <a href="std.crypto.argon2.html#std.crypto.argon2.strHash">strHash</a>(
+        password,
+        .{ .allocator = allocator, .params = .{ .t = <span class="tok-number">3</span>, .m = <span class="tok-number">32</span>, .p = <span class="tok-number">4</span> } },
+        &amp;buf,
+    );
+    <span class="tok-kw">try</span> <a href="std.crypto.argon2.html#std.crypto.argon2.strVerify">strVerify</a>(hash, password, .{ .allocator = allocator });
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;kdf derived key length&quot;</span> {
+    <span class="tok-kw">const</span> allocator = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>;
+
+    <span class="tok-kw">const</span> password = <span class="tok-str">&quot;testpass&quot;</span>;
+    <span class="tok-kw">const</span> salt = <span class="tok-str">&quot;saltsalt&quot;</span>;
+    <span class="tok-kw">const</span> params = <a href="std.crypto.argon2.Params.html">Params</a>{ .t = <span class="tok-number">3</span>, .m = <span class="tok-number">32</span>, .p = <span class="tok-number">4</span> };
+    <span class="tok-kw">const</span> mode = <a href="std.crypto.argon2.Mode.html">Mode</a>.<a href="#">argon2id</a>;
+
+    <span class="tok-kw">var</span> dk1: [<span class="tok-number">11</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">try</span> <a href="std.crypto.argon2.html#std.crypto.argon2.kdf">kdf</a>(allocator, &amp;dk1, password, salt, params, mode);
+
+    <span class="tok-kw">var</span> dk2: [<span class="tok-number">77</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">try</span> <a href="std.crypto.argon2.html#std.crypto.argon2.kdf">kdf</a>(allocator, &amp;dk2, password, salt, params, mode);
+
+    <span class="tok-kw">var</span> dk3: [<span class="tok-number">111</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">try</span> <a href="std.crypto.argon2.html#std.crypto.argon2.kdf">kdf</a>(allocator, &amp;dk3, password, salt, params, mode);
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

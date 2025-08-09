@@ -1,0 +1,1422 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">compress</a></li><li><a href="std.compress.html" class="">flate</a></li><li><a href="std.compress.flate.inflate.html" class="active">inflate</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.compress.flate.inflate" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.compress.flate.inflate</span><a href="#src.zig-std.compress.flate.inflate">[src]</a></h1><div class="sectTypes"><h2 class="sectionHeader">Types</h2><div class="listTypes"><div class="decl"><h2 id="std.compress.flate.inflate.Decompressor" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">Decompressor</span><a href="#src.zig-std.compress.flate.inflate.Decompressor">[src]</a></h2><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>container: <a href="std.compress.flate.container.Container.html">Container</a></code></pre></div><div><pre><code>ReaderType: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectTypes"><h3 class="sectionHeader">Types</h3><div class="listTypes"><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.Reader" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">Reader</span><a href="#src.zig-std.compress.flate.inflate.Inflate.Reader">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.Reader">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Reader = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.html#std.io.GenericReader">Reader</a>(*<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>, <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.read">read</a>)</code></pre></details></div></div></div></div><div class="sectFields"><h3 class="sectionHeader">Fields</h3><div class="listFields"><div><pre><code>bits: BitReaderType = .{}</code></pre></div><div><pre><code>hist: <a href="std.compress.flate.CircularBuffer.html">CircularBuffer</a> = .{}</code></pre></div><div><pre><code>hasher: container.Hasher() = .{}</code></pre></div><div><pre><code>lit_dec: <a href="std.compress.flate.huffman_decoder.html">hfd</a>.<a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.LiteralDecoder">LiteralDecoder</a> = .{}</code></pre></div><div><pre><code>dst_dec: <a href="std.compress.flate.huffman_decoder.html">hfd</a>.<a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.DistanceDecoder">DistanceDecoder</a> = .{}</code></pre></div><div><pre><code>bfinal: <span class="tok-type">u1</span> = <span class="tok-number">0</span></code></pre></div><div><pre><code>block_type: <span class="tok-type">u2</span> = <span class="tok-number">0b11</span></code></pre></div><div><pre><code>state: <a href="std.compress.flate.inflate.Inflate.ReadState.html">ReadState</a> = .protocol_header</code></pre></div></div></div><div class="sectErrSets"><h3 class="sectionHeader">Error Sets</h3><div class="listErrSets"><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.Error" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">Error</span><a href="#src.zig-std.compress.flate.inflate.Inflate.Error">[src]</a></h3><div class="sectFnErrors"><h4 class="sectionHeader">Errors</h4><div class="fnErrorsAnyError"><p><span class="tok-type">anyerror</span> means the error set is known only at runtime.</p></div><div class="tableFnErrors"><dl class="listFnErrors"><div><dt>BadGzipHeader <a href="std.compress.flate.container.Container.html#std.compress.flate.container.Container.Error">Error</a></dt></div><div><dt>BadZlibHeader <a href="std.compress.flate.container.Container.html#std.compress.flate.container.Container.Error">Error</a></dt></div><div><dt>IncompleteHuffmanTree <a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.Error">Error</a></dt></div><div><dt>InvalidBlockType</dt></div><div><dt>InvalidCode <a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.Error">Error</a></dt></div><div><dt>InvalidDynamicBlockHeader</dt></div><div><dt>InvalidMatch</dt></div><div><dt>MissingEndOfBlockCode <a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.Error">Error</a></dt></div><div><dt>OversubscribedHuffmanTree <a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.Error">Error</a></dt></div><div><dt>WrongGzipChecksum <a href="std.compress.flate.container.Container.html#std.compress.flate.container.Container.Error">Error</a></dt></div><div><dt>WrongGzipSize <a href="std.compress.flate.container.Container.html#std.compress.flate.container.Container.Error">Error</a></dt></div><div><dt>WrongStoredBlockNlen</dt></div><div><dt>WrongZlibChecksum <a href="std.compress.flate.container.Container.html#std.compress.flate.container.Container.Error">Error</a></dt></div></dl></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.Error">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = BitReaderType.Error || <a href="std.compress.flate.container.Container.html">Container</a>.<a href="std.compress.flate.container.Container.html#std.compress.flate.container.Container.Error">Error</a> || <a href="std.compress.flate.huffman_decoder.html">hfd</a>.<a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.Error">Error</a> || <span class="tok-kw">error</span>{
+    InvalidCode,
+    InvalidMatch,
+    InvalidBlockType,
+    WrongStoredBlockNlen,
+    InvalidDynamicBlockHeader,
+}</code></pre></details></div></div></div></div><div class="sectFns"><h3 class="sectionHeader">Functions</h3><div class="listFns"><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.compress.flate.inflate.Inflate.init">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(rt: ReaderType) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>rt: ReaderType</code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.init">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(rt: ReaderType) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a> {
+    <span class="tok-kw">return</span> .{ .bits = BitReaderType.init(rt) };
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.setReader" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">setReader</span><a href="#src.zig-std.compress.flate.inflate.Inflate.setReader">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setReader</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, new_reader: ReaderType) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Replaces the inner reader with new reader.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a></code></pre></div><div><pre><code>new_reader: ReaderType</code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.setReader">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setReader</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, new_reader: ReaderType) <span class="tok-type">void</span> {
+    self.bits.forward_reader = new_reader;
+    <span class="tok-kw">if</span> (self.state == .end <span class="tok-kw">or</span> self.state == .protocol_footer) {
+        self.state = .protocol_header;
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.decompress" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">decompress</span><a href="#src.zig-std.compress.flate.inflate.Inflate.decompress">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompress</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, writer: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.decompress">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompress</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, writer: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">while</span> (<span class="tok-kw">try</span> self.next()) |buf| {
+        <span class="tok-kw">try</span> writer.writeAll(buf);
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.unreadBytes" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">unreadBytes</span><a href="#src.zig-std.compress.flate.inflate.Inflate.unreadBytes">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">unreadBytes</span>(self: <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) <span class="tok-type">usize</span></code></pre></div><div class="tldDocs"><p>Returns the number of bytes that have been read from the internal
+reader but not yet consumed by the decompressor.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.unreadBytes">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">unreadBytes</span>(self: <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) <span class="tok-type">usize</span> {<span class="tok-comment">
+    // There can be no error here: the denominator is not zero, and
+    // overflow is not possible since the type is unsigned.
+    </span><span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.divCeil">divCeil</a>(<span class="tok-type">usize</span>, self.bits.nbits, <span class="tok-number">8</span>) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.next" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">next</span><a href="#src.zig-std.compress.flate.inflate.Inflate.next">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">next</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>!?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>Can be used in iterator like loop without memcpy to another buffer:
+while (try inflate.next()) |buf| { ... }</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.next">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">next</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>!?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">const</span> out = <span class="tok-kw">try</span> self.get(<span class="tok-number">0</span>);
+    <span class="tok-kw">if</span> (out.len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+    <span class="tok-kw">return</span> out;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.get" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">get</span><a href="#src.zig-std.compress.flate.inflate.Inflate.get">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, limit: <span class="tok-type">usize</span>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>![]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>Returns decompressed data from internal sliding window buffer.
+Returned buffer can be any length between 0 and <code>limit</code> bytes. 0
+returned bytes means end of stream reached. With limit=0 returns as
+much data it can. It newer will be more than 65536 bytes, which is
+size of internal buffer.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a></code></pre></div><div><pre><code>limit: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.get">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, limit: <span class="tok-type">usize</span>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+        <span class="tok-kw">const</span> out = self.hist.readAtMost(limit);
+        <span class="tok-kw">if</span> (out.len &gt; <span class="tok-number">0</span>) {
+            self.hasher.update(out);
+            <span class="tok-kw">return</span> out;
+        }
+        <span class="tok-kw">if</span> (self.state == .end) <span class="tok-kw">return</span> out;
+        <span class="tok-kw">try</span> self.step();
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.read" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">read</span><a href="#src.zig-std.compress.flate.inflate.Inflate.read">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">read</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, buffer: []<span class="tok-type">u8</span>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>!<span class="tok-type">usize</span></code></pre></div><div class="tldDocs"><p>Returns the number of bytes read. It may be less than buffer.len.
+If the number of bytes read is 0, it means end of stream.
+End of stream is not an error condition.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a></code></pre></div><div><pre><code>buffer: []<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.read">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">read</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, buffer: []<span class="tok-type">u8</span>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>!<span class="tok-type">usize</span> {
+    <span class="tok-kw">if</span> (buffer.len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> out = <span class="tok-kw">try</span> self.get(buffer.len);
+    <span class="tok-builtin">@memcpy</span>(buffer[<span class="tok-number">0</span>..out.len], out);
+    <span class="tok-kw">return</span> out.len;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.reader" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">reader</span><a href="#src.zig-std.compress.flate.inflate.Inflate.reader">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">reader</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Reader">Reader</a></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.reader">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">reader</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Reader">Reader</a> {
+    <span class="tok-kw">return</span> .{ .context = self };
+}</code></pre></details></div></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Decompressor">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">Decompressor</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, <span class="tok-kw">comptime</span> ReaderType: <span class="tok-type">type</span>) <span class="tok-type">type</span> {<span class="tok-comment">
+    // zlib has 4 bytes footer, lookahead of 4 bytes ensures that we will not overshoot.
+    // gzip has 8 bytes footer so we will not overshoot even with 8 bytes of lookahead.
+    // For raw deflate there is always possibility of overshot so we use 8 bytes lookahead.
+    </span><span class="tok-kw">const</span> lookahead: <span class="tok-type">type</span> = <span class="tok-kw">if</span> (container == .zlib) <span class="tok-type">u32</span> <span class="tok-kw">else</span> <span class="tok-type">u64</span>;
+    <span class="tok-kw">return</span> <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Inflate</a>(container, lookahead, ReaderType);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.compress.flate.inflate.Inflate" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">Inflate</span><a href="#src.zig-std.compress.flate.inflate.Inflate">[src]</a></h2><div class="tldDocs"><p>Inflate decompresses deflate bit stream. Reads compressed data from reader
+provided in init. Decompressed data are stored in internal hist buffer and
+can be accesses iterable <code>next</code> or reader interface.</p>
+<p>Container defines header/footer wrapper around deflate bit stream. Can be
+gzip or zlib.</p>
+<p>Deflate bit stream consists of multiple blocks. Block can be one of three types:</p>
+<ul>
+<li>stored, non compressed, max 64k in size</li>
+<li>fixed, huffman codes are predefined</li>
+<li>dynamic, huffman code tables are encoded at the block start</li>
+</ul>
+<p><code>step</code> function runs decoder until internal <code>hist</code> buffer is full. Client
+than needs to read that data in order to proceed with decoding.</p>
+<p>Allocates 74.5K of internal buffers, most important are:</p>
+<ul>
+<li>64K for history (CircularBuffer)</li>
+<li>~10K huffman decoders (Literal and DistanceDecoder)</li>
+</ul>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>container: <a href="std.compress.flate.container.Container.html">Container</a></code></pre></div><div><pre><code>LookaheadType: <span class="tok-type">type</span></code></pre></div><div><pre><code>ReaderType: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectTypes"><h3 class="sectionHeader">Types</h3><div class="listTypes"><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.Reader" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">Reader</span><a href="#src.zig-std.compress.flate.inflate.Inflate.Reader">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.Reader">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Reader = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.html#std.io.GenericReader">Reader</a>(*<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>, <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.read">read</a>)</code></pre></details></div></div></div></div><div class="sectFields"><h3 class="sectionHeader">Fields</h3><div class="listFields"><div><pre><code>bits: BitReaderType = .{}</code></pre></div><div><pre><code>hist: <a href="std.compress.flate.CircularBuffer.html">CircularBuffer</a> = .{}</code></pre></div><div><pre><code>hasher: container.Hasher() = .{}</code></pre></div><div><pre><code>lit_dec: <a href="std.compress.flate.huffman_decoder.html">hfd</a>.<a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.LiteralDecoder">LiteralDecoder</a> = .{}</code></pre></div><div><pre><code>dst_dec: <a href="std.compress.flate.huffman_decoder.html">hfd</a>.<a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.DistanceDecoder">DistanceDecoder</a> = .{}</code></pre></div><div><pre><code>bfinal: <span class="tok-type">u1</span> = <span class="tok-number">0</span></code></pre></div><div><pre><code>block_type: <span class="tok-type">u2</span> = <span class="tok-number">0b11</span></code></pre></div><div><pre><code>state: <a href="std.compress.flate.inflate.Inflate.ReadState.html">ReadState</a> = .protocol_header</code></pre></div></div></div><div class="sectErrSets"><h3 class="sectionHeader">Error Sets</h3><div class="listErrSets"><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.Error" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">Error</span><a href="#src.zig-std.compress.flate.inflate.Inflate.Error">[src]</a></h3><div class="sectFnErrors"><h4 class="sectionHeader">Errors</h4><div class="fnErrorsAnyError"><p><span class="tok-type">anyerror</span> means the error set is known only at runtime.</p></div><div class="tableFnErrors"><dl class="listFnErrors"><div><dt>BadGzipHeader <a href="std.compress.flate.container.Container.html#std.compress.flate.container.Container.Error">Error</a></dt></div><div><dt>BadZlibHeader <a href="std.compress.flate.container.Container.html#std.compress.flate.container.Container.Error">Error</a></dt></div><div><dt>IncompleteHuffmanTree <a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.Error">Error</a></dt></div><div><dt>InvalidBlockType</dt></div><div><dt>InvalidCode <a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.Error">Error</a></dt></div><div><dt>InvalidDynamicBlockHeader</dt></div><div><dt>InvalidMatch</dt></div><div><dt>MissingEndOfBlockCode <a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.Error">Error</a></dt></div><div><dt>OversubscribedHuffmanTree <a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.Error">Error</a></dt></div><div><dt>WrongGzipChecksum <a href="std.compress.flate.container.Container.html#std.compress.flate.container.Container.Error">Error</a></dt></div><div><dt>WrongGzipSize <a href="std.compress.flate.container.Container.html#std.compress.flate.container.Container.Error">Error</a></dt></div><div><dt>WrongStoredBlockNlen</dt></div><div><dt>WrongZlibChecksum <a href="std.compress.flate.container.Container.html#std.compress.flate.container.Container.Error">Error</a></dt></div></dl></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.Error">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = BitReaderType.Error || <a href="std.compress.flate.container.Container.html">Container</a>.<a href="std.compress.flate.container.Container.html#std.compress.flate.container.Container.Error">Error</a> || <a href="std.compress.flate.huffman_decoder.html">hfd</a>.<a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.Error">Error</a> || <span class="tok-kw">error</span>{
+    InvalidCode,
+    InvalidMatch,
+    InvalidBlockType,
+    WrongStoredBlockNlen,
+    InvalidDynamicBlockHeader,
+}</code></pre></details></div></div></div></div><div class="sectFns"><h3 class="sectionHeader">Functions</h3><div class="listFns"><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.compress.flate.inflate.Inflate.init">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(rt: ReaderType) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>rt: ReaderType</code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.init">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(rt: ReaderType) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a> {
+    <span class="tok-kw">return</span> .{ .bits = BitReaderType.init(rt) };
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.setReader" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">setReader</span><a href="#src.zig-std.compress.flate.inflate.Inflate.setReader">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setReader</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, new_reader: ReaderType) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Replaces the inner reader with new reader.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a></code></pre></div><div><pre><code>new_reader: ReaderType</code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.setReader">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setReader</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, new_reader: ReaderType) <span class="tok-type">void</span> {
+    self.bits.forward_reader = new_reader;
+    <span class="tok-kw">if</span> (self.state == .end <span class="tok-kw">or</span> self.state == .protocol_footer) {
+        self.state = .protocol_header;
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.decompress" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">decompress</span><a href="#src.zig-std.compress.flate.inflate.Inflate.decompress">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompress</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, writer: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.decompress">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompress</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, writer: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">while</span> (<span class="tok-kw">try</span> self.next()) |buf| {
+        <span class="tok-kw">try</span> writer.writeAll(buf);
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.unreadBytes" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">unreadBytes</span><a href="#src.zig-std.compress.flate.inflate.Inflate.unreadBytes">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">unreadBytes</span>(self: <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) <span class="tok-type">usize</span></code></pre></div><div class="tldDocs"><p>Returns the number of bytes that have been read from the internal
+reader but not yet consumed by the decompressor.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.unreadBytes">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">unreadBytes</span>(self: <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) <span class="tok-type">usize</span> {<span class="tok-comment">
+    // There can be no error here: the denominator is not zero, and
+    // overflow is not possible since the type is unsigned.
+    </span><span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.divCeil">divCeil</a>(<span class="tok-type">usize</span>, self.bits.nbits, <span class="tok-number">8</span>) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.next" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">next</span><a href="#src.zig-std.compress.flate.inflate.Inflate.next">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">next</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>!?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>Can be used in iterator like loop without memcpy to another buffer:
+while (try inflate.next()) |buf| { ... }</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.next">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">next</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>!?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">const</span> out = <span class="tok-kw">try</span> self.get(<span class="tok-number">0</span>);
+    <span class="tok-kw">if</span> (out.len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+    <span class="tok-kw">return</span> out;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.get" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">get</span><a href="#src.zig-std.compress.flate.inflate.Inflate.get">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, limit: <span class="tok-type">usize</span>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>![]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>Returns decompressed data from internal sliding window buffer.
+Returned buffer can be any length between 0 and <code>limit</code> bytes. 0
+returned bytes means end of stream reached. With limit=0 returns as
+much data it can. It newer will be more than 65536 bytes, which is
+size of internal buffer.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a></code></pre></div><div><pre><code>limit: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.get">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, limit: <span class="tok-type">usize</span>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+        <span class="tok-kw">const</span> out = self.hist.readAtMost(limit);
+        <span class="tok-kw">if</span> (out.len &gt; <span class="tok-number">0</span>) {
+            self.hasher.update(out);
+            <span class="tok-kw">return</span> out;
+        }
+        <span class="tok-kw">if</span> (self.state == .end) <span class="tok-kw">return</span> out;
+        <span class="tok-kw">try</span> self.step();
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.read" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">read</span><a href="#src.zig-std.compress.flate.inflate.Inflate.read">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">read</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, buffer: []<span class="tok-type">u8</span>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>!<span class="tok-type">usize</span></code></pre></div><div class="tldDocs"><p>Returns the number of bytes read. It may be less than buffer.len.
+If the number of bytes read is 0, it means end of stream.
+End of stream is not an error condition.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a></code></pre></div><div><pre><code>buffer: []<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.read">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">read</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, buffer: []<span class="tok-type">u8</span>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>!<span class="tok-type">usize</span> {
+    <span class="tok-kw">if</span> (buffer.len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> out = <span class="tok-kw">try</span> self.get(buffer.len);
+    <span class="tok-builtin">@memcpy</span>(buffer[<span class="tok-number">0</span>..out.len], out);
+    <span class="tok-kw">return</span> out.len;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.compress.flate.inflate.Inflate.reader" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">reader</span><a href="#src.zig-std.compress.flate.inflate.Inflate.reader">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">reader</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Reader">Reader</a></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate.reader">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">reader</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Reader">Reader</a> {
+    <span class="tok-kw">return</span> .{ .context = self };
+}</code></pre></details></div></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.flate.inflate.Inflate">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">Inflate</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, <span class="tok-kw">comptime</span> LookaheadType: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> ReaderType: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <a href="std.debug.html#std.debug.assert">assert</a>(LookaheadType == <span class="tok-type">u32</span> <span class="tok-kw">or</span> LookaheadType == <span class="tok-type">u64</span>);
+    <span class="tok-kw">const</span> BitReaderType = <a href="std.compress.flate.bit_reader.html#std.compress.flate.bit_reader.BitReader">BitReader</a>(LookaheadType, ReaderType);
+
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {<span class="tok-comment">
+        //const BitReaderType = BitReader(ReaderType);
+        </span><span class="tok-kw">const</span> F = BitReaderType.flag;
+
+        bits: BitReaderType = .{},
+        hist: <a href="std.compress.flate.CircularBuffer.html">CircularBuffer</a> = .{},<span class="tok-comment">
+        // Hashes, produces checkusm, of uncompressed data for gzip/zlib footer.
+        </span>hasher: container.Hasher() = .{},<span class="tok-comment">
+
+        // dynamic block huffman code decoders
+        </span>lit_dec: <a href="std.compress.flate.huffman_decoder.html">hfd</a>.<a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.LiteralDecoder">LiteralDecoder</a> = .{},<span class="tok-comment"> // literals
+        </span>dst_dec: <a href="std.compress.flate.huffman_decoder.html">hfd</a>.<a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.DistanceDecoder">DistanceDecoder</a> = .{},<span class="tok-comment"> // distances
+
+        // current read state
+        </span>bfinal: <span class="tok-type">u1</span> = <span class="tok-number">0</span>,
+        block_type: <span class="tok-type">u2</span> = <span class="tok-number">0b11</span>,
+        state: <a href="std.compress.flate.inflate.Inflate.ReadState.html">ReadState</a> = .protocol_header,
+
+        <span class="tok-kw">const</span> ReadState = <span class="tok-kw">enum</span> {
+            protocol_header,
+            block_header,
+            block,
+            protocol_footer,
+            end,
+        };
+
+        <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = BitReaderType.Error || <a href="std.compress.flate.container.Container.html">Container</a>.<a href="std.compress.flate.container.Container.html#std.compress.flate.container.Container.Error">Error</a> || <a href="std.compress.flate.huffman_decoder.html">hfd</a>.<a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.Error">Error</a> || <span class="tok-kw">error</span>{
+            InvalidCode,
+            InvalidMatch,
+            InvalidBlockType,
+            WrongStoredBlockNlen,
+            InvalidDynamicBlockHeader,
+        };
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(rt: ReaderType) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a> {
+            <span class="tok-kw">return</span> .{ .bits = BitReaderType.init(rt) };
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">blockHeader</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) !<span class="tok-type">void</span> {
+            self.bfinal = <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u1</span>);
+            self.block_type = <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u2</span>);
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">storedBlock</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) !<span class="tok-type">bool</span> {
+            self.bits.alignToByte();<span class="tok-comment"> // skip padding until byte boundary
+            // everything after this is byte aligned in stored block
+            </span><span class="tok-kw">var</span> len = <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u16</span>);
+            <span class="tok-kw">const</span> nlen = <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u16</span>);
+            <span class="tok-kw">if</span> (len != ~nlen) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.WrongStoredBlockNlen;
+
+            <span class="tok-kw">while</span> (len &gt; <span class="tok-number">0</span>) {
+                <span class="tok-kw">const</span> buf = self.hist.getWritable(len);
+                <span class="tok-kw">try</span> self.bits.readAll(buf);
+                len -= <span class="tok-builtin">@intCast</span>(buf.len);
+            }
+            <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">fixedBlock</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) !<span class="tok-type">bool</span> {
+            <span class="tok-kw">while</span> (!self.hist.full()) {
+                <span class="tok-kw">const</span> code = <span class="tok-kw">try</span> self.bits.readFixedCode();
+                <span class="tok-kw">switch</span> (code) {
+                    <span class="tok-number">0</span>...<span class="tok-number">255</span> =&gt; self.hist.write(<span class="tok-builtin">@intCast</span>(code)),
+                    <span class="tok-number">256</span> =&gt; <span class="tok-kw">return</span> <span class="tok-null">true</span>,<span class="tok-comment"> // end of block
+                    </span><span class="tok-number">257</span>...<span class="tok-number">285</span> =&gt; <span class="tok-kw">try</span> self.fixedDistanceCode(<span class="tok-builtin">@intCast</span>(code - <span class="tok-number">257</span>)),
+                    <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidCode,
+                }
+            }
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        }<span class="tok-comment">
+
+        // Handles fixed block non literal (length) code.
+        // Length code is followed by 5 bits of distance code.
+        </span><span class="tok-kw">fn</span> <span class="tok-fn">fixedDistanceCode</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, code: <span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">try</span> self.bits.fill(<span class="tok-number">5</span> + <span class="tok-number">5</span> + <span class="tok-number">13</span>);
+            <span class="tok-kw">const</span> length = <span class="tok-kw">try</span> self.decodeLength(code);
+            <span class="tok-kw">const</span> distance = <span class="tok-kw">try</span> self.decodeDistance(<span class="tok-kw">try</span> self.bits.readF(<span class="tok-type">u5</span>, <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.F">F</a>.<a href="#">buffered</a> | <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.F">F</a>.<a href="#">reverse</a>));
+            <span class="tok-kw">try</span> self.hist.writeMatch(length, distance);
+        }
+
+        <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeLength</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, code: <span class="tok-type">u8</span>) !<span class="tok-type">u16</span> {
+            <span class="tok-kw">if</span> (code &gt; <span class="tok-number">28</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidCode;
+            <span class="tok-kw">const</span> ml = <a href="std.compress.flate.Token.html">Token</a>.<a href="std.compress.flate.Token.html#std.compress.flate.Token.matchLength">matchLength</a>(code);
+            <span class="tok-kw">return</span> <span class="tok-kw">if</span> (ml.extra_bits == <span class="tok-number">0</span>)<span class="tok-comment"> // 0 - 5 extra bits
+                </span>ml.base
+            <span class="tok-kw">else</span>
+                ml.base + <span class="tok-kw">try</span> self.bits.readN(ml.extra_bits, <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.F">F</a>.<a href="#">buffered</a>);
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">decodeDistance</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, code: <span class="tok-type">u8</span>) !<span class="tok-type">u16</span> {
+            <span class="tok-kw">if</span> (code &gt; <span class="tok-number">29</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidCode;
+            <span class="tok-kw">const</span> md = <a href="std.compress.flate.Token.html">Token</a>.<a href="std.compress.flate.Token.html#std.compress.flate.Token.matchDistance">matchDistance</a>(code);
+            <span class="tok-kw">return</span> <span class="tok-kw">if</span> (md.extra_bits == <span class="tok-number">0</span>)<span class="tok-comment"> // 0 - 13 extra bits
+                </span>md.base
+            <span class="tok-kw">else</span>
+                md.base + <span class="tok-kw">try</span> self.bits.readN(md.extra_bits, <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.F">F</a>.<a href="#">buffered</a>);
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">dynamicBlockHeader</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">const</span> hlit: <span class="tok-type">u16</span> = <span class="tok-builtin">@as</span>(<span class="tok-type">u16</span>, <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u5</span>)) + <span class="tok-number">257</span>;<span class="tok-comment"> // number of ll code entries present - 257
+            </span><span class="tok-kw">const</span> hdist: <span class="tok-type">u16</span> = <span class="tok-builtin">@as</span>(<span class="tok-type">u16</span>, <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u5</span>)) + <span class="tok-number">1</span>;<span class="tok-comment"> // number of distance code entries - 1
+            </span><span class="tok-kw">const</span> hclen: <span class="tok-type">u8</span> = <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u4</span>)) + <span class="tok-number">4</span>;<span class="tok-comment"> // hclen + 4 code lengths are encoded
+
+            </span><span class="tok-kw">if</span> (hlit &gt; <span class="tok-number">286</span> <span class="tok-kw">or</span> hdist &gt; <span class="tok-number">30</span>)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDynamicBlockHeader;<span class="tok-comment">
+
+            // lengths for code lengths
+            </span><span class="tok-kw">var</span> cl_lens = [_]<span class="tok-type">u4</span>{<span class="tok-number">0</span>} ** <span class="tok-number">19</span>;
+            <span class="tok-kw">for</span> (<span class="tok-number">0</span>..hclen) |i| {
+                cl_lens[<a href="std.compress.flate.consts.huffman.html#std.compress.flate.consts.huffman.codegen_order">codegen_order</a>[i]] = <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u3</span>);
+            }
+            <span class="tok-kw">var</span> cl_dec: <a href="std.compress.flate.huffman_decoder.html">hfd</a>.<a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.CodegenDecoder">CodegenDecoder</a> = .{};
+            <span class="tok-kw">try</span> cl_dec.generate(&amp;cl_lens);<span class="tok-comment">
+
+            // decoded code lengths
+            </span><span class="tok-kw">var</span> dec_lens = [_]<span class="tok-type">u4</span>{<span class="tok-number">0</span>} ** (<span class="tok-number">286</span> + <span class="tok-number">30</span>);
+            <span class="tok-kw">var</span> pos: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (pos &lt; hlit + hdist) {
+                <span class="tok-kw">const</span> sym = <span class="tok-kw">try</span> cl_dec.find(<span class="tok-kw">try</span> self.bits.peekF(<span class="tok-type">u7</span>, <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.F">F</a>.<a href="#">reverse</a>));
+                <span class="tok-kw">try</span> self.bits.shift(sym.code_bits);
+                pos += <span class="tok-kw">try</span> self.dynamicCodeLength(sym.symbol, &amp;dec_lens, pos);
+            }
+            <span class="tok-kw">if</span> (pos &gt; hlit + hdist) {
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDynamicBlockHeader;
+            }<span class="tok-comment">
+
+            // literal code lengths to literal decoder
+            </span><span class="tok-kw">try</span> self.lit_dec.generate(dec_lens[<span class="tok-number">0</span>..hlit]);<span class="tok-comment">
+
+            // distance code lengths to distance decoder
+            </span><span class="tok-kw">try</span> self.dst_dec.generate(dec_lens[hlit .. hlit + hdist]);
+        }<span class="tok-comment">
+
+        // Decode code length symbol to code length. Writes decoded length into
+        // lens slice starting at position pos. Returns number of positions
+        // advanced.
+        </span><span class="tok-kw">fn</span> <span class="tok-fn">dynamicCodeLength</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, code: <span class="tok-type">u16</span>, lens: []<span class="tok-type">u4</span>, pos: <span class="tok-type">usize</span>) !<span class="tok-type">usize</span> {
+            <span class="tok-kw">if</span> (pos &gt;= lens.len)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDynamicBlockHeader;
+
+            <span class="tok-kw">switch</span> (code) {
+                <span class="tok-number">0</span>...<span class="tok-number">15</span> =&gt; {<span class="tok-comment">
+                    // Represent code lengths of 0 - 15
+                    </span>lens[pos] = <span class="tok-builtin">@intCast</span>(code);
+                    <span class="tok-kw">return</span> <span class="tok-number">1</span>;
+                },
+                <span class="tok-number">16</span> =&gt; {<span class="tok-comment">
+                    // Copy the previous code length 3 - 6 times.
+                    // The next 2 bits indicate repeat length
+                    </span><span class="tok-kw">const</span> n: <span class="tok-type">u8</span> = <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u2</span>)) + <span class="tok-number">3</span>;
+                    <span class="tok-kw">if</span> (pos == <span class="tok-number">0</span> <span class="tok-kw">or</span> pos + n &gt; lens.len)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDynamicBlockHeader;
+                    <span class="tok-kw">for</span> (<span class="tok-number">0</span>..n) |i| {
+                        lens[pos + i] = lens[pos + i - <span class="tok-number">1</span>];
+                    }
+                    <span class="tok-kw">return</span> n;
+                },<span class="tok-comment">
+                // Repeat a code length of 0 for 3 - 10 times. (3 bits of length)
+                </span><span class="tok-number">17</span> =&gt; <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u3</span>)) + <span class="tok-number">3</span>,<span class="tok-comment">
+                // Repeat a code length of 0 for 11 - 138 times (7 bits of length)
+                </span><span class="tok-number">18</span> =&gt; <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u7</span>)) + <span class="tok-number">11</span>,
+                <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDynamicBlockHeader,
+            }
+        }<span class="tok-comment">
+
+        // In larger archives most blocks are usually dynamic, so decompression
+        // performance depends on this function.
+        </span><span class="tok-kw">fn</span> <span class="tok-fn">dynamicBlock</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) !<span class="tok-type">bool</span> {<span class="tok-comment">
+            // Hot path loop!
+            </span><span class="tok-kw">while</span> (!self.hist.full()) {
+                <span class="tok-kw">try</span> self.bits.fill(<span class="tok-number">15</span>);<span class="tok-comment"> // optimization so other bit reads can be buffered (avoiding one `if` in hot path)
+                </span><span class="tok-kw">const</span> sym = <span class="tok-kw">try</span> self.decodeSymbol(&amp;self.lit_dec);
+
+                <span class="tok-kw">switch</span> (sym.kind) {
+                    .literal =&gt; self.hist.write(sym.symbol),
+                    .match =&gt; {<span class="tok-comment"> // Decode match backreference &lt;length, distance&gt;
+                        // fill so we can use buffered reads
+                        </span><span class="tok-kw">if</span> (LookaheadType == <span class="tok-type">u32</span>)
+                            <span class="tok-kw">try</span> self.bits.fill(<span class="tok-number">5</span> + <span class="tok-number">15</span>)
+                        <span class="tok-kw">else</span>
+                            <span class="tok-kw">try</span> self.bits.fill(<span class="tok-number">5</span> + <span class="tok-number">15</span> + <span class="tok-number">13</span>);
+                        <span class="tok-kw">const</span> length = <span class="tok-kw">try</span> self.decodeLength(sym.symbol);
+                        <span class="tok-kw">const</span> dsm = <span class="tok-kw">try</span> self.decodeSymbol(&amp;self.dst_dec);
+                        <span class="tok-kw">if</span> (LookaheadType == <span class="tok-type">u32</span>) <span class="tok-kw">try</span> self.bits.fill(<span class="tok-number">13</span>);
+                        <span class="tok-kw">const</span> distance = <span class="tok-kw">try</span> self.decodeDistance(dsm.symbol);
+                        <span class="tok-kw">try</span> self.hist.writeMatch(length, distance);
+                    },
+                    .end_of_block =&gt; <span class="tok-kw">return</span> <span class="tok-null">true</span>,
+                }
+            }
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        }<span class="tok-comment">
+
+        // Peek 15 bits from bits reader (maximum code len is 15 bits). Use
+        // decoder to find symbol for that code. We then know how many bits is
+        // used. Shift bit reader for that much bits, those bits are used. And
+        // return symbol.
+        </span><span class="tok-kw">fn</span> <span class="tok-fn">decodeSymbol</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, decoder: <span class="tok-kw">anytype</span>) !<a href="std.compress.flate.huffman_decoder.html">hfd</a>.<a href="std.compress.flate.huffman_decoder.Symbol.html">Symbol</a> {
+            <span class="tok-kw">const</span> sym = <span class="tok-kw">try</span> decoder.find(<span class="tok-kw">try</span> self.bits.peekF(<span class="tok-type">u15</span>, <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.F">F</a>.<a href="#">buffered</a> | <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.F">F</a>.<a href="#">reverse</a>));
+            <span class="tok-kw">try</span> self.bits.shift(sym.code_bits);
+            <span class="tok-kw">return</span> sym;
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">step</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">switch</span> (self.state) {
+                .protocol_header =&gt; {
+                    <span class="tok-kw">try</span> container.parseHeader(&amp;self.bits);
+                    self.state = .block_header;
+                },
+                .block_header =&gt; {
+                    <span class="tok-kw">try</span> self.blockHeader();
+                    self.state = .block;
+                    <span class="tok-kw">if</span> (self.block_type == <span class="tok-number">2</span>) <span class="tok-kw">try</span> self.dynamicBlockHeader();
+                },
+                .block =&gt; {
+                    <span class="tok-kw">const</span> done = <span class="tok-kw">switch</span> (self.block_type) {
+                        <span class="tok-number">0</span> =&gt; <span class="tok-kw">try</span> self.storedBlock(),
+                        <span class="tok-number">1</span> =&gt; <span class="tok-kw">try</span> self.fixedBlock(),
+                        <span class="tok-number">2</span> =&gt; <span class="tok-kw">try</span> self.dynamicBlock(),
+                        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidBlockType,
+                    };
+                    <span class="tok-kw">if</span> (done) {
+                        self.state = <span class="tok-kw">if</span> (self.bfinal == <span class="tok-number">1</span>) .protocol_footer <span class="tok-kw">else</span> .block_header;
+                    }
+                },
+                .protocol_footer =&gt; {
+                    self.bits.alignToByte();
+                    <span class="tok-kw">try</span> container.parseFooter(&amp;self.hasher, &amp;self.bits);
+                    self.state = .end;
+                },
+                .end =&gt; {},
+            }
+        }
+
+        <span class="tok-comment">/// Replaces the inner reader with new reader.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setReader</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, new_reader: ReaderType) <span class="tok-type">void</span> {
+            self.bits.forward_reader = new_reader;
+            <span class="tok-kw">if</span> (self.state == .end <span class="tok-kw">or</span> self.state == .protocol_footer) {
+                self.state = .protocol_header;
+            }
+        }<span class="tok-comment">
+
+        // Reads all compressed data from the internal reader and outputs plain
+        // (uncompressed) data to the provided writer.
+        </span><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompress</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, writer: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">while</span> (<span class="tok-kw">try</span> self.next()) |buf| {
+                <span class="tok-kw">try</span> writer.writeAll(buf);
+            }
+        }
+
+        <span class="tok-comment">/// Returns the number of bytes that have been read from the internal</span>
+        <span class="tok-comment">/// reader but not yet consumed by the decompressor.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">unreadBytes</span>(self: <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) <span class="tok-type">usize</span> {<span class="tok-comment">
+            // There can be no error here: the denominator is not zero, and
+            // overflow is not possible since the type is unsigned.
+            </span><span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.divCeil">divCeil</a>(<span class="tok-type">usize</span>, self.bits.nbits, <span class="tok-number">8</span>) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+        }<span class="tok-comment">
+
+        // Iterator interface
+
+        </span><span class="tok-comment">/// Can be used in iterator like loop without memcpy to another buffer:</span>
+        <span class="tok-comment">///   while (try inflate.next()) |buf| { ... }</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">next</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>!?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+            <span class="tok-kw">const</span> out = <span class="tok-kw">try</span> self.get(<span class="tok-number">0</span>);
+            <span class="tok-kw">if</span> (out.len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+            <span class="tok-kw">return</span> out;
+        }
+
+        <span class="tok-comment">/// Returns decompressed data from internal sliding window buffer.</span>
+        <span class="tok-comment">/// Returned buffer can be any length between 0 and `limit` bytes. 0</span>
+        <span class="tok-comment">/// returned bytes means end of stream reached. With limit=0 returns as</span>
+        <span class="tok-comment">/// much data it can. It newer will be more than 65536 bytes, which is</span>
+        <span class="tok-comment">/// size of internal buffer.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, limit: <span class="tok-type">usize</span>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+            <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+                <span class="tok-kw">const</span> out = self.hist.readAtMost(limit);
+                <span class="tok-kw">if</span> (out.len &gt; <span class="tok-number">0</span>) {
+                    self.hasher.update(out);
+                    <span class="tok-kw">return</span> out;
+                }
+                <span class="tok-kw">if</span> (self.state == .end) <span class="tok-kw">return</span> out;
+                <span class="tok-kw">try</span> self.step();
+            }
+        }<span class="tok-comment">
+
+        // Reader interface
+
+        </span><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Reader = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.html#std.io.GenericReader">Reader</a>(*<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>, <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.read">read</a>);
+
+        <span class="tok-comment">/// Returns the number of bytes read. It may be less than buffer.len.</span>
+        <span class="tok-comment">/// If the number of bytes read is 0, it means end of stream.</span>
+        <span class="tok-comment">/// End of stream is not an error condition.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">read</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, buffer: []<span class="tok-type">u8</span>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>!<span class="tok-type">usize</span> {
+            <span class="tok-kw">if</span> (buffer.len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-number">0</span>;
+            <span class="tok-kw">const</span> out = <span class="tok-kw">try</span> self.get(buffer.len);
+            <span class="tok-builtin">@memcpy</span>(buffer[<span class="tok-number">0</span>..out.len], out);
+            <span class="tok-kw">return</span> out.len;
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">reader</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Reader">Reader</a> {
+            <span class="tok-kw">return</span> .{ .context = self };
+        }
+    };
+}</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.compress.flate.inflate.decompress" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">decompress</span><a href="#src.zig-std.compress.flate.inflate.decompress">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompress</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, reader: <span class="tok-kw">anytype</span>, writer: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Decompresses deflate bit stream <code>reader</code> and writes uncompressed data to the
+<code>writer</code> stream.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>container: <a href="std.compress.flate.container.Container.html">Container</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.flate.inflate.decompress">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompress</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, reader: <span class="tok-kw">anytype</span>, writer: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> d = <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.decompressor">decompressor</a>(container, reader);
+    <span class="tok-kw">try</span> d.decompress(writer);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.compress.flate.inflate.decompressor" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">decompressor</span><a href="#src.zig-std.compress.flate.inflate.decompressor">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompressor</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, reader: <span class="tok-kw">anytype</span>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Decompressor">Decompressor</a>(container, <span class="tok-builtin">@TypeOf</span>(reader))</code></pre></div><div class="tldDocs"><p>Inflate decompressor for the reader type.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>container: <a href="std.compress.flate.container.Container.html">Container</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.flate.inflate.decompressor">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompressor</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, reader: <span class="tok-kw">anytype</span>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Decompressor">Decompressor</a>(container, <span class="tok-builtin">@TypeOf</span>(reader)) {
+    <span class="tok-kw">return</span> <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Decompressor">Decompressor</a>(container, <span class="tok-builtin">@TypeOf</span>(reader)).init(reader);
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.compress.flate.inflate">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>);
+<span class="tok-kw">const</span> assert = <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>;
+<span class="tok-kw">const</span> testing = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>;
+
+<span class="tok-kw">const</span> hfd = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;huffman_decoder.zig&quot;</span>);
+<span class="tok-kw">const</span> BitReader = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;bit_reader.zig&quot;</span>).BitReader;
+<span class="tok-kw">const</span> CircularBuffer = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;CircularBuffer.zig&quot;</span>);
+<span class="tok-kw">const</span> Container = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;container.zig&quot;</span>).Container;
+<span class="tok-kw">const</span> Token = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;Token.zig&quot;</span>);
+<span class="tok-kw">const</span> codegen_order = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;consts.zig&quot;</span>).huffman.codegen_order;
+
+<span class="tok-comment">/// Decompresses deflate bit stream `reader` and writes uncompressed data to the</span>
+<span class="tok-comment">/// `writer` stream.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompress</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, reader: <span class="tok-kw">anytype</span>, writer: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> d = <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.decompressor">decompressor</a>(container, reader);
+    <span class="tok-kw">try</span> d.decompress(writer);
+}
+
+<span class="tok-comment">/// Inflate decompressor for the reader type.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompressor</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, reader: <span class="tok-kw">anytype</span>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Decompressor">Decompressor</a>(container, <span class="tok-builtin">@TypeOf</span>(reader)) {
+    <span class="tok-kw">return</span> <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Decompressor">Decompressor</a>(container, <span class="tok-builtin">@TypeOf</span>(reader)).init(reader);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">Decompressor</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, <span class="tok-kw">comptime</span> ReaderType: <span class="tok-type">type</span>) <span class="tok-type">type</span> {<span class="tok-comment">
+    // zlib has 4 bytes footer, lookahead of 4 bytes ensures that we will not overshoot.
+    // gzip has 8 bytes footer so we will not overshoot even with 8 bytes of lookahead.
+    // For raw deflate there is always possibility of overshot so we use 8 bytes lookahead.
+    </span><span class="tok-kw">const</span> lookahead: <span class="tok-type">type</span> = <span class="tok-kw">if</span> (container == .zlib) <span class="tok-type">u32</span> <span class="tok-kw">else</span> <span class="tok-type">u64</span>;
+    <span class="tok-kw">return</span> <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Inflate</a>(container, lookahead, ReaderType);
+}
+
+<span class="tok-comment">/// Inflate decompresses deflate bit stream. Reads compressed data from reader</span>
+<span class="tok-comment">/// provided in init. Decompressed data are stored in internal hist buffer and</span>
+<span class="tok-comment">/// can be accesses iterable `next` or reader interface.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Container defines header/footer wrapper around deflate bit stream. Can be</span>
+<span class="tok-comment">/// gzip or zlib.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Deflate bit stream consists of multiple blocks. Block can be one of three types:</span>
+<span class="tok-comment">///   * stored, non compressed, max 64k in size</span>
+<span class="tok-comment">///   * fixed, huffman codes are predefined</span>
+<span class="tok-comment">///   * dynamic, huffman code tables are encoded at the block start</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// `step` function runs decoder until internal `hist` buffer is full. Client</span>
+<span class="tok-comment">/// than needs to read that data in order to proceed with decoding.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Allocates 74.5K of internal buffers, most important are:</span>
+<span class="tok-comment">///   * 64K for history (CircularBuffer)</span>
+<span class="tok-comment">///   * ~10K huffman decoders (Literal and DistanceDecoder)</span>
+<span class="tok-comment">///</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">Inflate</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, <span class="tok-kw">comptime</span> LookaheadType: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> ReaderType: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <a href="std.debug.html#std.debug.assert">assert</a>(LookaheadType == <span class="tok-type">u32</span> <span class="tok-kw">or</span> LookaheadType == <span class="tok-type">u64</span>);
+    <span class="tok-kw">const</span> BitReaderType = <a href="std.compress.flate.bit_reader.html#std.compress.flate.bit_reader.BitReader">BitReader</a>(LookaheadType, ReaderType);
+
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {<span class="tok-comment">
+        //const BitReaderType = BitReader(ReaderType);
+        </span><span class="tok-kw">const</span> F = BitReaderType.flag;
+
+        bits: BitReaderType = .{},
+        hist: <a href="std.compress.flate.CircularBuffer.html">CircularBuffer</a> = .{},<span class="tok-comment">
+        // Hashes, produces checkusm, of uncompressed data for gzip/zlib footer.
+        </span>hasher: container.Hasher() = .{},<span class="tok-comment">
+
+        // dynamic block huffman code decoders
+        </span>lit_dec: <a href="std.compress.flate.huffman_decoder.html">hfd</a>.<a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.LiteralDecoder">LiteralDecoder</a> = .{},<span class="tok-comment"> // literals
+        </span>dst_dec: <a href="std.compress.flate.huffman_decoder.html">hfd</a>.<a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.DistanceDecoder">DistanceDecoder</a> = .{},<span class="tok-comment"> // distances
+
+        // current read state
+        </span>bfinal: <span class="tok-type">u1</span> = <span class="tok-number">0</span>,
+        block_type: <span class="tok-type">u2</span> = <span class="tok-number">0b11</span>,
+        state: <a href="std.compress.flate.inflate.Inflate.ReadState.html">ReadState</a> = .protocol_header,
+
+        <span class="tok-kw">const</span> ReadState = <span class="tok-kw">enum</span> {
+            protocol_header,
+            block_header,
+            block,
+            protocol_footer,
+            end,
+        };
+
+        <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = BitReaderType.Error || <a href="std.compress.flate.container.Container.html">Container</a>.<a href="std.compress.flate.container.Container.html#std.compress.flate.container.Container.Error">Error</a> || <a href="std.compress.flate.huffman_decoder.html">hfd</a>.<a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.Error">Error</a> || <span class="tok-kw">error</span>{
+            InvalidCode,
+            InvalidMatch,
+            InvalidBlockType,
+            WrongStoredBlockNlen,
+            InvalidDynamicBlockHeader,
+        };
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(rt: ReaderType) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a> {
+            <span class="tok-kw">return</span> .{ .bits = BitReaderType.init(rt) };
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">blockHeader</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) !<span class="tok-type">void</span> {
+            self.bfinal = <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u1</span>);
+            self.block_type = <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u2</span>);
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">storedBlock</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) !<span class="tok-type">bool</span> {
+            self.bits.alignToByte();<span class="tok-comment"> // skip padding until byte boundary
+            // everything after this is byte aligned in stored block
+            </span><span class="tok-kw">var</span> len = <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u16</span>);
+            <span class="tok-kw">const</span> nlen = <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u16</span>);
+            <span class="tok-kw">if</span> (len != ~nlen) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.WrongStoredBlockNlen;
+
+            <span class="tok-kw">while</span> (len &gt; <span class="tok-number">0</span>) {
+                <span class="tok-kw">const</span> buf = self.hist.getWritable(len);
+                <span class="tok-kw">try</span> self.bits.readAll(buf);
+                len -= <span class="tok-builtin">@intCast</span>(buf.len);
+            }
+            <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">fixedBlock</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) !<span class="tok-type">bool</span> {
+            <span class="tok-kw">while</span> (!self.hist.full()) {
+                <span class="tok-kw">const</span> code = <span class="tok-kw">try</span> self.bits.readFixedCode();
+                <span class="tok-kw">switch</span> (code) {
+                    <span class="tok-number">0</span>...<span class="tok-number">255</span> =&gt; self.hist.write(<span class="tok-builtin">@intCast</span>(code)),
+                    <span class="tok-number">256</span> =&gt; <span class="tok-kw">return</span> <span class="tok-null">true</span>,<span class="tok-comment"> // end of block
+                    </span><span class="tok-number">257</span>...<span class="tok-number">285</span> =&gt; <span class="tok-kw">try</span> self.fixedDistanceCode(<span class="tok-builtin">@intCast</span>(code - <span class="tok-number">257</span>)),
+                    <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidCode,
+                }
+            }
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        }<span class="tok-comment">
+
+        // Handles fixed block non literal (length) code.
+        // Length code is followed by 5 bits of distance code.
+        </span><span class="tok-kw">fn</span> <span class="tok-fn">fixedDistanceCode</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, code: <span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">try</span> self.bits.fill(<span class="tok-number">5</span> + <span class="tok-number">5</span> + <span class="tok-number">13</span>);
+            <span class="tok-kw">const</span> length = <span class="tok-kw">try</span> self.decodeLength(code);
+            <span class="tok-kw">const</span> distance = <span class="tok-kw">try</span> self.decodeDistance(<span class="tok-kw">try</span> self.bits.readF(<span class="tok-type">u5</span>, <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.F">F</a>.<a href="#">buffered</a> | <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.F">F</a>.<a href="#">reverse</a>));
+            <span class="tok-kw">try</span> self.hist.writeMatch(length, distance);
+        }
+
+        <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">decodeLength</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, code: <span class="tok-type">u8</span>) !<span class="tok-type">u16</span> {
+            <span class="tok-kw">if</span> (code &gt; <span class="tok-number">28</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidCode;
+            <span class="tok-kw">const</span> ml = <a href="std.compress.flate.Token.html">Token</a>.<a href="std.compress.flate.Token.html#std.compress.flate.Token.matchLength">matchLength</a>(code);
+            <span class="tok-kw">return</span> <span class="tok-kw">if</span> (ml.extra_bits == <span class="tok-number">0</span>)<span class="tok-comment"> // 0 - 5 extra bits
+                </span>ml.base
+            <span class="tok-kw">else</span>
+                ml.base + <span class="tok-kw">try</span> self.bits.readN(ml.extra_bits, <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.F">F</a>.<a href="#">buffered</a>);
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">decodeDistance</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, code: <span class="tok-type">u8</span>) !<span class="tok-type">u16</span> {
+            <span class="tok-kw">if</span> (code &gt; <span class="tok-number">29</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidCode;
+            <span class="tok-kw">const</span> md = <a href="std.compress.flate.Token.html">Token</a>.<a href="std.compress.flate.Token.html#std.compress.flate.Token.matchDistance">matchDistance</a>(code);
+            <span class="tok-kw">return</span> <span class="tok-kw">if</span> (md.extra_bits == <span class="tok-number">0</span>)<span class="tok-comment"> // 0 - 13 extra bits
+                </span>md.base
+            <span class="tok-kw">else</span>
+                md.base + <span class="tok-kw">try</span> self.bits.readN(md.extra_bits, <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.F">F</a>.<a href="#">buffered</a>);
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">dynamicBlockHeader</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">const</span> hlit: <span class="tok-type">u16</span> = <span class="tok-builtin">@as</span>(<span class="tok-type">u16</span>, <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u5</span>)) + <span class="tok-number">257</span>;<span class="tok-comment"> // number of ll code entries present - 257
+            </span><span class="tok-kw">const</span> hdist: <span class="tok-type">u16</span> = <span class="tok-builtin">@as</span>(<span class="tok-type">u16</span>, <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u5</span>)) + <span class="tok-number">1</span>;<span class="tok-comment"> // number of distance code entries - 1
+            </span><span class="tok-kw">const</span> hclen: <span class="tok-type">u8</span> = <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u4</span>)) + <span class="tok-number">4</span>;<span class="tok-comment"> // hclen + 4 code lengths are encoded
+
+            </span><span class="tok-kw">if</span> (hlit &gt; <span class="tok-number">286</span> <span class="tok-kw">or</span> hdist &gt; <span class="tok-number">30</span>)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDynamicBlockHeader;<span class="tok-comment">
+
+            // lengths for code lengths
+            </span><span class="tok-kw">var</span> cl_lens = [_]<span class="tok-type">u4</span>{<span class="tok-number">0</span>} ** <span class="tok-number">19</span>;
+            <span class="tok-kw">for</span> (<span class="tok-number">0</span>..hclen) |i| {
+                cl_lens[<a href="std.compress.flate.consts.huffman.html#std.compress.flate.consts.huffman.codegen_order">codegen_order</a>[i]] = <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u3</span>);
+            }
+            <span class="tok-kw">var</span> cl_dec: <a href="std.compress.flate.huffman_decoder.html">hfd</a>.<a href="std.compress.flate.huffman_decoder.html#std.compress.flate.huffman_decoder.CodegenDecoder">CodegenDecoder</a> = .{};
+            <span class="tok-kw">try</span> cl_dec.generate(&amp;cl_lens);<span class="tok-comment">
+
+            // decoded code lengths
+            </span><span class="tok-kw">var</span> dec_lens = [_]<span class="tok-type">u4</span>{<span class="tok-number">0</span>} ** (<span class="tok-number">286</span> + <span class="tok-number">30</span>);
+            <span class="tok-kw">var</span> pos: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (pos &lt; hlit + hdist) {
+                <span class="tok-kw">const</span> sym = <span class="tok-kw">try</span> cl_dec.find(<span class="tok-kw">try</span> self.bits.peekF(<span class="tok-type">u7</span>, <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.F">F</a>.<a href="#">reverse</a>));
+                <span class="tok-kw">try</span> self.bits.shift(sym.code_bits);
+                pos += <span class="tok-kw">try</span> self.dynamicCodeLength(sym.symbol, &amp;dec_lens, pos);
+            }
+            <span class="tok-kw">if</span> (pos &gt; hlit + hdist) {
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDynamicBlockHeader;
+            }<span class="tok-comment">
+
+            // literal code lengths to literal decoder
+            </span><span class="tok-kw">try</span> self.lit_dec.generate(dec_lens[<span class="tok-number">0</span>..hlit]);<span class="tok-comment">
+
+            // distance code lengths to distance decoder
+            </span><span class="tok-kw">try</span> self.dst_dec.generate(dec_lens[hlit .. hlit + hdist]);
+        }<span class="tok-comment">
+
+        // Decode code length symbol to code length. Writes decoded length into
+        // lens slice starting at position pos. Returns number of positions
+        // advanced.
+        </span><span class="tok-kw">fn</span> <span class="tok-fn">dynamicCodeLength</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, code: <span class="tok-type">u16</span>, lens: []<span class="tok-type">u4</span>, pos: <span class="tok-type">usize</span>) !<span class="tok-type">usize</span> {
+            <span class="tok-kw">if</span> (pos &gt;= lens.len)
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDynamicBlockHeader;
+
+            <span class="tok-kw">switch</span> (code) {
+                <span class="tok-number">0</span>...<span class="tok-number">15</span> =&gt; {<span class="tok-comment">
+                    // Represent code lengths of 0 - 15
+                    </span>lens[pos] = <span class="tok-builtin">@intCast</span>(code);
+                    <span class="tok-kw">return</span> <span class="tok-number">1</span>;
+                },
+                <span class="tok-number">16</span> =&gt; {<span class="tok-comment">
+                    // Copy the previous code length 3 - 6 times.
+                    // The next 2 bits indicate repeat length
+                    </span><span class="tok-kw">const</span> n: <span class="tok-type">u8</span> = <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u2</span>)) + <span class="tok-number">3</span>;
+                    <span class="tok-kw">if</span> (pos == <span class="tok-number">0</span> <span class="tok-kw">or</span> pos + n &gt; lens.len)
+                        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDynamicBlockHeader;
+                    <span class="tok-kw">for</span> (<span class="tok-number">0</span>..n) |i| {
+                        lens[pos + i] = lens[pos + i - <span class="tok-number">1</span>];
+                    }
+                    <span class="tok-kw">return</span> n;
+                },<span class="tok-comment">
+                // Repeat a code length of 0 for 3 - 10 times. (3 bits of length)
+                </span><span class="tok-number">17</span> =&gt; <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u3</span>)) + <span class="tok-number">3</span>,<span class="tok-comment">
+                // Repeat a code length of 0 for 11 - 138 times (7 bits of length)
+                </span><span class="tok-number">18</span> =&gt; <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-kw">try</span> self.bits.read(<span class="tok-type">u7</span>)) + <span class="tok-number">11</span>,
+                <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDynamicBlockHeader,
+            }
+        }<span class="tok-comment">
+
+        // In larger archives most blocks are usually dynamic, so decompression
+        // performance depends on this function.
+        </span><span class="tok-kw">fn</span> <span class="tok-fn">dynamicBlock</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) !<span class="tok-type">bool</span> {<span class="tok-comment">
+            // Hot path loop!
+            </span><span class="tok-kw">while</span> (!self.hist.full()) {
+                <span class="tok-kw">try</span> self.bits.fill(<span class="tok-number">15</span>);<span class="tok-comment"> // optimization so other bit reads can be buffered (avoiding one `if` in hot path)
+                </span><span class="tok-kw">const</span> sym = <span class="tok-kw">try</span> self.decodeSymbol(&amp;self.lit_dec);
+
+                <span class="tok-kw">switch</span> (sym.kind) {
+                    .literal =&gt; self.hist.write(sym.symbol),
+                    .match =&gt; {<span class="tok-comment"> // Decode match backreference &lt;length, distance&gt;
+                        // fill so we can use buffered reads
+                        </span><span class="tok-kw">if</span> (LookaheadType == <span class="tok-type">u32</span>)
+                            <span class="tok-kw">try</span> self.bits.fill(<span class="tok-number">5</span> + <span class="tok-number">15</span>)
+                        <span class="tok-kw">else</span>
+                            <span class="tok-kw">try</span> self.bits.fill(<span class="tok-number">5</span> + <span class="tok-number">15</span> + <span class="tok-number">13</span>);
+                        <span class="tok-kw">const</span> length = <span class="tok-kw">try</span> self.decodeLength(sym.symbol);
+                        <span class="tok-kw">const</span> dsm = <span class="tok-kw">try</span> self.decodeSymbol(&amp;self.dst_dec);
+                        <span class="tok-kw">if</span> (LookaheadType == <span class="tok-type">u32</span>) <span class="tok-kw">try</span> self.bits.fill(<span class="tok-number">13</span>);
+                        <span class="tok-kw">const</span> distance = <span class="tok-kw">try</span> self.decodeDistance(dsm.symbol);
+                        <span class="tok-kw">try</span> self.hist.writeMatch(length, distance);
+                    },
+                    .end_of_block =&gt; <span class="tok-kw">return</span> <span class="tok-null">true</span>,
+                }
+            }
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        }<span class="tok-comment">
+
+        // Peek 15 bits from bits reader (maximum code len is 15 bits). Use
+        // decoder to find symbol for that code. We then know how many bits is
+        // used. Shift bit reader for that much bits, those bits are used. And
+        // return symbol.
+        </span><span class="tok-kw">fn</span> <span class="tok-fn">decodeSymbol</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, decoder: <span class="tok-kw">anytype</span>) !<a href="std.compress.flate.huffman_decoder.html">hfd</a>.<a href="std.compress.flate.huffman_decoder.Symbol.html">Symbol</a> {
+            <span class="tok-kw">const</span> sym = <span class="tok-kw">try</span> decoder.find(<span class="tok-kw">try</span> self.bits.peekF(<span class="tok-type">u15</span>, <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.F">F</a>.<a href="#">buffered</a> | <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.F">F</a>.<a href="#">reverse</a>));
+            <span class="tok-kw">try</span> self.bits.shift(sym.code_bits);
+            <span class="tok-kw">return</span> sym;
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">step</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">switch</span> (self.state) {
+                .protocol_header =&gt; {
+                    <span class="tok-kw">try</span> container.parseHeader(&amp;self.bits);
+                    self.state = .block_header;
+                },
+                .block_header =&gt; {
+                    <span class="tok-kw">try</span> self.blockHeader();
+                    self.state = .block;
+                    <span class="tok-kw">if</span> (self.block_type == <span class="tok-number">2</span>) <span class="tok-kw">try</span> self.dynamicBlockHeader();
+                },
+                .block =&gt; {
+                    <span class="tok-kw">const</span> done = <span class="tok-kw">switch</span> (self.block_type) {
+                        <span class="tok-number">0</span> =&gt; <span class="tok-kw">try</span> self.storedBlock(),
+                        <span class="tok-number">1</span> =&gt; <span class="tok-kw">try</span> self.fixedBlock(),
+                        <span class="tok-number">2</span> =&gt; <span class="tok-kw">try</span> self.dynamicBlock(),
+                        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidBlockType,
+                    };
+                    <span class="tok-kw">if</span> (done) {
+                        self.state = <span class="tok-kw">if</span> (self.bfinal == <span class="tok-number">1</span>) .protocol_footer <span class="tok-kw">else</span> .block_header;
+                    }
+                },
+                .protocol_footer =&gt; {
+                    self.bits.alignToByte();
+                    <span class="tok-kw">try</span> container.parseFooter(&amp;self.hasher, &amp;self.bits);
+                    self.state = .end;
+                },
+                .end =&gt; {},
+            }
+        }
+
+        <span class="tok-comment">/// Replaces the inner reader with new reader.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setReader</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, new_reader: ReaderType) <span class="tok-type">void</span> {
+            self.bits.forward_reader = new_reader;
+            <span class="tok-kw">if</span> (self.state == .end <span class="tok-kw">or</span> self.state == .protocol_footer) {
+                self.state = .protocol_header;
+            }
+        }<span class="tok-comment">
+
+        // Reads all compressed data from the internal reader and outputs plain
+        // (uncompressed) data to the provided writer.
+        </span><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompress</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, writer: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">while</span> (<span class="tok-kw">try</span> self.next()) |buf| {
+                <span class="tok-kw">try</span> writer.writeAll(buf);
+            }
+        }
+
+        <span class="tok-comment">/// Returns the number of bytes that have been read from the internal</span>
+        <span class="tok-comment">/// reader but not yet consumed by the decompressor.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">unreadBytes</span>(self: <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) <span class="tok-type">usize</span> {<span class="tok-comment">
+            // There can be no error here: the denominator is not zero, and
+            // overflow is not possible since the type is unsigned.
+            </span><span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.divCeil">divCeil</a>(<span class="tok-type">usize</span>, self.bits.nbits, <span class="tok-number">8</span>) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+        }<span class="tok-comment">
+
+        // Iterator interface
+
+        </span><span class="tok-comment">/// Can be used in iterator like loop without memcpy to another buffer:</span>
+        <span class="tok-comment">///   while (try inflate.next()) |buf| { ... }</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">next</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>!?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+            <span class="tok-kw">const</span> out = <span class="tok-kw">try</span> self.get(<span class="tok-number">0</span>);
+            <span class="tok-kw">if</span> (out.len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+            <span class="tok-kw">return</span> out;
+        }
+
+        <span class="tok-comment">/// Returns decompressed data from internal sliding window buffer.</span>
+        <span class="tok-comment">/// Returned buffer can be any length between 0 and `limit` bytes. 0</span>
+        <span class="tok-comment">/// returned bytes means end of stream reached. With limit=0 returns as</span>
+        <span class="tok-comment">/// much data it can. It newer will be more than 65536 bytes, which is</span>
+        <span class="tok-comment">/// size of internal buffer.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, limit: <span class="tok-type">usize</span>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+            <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+                <span class="tok-kw">const</span> out = self.hist.readAtMost(limit);
+                <span class="tok-kw">if</span> (out.len &gt; <span class="tok-number">0</span>) {
+                    self.hasher.update(out);
+                    <span class="tok-kw">return</span> out;
+                }
+                <span class="tok-kw">if</span> (self.state == .end) <span class="tok-kw">return</span> out;
+                <span class="tok-kw">try</span> self.step();
+            }
+        }<span class="tok-comment">
+
+        // Reader interface
+
+        </span><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Reader = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.html#std.io.GenericReader">Reader</a>(*<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>, <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.read">read</a>);
+
+        <span class="tok-comment">/// Returns the number of bytes read. It may be less than buffer.len.</span>
+        <span class="tok-comment">/// If the number of bytes read is 0, it means end of stream.</span>
+        <span class="tok-comment">/// End of stream is not an error condition.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">read</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>, buffer: []<span class="tok-type">u8</span>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Error">Error</a>!<span class="tok-type">usize</span> {
+            <span class="tok-kw">if</span> (buffer.len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-number">0</span>;
+            <span class="tok-kw">const</span> out = <span class="tok-kw">try</span> self.get(buffer.len);
+            <span class="tok-builtin">@memcpy</span>(buffer[<span class="tok-number">0</span>..out.len], out);
+            <span class="tok-kw">return</span> out.len;
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">reader</span>(self: *<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate">Self</a>) <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Inflate.Reader">Reader</a> {
+            <span class="tok-kw">return</span> .{ .context = self };
+        }
+    };
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;decompress&quot;</span> {
+    <span class="tok-kw">const</span> cases = [_]<span class="tok-kw">struct</span> {
+        in: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+        out: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    }{<span class="tok-comment">
+        // non compressed block (type 0)
+        </span>.{
+            .in = &amp;[_]<span class="tok-type">u8</span>{
+                <span class="tok-number">0b0000_0001</span>, <span class="tok-number">0b0000_1100</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0b1111_0011</span>, <span class="tok-number">0xff</span>,<span class="tok-comment"> // deflate fixed buffer header len, nlen
+                </span><span class="tok-str">'H'</span>, <span class="tok-str">'e'</span>, <span class="tok-str">'l'</span>, <span class="tok-str">'l'</span>, <span class="tok-str">'o'</span>, <span class="tok-str">' '</span>, <span class="tok-str">'w'</span>, <span class="tok-str">'o'</span>, <span class="tok-str">'r'</span>, <span class="tok-str">'l'</span>, <span class="tok-str">'d'</span>, <span class="tok-number">0x0a</span>,<span class="tok-comment"> // non compressed data
+            </span>},
+            .out = <span class="tok-str">&quot;Hello world\n&quot;</span>,
+        },<span class="tok-comment">
+        // fixed code block (type 1)
+        </span>.{
+            .in = &amp;[_]<span class="tok-type">u8</span>{
+                <span class="tok-number">0xf3</span>, <span class="tok-number">0x48</span>, <span class="tok-number">0xcd</span>, <span class="tok-number">0xc9</span>, <span class="tok-number">0xc9</span>, <span class="tok-number">0x57</span>, <span class="tok-number">0x28</span>, <span class="tok-number">0xcf</span>,<span class="tok-comment"> // deflate data block type 1
+                </span><span class="tok-number">0x2f</span>, <span class="tok-number">0xca</span>, <span class="tok-number">0x49</span>, <span class="tok-number">0xe1</span>, <span class="tok-number">0x02</span>, <span class="tok-number">0x00</span>,
+            },
+            .out = <span class="tok-str">&quot;Hello world\n&quot;</span>,
+        },<span class="tok-comment">
+        // dynamic block (type 2)
+        </span>.{
+            .in = &amp;[_]<span class="tok-type">u8</span>{
+                <span class="tok-number">0x3d</span>, <span class="tok-number">0xc6</span>, <span class="tok-number">0x39</span>, <span class="tok-number">0x11</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x0c</span>, <span class="tok-number">0x02</span>,<span class="tok-comment"> // deflate data block type 2
+                </span><span class="tok-number">0x30</span>, <span class="tok-number">0x2b</span>, <span class="tok-number">0xb5</span>, <span class="tok-number">0x52</span>, <span class="tok-number">0x1e</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0x96</span>, <span class="tok-number">0x38</span>,
+                <span class="tok-number">0x16</span>, <span class="tok-number">0x96</span>, <span class="tok-number">0x5c</span>, <span class="tok-number">0x1e</span>, <span class="tok-number">0x94</span>, <span class="tok-number">0xcb</span>, <span class="tok-number">0x6d</span>, <span class="tok-number">0x01</span>,
+            },
+            .out = <span class="tok-str">&quot;ABCDEABCD ABCDEABCD&quot;</span>,
+        },
+    };
+    <span class="tok-kw">for</span> (cases) |c| {
+        <span class="tok-kw">var</span> fb = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(c.in);
+        <span class="tok-kw">var</span> al = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>).init(<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>);
+        <span class="tok-kw">defer</span> al.deinit();
+
+        <span class="tok-kw">try</span> <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.decompress">decompress</a>(.raw, fb.reader(), al.writer());
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(c.out, al.items);
+    }
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;gzip decompress&quot;</span> {
+    <span class="tok-kw">const</span> cases = [_]<span class="tok-kw">struct</span> {
+        in: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+        out: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    }{<span class="tok-comment">
+        // non compressed block (type 0)
+        </span>.{
+            .in = &amp;[_]<span class="tok-type">u8</span>{
+                <span class="tok-number">0x1f</span>, <span class="tok-number">0x8b</span>, <span class="tok-number">0x08</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x03</span>,<span class="tok-comment"> // gzip header (10 bytes)
+                </span><span class="tok-number">0b0000_0001</span>, <span class="tok-number">0b0000_1100</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0b1111_0011</span>, <span class="tok-number">0xff</span>,<span class="tok-comment"> // deflate fixed buffer header len, nlen
+                </span><span class="tok-str">'H'</span>, <span class="tok-str">'e'</span>, <span class="tok-str">'l'</span>, <span class="tok-str">'l'</span>, <span class="tok-str">'o'</span>, <span class="tok-str">' '</span>, <span class="tok-str">'w'</span>, <span class="tok-str">'o'</span>, <span class="tok-str">'r'</span>, <span class="tok-str">'l'</span>, <span class="tok-str">'d'</span>, <span class="tok-number">0x0a</span>,<span class="tok-comment"> // non compressed data
+                </span><span class="tok-number">0xd5</span>, <span class="tok-number">0xe0</span>, <span class="tok-number">0x39</span>, <span class="tok-number">0xb7</span>,<span class="tok-comment"> // gzip footer: checksum
+                </span><span class="tok-number">0x0c</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>,<span class="tok-comment"> // gzip footer: size
+            </span>},
+            .out = <span class="tok-str">&quot;Hello world\n&quot;</span>,
+        },<span class="tok-comment">
+        // fixed code block (type 1)
+        </span>.{
+            .in = &amp;[_]<span class="tok-type">u8</span>{
+                <span class="tok-number">0x1f</span>, <span class="tok-number">0x8b</span>, <span class="tok-number">0x08</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x04</span>, <span class="tok-number">0x03</span>,<span class="tok-comment"> // gzip header (10 bytes)
+                </span><span class="tok-number">0xf3</span>, <span class="tok-number">0x48</span>, <span class="tok-number">0xcd</span>, <span class="tok-number">0xc9</span>, <span class="tok-number">0xc9</span>, <span class="tok-number">0x57</span>, <span class="tok-number">0x28</span>, <span class="tok-number">0xcf</span>,<span class="tok-comment"> // deflate data block type 1
+                </span><span class="tok-number">0x2f</span>, <span class="tok-number">0xca</span>, <span class="tok-number">0x49</span>, <span class="tok-number">0xe1</span>, <span class="tok-number">0x02</span>, <span class="tok-number">0x00</span>,
+                <span class="tok-number">0xd5</span>, <span class="tok-number">0xe0</span>, <span class="tok-number">0x39</span>, <span class="tok-number">0xb7</span>, <span class="tok-number">0x0c</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>,<span class="tok-comment"> // gzip footer (chksum, len)
+            </span>},
+            .out = <span class="tok-str">&quot;Hello world\n&quot;</span>,
+        },<span class="tok-comment">
+        // dynamic block (type 2)
+        </span>.{
+            .in = &amp;[_]<span class="tok-type">u8</span>{
+                <span class="tok-number">0x1f</span>, <span class="tok-number">0x8b</span>, <span class="tok-number">0x08</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x03</span>,<span class="tok-comment"> // gzip header (10 bytes)
+                </span><span class="tok-number">0x3d</span>, <span class="tok-number">0xc6</span>, <span class="tok-number">0x39</span>, <span class="tok-number">0x11</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x0c</span>, <span class="tok-number">0x02</span>,<span class="tok-comment"> // deflate data block type 2
+                </span><span class="tok-number">0x30</span>, <span class="tok-number">0x2b</span>, <span class="tok-number">0xb5</span>, <span class="tok-number">0x52</span>, <span class="tok-number">0x1e</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0x96</span>, <span class="tok-number">0x38</span>,
+                <span class="tok-number">0x16</span>, <span class="tok-number">0x96</span>, <span class="tok-number">0x5c</span>, <span class="tok-number">0x1e</span>, <span class="tok-number">0x94</span>, <span class="tok-number">0xcb</span>, <span class="tok-number">0x6d</span>, <span class="tok-number">0x01</span>,
+                <span class="tok-number">0x17</span>, <span class="tok-number">0x1c</span>, <span class="tok-number">0x39</span>, <span class="tok-number">0xb4</span>, <span class="tok-number">0x13</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>,<span class="tok-comment"> // gzip footer (chksum, len)
+            </span>},
+            .out = <span class="tok-str">&quot;ABCDEABCD ABCDEABCD&quot;</span>,
+        },<span class="tok-comment">
+        // gzip header with name
+        </span>.{
+            .in = &amp;[_]<span class="tok-type">u8</span>{
+                <span class="tok-number">0x1f</span>, <span class="tok-number">0x8b</span>, <span class="tok-number">0x08</span>, <span class="tok-number">0x08</span>, <span class="tok-number">0xe5</span>, <span class="tok-number">0x70</span>, <span class="tok-number">0xb1</span>, <span class="tok-number">0x65</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0x68</span>, <span class="tok-number">0x65</span>, <span class="tok-number">0x6c</span>, <span class="tok-number">0x6c</span>, <span class="tok-number">0x6f</span>, <span class="tok-number">0x2e</span>,
+                <span class="tok-number">0x74</span>, <span class="tok-number">0x78</span>, <span class="tok-number">0x74</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0xf3</span>, <span class="tok-number">0x48</span>, <span class="tok-number">0xcd</span>, <span class="tok-number">0xc9</span>, <span class="tok-number">0xc9</span>, <span class="tok-number">0x57</span>, <span class="tok-number">0x28</span>, <span class="tok-number">0xcf</span>, <span class="tok-number">0x2f</span>, <span class="tok-number">0xca</span>, <span class="tok-number">0x49</span>, <span class="tok-number">0xe1</span>,
+                <span class="tok-number">0x02</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0xd5</span>, <span class="tok-number">0xe0</span>, <span class="tok-number">0x39</span>, <span class="tok-number">0xb7</span>, <span class="tok-number">0x0c</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>,
+            },
+            .out = <span class="tok-str">&quot;Hello world\n&quot;</span>,
+        },
+    };
+    <span class="tok-kw">for</span> (cases) |c| {
+        <span class="tok-kw">var</span> fb = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(c.in);
+        <span class="tok-kw">var</span> al = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>).init(<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>);
+        <span class="tok-kw">defer</span> al.deinit();
+
+        <span class="tok-kw">try</span> <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.decompress">decompress</a>(.gzip, fb.reader(), al.writer());
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(c.out, al.items);
+    }
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;zlib decompress&quot;</span> {
+    <span class="tok-kw">const</span> cases = [_]<span class="tok-kw">struct</span> {
+        in: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+        out: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    }{<span class="tok-comment">
+        // non compressed block (type 0)
+        </span>.{
+            .in = &amp;[_]<span class="tok-type">u8</span>{
+                <span class="tok-number">0x78</span>, <span class="tok-number">0b10_0_11100</span>,<span class="tok-comment"> // zlib header (2 bytes)
+                </span><span class="tok-number">0b0000_0001</span>, <span class="tok-number">0b0000_1100</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0b1111_0011</span>, <span class="tok-number">0xff</span>,<span class="tok-comment"> // deflate fixed buffer header len, nlen
+                </span><span class="tok-str">'H'</span>, <span class="tok-str">'e'</span>, <span class="tok-str">'l'</span>, <span class="tok-str">'l'</span>, <span class="tok-str">'o'</span>, <span class="tok-str">' '</span>, <span class="tok-str">'w'</span>, <span class="tok-str">'o'</span>, <span class="tok-str">'r'</span>, <span class="tok-str">'l'</span>, <span class="tok-str">'d'</span>, <span class="tok-number">0x0a</span>,<span class="tok-comment"> // non compressed data
+                </span><span class="tok-number">0x1c</span>, <span class="tok-number">0xf2</span>, <span class="tok-number">0x04</span>, <span class="tok-number">0x47</span>,<span class="tok-comment"> // zlib footer: checksum
+            </span>},
+            .out = <span class="tok-str">&quot;Hello world\n&quot;</span>,
+        },
+    };
+    <span class="tok-kw">for</span> (cases) |c| {
+        <span class="tok-kw">var</span> fb = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(c.in);
+        <span class="tok-kw">var</span> al = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>).init(<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>);
+        <span class="tok-kw">defer</span> al.deinit();
+
+        <span class="tok-kw">try</span> <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.decompress">decompress</a>(.zlib, fb.reader(), al.writer());
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(c.out, al.items);
+    }
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;fuzzing tests&quot;</span> {
+    <span class="tok-kw">const</span> cases = [_]<span class="tok-kw">struct</span> {
+        input: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+        out: []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-str">&quot;&quot;</span>,
+        err: ?<span class="tok-type">anyerror</span> = <span class="tok-null">null</span>,
+    }{
+        .{ .input = <span class="tok-str">&quot;deflate-stream&quot;</span>, .out = <span class="tok-builtin">@embedFile</span>(<span class="tok-str">&quot;testdata/fuzz/deflate-stream.expect&quot;</span>) },<span class="tok-comment"> // 0
+        </span>.{ .input = <span class="tok-str">&quot;empty-distance-alphabet01&quot;</span> },
+        .{ .input = <span class="tok-str">&quot;empty-distance-alphabet02&quot;</span> },
+        .{ .input = <span class="tok-str">&quot;end-of-stream&quot;</span>, .err = <span class="tok-kw">error</span>.EndOfStream },
+        .{ .input = <span class="tok-str">&quot;invalid-distance&quot;</span>, .err = <span class="tok-kw">error</span>.InvalidMatch },
+        .{ .input = <span class="tok-str">&quot;invalid-tree01&quot;</span>, .err = <span class="tok-kw">error</span>.IncompleteHuffmanTree },<span class="tok-comment"> // 5
+        </span>.{ .input = <span class="tok-str">&quot;invalid-tree02&quot;</span>, .err = <span class="tok-kw">error</span>.IncompleteHuffmanTree },
+        .{ .input = <span class="tok-str">&quot;invalid-tree03&quot;</span>, .err = <span class="tok-kw">error</span>.IncompleteHuffmanTree },
+        .{ .input = <span class="tok-str">&quot;lengths-overflow&quot;</span>, .err = <span class="tok-kw">error</span>.InvalidDynamicBlockHeader },
+        .{ .input = <span class="tok-str">&quot;out-of-codes&quot;</span>, .err = <span class="tok-kw">error</span>.InvalidCode },
+        .{ .input = <span class="tok-str">&quot;puff01&quot;</span>, .err = <span class="tok-kw">error</span>.WrongStoredBlockNlen },<span class="tok-comment"> // 10
+        </span>.{ .input = <span class="tok-str">&quot;puff02&quot;</span>, .err = <span class="tok-kw">error</span>.EndOfStream },
+        .{ .input = <span class="tok-str">&quot;puff03&quot;</span>, .out = &amp;[_]<span class="tok-type">u8</span>{<span class="tok-number">0xa</span>} },
+        .{ .input = <span class="tok-str">&quot;puff04&quot;</span>, .err = <span class="tok-kw">error</span>.InvalidCode },
+        .{ .input = <span class="tok-str">&quot;puff05&quot;</span>, .err = <span class="tok-kw">error</span>.EndOfStream },
+        .{ .input = <span class="tok-str">&quot;puff06&quot;</span>, .err = <span class="tok-kw">error</span>.EndOfStream },
+        .{ .input = <span class="tok-str">&quot;puff08&quot;</span>, .err = <span class="tok-kw">error</span>.InvalidCode },
+        .{ .input = <span class="tok-str">&quot;puff09&quot;</span>, .out = <span class="tok-str">&quot;P&quot;</span> },
+        .{ .input = <span class="tok-str">&quot;puff10&quot;</span>, .err = <span class="tok-kw">error</span>.InvalidCode },
+        .{ .input = <span class="tok-str">&quot;puff11&quot;</span>, .err = <span class="tok-kw">error</span>.InvalidMatch },
+        .{ .input = <span class="tok-str">&quot;puff12&quot;</span>, .err = <span class="tok-kw">error</span>.InvalidDynamicBlockHeader },<span class="tok-comment"> // 20
+        </span>.{ .input = <span class="tok-str">&quot;puff13&quot;</span>, .err = <span class="tok-kw">error</span>.IncompleteHuffmanTree },
+        .{ .input = <span class="tok-str">&quot;puff14&quot;</span>, .err = <span class="tok-kw">error</span>.EndOfStream },
+        .{ .input = <span class="tok-str">&quot;puff15&quot;</span>, .err = <span class="tok-kw">error</span>.IncompleteHuffmanTree },
+        .{ .input = <span class="tok-str">&quot;puff16&quot;</span>, .err = <span class="tok-kw">error</span>.InvalidDynamicBlockHeader },
+        .{ .input = <span class="tok-str">&quot;puff17&quot;</span>, .err = <span class="tok-kw">error</span>.MissingEndOfBlockCode },<span class="tok-comment"> // 25
+        </span>.{ .input = <span class="tok-str">&quot;fuzz1&quot;</span>, .err = <span class="tok-kw">error</span>.InvalidDynamicBlockHeader },
+        .{ .input = <span class="tok-str">&quot;fuzz2&quot;</span>, .err = <span class="tok-kw">error</span>.InvalidDynamicBlockHeader },
+        .{ .input = <span class="tok-str">&quot;fuzz3&quot;</span>, .err = <span class="tok-kw">error</span>.InvalidMatch },
+        .{ .input = <span class="tok-str">&quot;fuzz4&quot;</span>, .err = <span class="tok-kw">error</span>.OversubscribedHuffmanTree },
+        .{ .input = <span class="tok-str">&quot;puff18&quot;</span>, .err = <span class="tok-kw">error</span>.OversubscribedHuffmanTree },<span class="tok-comment"> // 30
+        </span>.{ .input = <span class="tok-str">&quot;puff19&quot;</span>, .err = <span class="tok-kw">error</span>.OversubscribedHuffmanTree },
+        .{ .input = <span class="tok-str">&quot;puff20&quot;</span>, .err = <span class="tok-kw">error</span>.OversubscribedHuffmanTree },
+        .{ .input = <span class="tok-str">&quot;puff21&quot;</span>, .err = <span class="tok-kw">error</span>.OversubscribedHuffmanTree },
+        .{ .input = <span class="tok-str">&quot;puff22&quot;</span>, .err = <span class="tok-kw">error</span>.OversubscribedHuffmanTree },
+        .{ .input = <span class="tok-str">&quot;puff23&quot;</span>, .err = <span class="tok-kw">error</span>.OversubscribedHuffmanTree },<span class="tok-comment"> // 35
+        </span>.{ .input = <span class="tok-str">&quot;puff24&quot;</span>, .err = <span class="tok-kw">error</span>.IncompleteHuffmanTree },
+        .{ .input = <span class="tok-str">&quot;puff25&quot;</span>, .err = <span class="tok-kw">error</span>.OversubscribedHuffmanTree },
+        .{ .input = <span class="tok-str">&quot;puff26&quot;</span>, .err = <span class="tok-kw">error</span>.InvalidDynamicBlockHeader },
+        .{ .input = <span class="tok-str">&quot;puff27&quot;</span>, .err = <span class="tok-kw">error</span>.InvalidDynamicBlockHeader },
+    };
+
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (cases, <span class="tok-number">0</span>..) |c, case_no| {
+        <span class="tok-kw">var</span> in = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(<span class="tok-builtin">@embedFile</span>(<span class="tok-str">&quot;testdata/fuzz/&quot;</span> ++ c.input ++ <span class="tok-str">&quot;.input&quot;</span>));
+        <span class="tok-kw">var</span> out = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>).init(<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>);
+        <span class="tok-kw">defer</span> out.deinit();
+        <span class="tok-kw">errdefer</span> <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.print">print</a>(<span class="tok-str">&quot;test case failed {}\n&quot;</span>, .{case_no});
+
+        <span class="tok-kw">if</span> (c.err) |expected_err| {
+            <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(expected_err, <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.decompress">decompress</a>(.raw, in.reader(), out.writer()));
+        } <span class="tok-kw">else</span> {
+            <span class="tok-kw">try</span> <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.decompress">decompress</a>(.raw, in.reader(), out.writer());
+            <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(c.out, out.items);
+        }
+    }
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;bug 18966&quot;</span> {
+    <span class="tok-kw">const</span> input = <span class="tok-builtin">@embedFile</span>(<span class="tok-str">&quot;testdata/fuzz/bug_18966.input&quot;</span>);
+    <span class="tok-kw">const</span> expect = <span class="tok-builtin">@embedFile</span>(<span class="tok-str">&quot;testdata/fuzz/bug_18966.expect&quot;</span>);
+
+    <span class="tok-kw">var</span> in = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(input);
+    <span class="tok-kw">var</span> out = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>).init(<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>);
+    <span class="tok-kw">defer</span> out.deinit();
+
+    <span class="tok-kw">try</span> <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.decompress">decompress</a>(.gzip, in.reader(), out.writer());
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(expect, out.items);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;bug 19895&quot;</span> {
+    <span class="tok-kw">const</span> input = &amp;[_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0b0000_0001</span>, <span class="tok-number">0b0000_1100</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0b1111_0011</span>, <span class="tok-number">0xff</span>,<span class="tok-comment"> // deflate fixed buffer header len, nlen
+        </span><span class="tok-str">'H'</span>, <span class="tok-str">'e'</span>, <span class="tok-str">'l'</span>, <span class="tok-str">'l'</span>, <span class="tok-str">'o'</span>, <span class="tok-str">' '</span>, <span class="tok-str">'w'</span>, <span class="tok-str">'o'</span>, <span class="tok-str">'r'</span>, <span class="tok-str">'l'</span>, <span class="tok-str">'d'</span>, <span class="tok-number">0x0a</span>,<span class="tok-comment"> // non compressed data
+    </span>};
+    <span class="tok-kw">var</span> in = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(input);
+    <span class="tok-kw">var</span> decomp = <a href="std.compress.flate.inflate.html#std.compress.flate.inflate.decompressor">decompressor</a>(.raw, in.reader());
+    <span class="tok-kw">var</span> buf: [<span class="tok-number">0</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-number">0</span>, <span class="tok-kw">try</span> decomp.read(&amp;buf));
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

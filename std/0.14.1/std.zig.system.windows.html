@@ -1,0 +1,772 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">zig</a></li><li><a href="std.zig.html" class="">system</a></li><li><a href="std.zig.system.windows.html" class="active">windows</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.zig.system.windows" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.zig.system.windows</span><a href="#src.zig-std.zig.system.windows">[src]</a></h1><div class="sectNamespaces"><h2 class="sectionHeader">Namespaces</h2><ul class="listNamespaces columns"><li><a href="std.os.windows.REG.html">std.os.windows.REG</a></li></ul></div><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.Target.Os.WindowsVersion.html">std.Target.Os.WindowsVersion</a></li><li><a href="std.os.windows.PF.html">std.os.windows.PF</a></li></ul></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.os.windows.IsProcessorFeaturePresent" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">IsProcessorFeaturePresent</span><a href="#src.zig-std.os.windows.IsProcessorFeaturePresent">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">IsProcessorFeaturePresent</span>(feature: <a href="std.os.windows.PF.html">PF</a>) <span class="tok-type">bool</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>feature: <a href="std.os.windows.PF.html">PF</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.IsProcessorFeaturePresent">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">IsProcessorFeaturePresent</span>(feature: <a href="std.os.windows.PF.html">PF</a>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">if</span> (<span class="tok-builtin">@intFromEnum</span>(feature) &gt;= <a href="std.os.windows.html#std.os.windows.PROCESSOR_FEATURE_MAX">PROCESSOR_FEATURE_MAX</a>) <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+    <span class="tok-kw">return</span> <a href="std.os.windows.html#std.os.windows.SharedUserData">SharedUserData</a>.<a href="#">ProcessorFeatures</a>[<span class="tok-builtin">@intFromEnum</span>(feature)] == <span class="tok-number">1</span>;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.zig.system.windows.detectRuntimeVersion" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">detectRuntimeVersion</span><a href="#src.zig-std.zig.system.windows.detectRuntimeVersion">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">detectRuntimeVersion</span>() <a href="std.Target.Os.WindowsVersion.html">WindowsVersion</a></code></pre></div><div class="tldDocs"><p>Returns the highest known WindowsVersion deduced from reported runtime information.
+Discards information about in-between versions we don't differentiate.</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.system.windows.detectRuntimeVersion">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">detectRuntimeVersion</span>() <a href="std.Target.Os.WindowsVersion.html">WindowsVersion</a> {
+    <span class="tok-kw">var</span> version_info: <a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.OSVERSIONINFOW.html">RTL_OSVERSIONINFOW</a> = <span class="tok-null">undefined</span>;
+    version_info.dwOSVersionInfoSize = <span class="tok-builtin">@sizeOf</span>(<span class="tok-builtin">@TypeOf</span>(version_info));
+
+    <span class="tok-kw">switch</span> (<a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.ntdll.html">ntdll</a>.<a href="std.os.windows.ntdll.html#std.os.windows.ntdll.RtlGetVersion">RtlGetVersion</a>(&amp;version_info)) {
+        .SUCCESS =&gt; {},
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+    }<span class="tok-comment">
+
+    // Starting from the system infos build a NTDDI-like version
+    // constant whose format is:
+    //   B0 B1 B2 B3
+    //   `---` `` ``--&gt; Sub-version (Starting from Windows 10 onwards)
+    //     \    `--&gt; Service pack (Always zero in the constants defined)
+    //      `--&gt; OS version (Major &amp; minor)
+    </span><span class="tok-kw">const</span> os_ver: <span class="tok-type">u16</span> = <span class="tok-builtin">@as</span>(<span class="tok-type">u16</span>, <span class="tok-builtin">@intCast</span>(version_info.dwMajorVersion &amp; <span class="tok-number">0xff</span>)) &lt;&lt; <span class="tok-number">8</span> |
+        <span class="tok-builtin">@as</span>(<span class="tok-type">u16</span>, <span class="tok-builtin">@intCast</span>(version_info.dwMinorVersion &amp; <span class="tok-number">0xff</span>));
+    <span class="tok-kw">const</span> sp_ver: <span class="tok-type">u8</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> sub_ver: <span class="tok-type">u8</span> = <span class="tok-kw">if</span> (os_ver &gt;= <span class="tok-number">0x0A00</span>) subver: {<span class="tok-comment">
+        // There's no other way to obtain this info beside
+        // checking the build number against a known set of
+        // values
+        </span><span class="tok-kw">var</span> last_idx: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">for</span> (<a href="std.Target.Os.WindowsVersion.html">WindowsVersion</a>.<a href="std.Target.Os.WindowsVersion.html#std.Target.Os.WindowsVersion.known_win10_build_numbers">known_win10_build_numbers</a>, <span class="tok-number">0</span>..) |build, i| {
+            <span class="tok-kw">if</span> (version_info.dwBuildNumber &gt;= build)
+                last_idx = i;
+        }
+        <span class="tok-kw">break</span> :subver <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-builtin">@truncate</span>(last_idx));
+    } <span class="tok-kw">else</span> <span class="tok-number">0</span>;
+
+    <span class="tok-kw">const</span> version: <span class="tok-type">u32</span> = <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, os_ver) &lt;&lt; <span class="tok-number">16</span> | <span class="tok-builtin">@as</span>(<span class="tok-type">u16</span>, sp_ver) &lt;&lt; <span class="tok-number">8</span> | sub_ver;
+
+    <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(<a href="std.Target.Os.WindowsVersion.html">WindowsVersion</a>, <span class="tok-builtin">@enumFromInt</span>(version));
+}</code></pre></details></div></div><div class="decl"><h2 id="std.zig.system.windows.detectNativeCpuAndFeatures" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">detectNativeCpuAndFeatures</span><a href="#src.zig-std.zig.system.windows.detectNativeCpuAndFeatures">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">detectNativeCpuAndFeatures</span>() ?<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.system.windows.detectNativeCpuAndFeatures">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">detectNativeCpuAndFeatures</span>() ?<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a> {
+    <span class="tok-kw">const</span> current_arch = <a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.cpu">cpu</a>.<a href="#">arch</a>;
+    <span class="tok-kw">const</span> cpu: ?<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a> = <span class="tok-kw">switch</span> (current_arch) {
+        .aarch64, .aarch64_be =&gt; blk: {
+            <span class="tok-kw">var</span> cores: [<span class="tok-number">128</span>]<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> core_count = <a href="std.zig.system.windows.html#std.zig.system.windows.getCpuCount">getCpuCount</a>();
+
+            <span class="tok-kw">if</span> (core_count &gt; cores.len) <span class="tok-kw">break</span> :blk <span class="tok-null">null</span>;
+
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (i &lt; core_count) : (i += <span class="tok-number">1</span>) {<span class="tok-comment">
+                // Backing datastore
+                </span><span class="tok-kw">var</span> registers: [<span class="tok-number">12</span>]<span class="tok-type">u64</span> = <span class="tok-null">undefined</span>;<span class="tok-comment">
+
+                // Registry key to system ID register mapping
+                // CP 4000 -&gt; MIDR_EL1
+                // CP 4020 -&gt; ID_AA64PFR0_EL1
+                // CP 4021 -&gt; ID_AA64PFR1_EL1
+                // CP 4028 -&gt; ID_AA64DFR0_EL1
+                // CP 4029 -&gt; ID_AA64DFR1_EL1
+                // CP 402C -&gt; ID_AA64AFR0_EL1
+                // CP 402D -&gt; ID_AA64AFR1_EL1
+                // CP 4030 -&gt; ID_AA64ISAR0_EL1
+                // CP 4031 -&gt; ID_AA64ISAR1_EL1
+                // CP 4038 -&gt; ID_AA64MMFR0_EL1
+                // CP 4039 -&gt; ID_AA64MMFR1_EL1
+                // CP 403A -&gt; ID_AA64MMFR2_EL1
+                </span><a href="std.zig.system.windows.html#std.zig.system.windows.getCpuInfoFromRegistry">getCpuInfoFromRegistry</a>(i, .{
+                    .{ .key = <span class="tok-str">&quot;CP 4000&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">0</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 4020&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">1</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 4021&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">2</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 4028&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">3</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 4029&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">4</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 402C&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">5</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 402D&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">6</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 4030&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">7</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 4031&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">8</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 4038&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">9</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 4039&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">10</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 403A&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">11</span>])) },
+                }) <span class="tok-kw">catch</span> <span class="tok-kw">break</span> :blk <span class="tok-null">null</span>;
+
+                cores[i] = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;arm.zig&quot;</span>).aarch64.detectNativeCpuAndFeatures(current_arch, registers) <span class="tok-kw">orelse</span>
+                    <span class="tok-kw">break</span> :blk <span class="tok-null">null</span>;
+            }<span class="tok-comment">
+
+            // Pick the first core, usually LITTLE in big.LITTLE architecture.
+            </span><span class="tok-kw">break</span> :blk cores[<span class="tok-number">0</span>];
+        },
+        <span class="tok-kw">else</span> =&gt; <span class="tok-null">null</span>,
+    };
+    <span class="tok-kw">return</span> cpu <span class="tok-kw">orelse</span> <a href="std.zig.system.windows.html#std.zig.system.windows.genericCpuAndNativeFeatures">genericCpuAndNativeFeatures</a>(current_arch);
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.zig.system.windows">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>);
+<span class="tok-kw">const</span> builtin = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;builtin&quot;</span>);
+<span class="tok-kw">const</span> assert = <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>;
+<span class="tok-kw">const</span> mem = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>;
+<span class="tok-kw">const</span> Target = <a href="std.html">std</a>.<a href="std.Target.html">Target</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> WindowsVersion = <a href="std.html">std</a>.<a href="std.Target.html">Target</a>.<a href="std.Target.Os.html">Os</a>.<a href="std.Target.Os.WindowsVersion.html">WindowsVersion</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> PF = <a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.PF.html">PF</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> REG = <a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.REG.html">REG</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> IsProcessorFeaturePresent = <a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.IsProcessorFeaturePresent">IsProcessorFeaturePresent</a>;
+
+<span class="tok-comment">/// Returns the highest known WindowsVersion deduced from reported runtime information.</span>
+<span class="tok-comment">/// Discards information about in-between versions we don't differentiate.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">detectRuntimeVersion</span>() <a href="std.Target.Os.WindowsVersion.html">WindowsVersion</a> {
+    <span class="tok-kw">var</span> version_info: <a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.OSVERSIONINFOW.html">RTL_OSVERSIONINFOW</a> = <span class="tok-null">undefined</span>;
+    version_info.dwOSVersionInfoSize = <span class="tok-builtin">@sizeOf</span>(<span class="tok-builtin">@TypeOf</span>(version_info));
+
+    <span class="tok-kw">switch</span> (<a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.ntdll.html">ntdll</a>.<a href="std.os.windows.ntdll.html#std.os.windows.ntdll.RtlGetVersion">RtlGetVersion</a>(&amp;version_info)) {
+        .SUCCESS =&gt; {},
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+    }<span class="tok-comment">
+
+    // Starting from the system infos build a NTDDI-like version
+    // constant whose format is:
+    //   B0 B1 B2 B3
+    //   `---` `` ``--&gt; Sub-version (Starting from Windows 10 onwards)
+    //     \    `--&gt; Service pack (Always zero in the constants defined)
+    //      `--&gt; OS version (Major &amp; minor)
+    </span><span class="tok-kw">const</span> os_ver: <span class="tok-type">u16</span> = <span class="tok-builtin">@as</span>(<span class="tok-type">u16</span>, <span class="tok-builtin">@intCast</span>(version_info.dwMajorVersion &amp; <span class="tok-number">0xff</span>)) &lt;&lt; <span class="tok-number">8</span> |
+        <span class="tok-builtin">@as</span>(<span class="tok-type">u16</span>, <span class="tok-builtin">@intCast</span>(version_info.dwMinorVersion &amp; <span class="tok-number">0xff</span>));
+    <span class="tok-kw">const</span> sp_ver: <span class="tok-type">u8</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> sub_ver: <span class="tok-type">u8</span> = <span class="tok-kw">if</span> (os_ver &gt;= <span class="tok-number">0x0A00</span>) subver: {<span class="tok-comment">
+        // There's no other way to obtain this info beside
+        // checking the build number against a known set of
+        // values
+        </span><span class="tok-kw">var</span> last_idx: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">for</span> (<a href="std.Target.Os.WindowsVersion.html">WindowsVersion</a>.<a href="std.Target.Os.WindowsVersion.html#std.Target.Os.WindowsVersion.known_win10_build_numbers">known_win10_build_numbers</a>, <span class="tok-number">0</span>..) |build, i| {
+            <span class="tok-kw">if</span> (version_info.dwBuildNumber &gt;= build)
+                last_idx = i;
+        }
+        <span class="tok-kw">break</span> :subver <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-builtin">@truncate</span>(last_idx));
+    } <span class="tok-kw">else</span> <span class="tok-number">0</span>;
+
+    <span class="tok-kw">const</span> version: <span class="tok-type">u32</span> = <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, os_ver) &lt;&lt; <span class="tok-number">16</span> | <span class="tok-builtin">@as</span>(<span class="tok-type">u16</span>, sp_ver) &lt;&lt; <span class="tok-number">8</span> | sub_ver;
+
+    <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(<a href="std.Target.Os.WindowsVersion.html">WindowsVersion</a>, <span class="tok-builtin">@enumFromInt</span>(version));
+}<span class="tok-comment">
+
+// Technically, a registry value can be as long as 1MB. However, MS recommends storing
+// values larger than 2048 bytes in a file rather than directly in the registry, and since we
+// are only accessing a system hive \Registry\Machine, we stick to MS guidelines.
+// https://learn.microsoft.com/en-us/windows/win32/sysinfo/registry-element-size-limits
+</span><span class="tok-kw">const</span> max_value_len = <span class="tok-number">2048</span>;
+
+<span class="tok-kw">fn</span> <span class="tok-fn">getCpuInfoFromRegistry</span>(core: <span class="tok-type">usize</span>, args: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> ArgsType = <span class="tok-builtin">@TypeOf</span>(args);
+    <span class="tok-kw">const</span> args_type_info = <span class="tok-builtin">@typeInfo</span>(ArgsType);
+
+    <span class="tok-kw">if</span> (args_type_info != .@&quot;struct&quot;) {
+        <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;expected tuple or struct argument, found &quot;</span> ++ <span class="tok-builtin">@typeName</span>(ArgsType));
+    }
+
+    <span class="tok-kw">const</span> fields_info = args_type_info.@&quot;struct&quot;.fields;<span class="tok-comment">
+
+    // Originally, I wanted to issue a single call with a more complex table structure such that we
+    // would sequentially visit each CPU#d subkey in the registry and pull the value of interest into
+    // a buffer, however, NT seems to be expecting a single buffer per each table meaning we would
+    // end up pulling only the last CPU core info, overwriting everything else.
+    // If anyone can come up with a solution to this, please do!
+    </span><span class="tok-kw">const</span> table_size = <span class="tok-number">1</span> + fields_info.len;
+    <span class="tok-kw">var</span> table: [table_size + <span class="tok-number">1</span>]<a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.RTL_QUERY_REGISTRY_TABLE.html">RTL_QUERY_REGISTRY_TABLE</a> = <span class="tok-null">undefined</span>;
+
+    <span class="tok-kw">const</span> topkey = <a href="std.html">std</a>.<a href="std.unicode.html">unicode</a>.<a href="std.unicode.html#std.unicode.utf8ToUtf16LeStringLiteral">utf8ToUtf16LeStringLiteral</a>(<span class="tok-str">&quot;\\Registry\\Machine\\HARDWARE\\DESCRIPTION\\System\\CentralProcessor&quot;</span>);
+
+    <span class="tok-kw">const</span> max_cpu_buf = <span class="tok-number">4</span>;
+    <span class="tok-kw">var</span> next_cpu_buf: [max_cpu_buf]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">const</span> next_cpu = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.bufPrint">bufPrint</a>(&amp;next_cpu_buf, <span class="tok-str">&quot;{d}&quot;</span>, .{core});
+
+    <span class="tok-kw">var</span> subkey: [max_cpu_buf + <span class="tok-number">1</span>]<span class="tok-type">u16</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">const</span> subkey_len = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.unicode.html">unicode</a>.<a href="std.unicode.html#std.unicode.utf8ToUtf16Le">utf8ToUtf16Le</a>(&amp;subkey, next_cpu);
+    subkey[subkey_len] = <span class="tok-number">0</span>;
+
+    table[<span class="tok-number">0</span>] = .{
+        .QueryRoutine = <span class="tok-null">null</span>,
+        .Flags = <a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.RTL_QUERY_REGISTRY_SUBKEY">RTL_QUERY_REGISTRY_SUBKEY</a> | <a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.RTL_QUERY_REGISTRY_REQUIRED">RTL_QUERY_REGISTRY_REQUIRED</a>,
+        .Name = subkey[<span class="tok-number">0</span>..subkey_len :<span class="tok-number">0</span>],
+        .EntryContext = <span class="tok-null">null</span>,
+        .DefaultType = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.NONE">NONE</a>,
+        .DefaultData = <span class="tok-null">null</span>,
+        .DefaultLength = <span class="tok-number">0</span>,
+    };
+
+    <span class="tok-kw">var</span> tmp_bufs: [fields_info.len][<a href="std.zig.system.windows.html#std.zig.system.windows.max_value_len">max_value_len</a>]<span class="tok-type">u8</span> <span class="tok-kw">align</span>(<span class="tok-builtin">@alignOf</span>(<a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>)) = <span class="tok-null">undefined</span>;
+
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (fields_info, <span class="tok-number">0</span>..) |field, i| {
+        <span class="tok-kw">const</span> ctx: *<span class="tok-type">anyopaque</span> = blk: {
+            <span class="tok-kw">switch</span> (<span class="tok-builtin">@field</span>(args, field.name).value_type) {
+                <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.SZ">SZ</a>,
+                <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.EXPAND_SZ">EXPAND_SZ</a>,
+                <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.MULTI_SZ">MULTI_SZ</a>,
+                =&gt; {
+                    <span class="tok-kw">comptime</span> <a href="std.debug.html#std.debug.assert">assert</a>(<span class="tok-builtin">@sizeOf</span>(<a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>) % <span class="tok-number">2</span> == <span class="tok-number">0</span>);
+                    <span class="tok-kw">const</span> unicode = <span class="tok-builtin">@as</span>(*<a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>, <span class="tok-builtin">@ptrCast</span>(&amp;tmp_bufs[i]));
+                    unicode.* = .{
+                        .Length = <span class="tok-number">0</span>,
+                        .MaximumLength = <a href="std.zig.system.windows.html#std.zig.system.windows.max_value_len">max_value_len</a> - <span class="tok-builtin">@sizeOf</span>(<a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>),
+                        .Buffer = <span class="tok-builtin">@as</span>([*]<span class="tok-type">u16</span>, <span class="tok-builtin">@ptrCast</span>(tmp_bufs[i][<span class="tok-builtin">@sizeOf</span>(<a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>)..])),
+                    };
+                    <span class="tok-kw">break</span> :blk unicode;
+                },
+
+                <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.DWORD">DWORD</a>,
+                <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.DWORD_BIG_ENDIAN">DWORD_BIG_ENDIAN</a>,
+                <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>,
+                =&gt; <span class="tok-kw">break</span> :blk &amp;tmp_bufs[i],
+
+                <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+            }
+        };
+
+        <span class="tok-kw">var</span> key_buf: [<a href="std.zig.system.windows.html#std.zig.system.windows.max_value_len">max_value_len</a> / <span class="tok-number">2</span> + <span class="tok-number">1</span>]<span class="tok-type">u16</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">const</span> key_len = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.unicode.html">unicode</a>.<a href="std.unicode.html#std.unicode.utf8ToUtf16Le">utf8ToUtf16Le</a>(&amp;key_buf, <span class="tok-builtin">@field</span>(args, field.name).key);
+        key_buf[key_len] = <span class="tok-number">0</span>;
+
+        table[i + <span class="tok-number">1</span>] = .{
+            .QueryRoutine = <span class="tok-null">null</span>,
+            .Flags = <a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.RTL_QUERY_REGISTRY_DIRECT">RTL_QUERY_REGISTRY_DIRECT</a> | <a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.RTL_QUERY_REGISTRY_REQUIRED">RTL_QUERY_REGISTRY_REQUIRED</a>,
+            .Name = key_buf[<span class="tok-number">0</span>..key_len :<span class="tok-number">0</span>],
+            .EntryContext = ctx,
+            .DefaultType = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.NONE">NONE</a>,
+            .DefaultData = <span class="tok-null">null</span>,
+            .DefaultLength = <span class="tok-number">0</span>,
+        };
+    }<span class="tok-comment">
+
+    // Table sentinel
+    </span>table[table_size] = .{
+        .QueryRoutine = <span class="tok-null">null</span>,
+        .Flags = <span class="tok-number">0</span>,
+        .Name = <span class="tok-null">null</span>,
+        .EntryContext = <span class="tok-null">null</span>,
+        .DefaultType = <span class="tok-number">0</span>,
+        .DefaultData = <span class="tok-null">null</span>,
+        .DefaultLength = <span class="tok-number">0</span>,
+    };
+
+    <span class="tok-kw">const</span> res = <a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.ntdll.html">ntdll</a>.<a href="std.os.windows.ntdll.html#std.os.windows.ntdll.RtlQueryRegistryValues">RtlQueryRegistryValues</a>(
+        <a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.RTL_REGISTRY_ABSOLUTE">RTL_REGISTRY_ABSOLUTE</a>,
+        topkey,
+        &amp;table,
+        <span class="tok-null">null</span>,
+        <span class="tok-null">null</span>,
+    );
+    <span class="tok-kw">switch</span> (res) {
+        .SUCCESS =&gt; {
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (fields_info, <span class="tok-number">0</span>..) |field, i| <span class="tok-kw">switch</span> (<span class="tok-builtin">@field</span>(args, field.name).value_type) {
+                <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.SZ">SZ</a>,
+                <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.EXPAND_SZ">EXPAND_SZ</a>,
+                <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.MULTI_SZ">MULTI_SZ</a>,
+                =&gt; {
+                    <span class="tok-kw">var</span> buf = <span class="tok-builtin">@field</span>(args, field.name).value_buf;
+                    <span class="tok-kw">const</span> entry = <span class="tok-builtin">@as</span>(*<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>, <span class="tok-builtin">@ptrCast</span>(table[i + <span class="tok-number">1</span>].EntryContext));
+                    <span class="tok-kw">const</span> len = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.unicode.html">unicode</a>.<a href="std.unicode.html#std.unicode.utf16LeToUtf8">utf16LeToUtf8</a>(buf, entry.Buffer.?[<span class="tok-number">0</span> .. entry.Length / <span class="tok-number">2</span>]);
+                    buf[len] = <span class="tok-number">0</span>;
+                },
+
+                <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.DWORD">DWORD</a>,
+                <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.DWORD_BIG_ENDIAN">DWORD_BIG_ENDIAN</a>,
+                <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>,
+                =&gt; {
+                    <span class="tok-kw">const</span> entry = <span class="tok-builtin">@as</span>([*]<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(table[i + <span class="tok-number">1</span>].EntryContext));
+                    <span class="tok-kw">switch</span> (<span class="tok-builtin">@field</span>(args, field.name).value_type) {
+                        <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.DWORD">DWORD</a>, <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.DWORD_BIG_ENDIAN">DWORD_BIG_ENDIAN</a> =&gt; {
+                            <span class="tok-builtin">@memcpy</span>(<span class="tok-builtin">@field</span>(args, field.name).value_buf[<span class="tok-number">0</span>..<span class="tok-number">4</span>], entry[<span class="tok-number">0</span>..<span class="tok-number">4</span>]);
+                        },
+                        <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a> =&gt; {
+                            <span class="tok-builtin">@memcpy</span>(<span class="tok-builtin">@field</span>(args, field.name).value_buf[<span class="tok-number">0</span>..<span class="tok-number">8</span>], entry[<span class="tok-number">0</span>..<span class="tok-number">8</span>]);
+                        },
+                        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+                    }
+                },
+
+                <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+            };
+        },
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Unexpected,
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">setFeature</span>(<span class="tok-kw">comptime</span> Feature: <span class="tok-type">type</span>, cpu: *<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>, feature: Feature, enabled: <span class="tok-type">bool</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> idx = <span class="tok-builtin">@as</span>(<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Feature.html">Feature</a>.<a href="std.Target.Cpu.Feature.Set.html">Set</a>.<a href="std.Target.Cpu.Feature.Set.html#std.Target.Cpu.Feature.Set.Index">Index</a>, <span class="tok-builtin">@intFromEnum</span>(feature));
+
+    <span class="tok-kw">if</span> (enabled) cpu.features.addFeature(idx) <span class="tok-kw">else</span> cpu.features.removeFeature(idx);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">getCpuCount</span>() <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.peb">peb</a>().NumberOfProcessors;
+}
+
+<span class="tok-comment">/// If the fine-grained detection of CPU features via Win registry fails,</span>
+<span class="tok-comment">/// we fallback to a generic CPU model but we override the feature set</span>
+<span class="tok-comment">/// using `SharedUserData` contents.</span>
+<span class="tok-comment">/// This is effectively what LLVM does for all ARM chips on Windows.</span>
+<span class="tok-kw">fn</span> <span class="tok-fn">genericCpuAndNativeFeatures</span>(arch: <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Arch.html">Arch</a>) <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a> {
+    <span class="tok-kw">var</span> cpu = <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>{
+        .arch = arch,
+        .model = <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Model.html">Model</a>.<a href="std.Target.Cpu.Model.html#std.Target.Cpu.Model.generic">generic</a>(arch),
+        .features = <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Feature.html">Feature</a>.<a href="std.Target.Cpu.Feature.Set.html">Set</a>.<a href="std.Target.Cpu.Feature.Set.html#std.Target.Cpu.Feature.Set.empty">empty</a>,
+    };
+
+    <span class="tok-kw">switch</span> (arch) {
+        .aarch64, .aarch64_be =&gt; {
+            <span class="tok-kw">const</span> Feature = <a href="std.Target.html">Target</a>.<a href="std.Target.aarch64.html">aarch64</a>.<a href="std.Target.aarch64.Feature.html">Feature</a>;<span class="tok-comment">
+
+            // Override any features that are either present or absent
+            </span><a href="std.zig.system.windows.html#std.zig.system.windows.setFeature">setFeature</a>(Feature, &amp;cpu, .neon, <a href="std.os.windows.html#std.os.windows.IsProcessorFeaturePresent">IsProcessorFeaturePresent</a>(<a href="std.os.windows.PF.html">PF</a>.<a href="#">ARM_NEON_INSTRUCTIONS_AVAILABLE</a>));
+            <a href="std.zig.system.windows.html#std.zig.system.windows.setFeature">setFeature</a>(Feature, &amp;cpu, .crc, <a href="std.os.windows.html#std.os.windows.IsProcessorFeaturePresent">IsProcessorFeaturePresent</a>(<a href="std.os.windows.PF.html">PF</a>.<a href="#">ARM_V8_CRC32_INSTRUCTIONS_AVAILABLE</a>));
+            <a href="std.zig.system.windows.html#std.zig.system.windows.setFeature">setFeature</a>(Feature, &amp;cpu, .crypto, <a href="std.os.windows.html#std.os.windows.IsProcessorFeaturePresent">IsProcessorFeaturePresent</a>(<a href="std.os.windows.PF.html">PF</a>.<a href="#">ARM_V8_CRYPTO_INSTRUCTIONS_AVAILABLE</a>));
+            <a href="std.zig.system.windows.html#std.zig.system.windows.setFeature">setFeature</a>(Feature, &amp;cpu, .lse, <a href="std.os.windows.html#std.os.windows.IsProcessorFeaturePresent">IsProcessorFeaturePresent</a>(<a href="std.os.windows.PF.html">PF</a>.<a href="#">ARM_V81_ATOMIC_INSTRUCTIONS_AVAILABLE</a>));
+            <a href="std.zig.system.windows.html#std.zig.system.windows.setFeature">setFeature</a>(Feature, &amp;cpu, .dotprod, <a href="std.os.windows.html#std.os.windows.IsProcessorFeaturePresent">IsProcessorFeaturePresent</a>(<a href="std.os.windows.PF.html">PF</a>.<a href="#">ARM_V82_DP_INSTRUCTIONS_AVAILABLE</a>));
+            <a href="std.zig.system.windows.html#std.zig.system.windows.setFeature">setFeature</a>(Feature, &amp;cpu, .jsconv, <a href="std.os.windows.html#std.os.windows.IsProcessorFeaturePresent">IsProcessorFeaturePresent</a>(<a href="std.os.windows.PF.html">PF</a>.<a href="#">ARM_V83_JSCVT_INSTRUCTIONS_AVAILABLE</a>));
+        },
+        <span class="tok-kw">else</span> =&gt; {},
+    }
+
+    <span class="tok-kw">return</span> cpu;
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">detectNativeCpuAndFeatures</span>() ?<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a> {
+    <span class="tok-kw">const</span> current_arch = <a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.cpu">cpu</a>.<a href="#">arch</a>;
+    <span class="tok-kw">const</span> cpu: ?<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a> = <span class="tok-kw">switch</span> (current_arch) {
+        .aarch64, .aarch64_be =&gt; blk: {
+            <span class="tok-kw">var</span> cores: [<span class="tok-number">128</span>]<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> core_count = <a href="std.zig.system.windows.html#std.zig.system.windows.getCpuCount">getCpuCount</a>();
+
+            <span class="tok-kw">if</span> (core_count &gt; cores.len) <span class="tok-kw">break</span> :blk <span class="tok-null">null</span>;
+
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (i &lt; core_count) : (i += <span class="tok-number">1</span>) {<span class="tok-comment">
+                // Backing datastore
+                </span><span class="tok-kw">var</span> registers: [<span class="tok-number">12</span>]<span class="tok-type">u64</span> = <span class="tok-null">undefined</span>;<span class="tok-comment">
+
+                // Registry key to system ID register mapping
+                // CP 4000 -&gt; MIDR_EL1
+                // CP 4020 -&gt; ID_AA64PFR0_EL1
+                // CP 4021 -&gt; ID_AA64PFR1_EL1
+                // CP 4028 -&gt; ID_AA64DFR0_EL1
+                // CP 4029 -&gt; ID_AA64DFR1_EL1
+                // CP 402C -&gt; ID_AA64AFR0_EL1
+                // CP 402D -&gt; ID_AA64AFR1_EL1
+                // CP 4030 -&gt; ID_AA64ISAR0_EL1
+                // CP 4031 -&gt; ID_AA64ISAR1_EL1
+                // CP 4038 -&gt; ID_AA64MMFR0_EL1
+                // CP 4039 -&gt; ID_AA64MMFR1_EL1
+                // CP 403A -&gt; ID_AA64MMFR2_EL1
+                </span><a href="std.zig.system.windows.html#std.zig.system.windows.getCpuInfoFromRegistry">getCpuInfoFromRegistry</a>(i, .{
+                    .{ .key = <span class="tok-str">&quot;CP 4000&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">0</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 4020&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">1</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 4021&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">2</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 4028&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">3</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 4029&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">4</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 402C&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">5</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 402D&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">6</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 4030&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">7</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 4031&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">8</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 4038&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">9</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 4039&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">10</span>])) },
+                    .{ .key = <span class="tok-str">&quot;CP 403A&quot;</span>, .value_type = <a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.QWORD">QWORD</a>, .value_buf = <span class="tok-builtin">@as</span>(*[<span class="tok-number">8</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;registers[<span class="tok-number">11</span>])) },
+                }) <span class="tok-kw">catch</span> <span class="tok-kw">break</span> :blk <span class="tok-null">null</span>;
+
+                cores[i] = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;arm.zig&quot;</span>).aarch64.detectNativeCpuAndFeatures(current_arch, registers) <span class="tok-kw">orelse</span>
+                    <span class="tok-kw">break</span> :blk <span class="tok-null">null</span>;
+            }<span class="tok-comment">
+
+            // Pick the first core, usually LITTLE in big.LITTLE architecture.
+            </span><span class="tok-kw">break</span> :blk cores[<span class="tok-number">0</span>];
+        },
+        <span class="tok-kw">else</span> =&gt; <span class="tok-null">null</span>,
+    };
+    <span class="tok-kw">return</span> cpu <span class="tok-kw">orelse</span> <a href="std.zig.system.windows.html#std.zig.system.windows.genericCpuAndNativeFeatures">genericCpuAndNativeFeatures</a>(current_arch);
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,769 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">os</a></li><li><a href="std.os.html" class="">linux</a></li><li><a href="std.os.linux.syscalls.html" class="">syscalls</a></li><li><a href="std.os.linux.syscalls.MipsN64.html" class="active">MipsN64</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.os.linux.syscalls.MipsN64" class="declHeader"><span class="declHeaderCategory">enum</span><span class="declHeaderIdentifier">std.os.linux.syscalls.MipsN64</span><a href="#src.zig-std.os.linux.syscalls.MipsN64">[src]</a></h1><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>read = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">0</span></code></pre></div><div><pre><code>write = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">1</span></code></pre></div><div><pre><code>open = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">2</span></code></pre></div><div><pre><code>close = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">3</span></code></pre></div><div><pre><code>stat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">4</span></code></pre></div><div><pre><code>fstat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">5</span></code></pre></div><div><pre><code>lstat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">6</span></code></pre></div><div><pre><code>poll = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">7</span></code></pre></div><div><pre><code>lseek = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">8</span></code></pre></div><div><pre><code>mmap = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">9</span></code></pre></div><div><pre><code>mprotect = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">10</span></code></pre></div><div><pre><code>munmap = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">11</span></code></pre></div><div><pre><code>brk = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">12</span></code></pre></div><div><pre><code>rt_sigaction = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">13</span></code></pre></div><div><pre><code>rt_sigprocmask = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">14</span></code></pre></div><div><pre><code>ioctl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">15</span></code></pre></div><div><pre><code>pread64 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">16</span></code></pre></div><div><pre><code>pwrite64 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">17</span></code></pre></div><div><pre><code>readv = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">18</span></code></pre></div><div><pre><code>writev = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">19</span></code></pre></div><div><pre><code>access = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">20</span></code></pre></div><div><pre><code>pipe = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">21</span></code></pre></div><div><pre><code>newselect = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">22</span></code></pre></div><div><pre><code>sched_yield = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">23</span></code></pre></div><div><pre><code>mremap = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">24</span></code></pre></div><div><pre><code>msync = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">25</span></code></pre></div><div><pre><code>mincore = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">26</span></code></pre></div><div><pre><code>madvise = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">27</span></code></pre></div><div><pre><code>shmget = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">28</span></code></pre></div><div><pre><code>shmat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">29</span></code></pre></div><div><pre><code>shmctl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">30</span></code></pre></div><div><pre><code>dup = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">31</span></code></pre></div><div><pre><code>dup2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">32</span></code></pre></div><div><pre><code>pause = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">33</span></code></pre></div><div><pre><code>nanosleep = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">34</span></code></pre></div><div><pre><code>getitimer = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">35</span></code></pre></div><div><pre><code>setitimer = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">36</span></code></pre></div><div><pre><code>alarm = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">37</span></code></pre></div><div><pre><code>getpid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">38</span></code></pre></div><div><pre><code>sendfile = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">39</span></code></pre></div><div><pre><code>socket = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">40</span></code></pre></div><div><pre><code>connect = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">41</span></code></pre></div><div><pre><code>accept = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">42</span></code></pre></div><div><pre><code>sendto = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">43</span></code></pre></div><div><pre><code>recvfrom = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">44</span></code></pre></div><div><pre><code>sendmsg = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">45</span></code></pre></div><div><pre><code>recvmsg = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">46</span></code></pre></div><div><pre><code>shutdown = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">47</span></code></pre></div><div><pre><code>bind = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">48</span></code></pre></div><div><pre><code>listen = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">49</span></code></pre></div><div><pre><code>getsockname = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">50</span></code></pre></div><div><pre><code>getpeername = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">51</span></code></pre></div><div><pre><code>socketpair = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">52</span></code></pre></div><div><pre><code>setsockopt = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">53</span></code></pre></div><div><pre><code>getsockopt = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">54</span></code></pre></div><div><pre><code>clone = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">55</span></code></pre></div><div><pre><code>fork = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">56</span></code></pre></div><div><pre><code>execve = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">57</span></code></pre></div><div><pre><code>exit = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">58</span></code></pre></div><div><pre><code>wait4 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">59</span></code></pre></div><div><pre><code>kill = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">60</span></code></pre></div><div><pre><code>uname = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">61</span></code></pre></div><div><pre><code>semget = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">62</span></code></pre></div><div><pre><code>semop = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">63</span></code></pre></div><div><pre><code>semctl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">64</span></code></pre></div><div><pre><code>shmdt = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">65</span></code></pre></div><div><pre><code>msgget = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">66</span></code></pre></div><div><pre><code>msgsnd = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">67</span></code></pre></div><div><pre><code>msgrcv = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">68</span></code></pre></div><div><pre><code>msgctl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">69</span></code></pre></div><div><pre><code>fcntl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">70</span></code></pre></div><div><pre><code>flock = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">71</span></code></pre></div><div><pre><code>fsync = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">72</span></code></pre></div><div><pre><code>fdatasync = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">73</span></code></pre></div><div><pre><code>truncate = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">74</span></code></pre></div><div><pre><code>ftruncate = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">75</span></code></pre></div><div><pre><code>getdents = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">76</span></code></pre></div><div><pre><code>getcwd = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">77</span></code></pre></div><div><pre><code>chdir = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">78</span></code></pre></div><div><pre><code>fchdir = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">79</span></code></pre></div><div><pre><code>rename = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">80</span></code></pre></div><div><pre><code>mkdir = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">81</span></code></pre></div><div><pre><code>rmdir = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">82</span></code></pre></div><div><pre><code>creat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">83</span></code></pre></div><div><pre><code>link = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">84</span></code></pre></div><div><pre><code>unlink = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">85</span></code></pre></div><div><pre><code>symlink = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">86</span></code></pre></div><div><pre><code>readlink = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">87</span></code></pre></div><div><pre><code>chmod = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">88</span></code></pre></div><div><pre><code>fchmod = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">89</span></code></pre></div><div><pre><code>chown = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">90</span></code></pre></div><div><pre><code>fchown = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">91</span></code></pre></div><div><pre><code>lchown = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">92</span></code></pre></div><div><pre><code>umask = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">93</span></code></pre></div><div><pre><code>gettimeofday = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">94</span></code></pre></div><div><pre><code>getrlimit = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">95</span></code></pre></div><div><pre><code>getrusage = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">96</span></code></pre></div><div><pre><code>sysinfo = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">97</span></code></pre></div><div><pre><code>times = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">98</span></code></pre></div><div><pre><code>ptrace = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">99</span></code></pre></div><div><pre><code>getuid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">100</span></code></pre></div><div><pre><code>syslog = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">101</span></code></pre></div><div><pre><code>getgid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">102</span></code></pre></div><div><pre><code>setuid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">103</span></code></pre></div><div><pre><code>setgid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">104</span></code></pre></div><div><pre><code>geteuid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">105</span></code></pre></div><div><pre><code>getegid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">106</span></code></pre></div><div><pre><code>setpgid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">107</span></code></pre></div><div><pre><code>getppid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">108</span></code></pre></div><div><pre><code>getpgrp = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">109</span></code></pre></div><div><pre><code>setsid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">110</span></code></pre></div><div><pre><code>setreuid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">111</span></code></pre></div><div><pre><code>setregid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">112</span></code></pre></div><div><pre><code>getgroups = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">113</span></code></pre></div><div><pre><code>setgroups = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">114</span></code></pre></div><div><pre><code>setresuid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">115</span></code></pre></div><div><pre><code>getresuid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">116</span></code></pre></div><div><pre><code>setresgid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">117</span></code></pre></div><div><pre><code>getresgid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">118</span></code></pre></div><div><pre><code>getpgid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">119</span></code></pre></div><div><pre><code>setfsuid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">120</span></code></pre></div><div><pre><code>setfsgid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">121</span></code></pre></div><div><pre><code>getsid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">122</span></code></pre></div><div><pre><code>capget = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">123</span></code></pre></div><div><pre><code>capset = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">124</span></code></pre></div><div><pre><code>rt_sigpending = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">125</span></code></pre></div><div><pre><code>rt_sigtimedwait = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">126</span></code></pre></div><div><pre><code>rt_sigqueueinfo = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">127</span></code></pre></div><div><pre><code>rt_sigsuspend = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">128</span></code></pre></div><div><pre><code>sigaltstack = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">129</span></code></pre></div><div><pre><code>utime = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">130</span></code></pre></div><div><pre><code>mknod = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">131</span></code></pre></div><div><pre><code>personality = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">132</span></code></pre></div><div><pre><code>ustat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">133</span></code></pre></div><div><pre><code>statfs = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">134</span></code></pre></div><div><pre><code>fstatfs = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">135</span></code></pre></div><div><pre><code>sysfs = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">136</span></code></pre></div><div><pre><code>getpriority = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">137</span></code></pre></div><div><pre><code>setpriority = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">138</span></code></pre></div><div><pre><code>sched_setparam = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">139</span></code></pre></div><div><pre><code>sched_getparam = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">140</span></code></pre></div><div><pre><code>sched_setscheduler = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">141</span></code></pre></div><div><pre><code>sched_getscheduler = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">142</span></code></pre></div><div><pre><code>sched_get_priority_max = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">143</span></code></pre></div><div><pre><code>sched_get_priority_min = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">144</span></code></pre></div><div><pre><code>sched_rr_get_interval = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">145</span></code></pre></div><div><pre><code>mlock = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">146</span></code></pre></div><div><pre><code>munlock = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">147</span></code></pre></div><div><pre><code>mlockall = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">148</span></code></pre></div><div><pre><code>munlockall = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">149</span></code></pre></div><div><pre><code>vhangup = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">150</span></code></pre></div><div><pre><code>pivot_root = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">151</span></code></pre></div><div><pre><code>sysctl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">152</span></code></pre></div><div><pre><code>prctl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">153</span></code></pre></div><div><pre><code>adjtimex = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">154</span></code></pre></div><div><pre><code>setrlimit = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">155</span></code></pre></div><div><pre><code>chroot = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">156</span></code></pre></div><div><pre><code>sync = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">157</span></code></pre></div><div><pre><code>acct = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">158</span></code></pre></div><div><pre><code>settimeofday = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">159</span></code></pre></div><div><pre><code>mount = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">160</span></code></pre></div><div><pre><code>umount2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">161</span></code></pre></div><div><pre><code>swapon = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">162</span></code></pre></div><div><pre><code>swapoff = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">163</span></code></pre></div><div><pre><code>reboot = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">164</span></code></pre></div><div><pre><code>sethostname = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">165</span></code></pre></div><div><pre><code>setdomainname = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">166</span></code></pre></div><div><pre><code>create_module = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">167</span></code></pre></div><div><pre><code>init_module = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">168</span></code></pre></div><div><pre><code>delete_module = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">169</span></code></pre></div><div><pre><code>get_kernel_syms = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">170</span></code></pre></div><div><pre><code>query_module = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">171</span></code></pre></div><div><pre><code>quotactl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">172</span></code></pre></div><div><pre><code>nfsservctl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">173</span></code></pre></div><div><pre><code>getpmsg = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">174</span></code></pre></div><div><pre><code>putpmsg = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">175</span></code></pre></div><div><pre><code>afs_syscall = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">176</span></code></pre></div><div><pre><code>gettid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">178</span></code></pre></div><div><pre><code>readahead = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">179</span></code></pre></div><div><pre><code>setxattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">180</span></code></pre></div><div><pre><code>lsetxattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">181</span></code></pre></div><div><pre><code>fsetxattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">182</span></code></pre></div><div><pre><code>getxattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">183</span></code></pre></div><div><pre><code>lgetxattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">184</span></code></pre></div><div><pre><code>fgetxattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">185</span></code></pre></div><div><pre><code>listxattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">186</span></code></pre></div><div><pre><code>llistxattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">187</span></code></pre></div><div><pre><code>flistxattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">188</span></code></pre></div><div><pre><code>removexattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">189</span></code></pre></div><div><pre><code>lremovexattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">190</span></code></pre></div><div><pre><code>fremovexattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">191</span></code></pre></div><div><pre><code>tkill = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">192</span></code></pre></div><div><pre><code>futex = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">194</span></code></pre></div><div><pre><code>sched_setaffinity = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">195</span></code></pre></div><div><pre><code>sched_getaffinity = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">196</span></code></pre></div><div><pre><code>cacheflush = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">197</span></code></pre></div><div><pre><code>cachectl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">198</span></code></pre></div><div><pre><code>sysmips = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">199</span></code></pre></div><div><pre><code>io_setup = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">200</span></code></pre></div><div><pre><code>io_destroy = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">201</span></code></pre></div><div><pre><code>io_getevents = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">202</span></code></pre></div><div><pre><code>io_submit = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">203</span></code></pre></div><div><pre><code>io_cancel = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">204</span></code></pre></div><div><pre><code>exit_group = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">205</span></code></pre></div><div><pre><code>lookup_dcookie = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">206</span></code></pre></div><div><pre><code>epoll_create = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">207</span></code></pre></div><div><pre><code>epoll_ctl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">208</span></code></pre></div><div><pre><code>epoll_wait = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">209</span></code></pre></div><div><pre><code>remap_file_pages = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">210</span></code></pre></div><div><pre><code>rt_sigreturn = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">211</span></code></pre></div><div><pre><code>set_tid_address = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">212</span></code></pre></div><div><pre><code>restart_syscall = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">213</span></code></pre></div><div><pre><code>semtimedop = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">214</span></code></pre></div><div><pre><code>fadvise64 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">215</span></code></pre></div><div><pre><code>timer_create = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">216</span></code></pre></div><div><pre><code>timer_settime = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">217</span></code></pre></div><div><pre><code>timer_gettime = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">218</span></code></pre></div><div><pre><code>timer_getoverrun = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">219</span></code></pre></div><div><pre><code>timer_delete = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">220</span></code></pre></div><div><pre><code>clock_settime = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">221</span></code></pre></div><div><pre><code>clock_gettime = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">222</span></code></pre></div><div><pre><code>clock_getres = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">223</span></code></pre></div><div><pre><code>clock_nanosleep = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">224</span></code></pre></div><div><pre><code>tgkill = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">225</span></code></pre></div><div><pre><code>utimes = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">226</span></code></pre></div><div><pre><code>mbind = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">227</span></code></pre></div><div><pre><code>get_mempolicy = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">228</span></code></pre></div><div><pre><code>set_mempolicy = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">229</span></code></pre></div><div><pre><code>mq_open = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">230</span></code></pre></div><div><pre><code>mq_unlink = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">231</span></code></pre></div><div><pre><code>mq_timedsend = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">232</span></code></pre></div><div><pre><code>mq_timedreceive = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">233</span></code></pre></div><div><pre><code>mq_notify = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">234</span></code></pre></div><div><pre><code>mq_getsetattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">235</span></code></pre></div><div><pre><code>vserver = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">236</span></code></pre></div><div><pre><code>waitid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">237</span></code></pre></div><div><pre><code>add_key = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">239</span></code></pre></div><div><pre><code>request_key = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">240</span></code></pre></div><div><pre><code>keyctl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">241</span></code></pre></div><div><pre><code>set_thread_area = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">242</span></code></pre></div><div><pre><code>inotify_init = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">243</span></code></pre></div><div><pre><code>inotify_add_watch = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">244</span></code></pre></div><div><pre><code>inotify_rm_watch = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">245</span></code></pre></div><div><pre><code>migrate_pages = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">246</span></code></pre></div><div><pre><code>openat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">247</span></code></pre></div><div><pre><code>mkdirat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">248</span></code></pre></div><div><pre><code>mknodat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">249</span></code></pre></div><div><pre><code>fchownat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">250</span></code></pre></div><div><pre><code>futimesat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">251</span></code></pre></div><div><pre><code>fstatat64 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">252</span></code></pre></div><div><pre><code>unlinkat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">253</span></code></pre></div><div><pre><code>renameat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">254</span></code></pre></div><div><pre><code>linkat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">255</span></code></pre></div><div><pre><code>symlinkat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">256</span></code></pre></div><div><pre><code>readlinkat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">257</span></code></pre></div><div><pre><code>fchmodat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">258</span></code></pre></div><div><pre><code>faccessat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">259</span></code></pre></div><div><pre><code>pselect6 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">260</span></code></pre></div><div><pre><code>ppoll = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">261</span></code></pre></div><div><pre><code>unshare = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">262</span></code></pre></div><div><pre><code>splice = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">263</span></code></pre></div><div><pre><code>sync_file_range = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">264</span></code></pre></div><div><pre><code>tee = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">265</span></code></pre></div><div><pre><code>vmsplice = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">266</span></code></pre></div><div><pre><code>move_pages = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">267</span></code></pre></div><div><pre><code>set_robust_list = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">268</span></code></pre></div><div><pre><code>get_robust_list = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">269</span></code></pre></div><div><pre><code>kexec_load = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">270</span></code></pre></div><div><pre><code>getcpu = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">271</span></code></pre></div><div><pre><code>epoll_pwait = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">272</span></code></pre></div><div><pre><code>ioprio_set = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">273</span></code></pre></div><div><pre><code>ioprio_get = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">274</span></code></pre></div><div><pre><code>utimensat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">275</span></code></pre></div><div><pre><code>signalfd = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">276</span></code></pre></div><div><pre><code>timerfd = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">277</span></code></pre></div><div><pre><code>eventfd = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">278</span></code></pre></div><div><pre><code>fallocate = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">279</span></code></pre></div><div><pre><code>timerfd_create = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">280</span></code></pre></div><div><pre><code>timerfd_gettime = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">281</span></code></pre></div><div><pre><code>timerfd_settime = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">282</span></code></pre></div><div><pre><code>signalfd4 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">283</span></code></pre></div><div><pre><code>eventfd2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">284</span></code></pre></div><div><pre><code>epoll_create1 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">285</span></code></pre></div><div><pre><code>dup3 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">286</span></code></pre></div><div><pre><code>pipe2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">287</span></code></pre></div><div><pre><code>inotify_init1 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">288</span></code></pre></div><div><pre><code>preadv = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">289</span></code></pre></div><div><pre><code>pwritev = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">290</span></code></pre></div><div><pre><code>rt_tgsigqueueinfo = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">291</span></code></pre></div><div><pre><code>perf_event_open = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">292</span></code></pre></div><div><pre><code>accept4 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">293</span></code></pre></div><div><pre><code>recvmmsg = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">294</span></code></pre></div><div><pre><code>fanotify_init = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">295</span></code></pre></div><div><pre><code>fanotify_mark = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">296</span></code></pre></div><div><pre><code>prlimit64 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">297</span></code></pre></div><div><pre><code>name_to_handle_at = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">298</span></code></pre></div><div><pre><code>open_by_handle_at = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">299</span></code></pre></div><div><pre><code>clock_adjtime = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">300</span></code></pre></div><div><pre><code>syncfs = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">301</span></code></pre></div><div><pre><code>sendmmsg = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">302</span></code></pre></div><div><pre><code>setns = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">303</span></code></pre></div><div><pre><code>process_vm_readv = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">304</span></code></pre></div><div><pre><code>process_vm_writev = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">305</span></code></pre></div><div><pre><code>kcmp = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">306</span></code></pre></div><div><pre><code>finit_module = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">307</span></code></pre></div><div><pre><code>getdents64 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">308</span></code></pre></div><div><pre><code>sched_setattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">309</span></code></pre></div><div><pre><code>sched_getattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">310</span></code></pre></div><div><pre><code>renameat2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">311</span></code></pre></div><div><pre><code>seccomp = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">312</span></code></pre></div><div><pre><code>getrandom = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">313</span></code></pre></div><div><pre><code>memfd_create = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">314</span></code></pre></div><div><pre><code>bpf = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">315</span></code></pre></div><div><pre><code>execveat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">316</span></code></pre></div><div><pre><code>userfaultfd = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">317</span></code></pre></div><div><pre><code>membarrier = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">318</span></code></pre></div><div><pre><code>mlock2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">319</span></code></pre></div><div><pre><code>copy_file_range = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">320</span></code></pre></div><div><pre><code>preadv2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">321</span></code></pre></div><div><pre><code>pwritev2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">322</span></code></pre></div><div><pre><code>pkey_mprotect = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">323</span></code></pre></div><div><pre><code>pkey_alloc = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">324</span></code></pre></div><div><pre><code>pkey_free = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">325</span></code></pre></div><div><pre><code>statx = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">326</span></code></pre></div><div><pre><code>rseq = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">327</span></code></pre></div><div><pre><code>io_pgetevents = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">328</span></code></pre></div><div><pre><code>pidfd_send_signal = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">424</span></code></pre></div><div><pre><code>io_uring_setup = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">425</span></code></pre></div><div><pre><code>io_uring_enter = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">426</span></code></pre></div><div><pre><code>io_uring_register = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">427</span></code></pre></div><div><pre><code>open_tree = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">428</span></code></pre></div><div><pre><code>move_mount = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">429</span></code></pre></div><div><pre><code>fsopen = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">430</span></code></pre></div><div><pre><code>fsconfig = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">431</span></code></pre></div><div><pre><code>fsmount = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">432</span></code></pre></div><div><pre><code>fspick = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">433</span></code></pre></div><div><pre><code>pidfd_open = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">434</span></code></pre></div><div><pre><code>clone3 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">435</span></code></pre></div><div><pre><code>close_range = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">436</span></code></pre></div><div><pre><code>openat2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">437</span></code></pre></div><div><pre><code>pidfd_getfd = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">438</span></code></pre></div><div><pre><code>faccessat2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">439</span></code></pre></div><div><pre><code>process_madvise = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">440</span></code></pre></div><div><pre><code>epoll_pwait2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">441</span></code></pre></div><div><pre><code>mount_setattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">442</span></code></pre></div><div><pre><code>quotactl_fd = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">443</span></code></pre></div><div><pre><code>landlock_create_ruleset = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">444</span></code></pre></div><div><pre><code>landlock_add_rule = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">445</span></code></pre></div><div><pre><code>landlock_restrict_self = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">446</span></code></pre></div><div><pre><code>process_mrelease = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">448</span></code></pre></div><div><pre><code>futex_waitv = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">449</span></code></pre></div><div><pre><code>set_mempolicy_home_node = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">450</span></code></pre></div><div><pre><code>cachestat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">451</span></code></pre></div><div><pre><code>fchmodat2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">452</span></code></pre></div><div><pre><code>map_shadow_stack = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">453</span></code></pre></div><div><pre><code>futex_wake = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">454</span></code></pre></div><div><pre><code>futex_wait = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">455</span></code></pre></div><div><pre><code>futex_requeue = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">456</span></code></pre></div><div><pre><code>statmount = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">457</span></code></pre></div><div><pre><code>listmount = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">458</span></code></pre></div><div><pre><code>lsm_get_self_attr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">459</span></code></pre></div><div><pre><code>lsm_set_self_attr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">460</span></code></pre></div><div><pre><code>lsm_list_modules = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">461</span></code></pre></div><div><pre><code>mseal = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">462</span></code></pre></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.os.linux.syscalls.MipsN64">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MipsN64 = <span class="tok-kw">enum</span>(<span class="tok-type">usize</span>) {
+    <span class="tok-kw">const</span> linux_base = <span class="tok-number">5000</span>;
+
+    read = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">0</span>,
+    write = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">1</span>,
+    open = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">2</span>,
+    close = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">3</span>,
+    stat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">4</span>,
+    fstat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">5</span>,
+    lstat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">6</span>,
+    poll = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">7</span>,
+    lseek = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">8</span>,
+    mmap = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">9</span>,
+    mprotect = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">10</span>,
+    munmap = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">11</span>,
+    brk = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">12</span>,
+    rt_sigaction = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">13</span>,
+    rt_sigprocmask = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">14</span>,
+    ioctl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">15</span>,
+    pread64 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">16</span>,
+    pwrite64 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">17</span>,
+    readv = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">18</span>,
+    writev = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">19</span>,
+    access = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">20</span>,
+    pipe = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">21</span>,
+    newselect = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">22</span>,
+    sched_yield = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">23</span>,
+    mremap = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">24</span>,
+    msync = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">25</span>,
+    mincore = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">26</span>,
+    madvise = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">27</span>,
+    shmget = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">28</span>,
+    shmat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">29</span>,
+    shmctl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">30</span>,
+    dup = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">31</span>,
+    dup2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">32</span>,
+    pause = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">33</span>,
+    nanosleep = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">34</span>,
+    getitimer = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">35</span>,
+    setitimer = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">36</span>,
+    alarm = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">37</span>,
+    getpid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">38</span>,
+    sendfile = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">39</span>,
+    socket = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">40</span>,
+    connect = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">41</span>,
+    accept = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">42</span>,
+    sendto = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">43</span>,
+    recvfrom = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">44</span>,
+    sendmsg = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">45</span>,
+    recvmsg = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">46</span>,
+    shutdown = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">47</span>,
+    bind = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">48</span>,
+    listen = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">49</span>,
+    getsockname = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">50</span>,
+    getpeername = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">51</span>,
+    socketpair = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">52</span>,
+    setsockopt = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">53</span>,
+    getsockopt = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">54</span>,
+    clone = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">55</span>,
+    fork = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">56</span>,
+    execve = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">57</span>,
+    exit = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">58</span>,
+    wait4 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">59</span>,
+    kill = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">60</span>,
+    uname = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">61</span>,
+    semget = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">62</span>,
+    semop = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">63</span>,
+    semctl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">64</span>,
+    shmdt = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">65</span>,
+    msgget = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">66</span>,
+    msgsnd = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">67</span>,
+    msgrcv = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">68</span>,
+    msgctl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">69</span>,
+    fcntl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">70</span>,
+    flock = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">71</span>,
+    fsync = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">72</span>,
+    fdatasync = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">73</span>,
+    truncate = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">74</span>,
+    ftruncate = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">75</span>,
+    getdents = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">76</span>,
+    getcwd = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">77</span>,
+    chdir = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">78</span>,
+    fchdir = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">79</span>,
+    rename = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">80</span>,
+    mkdir = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">81</span>,
+    rmdir = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">82</span>,
+    creat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">83</span>,
+    link = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">84</span>,
+    unlink = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">85</span>,
+    symlink = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">86</span>,
+    readlink = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">87</span>,
+    chmod = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">88</span>,
+    fchmod = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">89</span>,
+    chown = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">90</span>,
+    fchown = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">91</span>,
+    lchown = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">92</span>,
+    umask = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">93</span>,
+    gettimeofday = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">94</span>,
+    getrlimit = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">95</span>,
+    getrusage = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">96</span>,
+    sysinfo = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">97</span>,
+    times = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">98</span>,
+    ptrace = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">99</span>,
+    getuid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">100</span>,
+    syslog = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">101</span>,
+    getgid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">102</span>,
+    setuid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">103</span>,
+    setgid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">104</span>,
+    geteuid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">105</span>,
+    getegid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">106</span>,
+    setpgid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">107</span>,
+    getppid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">108</span>,
+    getpgrp = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">109</span>,
+    setsid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">110</span>,
+    setreuid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">111</span>,
+    setregid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">112</span>,
+    getgroups = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">113</span>,
+    setgroups = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">114</span>,
+    setresuid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">115</span>,
+    getresuid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">116</span>,
+    setresgid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">117</span>,
+    getresgid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">118</span>,
+    getpgid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">119</span>,
+    setfsuid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">120</span>,
+    setfsgid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">121</span>,
+    getsid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">122</span>,
+    capget = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">123</span>,
+    capset = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">124</span>,
+    rt_sigpending = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">125</span>,
+    rt_sigtimedwait = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">126</span>,
+    rt_sigqueueinfo = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">127</span>,
+    rt_sigsuspend = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">128</span>,
+    sigaltstack = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">129</span>,
+    utime = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">130</span>,
+    mknod = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">131</span>,
+    personality = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">132</span>,
+    ustat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">133</span>,
+    statfs = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">134</span>,
+    fstatfs = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">135</span>,
+    sysfs = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">136</span>,
+    getpriority = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">137</span>,
+    setpriority = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">138</span>,
+    sched_setparam = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">139</span>,
+    sched_getparam = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">140</span>,
+    sched_setscheduler = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">141</span>,
+    sched_getscheduler = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">142</span>,
+    sched_get_priority_max = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">143</span>,
+    sched_get_priority_min = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">144</span>,
+    sched_rr_get_interval = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">145</span>,
+    mlock = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">146</span>,
+    munlock = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">147</span>,
+    mlockall = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">148</span>,
+    munlockall = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">149</span>,
+    vhangup = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">150</span>,
+    pivot_root = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">151</span>,
+    sysctl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">152</span>,
+    prctl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">153</span>,
+    adjtimex = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">154</span>,
+    setrlimit = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">155</span>,
+    chroot = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">156</span>,
+    sync = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">157</span>,
+    acct = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">158</span>,
+    settimeofday = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">159</span>,
+    mount = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">160</span>,
+    umount2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">161</span>,
+    swapon = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">162</span>,
+    swapoff = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">163</span>,
+    reboot = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">164</span>,
+    sethostname = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">165</span>,
+    setdomainname = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">166</span>,
+    create_module = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">167</span>,
+    init_module = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">168</span>,
+    delete_module = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">169</span>,
+    get_kernel_syms = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">170</span>,
+    query_module = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">171</span>,
+    quotactl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">172</span>,
+    nfsservctl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">173</span>,
+    getpmsg = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">174</span>,
+    putpmsg = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">175</span>,
+    afs_syscall = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">176</span>,
+    gettid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">178</span>,
+    readahead = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">179</span>,
+    setxattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">180</span>,
+    lsetxattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">181</span>,
+    fsetxattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">182</span>,
+    getxattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">183</span>,
+    lgetxattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">184</span>,
+    fgetxattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">185</span>,
+    listxattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">186</span>,
+    llistxattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">187</span>,
+    flistxattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">188</span>,
+    removexattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">189</span>,
+    lremovexattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">190</span>,
+    fremovexattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">191</span>,
+    tkill = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">192</span>,
+    futex = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">194</span>,
+    sched_setaffinity = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">195</span>,
+    sched_getaffinity = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">196</span>,
+    cacheflush = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">197</span>,
+    cachectl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">198</span>,
+    sysmips = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">199</span>,
+    io_setup = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">200</span>,
+    io_destroy = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">201</span>,
+    io_getevents = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">202</span>,
+    io_submit = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">203</span>,
+    io_cancel = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">204</span>,
+    exit_group = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">205</span>,
+    lookup_dcookie = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">206</span>,
+    epoll_create = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">207</span>,
+    epoll_ctl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">208</span>,
+    epoll_wait = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">209</span>,
+    remap_file_pages = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">210</span>,
+    rt_sigreturn = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">211</span>,
+    set_tid_address = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">212</span>,
+    restart_syscall = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">213</span>,
+    semtimedop = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">214</span>,
+    fadvise64 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">215</span>,
+    timer_create = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">216</span>,
+    timer_settime = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">217</span>,
+    timer_gettime = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">218</span>,
+    timer_getoverrun = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">219</span>,
+    timer_delete = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">220</span>,
+    clock_settime = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">221</span>,
+    clock_gettime = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">222</span>,
+    clock_getres = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">223</span>,
+    clock_nanosleep = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">224</span>,
+    tgkill = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">225</span>,
+    utimes = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">226</span>,
+    mbind = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">227</span>,
+    get_mempolicy = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">228</span>,
+    set_mempolicy = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">229</span>,
+    mq_open = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">230</span>,
+    mq_unlink = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">231</span>,
+    mq_timedsend = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">232</span>,
+    mq_timedreceive = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">233</span>,
+    mq_notify = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">234</span>,
+    mq_getsetattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">235</span>,
+    vserver = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">236</span>,
+    waitid = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">237</span>,
+    add_key = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">239</span>,
+    request_key = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">240</span>,
+    keyctl = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">241</span>,
+    set_thread_area = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">242</span>,
+    inotify_init = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">243</span>,
+    inotify_add_watch = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">244</span>,
+    inotify_rm_watch = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">245</span>,
+    migrate_pages = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">246</span>,
+    openat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">247</span>,
+    mkdirat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">248</span>,
+    mknodat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">249</span>,
+    fchownat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">250</span>,
+    futimesat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">251</span>,
+    fstatat64 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">252</span>,
+    unlinkat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">253</span>,
+    renameat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">254</span>,
+    linkat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">255</span>,
+    symlinkat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">256</span>,
+    readlinkat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">257</span>,
+    fchmodat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">258</span>,
+    faccessat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">259</span>,
+    pselect6 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">260</span>,
+    ppoll = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">261</span>,
+    unshare = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">262</span>,
+    splice = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">263</span>,
+    sync_file_range = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">264</span>,
+    tee = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">265</span>,
+    vmsplice = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">266</span>,
+    move_pages = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">267</span>,
+    set_robust_list = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">268</span>,
+    get_robust_list = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">269</span>,
+    kexec_load = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">270</span>,
+    getcpu = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">271</span>,
+    epoll_pwait = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">272</span>,
+    ioprio_set = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">273</span>,
+    ioprio_get = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">274</span>,
+    utimensat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">275</span>,
+    signalfd = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">276</span>,
+    timerfd = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">277</span>,
+    eventfd = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">278</span>,
+    fallocate = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">279</span>,
+    timerfd_create = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">280</span>,
+    timerfd_gettime = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">281</span>,
+    timerfd_settime = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">282</span>,
+    signalfd4 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">283</span>,
+    eventfd2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">284</span>,
+    epoll_create1 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">285</span>,
+    dup3 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">286</span>,
+    pipe2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">287</span>,
+    inotify_init1 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">288</span>,
+    preadv = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">289</span>,
+    pwritev = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">290</span>,
+    rt_tgsigqueueinfo = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">291</span>,
+    perf_event_open = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">292</span>,
+    accept4 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">293</span>,
+    recvmmsg = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">294</span>,
+    fanotify_init = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">295</span>,
+    fanotify_mark = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">296</span>,
+    prlimit64 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">297</span>,
+    name_to_handle_at = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">298</span>,
+    open_by_handle_at = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">299</span>,
+    clock_adjtime = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">300</span>,
+    syncfs = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">301</span>,
+    sendmmsg = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">302</span>,
+    setns = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">303</span>,
+    process_vm_readv = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">304</span>,
+    process_vm_writev = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">305</span>,
+    kcmp = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">306</span>,
+    finit_module = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">307</span>,
+    getdents64 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">308</span>,
+    sched_setattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">309</span>,
+    sched_getattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">310</span>,
+    renameat2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">311</span>,
+    seccomp = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">312</span>,
+    getrandom = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">313</span>,
+    memfd_create = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">314</span>,
+    bpf = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">315</span>,
+    execveat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">316</span>,
+    userfaultfd = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">317</span>,
+    membarrier = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">318</span>,
+    mlock2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">319</span>,
+    copy_file_range = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">320</span>,
+    preadv2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">321</span>,
+    pwritev2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">322</span>,
+    pkey_mprotect = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">323</span>,
+    pkey_alloc = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">324</span>,
+    pkey_free = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">325</span>,
+    statx = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">326</span>,
+    rseq = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">327</span>,
+    io_pgetevents = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">328</span>,
+    pidfd_send_signal = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">424</span>,
+    io_uring_setup = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">425</span>,
+    io_uring_enter = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">426</span>,
+    io_uring_register = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">427</span>,
+    open_tree = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">428</span>,
+    move_mount = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">429</span>,
+    fsopen = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">430</span>,
+    fsconfig = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">431</span>,
+    fsmount = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">432</span>,
+    fspick = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">433</span>,
+    pidfd_open = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">434</span>,
+    clone3 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">435</span>,
+    close_range = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">436</span>,
+    openat2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">437</span>,
+    pidfd_getfd = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">438</span>,
+    faccessat2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">439</span>,
+    process_madvise = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">440</span>,
+    epoll_pwait2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">441</span>,
+    mount_setattr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">442</span>,
+    quotactl_fd = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">443</span>,
+    landlock_create_ruleset = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">444</span>,
+    landlock_add_rule = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">445</span>,
+    landlock_restrict_self = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">446</span>,
+    process_mrelease = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">448</span>,
+    futex_waitv = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">449</span>,
+    set_mempolicy_home_node = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">450</span>,
+    cachestat = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">451</span>,
+    fchmodat2 = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">452</span>,
+    map_shadow_stack = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">453</span>,
+    futex_wake = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">454</span>,
+    futex_wait = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">455</span>,
+    futex_requeue = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">456</span>,
+    statmount = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">457</span>,
+    listmount = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">458</span>,
+    lsm_get_self_attr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">459</span>,
+    lsm_set_self_attr = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">460</span>,
+    lsm_list_modules = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">461</span>,
+    mseal = <a href="std.os.linux.syscalls.MipsN64.html#std.os.linux.syscalls.MipsN64.linux_base">linux_base</a> + <span class="tok-number">462</span>,
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

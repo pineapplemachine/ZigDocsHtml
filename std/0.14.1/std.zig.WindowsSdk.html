@@ -1,0 +1,1475 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">zig</a></li><li><a href="std.zig.WindowsSdk.html" class="active">WindowsSdk</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.zig.WindowsSdk" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.zig.WindowsSdk</span><a href="#src.zig-std.zig.WindowsSdk">[src]</a></h1><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.zig.WindowsSdk.Installation.html">std.zig.WindowsSdk.Installation</a></li></ul></div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>windows10sdk: ?<a href="std.zig.WindowsSdk.Installation.html">Installation</a></code></pre></div><div><pre><code>windows81sdk: ?<a href="std.zig.WindowsSdk.Installation.html">Installation</a></code></pre></div><div><pre><code>msvc_lib_dir: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.zig.WindowsSdk.find" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">find</span><a href="#src.zig-std.zig.WindowsSdk.find">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">find</span>(allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, arch: <a href="std.html">std</a>.<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Arch.html">Arch</a>) <span class="tok-kw">error</span>{ OutOfMemory, NotFound, PathTooLong }!<a href="std.zig.WindowsSdk.html">WindowsSdk</a></code></pre></div><div class="tldDocs"><p>Find path and version of Windows 10 SDK and Windows 8.1 SDK, and find path to MSVC's <code>lib/</code> directory.
+Caller owns the result's fields.
+After finishing work, call <code>free(allocator)</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a></code></pre></div><div><pre><code>arch: <a href="std.html">std</a>.<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Arch.html">Arch</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.WindowsSdk.find">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">find</span>(allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, arch: <a href="std.html">std</a>.<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Arch.html">Arch</a>) <span class="tok-kw">error</span>{ OutOfMemory, NotFound, PathTooLong }!<a href="std.zig.WindowsSdk.html">WindowsSdk</a> {
+    <span class="tok-kw">if</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.os">os</a>.<a href="#">tag</a> != .windows) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NotFound;<span class="tok-comment">
+
+    //note(dimenus): If this key doesn't exist, neither the Win 8 SDK nor the Win 10 SDK is installed
+    </span><span class="tok-kw">const</span> roots_key = <a href="std.zig.WindowsSdk.RegistryWtf8.html">RegistryWtf8</a>.<a href="std.zig.WindowsSdk.RegistryWtf8.html#std.zig.WindowsSdk.RegistryWtf8.openKey">openKey</a>(<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HKEY_LOCAL_MACHINE">HKEY_LOCAL_MACHINE</a>, <a href="std.zig.WindowsSdk.html#std.zig.WindowsSdk.windows_kits_reg_key">windows_kits_reg_key</a>, .{ .wow64_32 = <span class="tok-null">true</span> }) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+        <span class="tok-kw">error</span>.KeyNotFound =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NotFound,
+    };
+    <span class="tok-kw">defer</span> roots_key.closeKey();
+
+    <span class="tok-kw">const</span> windows10sdk = <a href="std.zig.WindowsSdk.Installation.html">Installation</a>.<a href="std.zig.WindowsSdk.Installation.html#std.zig.WindowsSdk.Installation.find">find</a>(allocator, roots_key, <span class="tok-str">&quot;KitsRoot10&quot;</span>, <span class="tok-str">&quot;&quot;</span>, <span class="tok-str">&quot;v10.0&quot;</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+        <span class="tok-kw">error</span>.InstallationNotFound =&gt; <span class="tok-null">null</span>,
+        <span class="tok-kw">error</span>.PathTooLong =&gt; <span class="tok-null">null</span>,
+        <span class="tok-kw">error</span>.VersionTooLong =&gt; <span class="tok-null">null</span>,
+        <span class="tok-kw">error</span>.OutOfMemory =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutOfMemory,
+    };
+    <span class="tok-kw">errdefer</span> <span class="tok-kw">if</span> (windows10sdk) |*w| w.free(allocator);
+
+    <span class="tok-kw">const</span> windows81sdk = <a href="std.zig.WindowsSdk.Installation.html">Installation</a>.<a href="std.zig.WindowsSdk.Installation.html#std.zig.WindowsSdk.Installation.find">find</a>(allocator, roots_key, <span class="tok-str">&quot;KitsRoot81&quot;</span>, <span class="tok-str">&quot;winver&quot;</span>, <span class="tok-str">&quot;v8.1&quot;</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+        <span class="tok-kw">error</span>.InstallationNotFound =&gt; <span class="tok-null">null</span>,
+        <span class="tok-kw">error</span>.PathTooLong =&gt; <span class="tok-null">null</span>,
+        <span class="tok-kw">error</span>.VersionTooLong =&gt; <span class="tok-null">null</span>,
+        <span class="tok-kw">error</span>.OutOfMemory =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutOfMemory,
+    };
+    <span class="tok-kw">errdefer</span> <span class="tok-kw">if</span> (windows81sdk) |*w| w.free(allocator);
+
+    <span class="tok-kw">const</span> msvc_lib_dir: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <a href="std.zig.WindowsSdk.MsvcLibDir.html">MsvcLibDir</a>.<a href="std.zig.WindowsSdk.MsvcLibDir.html#std.zig.WindowsSdk.MsvcLibDir.find">find</a>(allocator, arch) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+        <span class="tok-kw">error</span>.MsvcLibDirNotFound =&gt; <span class="tok-null">null</span>,
+        <span class="tok-kw">error</span>.OutOfMemory =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutOfMemory,
+    };
+    <span class="tok-kw">errdefer</span> allocator.free(msvc_lib_dir);
+
+    <span class="tok-kw">return</span> .{
+        .windows10sdk = windows10sdk,
+        .windows81sdk = windows81sdk,
+        .msvc_lib_dir = msvc_lib_dir,
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.zig.WindowsSdk.free" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">free</span><a href="#src.zig-std.zig.WindowsSdk.free">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">free</span>(sdk: <a href="std.zig.WindowsSdk.html">WindowsSdk</a>, allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>sdk: <a href="std.zig.WindowsSdk.html">WindowsSdk</a></code></pre></div><div><pre><code>allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.WindowsSdk.free">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">free</span>(sdk: <a href="std.zig.WindowsSdk.html">WindowsSdk</a>, allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (sdk.windows10sdk) |*w10sdk| {
+        w10sdk.free(allocator);
+    }
+    <span class="tok-kw">if</span> (sdk.windows81sdk) |*w81sdk| {
+        w81sdk.free(allocator);
+    }
+    <span class="tok-kw">if</span> (sdk.msvc_lib_dir) |msvc_lib_dir| {
+        allocator.free(msvc_lib_dir);
+    }
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.zig.WindowsSdk">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText">windows10sdk: ?<a href="std.zig.WindowsSdk.Installation.html">Installation</a>,
+windows81sdk: ?<a href="std.zig.WindowsSdk.Installation.html">Installation</a>,
+msvc_lib_dir: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+
+<span class="tok-kw">const</span> WindowsSdk = <span class="tok-builtin">@This</span>();
+<span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>);
+<span class="tok-kw">const</span> builtin = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;builtin&quot;</span>);
+
+<span class="tok-kw">const</span> windows = <a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>;
+<span class="tok-kw">const</span> RRF = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.advapi32.html">advapi32</a>.<a href="std.os.windows.advapi32.RRF.html">RRF</a>;
+
+<span class="tok-kw">const</span> windows_kits_reg_key = <span class="tok-str">&quot;SOFTWARE\\Microsoft\\Windows Kits\\Installed Roots&quot;</span>;<span class="tok-comment">
+
+// https://learn.microsoft.com/en-us/windows/win32/msi/productversion
+</span><span class="tok-kw">const</span> version_major_minor_max_length = <span class="tok-str">&quot;255.255&quot;</span>.len;<span class="tok-comment">
+// note(bratishkaerik): i think ProductVersion in registry (created by Visual Studio installer) also follows this rule
+</span><span class="tok-kw">const</span> product_version_max_length = <a href="std.zig.WindowsSdk.html#std.zig.WindowsSdk.version_major_minor_max_length">version_major_minor_max_length</a> + <span class="tok-str">&quot;.65535&quot;</span>.len;
+
+<span class="tok-comment">/// Find path and version of Windows 10 SDK and Windows 8.1 SDK, and find path to MSVC's `lib/` directory.</span>
+<span class="tok-comment">/// Caller owns the result's fields.</span>
+<span class="tok-comment">/// After finishing work, call `free(allocator)`.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">find</span>(allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, arch: <a href="std.html">std</a>.<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Arch.html">Arch</a>) <span class="tok-kw">error</span>{ OutOfMemory, NotFound, PathTooLong }!<a href="std.zig.WindowsSdk.html">WindowsSdk</a> {
+    <span class="tok-kw">if</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.os">os</a>.<a href="#">tag</a> != .windows) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NotFound;<span class="tok-comment">
+
+    //note(dimenus): If this key doesn't exist, neither the Win 8 SDK nor the Win 10 SDK is installed
+    </span><span class="tok-kw">const</span> roots_key = <a href="std.zig.WindowsSdk.RegistryWtf8.html">RegistryWtf8</a>.<a href="std.zig.WindowsSdk.RegistryWtf8.html#std.zig.WindowsSdk.RegistryWtf8.openKey">openKey</a>(<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HKEY_LOCAL_MACHINE">HKEY_LOCAL_MACHINE</a>, <a href="std.zig.WindowsSdk.html#std.zig.WindowsSdk.windows_kits_reg_key">windows_kits_reg_key</a>, .{ .wow64_32 = <span class="tok-null">true</span> }) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+        <span class="tok-kw">error</span>.KeyNotFound =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NotFound,
+    };
+    <span class="tok-kw">defer</span> roots_key.closeKey();
+
+    <span class="tok-kw">const</span> windows10sdk = <a href="std.zig.WindowsSdk.Installation.html">Installation</a>.<a href="std.zig.WindowsSdk.Installation.html#std.zig.WindowsSdk.Installation.find">find</a>(allocator, roots_key, <span class="tok-str">&quot;KitsRoot10&quot;</span>, <span class="tok-str">&quot;&quot;</span>, <span class="tok-str">&quot;v10.0&quot;</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+        <span class="tok-kw">error</span>.InstallationNotFound =&gt; <span class="tok-null">null</span>,
+        <span class="tok-kw">error</span>.PathTooLong =&gt; <span class="tok-null">null</span>,
+        <span class="tok-kw">error</span>.VersionTooLong =&gt; <span class="tok-null">null</span>,
+        <span class="tok-kw">error</span>.OutOfMemory =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutOfMemory,
+    };
+    <span class="tok-kw">errdefer</span> <span class="tok-kw">if</span> (windows10sdk) |*w| w.free(allocator);
+
+    <span class="tok-kw">const</span> windows81sdk = <a href="std.zig.WindowsSdk.Installation.html">Installation</a>.<a href="std.zig.WindowsSdk.Installation.html#std.zig.WindowsSdk.Installation.find">find</a>(allocator, roots_key, <span class="tok-str">&quot;KitsRoot81&quot;</span>, <span class="tok-str">&quot;winver&quot;</span>, <span class="tok-str">&quot;v8.1&quot;</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+        <span class="tok-kw">error</span>.InstallationNotFound =&gt; <span class="tok-null">null</span>,
+        <span class="tok-kw">error</span>.PathTooLong =&gt; <span class="tok-null">null</span>,
+        <span class="tok-kw">error</span>.VersionTooLong =&gt; <span class="tok-null">null</span>,
+        <span class="tok-kw">error</span>.OutOfMemory =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutOfMemory,
+    };
+    <span class="tok-kw">errdefer</span> <span class="tok-kw">if</span> (windows81sdk) |*w| w.free(allocator);
+
+    <span class="tok-kw">const</span> msvc_lib_dir: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <a href="std.zig.WindowsSdk.MsvcLibDir.html">MsvcLibDir</a>.<a href="std.zig.WindowsSdk.MsvcLibDir.html#std.zig.WindowsSdk.MsvcLibDir.find">find</a>(allocator, arch) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+        <span class="tok-kw">error</span>.MsvcLibDirNotFound =&gt; <span class="tok-null">null</span>,
+        <span class="tok-kw">error</span>.OutOfMemory =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutOfMemory,
+    };
+    <span class="tok-kw">errdefer</span> allocator.free(msvc_lib_dir);
+
+    <span class="tok-kw">return</span> .{
+        .windows10sdk = windows10sdk,
+        .windows81sdk = windows81sdk,
+        .msvc_lib_dir = msvc_lib_dir,
+    };
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">free</span>(sdk: <a href="std.zig.WindowsSdk.html">WindowsSdk</a>, allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (sdk.windows10sdk) |*w10sdk| {
+        w10sdk.free(allocator);
+    }
+    <span class="tok-kw">if</span> (sdk.windows81sdk) |*w81sdk| {
+        w81sdk.free(allocator);
+    }
+    <span class="tok-kw">if</span> (sdk.msvc_lib_dir) |msvc_lib_dir| {
+        allocator.free(msvc_lib_dir);
+    }
+}
+
+<span class="tok-comment">/// Iterates via `iterator` and collects all folders with names starting with `strip_prefix`</span>
+<span class="tok-comment">/// and a version. Returns slice of version strings sorted in descending order.</span>
+<span class="tok-comment">/// Caller owns result.</span>
+<span class="tok-kw">fn</span> <span class="tok-fn">iterateAndFilterByVersion</span>(
+    iterator: *<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.Dir.html">Dir</a>.<a href="std.fs.Dir.html#std.fs.Dir.Iterator">Iterator</a>,
+    allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>,
+    prefix: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+) <span class="tok-kw">error</span>{OutOfMemory}![][]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">const</span> Version = <span class="tok-kw">struct</span> {
+        nums: [<span class="tok-number">4</span>]<span class="tok-type">u32</span>,
+        build: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">parseNum</span>(num: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?<span class="tok-type">u32</span> {
+            <span class="tok-kw">if</span> (num[<span class="tok-number">0</span>] == <span class="tok-str">'0'</span> <span class="tok-kw">and</span> num.len &gt; <span class="tok-number">1</span>) <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+            <span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseInt">parseInt</a>(<span class="tok-type">u32</span>, num, <span class="tok-number">10</span>) <span class="tok-kw">catch</span> <span class="tok-null">null</span>;
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">order</span>(lhs: <span class="tok-builtin">@This</span>(), rhs: <span class="tok-builtin">@This</span>()) <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.Order.html">Order</a> {
+            <span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.order">order</a>(<span class="tok-type">u32</span>, &amp;lhs.nums, &amp;rhs.nums).differ() <span class="tok-kw">orelse</span>
+                <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.order">order</a>(<span class="tok-type">u8</span>, lhs.build, rhs.build);
+        }
+    };
+    <span class="tok-kw">var</span> versions = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(Version).init(allocator);
+    <span class="tok-kw">var</span> dirs = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>([]<span class="tok-kw">const</span> <span class="tok-type">u8</span>).init(allocator);
+    <span class="tok-kw">defer</span> {
+        versions.deinit();
+        <span class="tok-kw">for</span> (dirs.items) |filtered_dir| allocator.free(filtered_dir);
+        dirs.deinit();
+    }
+
+    iterate: <span class="tok-kw">while</span> (iterator.next() <span class="tok-kw">catch</span> <span class="tok-null">null</span>) |entry| {
+        <span class="tok-kw">if</span> (entry.kind != .directory) <span class="tok-kw">continue</span>;
+        <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.startsWith">startsWith</a>(<span class="tok-type">u8</span>, entry.name, prefix)) <span class="tok-kw">continue</span>;
+
+        <span class="tok-kw">var</span> version: Version = .{
+            .nums = .{<span class="tok-number">0</span>} ** <span class="tok-number">4</span>,
+            .build = <span class="tok-str">&quot;&quot;</span>,
+        };
+        <span class="tok-kw">const</span> suffix = entry.name[prefix.len..];
+        <span class="tok-kw">const</span> underscore = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, entry.name, <span class="tok-str">'_'</span>);
+        <span class="tok-kw">var</span> num_it = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, suffix[<span class="tok-number">0</span> .. underscore <span class="tok-kw">orelse</span> suffix.len], <span class="tok-str">'.'</span>);
+        version.nums[<span class="tok-number">0</span>] = Version.parseNum(num_it.first()) <span class="tok-kw">orelse</span> <span class="tok-kw">continue</span>;
+        <span class="tok-kw">for</span> (version.nums[<span class="tok-number">1</span>..]) |*num|
+            num.* = Version.parseNum(num_it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">break</span>) <span class="tok-kw">orelse</span> <span class="tok-kw">continue</span> :iterate
+        <span class="tok-kw">else</span> <span class="tok-kw">if</span> (num_it.next()) |_| <span class="tok-kw">continue</span>;
+
+        <span class="tok-kw">const</span> name = <span class="tok-kw">try</span> allocator.dupe(<span class="tok-type">u8</span>, suffix);
+        <span class="tok-kw">errdefer</span> allocator.free(name);
+        <span class="tok-kw">if</span> (underscore) |pos| version.build = name[pos + <span class="tok-number">1</span> ..];
+
+        <span class="tok-kw">try</span> versions.append(version);
+        <span class="tok-kw">try</span> dirs.append(name);
+    }
+
+    <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.sortUnstableContext">sortUnstableContext</a>(<span class="tok-number">0</span>, dirs.items.len, <span class="tok-kw">struct</span> {
+        versions: []Version,
+        dirs: [][]<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">lessThan</span>(context: <span class="tok-builtin">@This</span>(), lhs: <span class="tok-type">usize</span>, rhs: <span class="tok-type">usize</span>) <span class="tok-type">bool</span> {
+            <span class="tok-kw">return</span> context.versions[lhs].order(context.versions[rhs]).compare(.gt);
+        }
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">swap</span>(context: <span class="tok-builtin">@This</span>(), lhs: <span class="tok-type">usize</span>, rhs: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+            <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.swap">swap</a>(Version, &amp;context.versions[lhs], &amp;context.versions[rhs]);
+            <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.swap">swap</a>([]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, &amp;context.dirs[lhs], &amp;context.dirs[rhs]);
+        }
+    }{ .versions = versions.items, .dirs = dirs.items });
+    <span class="tok-kw">return</span> dirs.toOwnedSlice();
+}
+
+<span class="tok-kw">const</span> OpenOptions = <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Sets the KEY_WOW64_32KEY access flag.</span>
+    <span class="tok-comment">/// https://learn.microsoft.com/en-us/windows/win32/winprog64/accessing-an-alternate-registry-view</span>
+    wow64_32: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+};
+
+<span class="tok-kw">const</span> RegistryWtf8 = <span class="tok-kw">struct</span> {
+    key: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HKEY">HKEY</a>,
+
+    <span class="tok-comment">/// Assert that `key` is valid WTF-8 string</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">openKey</span>(hkey: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HKEY">HKEY</a>, key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, options: <a href="std.zig.WindowsSdk.OpenOptions.html">OpenOptions</a>) <span class="tok-kw">error</span>{KeyNotFound}!<a href="std.zig.WindowsSdk.RegistryWtf8.html">RegistryWtf8</a> {
+        <span class="tok-kw">const</span> key_wtf16le: [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span> = key_wtf16le: {
+            <span class="tok-kw">var</span> key_wtf16le_buf: [<a href="std.zig.WindowsSdk.RegistryWtf16Le.html">RegistryWtf16Le</a>.<a href="std.zig.WindowsSdk.RegistryWtf16Le.html#std.zig.WindowsSdk.RegistryWtf16Le.key_name_max_len">key_name_max_len</a>]<span class="tok-type">u16</span> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> key_wtf16le_len: <span class="tok-type">usize</span> = <a href="std.html">std</a>.<a href="std.unicode.html">unicode</a>.<a href="std.unicode.html#std.unicode.wtf8ToWtf16Le">wtf8ToWtf16Le</a>(key_wtf16le_buf[<span class="tok-number">0</span>..], key) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                <span class="tok-kw">error</span>.InvalidWtf8 =&gt; <span class="tok-kw">unreachable</span>,
+            };
+            key_wtf16le_buf[key_wtf16le_len] = <span class="tok-number">0</span>;
+            <span class="tok-kw">break</span> :key_wtf16le key_wtf16le_buf[<span class="tok-number">0</span>..key_wtf16le_len :<span class="tok-number">0</span>];
+        };
+
+        <span class="tok-kw">const</span> registry_wtf16le = <span class="tok-kw">try</span> <a href="std.zig.WindowsSdk.RegistryWtf16Le.html">RegistryWtf16Le</a>.<a href="std.zig.WindowsSdk.RegistryWtf16Le.html#std.zig.WindowsSdk.RegistryWtf16Le.openKey">openKey</a>(hkey, key_wtf16le, options);
+        <span class="tok-kw">return</span> .{ .key = registry_wtf16le.key };
+    }
+
+    <span class="tok-comment">/// Closes key, after that usage is invalid</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">closeKey</span>(reg: <a href="std.zig.WindowsSdk.RegistryWtf8.html">RegistryWtf8</a>) <span class="tok-type">void</span> {
+        <span class="tok-kw">const</span> return_code_int: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HRESULT">HRESULT</a> = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.advapi32.html">advapi32</a>.<a href="std.os.windows.advapi32.html#std.os.windows.advapi32.RegCloseKey">RegCloseKey</a>(reg.key);
+        <span class="tok-kw">const</span> return_code: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.win32error.Win32Error.html">Win32Error</a> = <span class="tok-builtin">@enumFromInt</span>(return_code_int);
+        <span class="tok-kw">switch</span> (return_code) {
+            .SUCCESS =&gt; {},
+            <span class="tok-kw">else</span> =&gt; {},
+        }
+    }
+
+    <span class="tok-comment">/// Get string from registry.</span>
+    <span class="tok-comment">/// Caller owns result.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getString</span>(reg: <a href="std.zig.WindowsSdk.RegistryWtf8.html">RegistryWtf8</a>, allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, subkey: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, value_name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-kw">error</span>{ OutOfMemory, ValueNameNotFound, NotAString, StringNotFound }![]<span class="tok-type">u8</span> {
+        <span class="tok-kw">const</span> subkey_wtf16le: [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span> = subkey_wtf16le: {
+            <span class="tok-kw">var</span> subkey_wtf16le_buf: [<a href="std.zig.WindowsSdk.RegistryWtf16Le.html">RegistryWtf16Le</a>.<a href="std.zig.WindowsSdk.RegistryWtf16Le.html#std.zig.WindowsSdk.RegistryWtf16Le.key_name_max_len">key_name_max_len</a>]<span class="tok-type">u16</span> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> subkey_wtf16le_len: <span class="tok-type">usize</span> = <a href="std.html">std</a>.<a href="std.unicode.html">unicode</a>.<a href="std.unicode.html#std.unicode.wtf8ToWtf16Le">wtf8ToWtf16Le</a>(subkey_wtf16le_buf[<span class="tok-number">0</span>..], subkey) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+            subkey_wtf16le_buf[subkey_wtf16le_len] = <span class="tok-number">0</span>;
+            <span class="tok-kw">break</span> :subkey_wtf16le subkey_wtf16le_buf[<span class="tok-number">0</span>..subkey_wtf16le_len :<span class="tok-number">0</span>];
+        };
+
+        <span class="tok-kw">const</span> value_name_wtf16le: [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span> = value_name_wtf16le: {
+            <span class="tok-kw">var</span> value_name_wtf16le_buf: [<a href="std.zig.WindowsSdk.RegistryWtf16Le.html">RegistryWtf16Le</a>.<a href="std.zig.WindowsSdk.RegistryWtf16Le.html#std.zig.WindowsSdk.RegistryWtf16Le.value_name_max_len">value_name_max_len</a>]<span class="tok-type">u16</span> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> value_name_wtf16le_len: <span class="tok-type">usize</span> = <a href="std.html">std</a>.<a href="std.unicode.html">unicode</a>.<a href="std.unicode.html#std.unicode.wtf8ToWtf16Le">wtf8ToWtf16Le</a>(value_name_wtf16le_buf[<span class="tok-number">0</span>..], value_name) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+            value_name_wtf16le_buf[value_name_wtf16le_len] = <span class="tok-number">0</span>;
+            <span class="tok-kw">break</span> :value_name_wtf16le value_name_wtf16le_buf[<span class="tok-number">0</span>..value_name_wtf16le_len :<span class="tok-number">0</span>];
+        };
+
+        <span class="tok-kw">const</span> registry_wtf16le: <a href="std.zig.WindowsSdk.RegistryWtf16Le.html">RegistryWtf16Le</a> = .{ .key = reg.key };
+        <span class="tok-kw">const</span> value_wtf16le = <span class="tok-kw">try</span> registry_wtf16le.getString(allocator, subkey_wtf16le, value_name_wtf16le);
+        <span class="tok-kw">defer</span> allocator.free(value_wtf16le);
+
+        <span class="tok-kw">const</span> value_wtf8: []<span class="tok-type">u8</span> = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.unicode.html">unicode</a>.<a href="std.unicode.html#std.unicode.wtf16LeToWtf8Alloc">wtf16LeToWtf8Alloc</a>(allocator, value_wtf16le);
+        <span class="tok-kw">errdefer</span> allocator.free(value_wtf8);
+
+        <span class="tok-kw">return</span> value_wtf8;
+    }
+
+    <span class="tok-comment">/// Get DWORD (u32) from registry.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getDword</span>(reg: <a href="std.zig.WindowsSdk.RegistryWtf8.html">RegistryWtf8</a>, subkey: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, value_name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-kw">error</span>{ ValueNameNotFound, NotADword, DwordTooLong, DwordNotFound }!<span class="tok-type">u32</span> {
+        <span class="tok-kw">const</span> subkey_wtf16le: [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span> = subkey_wtf16le: {
+            <span class="tok-kw">var</span> subkey_wtf16le_buf: [<a href="std.zig.WindowsSdk.RegistryWtf16Le.html">RegistryWtf16Le</a>.<a href="std.zig.WindowsSdk.RegistryWtf16Le.html#std.zig.WindowsSdk.RegistryWtf16Le.key_name_max_len">key_name_max_len</a>]<span class="tok-type">u16</span> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> subkey_wtf16le_len: <span class="tok-type">usize</span> = <a href="std.html">std</a>.<a href="std.unicode.html">unicode</a>.<a href="std.unicode.html#std.unicode.wtf8ToWtf16Le">wtf8ToWtf16Le</a>(subkey_wtf16le_buf[<span class="tok-number">0</span>..], subkey) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+            subkey_wtf16le_buf[subkey_wtf16le_len] = <span class="tok-number">0</span>;
+            <span class="tok-kw">break</span> :subkey_wtf16le subkey_wtf16le_buf[<span class="tok-number">0</span>..subkey_wtf16le_len :<span class="tok-number">0</span>];
+        };
+
+        <span class="tok-kw">const</span> value_name_wtf16le: [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span> = value_name_wtf16le: {
+            <span class="tok-kw">var</span> value_name_wtf16le_buf: [<a href="std.zig.WindowsSdk.RegistryWtf16Le.html">RegistryWtf16Le</a>.<a href="std.zig.WindowsSdk.RegistryWtf16Le.html#std.zig.WindowsSdk.RegistryWtf16Le.value_name_max_len">value_name_max_len</a>]<span class="tok-type">u16</span> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> value_name_wtf16le_len: <span class="tok-type">usize</span> = <a href="std.html">std</a>.<a href="std.unicode.html">unicode</a>.<a href="std.unicode.html#std.unicode.wtf8ToWtf16Le">wtf8ToWtf16Le</a>(value_name_wtf16le_buf[<span class="tok-number">0</span>..], value_name) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+            value_name_wtf16le_buf[value_name_wtf16le_len] = <span class="tok-number">0</span>;
+            <span class="tok-kw">break</span> :value_name_wtf16le value_name_wtf16le_buf[<span class="tok-number">0</span>..value_name_wtf16le_len :<span class="tok-number">0</span>];
+        };
+
+        <span class="tok-kw">const</span> registry_wtf16le: <a href="std.zig.WindowsSdk.RegistryWtf16Le.html">RegistryWtf16Le</a> = .{ .key = reg.key };
+        <span class="tok-kw">return</span> registry_wtf16le.getDword(subkey_wtf16le, value_name_wtf16le);
+    }
+
+    <span class="tok-comment">/// Under private space with flags:</span>
+    <span class="tok-comment">/// KEY_QUERY_VALUE and KEY_ENUMERATE_SUB_KEYS.</span>
+    <span class="tok-comment">/// After finishing work, call `closeKey`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">loadFromPath</span>(absolute_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-kw">error</span>{KeyNotFound}!<a href="std.zig.WindowsSdk.RegistryWtf8.html">RegistryWtf8</a> {
+        <span class="tok-kw">const</span> absolute_path_wtf16le: [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span> = absolute_path_wtf16le: {
+            <span class="tok-kw">var</span> absolute_path_wtf16le_buf: [<a href="std.zig.WindowsSdk.RegistryWtf16Le.html">RegistryWtf16Le</a>.<a href="std.zig.WindowsSdk.RegistryWtf16Le.html#std.zig.WindowsSdk.RegistryWtf16Le.value_name_max_len">value_name_max_len</a>]<span class="tok-type">u16</span> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> absolute_path_wtf16le_len: <span class="tok-type">usize</span> = <a href="std.html">std</a>.<a href="std.unicode.html">unicode</a>.<a href="std.unicode.html#std.unicode.wtf8ToWtf16Le">wtf8ToWtf16Le</a>(absolute_path_wtf16le_buf[<span class="tok-number">0</span>..], absolute_path) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+            absolute_path_wtf16le_buf[absolute_path_wtf16le_len] = <span class="tok-number">0</span>;
+            <span class="tok-kw">break</span> :absolute_path_wtf16le absolute_path_wtf16le_buf[<span class="tok-number">0</span>..absolute_path_wtf16le_len :<span class="tok-number">0</span>];
+        };
+
+        <span class="tok-kw">const</span> registry_wtf16le = <span class="tok-kw">try</span> <a href="std.zig.WindowsSdk.RegistryWtf16Le.html">RegistryWtf16Le</a>.<a href="std.zig.WindowsSdk.RegistryWtf16Le.html#std.zig.WindowsSdk.RegistryWtf16Le.loadFromPath">loadFromPath</a>(absolute_path_wtf16le);
+        <span class="tok-kw">return</span> .{ .key = registry_wtf16le.key };
+    }
+};
+
+<span class="tok-kw">const</span> RegistryWtf16Le = <span class="tok-kw">struct</span> {
+    key: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HKEY">HKEY</a>,
+
+    <span class="tok-comment">/// Includes root key (f.e. HKEY_LOCAL_MACHINE).</span>
+    <span class="tok-comment">/// https://learn.microsoft.com/en-us/windows/win32/sysinfo/registry-element-size-limits</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> key_name_max_len = <span class="tok-number">255</span>;
+    <span class="tok-comment">/// In Unicode characters.</span>
+    <span class="tok-comment">/// https://learn.microsoft.com/en-us/windows/win32/sysinfo/registry-element-size-limits</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> value_name_max_len = <span class="tok-number">16_383</span>;
+
+    <span class="tok-comment">/// Under HKEY_LOCAL_MACHINE with flags:</span>
+    <span class="tok-comment">/// KEY_QUERY_VALUE, KEY_ENUMERATE_SUB_KEYS, optionally KEY_WOW64_32KEY.</span>
+    <span class="tok-comment">/// After finishing work, call `closeKey`.</span>
+    <span class="tok-kw">fn</span> <span class="tok-fn">openKey</span>(hkey: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HKEY">HKEY</a>, key_wtf16le: [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>, options: <a href="std.zig.WindowsSdk.OpenOptions.html">OpenOptions</a>) <span class="tok-kw">error</span>{KeyNotFound}!<a href="std.zig.WindowsSdk.RegistryWtf16Le.html">RegistryWtf16Le</a> {
+        <span class="tok-kw">var</span> key: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HKEY">HKEY</a> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">var</span> access: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.DWORD">REGSAM</a> = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.KEY_QUERY_VALUE">KEY_QUERY_VALUE</a> | <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.KEY_ENUMERATE_SUB_KEYS">KEY_ENUMERATE_SUB_KEYS</a>;
+        <span class="tok-kw">if</span> (options.wow64_32) access |= <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.KEY_WOW64_32KEY">KEY_WOW64_32KEY</a>;
+        <span class="tok-kw">const</span> return_code_int: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HRESULT">HRESULT</a> = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.advapi32.html">advapi32</a>.<a href="std.os.windows.advapi32.html#std.os.windows.advapi32.RegOpenKeyExW">RegOpenKeyExW</a>(
+            hkey,
+            key_wtf16le,
+            <span class="tok-number">0</span>,
+            access,
+            &amp;key,
+        );
+        <span class="tok-kw">const</span> return_code: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.win32error.Win32Error.html">Win32Error</a> = <span class="tok-builtin">@enumFromInt</span>(return_code_int);
+        <span class="tok-kw">switch</span> (return_code) {
+            .SUCCESS =&gt; {},
+            .FILE_NOT_FOUND =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.KeyNotFound,
+
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.KeyNotFound,
+        }
+        <span class="tok-kw">return</span> .{ .key = key };
+    }
+
+    <span class="tok-comment">/// Closes key, after that usage is invalid</span>
+    <span class="tok-kw">fn</span> <span class="tok-fn">closeKey</span>(reg: <a href="std.zig.WindowsSdk.RegistryWtf16Le.html">RegistryWtf16Le</a>) <span class="tok-type">void</span> {
+        <span class="tok-kw">const</span> return_code_int: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HRESULT">HRESULT</a> = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.advapi32.html">advapi32</a>.<a href="std.os.windows.advapi32.html#std.os.windows.advapi32.RegCloseKey">RegCloseKey</a>(reg.key);
+        <span class="tok-kw">const</span> return_code: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.win32error.Win32Error.html">Win32Error</a> = <span class="tok-builtin">@enumFromInt</span>(return_code_int);
+        <span class="tok-kw">switch</span> (return_code) {
+            .SUCCESS =&gt; {},
+            <span class="tok-kw">else</span> =&gt; {},
+        }
+    }
+
+    <span class="tok-comment">/// Get string ([:0]const u16) from registry.</span>
+    <span class="tok-kw">fn</span> <span class="tok-fn">getString</span>(reg: <a href="std.zig.WindowsSdk.RegistryWtf16Le.html">RegistryWtf16Le</a>, allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, subkey_wtf16le: [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>, value_name_wtf16le: [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>) <span class="tok-kw">error</span>{ OutOfMemory, ValueNameNotFound, NotAString, StringNotFound }![]<span class="tok-kw">const</span> <span class="tok-type">u16</span> {
+        <span class="tok-kw">var</span> actual_type: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a> = <span class="tok-null">undefined</span>;<span class="tok-comment">
+
+        // Calculating length to allocate
+        </span><span class="tok-kw">var</span> value_wtf16le_buf_size: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;<span class="tok-comment"> // in bytes, including any terminating NUL character or characters.
+        </span><span class="tok-kw">var</span> return_code_int: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HRESULT">HRESULT</a> = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.advapi32.html">advapi32</a>.<a href="std.os.windows.advapi32.html#std.os.windows.advapi32.RegGetValueW">RegGetValueW</a>(
+            reg.key,
+            subkey_wtf16le,
+            value_name_wtf16le,
+            <a href="std.os.windows.advapi32.RRF.html">RRF</a>.<a href="std.os.windows.advapi32.RRF.html#std.os.windows.advapi32.RRF.RT_REG_SZ">RT_REG_SZ</a>,
+            &amp;actual_type,
+            <span class="tok-null">null</span>,
+            &amp;value_wtf16le_buf_size,
+        );<span class="tok-comment">
+
+        // Check returned code and type
+        </span><span class="tok-kw">var</span> return_code: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.win32error.Win32Error.html">Win32Error</a> = <span class="tok-builtin">@enumFromInt</span>(return_code_int);
+        <span class="tok-kw">switch</span> (return_code) {
+            .SUCCESS =&gt; <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(value_wtf16le_buf_size != <span class="tok-number">0</span>),
+            .MORE_DATA =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // We are only reading length
+            </span>.FILE_NOT_FOUND =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ValueNameNotFound,
+            .INVALID_PARAMETER =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // We didn't combine RRF.SUBKEY_WOW6464KEY and RRF.SUBKEY_WOW6432KEY
+            </span><span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.StringNotFound,
+        }
+        <span class="tok-kw">switch</span> (actual_type) {
+            <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.SZ">SZ</a> =&gt; {},
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NotAString,
+        }
+
+        <span class="tok-kw">const</span> value_wtf16le_buf: []<span class="tok-type">u16</span> = <span class="tok-kw">try</span> allocator.alloc(<span class="tok-type">u16</span>, <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.divCeil">divCeil</a>(<span class="tok-type">u32</span>, value_wtf16le_buf_size, <span class="tok-number">2</span>) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>);
+        <span class="tok-kw">errdefer</span> allocator.free(value_wtf16le_buf);
+
+        return_code_int = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.advapi32.html">advapi32</a>.<a href="std.os.windows.advapi32.html#std.os.windows.advapi32.RegGetValueW">RegGetValueW</a>(
+            reg.key,
+            subkey_wtf16le,
+            value_name_wtf16le,
+            <a href="std.os.windows.advapi32.RRF.html">RRF</a>.<a href="std.os.windows.advapi32.RRF.html#std.os.windows.advapi32.RRF.RT_REG_SZ">RT_REG_SZ</a>,
+            &amp;actual_type,
+            value_wtf16le_buf.ptr,
+            &amp;value_wtf16le_buf_size,
+        );<span class="tok-comment">
+
+        // Check returned code and (just in case) type again.
+        </span>return_code = <span class="tok-builtin">@enumFromInt</span>(return_code_int);
+        <span class="tok-kw">switch</span> (return_code) {
+            .SUCCESS =&gt; {},
+            .MORE_DATA =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // Calculated first time length should be enough, even overestimated
+            </span>.FILE_NOT_FOUND =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ValueNameNotFound,
+            .INVALID_PARAMETER =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // We didn't combine RRF.SUBKEY_WOW6464KEY and RRF.SUBKEY_WOW6432KEY
+            </span><span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.StringNotFound,
+        }
+        <span class="tok-kw">switch</span> (actual_type) {
+            <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.SZ">SZ</a> =&gt; {},
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NotAString,
+        }
+
+        <span class="tok-kw">const</span> value_wtf16le: []<span class="tok-kw">const</span> <span class="tok-type">u16</span> = value_wtf16le: {<span class="tok-comment">
+            // note(bratishkaerik): somehow returned value in `buf_len` is overestimated by Windows and contains extra space
+            // we will just search for zero termination and forget length
+            // Windows sure is strange
+            </span><span class="tok-kw">const</span> value_wtf16le_overestimated: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span> = <span class="tok-builtin">@ptrCast</span>(value_wtf16le_buf.ptr);
+            <span class="tok-kw">break</span> :value_wtf16le <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.span">span</a>(value_wtf16le_overestimated);
+        };
+
+        _ = allocator.resize(value_wtf16le_buf, value_wtf16le.len);
+        <span class="tok-kw">return</span> value_wtf16le;
+    }
+
+    <span class="tok-comment">/// Get DWORD (u32) from registry.</span>
+    <span class="tok-kw">fn</span> <span class="tok-fn">getDword</span>(reg: <a href="std.zig.WindowsSdk.RegistryWtf16Le.html">RegistryWtf16Le</a>, subkey_wtf16le: [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>, value_name_wtf16le: [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>) <span class="tok-kw">error</span>{ ValueNameNotFound, NotADword, DwordTooLong, DwordNotFound }!<span class="tok-type">u32</span> {
+        <span class="tok-kw">var</span> actual_type: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">var</span> reg_size: <span class="tok-type">u32</span> = <span class="tok-builtin">@sizeOf</span>(<span class="tok-type">u32</span>);
+        <span class="tok-kw">var</span> reg_value: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+
+        <span class="tok-kw">const</span> return_code_int: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HRESULT">HRESULT</a> = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.advapi32.html">advapi32</a>.<a href="std.os.windows.advapi32.html#std.os.windows.advapi32.RegGetValueW">RegGetValueW</a>(
+            reg.key,
+            subkey_wtf16le,
+            value_name_wtf16le,
+            <a href="std.os.windows.advapi32.RRF.html">RRF</a>.<a href="std.os.windows.advapi32.RRF.html#std.os.windows.advapi32.RRF.RT_REG_DWORD">RT_REG_DWORD</a>,
+            &amp;actual_type,
+            &amp;reg_value,
+            &amp;reg_size,
+        );
+        <span class="tok-kw">const</span> return_code: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.win32error.Win32Error.html">Win32Error</a> = <span class="tok-builtin">@enumFromInt</span>(return_code_int);
+        <span class="tok-kw">switch</span> (return_code) {
+            .SUCCESS =&gt; {},
+            .MORE_DATA =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.DwordTooLong,
+            .FILE_NOT_FOUND =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.ValueNameNotFound,
+            .INVALID_PARAMETER =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // We didn't combine RRF.SUBKEY_WOW6464KEY and RRF.SUBKEY_WOW6432KEY
+            </span><span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.DwordNotFound,
+        }
+
+        <span class="tok-kw">switch</span> (actual_type) {
+            <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.REG.html">REG</a>.<a href="std.os.windows.REG.html#std.os.windows.REG.DWORD">DWORD</a> =&gt; {},
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NotADword,
+        }
+
+        <span class="tok-kw">return</span> reg_value;
+    }
+
+    <span class="tok-comment">/// Under private space with flags:</span>
+    <span class="tok-comment">/// KEY_QUERY_VALUE and KEY_ENUMERATE_SUB_KEYS.</span>
+    <span class="tok-comment">/// After finishing work, call `closeKey`.</span>
+    <span class="tok-kw">fn</span> <span class="tok-fn">loadFromPath</span>(absolute_path_as_wtf16le: [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>) <span class="tok-kw">error</span>{KeyNotFound}!<a href="std.zig.WindowsSdk.RegistryWtf16Le.html">RegistryWtf16Le</a> {
+        <span class="tok-kw">var</span> key: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HKEY">HKEY</a> = <span class="tok-null">undefined</span>;
+
+        <span class="tok-kw">const</span> return_code_int: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HRESULT">HRESULT</a> = <a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.advapi32.html">advapi32</a>.<a href="std.os.windows.advapi32.html#std.os.windows.advapi32.RegLoadAppKeyW">RegLoadAppKeyW</a>(
+            absolute_path_as_wtf16le,
+            &amp;key,
+            <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.KEY_QUERY_VALUE">KEY_QUERY_VALUE</a> | <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.KEY_ENUMERATE_SUB_KEYS">KEY_ENUMERATE_SUB_KEYS</a>,
+            <span class="tok-number">0</span>,
+            <span class="tok-number">0</span>,
+        );
+        <span class="tok-kw">const</span> return_code: <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.win32error.Win32Error.html">Win32Error</a> = <span class="tok-builtin">@enumFromInt</span>(return_code_int);
+        <span class="tok-kw">switch</span> (return_code) {
+            .SUCCESS =&gt; {},
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.KeyNotFound,
+        }
+
+        <span class="tok-kw">return</span> .{ .key = key };
+    }
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Installation = <span class="tok-kw">struct</span> {
+    path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    version: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+
+    <span class="tok-comment">/// Find path and version of Windows SDK.</span>
+    <span class="tok-comment">/// Caller owns the result's fields.</span>
+    <span class="tok-comment">/// After finishing work, call `free(allocator)`.</span>
+    <span class="tok-kw">fn</span> <span class="tok-fn">find</span>(
+        allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>,
+        roots_key: <a href="std.zig.WindowsSdk.RegistryWtf8.html">RegistryWtf8</a>,
+        roots_subkey: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+        prefix: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+        version_key_name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    ) <span class="tok-kw">error</span>{ OutOfMemory, InstallationNotFound, PathTooLong, VersionTooLong }!<a href="std.zig.WindowsSdk.Installation.html">Installation</a> {
+        roots: {
+            <span class="tok-kw">const</span> installation = <a href="std.zig.WindowsSdk.Installation.html#std.zig.WindowsSdk.Installation.findFromRoot">findFromRoot</a>(allocator, roots_key, roots_subkey, prefix) <span class="tok-kw">catch</span>
+                <span class="tok-kw">break</span> :roots;
+            <span class="tok-kw">if</span> (installation.isValidVersion()) <span class="tok-kw">return</span> installation;
+            installation.free(allocator);
+        }
+        {
+            <span class="tok-kw">const</span> installation = <span class="tok-kw">try</span> <a href="std.zig.WindowsSdk.Installation.html#std.zig.WindowsSdk.Installation.findFromInstallationFolder">findFromInstallationFolder</a>(allocator, version_key_name);
+            <span class="tok-kw">if</span> (installation.isValidVersion()) <span class="tok-kw">return</span> installation;
+            installation.free(allocator);
+        }
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InstallationNotFound;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">findFromRoot</span>(
+        allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>,
+        roots_key: <a href="std.zig.WindowsSdk.RegistryWtf8.html">RegistryWtf8</a>,
+        roots_subkey: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+        prefix: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    ) <span class="tok-kw">error</span>{ OutOfMemory, InstallationNotFound, PathTooLong, VersionTooLong }!<a href="std.zig.WindowsSdk.Installation.html">Installation</a> {
+        <span class="tok-kw">const</span> path = path: {
+            <span class="tok-kw">const</span> path_maybe_with_trailing_slash = roots_key.getString(allocator, <span class="tok-str">&quot;&quot;</span>, roots_subkey) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                <span class="tok-kw">error</span>.NotAString =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InstallationNotFound,
+                <span class="tok-kw">error</span>.ValueNameNotFound =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InstallationNotFound,
+                <span class="tok-kw">error</span>.StringNotFound =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InstallationNotFound,
+
+                <span class="tok-kw">error</span>.OutOfMemory =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutOfMemory,
+            };
+            <span class="tok-kw">if</span> (path_maybe_with_trailing_slash.len &gt; <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a> <span class="tok-kw">or</span> !<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.isAbsolute">isAbsolute</a>(path_maybe_with_trailing_slash)) {
+                allocator.free(path_maybe_with_trailing_slash);
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathTooLong;
+            }
+
+            <span class="tok-kw">var</span> path = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>).fromOwnedSlice(allocator, path_maybe_with_trailing_slash);
+            <span class="tok-kw">errdefer</span> path.deinit();<span class="tok-comment">
+
+            // String might contain trailing slash, so trim it here
+            </span><span class="tok-kw">if</span> (path.items.len &gt; <span class="tok-str">&quot;C:\\&quot;</span>.len <span class="tok-kw">and</span> path.getLast() == <span class="tok-str">'\\'</span>) _ = path.pop();
+            <span class="tok-kw">break</span> :path <span class="tok-kw">try</span> path.toOwnedSlice();
+        };
+        <span class="tok-kw">errdefer</span> allocator.free(path);
+
+        <span class="tok-kw">const</span> version = version: {
+            <span class="tok-kw">var</span> buf: [<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> sdk_lib_dir_path = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.bufPrint">bufPrint</a>(buf[<span class="tok-number">0</span>..], <span class="tok-str">&quot;{s}\\Lib\\&quot;</span>, .{path}) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                <span class="tok-kw">error</span>.NoSpaceLeft =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathTooLong,
+            };
+            <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.isAbsolute">isAbsolute</a>(sdk_lib_dir_path)) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InstallationNotFound;<span class="tok-comment">
+
+            // enumerate files in sdk path looking for latest version
+            </span><span class="tok-kw">var</span> sdk_lib_dir = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.openDirAbsolute">openDirAbsolute</a>(sdk_lib_dir_path, .{
+                .iterate = <span class="tok-null">true</span>,
+            }) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                <span class="tok-kw">error</span>.NameTooLong =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathTooLong,
+                <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InstallationNotFound,
+            };
+            <span class="tok-kw">defer</span> sdk_lib_dir.close();
+
+            <span class="tok-kw">var</span> iterator = sdk_lib_dir.iterate();
+            <span class="tok-kw">const</span> versions = <span class="tok-kw">try</span> <a href="std.zig.WindowsSdk.html#std.zig.WindowsSdk.iterateAndFilterByVersion">iterateAndFilterByVersion</a>(&amp;iterator, allocator, prefix);
+            <span class="tok-kw">if</span> (versions.len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InstallationNotFound;
+            <span class="tok-kw">defer</span> {
+                <span class="tok-kw">for</span> (versions[<span class="tok-number">1</span>..]) |version| allocator.free(version);
+                allocator.free(versions);
+            }
+            <span class="tok-kw">break</span> :version versions[<span class="tok-number">0</span>];
+        };
+        <span class="tok-kw">errdefer</span> allocator.free(version);
+
+        <span class="tok-kw">return</span> .{ .path = path, .version = version };
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">findFromInstallationFolder</span>(
+        allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>,
+        version_key_name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    ) <span class="tok-kw">error</span>{ OutOfMemory, InstallationNotFound, PathTooLong, VersionTooLong }!<a href="std.zig.WindowsSdk.Installation.html">Installation</a> {
+        <span class="tok-kw">var</span> key_name_buf: [<a href="std.zig.WindowsSdk.RegistryWtf16Le.html">RegistryWtf16Le</a>.<a href="std.zig.WindowsSdk.RegistryWtf16Le.html#std.zig.WindowsSdk.RegistryWtf16Le.key_name_max_len">key_name_max_len</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">const</span> key_name = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.bufPrint">bufPrint</a>(
+            &amp;key_name_buf,
+            <span class="tok-str">&quot;SOFTWARE\\Microsoft\\Microsoft SDKs\\Windows\\{s}&quot;</span>,
+            .{version_key_name},
+        ) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+        <span class="tok-kw">const</span> key = key: <span class="tok-kw">for</span> ([_]<span class="tok-type">bool</span>{ <span class="tok-null">true</span>, <span class="tok-null">false</span> }) |wow6432node| {
+            <span class="tok-kw">for</span> ([_]<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HKEY">HKEY</a>{ <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HKEY_LOCAL_MACHINE">HKEY_LOCAL_MACHINE</a>, <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HKEY_CURRENT_USER">HKEY_CURRENT_USER</a> }) |hkey| {
+                <span class="tok-kw">break</span> :key <a href="std.zig.WindowsSdk.RegistryWtf8.html">RegistryWtf8</a>.<a href="std.zig.WindowsSdk.RegistryWtf8.html#std.zig.WindowsSdk.RegistryWtf8.openKey">openKey</a>(hkey, key_name, .{ .wow64_32 = wow6432node }) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                    <span class="tok-kw">error</span>.KeyNotFound =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InstallationNotFound,
+                };
+            }
+        } <span class="tok-kw">else</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InstallationNotFound;
+        <span class="tok-kw">defer</span> key.closeKey();
+
+        <span class="tok-kw">const</span> path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = path: {
+            <span class="tok-kw">const</span> path_maybe_with_trailing_slash = key.getString(allocator, <span class="tok-str">&quot;&quot;</span>, <span class="tok-str">&quot;InstallationFolder&quot;</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                <span class="tok-kw">error</span>.NotAString =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InstallationNotFound,
+                <span class="tok-kw">error</span>.ValueNameNotFound =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InstallationNotFound,
+                <span class="tok-kw">error</span>.StringNotFound =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InstallationNotFound,
+
+                <span class="tok-kw">error</span>.OutOfMemory =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutOfMemory,
+            };
+
+            <span class="tok-kw">if</span> (path_maybe_with_trailing_slash.len &gt; <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a> <span class="tok-kw">or</span> !<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.isAbsolute">isAbsolute</a>(path_maybe_with_trailing_slash)) {
+                allocator.free(path_maybe_with_trailing_slash);
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathTooLong;
+            }
+
+            <span class="tok-kw">var</span> path = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>).fromOwnedSlice(allocator, path_maybe_with_trailing_slash);
+            <span class="tok-kw">errdefer</span> path.deinit();<span class="tok-comment">
+
+            // String might contain trailing slash, so trim it here
+            </span><span class="tok-kw">if</span> (path.items.len &gt; <span class="tok-str">&quot;C:\\&quot;</span>.len <span class="tok-kw">and</span> path.getLast() == <span class="tok-str">'\\'</span>) _ = path.pop();
+
+            <span class="tok-kw">const</span> path_without_trailing_slash = <span class="tok-kw">try</span> path.toOwnedSlice();
+            <span class="tok-kw">break</span> :path path_without_trailing_slash;
+        };
+        <span class="tok-kw">errdefer</span> allocator.free(path);
+
+        <span class="tok-kw">const</span> version: []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = version: {<span class="tok-comment">
+
+            // note(dimenus): Microsoft doesn't include the .0 in the ProductVersion key....
+            </span><span class="tok-kw">const</span> version_without_0 = key.getString(allocator, <span class="tok-str">&quot;&quot;</span>, <span class="tok-str">&quot;ProductVersion&quot;</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                <span class="tok-kw">error</span>.NotAString =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InstallationNotFound,
+                <span class="tok-kw">error</span>.ValueNameNotFound =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InstallationNotFound,
+                <span class="tok-kw">error</span>.StringNotFound =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InstallationNotFound,
+
+                <span class="tok-kw">error</span>.OutOfMemory =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutOfMemory,
+            };
+            <span class="tok-kw">if</span> (version_without_0.len + <span class="tok-str">&quot;.0&quot;</span>.len &gt; <a href="std.zig.WindowsSdk.html#std.zig.WindowsSdk.product_version_max_length">product_version_max_length</a>) {
+                allocator.free(version_without_0);
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.VersionTooLong;
+            }
+
+            <span class="tok-kw">var</span> version = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>).fromOwnedSlice(allocator, version_without_0);
+            <span class="tok-kw">errdefer</span> version.deinit();
+
+            <span class="tok-kw">try</span> version.appendSlice(<span class="tok-str">&quot;.0&quot;</span>);
+
+            <span class="tok-kw">const</span> version_with_0 = <span class="tok-kw">try</span> version.toOwnedSlice();
+            <span class="tok-kw">break</span> :version version_with_0;
+        };
+        <span class="tok-kw">errdefer</span> allocator.free(version);
+
+        <span class="tok-kw">return</span> .{ .path = path, .version = version };
+    }
+
+    <span class="tok-comment">/// Check whether this version is enumerated in registry.</span>
+    <span class="tok-kw">fn</span> <span class="tok-fn">isValidVersion</span>(installation: <a href="std.zig.WindowsSdk.Installation.html">Installation</a>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">var</span> buf: [<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">const</span> reg_query_as_wtf8 = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.bufPrint">bufPrint</a>(buf[<span class="tok-number">0</span>..], <span class="tok-str">&quot;{s}\\{s}\\Installed Options&quot;</span>, .{
+            <a href="std.zig.WindowsSdk.html#std.zig.WindowsSdk.windows_kits_reg_key">windows_kits_reg_key</a>,
+            installation.version,
+        }) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.NoSpaceLeft =&gt; <span class="tok-kw">return</span> <span class="tok-null">false</span>,
+        };
+
+        <span class="tok-kw">const</span> options_key = <a href="std.zig.WindowsSdk.RegistryWtf8.html">RegistryWtf8</a>.<a href="std.zig.WindowsSdk.RegistryWtf8.html#std.zig.WindowsSdk.RegistryWtf8.openKey">openKey</a>(
+            <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HKEY_LOCAL_MACHINE">HKEY_LOCAL_MACHINE</a>,
+            reg_query_as_wtf8,
+            .{ .wow64_32 = <span class="tok-null">true</span> },
+        ) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.KeyNotFound =&gt; <span class="tok-kw">return</span> <span class="tok-null">false</span>,
+        };
+        <span class="tok-kw">defer</span> options_key.closeKey();
+
+        <span class="tok-kw">const</span> option_name = <span class="tok-kw">comptime</span> <span class="tok-kw">switch</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.target">target</a>.<a href="#">cpu</a>.<a href="#">arch</a>) {
+            .thumb =&gt; <span class="tok-str">&quot;OptionId.DesktopCPParm&quot;</span>,
+            .aarch64 =&gt; <span class="tok-str">&quot;OptionId.DesktopCPParm64&quot;</span>,
+            .x86 =&gt; <span class="tok-str">&quot;OptionId.DesktopCPPx86&quot;</span>,
+            .x86_64 =&gt; <span class="tok-str">&quot;OptionId.DesktopCPPx64&quot;</span>,
+            <span class="tok-kw">else</span> =&gt; |tag| <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Windows SDK cannot be detected on architecture &quot;</span> ++ tag),
+        };
+
+        <span class="tok-kw">const</span> reg_value = options_key.getDword(<span class="tok-str">&quot;&quot;</span>, option_name) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        <span class="tok-kw">return</span> (reg_value == <span class="tok-number">1</span>);
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">free</span>(install: <a href="std.zig.WindowsSdk.Installation.html">Installation</a>, allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) <span class="tok-type">void</span> {
+        allocator.free(install.path);
+        allocator.free(install.version);
+    }
+};
+
+<span class="tok-kw">const</span> MsvcLibDir = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">fn</span> <span class="tok-fn">findInstancesDirViaSetup</span>(allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) <span class="tok-kw">error</span>{ OutOfMemory, PathNotFound }!<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.Dir.html">Dir</a> {
+        <span class="tok-kw">const</span> vs_setup_key_path = <span class="tok-str">&quot;SOFTWARE\\Microsoft\\VisualStudio\\Setup&quot;</span>;
+        <span class="tok-kw">const</span> vs_setup_key = <a href="std.zig.WindowsSdk.RegistryWtf8.html">RegistryWtf8</a>.<a href="std.zig.WindowsSdk.RegistryWtf8.html#std.zig.WindowsSdk.RegistryWtf8.openKey">openKey</a>(<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HKEY_LOCAL_MACHINE">HKEY_LOCAL_MACHINE</a>, vs_setup_key_path, .{}) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.KeyNotFound =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound,
+        };
+        <span class="tok-kw">defer</span> vs_setup_key.closeKey();
+
+        <span class="tok-kw">const</span> packages_path = vs_setup_key.getString(allocator, <span class="tok-str">&quot;&quot;</span>, <span class="tok-str">&quot;CachePath&quot;</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.NotAString,
+            <span class="tok-kw">error</span>.ValueNameNotFound,
+            <span class="tok-kw">error</span>.StringNotFound,
+            =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound,
+
+            <span class="tok-kw">error</span>.OutOfMemory =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutOfMemory,
+        };
+        <span class="tok-kw">defer</span> allocator.free(packages_path);
+
+        <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.isAbsolute">isAbsolute</a>(packages_path)) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;
+
+        <span class="tok-kw">const</span> instances_path = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.join">join</a>(allocator, &amp;.{ packages_path, <span class="tok-str">&quot;_Instances&quot;</span> });
+        <span class="tok-kw">defer</span> allocator.free(instances_path);
+
+        <span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.openDirAbsolute">openDirAbsolute</a>(instances_path, .{ .iterate = <span class="tok-null">true</span> }) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">findInstancesDirViaCLSID</span>(allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) <span class="tok-kw">error</span>{ OutOfMemory, PathNotFound }!<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.Dir.html">Dir</a> {
+        <span class="tok-kw">const</span> setup_configuration_clsid = <span class="tok-str">&quot;{177f0c4a-1cd3-4de7-a32c-71dbbb9fa36d}&quot;</span>;
+        <span class="tok-kw">const</span> setup_config_key = <a href="std.zig.WindowsSdk.RegistryWtf8.html">RegistryWtf8</a>.<a href="std.zig.WindowsSdk.RegistryWtf8.html#std.zig.WindowsSdk.RegistryWtf8.openKey">openKey</a>(<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HKEY_CLASSES_ROOT">HKEY_CLASSES_ROOT</a>, <span class="tok-str">&quot;CLSID\\&quot;</span> ++ setup_configuration_clsid, .{}) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.KeyNotFound =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound,
+        };
+        <span class="tok-kw">defer</span> setup_config_key.closeKey();
+
+        <span class="tok-kw">const</span> dll_path = setup_config_key.getString(allocator, <span class="tok-str">&quot;InprocServer32&quot;</span>, <span class="tok-str">&quot;&quot;</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.NotAString,
+            <span class="tok-kw">error</span>.ValueNameNotFound,
+            <span class="tok-kw">error</span>.StringNotFound,
+            =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound,
+
+            <span class="tok-kw">error</span>.OutOfMemory =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutOfMemory,
+        };
+        <span class="tok-kw">defer</span> allocator.free(dll_path);
+
+        <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.isAbsolute">isAbsolute</a>(dll_path)) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;
+
+        <span class="tok-kw">var</span> path_it = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.componentIterator">componentIterator</a>(dll_path) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;<span class="tok-comment">
+        // the .dll filename
+        </span>_ = path_it.last();
+        <span class="tok-kw">const</span> root_path = <span class="tok-kw">while</span> (path_it.previous()) |dir_component| {
+            <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.ascii.html">ascii</a>.<a href="std.ascii.html#std.ascii.eqlIgnoreCase">eqlIgnoreCase</a>(dir_component.name, <span class="tok-str">&quot;VisualStudio&quot;</span>)) {
+                <span class="tok-kw">break</span> dir_component.path;
+            }
+        } <span class="tok-kw">else</span> {
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;
+        };
+
+        <span class="tok-kw">const</span> instances_path = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.join">join</a>(allocator, &amp;.{ root_path, <span class="tok-str">&quot;Packages&quot;</span>, <span class="tok-str">&quot;_Instances&quot;</span> });
+        <span class="tok-kw">defer</span> allocator.free(instances_path);
+
+        <span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.openDirAbsolute">openDirAbsolute</a>(instances_path, .{ .iterate = <span class="tok-null">true</span> }) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">findInstancesDir</span>(allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) <span class="tok-kw">error</span>{ OutOfMemory, PathNotFound }!<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.Dir.html">Dir</a> {<span class="tok-comment">
+        // First, try getting the packages cache path from the registry.
+        // This only seems to exist when the path is different from the default.
+        </span>method1: {
+            <span class="tok-kw">return</span> <a href="std.zig.WindowsSdk.MsvcLibDir.html#std.zig.WindowsSdk.MsvcLibDir.findInstancesDirViaSetup">findInstancesDirViaSetup</a>(allocator) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                <span class="tok-kw">error</span>.OutOfMemory =&gt; |e| <span class="tok-kw">return</span> e,
+                <span class="tok-kw">error</span>.PathNotFound =&gt; <span class="tok-kw">break</span> :method1,
+            };
+        }<span class="tok-comment">
+        // Otherwise, try to get the path from the .dll that would have been
+        // loaded via COM for SetupConfiguration.
+        </span>method2: {
+            <span class="tok-kw">return</span> <a href="std.zig.WindowsSdk.MsvcLibDir.html#std.zig.WindowsSdk.MsvcLibDir.findInstancesDirViaCLSID">findInstancesDirViaCLSID</a>(allocator) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                <span class="tok-kw">error</span>.OutOfMemory =&gt; |e| <span class="tok-kw">return</span> e,
+                <span class="tok-kw">error</span>.PathNotFound =&gt; <span class="tok-kw">break</span> :method2,
+            };
+        }<span class="tok-comment">
+        // If that can't be found, fall back to manually appending
+        // `Microsoft\VisualStudio\Packages\_Instances` to %PROGRAMDATA%
+        </span>method3: {
+            <span class="tok-kw">const</span> program_data = <a href="std.html">std</a>.<a href="std.process.html">process</a>.<a href="std.process.html#std.process.getEnvVarOwned">getEnvVarOwned</a>(allocator, <span class="tok-str">&quot;PROGRAMDATA&quot;</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                <span class="tok-kw">error</span>.OutOfMemory =&gt; |e| <span class="tok-kw">return</span> e,
+                <span class="tok-kw">error</span>.InvalidWtf8 =&gt; <span class="tok-kw">unreachable</span>,
+                <span class="tok-kw">error</span>.EnvironmentVariableNotFound =&gt; <span class="tok-kw">break</span> :method3,
+            };
+            <span class="tok-kw">defer</span> allocator.free(program_data);
+
+            <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.isAbsolute">isAbsolute</a>(program_data)) <span class="tok-kw">break</span> :method3;
+
+            <span class="tok-kw">const</span> instances_path = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.join">join</a>(allocator, &amp;.{ program_data, <span class="tok-str">&quot;Microsoft&quot;</span>, <span class="tok-str">&quot;VisualStudio&quot;</span>, <span class="tok-str">&quot;Packages&quot;</span>, <span class="tok-str">&quot;_Instances&quot;</span> });
+            <span class="tok-kw">defer</span> allocator.free(instances_path);
+
+            <span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.openDirAbsolute">openDirAbsolute</a>(instances_path, .{ .iterate = <span class="tok-null">true</span> }) <span class="tok-kw">catch</span> <span class="tok-kw">break</span> :method3;
+        }
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;
+    }
+
+    <span class="tok-comment">/// Intended to be equivalent to `ISetupHelper.ParseVersion`</span>
+    <span class="tok-comment">/// Example: 17.4.33205.214 -&gt; 0x0011000481b500d6</span>
+    <span class="tok-kw">fn</span> <span class="tok-fn">parseVersionQuad</span>(version: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-kw">error</span>{InvalidVersion}!<span class="tok-type">u64</span> {
+        <span class="tok-kw">var</span> it = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, version, <span class="tok-str">'.'</span>);
+        <span class="tok-kw">const</span> a = it.first();
+        <span class="tok-kw">const</span> b = it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion;
+        <span class="tok-kw">const</span> c = it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion;
+        <span class="tok-kw">const</span> d = it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion;
+        <span class="tok-kw">if</span> (it.next()) |_| <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion;
+        <span class="tok-kw">var</span> result: <span class="tok-type">u64</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">var</span> result_bytes = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.asBytes">asBytes</a>(&amp;result);
+
+        <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(
+            <span class="tok-type">u16</span>,
+            result_bytes[<span class="tok-number">0</span>..<span class="tok-number">2</span>],
+            <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseUnsigned">parseUnsigned</a>(<span class="tok-type">u16</span>, d, <span class="tok-number">10</span>) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion,
+            .little,
+        );
+        <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(
+            <span class="tok-type">u16</span>,
+            result_bytes[<span class="tok-number">2</span>..<span class="tok-number">4</span>],
+            <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseUnsigned">parseUnsigned</a>(<span class="tok-type">u16</span>, c, <span class="tok-number">10</span>) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion,
+            .little,
+        );
+        <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(
+            <span class="tok-type">u16</span>,
+            result_bytes[<span class="tok-number">4</span>..<span class="tok-number">6</span>],
+            <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseUnsigned">parseUnsigned</a>(<span class="tok-type">u16</span>, b, <span class="tok-number">10</span>) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion,
+            .little,
+        );
+        <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(
+            <span class="tok-type">u16</span>,
+            result_bytes[<span class="tok-number">6</span>..<span class="tok-number">8</span>],
+            <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseUnsigned">parseUnsigned</a>(<span class="tok-type">u16</span>, a, <span class="tok-number">10</span>) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion,
+            .little,
+        );
+
+        <span class="tok-kw">return</span> result;
+    }
+
+    <span class="tok-comment">/// Intended to be equivalent to ISetupConfiguration.EnumInstances:</span>
+    <span class="tok-comment">/// https://learn.microsoft.com/en-us/dotnet/api/microsoft.visualstudio.setup.configuration</span>
+    <span class="tok-comment">/// but without the use of COM in order to avoid a dependency on ole32.dll</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// The logic in this function is intended to match what ISetupConfiguration does</span>
+    <span class="tok-comment">/// under-the-hood, as verified using Procmon.</span>
+    <span class="tok-kw">fn</span> <span class="tok-fn">findViaCOM</span>(allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, arch: <a href="std.html">std</a>.<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Arch.html">Arch</a>) <span class="tok-kw">error</span>{ OutOfMemory, PathNotFound }![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {<span class="tok-comment">
+        // Typically `%PROGRAMDATA%\Microsoft\VisualStudio\Packages\_Instances`
+        // This will contain directories with names of instance IDs like 80a758ca,
+        // which will contain `state.json` files that have the version and
+        // installation directory.
+        </span><span class="tok-kw">var</span> instances_dir = <span class="tok-kw">try</span> <a href="std.zig.WindowsSdk.MsvcLibDir.html#std.zig.WindowsSdk.MsvcLibDir.findInstancesDir">findInstancesDir</a>(allocator);
+        <span class="tok-kw">defer</span> instances_dir.close();
+
+        <span class="tok-kw">var</span> state_subpath_buf: [<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.max_name_bytes">max_name_bytes</a> + <span class="tok-number">32</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">var</span> latest_version_lib_dir: <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayListUnmanaged">ArrayListUnmanaged</a>(<span class="tok-type">u8</span>) = .empty;
+        <span class="tok-kw">errdefer</span> latest_version_lib_dir.deinit(allocator);
+
+        <span class="tok-kw">var</span> latest_version: <span class="tok-type">u64</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">var</span> instances_dir_it = instances_dir.iterateAssumeFirstIteration();
+        <span class="tok-kw">while</span> (instances_dir_it.next() <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound) |entry| {
+            <span class="tok-kw">if</span> (entry.kind != .directory) <span class="tok-kw">continue</span>;
+
+            <span class="tok-kw">var</span> fbs = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(&amp;state_subpath_buf);
+            <span class="tok-kw">const</span> writer = fbs.writer();
+
+            writer.writeAll(entry.name) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+            writer.writeByte(<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.sep">sep</a>) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+            writer.writeAll(<span class="tok-str">&quot;state.json&quot;</span>) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+
+            <span class="tok-kw">const</span> json_contents = instances_dir.readFileAlloc(allocator, fbs.getWritten(), <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">usize</span>)) <span class="tok-kw">catch</span> <span class="tok-kw">continue</span>;
+            <span class="tok-kw">defer</span> allocator.free(json_contents);
+
+            <span class="tok-kw">var</span> parsed = <a href="std.html">std</a>.<a href="std.json.html">json</a>.<a href="std.json.static.html#std.json.static.parseFromSlice">parseFromSlice</a>(<a href="std.html">std</a>.<a href="std.json.html">json</a>.<a href="std.json.dynamic.Value.html">Value</a>, allocator, json_contents, .{}) <span class="tok-kw">catch</span> <span class="tok-kw">continue</span>;
+            <span class="tok-kw">defer</span> parsed.deinit();
+
+            <span class="tok-kw">if</span> (parsed.value != .object) <span class="tok-kw">continue</span>;
+            <span class="tok-kw">const</span> catalog_info = parsed.value.object.get(<span class="tok-str">&quot;catalogInfo&quot;</span>) <span class="tok-kw">orelse</span> <span class="tok-kw">continue</span>;
+            <span class="tok-kw">if</span> (catalog_info != .object) <span class="tok-kw">continue</span>;
+            <span class="tok-kw">const</span> product_version_value = catalog_info.object.get(<span class="tok-str">&quot;buildVersion&quot;</span>) <span class="tok-kw">orelse</span> <span class="tok-kw">continue</span>;
+            <span class="tok-kw">if</span> (product_version_value != .string) <span class="tok-kw">continue</span>;
+            <span class="tok-kw">const</span> product_version_text = product_version_value.string;
+            <span class="tok-kw">const</span> parsed_version = <a href="std.zig.WindowsSdk.MsvcLibDir.html#std.zig.WindowsSdk.MsvcLibDir.parseVersionQuad">parseVersionQuad</a>(product_version_text) <span class="tok-kw">catch</span> <span class="tok-kw">continue</span>;<span class="tok-comment">
+
+            // We want to end up with the most recent version installed
+            </span><span class="tok-kw">if</span> (parsed_version &lt;= latest_version) <span class="tok-kw">continue</span>;
+
+            <span class="tok-kw">const</span> installation_path = parsed.value.object.get(<span class="tok-str">&quot;installationPath&quot;</span>) <span class="tok-kw">orelse</span> <span class="tok-kw">continue</span>;
+            <span class="tok-kw">if</span> (installation_path != .string) <span class="tok-kw">continue</span>;
+
+            <span class="tok-kw">const</span> lib_dir_path = <a href="std.zig.WindowsSdk.MsvcLibDir.html#std.zig.WindowsSdk.MsvcLibDir.libDirFromInstallationPath">libDirFromInstallationPath</a>(allocator, installation_path.string, arch) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                <span class="tok-kw">error</span>.OutOfMemory =&gt; |e| <span class="tok-kw">return</span> e,
+                <span class="tok-kw">error</span>.PathNotFound =&gt; <span class="tok-kw">continue</span>,
+            };
+            <span class="tok-kw">defer</span> allocator.free(lib_dir_path);
+
+            latest_version_lib_dir.clearRetainingCapacity();
+            <span class="tok-kw">try</span> latest_version_lib_dir.appendSlice(allocator, lib_dir_path);
+            latest_version = parsed_version;
+        }
+
+        <span class="tok-kw">if</span> (latest_version_lib_dir.items.len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;
+        <span class="tok-kw">return</span> latest_version_lib_dir.toOwnedSlice(allocator);
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">libDirFromInstallationPath</span>(allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, installation_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, arch: <a href="std.html">std</a>.<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Arch.html">Arch</a>) <span class="tok-kw">error</span>{ OutOfMemory, PathNotFound }![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">var</span> lib_dir_buf = <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>).initCapacity(allocator, installation_path.len + <span class="tok-number">64</span>);
+        <span class="tok-kw">errdefer</span> lib_dir_buf.deinit();
+
+        lib_dir_buf.appendSliceAssumeCapacity(installation_path);
+
+        <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.isSep">isSep</a>(lib_dir_buf.getLast())) {
+            <span class="tok-kw">try</span> lib_dir_buf.append(<span class="tok-str">'\\'</span>);
+        }
+        <span class="tok-kw">const</span> installation_path_with_trailing_sep_len = lib_dir_buf.items.len;
+
+        <span class="tok-kw">try</span> lib_dir_buf.appendSlice(<span class="tok-str">&quot;VC\\Auxiliary\\Build\\Microsoft.VCToolsVersion.default.txt&quot;</span>);
+        <span class="tok-kw">var</span> default_tools_version_buf: [<span class="tok-number">512</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">const</span> default_tools_version_contents = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.cwd">cwd</a>().readFile(lib_dir_buf.items, &amp;default_tools_version_buf) <span class="tok-kw">catch</span> {
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;
+        };
+        <span class="tok-kw">var</span> tokenizer = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.tokenizeAny">tokenizeAny</a>(<span class="tok-type">u8</span>, default_tools_version_contents, <span class="tok-str">&quot; \r\n&quot;</span>);
+        <span class="tok-kw">const</span> default_tools_version = tokenizer.next() <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;
+
+        lib_dir_buf.shrinkRetainingCapacity(installation_path_with_trailing_sep_len);
+        <span class="tok-kw">try</span> lib_dir_buf.appendSlice(<span class="tok-str">&quot;VC\\Tools\\MSVC\\&quot;</span>);
+        <span class="tok-kw">try</span> lib_dir_buf.appendSlice(default_tools_version);
+        <span class="tok-kw">try</span> lib_dir_buf.appendSlice(<span class="tok-str">&quot;\\Lib\\&quot;</span>);
+        <span class="tok-kw">try</span> lib_dir_buf.appendSlice(<span class="tok-kw">switch</span> (arch) {
+            .thumb =&gt; <span class="tok-str">&quot;arm&quot;</span>,
+            .aarch64 =&gt; <span class="tok-str">&quot;arm64&quot;</span>,
+            .x86 =&gt; <span class="tok-str">&quot;x86&quot;</span>,
+            .x86_64 =&gt; <span class="tok-str">&quot;x64&quot;</span>,
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+        });
+
+        <span class="tok-kw">if</span> (!<a href="std.zig.WindowsSdk.MsvcLibDir.html#std.zig.WindowsSdk.MsvcLibDir.verifyLibDir">verifyLibDir</a>(lib_dir_buf.items)) {
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;
+        }
+
+        <span class="tok-kw">return</span> lib_dir_buf.toOwnedSlice();
+    }<span class="tok-comment">
+
+    // https://learn.microsoft.com/en-us/visualstudio/install/tools-for-managing-visual-studio-instances?view=vs-2022#editing-the-registry-for-a-visual-studio-instance
+    </span><span class="tok-kw">fn</span> <span class="tok-fn">findViaRegistry</span>(allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, arch: <a href="std.html">std</a>.<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Arch.html">Arch</a>) <span class="tok-kw">error</span>{ OutOfMemory, PathNotFound }![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {<span class="tok-comment">
+
+        // %localappdata%\Microsoft\VisualStudio\
+        // %appdata%\Local\Microsoft\VisualStudio\
+        </span><span class="tok-kw">const</span> visualstudio_folder_path = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.get_app_data_dir.html#std.fs.get_app_data_dir.getAppDataDir">getAppDataDir</a>(allocator, <span class="tok-str">&quot;Microsoft\\VisualStudio\\&quot;</span>) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;
+        <span class="tok-kw">defer</span> allocator.free(visualstudio_folder_path);
+
+        <span class="tok-kw">const</span> vs_versions: []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = vs_versions: {
+            <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.isAbsolute">isAbsolute</a>(visualstudio_folder_path)) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;<span class="tok-comment">
+            // enumerate folders that contain `privateregistry.bin`, looking for all versions
+            // f.i. %localappdata%\Microsoft\VisualStudio\17.0_9e9cbb98\
+            </span><span class="tok-kw">var</span> visualstudio_folder = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.openDirAbsolute">openDirAbsolute</a>(visualstudio_folder_path, .{
+                .iterate = <span class="tok-null">true</span>,
+            }) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;
+            <span class="tok-kw">defer</span> visualstudio_folder.close();
+
+            <span class="tok-kw">var</span> iterator = visualstudio_folder.iterate();
+            <span class="tok-kw">break</span> :vs_versions <span class="tok-kw">try</span> <a href="std.zig.WindowsSdk.html#std.zig.WindowsSdk.iterateAndFilterByVersion">iterateAndFilterByVersion</a>(&amp;iterator, allocator, <span class="tok-str">&quot;&quot;</span>);
+        };
+        <span class="tok-kw">defer</span> {
+            <span class="tok-kw">for</span> (vs_versions) |vs_version| allocator.free(vs_version);
+            allocator.free(vs_versions);
+        }
+        <span class="tok-kw">var</span> config_subkey_buf: [<a href="std.zig.WindowsSdk.RegistryWtf16Le.html">RegistryWtf16Le</a>.<a href="std.zig.WindowsSdk.RegistryWtf16Le.html#std.zig.WindowsSdk.RegistryWtf16Le.key_name_max_len">key_name_max_len</a> * <span class="tok-number">2</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">const</span> source_directories: []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = source_directories: <span class="tok-kw">for</span> (vs_versions) |vs_version| {
+            <span class="tok-kw">const</span> privateregistry_absolute_path = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.join">join</a>(allocator, &amp;.{ visualstudio_folder_path, vs_version, <span class="tok-str">&quot;privateregistry.bin&quot;</span> }) <span class="tok-kw">catch</span> <span class="tok-kw">continue</span>;
+            <span class="tok-kw">defer</span> allocator.free(privateregistry_absolute_path);
+            <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.isAbsolute">isAbsolute</a>(privateregistry_absolute_path)) <span class="tok-kw">continue</span>;
+
+            <span class="tok-kw">const</span> visualstudio_registry = <a href="std.zig.WindowsSdk.RegistryWtf8.html">RegistryWtf8</a>.<a href="std.zig.WindowsSdk.RegistryWtf8.html#std.zig.WindowsSdk.RegistryWtf8.loadFromPath">loadFromPath</a>(privateregistry_absolute_path) <span class="tok-kw">catch</span> <span class="tok-kw">continue</span>;
+            <span class="tok-kw">defer</span> visualstudio_registry.closeKey();
+
+            <span class="tok-kw">const</span> config_subkey = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.bufPrint">bufPrint</a>(config_subkey_buf[<span class="tok-number">0</span>..], <span class="tok-str">&quot;Software\\Microsoft\\VisualStudio\\{s}_Config&quot;</span>, .{vs_version}) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+
+            <span class="tok-kw">const</span> source_directories_value = visualstudio_registry.getString(allocator, config_subkey, <span class="tok-str">&quot;Source Directories&quot;</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                <span class="tok-kw">error</span>.OutOfMemory =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutOfMemory,
+                <span class="tok-kw">else</span> =&gt; <span class="tok-kw">continue</span>,
+            };
+            <span class="tok-kw">if</span> (source_directories_value.len &gt; (<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a> * <span class="tok-number">30</span>)) {<span class="tok-comment"> // note(bratishkaerik): guessing from the fact that on my computer it has 15 paths and at least some of them are not of max length
+                </span>allocator.free(source_directories_value);
+                <span class="tok-kw">continue</span>;
+            }
+
+            <span class="tok-kw">break</span> :source_directories source_directories_value;
+        } <span class="tok-kw">else</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;
+        <span class="tok-kw">defer</span> allocator.free(source_directories);
+
+        <span class="tok-kw">var</span> source_directories_split = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, source_directories, <span class="tok-str">';'</span>);
+
+        <span class="tok-kw">const</span> msvc_dir: []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = msvc_dir: {
+            <span class="tok-kw">const</span> msvc_include_dir_maybe_with_trailing_slash = <span class="tok-kw">try</span> allocator.dupe(<span class="tok-type">u8</span>, source_directories_split.first());
+
+            <span class="tok-kw">if</span> (msvc_include_dir_maybe_with_trailing_slash.len &gt; <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a> <span class="tok-kw">or</span> !<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.isAbsolute">isAbsolute</a>(msvc_include_dir_maybe_with_trailing_slash)) {
+                allocator.free(msvc_include_dir_maybe_with_trailing_slash);
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;
+            }
+
+            <span class="tok-kw">var</span> msvc_dir = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>).fromOwnedSlice(allocator, msvc_include_dir_maybe_with_trailing_slash);
+            <span class="tok-kw">errdefer</span> msvc_dir.deinit();<span class="tok-comment">
+
+            // String might contain trailing slash, so trim it here
+            </span><span class="tok-kw">if</span> (msvc_dir.items.len &gt; <span class="tok-str">&quot;C:\\&quot;</span>.len <span class="tok-kw">and</span> msvc_dir.getLast() == <span class="tok-str">'\\'</span>) _ = msvc_dir.pop();<span class="tok-comment">
+
+            // Remove `\include` at the end of path
+            </span><span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.endsWith">endsWith</a>(<span class="tok-type">u8</span>, msvc_dir.items, <span class="tok-str">&quot;\\include&quot;</span>)) {
+                msvc_dir.shrinkRetainingCapacity(msvc_dir.items.len - <span class="tok-str">&quot;\\include&quot;</span>.len);
+            }
+
+            <span class="tok-kw">try</span> msvc_dir.appendSlice(<span class="tok-str">&quot;\\Lib\\&quot;</span>);
+            <span class="tok-kw">try</span> msvc_dir.appendSlice(<span class="tok-kw">switch</span> (arch) {
+                .thumb =&gt; <span class="tok-str">&quot;arm&quot;</span>,
+                .aarch64 =&gt; <span class="tok-str">&quot;arm64&quot;</span>,
+                .x86 =&gt; <span class="tok-str">&quot;x86&quot;</span>,
+                .x86_64 =&gt; <span class="tok-str">&quot;x64&quot;</span>,
+                <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+            });
+            <span class="tok-kw">const</span> msvc_dir_with_arch = <span class="tok-kw">try</span> msvc_dir.toOwnedSlice();
+            <span class="tok-kw">break</span> :msvc_dir msvc_dir_with_arch;
+        };
+        <span class="tok-kw">errdefer</span> allocator.free(msvc_dir);
+
+        <span class="tok-kw">if</span> (!<a href="std.zig.WindowsSdk.MsvcLibDir.html#std.zig.WindowsSdk.MsvcLibDir.verifyLibDir">verifyLibDir</a>(msvc_dir)) {
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;
+        }
+
+        <span class="tok-kw">return</span> msvc_dir;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">findViaVs7Key</span>(allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, arch: <a href="std.html">std</a>.<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Arch.html">Arch</a>) <span class="tok-kw">error</span>{ OutOfMemory, PathNotFound }![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">var</span> base_path: <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>) = base_path: {
+            try_env: {
+                <span class="tok-kw">var</span> env_map = <a href="std.html">std</a>.<a href="std.process.html">process</a>.<a href="std.process.html#std.process.getEnvMap">getEnvMap</a>(allocator) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                    <span class="tok-kw">error</span>.OutOfMemory =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutOfMemory,
+                    <span class="tok-kw">else</span> =&gt; <span class="tok-kw">break</span> :try_env,
+                };
+                <span class="tok-kw">defer</span> env_map.deinit();
+
+                <span class="tok-kw">if</span> (env_map.get(<span class="tok-str">&quot;VS140COMNTOOLS&quot;</span>)) |VS140COMNTOOLS| {
+                    <span class="tok-kw">if</span> (VS140COMNTOOLS.len &lt; <span class="tok-str">&quot;C:\\Common7\\Tools&quot;</span>.len) <span class="tok-kw">break</span> :try_env;
+                    <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.isAbsolute">isAbsolute</a>(VS140COMNTOOLS)) <span class="tok-kw">break</span> :try_env;
+                    <span class="tok-kw">var</span> list = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>).init(allocator);
+                    <span class="tok-kw">errdefer</span> list.deinit();
+
+                    <span class="tok-kw">try</span> list.appendSlice(VS140COMNTOOLS);<span class="tok-comment"> // C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools
+                    // String might contain trailing slash, so trim it here
+                    </span><span class="tok-kw">if</span> (list.items.len &gt; <span class="tok-str">&quot;C:\\&quot;</span>.len <span class="tok-kw">and</span> list.getLast() == <span class="tok-str">'\\'</span>) _ = list.pop();
+                    list.shrinkRetainingCapacity(list.items.len - <span class="tok-str">&quot;\\Common7\\Tools&quot;</span>.len);<span class="tok-comment"> // C:\Program Files (x86)\Microsoft Visual Studio 14.0
+                    </span><span class="tok-kw">break</span> :base_path list;
+                }
+            }
+
+            <span class="tok-kw">const</span> vs7_key = <a href="std.zig.WindowsSdk.RegistryWtf8.html">RegistryWtf8</a>.<a href="std.zig.WindowsSdk.RegistryWtf8.html#std.zig.WindowsSdk.RegistryWtf8.openKey">openKey</a>(<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HKEY_LOCAL_MACHINE">HKEY_LOCAL_MACHINE</a>, <span class="tok-str">&quot;SOFTWARE\\Microsoft\\VisualStudio\\SxS\\VS7&quot;</span>, .{ .wow64_32 = <span class="tok-null">true</span> }) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;
+            <span class="tok-kw">defer</span> vs7_key.closeKey();
+            try_vs7_key: {
+                <span class="tok-kw">const</span> path_maybe_with_trailing_slash = vs7_key.getString(allocator, <span class="tok-str">&quot;&quot;</span>, <span class="tok-str">&quot;14.0&quot;</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                    <span class="tok-kw">error</span>.OutOfMemory =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutOfMemory,
+                    <span class="tok-kw">else</span> =&gt; <span class="tok-kw">break</span> :try_vs7_key,
+                };
+
+                <span class="tok-kw">if</span> (path_maybe_with_trailing_slash.len &gt; <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a> <span class="tok-kw">or</span> !<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.isAbsolute">isAbsolute</a>(path_maybe_with_trailing_slash)) {
+                    allocator.free(path_maybe_with_trailing_slash);
+                    <span class="tok-kw">break</span> :try_vs7_key;
+                }
+
+                <span class="tok-kw">var</span> path = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>).fromOwnedSlice(allocator, path_maybe_with_trailing_slash);
+                <span class="tok-kw">errdefer</span> path.deinit();<span class="tok-comment">
+
+                // String might contain trailing slash, so trim it here
+                </span><span class="tok-kw">if</span> (path.items.len &gt; <span class="tok-str">&quot;C:\\&quot;</span>.len <span class="tok-kw">and</span> path.getLast() == <span class="tok-str">'\\'</span>) _ = path.pop();
+                <span class="tok-kw">break</span> :base_path path;
+            }
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;
+        };
+        <span class="tok-kw">errdefer</span> base_path.deinit();
+
+        <span class="tok-kw">try</span> base_path.appendSlice(<span class="tok-str">&quot;\\VC\\lib\\&quot;</span>);
+        <span class="tok-kw">try</span> base_path.appendSlice(<span class="tok-kw">switch</span> (arch) {
+            .thumb =&gt; <span class="tok-str">&quot;arm&quot;</span>,
+            .aarch64 =&gt; <span class="tok-str">&quot;arm64&quot;</span>,
+            .x86 =&gt; <span class="tok-str">&quot;&quot;</span>,<span class="tok-comment"> //x86 is in the root of the Lib folder
+            </span>.x86_64 =&gt; <span class="tok-str">&quot;amd64&quot;</span>,
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+        });
+
+        <span class="tok-kw">if</span> (!<a href="std.zig.WindowsSdk.MsvcLibDir.html#std.zig.WindowsSdk.MsvcLibDir.verifyLibDir">verifyLibDir</a>(base_path.items)) {
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PathNotFound;
+        }
+
+        <span class="tok-kw">const</span> full_path = <span class="tok-kw">try</span> base_path.toOwnedSlice();
+        <span class="tok-kw">return</span> full_path;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">verifyLibDir</span>(lib_dir_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+        <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.isAbsolute">isAbsolute</a>(lib_dir_path));<span class="tok-comment"> // should be already handled in `findVia*`
+
+        </span><span class="tok-kw">var</span> dir = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.openDirAbsolute">openDirAbsolute</a>(lib_dir_path, .{}) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        <span class="tok-kw">defer</span> dir.close();
+
+        <span class="tok-kw">const</span> stat = dir.statFile(<span class="tok-str">&quot;vcruntime.lib&quot;</span>) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        <span class="tok-kw">if</span> (stat.kind != .file)
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+
+        <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+    }
+
+    <span class="tok-comment">/// Find path to MSVC's `lib/` directory.</span>
+    <span class="tok-comment">/// Caller owns the result.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">find</span>(allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, arch: <a href="std.html">std</a>.<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Arch.html">Arch</a>) <span class="tok-kw">error</span>{ OutOfMemory, MsvcLibDirNotFound }![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">const</span> full_path = <a href="std.zig.WindowsSdk.MsvcLibDir.html">MsvcLibDir</a>.<a href="std.zig.WindowsSdk.MsvcLibDir.html#std.zig.WindowsSdk.MsvcLibDir.findViaCOM">findViaCOM</a>(allocator, arch) <span class="tok-kw">catch</span> |err1| <span class="tok-kw">switch</span> (err1) {
+            <span class="tok-kw">error</span>.OutOfMemory =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutOfMemory,
+            <span class="tok-kw">error</span>.PathNotFound =&gt; <a href="std.zig.WindowsSdk.MsvcLibDir.html">MsvcLibDir</a>.<a href="std.zig.WindowsSdk.MsvcLibDir.html#std.zig.WindowsSdk.MsvcLibDir.findViaRegistry">findViaRegistry</a>(allocator, arch) <span class="tok-kw">catch</span> |err2| <span class="tok-kw">switch</span> (err2) {
+                <span class="tok-kw">error</span>.OutOfMemory =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutOfMemory,
+                <span class="tok-kw">error</span>.PathNotFound =&gt; <a href="std.zig.WindowsSdk.MsvcLibDir.html">MsvcLibDir</a>.<a href="std.zig.WindowsSdk.MsvcLibDir.html#std.zig.WindowsSdk.MsvcLibDir.findViaVs7Key">findViaVs7Key</a>(allocator, arch) <span class="tok-kw">catch</span> |err3| <span class="tok-kw">switch</span> (err3) {
+                    <span class="tok-kw">error</span>.OutOfMemory =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutOfMemory,
+                    <span class="tok-kw">error</span>.PathNotFound =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MsvcLibDirNotFound,
+                },
+            },
+        };
+        <span class="tok-kw">errdefer</span> allocator.free(full_path);
+
+        <span class="tok-kw">return</span> full_path;
+    }
+};</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

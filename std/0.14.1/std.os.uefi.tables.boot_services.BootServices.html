@@ -1,0 +1,648 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">os</a></li><li><a href="std.os.html" class="">uefi</a></li><li><a href="std.os.uefi.html" class="">tables</a></li><li><a href="std.os.uefi.tables.boot_services.html" class="">boot_services</a></li><li><a href="std.os.uefi.tables.boot_services.BootServices.html" class="active">BootServices</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.os.uefi.tables.boot_services.BootServices" class="declHeader"><span class="declHeaderCategory">extern struct</span><span class="declHeaderIdentifier">std.os.uefi.tables.boot_services.BootServices</span><a href="#src.zig-std.os.uefi.tables.boot_services.BootServices">[src]</a></h1><div class="tldDocs"><p>Boot services are services provided by the system's firmware until the operating system takes
+over control over the hardware by calling exitBootServices.</p>
+<p>Boot Services must not be used after exitBootServices has been called. The only exception is
+getMemoryMap, which may be used after the first unsuccessful call to exitBootServices.
+After successfully calling exitBootServices, system_table.console_in_handle, system_table.con_in,
+system_table.console_out_handle, system_table.con_out, system_table.standard_error_handle,
+system_table.std_err, and system_table.boot_services should be set to null. After setting these
+attributes to null, system_table.hdr.crc32 must be recomputed.</p>
+<p>As the boot_services table may grow with new UEFI versions, it is important to check hdr.header_size.</p>
+</div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>hdr: <a href="std.os.uefi.tables.table_header.TableHeader.html">TableHeader</a></code></pre></div><div><pre><code>raiseTpl: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (new_tpl: <span class="tok-type">usize</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <span class="tok-type">usize</span></code></pre><div class="fieldDocs"><p>Raises a task's priority level and returns its previous level.</p>
+</div></div><div><pre><code>restoreTpl: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (old_tpl: <span class="tok-type">usize</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <span class="tok-type">void</span></code></pre><div class="fieldDocs"><p>Restores a task's priority level to its previous value.</p>
+</div></div><div><pre><code>allocatePages: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (alloc_type: <a href="std.os.uefi.tables.AllocateType.html">AllocateType</a>, mem_type: <a href="std.os.uefi.tables.MemoryType.html">MemoryType</a>, pages: <span class="tok-type">usize</span>, memory: *[*]<span class="tok-kw">align</span>(<span class="tok-number">4096</span>) <span class="tok-type">u8</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Allocates memory pages from the system.</p>
+</div></div><div><pre><code>freePages: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (memory: [*]<span class="tok-kw">align</span>(<span class="tok-number">4096</span>) <span class="tok-type">u8</span>, pages: <span class="tok-type">usize</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Frees memory pages.</p>
+</div></div><div><pre><code>getMemoryMap: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (mmap_size: *<span class="tok-type">usize</span>, mmap: ?[*]<a href="std.os.uefi.tables.MemoryDescriptor.html">MemoryDescriptor</a>, map_key: *<span class="tok-type">usize</span>, descriptor_size: *<span class="tok-type">usize</span>, descriptor_version: *<span class="tok-type">u32</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Returns the current memory map.</p>
+</div></div><div><pre><code>allocatePool: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (pool_type: <a href="std.os.uefi.tables.MemoryType.html">MemoryType</a>, size: <span class="tok-type">usize</span>, buffer: *[*]<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-type">u8</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Allocates pool memory.</p>
+</div></div><div><pre><code>freePool: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (buffer: [*]<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-type">u8</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Returns pool memory to the system.</p>
+</div></div><div><pre><code>createEvent: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (<span class="tok-type">type</span>: <span class="tok-type">u32</span>, notify_tpl: <span class="tok-type">usize</span>, notify_func: ?*<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (<a href="std.os.uefi.html#std.os.uefi.Event">Event</a>, ?*<span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <span class="tok-type">void</span>, notify_ctx: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>, event: *<a href="std.os.uefi.html#std.os.uefi.Event">Event</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Creates an event.</p>
+</div></div><div><pre><code>setTimer: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (event: <a href="std.os.uefi.html#std.os.uefi.Event">Event</a>, <span class="tok-type">type</span>: <a href="std.os.uefi.tables.TimerDelay.html">TimerDelay</a>, trigger_time: <span class="tok-type">u64</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Sets the type of timer and the trigger time for a timer event.</p>
+</div></div><div><pre><code>waitForEvent: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (event_len: <span class="tok-type">usize</span>, events: [*]<span class="tok-kw">const</span> <a href="std.os.uefi.html#std.os.uefi.Event">Event</a>, index: *<span class="tok-type">usize</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Stops execution until an event is signaled.</p>
+</div></div><div><pre><code>signalEvent: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (event: <a href="std.os.uefi.html#std.os.uefi.Event">Event</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Signals an event.</p>
+</div></div><div><pre><code>closeEvent: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (event: <a href="std.os.uefi.html#std.os.uefi.Event">Event</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Closes an event.</p>
+</div></div><div><pre><code>checkEvent: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (event: <a href="std.os.uefi.html#std.os.uefi.Event">Event</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Checks whether an event is in the signaled state.</p>
+</div></div><div><pre><code>installProtocolInterface: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, protocol: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, interface_type: <a href="std.os.uefi.tables.InterfaceType.html">InterfaceType</a>, interface: *<span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Installs a protocol interface on a device handle. If the handle does not exist, it is created
+and added to the list of handles in the system. installMultipleProtocolInterfaces()
+performs more error checking than installProtocolInterface(), so its use is recommended over this.</p>
+</div></div><div><pre><code>reinstallProtocolInterface: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, protocol: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, old_interface: *<span class="tok-type">anyopaque</span>, new_interface: *<span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Reinstalls a protocol interface on a device handle</p>
+</div></div><div><pre><code>uninstallProtocolInterface: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, protocol: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, interface: *<span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Removes a protocol interface from a device handle. Usage of
+uninstallMultipleProtocolInterfaces is recommended over this.</p>
+</div></div><div><pre><code>handleProtocol: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, protocol: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, interface: *?*<span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Queries a handle to determine if it supports a specified protocol.</p>
+</div></div><div><pre><code>reserved: *<span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>registerProtocolNotify: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (protocol: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, event: <a href="std.os.uefi.html#std.os.uefi.Event">Event</a>, registration: **<span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Creates an event that is to be signaled whenever an interface is installed for a specified protocol.</p>
+</div></div><div><pre><code>locateHandle: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (search_type: <a href="std.os.uefi.tables.LocateSearchType.html">LocateSearchType</a>, protocol: ?*<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, search_key: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>, buffer_size: *<span class="tok-type">usize</span>, buffer: [*]<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Returns an array of handles that support a specified protocol.</p>
+</div></div><div><pre><code>locateDevicePath: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (protocols: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, device_path: **<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.device_path.DevicePath.html">DevicePathProtocol</a>, device: *?<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Locates the handle to a device on the device path that supports the specified protocol</p>
+</div></div><div><pre><code>installConfigurationTable: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (guid: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, table: ?*<span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Adds, updates, or removes a configuration table entry from the EFI System Table.</p>
+</div></div><div><pre><code>loadImage: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (boot_policy: <span class="tok-type">bool</span>, parent_image_handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, device_path: ?*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.device_path.DevicePath.html">DevicePathProtocol</a>, source_buffer: ?[*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, source_size: <span class="tok-type">usize</span>, image_handle: *?<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Loads an EFI image into memory.</p>
+</div></div><div><pre><code>startImage: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (image_handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, exit_data_size: ?*<span class="tok-type">usize</span>, exit_data: ?*[*]<span class="tok-type">u16</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Transfers control to a loaded image's entry point.</p>
+</div></div><div><pre><code>exit: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (image_handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, exit_status: <a href="std.os.uefi.status.Status.html">Status</a>, exit_data_size: <span class="tok-type">usize</span>, exit_data: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Terminates a loaded EFI image and returns control to boot services.</p>
+</div></div><div><pre><code>unloadImage: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (image_handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Unloads an image.</p>
+</div></div><div><pre><code>exitBootServices: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (image_handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, map_key: <span class="tok-type">usize</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Terminates all boot services.</p>
+</div></div><div><pre><code>getNextMonotonicCount: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (count: *<span class="tok-type">u64</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Returns a monotonically increasing count for the platform.</p>
+</div></div><div><pre><code>stall: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (microseconds: <span class="tok-type">usize</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Induces a fine-grained stall.</p>
+</div></div><div><pre><code>setWatchdogTimer: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (timeout: <span class="tok-type">usize</span>, watchdog_code: <span class="tok-type">u64</span>, data_size: <span class="tok-type">usize</span>, watchdog_data: ?[*]<span class="tok-kw">const</span> <span class="tok-type">u16</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Sets the system's watchdog timer.</p>
+</div></div><div><pre><code>connectController: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (controller_handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, driver_image_handle: ?<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, remaining_device_path: ?*<a href="std.os.uefi.protocol.device_path.DevicePath.html">DevicePathProtocol</a>, recursive: <span class="tok-type">bool</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Connects one or more drives to a controller.</p>
+</div></div><div><pre><code>disconnectController: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (controller_handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, driver_image_handle: ?<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, child_handle: ?<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div><pre><code>openProtocol: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, protocol: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, interface: *?*<span class="tok-type">anyopaque</span>, agent_handle: ?<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, controller_handle: ?<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, attributes: <a href="std.os.uefi.tables.OpenProtocolAttributes.html">OpenProtocolAttributes</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Queries a handle to determine if it supports a specified protocol.</p>
+</div></div><div><pre><code>closeProtocol: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, protocol: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, agent_handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, controller_handle: ?<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Closes a protocol on a handle that was opened using openProtocol().</p>
+</div></div><div><pre><code>openProtocolInformation: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, protocol: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, entry_buffer: *[*]<a href="std.os.uefi.tables.ProtocolInformationEntry.html">ProtocolInformationEntry</a>, entry_count: *<span class="tok-type">usize</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Retrieves the list of agents that currently have a protocol interface opened.</p>
+</div></div><div><pre><code>protocolsPerHandle: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, protocol_buffer: *[*]*<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, protocol_buffer_count: *<span class="tok-type">usize</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Retrieves the list of protocol interface GUIDs that are installed on a handle in a buffer allocated from pool.</p>
+</div></div><div><pre><code>locateHandleBuffer: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (search_type: <a href="std.os.uefi.tables.LocateSearchType.html">LocateSearchType</a>, protocol: ?*<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, search_key: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>, num_handles: *<span class="tok-type">usize</span>, buffer: *[*]<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Returns an array of handles that support the requested protocol in a buffer allocated from pool.</p>
+</div></div><div><pre><code>locateProtocol: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (protocol: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, registration: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>, interface: *?*<span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Returns the first protocol instance that matches the given protocol.</p>
+</div></div><div><pre><code>installMultipleProtocolInterfaces: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: *<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, ...) <span class="tok-kw">callconv</span>(.c) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Installs one or more protocol interfaces into the boot services environment</p>
+</div></div><div><pre><code>uninstallMultipleProtocolInterfaces: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: *<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, ...) <span class="tok-kw">callconv</span>(.c) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Removes one or more protocol interfaces into the boot services environment</p>
+</div></div><div><pre><code>calculateCrc32: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (data: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, data_size: <span class="tok-type">usize</span>, *<span class="tok-type">u32</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Computes and returns a 32-bit CRC for a data buffer.</p>
+</div></div><div><pre><code>copyMem: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (dest: [*]<span class="tok-type">u8</span>, src: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, len: <span class="tok-type">usize</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <span class="tok-type">void</span></code></pre><div class="fieldDocs"><p>Copies the contents of one buffer to another buffer</p>
+</div></div><div><pre><code>setMem: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (buffer: [*]<span class="tok-type">u8</span>, size: <span class="tok-type">usize</span>, value: <span class="tok-type">u8</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <span class="tok-type">void</span></code></pre><div class="fieldDocs"><p>Fills a buffer with a specified value</p>
+</div></div><div><pre><code>createEventEx: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (<span class="tok-type">type</span>: <span class="tok-type">u32</span>, notify_tpl: <span class="tok-type">usize</span>, notify_func: <a href="std.os.uefi.tables.html#std.os.uefi.tables.EventNotify">EventNotify</a>, notify_ctx: *<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>, event_group: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, event: *<a href="std.os.uefi.html#std.os.uefi.Event">Event</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre><div class="fieldDocs"><p>Creates an event in a group.</p>
+</div></div></div></div><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.os.uefi.tables.boot_services.BootServices.signature" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">signature</span><a href="#src.zig-std.os.uefi.tables.boot_services.BootServices.signature">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.tables.boot_services.BootServices.signature">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> signature: <span class="tok-type">u64</span> = <span class="tok-number">0x56524553544f4f42</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.tables.boot_services.BootServices.event_timer" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">event_timer</span><a href="#src.zig-std.os.uefi.tables.boot_services.BootServices.event_timer">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.tables.boot_services.BootServices.event_timer">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> event_timer: <span class="tok-type">u32</span> = <span class="tok-number">0x80000000</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.tables.boot_services.BootServices.event_runtime" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">event_runtime</span><a href="#src.zig-std.os.uefi.tables.boot_services.BootServices.event_runtime">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.tables.boot_services.BootServices.event_runtime">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> event_runtime: <span class="tok-type">u32</span> = <span class="tok-number">0x40000000</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.tables.boot_services.BootServices.event_notify_wait" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">event_notify_wait</span><a href="#src.zig-std.os.uefi.tables.boot_services.BootServices.event_notify_wait">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.tables.boot_services.BootServices.event_notify_wait">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> event_notify_wait: <span class="tok-type">u32</span> = <span class="tok-number">0x00000100</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.tables.boot_services.BootServices.event_notify_signal" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">event_notify_signal</span><a href="#src.zig-std.os.uefi.tables.boot_services.BootServices.event_notify_signal">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.tables.boot_services.BootServices.event_notify_signal">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> event_notify_signal: <span class="tok-type">u32</span> = <span class="tok-number">0x00000200</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.tables.boot_services.BootServices.event_signal_exit_boot_services" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">event_signal_exit_boot_services</span><a href="#src.zig-std.os.uefi.tables.boot_services.BootServices.event_signal_exit_boot_services">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.tables.boot_services.BootServices.event_signal_exit_boot_services">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> event_signal_exit_boot_services: <span class="tok-type">u32</span> = <span class="tok-number">0x00000201</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.tables.boot_services.BootServices.event_signal_virtual_address_change" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">event_signal_virtual_address_change</span><a href="#src.zig-std.os.uefi.tables.boot_services.BootServices.event_signal_virtual_address_change">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.tables.boot_services.BootServices.event_signal_virtual_address_change">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> event_signal_virtual_address_change: <span class="tok-type">u32</span> = <span class="tok-number">0x00000202</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.tables.boot_services.BootServices.tpl_application" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">tpl_application</span><a href="#src.zig-std.os.uefi.tables.boot_services.BootServices.tpl_application">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.tables.boot_services.BootServices.tpl_application">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> tpl_application: <span class="tok-type">usize</span> = <span class="tok-number">4</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.tables.boot_services.BootServices.tpl_callback" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">tpl_callback</span><a href="#src.zig-std.os.uefi.tables.boot_services.BootServices.tpl_callback">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.tables.boot_services.BootServices.tpl_callback">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> tpl_callback: <span class="tok-type">usize</span> = <span class="tok-number">8</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.tables.boot_services.BootServices.tpl_notify" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">tpl_notify</span><a href="#src.zig-std.os.uefi.tables.boot_services.BootServices.tpl_notify">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.tables.boot_services.BootServices.tpl_notify">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> tpl_notify: <span class="tok-type">usize</span> = <span class="tok-number">16</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.tables.boot_services.BootServices.tpl_high_level" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">tpl_high_level</span><a href="#src.zig-std.os.uefi.tables.boot_services.BootServices.tpl_high_level">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.tables.boot_services.BootServices.tpl_high_level">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> tpl_high_level: <span class="tok-type">usize</span> = <span class="tok-number">31</span></code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.os.uefi.tables.boot_services.BootServices.openProtocolSt" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">openProtocolSt</span><a href="#src.zig-std.os.uefi.tables.boot_services.BootServices.openProtocolSt">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">openProtocolSt</span>(self: *<a href="std.os.uefi.tables.boot_services.BootServices.html">BootServices</a>, <span class="tok-kw">comptime</span> protocol: <span class="tok-type">type</span>, handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>) !*protocol</code></pre></div><div class="tldDocs"><p>Opens a protocol with a structure as the loaded image for a UEFI application</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.os.uefi.tables.boot_services.BootServices.html">BootServices</a></code></pre></div><div><pre><code>protocol: <span class="tok-type">type</span></code></pre></div><div><pre><code>handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.tables.boot_services.BootServices.openProtocolSt">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">openProtocolSt</span>(self: *<a href="std.os.uefi.tables.boot_services.BootServices.html">BootServices</a>, <span class="tok-kw">comptime</span> protocol: <span class="tok-type">type</span>, handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>) !*protocol {
+    <span class="tok-kw">if</span> (!<span class="tok-builtin">@hasDecl</span>(protocol, <span class="tok-str">&quot;guid&quot;</span>))
+        <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Protocol is missing guid!&quot;</span>);
+
+    <span class="tok-kw">var</span> ptr: ?*protocol = <span class="tok-null">undefined</span>;
+
+    <span class="tok-kw">try</span> self.openProtocol(
+        handle,
+        &amp;protocol.guid,
+        <span class="tok-builtin">@as</span>(*?*<span class="tok-type">anyopaque</span>, <span class="tok-builtin">@ptrCast</span>(&amp;ptr)),<span class="tok-comment">
+        // Invoking handle (loaded image)
+        </span><a href="std.os.uefi.html">uefi</a>.<a href="std.os.uefi.html#std.os.uefi.handle">handle</a>,<span class="tok-comment">
+        // Control handle (null as not a driver)
+        </span><span class="tok-null">null</span>,
+        <a href="std.os.uefi.html">uefi</a>.<a href="std.os.uefi.tables.html">tables</a>.<a href="std.os.uefi.tables.OpenProtocolAttributes.html">OpenProtocolAttributes</a>{ .by_handle_protocol = <span class="tok-null">true</span> },
+    ).err();
+
+    <span class="tok-kw">return</span> ptr.?;
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.os.uefi.tables.boot_services.BootServices">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> BootServices = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    hdr: <a href="std.os.uefi.tables.table_header.TableHeader.html">TableHeader</a>,
+
+    <span class="tok-comment">/// Raises a task's priority level and returns its previous level.</span>
+    raiseTpl: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (new_tpl: <span class="tok-type">usize</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <span class="tok-type">usize</span>,
+
+    <span class="tok-comment">/// Restores a task's priority level to its previous value.</span>
+    restoreTpl: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (old_tpl: <span class="tok-type">usize</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <span class="tok-type">void</span>,
+
+    <span class="tok-comment">/// Allocates memory pages from the system.</span>
+    allocatePages: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (alloc_type: <a href="std.os.uefi.tables.AllocateType.html">AllocateType</a>, mem_type: <a href="std.os.uefi.tables.MemoryType.html">MemoryType</a>, pages: <span class="tok-type">usize</span>, memory: *[*]<span class="tok-kw">align</span>(<span class="tok-number">4096</span>) <span class="tok-type">u8</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Frees memory pages.</span>
+    freePages: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (memory: [*]<span class="tok-kw">align</span>(<span class="tok-number">4096</span>) <span class="tok-type">u8</span>, pages: <span class="tok-type">usize</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Returns the current memory map.</span>
+    getMemoryMap: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (mmap_size: *<span class="tok-type">usize</span>, mmap: ?[*]<a href="std.os.uefi.tables.MemoryDescriptor.html">MemoryDescriptor</a>, map_key: *<span class="tok-type">usize</span>, descriptor_size: *<span class="tok-type">usize</span>, descriptor_version: *<span class="tok-type">u32</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Allocates pool memory.</span>
+    allocatePool: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (pool_type: <a href="std.os.uefi.tables.MemoryType.html">MemoryType</a>, size: <span class="tok-type">usize</span>, buffer: *[*]<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-type">u8</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Returns pool memory to the system.</span>
+    freePool: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (buffer: [*]<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-type">u8</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Creates an event.</span>
+    createEvent: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (<span class="tok-type">type</span>: <span class="tok-type">u32</span>, notify_tpl: <span class="tok-type">usize</span>, notify_func: ?*<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (<a href="std.os.uefi.html#std.os.uefi.Event">Event</a>, ?*<span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <span class="tok-type">void</span>, notify_ctx: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>, event: *<a href="std.os.uefi.html#std.os.uefi.Event">Event</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Sets the type of timer and the trigger time for a timer event.</span>
+    setTimer: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (event: <a href="std.os.uefi.html#std.os.uefi.Event">Event</a>, <span class="tok-type">type</span>: <a href="std.os.uefi.tables.TimerDelay.html">TimerDelay</a>, trigger_time: <span class="tok-type">u64</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Stops execution until an event is signaled.</span>
+    waitForEvent: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (event_len: <span class="tok-type">usize</span>, events: [*]<span class="tok-kw">const</span> <a href="std.os.uefi.html#std.os.uefi.Event">Event</a>, index: *<span class="tok-type">usize</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Signals an event.</span>
+    signalEvent: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (event: <a href="std.os.uefi.html#std.os.uefi.Event">Event</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Closes an event.</span>
+    closeEvent: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (event: <a href="std.os.uefi.html#std.os.uefi.Event">Event</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Checks whether an event is in the signaled state.</span>
+    checkEvent: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (event: <a href="std.os.uefi.html#std.os.uefi.Event">Event</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Installs a protocol interface on a device handle. If the handle does not exist, it is created</span>
+    <span class="tok-comment">/// and added to the list of handles in the system. installMultipleProtocolInterfaces()</span>
+    <span class="tok-comment">/// performs more error checking than installProtocolInterface(), so its use is recommended over this.</span>
+    installProtocolInterface: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, protocol: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, interface_type: <a href="std.os.uefi.tables.InterfaceType.html">InterfaceType</a>, interface: *<span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Reinstalls a protocol interface on a device handle</span>
+    reinstallProtocolInterface: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, protocol: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, old_interface: *<span class="tok-type">anyopaque</span>, new_interface: *<span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Removes a protocol interface from a device handle. Usage of</span>
+    <span class="tok-comment">/// uninstallMultipleProtocolInterfaces is recommended over this.</span>
+    uninstallProtocolInterface: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, protocol: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, interface: *<span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Queries a handle to determine if it supports a specified protocol.</span>
+    handleProtocol: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, protocol: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, interface: *?*<span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    reserved: *<span class="tok-type">anyopaque</span>,
+
+    <span class="tok-comment">/// Creates an event that is to be signaled whenever an interface is installed for a specified protocol.</span>
+    registerProtocolNotify: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (protocol: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, event: <a href="std.os.uefi.html#std.os.uefi.Event">Event</a>, registration: **<span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Returns an array of handles that support a specified protocol.</span>
+    locateHandle: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (search_type: <a href="std.os.uefi.tables.LocateSearchType.html">LocateSearchType</a>, protocol: ?*<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, search_key: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>, buffer_size: *<span class="tok-type">usize</span>, buffer: [*]<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Locates the handle to a device on the device path that supports the specified protocol</span>
+    locateDevicePath: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (protocols: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, device_path: **<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.device_path.DevicePath.html">DevicePathProtocol</a>, device: *?<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Adds, updates, or removes a configuration table entry from the EFI System Table.</span>
+    installConfigurationTable: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (guid: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, table: ?*<span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Loads an EFI image into memory.</span>
+    loadImage: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (boot_policy: <span class="tok-type">bool</span>, parent_image_handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, device_path: ?*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.device_path.DevicePath.html">DevicePathProtocol</a>, source_buffer: ?[*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, source_size: <span class="tok-type">usize</span>, image_handle: *?<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Transfers control to a loaded image's entry point.</span>
+    startImage: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (image_handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, exit_data_size: ?*<span class="tok-type">usize</span>, exit_data: ?*[*]<span class="tok-type">u16</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Terminates a loaded EFI image and returns control to boot services.</span>
+    exit: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (image_handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, exit_status: <a href="std.os.uefi.status.Status.html">Status</a>, exit_data_size: <span class="tok-type">usize</span>, exit_data: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Unloads an image.</span>
+    unloadImage: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (image_handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Terminates all boot services.</span>
+    exitBootServices: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (image_handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, map_key: <span class="tok-type">usize</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Returns a monotonically increasing count for the platform.</span>
+    getNextMonotonicCount: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (count: *<span class="tok-type">u64</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Induces a fine-grained stall.</span>
+    stall: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (microseconds: <span class="tok-type">usize</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Sets the system's watchdog timer.</span>
+    setWatchdogTimer: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (timeout: <span class="tok-type">usize</span>, watchdog_code: <span class="tok-type">u64</span>, data_size: <span class="tok-type">usize</span>, watchdog_data: ?[*]<span class="tok-kw">const</span> <span class="tok-type">u16</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Connects one or more drives to a controller.</span>
+    connectController: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (controller_handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, driver_image_handle: ?<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, remaining_device_path: ?*<a href="std.os.uefi.protocol.device_path.DevicePath.html">DevicePathProtocol</a>, recursive: <span class="tok-type">bool</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,<span class="tok-comment">
+
+    // Disconnects one or more drivers from a controller
+    </span>disconnectController: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (controller_handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, driver_image_handle: ?<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, child_handle: ?<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Queries a handle to determine if it supports a specified protocol.</span>
+    openProtocol: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, protocol: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, interface: *?*<span class="tok-type">anyopaque</span>, agent_handle: ?<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, controller_handle: ?<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, attributes: <a href="std.os.uefi.tables.OpenProtocolAttributes.html">OpenProtocolAttributes</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Closes a protocol on a handle that was opened using openProtocol().</span>
+    closeProtocol: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, protocol: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, agent_handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, controller_handle: ?<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Retrieves the list of agents that currently have a protocol interface opened.</span>
+    openProtocolInformation: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, protocol: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, entry_buffer: *[*]<a href="std.os.uefi.tables.ProtocolInformationEntry.html">ProtocolInformationEntry</a>, entry_count: *<span class="tok-type">usize</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Retrieves the list of protocol interface GUIDs that are installed on a handle in a buffer allocated from pool.</span>
+    protocolsPerHandle: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, protocol_buffer: *[*]*<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, protocol_buffer_count: *<span class="tok-type">usize</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Returns an array of handles that support the requested protocol in a buffer allocated from pool.</span>
+    locateHandleBuffer: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (search_type: <a href="std.os.uefi.tables.LocateSearchType.html">LocateSearchType</a>, protocol: ?*<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, search_key: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>, num_handles: *<span class="tok-type">usize</span>, buffer: *[*]<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Returns the first protocol instance that matches the given protocol.</span>
+    locateProtocol: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (protocol: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, registration: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>, interface: *?*<span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Installs one or more protocol interfaces into the boot services environment</span><span class="tok-comment">
+    // TODO: use callconv(cc) instead once that works
+    </span>installMultipleProtocolInterfaces: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: *<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, ...) <span class="tok-kw">callconv</span>(.c) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Removes one or more protocol interfaces into the boot services environment</span><span class="tok-comment">
+    // TODO: use callconv(cc) instead once that works
+    </span>uninstallMultipleProtocolInterfaces: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (handle: *<a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>, ...) <span class="tok-kw">callconv</span>(.c) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Computes and returns a 32-bit CRC for a data buffer.</span>
+    calculateCrc32: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (data: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, data_size: <span class="tok-type">usize</span>, *<span class="tok-type">u32</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Copies the contents of one buffer to another buffer</span>
+    copyMem: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (dest: [*]<span class="tok-type">u8</span>, src: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, len: <span class="tok-type">usize</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <span class="tok-type">void</span>,
+
+    <span class="tok-comment">/// Fills a buffer with a specified value</span>
+    setMem: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (buffer: [*]<span class="tok-type">u8</span>, size: <span class="tok-type">usize</span>, value: <span class="tok-type">u8</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <span class="tok-type">void</span>,
+
+    <span class="tok-comment">/// Creates an event in a group.</span>
+    createEventEx: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (<span class="tok-type">type</span>: <span class="tok-type">u32</span>, notify_tpl: <span class="tok-type">usize</span>, notify_func: <a href="std.os.uefi.tables.html#std.os.uefi.tables.EventNotify">EventNotify</a>, notify_ctx: *<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>, event_group: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, event: *<a href="std.os.uefi.html#std.os.uefi.Event">Event</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-comment">/// Opens a protocol with a structure as the loaded image for a UEFI application</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">openProtocolSt</span>(self: *<a href="std.os.uefi.tables.boot_services.BootServices.html">BootServices</a>, <span class="tok-kw">comptime</span> protocol: <span class="tok-type">type</span>, handle: <a href="std.os.uefi.html#std.os.uefi.Handle">Handle</a>) !*protocol {
+        <span class="tok-kw">if</span> (!<span class="tok-builtin">@hasDecl</span>(protocol, <span class="tok-str">&quot;guid&quot;</span>))
+            <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Protocol is missing guid!&quot;</span>);
+
+        <span class="tok-kw">var</span> ptr: ?*protocol = <span class="tok-null">undefined</span>;
+
+        <span class="tok-kw">try</span> self.openProtocol(
+            handle,
+            &amp;protocol.guid,
+            <span class="tok-builtin">@as</span>(*?*<span class="tok-type">anyopaque</span>, <span class="tok-builtin">@ptrCast</span>(&amp;ptr)),<span class="tok-comment">
+            // Invoking handle (loaded image)
+            </span><a href="std.os.uefi.html">uefi</a>.<a href="std.os.uefi.html#std.os.uefi.handle">handle</a>,<span class="tok-comment">
+            // Control handle (null as not a driver)
+            </span><span class="tok-null">null</span>,
+            <a href="std.os.uefi.html">uefi</a>.<a href="std.os.uefi.tables.html">tables</a>.<a href="std.os.uefi.tables.OpenProtocolAttributes.html">OpenProtocolAttributes</a>{ .by_handle_protocol = <span class="tok-null">true</span> },
+        ).err();
+
+        <span class="tok-kw">return</span> ptr.?;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> signature: <span class="tok-type">u64</span> = <span class="tok-number">0x56524553544f4f42</span>;
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> event_timer: <span class="tok-type">u32</span> = <span class="tok-number">0x80000000</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> event_runtime: <span class="tok-type">u32</span> = <span class="tok-number">0x40000000</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> event_notify_wait: <span class="tok-type">u32</span> = <span class="tok-number">0x00000100</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> event_notify_signal: <span class="tok-type">u32</span> = <span class="tok-number">0x00000200</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> event_signal_exit_boot_services: <span class="tok-type">u32</span> = <span class="tok-number">0x00000201</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> event_signal_virtual_address_change: <span class="tok-type">u32</span> = <span class="tok-number">0x00000202</span>;
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> tpl_application: <span class="tok-type">usize</span> = <span class="tok-number">4</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> tpl_callback: <span class="tok-type">usize</span> = <span class="tok-number">8</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> tpl_notify: <span class="tok-type">usize</span> = <span class="tok-number">16</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> tpl_high_level: <span class="tok-type">usize</span> = <span class="tok-number">31</span>;
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

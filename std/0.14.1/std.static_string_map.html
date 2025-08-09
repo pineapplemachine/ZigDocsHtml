@@ -1,0 +1,1446 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.static_string_map.html" class="active">static_string_map</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.static_string_map" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.static_string_map</span><a href="#src.zig-std.static_string_map">[src]</a></h1><div class="sectTypes"><h2 class="sectionHeader">Types</h2><div class="listTypes"><div class="decl"><h2 id="std.static_string_map.StaticStringMap" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">StaticStringMap</span><a href="#src.zig-std.static_string_map.StaticStringMap">[src]</a></h2><div class="tldDocs"><p>Static string map optimized for small sets of disparate string keys.
+Works by separating the keys by length at initialization and only checking
+strings of equal length at runtime.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>V: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectContainers"><h3 class="sectionHeader">Container Types</h3><ul class="listContainers columns"><li><a href="std.static_string_map.StaticStringMapWithEql.KV.html">std.static_string_map.StaticStringMapWithEql.KV</a></li></ul></div><div class="sectFields"><h3 class="sectionHeader">Fields</h3><div class="listFields"><div><pre><code>kvs: *<span class="tok-kw">const</span> <a href="std.static_string_map.StaticStringMapWithEql.KVs.html">KVs</a> = &amp;<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql.empty_kvs">empty_kvs</a></code></pre></div><div><pre><code>len_indexes: [*]<span class="tok-kw">const</span> <span class="tok-type">u32</span> = &amp;<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql.empty_len_indexes">empty_len_indexes</a></code></pre></div><div><pre><code>len_indexes_len: <span class="tok-type">u32</span> = <span class="tok-number">0</span></code></pre></div><div><pre><code>min_len: <span class="tok-type">u32</span> = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u32</span>)</code></pre></div><div><pre><code>max_len: <span class="tok-type">u32</span> = <span class="tok-number">0</span></code></pre></div></div></div><div class="sectFns"><h3 class="sectionHeader">Functions</h3><div class="listFns"><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.initComptime" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">initComptime</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.initComptime">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">initComptime</span>(<span class="tok-kw">comptime</span> kvs_list: <span class="tok-kw">anytype</span>) <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div><div class="tldDocs"><p>Returns a map backed by static, comptime allocated memory.</p>
+<p><code>kvs_list</code> must be either a list of <code>struct { []const u8, V }</code>
+(key-value pair) tuples, or a list of <code>struct { []const u8 }</code>
+(only keys) tuples if <code>V</code> is <code>void</code>.</p>
+</div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.initComptime">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">initComptime</span>(<span class="tok-kw">comptime</span> kvs_list: <span class="tok-kw">anytype</span>) <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a> {
+    <span class="tok-kw">comptime</span> {
+        <span class="tok-kw">var</span> self = <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>{};
+        <span class="tok-kw">if</span> (kvs_list.len == <span class="tok-number">0</span>)
+            <span class="tok-kw">return</span> self;<span class="tok-comment">
+
+        // Since the KVs are sorted, a linearly-growing bound will never
+        // be sufficient for extreme cases. So we grow proportional to
+        // N*log2(N).
+        </span><span class="tok-builtin">@setEvalBranchQuota</span>(<span class="tok-number">10</span> * kvs_list.len * <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.log2_int_ceil">log2_int_ceil</a>(<span class="tok-type">usize</span>, kvs_list.len));
+
+        <span class="tok-kw">var</span> sorted_keys: [kvs_list.len][]<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">var</span> sorted_vals: [kvs_list.len]V = <span class="tok-null">undefined</span>;
+
+        self.initSortedKVs(kvs_list, &amp;sorted_keys, &amp;sorted_vals);
+        <span class="tok-kw">const</span> final_keys = sorted_keys;
+        <span class="tok-kw">const</span> final_vals = sorted_vals;
+        self.kvs = &amp;.{
+            .keys = &amp;final_keys,
+            .values = &amp;final_vals,
+            .len = <span class="tok-builtin">@intCast</span>(kvs_list.len),
+        };
+
+        <span class="tok-kw">var</span> len_indexes: [self.max_len + <span class="tok-number">1</span>]<span class="tok-type">u32</span> = <span class="tok-null">undefined</span>;
+        self.initLenIndexes(&amp;len_indexes);
+        <span class="tok-kw">const</span> final_len_indexes = len_indexes;
+        self.len_indexes = &amp;final_len_indexes;
+        self.len_indexes_len = <span class="tok-builtin">@intCast</span>(len_indexes.len);
+        <span class="tok-kw">return</span> self;
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.init">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(kvs_list: <span class="tok-kw">anytype</span>, allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) !<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div><div class="tldDocs"><p>Returns a map backed by memory allocated with <code>allocator</code>.</p>
+<p>Handles <code>kvs_list</code> the same way as <code>initComptime()</code>.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.init">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(kvs_list: <span class="tok-kw">anytype</span>, allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) !<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a> {
+    <span class="tok-kw">var</span> self = <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>{};
+    <span class="tok-kw">if</span> (kvs_list.len == <span class="tok-number">0</span>)
+        <span class="tok-kw">return</span> self;
+
+    <span class="tok-kw">const</span> sorted_keys = <span class="tok-kw">try</span> allocator.alloc([]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, kvs_list.len);
+    <span class="tok-kw">errdefer</span> allocator.free(sorted_keys);
+    <span class="tok-kw">const</span> sorted_vals = <span class="tok-kw">try</span> allocator.alloc(V, kvs_list.len);
+    <span class="tok-kw">errdefer</span> allocator.free(sorted_vals);
+    <span class="tok-kw">const</span> kvs = <span class="tok-kw">try</span> allocator.create(<a href="std.static_string_map.StaticStringMapWithEql.KVs.html">KVs</a>);
+    <span class="tok-kw">errdefer</span> allocator.destroy(kvs);
+
+    self.initSortedKVs(kvs_list, sorted_keys, sorted_vals);
+    kvs.* = .{
+        .keys = sorted_keys.ptr,
+        .values = sorted_vals.ptr,
+        .len = <span class="tok-builtin">@intCast</span>(kvs_list.len),
+    };
+    self.kvs = kvs;
+
+    <span class="tok-kw">const</span> len_indexes = <span class="tok-kw">try</span> allocator.alloc(<span class="tok-type">u32</span>, self.max_len + <span class="tok-number">1</span>);
+    self.initLenIndexes(len_indexes);
+    self.len_indexes = len_indexes.ptr;
+    self.len_indexes_len = <span class="tok-builtin">@intCast</span>(len_indexes.len);
+    <span class="tok-kw">return</span> self;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.deinit" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">deinit</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.deinit">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>this method should only be used with init() and not with initComptime().</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div><div><pre><code>allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.deinit">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) <span class="tok-type">void</span> {
+    allocator.free(self.len_indexes[<span class="tok-number">0</span>..self.len_indexes_len]);
+    allocator.free(self.kvs.keys[<span class="tok-number">0</span>..self.kvs.len]);
+    allocator.free(self.kvs.values[<span class="tok-number">0</span>..self.kvs.len]);
+    allocator.destroy(self.kvs);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.has" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">has</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.has">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">has</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span></code></pre></div><div class="tldDocs"><p>Checks if the map has a value for the key.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div><div><pre><code>str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.has">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">has</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> self.get(str) != <span class="tok-null">null</span>;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.get" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">get</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.get">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?V</code></pre></div><div class="tldDocs"><p>Returns the value for the key if any, else null.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div><div><pre><code>str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.get">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?V {
+    <span class="tok-kw">if</span> (self.kvs.len == <span class="tok-number">0</span>)
+        <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+    <span class="tok-kw">return</span> self.kvs.values[self.getIndex(str) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-null">null</span>];
+}</code></pre></details></div></div><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.getIndex" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getIndex</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.getIndex">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getIndex</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?<span class="tok-type">usize</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div><div><pre><code>str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.getIndex">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getIndex</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?<span class="tok-type">usize</span> {
+    <span class="tok-kw">const</span> kvs = self.kvs.*;
+    <span class="tok-kw">if</span> (kvs.len == <span class="tok-number">0</span>)
+        <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+    <span class="tok-kw">if</span> (str.len &lt; self.min_len <span class="tok-kw">or</span> str.len &gt; self.max_len)
+        <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+    <span class="tok-kw">var</span> i = self.len_indexes[str.len];
+    <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+        <span class="tok-kw">const</span> key = kvs.keys[i];
+        <span class="tok-kw">if</span> (key.len != str.len)
+            <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+        <span class="tok-kw">if</span> (eql(key, str))
+            <span class="tok-kw">return</span> i;
+        i += <span class="tok-number">1</span>;
+        <span class="tok-kw">if</span> (i &gt;= kvs.len)
+            <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.getLongestPrefix" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getLongestPrefix</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.getLongestPrefix">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getLongestPrefix</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?<a href="std.static_string_map.StaticStringMapWithEql.KV.html">KV</a></code></pre></div><div class="tldDocs"><p>Returns the key-value pair where key is the longest prefix of <code>str</code>
+else null.</p>
+<p>This is effectively an O(N) algorithm which loops from <code>max_len</code> to
+<code>min_len</code> and calls <code>getIndex()</code> to check all keys with the given
+len.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div><div><pre><code>str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.getLongestPrefix">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getLongestPrefix</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?<a href="std.static_string_map.StaticStringMapWithEql.KV.html">KV</a> {
+    <span class="tok-kw">if</span> (self.kvs.len == <span class="tok-number">0</span>)
+        <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+    <span class="tok-kw">const</span> i = self.getLongestPrefixIndex(str) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+    <span class="tok-kw">const</span> kvs = self.kvs.*;
+    <span class="tok-kw">return</span> .{
+        .key = kvs.keys[i],
+        .value = kvs.values[i],
+    };
+}</code></pre></details></div></div><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.getLongestPrefixIndex" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getLongestPrefixIndex</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.getLongestPrefixIndex">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getLongestPrefixIndex</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?<span class="tok-type">usize</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div><div><pre><code>str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.getLongestPrefixIndex">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getLongestPrefixIndex</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?<span class="tok-type">usize</span> {
+    <span class="tok-kw">if</span> (self.kvs.len == <span class="tok-number">0</span>)
+        <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+    <span class="tok-kw">if</span> (str.len &lt; self.min_len)
+        <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+    <span class="tok-kw">var</span> len = <span class="tok-builtin">@min</span>(self.max_len, str.len);
+    <span class="tok-kw">while</span> (len &gt;= self.min_len) : (len -= <span class="tok-number">1</span>) {
+        <span class="tok-kw">if</span> (self.getIndex(str[<span class="tok-number">0</span>..len])) |i|
+            <span class="tok-kw">return</span> i;
+    }
+    <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.keys" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">keys</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.keys">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">keys</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>) []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.keys">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">keys</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>) []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">const</span> kvs = self.kvs.*;
+    <span class="tok-kw">return</span> kvs.keys[<span class="tok-number">0</span>..kvs.len];
+}</code></pre></details></div></div><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.values" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">values</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.values">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">values</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>) []<span class="tok-kw">const</span> V</code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.values">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">values</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>) []<span class="tok-kw">const</span> V {
+    <span class="tok-kw">const</span> kvs = self.kvs.*;
+    <span class="tok-kw">return</span> kvs.values[<span class="tok-number">0</span>..kvs.len];
+}</code></pre></details></div></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMap">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">StaticStringMap</span>(<span class="tok-kw">comptime</span> V: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">StaticStringMapWithEql</a>(V, <a href="std.static_string_map.html#std.static_string_map.defaultEql">defaultEql</a>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.static_string_map.StaticStringMapWithEql" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">StaticStringMapWithEql</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql">[src]</a></h2><div class="tldDocs"><p>StaticStringMap, but accepts an equality function (<code>eql</code>).
+The <code>eql</code> function is only called to determine the equality
+of equal length strings. Any strings that are not equal length
+are never compared using the <code>eql</code> function.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>V: <span class="tok-type">type</span></code></pre></div><div><pre><code>eql: <span class="tok-kw">fn</span> (a: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span></code></pre></div></div></div><div class="sectContainers"><h3 class="sectionHeader">Container Types</h3><ul class="listContainers columns"><li><a href="std.static_string_map.StaticStringMapWithEql.KV.html">std.static_string_map.StaticStringMapWithEql.KV</a></li></ul></div><div class="sectFields"><h3 class="sectionHeader">Fields</h3><div class="listFields"><div><pre><code>kvs: *<span class="tok-kw">const</span> <a href="std.static_string_map.StaticStringMapWithEql.KVs.html">KVs</a> = &amp;<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql.empty_kvs">empty_kvs</a></code></pre></div><div><pre><code>len_indexes: [*]<span class="tok-kw">const</span> <span class="tok-type">u32</span> = &amp;<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql.empty_len_indexes">empty_len_indexes</a></code></pre></div><div><pre><code>len_indexes_len: <span class="tok-type">u32</span> = <span class="tok-number">0</span></code></pre></div><div><pre><code>min_len: <span class="tok-type">u32</span> = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u32</span>)</code></pre></div><div><pre><code>max_len: <span class="tok-type">u32</span> = <span class="tok-number">0</span></code></pre></div></div></div><div class="sectFns"><h3 class="sectionHeader">Functions</h3><div class="listFns"><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.initComptime" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">initComptime</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.initComptime">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">initComptime</span>(<span class="tok-kw">comptime</span> kvs_list: <span class="tok-kw">anytype</span>) <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div><div class="tldDocs"><p>Returns a map backed by static, comptime allocated memory.</p>
+<p><code>kvs_list</code> must be either a list of <code>struct { []const u8, V }</code>
+(key-value pair) tuples, or a list of <code>struct { []const u8 }</code>
+(only keys) tuples if <code>V</code> is <code>void</code>.</p>
+</div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.initComptime">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">initComptime</span>(<span class="tok-kw">comptime</span> kvs_list: <span class="tok-kw">anytype</span>) <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a> {
+    <span class="tok-kw">comptime</span> {
+        <span class="tok-kw">var</span> self = <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>{};
+        <span class="tok-kw">if</span> (kvs_list.len == <span class="tok-number">0</span>)
+            <span class="tok-kw">return</span> self;<span class="tok-comment">
+
+        // Since the KVs are sorted, a linearly-growing bound will never
+        // be sufficient for extreme cases. So we grow proportional to
+        // N*log2(N).
+        </span><span class="tok-builtin">@setEvalBranchQuota</span>(<span class="tok-number">10</span> * kvs_list.len * <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.log2_int_ceil">log2_int_ceil</a>(<span class="tok-type">usize</span>, kvs_list.len));
+
+        <span class="tok-kw">var</span> sorted_keys: [kvs_list.len][]<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">var</span> sorted_vals: [kvs_list.len]V = <span class="tok-null">undefined</span>;
+
+        self.initSortedKVs(kvs_list, &amp;sorted_keys, &amp;sorted_vals);
+        <span class="tok-kw">const</span> final_keys = sorted_keys;
+        <span class="tok-kw">const</span> final_vals = sorted_vals;
+        self.kvs = &amp;.{
+            .keys = &amp;final_keys,
+            .values = &amp;final_vals,
+            .len = <span class="tok-builtin">@intCast</span>(kvs_list.len),
+        };
+
+        <span class="tok-kw">var</span> len_indexes: [self.max_len + <span class="tok-number">1</span>]<span class="tok-type">u32</span> = <span class="tok-null">undefined</span>;
+        self.initLenIndexes(&amp;len_indexes);
+        <span class="tok-kw">const</span> final_len_indexes = len_indexes;
+        self.len_indexes = &amp;final_len_indexes;
+        self.len_indexes_len = <span class="tok-builtin">@intCast</span>(len_indexes.len);
+        <span class="tok-kw">return</span> self;
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.init">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(kvs_list: <span class="tok-kw">anytype</span>, allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) !<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div><div class="tldDocs"><p>Returns a map backed by memory allocated with <code>allocator</code>.</p>
+<p>Handles <code>kvs_list</code> the same way as <code>initComptime()</code>.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.init">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(kvs_list: <span class="tok-kw">anytype</span>, allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) !<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a> {
+    <span class="tok-kw">var</span> self = <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>{};
+    <span class="tok-kw">if</span> (kvs_list.len == <span class="tok-number">0</span>)
+        <span class="tok-kw">return</span> self;
+
+    <span class="tok-kw">const</span> sorted_keys = <span class="tok-kw">try</span> allocator.alloc([]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, kvs_list.len);
+    <span class="tok-kw">errdefer</span> allocator.free(sorted_keys);
+    <span class="tok-kw">const</span> sorted_vals = <span class="tok-kw">try</span> allocator.alloc(V, kvs_list.len);
+    <span class="tok-kw">errdefer</span> allocator.free(sorted_vals);
+    <span class="tok-kw">const</span> kvs = <span class="tok-kw">try</span> allocator.create(<a href="std.static_string_map.StaticStringMapWithEql.KVs.html">KVs</a>);
+    <span class="tok-kw">errdefer</span> allocator.destroy(kvs);
+
+    self.initSortedKVs(kvs_list, sorted_keys, sorted_vals);
+    kvs.* = .{
+        .keys = sorted_keys.ptr,
+        .values = sorted_vals.ptr,
+        .len = <span class="tok-builtin">@intCast</span>(kvs_list.len),
+    };
+    self.kvs = kvs;
+
+    <span class="tok-kw">const</span> len_indexes = <span class="tok-kw">try</span> allocator.alloc(<span class="tok-type">u32</span>, self.max_len + <span class="tok-number">1</span>);
+    self.initLenIndexes(len_indexes);
+    self.len_indexes = len_indexes.ptr;
+    self.len_indexes_len = <span class="tok-builtin">@intCast</span>(len_indexes.len);
+    <span class="tok-kw">return</span> self;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.deinit" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">deinit</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.deinit">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>this method should only be used with init() and not with initComptime().</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div><div><pre><code>allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.deinit">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) <span class="tok-type">void</span> {
+    allocator.free(self.len_indexes[<span class="tok-number">0</span>..self.len_indexes_len]);
+    allocator.free(self.kvs.keys[<span class="tok-number">0</span>..self.kvs.len]);
+    allocator.free(self.kvs.values[<span class="tok-number">0</span>..self.kvs.len]);
+    allocator.destroy(self.kvs);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.has" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">has</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.has">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">has</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span></code></pre></div><div class="tldDocs"><p>Checks if the map has a value for the key.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div><div><pre><code>str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.has">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">has</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> self.get(str) != <span class="tok-null">null</span>;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.get" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">get</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.get">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?V</code></pre></div><div class="tldDocs"><p>Returns the value for the key if any, else null.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div><div><pre><code>str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.get">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?V {
+    <span class="tok-kw">if</span> (self.kvs.len == <span class="tok-number">0</span>)
+        <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+    <span class="tok-kw">return</span> self.kvs.values[self.getIndex(str) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-null">null</span>];
+}</code></pre></details></div></div><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.getIndex" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getIndex</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.getIndex">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getIndex</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?<span class="tok-type">usize</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div><div><pre><code>str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.getIndex">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getIndex</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?<span class="tok-type">usize</span> {
+    <span class="tok-kw">const</span> kvs = self.kvs.*;
+    <span class="tok-kw">if</span> (kvs.len == <span class="tok-number">0</span>)
+        <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+    <span class="tok-kw">if</span> (str.len &lt; self.min_len <span class="tok-kw">or</span> str.len &gt; self.max_len)
+        <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+    <span class="tok-kw">var</span> i = self.len_indexes[str.len];
+    <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+        <span class="tok-kw">const</span> key = kvs.keys[i];
+        <span class="tok-kw">if</span> (key.len != str.len)
+            <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+        <span class="tok-kw">if</span> (eql(key, str))
+            <span class="tok-kw">return</span> i;
+        i += <span class="tok-number">1</span>;
+        <span class="tok-kw">if</span> (i &gt;= kvs.len)
+            <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.getLongestPrefix" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getLongestPrefix</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.getLongestPrefix">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getLongestPrefix</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?<a href="std.static_string_map.StaticStringMapWithEql.KV.html">KV</a></code></pre></div><div class="tldDocs"><p>Returns the key-value pair where key is the longest prefix of <code>str</code>
+else null.</p>
+<p>This is effectively an O(N) algorithm which loops from <code>max_len</code> to
+<code>min_len</code> and calls <code>getIndex()</code> to check all keys with the given
+len.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div><div><pre><code>str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.getLongestPrefix">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getLongestPrefix</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?<a href="std.static_string_map.StaticStringMapWithEql.KV.html">KV</a> {
+    <span class="tok-kw">if</span> (self.kvs.len == <span class="tok-number">0</span>)
+        <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+    <span class="tok-kw">const</span> i = self.getLongestPrefixIndex(str) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+    <span class="tok-kw">const</span> kvs = self.kvs.*;
+    <span class="tok-kw">return</span> .{
+        .key = kvs.keys[i],
+        .value = kvs.values[i],
+    };
+}</code></pre></details></div></div><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.getLongestPrefixIndex" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getLongestPrefixIndex</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.getLongestPrefixIndex">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getLongestPrefixIndex</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?<span class="tok-type">usize</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div><div><pre><code>str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.getLongestPrefixIndex">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getLongestPrefixIndex</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?<span class="tok-type">usize</span> {
+    <span class="tok-kw">if</span> (self.kvs.len == <span class="tok-number">0</span>)
+        <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+    <span class="tok-kw">if</span> (str.len &lt; self.min_len)
+        <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+    <span class="tok-kw">var</span> len = <span class="tok-builtin">@min</span>(self.max_len, str.len);
+    <span class="tok-kw">while</span> (len &gt;= self.min_len) : (len -= <span class="tok-number">1</span>) {
+        <span class="tok-kw">if</span> (self.getIndex(str[<span class="tok-number">0</span>..len])) |i|
+            <span class="tok-kw">return</span> i;
+    }
+    <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.keys" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">keys</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.keys">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">keys</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>) []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.keys">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">keys</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>) []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">const</span> kvs = self.kvs.*;
+    <span class="tok-kw">return</span> kvs.keys[<span class="tok-number">0</span>..kvs.len];
+}</code></pre></details></div></div><div class="decl"><h3 id="std.static_string_map.StaticStringMapWithEql.values" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">values</span><a href="#src.zig-std.static_string_map.StaticStringMapWithEql.values">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">values</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>) []<span class="tok-kw">const</span> V</code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql.values">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">values</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>) []<span class="tok-kw">const</span> V {
+    <span class="tok-kw">const</span> kvs = self.kvs.*;
+    <span class="tok-kw">return</span> kvs.values[<span class="tok-number">0</span>..kvs.len];
+}</code></pre></details></div></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.static_string_map.StaticStringMapWithEql">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">StaticStringMapWithEql</span>(
+    <span class="tok-kw">comptime</span> V: <span class="tok-type">type</span>,
+    <span class="tok-kw">comptime</span> eql: <span class="tok-kw">fn</span> (a: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span>,
+) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        kvs: *<span class="tok-kw">const</span> <a href="std.static_string_map.StaticStringMapWithEql.KVs.html">KVs</a> = &amp;<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql.empty_kvs">empty_kvs</a>,
+        len_indexes: [*]<span class="tok-kw">const</span> <span class="tok-type">u32</span> = &amp;<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql.empty_len_indexes">empty_len_indexes</a>,
+        len_indexes_len: <span class="tok-type">u32</span> = <span class="tok-number">0</span>,
+        min_len: <span class="tok-type">u32</span> = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u32</span>),
+        max_len: <span class="tok-type">u32</span> = <span class="tok-number">0</span>,
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> KV = <span class="tok-kw">struct</span> {
+            key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+            value: V,
+        };
+
+        <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+        <span class="tok-kw">const</span> KVs = <span class="tok-kw">struct</span> {
+            keys: [*]<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+            values: [*]<span class="tok-kw">const</span> V,
+            len: <span class="tok-type">u32</span>,
+        };
+        <span class="tok-kw">const</span> empty_kvs = <a href="std.static_string_map.StaticStringMapWithEql.KVs.html">KVs</a>{
+            .keys = &amp;<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql.empty_keys">empty_keys</a>,
+            .values = &amp;<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql.empty_vals">empty_vals</a>,
+            .len = <span class="tok-number">0</span>,
+        };
+        <span class="tok-kw">const</span> empty_len_indexes = [<span class="tok-number">0</span>]<span class="tok-type">u32</span>{};
+        <span class="tok-kw">const</span> empty_keys = [<span class="tok-number">0</span>][]<span class="tok-kw">const</span> <span class="tok-type">u8</span>{};
+        <span class="tok-kw">const</span> empty_vals = [<span class="tok-number">0</span>]V{};
+
+        <span class="tok-comment">/// Returns a map backed by static, comptime allocated memory.</span>
+        <span class="tok-comment">///</span>
+        <span class="tok-comment">/// `kvs_list` must be either a list of `struct { []const u8, V }`</span>
+        <span class="tok-comment">/// (key-value pair) tuples, or a list of `struct { []const u8 }`</span>
+        <span class="tok-comment">/// (only keys) tuples if `V` is `void`.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">initComptime</span>(<span class="tok-kw">comptime</span> kvs_list: <span class="tok-kw">anytype</span>) <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a> {
+            <span class="tok-kw">comptime</span> {
+                <span class="tok-kw">var</span> self = <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>{};
+                <span class="tok-kw">if</span> (kvs_list.len == <span class="tok-number">0</span>)
+                    <span class="tok-kw">return</span> self;<span class="tok-comment">
+
+                // Since the KVs are sorted, a linearly-growing bound will never
+                // be sufficient for extreme cases. So we grow proportional to
+                // N*log2(N).
+                </span><span class="tok-builtin">@setEvalBranchQuota</span>(<span class="tok-number">10</span> * kvs_list.len * <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.log2_int_ceil">log2_int_ceil</a>(<span class="tok-type">usize</span>, kvs_list.len));
+
+                <span class="tok-kw">var</span> sorted_keys: [kvs_list.len][]<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+                <span class="tok-kw">var</span> sorted_vals: [kvs_list.len]V = <span class="tok-null">undefined</span>;
+
+                self.initSortedKVs(kvs_list, &amp;sorted_keys, &amp;sorted_vals);
+                <span class="tok-kw">const</span> final_keys = sorted_keys;
+                <span class="tok-kw">const</span> final_vals = sorted_vals;
+                self.kvs = &amp;.{
+                    .keys = &amp;final_keys,
+                    .values = &amp;final_vals,
+                    .len = <span class="tok-builtin">@intCast</span>(kvs_list.len),
+                };
+
+                <span class="tok-kw">var</span> len_indexes: [self.max_len + <span class="tok-number">1</span>]<span class="tok-type">u32</span> = <span class="tok-null">undefined</span>;
+                self.initLenIndexes(&amp;len_indexes);
+                <span class="tok-kw">const</span> final_len_indexes = len_indexes;
+                self.len_indexes = &amp;final_len_indexes;
+                self.len_indexes_len = <span class="tok-builtin">@intCast</span>(len_indexes.len);
+                <span class="tok-kw">return</span> self;
+            }
+        }
+
+        <span class="tok-comment">/// Returns a map backed by memory allocated with `allocator`.</span>
+        <span class="tok-comment">///</span>
+        <span class="tok-comment">/// Handles `kvs_list` the same way as `initComptime()`.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(kvs_list: <span class="tok-kw">anytype</span>, allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) !<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a> {
+            <span class="tok-kw">var</span> self = <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>{};
+            <span class="tok-kw">if</span> (kvs_list.len == <span class="tok-number">0</span>)
+                <span class="tok-kw">return</span> self;
+
+            <span class="tok-kw">const</span> sorted_keys = <span class="tok-kw">try</span> allocator.alloc([]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, kvs_list.len);
+            <span class="tok-kw">errdefer</span> allocator.free(sorted_keys);
+            <span class="tok-kw">const</span> sorted_vals = <span class="tok-kw">try</span> allocator.alloc(V, kvs_list.len);
+            <span class="tok-kw">errdefer</span> allocator.free(sorted_vals);
+            <span class="tok-kw">const</span> kvs = <span class="tok-kw">try</span> allocator.create(<a href="std.static_string_map.StaticStringMapWithEql.KVs.html">KVs</a>);
+            <span class="tok-kw">errdefer</span> allocator.destroy(kvs);
+
+            self.initSortedKVs(kvs_list, sorted_keys, sorted_vals);
+            kvs.* = .{
+                .keys = sorted_keys.ptr,
+                .values = sorted_vals.ptr,
+                .len = <span class="tok-builtin">@intCast</span>(kvs_list.len),
+            };
+            self.kvs = kvs;
+
+            <span class="tok-kw">const</span> len_indexes = <span class="tok-kw">try</span> allocator.alloc(<span class="tok-type">u32</span>, self.max_len + <span class="tok-number">1</span>);
+            self.initLenIndexes(len_indexes);
+            self.len_indexes = len_indexes.ptr;
+            self.len_indexes_len = <span class="tok-builtin">@intCast</span>(len_indexes.len);
+            <span class="tok-kw">return</span> self;
+        }
+
+        <span class="tok-comment">/// this method should only be used with init() and not with initComptime().</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) <span class="tok-type">void</span> {
+            allocator.free(self.len_indexes[<span class="tok-number">0</span>..self.len_indexes_len]);
+            allocator.free(self.kvs.keys[<span class="tok-number">0</span>..self.kvs.len]);
+            allocator.free(self.kvs.values[<span class="tok-number">0</span>..self.kvs.len]);
+            allocator.destroy(self.kvs);
+        }
+
+        <span class="tok-kw">const</span> SortContext = <span class="tok-kw">struct</span> {
+            keys: [][]<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+            vals: []V,
+
+            <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">lessThan</span>(ctx: <span class="tok-builtin">@This</span>(), a: <span class="tok-type">usize</span>, b: <span class="tok-type">usize</span>) <span class="tok-type">bool</span> {
+                <span class="tok-kw">return</span> ctx.keys[a].len &lt; ctx.keys[b].len;
+            }
+
+            <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">swap</span>(ctx: <span class="tok-builtin">@This</span>(), a: <span class="tok-type">usize</span>, b: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+                <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.swap">swap</a>([]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, &amp;ctx.keys[a], &amp;ctx.keys[b]);
+                <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.swap">swap</a>(V, &amp;ctx.vals[a], &amp;ctx.vals[b]);
+            }
+        };
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">initSortedKVs</span>(
+            self: *<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>,
+            kvs_list: <span class="tok-kw">anytype</span>,
+            sorted_keys: [][]<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+            sorted_vals: []V,
+        ) <span class="tok-type">void</span> {
+            <span class="tok-kw">for</span> (kvs_list, <span class="tok-number">0</span>..) |kv, i| {
+                sorted_keys[i] = kv.@&quot;0&quot;;
+                sorted_vals[i] = <span class="tok-kw">if</span> (V == <span class="tok-type">void</span>) {} <span class="tok-kw">else</span> kv.@&quot;1&quot;;
+                self.min_len = <span class="tok-builtin">@intCast</span>(<span class="tok-builtin">@min</span>(self.min_len, kv.@&quot;0&quot;.len));
+                self.max_len = <span class="tok-builtin">@intCast</span>(<span class="tok-builtin">@max</span>(self.max_len, kv.@&quot;0&quot;.len));
+            }
+            <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.sortUnstableContext">sortUnstableContext</a>(<span class="tok-number">0</span>, sorted_keys.len, <a href="std.static_string_map.StaticStringMapWithEql.SortContext.html">SortContext</a>{
+                .keys = sorted_keys,
+                .vals = sorted_vals,
+            });
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">initLenIndexes</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, len_indexes: []<span class="tok-type">u32</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">var</span> len: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">var</span> i: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (len &lt;= self.max_len) : (len += <span class="tok-number">1</span>) {<span class="tok-comment">
+                // find the first keyword len == len
+                </span><span class="tok-kw">while</span> (len &gt; self.kvs.keys[i].len) {
+                    i += <span class="tok-number">1</span>;
+                }
+                len_indexes[len] = i;
+            }
+        }
+
+        <span class="tok-comment">/// Checks if the map has a value for the key.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">has</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+            <span class="tok-kw">return</span> self.get(str) != <span class="tok-null">null</span>;
+        }
+
+        <span class="tok-comment">/// Returns the value for the key if any, else null.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?V {
+            <span class="tok-kw">if</span> (self.kvs.len == <span class="tok-number">0</span>)
+                <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+            <span class="tok-kw">return</span> self.kvs.values[self.getIndex(str) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-null">null</span>];
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getIndex</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?<span class="tok-type">usize</span> {
+            <span class="tok-kw">const</span> kvs = self.kvs.*;
+            <span class="tok-kw">if</span> (kvs.len == <span class="tok-number">0</span>)
+                <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+            <span class="tok-kw">if</span> (str.len &lt; self.min_len <span class="tok-kw">or</span> str.len &gt; self.max_len)
+                <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+            <span class="tok-kw">var</span> i = self.len_indexes[str.len];
+            <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+                <span class="tok-kw">const</span> key = kvs.keys[i];
+                <span class="tok-kw">if</span> (key.len != str.len)
+                    <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+                <span class="tok-kw">if</span> (eql(key, str))
+                    <span class="tok-kw">return</span> i;
+                i += <span class="tok-number">1</span>;
+                <span class="tok-kw">if</span> (i &gt;= kvs.len)
+                    <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+            }
+        }
+
+        <span class="tok-comment">/// Returns the key-value pair where key is the longest prefix of `str`</span>
+        <span class="tok-comment">/// else null.</span>
+        <span class="tok-comment">///</span>
+        <span class="tok-comment">/// This is effectively an O(N) algorithm which loops from `max_len` to</span>
+        <span class="tok-comment">/// `min_len` and calls `getIndex()` to check all keys with the given</span>
+        <span class="tok-comment">/// len.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getLongestPrefix</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?<a href="std.static_string_map.StaticStringMapWithEql.KV.html">KV</a> {
+            <span class="tok-kw">if</span> (self.kvs.len == <span class="tok-number">0</span>)
+                <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+            <span class="tok-kw">const</span> i = self.getLongestPrefixIndex(str) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+            <span class="tok-kw">const</span> kvs = self.kvs.*;
+            <span class="tok-kw">return</span> .{
+                .key = kvs.keys[i],
+                .value = kvs.values[i],
+            };
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getLongestPrefixIndex</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?<span class="tok-type">usize</span> {
+            <span class="tok-kw">if</span> (self.kvs.len == <span class="tok-number">0</span>)
+                <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+            <span class="tok-kw">if</span> (str.len &lt; self.min_len)
+                <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+            <span class="tok-kw">var</span> len = <span class="tok-builtin">@min</span>(self.max_len, str.len);
+            <span class="tok-kw">while</span> (len &gt;= self.min_len) : (len -= <span class="tok-number">1</span>) {
+                <span class="tok-kw">if</span> (self.getIndex(str[<span class="tok-number">0</span>..len])) |i|
+                    <span class="tok-kw">return</span> i;
+            }
+            <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">keys</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>) []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+            <span class="tok-kw">const</span> kvs = self.kvs.*;
+            <span class="tok-kw">return</span> kvs.keys[<span class="tok-number">0</span>..kvs.len];
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">values</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>) []<span class="tok-kw">const</span> V {
+            <span class="tok-kw">const</span> kvs = self.kvs.*;
+            <span class="tok-kw">return</span> kvs.values[<span class="tok-number">0</span>..kvs.len];
+        }
+    };
+}</code></pre></details></div></div></div></div><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.static_string_map.foo" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">foo</span><a href="#src.zig-std.static_string_map.foo">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.static_string_map.foo">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> foo = <span class="tok-number">1</span></code></pre></details></div></div><div class="decl"><h2 id="std.static_string_map.foo" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">foo</span><a href="#src.zig-std.static_string_map.foo">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.static_string_map.foo">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> foo = <span class="tok-number">2</span></code></pre></details></div></div><div class="decl"><h2 id="std.static_string_map.foo" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">foo</span><a href="#src.zig-std.static_string_map.foo">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.static_string_map.foo">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> foo = <span class="tok-number">3</span></code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.static_string_map.defaultEql" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">defaultEql</span><a href="#src.zig-std.static_string_map.defaultEql">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">defaultEql</span>(a: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span></code></pre></div><div class="tldDocs"><p>Like <code><a href="std.mem.html#std.mem.eql">std.mem.eql</a></code>, but takes advantage of the fact that the lengths
+of <code>a</code> and <code>b</code> are known to be equal.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>a: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.static_string_map.defaultEql">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">defaultEql</span>(a: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">if</span> (a.ptr == b.ptr) <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+    <span class="tok-kw">for</span> (a, b) |a_elem, b_elem| {
+        <span class="tok-kw">if</span> (a_elem != b_elem) <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+    }
+    <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.static_string_map.eqlAsciiIgnoreCase" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">eqlAsciiIgnoreCase</span><a href="#src.zig-std.static_string_map.eqlAsciiIgnoreCase">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eqlAsciiIgnoreCase</span>(a: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span></code></pre></div><div class="tldDocs"><p>Like <code><a href="std.ascii.html#std.ascii.eqlIgnoreCase">std.ascii.eqlIgnoreCase</a></code> but takes advantage of the fact that
+the lengths of <code>a</code> and <code>b</code> are known to be equal.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>a: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.static_string_map.eqlAsciiIgnoreCase">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eqlAsciiIgnoreCase</span>(a: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">if</span> (a.ptr == b.ptr) <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+    <span class="tok-kw">for</span> (a, b) |a_c, b_c| {
+        <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.ascii.html">ascii</a>.<a href="std.ascii.html#std.ascii.toLower">toLower</a>(a_c) != <a href="std.html">std</a>.<a href="std.ascii.html">ascii</a>.<a href="std.ascii.html#std.ascii.toLower">toLower</a>(b_c)) <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+    }
+    <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.static_string_map">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std.zig&quot;</span>);
+<span class="tok-kw">const</span> mem = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>;
+
+<span class="tok-comment">/// Static string map optimized for small sets of disparate string keys.</span>
+<span class="tok-comment">/// Works by separating the keys by length at initialization and only checking</span>
+<span class="tok-comment">/// strings of equal length at runtime.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">StaticStringMap</span>(<span class="tok-kw">comptime</span> V: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">StaticStringMapWithEql</a>(V, <a href="std.static_string_map.html#std.static_string_map.defaultEql">defaultEql</a>);
+}
+
+<span class="tok-comment">/// Like `std.mem.eql`, but takes advantage of the fact that the lengths</span>
+<span class="tok-comment">/// of `a` and `b` are known to be equal.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">defaultEql</span>(a: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">if</span> (a.ptr == b.ptr) <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+    <span class="tok-kw">for</span> (a, b) |a_elem, b_elem| {
+        <span class="tok-kw">if</span> (a_elem != b_elem) <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+    }
+    <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+}
+
+<span class="tok-comment">/// Like `std.ascii.eqlIgnoreCase` but takes advantage of the fact that</span>
+<span class="tok-comment">/// the lengths of `a` and `b` are known to be equal.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eqlAsciiIgnoreCase</span>(a: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">if</span> (a.ptr == b.ptr) <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+    <span class="tok-kw">for</span> (a, b) |a_c, b_c| {
+        <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.ascii.html">ascii</a>.<a href="std.ascii.html#std.ascii.toLower">toLower</a>(a_c) != <a href="std.html">std</a>.<a href="std.ascii.html">ascii</a>.<a href="std.ascii.html#std.ascii.toLower">toLower</a>(b_c)) <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+    }
+    <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+}
+
+<span class="tok-comment">/// StaticStringMap, but accepts an equality function (`eql`).</span>
+<span class="tok-comment">/// The `eql` function is only called to determine the equality</span>
+<span class="tok-comment">/// of equal length strings. Any strings that are not equal length</span>
+<span class="tok-comment">/// are never compared using the `eql` function.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">StaticStringMapWithEql</span>(
+    <span class="tok-kw">comptime</span> V: <span class="tok-type">type</span>,
+    <span class="tok-kw">comptime</span> eql: <span class="tok-kw">fn</span> (a: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, b: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span>,
+) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        kvs: *<span class="tok-kw">const</span> <a href="std.static_string_map.StaticStringMapWithEql.KVs.html">KVs</a> = &amp;<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql.empty_kvs">empty_kvs</a>,
+        len_indexes: [*]<span class="tok-kw">const</span> <span class="tok-type">u32</span> = &amp;<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql.empty_len_indexes">empty_len_indexes</a>,
+        len_indexes_len: <span class="tok-type">u32</span> = <span class="tok-number">0</span>,
+        min_len: <span class="tok-type">u32</span> = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u32</span>),
+        max_len: <span class="tok-type">u32</span> = <span class="tok-number">0</span>,
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> KV = <span class="tok-kw">struct</span> {
+            key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+            value: V,
+        };
+
+        <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+        <span class="tok-kw">const</span> KVs = <span class="tok-kw">struct</span> {
+            keys: [*]<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+            values: [*]<span class="tok-kw">const</span> V,
+            len: <span class="tok-type">u32</span>,
+        };
+        <span class="tok-kw">const</span> empty_kvs = <a href="std.static_string_map.StaticStringMapWithEql.KVs.html">KVs</a>{
+            .keys = &amp;<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql.empty_keys">empty_keys</a>,
+            .values = &amp;<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql.empty_vals">empty_vals</a>,
+            .len = <span class="tok-number">0</span>,
+        };
+        <span class="tok-kw">const</span> empty_len_indexes = [<span class="tok-number">0</span>]<span class="tok-type">u32</span>{};
+        <span class="tok-kw">const</span> empty_keys = [<span class="tok-number">0</span>][]<span class="tok-kw">const</span> <span class="tok-type">u8</span>{};
+        <span class="tok-kw">const</span> empty_vals = [<span class="tok-number">0</span>]V{};
+
+        <span class="tok-comment">/// Returns a map backed by static, comptime allocated memory.</span>
+        <span class="tok-comment">///</span>
+        <span class="tok-comment">/// `kvs_list` must be either a list of `struct { []const u8, V }`</span>
+        <span class="tok-comment">/// (key-value pair) tuples, or a list of `struct { []const u8 }`</span>
+        <span class="tok-comment">/// (only keys) tuples if `V` is `void`.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">initComptime</span>(<span class="tok-kw">comptime</span> kvs_list: <span class="tok-kw">anytype</span>) <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a> {
+            <span class="tok-kw">comptime</span> {
+                <span class="tok-kw">var</span> self = <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>{};
+                <span class="tok-kw">if</span> (kvs_list.len == <span class="tok-number">0</span>)
+                    <span class="tok-kw">return</span> self;<span class="tok-comment">
+
+                // Since the KVs are sorted, a linearly-growing bound will never
+                // be sufficient for extreme cases. So we grow proportional to
+                // N*log2(N).
+                </span><span class="tok-builtin">@setEvalBranchQuota</span>(<span class="tok-number">10</span> * kvs_list.len * <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.log2_int_ceil">log2_int_ceil</a>(<span class="tok-type">usize</span>, kvs_list.len));
+
+                <span class="tok-kw">var</span> sorted_keys: [kvs_list.len][]<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+                <span class="tok-kw">var</span> sorted_vals: [kvs_list.len]V = <span class="tok-null">undefined</span>;
+
+                self.initSortedKVs(kvs_list, &amp;sorted_keys, &amp;sorted_vals);
+                <span class="tok-kw">const</span> final_keys = sorted_keys;
+                <span class="tok-kw">const</span> final_vals = sorted_vals;
+                self.kvs = &amp;.{
+                    .keys = &amp;final_keys,
+                    .values = &amp;final_vals,
+                    .len = <span class="tok-builtin">@intCast</span>(kvs_list.len),
+                };
+
+                <span class="tok-kw">var</span> len_indexes: [self.max_len + <span class="tok-number">1</span>]<span class="tok-type">u32</span> = <span class="tok-null">undefined</span>;
+                self.initLenIndexes(&amp;len_indexes);
+                <span class="tok-kw">const</span> final_len_indexes = len_indexes;
+                self.len_indexes = &amp;final_len_indexes;
+                self.len_indexes_len = <span class="tok-builtin">@intCast</span>(len_indexes.len);
+                <span class="tok-kw">return</span> self;
+            }
+        }
+
+        <span class="tok-comment">/// Returns a map backed by memory allocated with `allocator`.</span>
+        <span class="tok-comment">///</span>
+        <span class="tok-comment">/// Handles `kvs_list` the same way as `initComptime()`.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(kvs_list: <span class="tok-kw">anytype</span>, allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) !<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a> {
+            <span class="tok-kw">var</span> self = <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>{};
+            <span class="tok-kw">if</span> (kvs_list.len == <span class="tok-number">0</span>)
+                <span class="tok-kw">return</span> self;
+
+            <span class="tok-kw">const</span> sorted_keys = <span class="tok-kw">try</span> allocator.alloc([]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, kvs_list.len);
+            <span class="tok-kw">errdefer</span> allocator.free(sorted_keys);
+            <span class="tok-kw">const</span> sorted_vals = <span class="tok-kw">try</span> allocator.alloc(V, kvs_list.len);
+            <span class="tok-kw">errdefer</span> allocator.free(sorted_vals);
+            <span class="tok-kw">const</span> kvs = <span class="tok-kw">try</span> allocator.create(<a href="std.static_string_map.StaticStringMapWithEql.KVs.html">KVs</a>);
+            <span class="tok-kw">errdefer</span> allocator.destroy(kvs);
+
+            self.initSortedKVs(kvs_list, sorted_keys, sorted_vals);
+            kvs.* = .{
+                .keys = sorted_keys.ptr,
+                .values = sorted_vals.ptr,
+                .len = <span class="tok-builtin">@intCast</span>(kvs_list.len),
+            };
+            self.kvs = kvs;
+
+            <span class="tok-kw">const</span> len_indexes = <span class="tok-kw">try</span> allocator.alloc(<span class="tok-type">u32</span>, self.max_len + <span class="tok-number">1</span>);
+            self.initLenIndexes(len_indexes);
+            self.len_indexes = len_indexes.ptr;
+            self.len_indexes_len = <span class="tok-builtin">@intCast</span>(len_indexes.len);
+            <span class="tok-kw">return</span> self;
+        }
+
+        <span class="tok-comment">/// this method should only be used with init() and not with initComptime().</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) <span class="tok-type">void</span> {
+            allocator.free(self.len_indexes[<span class="tok-number">0</span>..self.len_indexes_len]);
+            allocator.free(self.kvs.keys[<span class="tok-number">0</span>..self.kvs.len]);
+            allocator.free(self.kvs.values[<span class="tok-number">0</span>..self.kvs.len]);
+            allocator.destroy(self.kvs);
+        }
+
+        <span class="tok-kw">const</span> SortContext = <span class="tok-kw">struct</span> {
+            keys: [][]<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+            vals: []V,
+
+            <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">lessThan</span>(ctx: <span class="tok-builtin">@This</span>(), a: <span class="tok-type">usize</span>, b: <span class="tok-type">usize</span>) <span class="tok-type">bool</span> {
+                <span class="tok-kw">return</span> ctx.keys[a].len &lt; ctx.keys[b].len;
+            }
+
+            <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">swap</span>(ctx: <span class="tok-builtin">@This</span>(), a: <span class="tok-type">usize</span>, b: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+                <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.swap">swap</a>([]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, &amp;ctx.keys[a], &amp;ctx.keys[b]);
+                <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.swap">swap</a>(V, &amp;ctx.vals[a], &amp;ctx.vals[b]);
+            }
+        };
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">initSortedKVs</span>(
+            self: *<a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>,
+            kvs_list: <span class="tok-kw">anytype</span>,
+            sorted_keys: [][]<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+            sorted_vals: []V,
+        ) <span class="tok-type">void</span> {
+            <span class="tok-kw">for</span> (kvs_list, <span class="tok-number">0</span>..) |kv, i| {
+                sorted_keys[i] = kv.@&quot;0&quot;;
+                sorted_vals[i] = <span class="tok-kw">if</span> (V == <span class="tok-type">void</span>) {} <span class="tok-kw">else</span> kv.@&quot;1&quot;;
+                self.min_len = <span class="tok-builtin">@intCast</span>(<span class="tok-builtin">@min</span>(self.min_len, kv.@&quot;0&quot;.len));
+                self.max_len = <span class="tok-builtin">@intCast</span>(<span class="tok-builtin">@max</span>(self.max_len, kv.@&quot;0&quot;.len));
+            }
+            <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.sortUnstableContext">sortUnstableContext</a>(<span class="tok-number">0</span>, sorted_keys.len, <a href="std.static_string_map.StaticStringMapWithEql.SortContext.html">SortContext</a>{
+                .keys = sorted_keys,
+                .vals = sorted_vals,
+            });
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">initLenIndexes</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, len_indexes: []<span class="tok-type">u32</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">var</span> len: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">var</span> i: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (len &lt;= self.max_len) : (len += <span class="tok-number">1</span>) {<span class="tok-comment">
+                // find the first keyword len == len
+                </span><span class="tok-kw">while</span> (len &gt; self.kvs.keys[i].len) {
+                    i += <span class="tok-number">1</span>;
+                }
+                len_indexes[len] = i;
+            }
+        }
+
+        <span class="tok-comment">/// Checks if the map has a value for the key.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">has</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+            <span class="tok-kw">return</span> self.get(str) != <span class="tok-null">null</span>;
+        }
+
+        <span class="tok-comment">/// Returns the value for the key if any, else null.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?V {
+            <span class="tok-kw">if</span> (self.kvs.len == <span class="tok-number">0</span>)
+                <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+            <span class="tok-kw">return</span> self.kvs.values[self.getIndex(str) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-null">null</span>];
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getIndex</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?<span class="tok-type">usize</span> {
+            <span class="tok-kw">const</span> kvs = self.kvs.*;
+            <span class="tok-kw">if</span> (kvs.len == <span class="tok-number">0</span>)
+                <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+            <span class="tok-kw">if</span> (str.len &lt; self.min_len <span class="tok-kw">or</span> str.len &gt; self.max_len)
+                <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+            <span class="tok-kw">var</span> i = self.len_indexes[str.len];
+            <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+                <span class="tok-kw">const</span> key = kvs.keys[i];
+                <span class="tok-kw">if</span> (key.len != str.len)
+                    <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+                <span class="tok-kw">if</span> (eql(key, str))
+                    <span class="tok-kw">return</span> i;
+                i += <span class="tok-number">1</span>;
+                <span class="tok-kw">if</span> (i &gt;= kvs.len)
+                    <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+            }
+        }
+
+        <span class="tok-comment">/// Returns the key-value pair where key is the longest prefix of `str`</span>
+        <span class="tok-comment">/// else null.</span>
+        <span class="tok-comment">///</span>
+        <span class="tok-comment">/// This is effectively an O(N) algorithm which loops from `max_len` to</span>
+        <span class="tok-comment">/// `min_len` and calls `getIndex()` to check all keys with the given</span>
+        <span class="tok-comment">/// len.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getLongestPrefix</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?<a href="std.static_string_map.StaticStringMapWithEql.KV.html">KV</a> {
+            <span class="tok-kw">if</span> (self.kvs.len == <span class="tok-number">0</span>)
+                <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+            <span class="tok-kw">const</span> i = self.getLongestPrefixIndex(str) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+            <span class="tok-kw">const</span> kvs = self.kvs.*;
+            <span class="tok-kw">return</span> .{
+                .key = kvs.keys[i],
+                .value = kvs.values[i],
+            };
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getLongestPrefixIndex</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?<span class="tok-type">usize</span> {
+            <span class="tok-kw">if</span> (self.kvs.len == <span class="tok-number">0</span>)
+                <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+            <span class="tok-kw">if</span> (str.len &lt; self.min_len)
+                <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+            <span class="tok-kw">var</span> len = <span class="tok-builtin">@min</span>(self.max_len, str.len);
+            <span class="tok-kw">while</span> (len &gt;= self.min_len) : (len -= <span class="tok-number">1</span>) {
+                <span class="tok-kw">if</span> (self.getIndex(str[<span class="tok-number">0</span>..len])) |i|
+                    <span class="tok-kw">return</span> i;
+            }
+            <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">keys</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>) []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+            <span class="tok-kw">const</span> kvs = self.kvs.*;
+            <span class="tok-kw">return</span> kvs.keys[<span class="tok-number">0</span>..kvs.len];
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">values</span>(self: <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">Self</a>) []<span class="tok-kw">const</span> V {
+            <span class="tok-kw">const</span> kvs = self.kvs.*;
+            <span class="tok-kw">return</span> kvs.values[<span class="tok-number">0</span>..kvs.len];
+        }
+    };
+}
+
+<span class="tok-kw">const</span> TestEnum = <span class="tok-kw">enum</span> { A, B, C, D, E };
+<span class="tok-kw">const</span> TestMap = <a href="std.static_string_map.html#std.static_string_map.StaticStringMap">StaticStringMap</a>(<a href="std.static_string_map.TestEnum.html">TestEnum</a>);
+<span class="tok-kw">const</span> TestKV = <span class="tok-kw">struct</span> { []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, <a href="std.static_string_map.TestEnum.html">TestEnum</a> };
+<span class="tok-kw">const</span> TestMapVoid = <a href="std.static_string_map.html#std.static_string_map.StaticStringMap">StaticStringMap</a>(<span class="tok-type">void</span>);
+<span class="tok-kw">const</span> TestKVVoid = <span class="tok-kw">struct</span> { []<span class="tok-kw">const</span> <span class="tok-type">u8</span> };
+<span class="tok-kw">const</span> TestMapWithEql = <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">StaticStringMapWithEql</a>(<a href="std.static_string_map.TestEnum.html">TestEnum</a>, <a href="std.static_string_map.html#std.static_string_map.eqlAsciiIgnoreCase">eqlAsciiIgnoreCase</a>);
+<span class="tok-kw">const</span> testing = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>;
+<span class="tok-kw">const</span> test_alloc = <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>;
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;list literal of list literals&quot;</span> {
+    <span class="tok-kw">const</span> slice: []<span class="tok-kw">const</span> <a href="std.static_string_map.TestKV.html">TestKV</a> = &amp;.{
+        .{ <span class="tok-str">&quot;these&quot;</span>, .D },
+        .{ <span class="tok-str">&quot;have&quot;</span>, .A },
+        .{ <span class="tok-str">&quot;nothing&quot;</span>, .B },
+        .{ <span class="tok-str">&quot;incommon&quot;</span>, .C },
+        .{ <span class="tok-str">&quot;samelen&quot;</span>, .E },
+    };
+
+    <span class="tok-kw">const</span> map = <a href="std.static_string_map.html#std.static_string_map.TestMap">TestMap</a>.<a href="#">initComptime</a>(slice);
+    <span class="tok-kw">try</span> <a href="std.static_string_map.html#std.static_string_map.testMap">testMap</a>(map);<span class="tok-comment">
+    // Default comparison is case sensitive
+    </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-null">null</span> == map.get(<span class="tok-str">&quot;NOTHING&quot;</span>));<span class="tok-comment">
+
+    // runtime init(), deinit()
+    </span><span class="tok-kw">const</span> map_rt = <span class="tok-kw">try</span> <a href="std.static_string_map.html#std.static_string_map.TestMap">TestMap</a>.<a href="#">init</a>(slice, <a href="std.testing.html#std.testing.allocator">test_alloc</a>);
+    <span class="tok-kw">defer</span> map_rt.deinit(<a href="std.testing.html#std.testing.allocator">test_alloc</a>);
+    <span class="tok-kw">try</span> <a href="std.static_string_map.html#std.static_string_map.testMap">testMap</a>(map_rt);<span class="tok-comment">
+    // Default comparison is case sensitive
+    </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-null">null</span> == map_rt.get(<span class="tok-str">&quot;NOTHING&quot;</span>));
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;array of structs&quot;</span> {
+    <span class="tok-kw">const</span> slice = [_]<a href="std.static_string_map.TestKV.html">TestKV</a>{
+        .{ <span class="tok-str">&quot;these&quot;</span>, .D },
+        .{ <span class="tok-str">&quot;have&quot;</span>, .A },
+        .{ <span class="tok-str">&quot;nothing&quot;</span>, .B },
+        .{ <span class="tok-str">&quot;incommon&quot;</span>, .C },
+        .{ <span class="tok-str">&quot;samelen&quot;</span>, .E },
+    };
+
+    <span class="tok-kw">try</span> <a href="std.static_string_map.html#std.static_string_map.testMap">testMap</a>(<a href="std.static_string_map.html#std.static_string_map.TestMap">TestMap</a>.<a href="#">initComptime</a>(slice));
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;slice of structs&quot;</span> {
+    <span class="tok-kw">const</span> slice = [_]<a href="std.static_string_map.TestKV.html">TestKV</a>{
+        .{ <span class="tok-str">&quot;these&quot;</span>, .D },
+        .{ <span class="tok-str">&quot;have&quot;</span>, .A },
+        .{ <span class="tok-str">&quot;nothing&quot;</span>, .B },
+        .{ <span class="tok-str">&quot;incommon&quot;</span>, .C },
+        .{ <span class="tok-str">&quot;samelen&quot;</span>, .E },
+    };
+
+    <span class="tok-kw">try</span> <a href="std.static_string_map.html#std.static_string_map.testMap">testMap</a>(<a href="std.static_string_map.html#std.static_string_map.TestMap">TestMap</a>.<a href="#">initComptime</a>(slice));
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">testMap</span>(map: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<a href="std.static_string_map.TestEnum.html">TestEnum</a>.<a href="#">A</a>, map.get(<span class="tok-str">&quot;have&quot;</span>).?);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<a href="std.static_string_map.TestEnum.html">TestEnum</a>.<a href="#">B</a>, map.get(<span class="tok-str">&quot;nothing&quot;</span>).?);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-null">null</span> == map.get(<span class="tok-str">&quot;missing&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<a href="std.static_string_map.TestEnum.html">TestEnum</a>.<a href="#">D</a>, map.get(<span class="tok-str">&quot;these&quot;</span>).?);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<a href="std.static_string_map.TestEnum.html">TestEnum</a>.<a href="#">E</a>, map.get(<span class="tok-str">&quot;samelen&quot;</span>).?);
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(!map.has(<span class="tok-str">&quot;missing&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(map.has(<span class="tok-str">&quot;these&quot;</span>));
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-null">null</span> == map.get(<span class="tok-str">&quot;&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-null">null</span> == map.get(<span class="tok-str">&quot;averylongstringthathasnomatches&quot;</span>));
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;void value type, slice of structs&quot;</span> {
+    <span class="tok-kw">const</span> slice = [_]<a href="std.static_string_map.TestKVVoid.html">TestKVVoid</a>{
+        .{<span class="tok-str">&quot;these&quot;</span>},
+        .{<span class="tok-str">&quot;have&quot;</span>},
+        .{<span class="tok-str">&quot;nothing&quot;</span>},
+        .{<span class="tok-str">&quot;incommon&quot;</span>},
+        .{<span class="tok-str">&quot;samelen&quot;</span>},
+    };
+    <span class="tok-kw">const</span> map = <a href="std.static_string_map.html#std.static_string_map.TestMapVoid">TestMapVoid</a>.<a href="#">initComptime</a>(slice);
+    <span class="tok-kw">try</span> <a href="std.static_string_map.html#std.static_string_map.testSet">testSet</a>(map);<span class="tok-comment">
+    // Default comparison is case sensitive
+    </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-null">null</span> == map.get(<span class="tok-str">&quot;NOTHING&quot;</span>));
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;void value type, list literal of list literals&quot;</span> {
+    <span class="tok-kw">const</span> slice = [_]<a href="std.static_string_map.TestKVVoid.html">TestKVVoid</a>{
+        .{<span class="tok-str">&quot;these&quot;</span>},
+        .{<span class="tok-str">&quot;have&quot;</span>},
+        .{<span class="tok-str">&quot;nothing&quot;</span>},
+        .{<span class="tok-str">&quot;incommon&quot;</span>},
+        .{<span class="tok-str">&quot;samelen&quot;</span>},
+    };
+
+    <span class="tok-kw">try</span> <a href="std.static_string_map.html#std.static_string_map.testSet">testSet</a>(<a href="std.static_string_map.html#std.static_string_map.TestMapVoid">TestMapVoid</a>.<a href="#">initComptime</a>(slice));
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">testSet</span>(map: <a href="std.static_string_map.html#std.static_string_map.TestMapVoid">TestMapVoid</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>({}, map.get(<span class="tok-str">&quot;have&quot;</span>).?);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>({}, map.get(<span class="tok-str">&quot;nothing&quot;</span>).?);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-null">null</span> == map.get(<span class="tok-str">&quot;missing&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>({}, map.get(<span class="tok-str">&quot;these&quot;</span>).?);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>({}, map.get(<span class="tok-str">&quot;samelen&quot;</span>).?);
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(!map.has(<span class="tok-str">&quot;missing&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(map.has(<span class="tok-str">&quot;these&quot;</span>));
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-null">null</span> == map.get(<span class="tok-str">&quot;&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-null">null</span> == map.get(<span class="tok-str">&quot;averylongstringthathasnomatches&quot;</span>));
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">testStaticStringMapWithEql</span>(map: <a href="std.static_string_map.html#std.static_string_map.TestMapWithEql">TestMapWithEql</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">try</span> <a href="std.static_string_map.html#std.static_string_map.testMap">testMap</a>(map);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<a href="std.static_string_map.TestEnum.html">TestEnum</a>.<a href="#">A</a>, map.get(<span class="tok-str">&quot;HAVE&quot;</span>).?);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<a href="std.static_string_map.TestEnum.html">TestEnum</a>.<a href="#">E</a>, map.get(<span class="tok-str">&quot;SameLen&quot;</span>).?);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-null">null</span> == map.get(<span class="tok-str">&quot;SameLength&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(map.has(<span class="tok-str">&quot;ThESe&quot;</span>));
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;StaticStringMapWithEql&quot;</span> {
+    <span class="tok-kw">const</span> slice = [_]<a href="std.static_string_map.TestKV.html">TestKV</a>{
+        .{ <span class="tok-str">&quot;these&quot;</span>, .D },
+        .{ <span class="tok-str">&quot;have&quot;</span>, .A },
+        .{ <span class="tok-str">&quot;nothing&quot;</span>, .B },
+        .{ <span class="tok-str">&quot;incommon&quot;</span>, .C },
+        .{ <span class="tok-str">&quot;samelen&quot;</span>, .E },
+    };
+
+    <span class="tok-kw">try</span> <a href="std.static_string_map.html#std.static_string_map.testStaticStringMapWithEql">testStaticStringMapWithEql</a>(<a href="std.static_string_map.html#std.static_string_map.TestMapWithEql">TestMapWithEql</a>.<a href="#">initComptime</a>(slice));
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;empty&quot;</span> {
+    <span class="tok-kw">const</span> m1 = <a href="std.static_string_map.html#std.static_string_map.StaticStringMap">StaticStringMap</a>(<span class="tok-type">usize</span>).initComptime(.{});
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-null">null</span> == m1.get(<span class="tok-str">&quot;anything&quot;</span>));
+
+    <span class="tok-kw">const</span> m2 = <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">StaticStringMapWithEql</a>(<span class="tok-type">usize</span>, <a href="std.static_string_map.html#std.static_string_map.eqlAsciiIgnoreCase">eqlAsciiIgnoreCase</a>).initComptime(.{});
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-null">null</span> == m2.get(<span class="tok-str">&quot;anything&quot;</span>));
+
+    <span class="tok-kw">const</span> m3 = <span class="tok-kw">try</span> <a href="std.static_string_map.html#std.static_string_map.StaticStringMap">StaticStringMap</a>(<span class="tok-type">usize</span>).init(.{}, <a href="std.testing.html#std.testing.allocator">test_alloc</a>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-null">null</span> == m3.get(<span class="tok-str">&quot;anything&quot;</span>));
+
+    <span class="tok-kw">const</span> m4 = <span class="tok-kw">try</span> <a href="std.static_string_map.html#std.static_string_map.StaticStringMapWithEql">StaticStringMapWithEql</a>(<span class="tok-type">usize</span>, <a href="std.static_string_map.html#std.static_string_map.eqlAsciiIgnoreCase">eqlAsciiIgnoreCase</a>).init(.{}, <a href="std.testing.html#std.testing.allocator">test_alloc</a>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-null">null</span> == m4.get(<span class="tok-str">&quot;anything&quot;</span>));
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;redundant entries&quot;</span> {
+    <span class="tok-kw">const</span> slice = [_]<a href="std.static_string_map.TestKV.html">TestKV</a>{
+        .{ <span class="tok-str">&quot;redundant&quot;</span>, .D },
+        .{ <span class="tok-str">&quot;theNeedle&quot;</span>, .A },
+        .{ <span class="tok-str">&quot;redundant&quot;</span>, .B },
+        .{ <span class="tok-str">&quot;re&quot;</span> ++ <span class="tok-str">&quot;dundant&quot;</span>, .C },
+        .{ <span class="tok-str">&quot;redun&quot;</span> ++ <span class="tok-str">&quot;dant&quot;</span>, .E },
+    };
+    <span class="tok-kw">const</span> map = <a href="std.static_string_map.html#std.static_string_map.TestMap">TestMap</a>.<a href="#">initComptime</a>(slice);<span class="tok-comment">
+
+    // No promises about which one you get:
+    </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-null">null</span> != map.get(<span class="tok-str">&quot;redundant&quot;</span>));<span class="tok-comment">
+
+    // Default map is not case sensitive:
+    </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-null">null</span> == map.get(<span class="tok-str">&quot;REDUNDANT&quot;</span>));
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<a href="std.static_string_map.TestEnum.html">TestEnum</a>.<a href="#">A</a>, map.get(<span class="tok-str">&quot;theNeedle&quot;</span>).?);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;redundant insensitive&quot;</span> {
+    <span class="tok-kw">const</span> slice = [_]<a href="std.static_string_map.TestKV.html">TestKV</a>{
+        .{ <span class="tok-str">&quot;redundant&quot;</span>, .D },
+        .{ <span class="tok-str">&quot;theNeedle&quot;</span>, .A },
+        .{ <span class="tok-str">&quot;redundanT&quot;</span>, .B },
+        .{ <span class="tok-str">&quot;RE&quot;</span> ++ <span class="tok-str">&quot;dundant&quot;</span>, .C },
+        .{ <span class="tok-str">&quot;redun&quot;</span> ++ <span class="tok-str">&quot;DANT&quot;</span>, .E },
+    };
+
+    <span class="tok-kw">const</span> map = <a href="std.static_string_map.html#std.static_string_map.TestMapWithEql">TestMapWithEql</a>.<a href="#">initComptime</a>(slice);<span class="tok-comment">
+
+    // No promises about which result you'll get ...
+    </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-null">null</span> != map.get(<span class="tok-str">&quot;REDUNDANT&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-null">null</span> != map.get(<span class="tok-str">&quot;ReDuNdAnT&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<a href="std.static_string_map.TestEnum.html">TestEnum</a>.<a href="#">A</a>, map.get(<span class="tok-str">&quot;theNeedle&quot;</span>).?);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;comptime-only value&quot;</span> {
+    <span class="tok-kw">const</span> map = <a href="std.static_string_map.html#std.static_string_map.StaticStringMap">StaticStringMap</a>(<span class="tok-type">type</span>).initComptime(.{
+        .{ <span class="tok-str">&quot;a&quot;</span>, <span class="tok-kw">struct</span> {
+            <span class="tok-kw">pub</span> <span class="tok-kw">const</span> foo = <span class="tok-number">1</span>;
+        } },
+        .{ <span class="tok-str">&quot;b&quot;</span>, <span class="tok-kw">struct</span> {
+            <span class="tok-kw">pub</span> <span class="tok-kw">const</span> foo = <span class="tok-number">2</span>;
+        } },
+        .{ <span class="tok-str">&quot;c&quot;</span>, <span class="tok-kw">struct</span> {
+            <span class="tok-kw">pub</span> <span class="tok-kw">const</span> foo = <span class="tok-number">3</span>;
+        } },
+    });
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(map.get(<span class="tok-str">&quot;a&quot;</span>).?.foo == <span class="tok-number">1</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(map.get(<span class="tok-str">&quot;b&quot;</span>).?.foo == <span class="tok-number">2</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(map.get(<span class="tok-str">&quot;c&quot;</span>).?.foo == <span class="tok-number">3</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(map.get(<span class="tok-str">&quot;d&quot;</span>) == <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;getLongestPrefix&quot;</span> {
+    <span class="tok-kw">const</span> slice = [_]<a href="std.static_string_map.TestKV.html">TestKV</a>{
+        .{ <span class="tok-str">&quot;a&quot;</span>, .A },
+        .{ <span class="tok-str">&quot;aa&quot;</span>, .B },
+        .{ <span class="tok-str">&quot;aaa&quot;</span>, .C },
+        .{ <span class="tok-str">&quot;aaaa&quot;</span>, .D },
+    };
+
+    <span class="tok-kw">const</span> map = <a href="std.static_string_map.html#std.static_string_map.TestMap">TestMap</a>.<a href="#">initComptime</a>(slice);
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-null">null</span>, map.getLongestPrefix(<span class="tok-str">&quot;&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-null">null</span>, map.getLongestPrefix(<span class="tok-str">&quot;bar&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;aaaa&quot;</span>, map.getLongestPrefix(<span class="tok-str">&quot;aaaabar&quot;</span>).?.key);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;aaa&quot;</span>, map.getLongestPrefix(<span class="tok-str">&quot;aaabar&quot;</span>).?.key);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;getLongestPrefix2&quot;</span> {
+    <span class="tok-kw">const</span> slice = [_]<span class="tok-kw">struct</span> { []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, <span class="tok-type">u8</span> }{
+        .{ <span class="tok-str">&quot;one&quot;</span>, <span class="tok-number">1</span> },
+        .{ <span class="tok-str">&quot;two&quot;</span>, <span class="tok-number">2</span> },
+        .{ <span class="tok-str">&quot;three&quot;</span>, <span class="tok-number">3</span> },
+        .{ <span class="tok-str">&quot;four&quot;</span>, <span class="tok-number">4</span> },
+        .{ <span class="tok-str">&quot;five&quot;</span>, <span class="tok-number">5</span> },
+        .{ <span class="tok-str">&quot;six&quot;</span>, <span class="tok-number">6</span> },
+        .{ <span class="tok-str">&quot;seven&quot;</span>, <span class="tok-number">7</span> },
+        .{ <span class="tok-str">&quot;eight&quot;</span>, <span class="tok-number">8</span> },
+        .{ <span class="tok-str">&quot;nine&quot;</span>, <span class="tok-number">9</span> },
+    };
+    <span class="tok-kw">const</span> map = <a href="std.static_string_map.html#std.static_string_map.StaticStringMap">StaticStringMap</a>(<span class="tok-type">u8</span>).initComptime(slice);
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-number">1</span>, map.get(<span class="tok-str">&quot;one&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-null">null</span>, map.get(<span class="tok-str">&quot;o&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-null">null</span>, map.get(<span class="tok-str">&quot;onexxx&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-number">9</span>, map.get(<span class="tok-str">&quot;nine&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-null">null</span>, map.get(<span class="tok-str">&quot;n&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-null">null</span>, map.get(<span class="tok-str">&quot;ninexxx&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-null">null</span>, map.get(<span class="tok-str">&quot;xxx&quot;</span>));
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-number">1</span>, map.getLongestPrefix(<span class="tok-str">&quot;one&quot;</span>).?.value);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-number">1</span>, map.getLongestPrefix(<span class="tok-str">&quot;onexxx&quot;</span>).?.value);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-null">null</span>, map.getLongestPrefix(<span class="tok-str">&quot;o&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-null">null</span>, map.getLongestPrefix(<span class="tok-str">&quot;on&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-number">9</span>, map.getLongestPrefix(<span class="tok-str">&quot;nine&quot;</span>).?.value);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-number">9</span>, map.getLongestPrefix(<span class="tok-str">&quot;ninexxx&quot;</span>).?.value);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-null">null</span>, map.getLongestPrefix(<span class="tok-str">&quot;n&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-null">null</span>, map.getLongestPrefix(<span class="tok-str">&quot;xxx&quot;</span>));
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;sorting kvs doesn't exceed eval branch quota&quot;</span> {<span class="tok-comment">
+    // from https://github.com/ziglang/zig/issues/19803
+    </span><span class="tok-kw">const</span> TypeToByteSizeLUT = <a href="std.html">std</a>.<a href="std.static_string_map.html#std.static_string_map.StaticStringMap">StaticStringMap</a>(<span class="tok-type">u32</span>).initComptime(.{
+        .{ <span class="tok-str">&quot;bool&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;c_int&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;c_long&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;c_longdouble&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t20&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t19&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t18&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t17&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t16&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t15&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t14&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t13&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t12&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t11&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t10&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t9&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t8&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t7&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t6&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t5&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t4&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t3&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t2&quot;</span>, <span class="tok-number">0</span> },
+        .{ <span class="tok-str">&quot;t1&quot;</span>, <span class="tok-number">1</span> },
+    });
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-number">1</span>, TypeToByteSizeLUT.get(<span class="tok-str">&quot;t1&quot;</span>));
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

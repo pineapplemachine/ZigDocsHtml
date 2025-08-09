@@ -1,0 +1,838 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.Build.html" class="">Build</a></li><li><a href="std.Build.LazyPath.html" class="active">LazyPath</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.Build.LazyPath" class="declHeader"><span class="declHeaderCategory">union</span><span class="declHeaderIdentifier">std.Build.LazyPath</span><a href="#src.zig-std.Build.LazyPath">[src]</a></h1><div class="tldDocs"><p>A reference to an existing or future path.</p>
+</div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>src_path: <span class="tok-kw">struct</span> {
+    owner: *<a href="std.html">std</a>.<a href="std.Build.html">Build</a>,
+    sub_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+}</code></pre><div class="fieldDocs"><p>A source file path relative to build root.</p>
+</div></div><div><pre><code>generated: <span class="tok-kw">struct</span> {
+    file: *<span class="tok-kw">const</span> <a href="std.Build.GeneratedFile.html">GeneratedFile</a>,
+
+    <span class="tok-comment">/// The number of parent directories to go up.</span>
+    <span class="tok-comment">/// 0 means the generated file itself.</span>
+    <span class="tok-comment">/// 1 means the directory of the generated file.</span>
+    <span class="tok-comment">/// 2 means the parent of that directory, and so on.</span>
+    up: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+
+    <span class="tok-comment">/// Applied after `up`.</span>
+    sub_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-str">&quot;&quot;</span>,
+}</code></pre></div><div><pre><code>cwd_relative: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre><div class="fieldDocs"><p>An absolute path or a path relative to the current working directory of
+the build runner process.
+This is uncommon but used for system environment paths such as <code>--zig-lib-dir</code> which
+ignore the file system path of build.zig and instead are relative to the directory from
+which <code>zig build</code> was invoked.
+Use of this tag indicates a dependency on the host system.</p>
+</div></div><div><pre><code>dependency: <span class="tok-kw">struct</span> {
+    dependency: *<a href="std.Build.Dependency.html">Dependency</a>,
+    sub_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+}</code></pre></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.Build.LazyPath.dirname" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">dirname</span><a href="#src.zig-std.Build.LazyPath.dirname">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">dirname</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div><div class="tldDocs"><p>Returns a lazy path referring to the directory containing this path.</p>
+<p>The dirname is not allowed to escape the logical root for underlying path.
+For example, if the path is relative to the build root,
+the dirname is not allowed to traverse outside of the build root.
+Similarly, if the path is a generated file inside zig-cache,
+the dirname is not allowed to traverse outside of zig-cache.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.LazyPath.dirname">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">dirname</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <a href="std.Build.LazyPath.html">LazyPath</a> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (lazy_path) {
+        .src_path =&gt; |sp| .{ .src_path = .{
+            .owner = sp.owner,
+            .sub_path = <a href="std.Build.html#std.Build.dirnameAllowEmpty">dirnameAllowEmpty</a>(sp.sub_path) <span class="tok-kw">orelse</span> {
+                <a href="std.Build.html#std.Build.dumpBadDirnameHelp">dumpBadDirnameHelp</a>(<span class="tok-null">null</span>, <span class="tok-null">null</span>, <span class="tok-str">&quot;dirname() attempted to traverse outside the build root\n&quot;</span>, .{}) <span class="tok-kw">catch</span> {};
+                <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;misconfigured build script&quot;</span>);
+            },
+        } },
+        .generated =&gt; |generated| .{ .generated = <span class="tok-kw">if</span> (<a href="std.Build.html#std.Build.dirnameAllowEmpty">dirnameAllowEmpty</a>(generated.sub_path)) |sub_dirname| .{
+            .file = generated.file,
+            .up = generated.up,
+            .sub_path = sub_dirname,
+        } <span class="tok-kw">else</span> .{
+            .file = generated.file,
+            .up = generated.up + <span class="tok-number">1</span>,
+            .sub_path = <span class="tok-str">&quot;&quot;</span>,
+        } },
+        .cwd_relative =&gt; |rel_path| .{
+            .cwd_relative = <a href="std.Build.html#std.Build.dirnameAllowEmpty">dirnameAllowEmpty</a>(rel_path) <span class="tok-kw">orelse</span> {<span class="tok-comment">
+                // If we get null, it means one of two things:
+                // - rel_path was absolute, and is now root
+                // - rel_path was relative, and is now &quot;&quot;
+                // In either case, the build script tried to go too far
+                // and we should panic.
+                </span><span class="tok-kw">if</span> (<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.isAbsolute">isAbsolute</a>(rel_path)) {
+                    <a href="std.Build.html#std.Build.dumpBadDirnameHelp">dumpBadDirnameHelp</a>(<span class="tok-null">null</span>, <span class="tok-null">null</span>,
+                        <span class="tok-str">\\dirname() attempted to traverse outside the root.</span>
+                        <span class="tok-str">\\No more directories left to go up.</span>
+                        <span class="tok-str">\\</span>
+                    , .{}) <span class="tok-kw">catch</span> {};
+                    <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;misconfigured build script&quot;</span>);
+                } <span class="tok-kw">else</span> {
+                    <a href="std.Build.html#std.Build.dumpBadDirnameHelp">dumpBadDirnameHelp</a>(<span class="tok-null">null</span>, <span class="tok-null">null</span>,
+                        <span class="tok-str">\\dirname() attempted to traverse outside the current working directory.</span>
+                        <span class="tok-str">\\</span>
+                    , .{}) <span class="tok-kw">catch</span> {};
+                    <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;misconfigured build script&quot;</span>);
+                }
+            },
+        },
+        .dependency =&gt; |dep| .{ .dependency = .{
+            .dependency = dep.dependency,
+            .sub_path = <a href="std.Build.html#std.Build.dirnameAllowEmpty">dirnameAllowEmpty</a>(dep.sub_path) <span class="tok-kw">orelse</span> {
+                <a href="std.Build.html#std.Build.dumpBadDirnameHelp">dumpBadDirnameHelp</a>(<span class="tok-null">null</span>, <span class="tok-null">null</span>,
+                    <span class="tok-str">\\dirname() attempted to traverse outside the dependency root.</span>
+                    <span class="tok-str">\\</span>
+                , .{}) <span class="tok-kw">catch</span> {};
+                <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;misconfigured build script&quot;</span>);
+            },
+        } },
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.LazyPath.path" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">path</span><a href="#src.zig-std.Build.LazyPath.path">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">path</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, b: *<a href="std.Build.html">Build</a>, sub_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div><div><pre><code>b: *<a href="std.Build.html">Build</a></code></pre></div><div><pre><code>sub_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.LazyPath.path">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">path</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, b: *<a href="std.Build.html">Build</a>, sub_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.Build.LazyPath.html">LazyPath</a> {
+    <span class="tok-kw">return</span> lazy_path.join(b.allocator, sub_path) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.LazyPath.join" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">join</span><a href="#src.zig-std.Build.LazyPath.join">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">join</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, arena: <a href="std.mem.Allocator.html">Allocator</a>, sub_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.mem.Allocator.html">Allocator</a>.<a href="std.mem.Allocator.html#std.mem.Allocator.Error">Error</a>!<a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div><div><pre><code>arena: <a href="std.mem.Allocator.html">Allocator</a></code></pre></div><div><pre><code>sub_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.LazyPath.join">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">join</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, arena: <a href="std.mem.Allocator.html">Allocator</a>, sub_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.mem.Allocator.html">Allocator</a>.<a href="std.mem.Allocator.html#std.mem.Allocator.Error">Error</a>!<a href="std.Build.LazyPath.html">LazyPath</a> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (lazy_path) {
+        .src_path =&gt; |src| .{ .src_path = .{
+            .owner = src.owner,
+            .sub_path = <span class="tok-kw">try</span> <a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.resolve">resolve</a>(arena, &amp;.{ src.sub_path, sub_path }),
+        } },
+        .generated =&gt; |gen| .{ .generated = .{
+            .file = gen.file,
+            .up = gen.up,
+            .sub_path = <span class="tok-kw">try</span> <a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.resolve">resolve</a>(arena, &amp;.{ gen.sub_path, sub_path }),
+        } },
+        .cwd_relative =&gt; |cwd_relative| .{
+            .cwd_relative = <span class="tok-kw">try</span> <a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.resolve">resolve</a>(arena, &amp;.{ cwd_relative, sub_path }),
+        },
+        .dependency =&gt; |dep| .{ .dependency = .{
+            .dependency = dep.dependency,
+            .sub_path = <span class="tok-kw">try</span> <a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.resolve">resolve</a>(arena, &amp;.{ dep.sub_path, sub_path }),
+        } },
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.LazyPath.getDisplayName" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getDisplayName</span><a href="#src.zig-std.Build.LazyPath.getDisplayName">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getDisplayName</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>Returns a string that can be shown to represent the file source.
+Either returns the path, <code>&quot;generated&quot;</code>, or <code>&quot;dependency&quot;</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.LazyPath.getDisplayName">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getDisplayName</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (lazy_path) {
+        .src_path =&gt; |sp| sp.sub_path,
+        .cwd_relative =&gt; |p| p,
+        .generated =&gt; <span class="tok-str">&quot;generated&quot;</span>,
+        .dependency =&gt; <span class="tok-str">&quot;dependency&quot;</span>,
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.LazyPath.addStepDependencies" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addStepDependencies</span><a href="#src.zig-std.Build.LazyPath.addStepDependencies">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addStepDependencies</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, other_step: *<a href="std.Build.Step.html">Step</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Adds dependencies this file source implies to the given step.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div><div><pre><code>other_step: *<a href="std.Build.Step.html">Step</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.LazyPath.addStepDependencies">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addStepDependencies</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, other_step: *<a href="std.Build.Step.html">Step</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">switch</span> (lazy_path) {
+        .src_path, .cwd_relative, .dependency =&gt; {},
+        .generated =&gt; |gen| other_step.dependOn(gen.file.step),
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.LazyPath.getPath" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getPath</span><a href="#src.zig-std.Build.LazyPath.getPath">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPath</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, src_builder: *<a href="std.Build.html">Build</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>Deprecated, see <code>getPath3</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div><div><pre><code>src_builder: *<a href="std.Build.html">Build</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.LazyPath.getPath">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPath</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, src_builder: *<a href="std.Build.html">Build</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> <a href="std.Build.LazyPath.html#std.Build.LazyPath.getPath2">getPath2</a>(lazy_path, src_builder, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.LazyPath.getPath2" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getPath2</span><a href="#src.zig-std.Build.LazyPath.getPath2">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPath2</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, src_builder: *<a href="std.Build.html">Build</a>, asking_step: ?*<a href="std.Build.Step.html">Step</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>Deprecated, see <code>getPath3</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div><div><pre><code>src_builder: *<a href="std.Build.html">Build</a></code></pre></div><div><pre><code>asking_step: ?*<a href="std.Build.Step.html">Step</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.LazyPath.getPath2">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPath2</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, src_builder: *<a href="std.Build.html">Build</a>, asking_step: ?*<a href="std.Build.Step.html">Step</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">const</span> p = <a href="std.Build.LazyPath.html#std.Build.LazyPath.getPath3">getPath3</a>(lazy_path, src_builder, asking_step);
+    <span class="tok-kw">return</span> src_builder.pathResolve(&amp;.{ p.root_dir.path <span class="tok-kw">orelse</span> <span class="tok-str">&quot;.&quot;</span>, p.sub_path });
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.LazyPath.getPath3" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getPath3</span><a href="#src.zig-std.Build.LazyPath.getPath3">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPath3</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, src_builder: *<a href="std.Build.html">Build</a>, asking_step: ?*<a href="std.Build.Step.html">Step</a>) <a href="std.Build.Cache.html">Cache</a>.<a href="std.Build.Cache.Path.html">Path</a></code></pre></div><div class="tldDocs"><p>Intended to be used during the make phase only.</p>
+<p><code>asking_step</code> is only used for debugging purposes; it's the step being
+run that is asking for the path.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div><div><pre><code>src_builder: *<a href="std.Build.html">Build</a></code></pre></div><div><pre><code>asking_step: ?*<a href="std.Build.Step.html">Step</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.LazyPath.getPath3">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPath3</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, src_builder: *<a href="std.Build.html">Build</a>, asking_step: ?*<a href="std.Build.Step.html">Step</a>) <a href="std.Build.Cache.html">Cache</a>.<a href="std.Build.Cache.Path.html">Path</a> {
+    <span class="tok-kw">switch</span> (lazy_path) {
+        .src_path =&gt; |sp| <span class="tok-kw">return</span> .{
+            .root_dir = sp.owner.build_root,
+            .sub_path = sp.sub_path,
+        },
+        .cwd_relative =&gt; |sub_path| <span class="tok-kw">return</span> .{
+            .root_dir = <a href="std.Build.Cache.html">Cache</a>.<a href="std.Build.Cache.Directory.html">Directory</a>.<a href="std.Build.Cache.Directory.html#std.Build.Cache.Directory.cwd">cwd</a>(),
+            .sub_path = sub_path,
+        },
+        .generated =&gt; |gen| {<span class="tok-comment">
+            // TODO make gen.file.path not be absolute and use that as the
+            // basis for not traversing up too many directories.
+
+            </span><span class="tok-kw">var</span> file_path: <a href="std.Build.Cache.html">Cache</a>.<a href="std.Build.Cache.Path.html">Path</a> = .{
+                .root_dir = <a href="std.Build.Cache.html">Cache</a>.<a href="std.Build.Cache.Directory.html">Directory</a>.<a href="std.Build.Cache.Directory.html#std.Build.Cache.Directory.cwd">cwd</a>(),
+                .sub_path = gen.file.path <span class="tok-kw">orelse</span> {
+                    <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.lockStdErr">lockStdErr</a>();
+                    <span class="tok-kw">const</span> stderr = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.html#std.io.getStdErr">getStdErr</a>();
+                    <a href="std.Build.html#std.Build.dumpBadGetPathHelp">dumpBadGetPathHelp</a>(gen.file.step, stderr, src_builder, asking_step) <span class="tok-kw">catch</span> {};
+                    <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.unlockStdErr">unlockStdErr</a>();
+                    <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;misconfigured build script&quot;</span>);
+                },
+            };
+
+            <span class="tok-kw">if</span> (gen.up &gt; <span class="tok-number">0</span>) {
+                <span class="tok-kw">const</span> cache_root_path = src_builder.cache_root.path <span class="tok-kw">orelse</span>
+                    (src_builder.cache_root.join(src_builder.allocator, &amp;.{<span class="tok-str">&quot;.&quot;</span>}) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>));
+
+                <span class="tok-kw">for</span> (<span class="tok-number">0</span>..gen.up) |_| {
+                    <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, file_path.sub_path, cache_root_path)) {<span class="tok-comment">
+                        // If we hit the cache root and there's still more to go,
+                        // the script attempted to go too far.
+                        </span><a href="std.Build.html#std.Build.dumpBadDirnameHelp">dumpBadDirnameHelp</a>(gen.file.step, asking_step,
+                            <span class="tok-str">\\dirname() attempted to traverse outside the cache root.</span>
+                            <span class="tok-str">\\This is not allowed.</span>
+                            <span class="tok-str">\\</span>
+                        , .{}) <span class="tok-kw">catch</span> {};
+                        <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;misconfigured build script&quot;</span>);
+                    }<span class="tok-comment">
+
+                    // path is absolute.
+                    // dirname will return null only if we're at root.
+                    // Typically, we'll stop well before that at the cache root.
+                    </span>file_path.sub_path = <a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.dirname">dirname</a>(file_path.sub_path) <span class="tok-kw">orelse</span> {
+                        <a href="std.Build.html#std.Build.dumpBadDirnameHelp">dumpBadDirnameHelp</a>(gen.file.step, asking_step,
+                            <span class="tok-str">\\dirname() reached root.</span>
+                            <span class="tok-str">\\No more directories left to go up.</span>
+                            <span class="tok-str">\\</span>
+                        , .{}) <span class="tok-kw">catch</span> {};
+                        <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;misconfigured build script&quot;</span>);
+                    };
+                }
+            }
+
+            <span class="tok-kw">return</span> file_path.join(src_builder.allocator, gen.sub_path) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+        },
+        .dependency =&gt; |dep| <span class="tok-kw">return</span> .{
+            .root_dir = dep.dependency.builder.build_root,
+            .sub_path = dep.sub_path,
+        },
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.LazyPath.dupe" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">dupe</span><a href="#src.zig-std.Build.LazyPath.dupe">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">dupe</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, b: *<a href="std.Build.html">Build</a>) <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div><div class="tldDocs"><p>Copies the internal strings.</p>
+<p>The <code>b</code> parameter is only used for its allocator. All *Build instances
+share the same allocator.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div><div><pre><code>b: *<a href="std.Build.html">Build</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.LazyPath.dupe">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">dupe</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, b: *<a href="std.Build.html">Build</a>) <a href="std.Build.LazyPath.html">LazyPath</a> {
+    <span class="tok-kw">return</span> lazy_path.dupeInner(b.allocator);
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.Build.LazyPath">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> LazyPath = <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) {
+    <span class="tok-comment">/// A source file path relative to build root.</span>
+    src_path: <span class="tok-kw">struct</span> {
+        owner: *<a href="std.html">std</a>.<a href="std.Build.html">Build</a>,
+        sub_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    },
+
+    generated: <span class="tok-kw">struct</span> {
+        file: *<span class="tok-kw">const</span> <a href="std.Build.GeneratedFile.html">GeneratedFile</a>,
+
+        <span class="tok-comment">/// The number of parent directories to go up.</span>
+        <span class="tok-comment">/// 0 means the generated file itself.</span>
+        <span class="tok-comment">/// 1 means the directory of the generated file.</span>
+        <span class="tok-comment">/// 2 means the parent of that directory, and so on.</span>
+        up: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+
+        <span class="tok-comment">/// Applied after `up`.</span>
+        sub_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-str">&quot;&quot;</span>,
+    },
+
+    <span class="tok-comment">/// An absolute path or a path relative to the current working directory of</span>
+    <span class="tok-comment">/// the build runner process.</span>
+    <span class="tok-comment">/// This is uncommon but used for system environment paths such as `--zig-lib-dir` which</span>
+    <span class="tok-comment">/// ignore the file system path of build.zig and instead are relative to the directory from</span>
+    <span class="tok-comment">/// which `zig build` was invoked.</span>
+    <span class="tok-comment">/// Use of this tag indicates a dependency on the host system.</span>
+    cwd_relative: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+
+    dependency: <span class="tok-kw">struct</span> {
+        dependency: *<a href="std.Build.Dependency.html">Dependency</a>,
+        sub_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    },
+
+    <span class="tok-comment">/// Returns a lazy path referring to the directory containing this path.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// The dirname is not allowed to escape the logical root for underlying path.</span>
+    <span class="tok-comment">/// For example, if the path is relative to the build root,</span>
+    <span class="tok-comment">/// the dirname is not allowed to traverse outside of the build root.</span>
+    <span class="tok-comment">/// Similarly, if the path is a generated file inside zig-cache,</span>
+    <span class="tok-comment">/// the dirname is not allowed to traverse outside of zig-cache.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">dirname</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <a href="std.Build.LazyPath.html">LazyPath</a> {
+        <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (lazy_path) {
+            .src_path =&gt; |sp| .{ .src_path = .{
+                .owner = sp.owner,
+                .sub_path = <a href="std.Build.html#std.Build.dirnameAllowEmpty">dirnameAllowEmpty</a>(sp.sub_path) <span class="tok-kw">orelse</span> {
+                    <a href="std.Build.html#std.Build.dumpBadDirnameHelp">dumpBadDirnameHelp</a>(<span class="tok-null">null</span>, <span class="tok-null">null</span>, <span class="tok-str">&quot;dirname() attempted to traverse outside the build root\n&quot;</span>, .{}) <span class="tok-kw">catch</span> {};
+                    <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;misconfigured build script&quot;</span>);
+                },
+            } },
+            .generated =&gt; |generated| .{ .generated = <span class="tok-kw">if</span> (<a href="std.Build.html#std.Build.dirnameAllowEmpty">dirnameAllowEmpty</a>(generated.sub_path)) |sub_dirname| .{
+                .file = generated.file,
+                .up = generated.up,
+                .sub_path = sub_dirname,
+            } <span class="tok-kw">else</span> .{
+                .file = generated.file,
+                .up = generated.up + <span class="tok-number">1</span>,
+                .sub_path = <span class="tok-str">&quot;&quot;</span>,
+            } },
+            .cwd_relative =&gt; |rel_path| .{
+                .cwd_relative = <a href="std.Build.html#std.Build.dirnameAllowEmpty">dirnameAllowEmpty</a>(rel_path) <span class="tok-kw">orelse</span> {<span class="tok-comment">
+                    // If we get null, it means one of two things:
+                    // - rel_path was absolute, and is now root
+                    // - rel_path was relative, and is now &quot;&quot;
+                    // In either case, the build script tried to go too far
+                    // and we should panic.
+                    </span><span class="tok-kw">if</span> (<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.isAbsolute">isAbsolute</a>(rel_path)) {
+                        <a href="std.Build.html#std.Build.dumpBadDirnameHelp">dumpBadDirnameHelp</a>(<span class="tok-null">null</span>, <span class="tok-null">null</span>,
+                            <span class="tok-str">\\dirname() attempted to traverse outside the root.</span>
+                            <span class="tok-str">\\No more directories left to go up.</span>
+                            <span class="tok-str">\\</span>
+                        , .{}) <span class="tok-kw">catch</span> {};
+                        <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;misconfigured build script&quot;</span>);
+                    } <span class="tok-kw">else</span> {
+                        <a href="std.Build.html#std.Build.dumpBadDirnameHelp">dumpBadDirnameHelp</a>(<span class="tok-null">null</span>, <span class="tok-null">null</span>,
+                            <span class="tok-str">\\dirname() attempted to traverse outside the current working directory.</span>
+                            <span class="tok-str">\\</span>
+                        , .{}) <span class="tok-kw">catch</span> {};
+                        <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;misconfigured build script&quot;</span>);
+                    }
+                },
+            },
+            .dependency =&gt; |dep| .{ .dependency = .{
+                .dependency = dep.dependency,
+                .sub_path = <a href="std.Build.html#std.Build.dirnameAllowEmpty">dirnameAllowEmpty</a>(dep.sub_path) <span class="tok-kw">orelse</span> {
+                    <a href="std.Build.html#std.Build.dumpBadDirnameHelp">dumpBadDirnameHelp</a>(<span class="tok-null">null</span>, <span class="tok-null">null</span>,
+                        <span class="tok-str">\\dirname() attempted to traverse outside the dependency root.</span>
+                        <span class="tok-str">\\</span>
+                    , .{}) <span class="tok-kw">catch</span> {};
+                    <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;misconfigured build script&quot;</span>);
+                },
+            } },
+        };
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">path</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, b: *<a href="std.Build.html">Build</a>, sub_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.Build.LazyPath.html">LazyPath</a> {
+        <span class="tok-kw">return</span> lazy_path.join(b.allocator, sub_path) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">join</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, arena: <a href="std.mem.Allocator.html">Allocator</a>, sub_path: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.mem.Allocator.html">Allocator</a>.<a href="std.mem.Allocator.html#std.mem.Allocator.Error">Error</a>!<a href="std.Build.LazyPath.html">LazyPath</a> {
+        <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (lazy_path) {
+            .src_path =&gt; |src| .{ .src_path = .{
+                .owner = src.owner,
+                .sub_path = <span class="tok-kw">try</span> <a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.resolve">resolve</a>(arena, &amp;.{ src.sub_path, sub_path }),
+            } },
+            .generated =&gt; |gen| .{ .generated = .{
+                .file = gen.file,
+                .up = gen.up,
+                .sub_path = <span class="tok-kw">try</span> <a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.resolve">resolve</a>(arena, &amp;.{ gen.sub_path, sub_path }),
+            } },
+            .cwd_relative =&gt; |cwd_relative| .{
+                .cwd_relative = <span class="tok-kw">try</span> <a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.resolve">resolve</a>(arena, &amp;.{ cwd_relative, sub_path }),
+            },
+            .dependency =&gt; |dep| .{ .dependency = .{
+                .dependency = dep.dependency,
+                .sub_path = <span class="tok-kw">try</span> <a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.resolve">resolve</a>(arena, &amp;.{ dep.sub_path, sub_path }),
+            } },
+        };
+    }
+
+    <span class="tok-comment">/// Returns a string that can be shown to represent the file source.</span>
+    <span class="tok-comment">/// Either returns the path, `&quot;generated&quot;`, or `&quot;dependency&quot;`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getDisplayName</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (lazy_path) {
+            .src_path =&gt; |sp| sp.sub_path,
+            .cwd_relative =&gt; |p| p,
+            .generated =&gt; <span class="tok-str">&quot;generated&quot;</span>,
+            .dependency =&gt; <span class="tok-str">&quot;dependency&quot;</span>,
+        };
+    }
+
+    <span class="tok-comment">/// Adds dependencies this file source implies to the given step.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addStepDependencies</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, other_step: *<a href="std.Build.Step.html">Step</a>) <span class="tok-type">void</span> {
+        <span class="tok-kw">switch</span> (lazy_path) {
+            .src_path, .cwd_relative, .dependency =&gt; {},
+            .generated =&gt; |gen| other_step.dependOn(gen.file.step),
+        }
+    }
+
+    <span class="tok-comment">/// Deprecated, see `getPath3`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPath</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, src_builder: *<a href="std.Build.html">Build</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> <a href="std.Build.LazyPath.html#std.Build.LazyPath.getPath2">getPath2</a>(lazy_path, src_builder, <span class="tok-null">null</span>);
+    }
+
+    <span class="tok-comment">/// Deprecated, see `getPath3`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPath2</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, src_builder: *<a href="std.Build.html">Build</a>, asking_step: ?*<a href="std.Build.Step.html">Step</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">const</span> p = <a href="std.Build.LazyPath.html#std.Build.LazyPath.getPath3">getPath3</a>(lazy_path, src_builder, asking_step);
+        <span class="tok-kw">return</span> src_builder.pathResolve(&amp;.{ p.root_dir.path <span class="tok-kw">orelse</span> <span class="tok-str">&quot;.&quot;</span>, p.sub_path });
+    }
+
+    <span class="tok-comment">/// Intended to be used during the make phase only.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// `asking_step` is only used for debugging purposes; it's the step being</span>
+    <span class="tok-comment">/// run that is asking for the path.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPath3</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, src_builder: *<a href="std.Build.html">Build</a>, asking_step: ?*<a href="std.Build.Step.html">Step</a>) <a href="std.Build.Cache.html">Cache</a>.<a href="std.Build.Cache.Path.html">Path</a> {
+        <span class="tok-kw">switch</span> (lazy_path) {
+            .src_path =&gt; |sp| <span class="tok-kw">return</span> .{
+                .root_dir = sp.owner.build_root,
+                .sub_path = sp.sub_path,
+            },
+            .cwd_relative =&gt; |sub_path| <span class="tok-kw">return</span> .{
+                .root_dir = <a href="std.Build.Cache.html">Cache</a>.<a href="std.Build.Cache.Directory.html">Directory</a>.<a href="std.Build.Cache.Directory.html#std.Build.Cache.Directory.cwd">cwd</a>(),
+                .sub_path = sub_path,
+            },
+            .generated =&gt; |gen| {<span class="tok-comment">
+                // TODO make gen.file.path not be absolute and use that as the
+                // basis for not traversing up too many directories.
+
+                </span><span class="tok-kw">var</span> file_path: <a href="std.Build.Cache.html">Cache</a>.<a href="std.Build.Cache.Path.html">Path</a> = .{
+                    .root_dir = <a href="std.Build.Cache.html">Cache</a>.<a href="std.Build.Cache.Directory.html">Directory</a>.<a href="std.Build.Cache.Directory.html#std.Build.Cache.Directory.cwd">cwd</a>(),
+                    .sub_path = gen.file.path <span class="tok-kw">orelse</span> {
+                        <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.lockStdErr">lockStdErr</a>();
+                        <span class="tok-kw">const</span> stderr = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.html#std.io.getStdErr">getStdErr</a>();
+                        <a href="std.Build.html#std.Build.dumpBadGetPathHelp">dumpBadGetPathHelp</a>(gen.file.step, stderr, src_builder, asking_step) <span class="tok-kw">catch</span> {};
+                        <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.unlockStdErr">unlockStdErr</a>();
+                        <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;misconfigured build script&quot;</span>);
+                    },
+                };
+
+                <span class="tok-kw">if</span> (gen.up &gt; <span class="tok-number">0</span>) {
+                    <span class="tok-kw">const</span> cache_root_path = src_builder.cache_root.path <span class="tok-kw">orelse</span>
+                        (src_builder.cache_root.join(src_builder.allocator, &amp;.{<span class="tok-str">&quot;.&quot;</span>}) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>));
+
+                    <span class="tok-kw">for</span> (<span class="tok-number">0</span>..gen.up) |_| {
+                        <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, file_path.sub_path, cache_root_path)) {<span class="tok-comment">
+                            // If we hit the cache root and there's still more to go,
+                            // the script attempted to go too far.
+                            </span><a href="std.Build.html#std.Build.dumpBadDirnameHelp">dumpBadDirnameHelp</a>(gen.file.step, asking_step,
+                                <span class="tok-str">\\dirname() attempted to traverse outside the cache root.</span>
+                                <span class="tok-str">\\This is not allowed.</span>
+                                <span class="tok-str">\\</span>
+                            , .{}) <span class="tok-kw">catch</span> {};
+                            <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;misconfigured build script&quot;</span>);
+                        }<span class="tok-comment">
+
+                        // path is absolute.
+                        // dirname will return null only if we're at root.
+                        // Typically, we'll stop well before that at the cache root.
+                        </span>file_path.sub_path = <a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.dirname">dirname</a>(file_path.sub_path) <span class="tok-kw">orelse</span> {
+                            <a href="std.Build.html#std.Build.dumpBadDirnameHelp">dumpBadDirnameHelp</a>(gen.file.step, asking_step,
+                                <span class="tok-str">\\dirname() reached root.</span>
+                                <span class="tok-str">\\No more directories left to go up.</span>
+                                <span class="tok-str">\\</span>
+                            , .{}) <span class="tok-kw">catch</span> {};
+                            <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;misconfigured build script&quot;</span>);
+                        };
+                    }
+                }
+
+                <span class="tok-kw">return</span> file_path.join(src_builder.allocator, gen.sub_path) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+            },
+            .dependency =&gt; |dep| <span class="tok-kw">return</span> .{
+                .root_dir = dep.dependency.builder.build_root,
+                .sub_path = dep.sub_path,
+            },
+        }
+    }
+
+    <span class="tok-comment">/// Copies the internal strings.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// The `b` parameter is only used for its allocator. All *Build instances</span>
+    <span class="tok-comment">/// share the same allocator.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">dupe</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, b: *<a href="std.Build.html">Build</a>) <a href="std.Build.LazyPath.html">LazyPath</a> {
+        <span class="tok-kw">return</span> lazy_path.dupeInner(b.allocator);
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">dupeInner</span>(lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>, allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) <a href="std.Build.LazyPath.html">LazyPath</a> {
+        <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (lazy_path) {
+            .src_path =&gt; |sp| .{ .src_path = .{
+                .owner = sp.owner,
+                .sub_path = sp.owner.dupePath(sp.sub_path),
+            } },
+            .cwd_relative =&gt; |p| .{ .cwd_relative = <a href="std.Build.html#std.Build.dupePathInner">dupePathInner</a>(allocator, p) },
+            .generated =&gt; |gen| .{ .generated = .{
+                .file = gen.file,
+                .up = gen.up,
+                .sub_path = <a href="std.Build.html#std.Build.dupePathInner">dupePathInner</a>(allocator, gen.sub_path),
+            } },
+            .dependency =&gt; |dep| .{ .dependency = dep },
+        };
+    }
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

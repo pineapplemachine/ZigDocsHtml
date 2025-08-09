@@ -1,0 +1,1421 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">Build</a></li><li><a href="std.Build.Module.html" class="active">Module</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.Build.Module" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.Build.Module</span><a href="#src.zig-std.Build.Module">[src]</a></h1><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.Build.Module.RPath.html">std.Build.Module.RPath</a></li><li><a href="std.Build.Module.LinkObject.html">std.Build.Module.LinkObject</a></li><li><a href="std.Build.Module.SystemLib.html">std.Build.Module.SystemLib</a></li><li><a href="std.Build.Module.CSourceLanguage.html">std.Build.Module.CSourceLanguage</a></li><li><a href="std.Build.Module.CSourceFiles.html">std.Build.Module.CSourceFiles</a></li><li><a href="std.Build.Module.CSourceFile.html">std.Build.Module.CSourceFile</a></li><li><a href="std.Build.Module.RcSourceFile.html">std.Build.Module.RcSourceFile</a></li><li><a href="std.Build.Module.IncludeDir.html">std.Build.Module.IncludeDir</a></li><li><a href="std.Build.Module.LinkFrameworkOptions.html">std.Build.Module.LinkFrameworkOptions</a></li><li><a href="std.Build.Module.CreateOptions.html">std.Build.Module.CreateOptions</a></li><li><a href="std.Build.Module.Import.html">std.Build.Module.Import</a></li><li><a href="std.Build.Module.LinkSystemLibraryOptions.html">std.Build.Module.LinkSystemLibraryOptions</a></li><li><a href="std.Build.Module.AddCSourceFilesOptions.html">std.Build.Module.AddCSourceFilesOptions</a></li><li><a href="std.Build.Module.Graph.html">std.Build.Module.Graph</a></li></ul></div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>owner: *<a href="std.html">std</a>.<a href="std.Build.html">Build</a></code></pre><div class="fieldDocs"><p>The one responsible for creating this module.</p>
+</div></div><div><pre><code>root_source_file: ?<a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div><div><pre><code>import_table: <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMapUnmanaged">StringArrayHashMapUnmanaged</a>(*<a href="std.Build.Module.html">Module</a>)</code></pre><div class="fieldDocs"><p>The modules that are mapped into this module's import table.
+Use <code><a href="std.Build.Module.html#std.Build.Module.addImport">addImport</a></code> rather than modifying this field directly in order to
+maintain step dependency edges.</p>
+</div></div><div><pre><code>resolved_target: ?<a href="std.html">std</a>.<a href="std.Build.html">Build</a>.<a href="std.Build.ResolvedTarget.html">ResolvedTarget</a> = <span class="tok-null">null</span></code></pre></div><div><pre><code>optimize: ?<a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.OptimizeMode.html">OptimizeMode</a> = <span class="tok-null">null</span></code></pre></div><div><pre><code>dwarf_format: ?<a href="std.html">std</a>.<a href="std.dwarf.html">dwarf</a>.<a href="std.dwarf.Format.html">Format</a></code></pre></div><div><pre><code>c_macros: <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayListUnmanaged">ArrayListUnmanaged</a>([]<span class="tok-kw">const</span> <span class="tok-type">u8</span>)</code></pre></div><div><pre><code>include_dirs: <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayListUnmanaged">ArrayListUnmanaged</a>(<a href="std.Build.Module.IncludeDir.html">IncludeDir</a>)</code></pre></div><div><pre><code>lib_paths: <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayListUnmanaged">ArrayListUnmanaged</a>(<a href="std.Build.LazyPath.html">LazyPath</a>)</code></pre></div><div><pre><code>rpaths: <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayListUnmanaged">ArrayListUnmanaged</a>(<a href="std.Build.Module.RPath.html">RPath</a>)</code></pre></div><div><pre><code>frameworks: <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMapUnmanaged">StringArrayHashMapUnmanaged</a>(<a href="std.Build.Module.LinkFrameworkOptions.html">LinkFrameworkOptions</a>)</code></pre></div><div><pre><code>link_objects: <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayListUnmanaged">ArrayListUnmanaged</a>(<a href="std.Build.Module.LinkObject.html">LinkObject</a>)</code></pre></div><div><pre><code>strip: ?<span class="tok-type">bool</span></code></pre></div><div><pre><code>unwind_tables: ?<a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.UnwindTables.html">UnwindTables</a></code></pre></div><div><pre><code>single_threaded: ?<span class="tok-type">bool</span></code></pre></div><div><pre><code>stack_protector: ?<span class="tok-type">bool</span></code></pre></div><div><pre><code>stack_check: ?<span class="tok-type">bool</span></code></pre></div><div><pre><code>sanitize_c: ?<span class="tok-type">bool</span></code></pre></div><div><pre><code>sanitize_thread: ?<span class="tok-type">bool</span></code></pre></div><div><pre><code>fuzz: ?<span class="tok-type">bool</span></code></pre></div><div><pre><code>code_model: <a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.CodeModel.html">CodeModel</a></code></pre></div><div><pre><code>valgrind: ?<span class="tok-type">bool</span></code></pre></div><div><pre><code>pic: ?<span class="tok-type">bool</span></code></pre></div><div><pre><code>red_zone: ?<span class="tok-type">bool</span></code></pre></div><div><pre><code>omit_frame_pointer: ?<span class="tok-type">bool</span></code></pre></div><div><pre><code>error_tracing: ?<span class="tok-type">bool</span></code></pre></div><div><pre><code>link_libc: ?<span class="tok-type">bool</span></code></pre></div><div><pre><code>link_libcpp: ?<span class="tok-type">bool</span></code></pre></div><div><pre><code>export_symbol_names: []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = &amp;.{}</code></pre><div class="fieldDocs"><p>Symbols to be exported when compiling to WebAssembly.</p>
+</div></div><div><pre><code>cached_graph: <a href="std.Build.Module.Graph.html">Graph</a> = .{ .modules = &amp;.{}, .names = &amp;.{} }</code></pre><div class="fieldDocs"><p>Caches the result of <code><a href="std.Build.Module.html#std.Build.Module.getGraph">getGraph</a></code> when called multiple times.
+Use <code><a href="std.Build.Module.html#std.Build.Module.getGraph">getGraph</a></code> instead of accessing this field directly.</p>
+</div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.Build.Module.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.Build.Module.init">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>( m: *<a href="std.Build.Module.html">Module</a>, owner: *<a href="std.html">std</a>.<a href="std.Build.html">Build</a>, value: <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) { options: <a href="std.Build.Module.CreateOptions.html">CreateOptions</a>, existing: *<span class="tok-kw">const</span> <a href="std.Build.Module.html">Module</a> }, ) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>owner: *<a href="std.html">std</a>.<a href="std.Build.html">Build</a></code></pre></div><div><pre><code>value: <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) { options: <a href="std.Build.Module.CreateOptions.html">CreateOptions</a>, existing: *<span class="tok-kw">const</span> <a href="std.Build.Module.html">Module</a> }</code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.init">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(
+    m: *<a href="std.Build.Module.html">Module</a>,
+    owner: *<a href="std.html">std</a>.<a href="std.Build.html">Build</a>,
+    value: <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) { options: <a href="std.Build.Module.CreateOptions.html">CreateOptions</a>, existing: *<span class="tok-kw">const</span> <a href="std.Build.Module.html">Module</a> },
+) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> allocator = owner.allocator;
+
+    <span class="tok-kw">switch</span> (value) {
+        .options =&gt; |options| {
+            m.* = .{
+                .owner = owner,
+                .root_source_file = <span class="tok-kw">if</span> (options.root_source_file) |lp| lp.dupe(owner) <span class="tok-kw">else</span> <span class="tok-null">null</span>,
+                .import_table = .{},
+                .resolved_target = options.target,
+                .optimize = options.optimize,
+                .link_libc = options.link_libc,
+                .link_libcpp = options.link_libcpp,
+                .dwarf_format = options.dwarf_format,
+                .c_macros = .{},
+                .include_dirs = .{},
+                .lib_paths = .{},
+                .rpaths = .{},
+                .frameworks = .{},
+                .link_objects = .{},
+                .strip = options.strip,
+                .unwind_tables = options.unwind_tables,
+                .single_threaded = options.single_threaded,
+                .stack_protector = options.stack_protector,
+                .stack_check = options.stack_check,
+                .sanitize_c = options.sanitize_c,
+                .sanitize_thread = options.sanitize_thread,
+                .fuzz = options.fuzz,
+                .code_model = options.code_model,
+                .valgrind = options.valgrind,
+                .pic = options.pic,
+                .red_zone = options.red_zone,
+                .omit_frame_pointer = options.omit_frame_pointer,
+                .error_tracing = options.error_tracing,
+                .export_symbol_names = &amp;.{},
+            };
+
+            m.import_table.ensureUnusedCapacity(allocator, options.imports.len) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+            <span class="tok-kw">for</span> (options.imports) |dep| {
+                m.import_table.putAssumeCapacity(dep.name, dep.module);
+            }
+        },
+        .existing =&gt; |existing| {
+            m.* = existing.*;
+        },
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.create" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">create</span><a href="#src.zig-std.Build.Module.create">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">create</span>(owner: *<a href="std.html">std</a>.<a href="std.Build.html">Build</a>, options: <a href="std.Build.Module.CreateOptions.html">CreateOptions</a>) *<a href="std.Build.Module.html">Module</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>owner: *<a href="std.html">std</a>.<a href="std.Build.html">Build</a></code></pre></div><div><pre><code>options: <a href="std.Build.Module.CreateOptions.html">CreateOptions</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.create">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">create</span>(owner: *<a href="std.html">std</a>.<a href="std.Build.html">Build</a>, options: <a href="std.Build.Module.CreateOptions.html">CreateOptions</a>) *<a href="std.Build.Module.html">Module</a> {
+    <span class="tok-kw">const</span> m = owner.allocator.create(<a href="std.Build.Module.html">Module</a>) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+    m.init(owner, .{ .options = options });
+    <span class="tok-kw">return</span> m;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.addImport" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addImport</span><a href="#src.zig-std.Build.Module.addImport">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addImport</span>(m: *<a href="std.Build.Module.html">Module</a>, name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, module: *<a href="std.Build.Module.html">Module</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Adds an existing module to be used with <code>@import</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>module: *<a href="std.Build.Module.html">Module</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.addImport">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addImport</span>(m: *<a href="std.Build.Module.html">Module</a>, name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, module: *<a href="std.Build.Module.html">Module</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.import_table.put(b.allocator, b.dupe(name), module) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.addAnonymousImport" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addAnonymousImport</span><a href="#src.zig-std.Build.Module.addAnonymousImport">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addAnonymousImport</span>(m: *<a href="std.Build.Module.html">Module</a>, name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, options: <a href="std.Build.Module.CreateOptions.html">CreateOptions</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Creates a new module and adds it to be used with <code>@import</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>options: <a href="std.Build.Module.CreateOptions.html">CreateOptions</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.addAnonymousImport">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addAnonymousImport</span>(m: *<a href="std.Build.Module.html">Module</a>, name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, options: <a href="std.Build.Module.CreateOptions.html">CreateOptions</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> module = <a href="std.Build.Module.html#std.Build.Module.create">create</a>(m.owner, options);
+    <span class="tok-kw">return</span> <a href="std.Build.Module.html#std.Build.Module.addImport">addImport</a>(m, name, module);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.addOptions" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addOptions</span><a href="#src.zig-std.Build.Module.addOptions">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addOptions</span>(m: *<a href="std.Build.Module.html">Module</a>, module_name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, options: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.Options.html">Options</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Converts a set of key-value pairs into a Zig source file, and then inserts it into
+the Module's import table with the specified name. This makes the options importable
+via <code>@import(&quot;module_name&quot;)</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>module_name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>options: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.Options.html">Options</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.addOptions">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addOptions</span>(m: *<a href="std.Build.Module.html">Module</a>, module_name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, options: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.Options.html">Options</a>) <span class="tok-type">void</span> {
+    <a href="std.Build.Module.html#std.Build.Module.addImport">addImport</a>(m, module_name, options.createModule());
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.linkSystemLibrary" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">linkSystemLibrary</span><a href="#src.zig-std.Build.Module.linkSystemLibrary">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">linkSystemLibrary</span>( m: *<a href="std.Build.Module.html">Module</a>, name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, options: <a href="std.Build.Module.LinkSystemLibraryOptions.html">LinkSystemLibraryOptions</a>, ) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>options: <a href="std.Build.Module.LinkSystemLibraryOptions.html">LinkSystemLibraryOptions</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.linkSystemLibrary">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">linkSystemLibrary</span>(
+    m: *<a href="std.Build.Module.html">Module</a>,
+    name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    options: <a href="std.Build.Module.LinkSystemLibraryOptions.html">LinkSystemLibraryOptions</a>,
+) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+
+    <span class="tok-kw">const</span> target = m.requireKnownTarget();
+    <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.zig.html">zig</a>.<a href="std.zig.target.html">target</a>.<a href="std.zig.target.html#std.zig.target.isLibCLibName">isLibCLibName</a>(target, name)) {
+        m.link_libc = <span class="tok-null">true</span>;
+        <span class="tok-kw">return</span>;
+    }
+    <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.zig.html">zig</a>.<a href="std.zig.target.html">target</a>.<a href="std.zig.target.html#std.zig.target.isLibCxxLibName">isLibCxxLibName</a>(target, name)) {
+        m.link_libcpp = <span class="tok-null">true</span>;
+        <span class="tok-kw">return</span>;
+    }
+
+    m.link_objects.append(b.allocator, .{
+        .system_lib = .{
+            .name = b.dupe(name),
+            .needed = options.needed,
+            .weak = options.weak,
+            .use_pkg_config = options.use_pkg_config,
+            .preferred_link_mode = options.preferred_link_mode,
+            .search_strategy = options.search_strategy,
+        },
+    }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.linkFramework" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">linkFramework</span><a href="#src.zig-std.Build.Module.linkFramework">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">linkFramework</span>(m: *<a href="std.Build.Module.html">Module</a>, name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, options: <a href="std.Build.Module.LinkFrameworkOptions.html">LinkFrameworkOptions</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>options: <a href="std.Build.Module.LinkFrameworkOptions.html">LinkFrameworkOptions</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.linkFramework">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">linkFramework</span>(m: *<a href="std.Build.Module.html">Module</a>, name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, options: <a href="std.Build.Module.LinkFrameworkOptions.html">LinkFrameworkOptions</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.frameworks.put(b.allocator, b.dupe(name), options) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.addCSourceFiles" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addCSourceFiles</span><a href="#src.zig-std.Build.Module.addCSourceFiles">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addCSourceFiles</span>(m: *<a href="std.Build.Module.html">Module</a>, options: <a href="std.Build.Module.AddCSourceFilesOptions.html">AddCSourceFilesOptions</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Handy when you have many non-Zig source files and want them all to have the same flags.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>options: <a href="std.Build.Module.AddCSourceFilesOptions.html">AddCSourceFilesOptions</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.addCSourceFiles">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addCSourceFiles</span>(m: *<a href="std.Build.Module.html">Module</a>, options: <a href="std.Build.Module.AddCSourceFilesOptions.html">AddCSourceFilesOptions</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    <span class="tok-kw">const</span> allocator = b.allocator;
+
+    <span class="tok-kw">for</span> (options.files) |path| {
+        <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.isAbsolute">isAbsolute</a>(path)) {
+            <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.panic">panic</a>(
+                <span class="tok-str">&quot;file paths added with 'addCSourceFiles' must be relative, found absolute path '{s}'&quot;</span>,
+                .{path},
+            );
+        }
+    }
+
+    <span class="tok-kw">const</span> c_source_files = allocator.create(<a href="std.Build.Module.CSourceFiles.html">CSourceFiles</a>) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+    c_source_files.* = .{
+        .root = options.root <span class="tok-kw">orelse</span> b.path(<span class="tok-str">&quot;&quot;</span>),
+        .files = b.dupeStrings(options.files),
+        .flags = b.dupeStrings(options.flags),
+        .language = options.language,
+    };
+    m.link_objects.append(allocator, .{ .c_source_files = c_source_files }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.addCSourceFile" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addCSourceFile</span><a href="#src.zig-std.Build.Module.addCSourceFile">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addCSourceFile</span>(m: *<a href="std.Build.Module.html">Module</a>, source: <a href="std.Build.Module.CSourceFile.html">CSourceFile</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>source: <a href="std.Build.Module.CSourceFile.html">CSourceFile</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.addCSourceFile">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addCSourceFile</span>(m: *<a href="std.Build.Module.html">Module</a>, source: <a href="std.Build.Module.CSourceFile.html">CSourceFile</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    <span class="tok-kw">const</span> allocator = b.allocator;
+    <span class="tok-kw">const</span> c_source_file = allocator.create(<a href="std.Build.Module.CSourceFile.html">CSourceFile</a>) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+    c_source_file.* = source.dupe(b);
+    m.link_objects.append(allocator, .{ .c_source_file = c_source_file }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.addWin32ResourceFile" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addWin32ResourceFile</span><a href="#src.zig-std.Build.Module.addWin32ResourceFile">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addWin32ResourceFile</span>(m: *<a href="std.Build.Module.html">Module</a>, source: <a href="std.Build.Module.RcSourceFile.html">RcSourceFile</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Resource files must have the extension <code>.rc</code>.
+Can be called regardless of target. The .rc file will be ignored
+if the target object format does not support embedded resources.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>source: <a href="std.Build.Module.RcSourceFile.html">RcSourceFile</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.addWin32ResourceFile">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addWin32ResourceFile</span>(m: *<a href="std.Build.Module.html">Module</a>, source: <a href="std.Build.Module.RcSourceFile.html">RcSourceFile</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    <span class="tok-kw">const</span> allocator = b.allocator;
+    <span class="tok-kw">const</span> target = m.requireKnownTarget();<span class="tok-comment">
+    // Only the PE/COFF format has a Resource Table, so for any other target
+    // the resource file is ignored.
+    </span><span class="tok-kw">if</span> (target.ofmt != .coff) <span class="tok-kw">return</span>;
+
+    <span class="tok-kw">const</span> rc_source_file = allocator.create(<a href="std.Build.Module.RcSourceFile.html">RcSourceFile</a>) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+    rc_source_file.* = source.dupe(b);
+    m.link_objects.append(allocator, .{ .win32_resource_file = rc_source_file }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.addAssemblyFile" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addAssemblyFile</span><a href="#src.zig-std.Build.Module.addAssemblyFile">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addAssemblyFile</span>(m: *<a href="std.Build.Module.html">Module</a>, source: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>source: <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.addAssemblyFile">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addAssemblyFile</span>(m: *<a href="std.Build.Module.html">Module</a>, source: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.link_objects.append(b.allocator, .{ .assembly_file = source.dupe(b) }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.addObjectFile" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addObjectFile</span><a href="#src.zig-std.Build.Module.addObjectFile">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addObjectFile</span>(m: *<a href="std.Build.Module.html">Module</a>, object: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>object: <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.addObjectFile">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addObjectFile</span>(m: *<a href="std.Build.Module.html">Module</a>, object: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.link_objects.append(b.allocator, .{ .static_path = object.dupe(b) }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.addObject" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addObject</span><a href="#src.zig-std.Build.Module.addObject">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addObject</span>(m: *<a href="std.Build.Module.html">Module</a>, object: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.Compile.html">Compile</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>object: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.Compile.html">Compile</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.addObject">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addObject</span>(m: *<a href="std.Build.Module.html">Module</a>, object: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.Compile.html">Compile</a>) <span class="tok-type">void</span> {
+    <a href="std.debug.html#std.debug.assert">assert</a>(object.kind == .obj);
+    m.linkLibraryOrObject(object);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.linkLibrary" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">linkLibrary</span><a href="#src.zig-std.Build.Module.linkLibrary">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">linkLibrary</span>(m: *<a href="std.Build.Module.html">Module</a>, library: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.Compile.html">Compile</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>library: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.Compile.html">Compile</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.linkLibrary">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">linkLibrary</span>(m: *<a href="std.Build.Module.html">Module</a>, library: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.Compile.html">Compile</a>) <span class="tok-type">void</span> {
+    <a href="std.debug.html#std.debug.assert">assert</a>(library.kind == .lib);
+    m.linkLibraryOrObject(library);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.addAfterIncludePath" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addAfterIncludePath</span><a href="#src.zig-std.Build.Module.addAfterIncludePath">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addAfterIncludePath</span>(m: *<a href="std.Build.Module.html">Module</a>, lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.addAfterIncludePath">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addAfterIncludePath</span>(m: *<a href="std.Build.Module.html">Module</a>, lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.include_dirs.append(b.allocator, .{ .path_after = lazy_path.dupe(b) }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.addSystemIncludePath" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addSystemIncludePath</span><a href="#src.zig-std.Build.Module.addSystemIncludePath">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addSystemIncludePath</span>(m: *<a href="std.Build.Module.html">Module</a>, lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.addSystemIncludePath">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addSystemIncludePath</span>(m: *<a href="std.Build.Module.html">Module</a>, lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.include_dirs.append(b.allocator, .{ .path_system = lazy_path.dupe(b) }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.addIncludePath" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addIncludePath</span><a href="#src.zig-std.Build.Module.addIncludePath">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addIncludePath</span>(m: *<a href="std.Build.Module.html">Module</a>, lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.addIncludePath">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addIncludePath</span>(m: *<a href="std.Build.Module.html">Module</a>, lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.include_dirs.append(b.allocator, .{ .path = lazy_path.dupe(b) }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.addConfigHeader" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addConfigHeader</span><a href="#src.zig-std.Build.Module.addConfigHeader">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addConfigHeader</span>(m: *<a href="std.Build.Module.html">Module</a>, config_header: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>config_header: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.addConfigHeader">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addConfigHeader</span>(m: *<a href="std.Build.Module.html">Module</a>, config_header: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> allocator = m.owner.allocator;
+    m.include_dirs.append(allocator, .{ .config_header_step = config_header }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.addSystemFrameworkPath" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addSystemFrameworkPath</span><a href="#src.zig-std.Build.Module.addSystemFrameworkPath">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addSystemFrameworkPath</span>(m: *<a href="std.Build.Module.html">Module</a>, directory_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>directory_path: <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.addSystemFrameworkPath">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addSystemFrameworkPath</span>(m: *<a href="std.Build.Module.html">Module</a>, directory_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.include_dirs.append(b.allocator, .{ .framework_path_system = directory_path.dupe(b) }) <span class="tok-kw">catch</span>
+        <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.addFrameworkPath" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addFrameworkPath</span><a href="#src.zig-std.Build.Module.addFrameworkPath">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addFrameworkPath</span>(m: *<a href="std.Build.Module.html">Module</a>, directory_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>directory_path: <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.addFrameworkPath">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addFrameworkPath</span>(m: *<a href="std.Build.Module.html">Module</a>, directory_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.include_dirs.append(b.allocator, .{ .framework_path = directory_path.dupe(b) }) <span class="tok-kw">catch</span>
+        <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.addLibraryPath" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addLibraryPath</span><a href="#src.zig-std.Build.Module.addLibraryPath">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addLibraryPath</span>(m: *<a href="std.Build.Module.html">Module</a>, directory_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>directory_path: <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.addLibraryPath">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addLibraryPath</span>(m: *<a href="std.Build.Module.html">Module</a>, directory_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.lib_paths.append(b.allocator, directory_path.dupe(b)) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.addRPath" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addRPath</span><a href="#src.zig-std.Build.Module.addRPath">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addRPath</span>(m: *<a href="std.Build.Module.html">Module</a>, directory_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>directory_path: <a href="std.Build.LazyPath.html">LazyPath</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.addRPath">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addRPath</span>(m: *<a href="std.Build.Module.html">Module</a>, directory_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.rpaths.append(b.allocator, .{ .lazy_path = directory_path.dupe(b) }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.addRPathSpecial" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addRPathSpecial</span><a href="#src.zig-std.Build.Module.addRPathSpecial">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addRPathSpecial</span>(m: *<a href="std.Build.Module.html">Module</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.addRPathSpecial">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addRPathSpecial</span>(m: *<a href="std.Build.Module.html">Module</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.rpaths.append(b.allocator, .{ .special = b.dupe(bytes) }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.addCMacro" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addCMacro</span><a href="#src.zig-std.Build.Module.addCMacro">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addCMacro</span>(m: *<a href="std.Build.Module.html">Module</a>, name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, value: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Equvialent to the following C code, applied to all C source files owned by
+this <code><a href="std.Build.Module.html">Module</a></code>:</p>
+<pre><code>#define name value
+</code></pre>
+<p><code>name</code> and <code>value</code> need not live longer than the function call.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>value: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.addCMacro">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addCMacro</span>(m: *<a href="std.Build.Module.html">Module</a>, name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, value: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.c_macros.append(b.allocator, b.fmt(<span class="tok-str">&quot;-D{s}={s}&quot;</span>, .{ name, value })) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.appendZigProcessFlags" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">appendZigProcessFlags</span><a href="#src.zig-std.Build.Module.appendZigProcessFlags">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">appendZigProcessFlags</span>( m: *<a href="std.Build.Module.html">Module</a>, zig_args: *<a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>([]<span class="tok-kw">const</span> <span class="tok-type">u8</span>), asking_step: ?*<a href="std.Build.Step.html">Step</a>, ) !<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>m: *<a href="std.Build.Module.html">Module</a></code></pre></div><div><pre><code>zig_args: *<a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>([]<span class="tok-kw">const</span> <span class="tok-type">u8</span>)</code></pre></div><div><pre><code>asking_step: ?*<a href="std.Build.Step.html">Step</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.appendZigProcessFlags">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">appendZigProcessFlags</span>(
+    m: *<a href="std.Build.Module.html">Module</a>,
+    zig_args: *<a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>([]<span class="tok-kw">const</span> <span class="tok-type">u8</span>),
+    asking_step: ?*<a href="std.Build.Step.html">Step</a>,
+) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.strip, <span class="tok-str">&quot;-fstrip&quot;</span>, <span class="tok-str">&quot;-fno-strip&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.single_threaded, <span class="tok-str">&quot;-fsingle-threaded&quot;</span>, <span class="tok-str">&quot;-fno-single-threaded&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.stack_check, <span class="tok-str">&quot;-fstack-check&quot;</span>, <span class="tok-str">&quot;-fno-stack-check&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.stack_protector, <span class="tok-str">&quot;-fstack-protector&quot;</span>, <span class="tok-str">&quot;-fno-stack-protector&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.omit_frame_pointer, <span class="tok-str">&quot;-fomit-frame-pointer&quot;</span>, <span class="tok-str">&quot;-fno-omit-frame-pointer&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.error_tracing, <span class="tok-str">&quot;-ferror-tracing&quot;</span>, <span class="tok-str">&quot;-fno-error-tracing&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.sanitize_c, <span class="tok-str">&quot;-fsanitize-c&quot;</span>, <span class="tok-str">&quot;-fno-sanitize-c&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.sanitize_thread, <span class="tok-str">&quot;-fsanitize-thread&quot;</span>, <span class="tok-str">&quot;-fno-sanitize-thread&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.fuzz, <span class="tok-str">&quot;-ffuzz&quot;</span>, <span class="tok-str">&quot;-fno-fuzz&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.valgrind, <span class="tok-str">&quot;-fvalgrind&quot;</span>, <span class="tok-str">&quot;-fno-valgrind&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.pic, <span class="tok-str">&quot;-fPIC&quot;</span>, <span class="tok-str">&quot;-fno-PIC&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.red_zone, <span class="tok-str">&quot;-mred-zone&quot;</span>, <span class="tok-str">&quot;-mno-red-zone&quot;</span>);
+
+    <span class="tok-kw">if</span> (m.dwarf_format) |dwarf_format| {
+        <span class="tok-kw">try</span> zig_args.append(<span class="tok-kw">switch</span> (dwarf_format) {
+            .@&quot;32&quot; =&gt; <span class="tok-str">&quot;-gdwarf32&quot;</span>,
+            .@&quot;64&quot; =&gt; <span class="tok-str">&quot;-gdwarf64&quot;</span>,
+        });
+    }
+
+    <span class="tok-kw">if</span> (m.unwind_tables) |unwind_tables| {
+        <span class="tok-kw">try</span> zig_args.append(<span class="tok-kw">switch</span> (unwind_tables) {
+            .none =&gt; <span class="tok-str">&quot;-fno-unwind-tables&quot;</span>,
+            .sync =&gt; <span class="tok-str">&quot;-funwind-tables&quot;</span>,
+            .@&quot;async&quot; =&gt; <span class="tok-str">&quot;-fasync-unwind-tables&quot;</span>,
+        });
+    }
+
+    <span class="tok-kw">try</span> zig_args.ensureUnusedCapacity(<span class="tok-number">1</span>);
+    <span class="tok-kw">if</span> (m.optimize) |optimize| <span class="tok-kw">switch</span> (optimize) {
+        .Debug =&gt; zig_args.appendAssumeCapacity(<span class="tok-str">&quot;-ODebug&quot;</span>),
+        .ReleaseSmall =&gt; zig_args.appendAssumeCapacity(<span class="tok-str">&quot;-OReleaseSmall&quot;</span>),
+        .ReleaseFast =&gt; zig_args.appendAssumeCapacity(<span class="tok-str">&quot;-OReleaseFast&quot;</span>),
+        .ReleaseSafe =&gt; zig_args.appendAssumeCapacity(<span class="tok-str">&quot;-OReleaseSafe&quot;</span>),
+    };
+
+    <span class="tok-kw">if</span> (m.code_model != .default) {
+        <span class="tok-kw">try</span> zig_args.append(<span class="tok-str">&quot;-mcmodel&quot;</span>);
+        <span class="tok-kw">try</span> zig_args.append(<span class="tok-builtin">@tagName</span>(m.code_model));
+    }
+
+    <span class="tok-kw">if</span> (m.resolved_target) |*target| {<span class="tok-comment">
+        // Communicate the query via CLI since it's more compact.
+        </span><span class="tok-kw">if</span> (!target.query.isNative()) {
+            <span class="tok-kw">try</span> zig_args.appendSlice(&amp;.{
+                <span class="tok-str">&quot;-target&quot;</span>, <span class="tok-kw">try</span> target.query.zigTriple(b.allocator),
+                <span class="tok-str">&quot;-mcpu&quot;</span>,   <span class="tok-kw">try</span> target.query.serializeCpuAlloc(b.allocator),
+            });
+
+            <span class="tok-kw">if</span> (target.query.dynamic_linker.get()) |dynamic_linker| {
+                <span class="tok-kw">try</span> zig_args.append(<span class="tok-str">&quot;--dynamic-linker&quot;</span>);
+                <span class="tok-kw">try</span> zig_args.append(dynamic_linker);
+            }
+        }
+    }
+
+    <span class="tok-kw">for</span> (m.export_symbol_names) |symbol_name| {
+        <span class="tok-kw">try</span> zig_args.append(b.fmt(<span class="tok-str">&quot;--export={s}&quot;</span>, .{symbol_name}));
+    }
+
+    <span class="tok-kw">for</span> (m.include_dirs.items) |include_dir| {
+        <span class="tok-kw">try</span> include_dir.appendZigProcessFlags(b, zig_args, asking_step);
+    }
+
+    <span class="tok-kw">try</span> zig_args.appendSlice(m.c_macros.items);
+
+    <span class="tok-kw">try</span> zig_args.ensureUnusedCapacity(<span class="tok-number">2</span> * m.lib_paths.items.len);
+    <span class="tok-kw">for</span> (m.lib_paths.items) |lib_path| {
+        zig_args.appendAssumeCapacity(<span class="tok-str">&quot;-L&quot;</span>);
+        zig_args.appendAssumeCapacity(lib_path.getPath2(b, asking_step));
+    }
+
+    <span class="tok-kw">try</span> zig_args.ensureUnusedCapacity(<span class="tok-number">2</span> * m.rpaths.items.len);
+    <span class="tok-kw">for</span> (m.rpaths.items) |rpath| <span class="tok-kw">switch</span> (rpath) {
+        .lazy_path =&gt; |lp| {
+            zig_args.appendAssumeCapacity(<span class="tok-str">&quot;-rpath&quot;</span>);
+            zig_args.appendAssumeCapacity(lp.getPath2(b, asking_step));
+        },
+        .special =&gt; |bytes| {
+            zig_args.appendAssumeCapacity(<span class="tok-str">&quot;-rpath&quot;</span>);
+            zig_args.appendAssumeCapacity(bytes);
+        },
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Build.Module.getGraph" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getGraph</span><a href="#src.zig-std.Build.Module.getGraph">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getGraph</span>(root: *<a href="std.Build.Module.html">Module</a>) <a href="std.Build.Module.Graph.html">Graph</a></code></pre></div><div class="tldDocs"><p>Intended to be used during the make phase only.</p>
+<p>Given that <code>root</code> is the root <code><a href="std.Build.Module.html">Module</a></code> of a compilation, return all <code><a href="std.Build.Module.html">Module</a></code>s
+in the module graph, including <code>root</code> itself. <code>root</code> is guaranteed to be the
+first module in the returned slice.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>root: *<a href="std.Build.Module.html">Module</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Build.Module.getGraph">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getGraph</span>(root: *<a href="std.Build.Module.html">Module</a>) <a href="std.Build.Module.Graph.html">Graph</a> {
+    <span class="tok-kw">if</span> (root.cached_graph.modules.len != <span class="tok-number">0</span>) {
+        <span class="tok-kw">return</span> root.cached_graph;
+    }
+
+    <span class="tok-kw">const</span> arena = root.owner.graph.arena;
+
+    <span class="tok-kw">var</span> modules: <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.AutoArrayHashMapUnmanaged">AutoArrayHashMapUnmanaged</a>(*<a href="std.html">std</a>.<a href="std.Build.html">Build</a>.<a href="std.Build.Module.html">Module</a>, []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) = .empty;
+    <span class="tok-kw">var</span> next_idx: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+
+    modules.putNoClobber(arena, root, <span class="tok-str">&quot;root&quot;</span>) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+
+    <span class="tok-kw">while</span> (next_idx &lt; modules.count()) {
+        <span class="tok-kw">const</span> mod = modules.keys()[next_idx];
+        next_idx += <span class="tok-number">1</span>;
+        modules.ensureUnusedCapacity(arena, mod.import_table.count()) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+        <span class="tok-kw">for</span> (mod.import_table.keys(), mod.import_table.values()) |import_name, other_mod| {
+            modules.putAssumeCapacity(other_mod, import_name);
+        }
+    }
+
+    <span class="tok-kw">const</span> result: <a href="std.Build.Module.Graph.html">Graph</a> = .{
+        .modules = modules.keys(),
+        .names = modules.values(),
+    };
+    root.cached_graph = result;
+    <span class="tok-kw">return</span> result;
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.Build.Module">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-comment">/// The one responsible for creating this module.</span>
+owner: *<a href="std.html">std</a>.<a href="std.Build.html">Build</a>,
+root_source_file: ?<a href="std.Build.LazyPath.html">LazyPath</a>,
+<span class="tok-comment">/// The modules that are mapped into this module's import table.</span>
+<span class="tok-comment">/// Use `addImport` rather than modifying this field directly in order to</span>
+<span class="tok-comment">/// maintain step dependency edges.</span>
+import_table: <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMapUnmanaged">StringArrayHashMapUnmanaged</a>(*<a href="std.Build.Module.html">Module</a>),
+
+resolved_target: ?<a href="std.html">std</a>.<a href="std.Build.html">Build</a>.<a href="std.Build.ResolvedTarget.html">ResolvedTarget</a> = <span class="tok-null">null</span>,
+optimize: ?<a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.OptimizeMode.html">OptimizeMode</a> = <span class="tok-null">null</span>,
+dwarf_format: ?<a href="std.html">std</a>.<a href="std.dwarf.html">dwarf</a>.<a href="std.dwarf.Format.html">Format</a>,
+
+c_macros: <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayListUnmanaged">ArrayListUnmanaged</a>([]<span class="tok-kw">const</span> <span class="tok-type">u8</span>),
+include_dirs: <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayListUnmanaged">ArrayListUnmanaged</a>(<a href="std.Build.Module.IncludeDir.html">IncludeDir</a>),
+lib_paths: <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayListUnmanaged">ArrayListUnmanaged</a>(<a href="std.Build.LazyPath.html">LazyPath</a>),
+rpaths: <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayListUnmanaged">ArrayListUnmanaged</a>(<a href="std.Build.Module.RPath.html">RPath</a>),
+frameworks: <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.StringArrayHashMapUnmanaged">StringArrayHashMapUnmanaged</a>(<a href="std.Build.Module.LinkFrameworkOptions.html">LinkFrameworkOptions</a>),
+link_objects: <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayListUnmanaged">ArrayListUnmanaged</a>(<a href="std.Build.Module.LinkObject.html">LinkObject</a>),
+
+strip: ?<span class="tok-type">bool</span>,
+unwind_tables: ?<a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.UnwindTables.html">UnwindTables</a>,
+single_threaded: ?<span class="tok-type">bool</span>,
+stack_protector: ?<span class="tok-type">bool</span>,
+stack_check: ?<span class="tok-type">bool</span>,
+sanitize_c: ?<span class="tok-type">bool</span>,
+sanitize_thread: ?<span class="tok-type">bool</span>,
+fuzz: ?<span class="tok-type">bool</span>,
+code_model: <a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.CodeModel.html">CodeModel</a>,
+valgrind: ?<span class="tok-type">bool</span>,
+pic: ?<span class="tok-type">bool</span>,
+red_zone: ?<span class="tok-type">bool</span>,
+omit_frame_pointer: ?<span class="tok-type">bool</span>,
+error_tracing: ?<span class="tok-type">bool</span>,
+link_libc: ?<span class="tok-type">bool</span>,
+link_libcpp: ?<span class="tok-type">bool</span>,
+
+<span class="tok-comment">/// Symbols to be exported when compiling to WebAssembly.</span>
+export_symbol_names: []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = &amp;.{},
+
+<span class="tok-comment">/// Caches the result of `getGraph` when called multiple times.</span>
+<span class="tok-comment">/// Use `getGraph` instead of accessing this field directly.</span>
+cached_graph: <a href="std.Build.Module.Graph.html">Graph</a> = .{ .modules = &amp;.{}, .names = &amp;.{} },
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> RPath = <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) {
+    lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>,
+    special: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> LinkObject = <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) {
+    static_path: <a href="std.Build.LazyPath.html">LazyPath</a>,
+    other_step: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.Compile.html">Compile</a>,
+    system_lib: <a href="std.Build.Module.SystemLib.html">SystemLib</a>,
+    assembly_file: <a href="std.Build.LazyPath.html">LazyPath</a>,
+    c_source_file: *<a href="std.Build.Module.CSourceFile.html">CSourceFile</a>,
+    c_source_files: *<a href="std.Build.Module.CSourceFiles.html">CSourceFiles</a>,
+    win32_resource_file: *<a href="std.Build.Module.RcSourceFile.html">RcSourceFile</a>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SystemLib = <span class="tok-kw">struct</span> {
+    name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    needed: <span class="tok-type">bool</span>,
+    weak: <span class="tok-type">bool</span>,
+    use_pkg_config: <a href="std.Build.Module.SystemLib.UsePkgConfig.html">UsePkgConfig</a>,
+    preferred_link_mode: <a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.LinkMode.html">LinkMode</a>,
+    search_strategy: <a href="std.Build.Module.SystemLib.html">SystemLib</a>.<a href="std.Build.Module.SystemLib.SearchStrategy.html">SearchStrategy</a>,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> UsePkgConfig = <span class="tok-kw">enum</span> {
+        <span class="tok-comment">/// Don't use pkg-config, just pass -lfoo where foo is name.</span>
+        no,
+        <span class="tok-comment">/// Try to get information on how to link the library from pkg-config.</span>
+        <span class="tok-comment">/// If that fails, fall back to passing -lfoo where foo is name.</span>
+        yes,
+        <span class="tok-comment">/// Try to get information on how to link the library from pkg-config.</span>
+        <span class="tok-comment">/// If that fails, error out.</span>
+        force,
+    };
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> SearchStrategy = <span class="tok-kw">enum</span> { paths_first, mode_first, no_fallback };
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CSourceLanguage = <span class="tok-kw">enum</span> {
+    c,
+    cpp,
+
+    objective_c,
+    objective_cpp,
+
+    <span class="tok-comment">/// Standard assembly</span>
+    assembly,
+    <span class="tok-comment">/// Assembly with the C preprocessor</span>
+    assembly_with_preprocessor,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">internalIdentifier</span>(self: <a href="std.Build.Module.CSourceLanguage.html">CSourceLanguage</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (self) {
+            .c =&gt; <span class="tok-str">&quot;c&quot;</span>,
+            .cpp =&gt; <span class="tok-str">&quot;c++&quot;</span>,
+            .objective_c =&gt; <span class="tok-str">&quot;objective-c&quot;</span>,
+            .objective_cpp =&gt; <span class="tok-str">&quot;objective-c++&quot;</span>,
+            .assembly =&gt; <span class="tok-str">&quot;assembler&quot;</span>,
+            .assembly_with_preprocessor =&gt; <span class="tok-str">&quot;assembler-with-cpp&quot;</span>,
+        };
+    }
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CSourceFiles = <span class="tok-kw">struct</span> {
+    root: <a href="std.Build.LazyPath.html">LazyPath</a>,
+    <span class="tok-comment">/// `files` is relative to `root`, which is</span>
+    <span class="tok-comment">/// the build root by default</span>
+    files: []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    flags: []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    <span class="tok-comment">/// By default, determines language of each file individually based on its file extension</span>
+    language: ?<a href="std.Build.Module.CSourceLanguage.html">CSourceLanguage</a>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CSourceFile = <span class="tok-kw">struct</span> {
+    file: <a href="std.Build.LazyPath.html">LazyPath</a>,
+    flags: []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = &amp;.{},
+    <span class="tok-comment">/// By default, determines language of each file individually based on its file extension</span>
+    language: ?<a href="std.Build.Module.CSourceLanguage.html">CSourceLanguage</a> = <span class="tok-null">null</span>,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">dupe</span>(file: <a href="std.Build.Module.CSourceFile.html">CSourceFile</a>, b: *<a href="std.html">std</a>.<a href="std.Build.html">Build</a>) <a href="std.Build.Module.CSourceFile.html">CSourceFile</a> {
+        <span class="tok-kw">return</span> .{
+            .file = file.file.dupe(b),
+            .flags = b.dupeStrings(file.flags),
+            .language = file.language,
+        };
+    }
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> RcSourceFile = <span class="tok-kw">struct</span> {
+    file: <a href="std.Build.LazyPath.html">LazyPath</a>,
+    <span class="tok-comment">/// Any option that rc.exe accepts will work here, with the exception of:</span>
+    <span class="tok-comment">/// - `/fo`: The output filename is set by the build system</span>
+    <span class="tok-comment">/// - `/p`: Only running the preprocessor is not supported in this context</span>
+    <span class="tok-comment">/// - `/:no-preprocess` (non-standard option): Not supported in this context</span>
+    <span class="tok-comment">/// - Any MUI-related option</span>
+    <span class="tok-comment">/// https://learn.microsoft.com/en-us/windows/win32/menurc/using-rc-the-rc-command-line-</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// Implicitly defined options:</span>
+    <span class="tok-comment">///  /x (ignore the INCLUDE environment variable)</span>
+    <span class="tok-comment">///  /D_DEBUG or /DNDEBUG depending on the optimization mode</span>
+    flags: []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = &amp;.{},
+    <span class="tok-comment">/// Include paths that may or may not exist yet and therefore need to be</span>
+    <span class="tok-comment">/// specified as a LazyPath. Each path will be appended to the flags</span>
+    <span class="tok-comment">/// as `/I &lt;resolved path&gt;`.</span>
+    include_paths: []<span class="tok-kw">const</span> <a href="std.Build.LazyPath.html">LazyPath</a> = &amp;.{},
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">dupe</span>(file: <a href="std.Build.Module.RcSourceFile.html">RcSourceFile</a>, b: *<a href="std.html">std</a>.<a href="std.Build.html">Build</a>) <a href="std.Build.Module.RcSourceFile.html">RcSourceFile</a> {
+        <span class="tok-kw">const</span> include_paths = b.allocator.alloc(<a href="std.Build.LazyPath.html">LazyPath</a>, file.include_paths.len) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+        <span class="tok-kw">for</span> (include_paths, file.include_paths) |*dest, lazy_path| dest.* = lazy_path.dupe(b);
+        <span class="tok-kw">return</span> .{
+            .file = file.file.dupe(b),
+            .flags = b.dupeStrings(file.flags),
+            .include_paths = include_paths,
+        };
+    }
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> IncludeDir = <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) {
+    path: <a href="std.Build.LazyPath.html">LazyPath</a>,
+    path_system: <a href="std.Build.LazyPath.html">LazyPath</a>,
+    path_after: <a href="std.Build.LazyPath.html">LazyPath</a>,
+    framework_path: <a href="std.Build.LazyPath.html">LazyPath</a>,
+    framework_path_system: <a href="std.Build.LazyPath.html">LazyPath</a>,
+    other_step: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.Compile.html">Compile</a>,
+    config_header_step: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a>,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">appendZigProcessFlags</span>(
+        include_dir: <a href="std.Build.Module.IncludeDir.html">IncludeDir</a>,
+        b: *<a href="std.html">std</a>.<a href="std.Build.html">Build</a>,
+        zig_args: *<a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>([]<span class="tok-kw">const</span> <span class="tok-type">u8</span>),
+        asking_step: ?*<a href="std.Build.Step.html">Step</a>,
+    ) !<span class="tok-type">void</span> {
+        <span class="tok-kw">switch</span> (include_dir) {
+            .path =&gt; |include_path| {
+                <span class="tok-kw">try</span> zig_args.appendSlice(&amp;.{ <span class="tok-str">&quot;-I&quot;</span>, include_path.getPath2(b, asking_step) });
+            },
+            .path_system =&gt; |include_path| {
+                <span class="tok-kw">try</span> zig_args.appendSlice(&amp;.{ <span class="tok-str">&quot;-isystem&quot;</span>, include_path.getPath2(b, asking_step) });
+            },
+            .path_after =&gt; |include_path| {
+                <span class="tok-kw">try</span> zig_args.appendSlice(&amp;.{ <span class="tok-str">&quot;-idirafter&quot;</span>, include_path.getPath2(b, asking_step) });
+            },
+            .framework_path =&gt; |include_path| {
+                <span class="tok-kw">try</span> zig_args.appendSlice(&amp;.{ <span class="tok-str">&quot;-F&quot;</span>, include_path.getPath2(b, asking_step) });
+            },
+            .framework_path_system =&gt; |include_path| {
+                <span class="tok-kw">try</span> zig_args.appendSlice(&amp;.{ <span class="tok-str">&quot;-iframework&quot;</span>, include_path.getPath2(b, asking_step) });
+            },
+            .other_step =&gt; |other| {
+                <span class="tok-kw">if</span> (other.generated_h) |header| {
+                    <span class="tok-kw">try</span> zig_args.appendSlice(&amp;.{ <span class="tok-str">&quot;-isystem&quot;</span>, <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.dirname">dirname</a>(header.getPath()).? });
+                }
+                <span class="tok-kw">if</span> (other.installed_headers_include_tree) |include_tree| {
+                    <span class="tok-kw">try</span> zig_args.appendSlice(&amp;.{ <span class="tok-str">&quot;-I&quot;</span>, include_tree.generated_directory.getPath() });
+                }
+            },
+            .config_header_step =&gt; |config_header| {
+                <span class="tok-kw">const</span> full_file_path = config_header.output_file.getPath();
+                <span class="tok-kw">const</span> header_dir_path = full_file_path[<span class="tok-number">0</span> .. full_file_path.len - config_header.include_path.len];
+                <span class="tok-kw">try</span> zig_args.appendSlice(&amp;.{ <span class="tok-str">&quot;-I&quot;</span>, header_dir_path });
+            },
+        }
+    }
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> LinkFrameworkOptions = <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Causes dynamic libraries to be linked regardless of whether they are</span>
+    <span class="tok-comment">/// actually depended on. When false, dynamic libraries with no referenced</span>
+    <span class="tok-comment">/// symbols will be omitted by the linker.</span>
+    needed: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// Marks all referenced symbols from this library as weak, meaning that if</span>
+    <span class="tok-comment">/// a same-named symbol is provided by another compilation unit, instead of</span>
+    <span class="tok-comment">/// emitting a &quot;duplicate symbol&quot; error, the linker will resolve all</span>
+    <span class="tok-comment">/// references to the symbol with the strong version.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// When the linker encounters two weak symbols, the chosen one is</span>
+    <span class="tok-comment">/// determined by the order compilation units are provided to the linker,</span>
+    <span class="tok-comment">/// priority given to later ones.</span>
+    weak: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+};
+
+<span class="tok-comment">/// Unspecified options here will be inherited from parent `Module` when</span>
+<span class="tok-comment">/// inserted into an import table.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CreateOptions = <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// This could either be a generated file, in which case the module</span>
+    <span class="tok-comment">/// contains exactly one file, or it could be a path to the root source</span>
+    <span class="tok-comment">/// file of directory of files which constitute the module.</span>
+    <span class="tok-comment">/// If `null`, it means this module is made up of only `link_objects`.</span>
+    root_source_file: ?<a href="std.Build.LazyPath.html">LazyPath</a> = <span class="tok-null">null</span>,
+
+    <span class="tok-comment">/// The table of other modules that this module can access via `@import`.</span>
+    <span class="tok-comment">/// Imports are allowed to be cyclical, so this table can be added to after</span>
+    <span class="tok-comment">/// the `Module` is created via `addImport`.</span>
+    imports: []<span class="tok-kw">const</span> <a href="std.Build.Module.Import.html">Import</a> = &amp;.{},
+
+    target: ?<a href="std.html">std</a>.<a href="std.Build.html">Build</a>.<a href="std.Build.ResolvedTarget.html">ResolvedTarget</a> = <span class="tok-null">null</span>,
+    optimize: ?<a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.OptimizeMode.html">OptimizeMode</a> = <span class="tok-null">null</span>,
+
+    <span class="tok-comment">/// `true` requires a compilation that includes this Module to link libc.</span>
+    <span class="tok-comment">/// `false` causes a build failure if a compilation that includes this Module would link libc.</span>
+    <span class="tok-comment">/// `null` neither requires nor prevents libc from being linked.</span>
+    link_libc: ?<span class="tok-type">bool</span> = <span class="tok-null">null</span>,
+    <span class="tok-comment">/// `true` requires a compilation that includes this Module to link libc++.</span>
+    <span class="tok-comment">/// `false` causes a build failure if a compilation that includes this Module would link libc++.</span>
+    <span class="tok-comment">/// `null` neither requires nor prevents libc++ from being linked.</span>
+    link_libcpp: ?<span class="tok-type">bool</span> = <span class="tok-null">null</span>,
+    single_threaded: ?<span class="tok-type">bool</span> = <span class="tok-null">null</span>,
+    strip: ?<span class="tok-type">bool</span> = <span class="tok-null">null</span>,
+    unwind_tables: ?<a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.UnwindTables.html">UnwindTables</a> = <span class="tok-null">null</span>,
+    dwarf_format: ?<a href="std.html">std</a>.<a href="std.dwarf.html">dwarf</a>.<a href="std.dwarf.Format.html">Format</a> = <span class="tok-null">null</span>,
+    code_model: <a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.CodeModel.html">CodeModel</a> = .default,
+    stack_protector: ?<span class="tok-type">bool</span> = <span class="tok-null">null</span>,
+    stack_check: ?<span class="tok-type">bool</span> = <span class="tok-null">null</span>,
+    sanitize_c: ?<span class="tok-type">bool</span> = <span class="tok-null">null</span>,
+    sanitize_thread: ?<span class="tok-type">bool</span> = <span class="tok-null">null</span>,
+    fuzz: ?<span class="tok-type">bool</span> = <span class="tok-null">null</span>,
+    <span class="tok-comment">/// Whether to emit machine code that integrates with Valgrind.</span>
+    valgrind: ?<span class="tok-type">bool</span> = <span class="tok-null">null</span>,
+    <span class="tok-comment">/// Position Independent Code</span>
+    pic: ?<span class="tok-type">bool</span> = <span class="tok-null">null</span>,
+    red_zone: ?<span class="tok-type">bool</span> = <span class="tok-null">null</span>,
+    <span class="tok-comment">/// Whether to omit the stack frame pointer. Frees up a register and makes it</span>
+    <span class="tok-comment">/// more difficult to obtain stack traces. Has target-dependent effects.</span>
+    omit_frame_pointer: ?<span class="tok-type">bool</span> = <span class="tok-null">null</span>,
+    error_tracing: ?<span class="tok-type">bool</span> = <span class="tok-null">null</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Import = <span class="tok-kw">struct</span> {
+    name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    module: *<a href="std.Build.Module.html">Module</a>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(
+    m: *<a href="std.Build.Module.html">Module</a>,
+    owner: *<a href="std.html">std</a>.<a href="std.Build.html">Build</a>,
+    value: <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) { options: <a href="std.Build.Module.CreateOptions.html">CreateOptions</a>, existing: *<span class="tok-kw">const</span> <a href="std.Build.Module.html">Module</a> },
+) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> allocator = owner.allocator;
+
+    <span class="tok-kw">switch</span> (value) {
+        .options =&gt; |options| {
+            m.* = .{
+                .owner = owner,
+                .root_source_file = <span class="tok-kw">if</span> (options.root_source_file) |lp| lp.dupe(owner) <span class="tok-kw">else</span> <span class="tok-null">null</span>,
+                .import_table = .{},
+                .resolved_target = options.target,
+                .optimize = options.optimize,
+                .link_libc = options.link_libc,
+                .link_libcpp = options.link_libcpp,
+                .dwarf_format = options.dwarf_format,
+                .c_macros = .{},
+                .include_dirs = .{},
+                .lib_paths = .{},
+                .rpaths = .{},
+                .frameworks = .{},
+                .link_objects = .{},
+                .strip = options.strip,
+                .unwind_tables = options.unwind_tables,
+                .single_threaded = options.single_threaded,
+                .stack_protector = options.stack_protector,
+                .stack_check = options.stack_check,
+                .sanitize_c = options.sanitize_c,
+                .sanitize_thread = options.sanitize_thread,
+                .fuzz = options.fuzz,
+                .code_model = options.code_model,
+                .valgrind = options.valgrind,
+                .pic = options.pic,
+                .red_zone = options.red_zone,
+                .omit_frame_pointer = options.omit_frame_pointer,
+                .error_tracing = options.error_tracing,
+                .export_symbol_names = &amp;.{},
+            };
+
+            m.import_table.ensureUnusedCapacity(allocator, options.imports.len) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+            <span class="tok-kw">for</span> (options.imports) |dep| {
+                m.import_table.putAssumeCapacity(dep.name, dep.module);
+            }
+        },
+        .existing =&gt; |existing| {
+            m.* = existing.*;
+        },
+    }
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">create</span>(owner: *<a href="std.html">std</a>.<a href="std.Build.html">Build</a>, options: <a href="std.Build.Module.CreateOptions.html">CreateOptions</a>) *<a href="std.Build.Module.html">Module</a> {
+    <span class="tok-kw">const</span> m = owner.allocator.create(<a href="std.Build.Module.html">Module</a>) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+    m.init(owner, .{ .options = options });
+    <span class="tok-kw">return</span> m;
+}
+
+<span class="tok-comment">/// Adds an existing module to be used with `@import`.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addImport</span>(m: *<a href="std.Build.Module.html">Module</a>, name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, module: *<a href="std.Build.Module.html">Module</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.import_table.put(b.allocator, b.dupe(name), module) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-comment">/// Creates a new module and adds it to be used with `@import`.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addAnonymousImport</span>(m: *<a href="std.Build.Module.html">Module</a>, name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, options: <a href="std.Build.Module.CreateOptions.html">CreateOptions</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> module = <a href="std.Build.Module.html#std.Build.Module.create">create</a>(m.owner, options);
+    <span class="tok-kw">return</span> <a href="std.Build.Module.html#std.Build.Module.addImport">addImport</a>(m, name, module);
+}
+
+<span class="tok-comment">/// Converts a set of key-value pairs into a Zig source file, and then inserts it into</span>
+<span class="tok-comment">/// the Module's import table with the specified name. This makes the options importable</span>
+<span class="tok-comment">/// via `@import(&quot;module_name&quot;)`.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addOptions</span>(m: *<a href="std.Build.Module.html">Module</a>, module_name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, options: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.Options.html">Options</a>) <span class="tok-type">void</span> {
+    <a href="std.Build.Module.html#std.Build.Module.addImport">addImport</a>(m, module_name, options.createModule());
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> LinkSystemLibraryOptions = <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Causes dynamic libraries to be linked regardless of whether they are</span>
+    <span class="tok-comment">/// actually depended on. When false, dynamic libraries with no referenced</span>
+    <span class="tok-comment">/// symbols will be omitted by the linker.</span>
+    needed: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    <span class="tok-comment">/// Marks all referenced symbols from this library as weak, meaning that if</span>
+    <span class="tok-comment">/// a same-named symbol is provided by another compilation unit, instead of</span>
+    <span class="tok-comment">/// emitting a &quot;duplicate symbol&quot; error, the linker will resolve all</span>
+    <span class="tok-comment">/// references to the symbol with the strong version.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// When the linker encounters two weak symbols, the chosen one is</span>
+    <span class="tok-comment">/// determined by the order compilation units are provided to the linker,</span>
+    <span class="tok-comment">/// priority given to later ones.</span>
+    weak: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    use_pkg_config: <a href="std.Build.Module.SystemLib.html">SystemLib</a>.<a href="std.Build.Module.SystemLib.UsePkgConfig.html">UsePkgConfig</a> = .yes,
+    preferred_link_mode: <a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.LinkMode.html">LinkMode</a> = .dynamic,
+    search_strategy: <a href="std.Build.Module.SystemLib.html">SystemLib</a>.<a href="std.Build.Module.SystemLib.SearchStrategy.html">SearchStrategy</a> = .paths_first,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">linkSystemLibrary</span>(
+    m: *<a href="std.Build.Module.html">Module</a>,
+    name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    options: <a href="std.Build.Module.LinkSystemLibraryOptions.html">LinkSystemLibraryOptions</a>,
+) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+
+    <span class="tok-kw">const</span> target = m.requireKnownTarget();
+    <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.zig.html">zig</a>.<a href="std.zig.target.html">target</a>.<a href="std.zig.target.html#std.zig.target.isLibCLibName">isLibCLibName</a>(target, name)) {
+        m.link_libc = <span class="tok-null">true</span>;
+        <span class="tok-kw">return</span>;
+    }
+    <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.zig.html">zig</a>.<a href="std.zig.target.html">target</a>.<a href="std.zig.target.html#std.zig.target.isLibCxxLibName">isLibCxxLibName</a>(target, name)) {
+        m.link_libcpp = <span class="tok-null">true</span>;
+        <span class="tok-kw">return</span>;
+    }
+
+    m.link_objects.append(b.allocator, .{
+        .system_lib = .{
+            .name = b.dupe(name),
+            .needed = options.needed,
+            .weak = options.weak,
+            .use_pkg_config = options.use_pkg_config,
+            .preferred_link_mode = options.preferred_link_mode,
+            .search_strategy = options.search_strategy,
+        },
+    }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">linkFramework</span>(m: *<a href="std.Build.Module.html">Module</a>, name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, options: <a href="std.Build.Module.LinkFrameworkOptions.html">LinkFrameworkOptions</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.frameworks.put(b.allocator, b.dupe(name), options) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> AddCSourceFilesOptions = <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// When provided, `files` are relative to `root` rather than the</span>
+    <span class="tok-comment">/// package that owns the `Compile` step.</span>
+    root: ?<a href="std.Build.LazyPath.html">LazyPath</a> = <span class="tok-null">null</span>,
+    files: []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    flags: []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = &amp;.{},
+    <span class="tok-comment">/// By default, determines language of each file individually based on its file extension</span>
+    language: ?<a href="std.Build.Module.CSourceLanguage.html">CSourceLanguage</a> = <span class="tok-null">null</span>,
+};
+
+<span class="tok-comment">/// Handy when you have many non-Zig source files and want them all to have the same flags.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addCSourceFiles</span>(m: *<a href="std.Build.Module.html">Module</a>, options: <a href="std.Build.Module.AddCSourceFilesOptions.html">AddCSourceFilesOptions</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    <span class="tok-kw">const</span> allocator = b.allocator;
+
+    <span class="tok-kw">for</span> (options.files) |path| {
+        <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.isAbsolute">isAbsolute</a>(path)) {
+            <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.panic">panic</a>(
+                <span class="tok-str">&quot;file paths added with 'addCSourceFiles' must be relative, found absolute path '{s}'&quot;</span>,
+                .{path},
+            );
+        }
+    }
+
+    <span class="tok-kw">const</span> c_source_files = allocator.create(<a href="std.Build.Module.CSourceFiles.html">CSourceFiles</a>) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+    c_source_files.* = .{
+        .root = options.root <span class="tok-kw">orelse</span> b.path(<span class="tok-str">&quot;&quot;</span>),
+        .files = b.dupeStrings(options.files),
+        .flags = b.dupeStrings(options.flags),
+        .language = options.language,
+    };
+    m.link_objects.append(allocator, .{ .c_source_files = c_source_files }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addCSourceFile</span>(m: *<a href="std.Build.Module.html">Module</a>, source: <a href="std.Build.Module.CSourceFile.html">CSourceFile</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    <span class="tok-kw">const</span> allocator = b.allocator;
+    <span class="tok-kw">const</span> c_source_file = allocator.create(<a href="std.Build.Module.CSourceFile.html">CSourceFile</a>) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+    c_source_file.* = source.dupe(b);
+    m.link_objects.append(allocator, .{ .c_source_file = c_source_file }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-comment">/// Resource files must have the extension `.rc`.</span>
+<span class="tok-comment">/// Can be called regardless of target. The .rc file will be ignored</span>
+<span class="tok-comment">/// if the target object format does not support embedded resources.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addWin32ResourceFile</span>(m: *<a href="std.Build.Module.html">Module</a>, source: <a href="std.Build.Module.RcSourceFile.html">RcSourceFile</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    <span class="tok-kw">const</span> allocator = b.allocator;
+    <span class="tok-kw">const</span> target = m.requireKnownTarget();<span class="tok-comment">
+    // Only the PE/COFF format has a Resource Table, so for any other target
+    // the resource file is ignored.
+    </span><span class="tok-kw">if</span> (target.ofmt != .coff) <span class="tok-kw">return</span>;
+
+    <span class="tok-kw">const</span> rc_source_file = allocator.create(<a href="std.Build.Module.RcSourceFile.html">RcSourceFile</a>) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+    rc_source_file.* = source.dupe(b);
+    m.link_objects.append(allocator, .{ .win32_resource_file = rc_source_file }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addAssemblyFile</span>(m: *<a href="std.Build.Module.html">Module</a>, source: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.link_objects.append(b.allocator, .{ .assembly_file = source.dupe(b) }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addObjectFile</span>(m: *<a href="std.Build.Module.html">Module</a>, object: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.link_objects.append(b.allocator, .{ .static_path = object.dupe(b) }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addObject</span>(m: *<a href="std.Build.Module.html">Module</a>, object: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.Compile.html">Compile</a>) <span class="tok-type">void</span> {
+    <a href="std.debug.html#std.debug.assert">assert</a>(object.kind == .obj);
+    m.linkLibraryOrObject(object);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">linkLibrary</span>(m: *<a href="std.Build.Module.html">Module</a>, library: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.Compile.html">Compile</a>) <span class="tok-type">void</span> {
+    <a href="std.debug.html#std.debug.assert">assert</a>(library.kind == .lib);
+    m.linkLibraryOrObject(library);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addAfterIncludePath</span>(m: *<a href="std.Build.Module.html">Module</a>, lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.include_dirs.append(b.allocator, .{ .path_after = lazy_path.dupe(b) }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addSystemIncludePath</span>(m: *<a href="std.Build.Module.html">Module</a>, lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.include_dirs.append(b.allocator, .{ .path_system = lazy_path.dupe(b) }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addIncludePath</span>(m: *<a href="std.Build.Module.html">Module</a>, lazy_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.include_dirs.append(b.allocator, .{ .path = lazy_path.dupe(b) }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addConfigHeader</span>(m: *<a href="std.Build.Module.html">Module</a>, config_header: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.ConfigHeader.html">ConfigHeader</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> allocator = m.owner.allocator;
+    m.include_dirs.append(allocator, .{ .config_header_step = config_header }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addSystemFrameworkPath</span>(m: *<a href="std.Build.Module.html">Module</a>, directory_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.include_dirs.append(b.allocator, .{ .framework_path_system = directory_path.dupe(b) }) <span class="tok-kw">catch</span>
+        <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addFrameworkPath</span>(m: *<a href="std.Build.Module.html">Module</a>, directory_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.include_dirs.append(b.allocator, .{ .framework_path = directory_path.dupe(b) }) <span class="tok-kw">catch</span>
+        <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addLibraryPath</span>(m: *<a href="std.Build.Module.html">Module</a>, directory_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.lib_paths.append(b.allocator, directory_path.dupe(b)) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addRPath</span>(m: *<a href="std.Build.Module.html">Module</a>, directory_path: <a href="std.Build.LazyPath.html">LazyPath</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.rpaths.append(b.allocator, .{ .lazy_path = directory_path.dupe(b) }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addRPathSpecial</span>(m: *<a href="std.Build.Module.html">Module</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.rpaths.append(b.allocator, .{ .special = b.dupe(bytes) }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-comment">/// Equvialent to the following C code, applied to all C source files owned by</span>
+<span class="tok-comment">/// this `Module`:</span>
+<span class="tok-comment">/// ```c</span>
+<span class="tok-comment">/// #define name value</span>
+<span class="tok-comment">/// ```</span>
+<span class="tok-comment">/// `name` and `value` need not live longer than the function call.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addCMacro</span>(m: *<a href="std.Build.Module.html">Module</a>, name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, value: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+    m.c_macros.append(b.allocator, b.fmt(<span class="tok-str">&quot;-D{s}={s}&quot;</span>, .{ name, value })) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">appendZigProcessFlags</span>(
+    m: *<a href="std.Build.Module.html">Module</a>,
+    zig_args: *<a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>([]<span class="tok-kw">const</span> <span class="tok-type">u8</span>),
+    asking_step: ?*<a href="std.Build.Step.html">Step</a>,
+) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> b = m.owner;
+
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.strip, <span class="tok-str">&quot;-fstrip&quot;</span>, <span class="tok-str">&quot;-fno-strip&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.single_threaded, <span class="tok-str">&quot;-fsingle-threaded&quot;</span>, <span class="tok-str">&quot;-fno-single-threaded&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.stack_check, <span class="tok-str">&quot;-fstack-check&quot;</span>, <span class="tok-str">&quot;-fno-stack-check&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.stack_protector, <span class="tok-str">&quot;-fstack-protector&quot;</span>, <span class="tok-str">&quot;-fno-stack-protector&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.omit_frame_pointer, <span class="tok-str">&quot;-fomit-frame-pointer&quot;</span>, <span class="tok-str">&quot;-fno-omit-frame-pointer&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.error_tracing, <span class="tok-str">&quot;-ferror-tracing&quot;</span>, <span class="tok-str">&quot;-fno-error-tracing&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.sanitize_c, <span class="tok-str">&quot;-fsanitize-c&quot;</span>, <span class="tok-str">&quot;-fno-sanitize-c&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.sanitize_thread, <span class="tok-str">&quot;-fsanitize-thread&quot;</span>, <span class="tok-str">&quot;-fno-sanitize-thread&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.fuzz, <span class="tok-str">&quot;-ffuzz&quot;</span>, <span class="tok-str">&quot;-fno-fuzz&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.valgrind, <span class="tok-str">&quot;-fvalgrind&quot;</span>, <span class="tok-str">&quot;-fno-valgrind&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.pic, <span class="tok-str">&quot;-fPIC&quot;</span>, <span class="tok-str">&quot;-fno-PIC&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.Build.Module.html#std.Build.Module.addFlag">addFlag</a>(zig_args, m.red_zone, <span class="tok-str">&quot;-mred-zone&quot;</span>, <span class="tok-str">&quot;-mno-red-zone&quot;</span>);
+
+    <span class="tok-kw">if</span> (m.dwarf_format) |dwarf_format| {
+        <span class="tok-kw">try</span> zig_args.append(<span class="tok-kw">switch</span> (dwarf_format) {
+            .@&quot;32&quot; =&gt; <span class="tok-str">&quot;-gdwarf32&quot;</span>,
+            .@&quot;64&quot; =&gt; <span class="tok-str">&quot;-gdwarf64&quot;</span>,
+        });
+    }
+
+    <span class="tok-kw">if</span> (m.unwind_tables) |unwind_tables| {
+        <span class="tok-kw">try</span> zig_args.append(<span class="tok-kw">switch</span> (unwind_tables) {
+            .none =&gt; <span class="tok-str">&quot;-fno-unwind-tables&quot;</span>,
+            .sync =&gt; <span class="tok-str">&quot;-funwind-tables&quot;</span>,
+            .@&quot;async&quot; =&gt; <span class="tok-str">&quot;-fasync-unwind-tables&quot;</span>,
+        });
+    }
+
+    <span class="tok-kw">try</span> zig_args.ensureUnusedCapacity(<span class="tok-number">1</span>);
+    <span class="tok-kw">if</span> (m.optimize) |optimize| <span class="tok-kw">switch</span> (optimize) {
+        .Debug =&gt; zig_args.appendAssumeCapacity(<span class="tok-str">&quot;-ODebug&quot;</span>),
+        .ReleaseSmall =&gt; zig_args.appendAssumeCapacity(<span class="tok-str">&quot;-OReleaseSmall&quot;</span>),
+        .ReleaseFast =&gt; zig_args.appendAssumeCapacity(<span class="tok-str">&quot;-OReleaseFast&quot;</span>),
+        .ReleaseSafe =&gt; zig_args.appendAssumeCapacity(<span class="tok-str">&quot;-OReleaseSafe&quot;</span>),
+    };
+
+    <span class="tok-kw">if</span> (m.code_model != .default) {
+        <span class="tok-kw">try</span> zig_args.append(<span class="tok-str">&quot;-mcmodel&quot;</span>);
+        <span class="tok-kw">try</span> zig_args.append(<span class="tok-builtin">@tagName</span>(m.code_model));
+    }
+
+    <span class="tok-kw">if</span> (m.resolved_target) |*target| {<span class="tok-comment">
+        // Communicate the query via CLI since it's more compact.
+        </span><span class="tok-kw">if</span> (!target.query.isNative()) {
+            <span class="tok-kw">try</span> zig_args.appendSlice(&amp;.{
+                <span class="tok-str">&quot;-target&quot;</span>, <span class="tok-kw">try</span> target.query.zigTriple(b.allocator),
+                <span class="tok-str">&quot;-mcpu&quot;</span>,   <span class="tok-kw">try</span> target.query.serializeCpuAlloc(b.allocator),
+            });
+
+            <span class="tok-kw">if</span> (target.query.dynamic_linker.get()) |dynamic_linker| {
+                <span class="tok-kw">try</span> zig_args.append(<span class="tok-str">&quot;--dynamic-linker&quot;</span>);
+                <span class="tok-kw">try</span> zig_args.append(dynamic_linker);
+            }
+        }
+    }
+
+    <span class="tok-kw">for</span> (m.export_symbol_names) |symbol_name| {
+        <span class="tok-kw">try</span> zig_args.append(b.fmt(<span class="tok-str">&quot;--export={s}&quot;</span>, .{symbol_name}));
+    }
+
+    <span class="tok-kw">for</span> (m.include_dirs.items) |include_dir| {
+        <span class="tok-kw">try</span> include_dir.appendZigProcessFlags(b, zig_args, asking_step);
+    }
+
+    <span class="tok-kw">try</span> zig_args.appendSlice(m.c_macros.items);
+
+    <span class="tok-kw">try</span> zig_args.ensureUnusedCapacity(<span class="tok-number">2</span> * m.lib_paths.items.len);
+    <span class="tok-kw">for</span> (m.lib_paths.items) |lib_path| {
+        zig_args.appendAssumeCapacity(<span class="tok-str">&quot;-L&quot;</span>);
+        zig_args.appendAssumeCapacity(lib_path.getPath2(b, asking_step));
+    }
+
+    <span class="tok-kw">try</span> zig_args.ensureUnusedCapacity(<span class="tok-number">2</span> * m.rpaths.items.len);
+    <span class="tok-kw">for</span> (m.rpaths.items) |rpath| <span class="tok-kw">switch</span> (rpath) {
+        .lazy_path =&gt; |lp| {
+            zig_args.appendAssumeCapacity(<span class="tok-str">&quot;-rpath&quot;</span>);
+            zig_args.appendAssumeCapacity(lp.getPath2(b, asking_step));
+        },
+        .special =&gt; |bytes| {
+            zig_args.appendAssumeCapacity(<span class="tok-str">&quot;-rpath&quot;</span>);
+            zig_args.appendAssumeCapacity(bytes);
+        },
+    };
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">addFlag</span>(
+    args: *<a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>([]<span class="tok-kw">const</span> <span class="tok-type">u8</span>),
+    opt: ?<span class="tok-type">bool</span>,
+    then_name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    else_name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> cond = opt <span class="tok-kw">orelse</span> <span class="tok-kw">return</span>;
+    <span class="tok-kw">return</span> args.append(<span class="tok-kw">if</span> (cond) then_name <span class="tok-kw">else</span> else_name);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">linkLibraryOrObject</span>(m: *<a href="std.Build.Module.html">Module</a>, other: *<a href="std.Build.Step.html">Step</a>.<a href="std.Build.Step.Compile.html">Compile</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> allocator = m.owner.allocator;
+    _ = other.getEmittedBin();<span class="tok-comment"> // Indicate there is a dependency on the outputted binary.
+
+    </span><span class="tok-kw">if</span> (other.rootModuleTarget().os.tag == .windows <span class="tok-kw">and</span> other.isDynamicLibrary()) {
+        _ = other.getEmittedImplib();<span class="tok-comment"> // Indicate dependency on the outputted implib.
+    </span>}
+
+    m.link_objects.append(allocator, .{ .other_step = other }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+    m.include_dirs.append(allocator, .{ .other_step = other }) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">requireKnownTarget</span>(m: *<a href="std.Build.Module.html">Module</a>) <a href="std.html">std</a>.<a href="std.Target.html">Target</a> {
+    <span class="tok-kw">const</span> resolved_target = m.resolved_target <span class="tok-kw">orelse</span>
+        <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;this API requires the Module to be created with a known 'target' field&quot;</span>);
+    <span class="tok-kw">return</span> resolved_target.result;
+}
+
+<span class="tok-comment">/// Elements of `modules` and `names` are matched one-to-one.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Graph = <span class="tok-kw">struct</span> {
+    modules: []<span class="tok-kw">const</span> *<a href="std.Build.Module.html">Module</a>,
+    names: []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+};
+
+<span class="tok-comment">/// Intended to be used during the make phase only.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Given that `root` is the root `Module` of a compilation, return all `Module`s</span>
+<span class="tok-comment">/// in the module graph, including `root` itself. `root` is guaranteed to be the</span>
+<span class="tok-comment">/// first module in the returned slice.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getGraph</span>(root: *<a href="std.Build.Module.html">Module</a>) <a href="std.Build.Module.Graph.html">Graph</a> {
+    <span class="tok-kw">if</span> (root.cached_graph.modules.len != <span class="tok-number">0</span>) {
+        <span class="tok-kw">return</span> root.cached_graph;
+    }
+
+    <span class="tok-kw">const</span> arena = root.owner.graph.arena;
+
+    <span class="tok-kw">var</span> modules: <a href="std.html">std</a>.<a href="std.array_hash_map.html#std.array_hash_map.AutoArrayHashMapUnmanaged">AutoArrayHashMapUnmanaged</a>(*<a href="std.html">std</a>.<a href="std.Build.html">Build</a>.<a href="std.Build.Module.html">Module</a>, []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) = .empty;
+    <span class="tok-kw">var</span> next_idx: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+
+    modules.putNoClobber(arena, root, <span class="tok-str">&quot;root&quot;</span>) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+
+    <span class="tok-kw">while</span> (next_idx &lt; modules.count()) {
+        <span class="tok-kw">const</span> mod = modules.keys()[next_idx];
+        next_idx += <span class="tok-number">1</span>;
+        modules.ensureUnusedCapacity(arena, mod.import_table.count()) <span class="tok-kw">catch</span> <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;OOM&quot;</span>);
+        <span class="tok-kw">for</span> (mod.import_table.keys(), mod.import_table.values()) |import_name, other_mod| {
+            modules.putAssumeCapacity(other_mod, import_name);
+        }
+    }
+
+    <span class="tok-kw">const</span> result: <a href="std.Build.Module.Graph.html">Graph</a> = .{
+        .modules = modules.keys(),
+        .names = modules.values(),
+    };
+    root.cached_graph = result;
+    <span class="tok-kw">return</span> result;
+}
+
+<span class="tok-kw">const</span> Module = <span class="tok-builtin">@This</span>();
+<span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>);
+<span class="tok-kw">const</span> assert = <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>;
+<span class="tok-kw">const</span> LazyPath = <a href="std.html">std</a>.<a href="std.Build.html">Build</a>.<a href="std.Build.LazyPath.html">LazyPath</a>;
+<span class="tok-kw">const</span> Step = <a href="std.html">std</a>.<a href="std.Build.html">Build</a>.<a href="std.Build.Step.html">Step</a>;</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

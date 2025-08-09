@@ -1,0 +1,907 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.os.html" class="active">os</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.os" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.os</span><a href="#src.zig-std.os">[src]</a></h1><div class="tldDocs"><p>This file contains thin wrappers around OS-specific APIs, with these
+specific goals in mind:</p>
+<ul>
+<li>Convert &quot;errno&quot;-style error codes into Zig errors.</li>
+<li>When null-terminated byte buffers are required, provide APIs which accept
+slices as well as APIs which accept null-terminated byte buffers. Same goes
+for WTF-16LE encoding.</li>
+<li>Where operating systems share APIs, e.g. POSIX, these thin wrappers provide
+cross platform abstracting.</li>
+<li>When there exists a corresponding libc function and linking libc, the libc
+implementation is used. Exceptions are made for known buggy areas of libc.
+On Linux libc can be side-stepped by using <code><a href="std.os.linux.html">std.os.linux</a></code> directly.</li>
+<li>For Windows, this file represents the API that libc would provide for
+Windows. For thin wrappers around Windows-specific APIs, see <code><a href="std.os.windows.html">std.os.windows</a></code>.</li>
+</ul>
+</div><div class="sectNamespaces"><h2 class="sectionHeader">Namespaces</h2><ul class="listNamespaces columns"><li><a href="std.os.linux.html">std.os.linux</a></li><li><a href="std.os.plan9.html">std.os.plan9</a></li><li><a href="std.os.uefi.html">std.os.uefi</a></li><li><a href="std.os.wasi.html">std.os.wasi</a></li><li><a href="std.os.emscripten.html">std.os.emscripten</a></li><li><a href="std.os.windows.html">std.os.windows</a></li></ul></div><div class="sectGlobalVars"><h2 class="sectionHeader">Global Variables</h2><div class="listGlobalVars"><div class="decl"><h2 id="std.os.environ" class="declHeader"><span class="declHeaderCategory">Global Variable</span><span class="declHeaderIdentifier">environ</span><a href="#src.zig-std.os.environ">[src]</a></h2><div class="tldDocs"><p>See also <code>getenv</code>. Populated by startup code before main().
+TODO this is a footgun because the value will be undefined when using <code>zig build-lib</code>.
+<a href="https://github.com/ziglang/zig/issues/4524">https://github.com/ziglang/zig/issues/4524</a></p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.environ">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">var</span> environ: [][*:<span class="tok-number">0</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.argv" class="declHeader"><span class="declHeaderCategory">Global Variable</span><span class="declHeaderIdentifier">argv</span><a href="#src.zig-std.os.argv">[src]</a></h2><div class="tldDocs"><p>Populated by startup code before main().
+Not available on WASI or Windows without libc. See <code><a href="std.process.html#std.process.argsAlloc">std.process.argsAlloc</a></code>
+or <code><a href="std.process.html#std.process.argsWithAllocator">std.process.argsWithAllocator</a></code> for a cross-platform alternative.</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.argv">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">var</span> argv: [][*:<span class="tok-number">0</span>]<span class="tok-type">u8</span> = <span class="tok-kw">if</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.link_libc">link_libc</a>) <span class="tok-null">undefined</span> <span class="tok-kw">else</span> <span class="tok-kw">switch</span> (<a href="std.os.html#std.os.native_os">native_os</a>) {
+    .windows =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;argv isn't supported on Windows: use std.process.argsAlloc instead&quot;</span>),
+    .wasi =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;argv isn't supported on WASI: use std.process.argsAlloc instead&quot;</span>),
+    <span class="tok-kw">else</span> =&gt; <span class="tok-null">undefined</span>,
+}</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.os.accessW" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">accessW</span><a href="#src.zig-std.os.accessW">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">accessW</span>(path: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>) <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.GetFileAttributesError">GetFileAttributesError</a>!<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Call from Windows-specific code if you already have a WTF-16LE encoded, null terminated string.
+Otherwise use <code>access</code> or <code>accessZ</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>path: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.accessW">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">accessW</span>(path: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>) <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.GetFileAttributesError">GetFileAttributesError</a>!<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> ret = <span class="tok-kw">try</span> <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.GetFileAttributesW">GetFileAttributesW</a>(path);
+    <span class="tok-kw">if</span> (ret != <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.INVALID_FILE_ATTRIBUTES">INVALID_FILE_ATTRIBUTES</a>) {
+        <span class="tok-kw">return</span>;
+    }
+    <span class="tok-kw">switch</span> (<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.GetLastError">GetLastError</a>()) {
+        .FILE_NOT_FOUND =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,
+        .PATH_NOT_FOUND =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,
+        .ACCESS_DENIED =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PermissionDenied,
+        <span class="tok-kw">else</span> =&gt; |err| <span class="tok-kw">return</span> <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.unexpectedError">unexpectedError</a>(err),
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.isGetFdPathSupportedOnTarget" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">isGetFdPathSupportedOnTarget</span><a href="#src.zig-std.os.isGetFdPathSupportedOnTarget">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isGetFdPathSupportedOnTarget</span>(os: <a href="std.html">std</a>.<a href="std.Target.html">Target</a>.<a href="std.Target.Os.html">Os</a>) <span class="tok-type">bool</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>os: <a href="std.html">std</a>.<a href="std.Target.html">Target</a>.<a href="std.Target.Os.html">Os</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.isGetFdPathSupportedOnTarget">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isGetFdPathSupportedOnTarget</span>(os: <a href="std.html">std</a>.<a href="std.Target.html">Target</a>.<a href="std.Target.Os.html">Os</a>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (os.tag) {
+        .windows,
+        .macos,
+        .ios,
+        .watchos,
+        .tvos,
+        .visionos,
+        .linux,
+        .solaris,
+        .illumos,
+        .freebsd,
+        =&gt; <span class="tok-null">true</span>,
+
+        .dragonfly =&gt; os.version_range.semver.max.order(.{ .major = <span class="tok-number">6</span>, .minor = <span class="tok-number">0</span>, .patch = <span class="tok-number">0</span> }) != .lt,
+        .netbsd =&gt; os.version_range.semver.max.order(.{ .major = <span class="tok-number">10</span>, .minor = <span class="tok-number">0</span>, .patch = <span class="tok-number">0</span> }) != .lt,
+        <span class="tok-kw">else</span> =&gt; <span class="tok-null">false</span>,
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.getFdPath" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getFdPath</span><a href="#src.zig-std.os.getFdPath">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getFdPath</span>(fd: <a href="std.html">std</a>.<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.fd_t">fd_t</a>, out_buffer: *[<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>]<span class="tok-type">u8</span>) <a href="std.html">std</a>.<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.RealPathError">RealPathError</a>![]<span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>Return canonical path of handle <code>fd</code>.</p>
+<p>This function is very host-specific and is not universally supported by all hosts.
+For example, while it generally works on Linux, macOS, FreeBSD or Windows, it is
+unsupported on WASI.</p>
+<ul>
+<li>On Windows, the result is encoded as <a href="https://simonsapin.github.io/wtf-8/">WTF-8</a>.</li>
+<li>On other platforms, the result is an opaque sequence of bytes with no particular encoding.</li>
+</ul>
+<p>Calling this function is usually a bug.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.html">std</a>.<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.fd_t">fd_t</a></code></pre></div><div><pre><code>out_buffer: *[<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.getFdPath">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getFdPath</span>(fd: <a href="std.html">std</a>.<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.fd_t">fd_t</a>, out_buffer: *[<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>]<span class="tok-type">u8</span>) <a href="std.html">std</a>.<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.RealPathError">RealPathError</a>![]<span class="tok-type">u8</span> {
+    <span class="tok-kw">if</span> (!<span class="tok-kw">comptime</span> <a href="std.os.html#std.os.isGetFdPathSupportedOnTarget">isGetFdPathSupportedOnTarget</a>(<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.os">os</a>)) {
+        <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;querying for canonical path of a handle is unsupported on this host&quot;</span>);
+    }
+    <span class="tok-kw">switch</span> (<a href="std.os.html#std.os.native_os">native_os</a>) {
+        .windows =&gt; {
+            <span class="tok-kw">var</span> wide_buf: [<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.PATH_MAX_WIDE">PATH_MAX_WIDE</a>]<span class="tok-type">u16</span> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> wide_slice = <span class="tok-kw">try</span> <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.GetFinalPathNameByHandle">GetFinalPathNameByHandle</a>(fd, .{}, wide_buf[<span class="tok-number">0</span>..]);
+
+            <span class="tok-kw">const</span> end_index = <a href="std.html">std</a>.<a href="std.unicode.html">unicode</a>.<a href="std.unicode.html#std.unicode.wtf16LeToWtf8">wtf16LeToWtf8</a>(out_buffer, wide_slice);
+            <span class="tok-kw">return</span> out_buffer[<span class="tok-number">0</span>..end_index];
+        },
+        .macos, .ios, .watchos, .tvos, .visionos =&gt; {<span class="tok-comment">
+            // On macOS, we can use F.GETPATH fcntl command to query the OS for
+            // the path to the file descriptor.
+            </span><span class="tok-builtin">@memset</span>(out_buffer[<span class="tok-number">0</span>..<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>], <span class="tok-number">0</span>);
+            <span class="tok-kw">switch</span> (<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.errno">errno</a>(<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.system">system</a>.<a href="#">fcntl</a>(fd, <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.F">F</a>.<a href="#">GETPATH</a>, out_buffer))) {
+                .SUCCESS =&gt; {},
+                .BADF =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,
+                .NOSPC =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NameTooLong,
+                .NOENT =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,<span class="tok-comment">
+                // TODO man pages for fcntl on macOS don't really tell you what
+                // errno values to expect when command is F.GETPATH...
+                </span><span class="tok-kw">else</span> =&gt; |err| <span class="tok-kw">return</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.unexpectedErrno">unexpectedErrno</a>(err),
+            }
+            <span class="tok-kw">const</span> len = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, out_buffer[<span class="tok-number">0</span>..], <span class="tok-number">0</span>) <span class="tok-kw">orelse</span> <a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>;
+            <span class="tok-kw">return</span> out_buffer[<span class="tok-number">0</span>..len];
+        },
+        .linux =&gt; {
+            <span class="tok-kw">var</span> procfs_buf: [<span class="tok-str">&quot;/proc/self/fd/-2147483648\x00&quot;</span>.len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> proc_path = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.bufPrintZ">bufPrintZ</a>(procfs_buf[<span class="tok-number">0</span>..], <span class="tok-str">&quot;/proc/self/fd/{d}&quot;</span>, .{fd}) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+
+            <span class="tok-kw">const</span> target = <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.readlinkZ">readlinkZ</a>(proc_path, out_buffer) <span class="tok-kw">catch</span> |err| {
+                <span class="tok-kw">switch</span> (err) {
+                    <span class="tok-kw">error</span>.NotLink =&gt; <span class="tok-kw">unreachable</span>,
+                    <span class="tok-kw">error</span>.BadPathName =&gt; <span class="tok-kw">unreachable</span>,
+                    <span class="tok-kw">error</span>.InvalidUtf8 =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // WASI-only
+                    </span><span class="tok-kw">error</span>.InvalidWtf8 =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // Windows-only
+                    </span><span class="tok-kw">error</span>.UnsupportedReparsePointType =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // Windows-only
+                    </span><span class="tok-kw">error</span>.NetworkNotFound =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // Windows-only
+                    </span><span class="tok-kw">else</span> =&gt; |e| <span class="tok-kw">return</span> e,
+                }
+            };
+            <span class="tok-kw">return</span> target;
+        },
+        .solaris, .illumos =&gt; {
+            <span class="tok-kw">var</span> procfs_buf: [<span class="tok-str">&quot;/proc/self/path/-2147483648\x00&quot;</span>.len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> proc_path = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.bufPrintZ">bufPrintZ</a>(procfs_buf[<span class="tok-number">0</span>..], <span class="tok-str">&quot;/proc/self/path/{d}&quot;</span>, .{fd}) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+
+            <span class="tok-kw">const</span> target = <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.readlinkZ">readlinkZ</a>(proc_path, out_buffer) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                <span class="tok-kw">error</span>.UnsupportedReparsePointType =&gt; <span class="tok-kw">unreachable</span>,
+                <span class="tok-kw">error</span>.NotLink =&gt; <span class="tok-kw">unreachable</span>,
+                <span class="tok-kw">error</span>.InvalidUtf8 =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // WASI-only
+                </span><span class="tok-kw">else</span> =&gt; |e| <span class="tok-kw">return</span> e,
+            };
+            <span class="tok-kw">return</span> target;
+        },
+        .freebsd =&gt; {
+            <span class="tok-kw">if</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.os">os</a>.<a href="#">isAtLeast</a>(.freebsd, .{ .major = <span class="tok-number">13</span>, .minor = <span class="tok-number">0</span>, .patch = <span class="tok-number">0</span> }) <span class="tok-kw">orelse</span> <span class="tok-null">false</span>) {
+                <span class="tok-kw">var</span> kfile: <a href="std.html">std</a>.<a href="std.c.html">c</a>.<a href="std.c.freebsd.kinfo_file.html">kinfo_file</a> = <span class="tok-null">undefined</span>;
+                kfile.structsize = <a href="std.html">std</a>.<a href="std.c.html">c</a>.<a href="std.c.freebsd.html#std.c.freebsd.KINFO_FILE_SIZE">KINFO_FILE_SIZE</a>;
+                <span class="tok-kw">switch</span> (<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.errno">errno</a>(<a href="std.html">std</a>.<a href="std.c.html">c</a>.<a href="std.c.html#std.c.fcntl">fcntl</a>(fd, <a href="std.html">std</a>.<a href="std.c.html">c</a>.<a href="std.c.html#std.c.F">F</a>.<a href="std.c.html#std.c.F.KINFO">KINFO</a>, <span class="tok-builtin">@intFromPtr</span>(&amp;kfile)))) {
+                    .SUCCESS =&gt; {},
+                    .BADF =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,
+                    <span class="tok-kw">else</span> =&gt; |err| <span class="tok-kw">return</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.unexpectedErrno">unexpectedErrno</a>(err),
+                }
+                <span class="tok-kw">const</span> len = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, &amp;kfile.path, <span class="tok-number">0</span>) <span class="tok-kw">orelse</span> <a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>;
+                <span class="tok-kw">if</span> (len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NameTooLong;
+                <span class="tok-kw">const</span> result = out_buffer[<span class="tok-number">0</span>..len];
+                <span class="tok-builtin">@memcpy</span>(result, kfile.path[<span class="tok-number">0</span>..len]);
+                <span class="tok-kw">return</span> result;
+            } <span class="tok-kw">else</span> {<span class="tok-comment">
+                // This fallback implementation reimplements libutil's `kinfo_getfile()`.
+                // The motivation is to avoid linking -lutil when building zig or general
+                // user executables.
+                </span><span class="tok-kw">var</span> mib = [<span class="tok-number">4</span>]<span class="tok-type">c_int</span>{ <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.CTL">CTL</a>.<a href="#">KERN</a>, <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.KERN">KERN</a>.<a href="#">PROC</a>, <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.KERN">KERN</a>.<a href="#">PROC_FILEDESC</a>, <a href="std.html">std</a>.<a href="std.c.html">c</a>.<a href="std.c.html#std.c.getpid">getpid</a>() };
+                <span class="tok-kw">var</span> len: <span class="tok-type">usize</span> = <span class="tok-null">undefined</span>;
+                <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sysctl">sysctl</a>(&amp;mib, <span class="tok-null">null</span>, &amp;len, <span class="tok-null">null</span>, <span class="tok-number">0</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                    <span class="tok-kw">error</span>.PermissionDenied =&gt; <span class="tok-kw">unreachable</span>,
+                    <span class="tok-kw">error</span>.SystemResources =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SystemResources,
+                    <span class="tok-kw">error</span>.NameTooLong =&gt; <span class="tok-kw">unreachable</span>,
+                    <span class="tok-kw">error</span>.UnknownName =&gt; <span class="tok-kw">unreachable</span>,
+                    <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Unexpected,
+                };
+                len = len * <span class="tok-number">4</span> / <span class="tok-number">3</span>;
+                <span class="tok-kw">const</span> buf = <a href="std.html">std</a>.<a href="std.heap.html">heap</a>.<a href="std.heap.html#std.heap.c_allocator">c_allocator</a>.<a href="#">alloc</a>(<span class="tok-type">u8</span>, len) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SystemResources;
+                <span class="tok-kw">defer</span> <a href="std.html">std</a>.<a href="std.heap.html">heap</a>.<a href="std.heap.html#std.heap.c_allocator">c_allocator</a>.<a href="#">free</a>(buf);
+                len = buf.len;
+                <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sysctl">sysctl</a>(&amp;mib, &amp;buf[<span class="tok-number">0</span>], &amp;len, <span class="tok-null">null</span>, <span class="tok-number">0</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                    <span class="tok-kw">error</span>.PermissionDenied =&gt; <span class="tok-kw">unreachable</span>,
+                    <span class="tok-kw">error</span>.SystemResources =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SystemResources,
+                    <span class="tok-kw">error</span>.NameTooLong =&gt; <span class="tok-kw">unreachable</span>,
+                    <span class="tok-kw">error</span>.UnknownName =&gt; <span class="tok-kw">unreachable</span>,
+                    <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Unexpected,
+                };
+                <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+                <span class="tok-kw">while</span> (i &lt; len) {
+                    <span class="tok-kw">const</span> kf: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.html">std</a>.<a href="std.c.html">c</a>.<a href="std.c.freebsd.kinfo_file.html">kinfo_file</a> = <span class="tok-builtin">@ptrCast</span>(&amp;buf[i]);
+                    <span class="tok-kw">if</span> (kf.fd == fd) {
+                        len = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, &amp;kf.path, <span class="tok-number">0</span>) <span class="tok-kw">orelse</span> <a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>;
+                        <span class="tok-kw">if</span> (len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NameTooLong;
+                        <span class="tok-kw">const</span> result = out_buffer[<span class="tok-number">0</span>..len];
+                        <span class="tok-builtin">@memcpy</span>(result, kf.path[<span class="tok-number">0</span>..len]);
+                        <span class="tok-kw">return</span> result;
+                    }
+                    i += <span class="tok-builtin">@intCast</span>(kf.structsize);
+                }
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound;
+            }
+        },
+        .dragonfly =&gt; {
+            <span class="tok-builtin">@memset</span>(out_buffer[<span class="tok-number">0</span>..<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>], <span class="tok-number">0</span>);
+            <span class="tok-kw">switch</span> (<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.errno">errno</a>(<a href="std.html">std</a>.<a href="std.c.html">c</a>.<a href="std.c.html#std.c.fcntl">fcntl</a>(fd, <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.F">F</a>.<a href="#">GETPATH</a>, out_buffer))) {
+                .SUCCESS =&gt; {},
+                .BADF =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,
+                .RANGE =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NameTooLong,
+                <span class="tok-kw">else</span> =&gt; |err| <span class="tok-kw">return</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.unexpectedErrno">unexpectedErrno</a>(err),
+            }
+            <span class="tok-kw">const</span> len = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, out_buffer[<span class="tok-number">0</span>..], <span class="tok-number">0</span>) <span class="tok-kw">orelse</span> <a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>;
+            <span class="tok-kw">return</span> out_buffer[<span class="tok-number">0</span>..len];
+        },
+        .netbsd =&gt; {
+            <span class="tok-builtin">@memset</span>(out_buffer[<span class="tok-number">0</span>..<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>], <span class="tok-number">0</span>);
+            <span class="tok-kw">switch</span> (<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.errno">errno</a>(<a href="std.html">std</a>.<a href="std.c.html">c</a>.<a href="std.c.html#std.c.fcntl">fcntl</a>(fd, <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.F">F</a>.<a href="#">GETPATH</a>, out_buffer))) {
+                .SUCCESS =&gt; {},
+                .ACCES =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.AccessDenied,
+                .BADF =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,
+                .NOENT =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,
+                .NOMEM =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SystemResources,
+                .RANGE =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NameTooLong,
+                <span class="tok-kw">else</span> =&gt; |err| <span class="tok-kw">return</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.unexpectedErrno">unexpectedErrno</a>(err),
+            }
+            <span class="tok-kw">const</span> len = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, out_buffer[<span class="tok-number">0</span>..], <span class="tok-number">0</span>) <span class="tok-kw">orelse</span> <a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>;
+            <span class="tok-kw">return</span> out_buffer[<span class="tok-number">0</span>..len];
+        },
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // made unreachable by isGetFdPathSupportedOnTarget above
+    </span>}
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.fstatat_wasi" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fstatat_wasi</span><a href="#src.zig-std.os.fstatat_wasi">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fstatat_wasi</span>(dirfd: <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.fd_t">fd_t</a>, pathname: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, flags: <a href="std.os.wasi.html">wasi</a>.<a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a>) <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.FStatAtError">FStatAtError</a>!<a href="std.os.wasi.html">wasi</a>.<a href="std.os.wasi.filestat_t.html">filestat_t</a></code></pre></div><div class="tldDocs"><p>WASI-only. Same as <code>fstatat</code> but targeting WASI.
+<code>pathname</code> should be encoded as valid UTF-8.
+See also <code>fstatat</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>dirfd: <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.fd_t">fd_t</a></code></pre></div><div><pre><code>pathname: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>flags: <a href="std.os.wasi.html">wasi</a>.<a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.fstatat_wasi">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fstatat_wasi</span>(dirfd: <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.fd_t">fd_t</a>, pathname: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, flags: <a href="std.os.wasi.html">wasi</a>.<a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a>) <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.FStatAtError">FStatAtError</a>!<a href="std.os.wasi.html">wasi</a>.<a href="std.os.wasi.filestat_t.html">filestat_t</a> {
+    <span class="tok-kw">var</span> stat: <a href="std.os.wasi.html">wasi</a>.<a href="std.os.wasi.filestat_t.html">filestat_t</a> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">switch</span> (<a href="std.os.wasi.html">wasi</a>.<a href="std.os.wasi.html#std.os.wasi.path_filestat_get">path_filestat_get</a>(dirfd, flags, pathname.ptr, pathname.len, &amp;stat)) {
+        .SUCCESS =&gt; <span class="tok-kw">return</span> stat,
+        .INVAL =&gt; <span class="tok-kw">unreachable</span>,
+        .BADF =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // Always a race condition.
+        </span>.NOMEM =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SystemResources,
+        .ACCES =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.AccessDenied,
+        .FAULT =&gt; <span class="tok-kw">unreachable</span>,
+        .NAMETOOLONG =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NameTooLong,
+        .NOENT =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,
+        .NOTDIR =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,
+        .NOTCAPABLE =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.AccessDenied,
+        .ILSEQ =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidUtf8,
+        <span class="tok-kw">else</span> =&gt; |err| <span class="tok-kw">return</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.unexpectedErrno">unexpectedErrno</a>(err),
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.fstat_wasi" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fstat_wasi</span><a href="#src.zig-std.os.fstat_wasi">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fstat_wasi</span>(fd: <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.fd_t">fd_t</a>) <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.FStatError">FStatError</a>!<a href="std.os.wasi.html">wasi</a>.<a href="std.os.wasi.filestat_t.html">filestat_t</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.fd_t">fd_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.fstat_wasi">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fstat_wasi</span>(fd: <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.fd_t">fd_t</a>) <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.FStatError">FStatError</a>!<a href="std.os.wasi.html">wasi</a>.<a href="std.os.wasi.filestat_t.html">filestat_t</a> {
+    <span class="tok-kw">var</span> stat: <a href="std.os.wasi.html">wasi</a>.<a href="std.os.wasi.filestat_t.html">filestat_t</a> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">switch</span> (<a href="std.os.wasi.html">wasi</a>.<a href="std.os.wasi.html#std.os.wasi.fd_filestat_get">fd_filestat_get</a>(fd, &amp;stat)) {
+        .SUCCESS =&gt; <span class="tok-kw">return</span> stat,
+        .INVAL =&gt; <span class="tok-kw">unreachable</span>,
+        .BADF =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // Always a race condition.
+        </span>.NOMEM =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SystemResources,
+        .ACCES =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.AccessDenied,
+        .NOTCAPABLE =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.AccessDenied,
+        <span class="tok-kw">else</span> =&gt; |err| <span class="tok-kw">return</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.unexpectedErrno">unexpectedErrno</a>(err),
+    }
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.os">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-comment">//! This file contains thin wrappers around OS-specific APIs, with these</span>
+<span class="tok-comment">//! specific goals in mind:</span>
+<span class="tok-comment">//! * Convert &quot;errno&quot;-style error codes into Zig errors.</span>
+<span class="tok-comment">//! * When null-terminated byte buffers are required, provide APIs which accept</span>
+<span class="tok-comment">//!   slices as well as APIs which accept null-terminated byte buffers. Same goes</span>
+<span class="tok-comment">//!   for WTF-16LE encoding.</span>
+<span class="tok-comment">//! * Where operating systems share APIs, e.g. POSIX, these thin wrappers provide</span>
+<span class="tok-comment">//!   cross platform abstracting.</span>
+<span class="tok-comment">//! * When there exists a corresponding libc function and linking libc, the libc</span>
+<span class="tok-comment">//!   implementation is used. Exceptions are made for known buggy areas of libc.</span>
+<span class="tok-comment">//!   On Linux libc can be side-stepped by using `std.os.linux` directly.</span>
+<span class="tok-comment">//! * For Windows, this file represents the API that libc would provide for</span>
+<span class="tok-comment">//!   Windows. For thin wrappers around Windows-specific APIs, see `std.os.windows`.</span>
+
+<span class="tok-kw">const</span> root = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;root&quot;</span>);
+<span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std.zig&quot;</span>);
+<span class="tok-kw">const</span> builtin = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;builtin&quot;</span>);
+<span class="tok-kw">const</span> assert = <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>;
+<span class="tok-kw">const</span> math = <a href="std.html">std</a>.<a href="std.math.html">math</a>;
+<span class="tok-kw">const</span> mem = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>;
+<span class="tok-kw">const</span> elf = <a href="std.html">std</a>.<a href="std.elf.html">elf</a>;
+<span class="tok-kw">const</span> fs = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>;
+<span class="tok-kw">const</span> dl = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;dynamic_library.zig&quot;</span>);
+<span class="tok-kw">const</span> max_path_bytes = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>;
+<span class="tok-kw">const</span> posix = <a href="std.html">std</a>.<a href="std.posix.html">posix</a>;
+<span class="tok-kw">const</span> native_os = <a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.os">os</a>.<a href="#">tag</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> linux = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;os/linux.zig&quot;</span>);
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> plan9 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;os/plan9.zig&quot;</span>);
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> uefi = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;os/uefi.zig&quot;</span>);
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> wasi = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;os/wasi.zig&quot;</span>);
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> emscripten = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;os/emscripten.zig&quot;</span>);
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> windows = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;os/windows.zig&quot;</span>);
+
+<span class="tok-kw">test</span> {
+    _ = <a href="std.os.linux.html">linux</a>;
+    <span class="tok-kw">if</span> (<a href="std.os.html#std.os.native_os">native_os</a> == .uefi) {
+        _ = <a href="std.os.uefi.html">uefi</a>;
+    }
+    _ = <a href="std.os.wasi.html">wasi</a>;
+    _ = <a href="std.os.windows.html">windows</a>;
+}
+
+<span class="tok-comment">/// See also `getenv`. Populated by startup code before main().</span>
+<span class="tok-comment">/// TODO this is a footgun because the value will be undefined when using `zig build-lib`.</span>
+<span class="tok-comment">/// https://github.com/ziglang/zig/issues/4524</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">var</span> environ: [][*:<span class="tok-number">0</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+
+<span class="tok-comment">/// Populated by startup code before main().</span>
+<span class="tok-comment">/// Not available on WASI or Windows without libc. See `std.process.argsAlloc`</span>
+<span class="tok-comment">/// or `std.process.argsWithAllocator` for a cross-platform alternative.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">var</span> argv: [][*:<span class="tok-number">0</span>]<span class="tok-type">u8</span> = <span class="tok-kw">if</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.link_libc">link_libc</a>) <span class="tok-null">undefined</span> <span class="tok-kw">else</span> <span class="tok-kw">switch</span> (<a href="std.os.html#std.os.native_os">native_os</a>) {
+    .windows =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;argv isn't supported on Windows: use std.process.argsAlloc instead&quot;</span>),
+    .wasi =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;argv isn't supported on WASI: use std.process.argsAlloc instead&quot;</span>),
+    <span class="tok-kw">else</span> =&gt; <span class="tok-null">undefined</span>,
+};
+
+<span class="tok-comment">/// Call from Windows-specific code if you already have a WTF-16LE encoded, null terminated string.</span>
+<span class="tok-comment">/// Otherwise use `access` or `accessZ`.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">accessW</span>(path: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>) <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.GetFileAttributesError">GetFileAttributesError</a>!<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> ret = <span class="tok-kw">try</span> <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.GetFileAttributesW">GetFileAttributesW</a>(path);
+    <span class="tok-kw">if</span> (ret != <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.INVALID_FILE_ATTRIBUTES">INVALID_FILE_ATTRIBUTES</a>) {
+        <span class="tok-kw">return</span>;
+    }
+    <span class="tok-kw">switch</span> (<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.GetLastError">GetLastError</a>()) {
+        .FILE_NOT_FOUND =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,
+        .PATH_NOT_FOUND =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,
+        .ACCESS_DENIED =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.PermissionDenied,
+        <span class="tok-kw">else</span> =&gt; |err| <span class="tok-kw">return</span> <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.unexpectedError">unexpectedError</a>(err),
+    }
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isGetFdPathSupportedOnTarget</span>(os: <a href="std.html">std</a>.<a href="std.Target.html">Target</a>.<a href="std.Target.Os.html">Os</a>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (os.tag) {
+        .windows,
+        .macos,
+        .ios,
+        .watchos,
+        .tvos,
+        .visionos,
+        .linux,
+        .solaris,
+        .illumos,
+        .freebsd,
+        =&gt; <span class="tok-null">true</span>,
+
+        .dragonfly =&gt; os.version_range.semver.max.order(.{ .major = <span class="tok-number">6</span>, .minor = <span class="tok-number">0</span>, .patch = <span class="tok-number">0</span> }) != .lt,
+        .netbsd =&gt; os.version_range.semver.max.order(.{ .major = <span class="tok-number">10</span>, .minor = <span class="tok-number">0</span>, .patch = <span class="tok-number">0</span> }) != .lt,
+        <span class="tok-kw">else</span> =&gt; <span class="tok-null">false</span>,
+    };
+}
+
+<span class="tok-comment">/// Return canonical path of handle `fd`.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// This function is very host-specific and is not universally supported by all hosts.</span>
+<span class="tok-comment">/// For example, while it generally works on Linux, macOS, FreeBSD or Windows, it is</span>
+<span class="tok-comment">/// unsupported on WASI.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// * On Windows, the result is encoded as [WTF-8](https://simonsapin.github.io/wtf-8/).</span>
+<span class="tok-comment">/// * On other platforms, the result is an opaque sequence of bytes with no particular encoding.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Calling this function is usually a bug.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getFdPath</span>(fd: <a href="std.html">std</a>.<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.fd_t">fd_t</a>, out_buffer: *[<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>]<span class="tok-type">u8</span>) <a href="std.html">std</a>.<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.RealPathError">RealPathError</a>![]<span class="tok-type">u8</span> {
+    <span class="tok-kw">if</span> (!<span class="tok-kw">comptime</span> <a href="std.os.html#std.os.isGetFdPathSupportedOnTarget">isGetFdPathSupportedOnTarget</a>(<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.os">os</a>)) {
+        <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;querying for canonical path of a handle is unsupported on this host&quot;</span>);
+    }
+    <span class="tok-kw">switch</span> (<a href="std.os.html#std.os.native_os">native_os</a>) {
+        .windows =&gt; {
+            <span class="tok-kw">var</span> wide_buf: [<a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.PATH_MAX_WIDE">PATH_MAX_WIDE</a>]<span class="tok-type">u16</span> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> wide_slice = <span class="tok-kw">try</span> <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.GetFinalPathNameByHandle">GetFinalPathNameByHandle</a>(fd, .{}, wide_buf[<span class="tok-number">0</span>..]);
+
+            <span class="tok-kw">const</span> end_index = <a href="std.html">std</a>.<a href="std.unicode.html">unicode</a>.<a href="std.unicode.html#std.unicode.wtf16LeToWtf8">wtf16LeToWtf8</a>(out_buffer, wide_slice);
+            <span class="tok-kw">return</span> out_buffer[<span class="tok-number">0</span>..end_index];
+        },
+        .macos, .ios, .watchos, .tvos, .visionos =&gt; {<span class="tok-comment">
+            // On macOS, we can use F.GETPATH fcntl command to query the OS for
+            // the path to the file descriptor.
+            </span><span class="tok-builtin">@memset</span>(out_buffer[<span class="tok-number">0</span>..<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>], <span class="tok-number">0</span>);
+            <span class="tok-kw">switch</span> (<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.errno">errno</a>(<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.system">system</a>.<a href="#">fcntl</a>(fd, <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.F">F</a>.<a href="#">GETPATH</a>, out_buffer))) {
+                .SUCCESS =&gt; {},
+                .BADF =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,
+                .NOSPC =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NameTooLong,
+                .NOENT =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,<span class="tok-comment">
+                // TODO man pages for fcntl on macOS don't really tell you what
+                // errno values to expect when command is F.GETPATH...
+                </span><span class="tok-kw">else</span> =&gt; |err| <span class="tok-kw">return</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.unexpectedErrno">unexpectedErrno</a>(err),
+            }
+            <span class="tok-kw">const</span> len = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, out_buffer[<span class="tok-number">0</span>..], <span class="tok-number">0</span>) <span class="tok-kw">orelse</span> <a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>;
+            <span class="tok-kw">return</span> out_buffer[<span class="tok-number">0</span>..len];
+        },
+        .linux =&gt; {
+            <span class="tok-kw">var</span> procfs_buf: [<span class="tok-str">&quot;/proc/self/fd/-2147483648\x00&quot;</span>.len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> proc_path = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.bufPrintZ">bufPrintZ</a>(procfs_buf[<span class="tok-number">0</span>..], <span class="tok-str">&quot;/proc/self/fd/{d}&quot;</span>, .{fd}) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+
+            <span class="tok-kw">const</span> target = <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.readlinkZ">readlinkZ</a>(proc_path, out_buffer) <span class="tok-kw">catch</span> |err| {
+                <span class="tok-kw">switch</span> (err) {
+                    <span class="tok-kw">error</span>.NotLink =&gt; <span class="tok-kw">unreachable</span>,
+                    <span class="tok-kw">error</span>.BadPathName =&gt; <span class="tok-kw">unreachable</span>,
+                    <span class="tok-kw">error</span>.InvalidUtf8 =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // WASI-only
+                    </span><span class="tok-kw">error</span>.InvalidWtf8 =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // Windows-only
+                    </span><span class="tok-kw">error</span>.UnsupportedReparsePointType =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // Windows-only
+                    </span><span class="tok-kw">error</span>.NetworkNotFound =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // Windows-only
+                    </span><span class="tok-kw">else</span> =&gt; |e| <span class="tok-kw">return</span> e,
+                }
+            };
+            <span class="tok-kw">return</span> target;
+        },
+        .solaris, .illumos =&gt; {
+            <span class="tok-kw">var</span> procfs_buf: [<span class="tok-str">&quot;/proc/self/path/-2147483648\x00&quot;</span>.len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">const</span> proc_path = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.bufPrintZ">bufPrintZ</a>(procfs_buf[<span class="tok-number">0</span>..], <span class="tok-str">&quot;/proc/self/path/{d}&quot;</span>, .{fd}) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+
+            <span class="tok-kw">const</span> target = <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.readlinkZ">readlinkZ</a>(proc_path, out_buffer) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                <span class="tok-kw">error</span>.UnsupportedReparsePointType =&gt; <span class="tok-kw">unreachable</span>,
+                <span class="tok-kw">error</span>.NotLink =&gt; <span class="tok-kw">unreachable</span>,
+                <span class="tok-kw">error</span>.InvalidUtf8 =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // WASI-only
+                </span><span class="tok-kw">else</span> =&gt; |e| <span class="tok-kw">return</span> e,
+            };
+            <span class="tok-kw">return</span> target;
+        },
+        .freebsd =&gt; {
+            <span class="tok-kw">if</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.os">os</a>.<a href="#">isAtLeast</a>(.freebsd, .{ .major = <span class="tok-number">13</span>, .minor = <span class="tok-number">0</span>, .patch = <span class="tok-number">0</span> }) <span class="tok-kw">orelse</span> <span class="tok-null">false</span>) {
+                <span class="tok-kw">var</span> kfile: <a href="std.html">std</a>.<a href="std.c.html">c</a>.<a href="std.c.freebsd.kinfo_file.html">kinfo_file</a> = <span class="tok-null">undefined</span>;
+                kfile.structsize = <a href="std.html">std</a>.<a href="std.c.html">c</a>.<a href="std.c.freebsd.html#std.c.freebsd.KINFO_FILE_SIZE">KINFO_FILE_SIZE</a>;
+                <span class="tok-kw">switch</span> (<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.errno">errno</a>(<a href="std.html">std</a>.<a href="std.c.html">c</a>.<a href="std.c.html#std.c.fcntl">fcntl</a>(fd, <a href="std.html">std</a>.<a href="std.c.html">c</a>.<a href="std.c.html#std.c.F">F</a>.<a href="std.c.html#std.c.F.KINFO">KINFO</a>, <span class="tok-builtin">@intFromPtr</span>(&amp;kfile)))) {
+                    .SUCCESS =&gt; {},
+                    .BADF =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,
+                    <span class="tok-kw">else</span> =&gt; |err| <span class="tok-kw">return</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.unexpectedErrno">unexpectedErrno</a>(err),
+                }
+                <span class="tok-kw">const</span> len = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, &amp;kfile.path, <span class="tok-number">0</span>) <span class="tok-kw">orelse</span> <a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>;
+                <span class="tok-kw">if</span> (len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NameTooLong;
+                <span class="tok-kw">const</span> result = out_buffer[<span class="tok-number">0</span>..len];
+                <span class="tok-builtin">@memcpy</span>(result, kfile.path[<span class="tok-number">0</span>..len]);
+                <span class="tok-kw">return</span> result;
+            } <span class="tok-kw">else</span> {<span class="tok-comment">
+                // This fallback implementation reimplements libutil's `kinfo_getfile()`.
+                // The motivation is to avoid linking -lutil when building zig or general
+                // user executables.
+                </span><span class="tok-kw">var</span> mib = [<span class="tok-number">4</span>]<span class="tok-type">c_int</span>{ <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.CTL">CTL</a>.<a href="#">KERN</a>, <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.KERN">KERN</a>.<a href="#">PROC</a>, <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.KERN">KERN</a>.<a href="#">PROC_FILEDESC</a>, <a href="std.html">std</a>.<a href="std.c.html">c</a>.<a href="std.c.html#std.c.getpid">getpid</a>() };
+                <span class="tok-kw">var</span> len: <span class="tok-type">usize</span> = <span class="tok-null">undefined</span>;
+                <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sysctl">sysctl</a>(&amp;mib, <span class="tok-null">null</span>, &amp;len, <span class="tok-null">null</span>, <span class="tok-number">0</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                    <span class="tok-kw">error</span>.PermissionDenied =&gt; <span class="tok-kw">unreachable</span>,
+                    <span class="tok-kw">error</span>.SystemResources =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SystemResources,
+                    <span class="tok-kw">error</span>.NameTooLong =&gt; <span class="tok-kw">unreachable</span>,
+                    <span class="tok-kw">error</span>.UnknownName =&gt; <span class="tok-kw">unreachable</span>,
+                    <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Unexpected,
+                };
+                len = len * <span class="tok-number">4</span> / <span class="tok-number">3</span>;
+                <span class="tok-kw">const</span> buf = <a href="std.html">std</a>.<a href="std.heap.html">heap</a>.<a href="std.heap.html#std.heap.c_allocator">c_allocator</a>.<a href="#">alloc</a>(<span class="tok-type">u8</span>, len) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SystemResources;
+                <span class="tok-kw">defer</span> <a href="std.html">std</a>.<a href="std.heap.html">heap</a>.<a href="std.heap.html#std.heap.c_allocator">c_allocator</a>.<a href="#">free</a>(buf);
+                len = buf.len;
+                <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.sysctl">sysctl</a>(&amp;mib, &amp;buf[<span class="tok-number">0</span>], &amp;len, <span class="tok-null">null</span>, <span class="tok-number">0</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+                    <span class="tok-kw">error</span>.PermissionDenied =&gt; <span class="tok-kw">unreachable</span>,
+                    <span class="tok-kw">error</span>.SystemResources =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SystemResources,
+                    <span class="tok-kw">error</span>.NameTooLong =&gt; <span class="tok-kw">unreachable</span>,
+                    <span class="tok-kw">error</span>.UnknownName =&gt; <span class="tok-kw">unreachable</span>,
+                    <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Unexpected,
+                };
+                <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+                <span class="tok-kw">while</span> (i &lt; len) {
+                    <span class="tok-kw">const</span> kf: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <a href="std.html">std</a>.<a href="std.c.html">c</a>.<a href="std.c.freebsd.kinfo_file.html">kinfo_file</a> = <span class="tok-builtin">@ptrCast</span>(&amp;buf[i]);
+                    <span class="tok-kw">if</span> (kf.fd == fd) {
+                        len = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, &amp;kf.path, <span class="tok-number">0</span>) <span class="tok-kw">orelse</span> <a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>;
+                        <span class="tok-kw">if</span> (len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NameTooLong;
+                        <span class="tok-kw">const</span> result = out_buffer[<span class="tok-number">0</span>..len];
+                        <span class="tok-builtin">@memcpy</span>(result, kf.path[<span class="tok-number">0</span>..len]);
+                        <span class="tok-kw">return</span> result;
+                    }
+                    i += <span class="tok-builtin">@intCast</span>(kf.structsize);
+                }
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound;
+            }
+        },
+        .dragonfly =&gt; {
+            <span class="tok-builtin">@memset</span>(out_buffer[<span class="tok-number">0</span>..<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>], <span class="tok-number">0</span>);
+            <span class="tok-kw">switch</span> (<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.errno">errno</a>(<a href="std.html">std</a>.<a href="std.c.html">c</a>.<a href="std.c.html#std.c.fcntl">fcntl</a>(fd, <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.F">F</a>.<a href="#">GETPATH</a>, out_buffer))) {
+                .SUCCESS =&gt; {},
+                .BADF =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,
+                .RANGE =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NameTooLong,
+                <span class="tok-kw">else</span> =&gt; |err| <span class="tok-kw">return</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.unexpectedErrno">unexpectedErrno</a>(err),
+            }
+            <span class="tok-kw">const</span> len = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, out_buffer[<span class="tok-number">0</span>..], <span class="tok-number">0</span>) <span class="tok-kw">orelse</span> <a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>;
+            <span class="tok-kw">return</span> out_buffer[<span class="tok-number">0</span>..len];
+        },
+        .netbsd =&gt; {
+            <span class="tok-builtin">@memset</span>(out_buffer[<span class="tok-number">0</span>..<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>], <span class="tok-number">0</span>);
+            <span class="tok-kw">switch</span> (<a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.errno">errno</a>(<a href="std.html">std</a>.<a href="std.c.html">c</a>.<a href="std.c.html#std.c.fcntl">fcntl</a>(fd, <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.F">F</a>.<a href="#">GETPATH</a>, out_buffer))) {
+                .SUCCESS =&gt; {},
+                .ACCES =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.AccessDenied,
+                .BADF =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,
+                .NOENT =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,
+                .NOMEM =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SystemResources,
+                .RANGE =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NameTooLong,
+                <span class="tok-kw">else</span> =&gt; |err| <span class="tok-kw">return</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.unexpectedErrno">unexpectedErrno</a>(err),
+            }
+            <span class="tok-kw">const</span> len = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, out_buffer[<span class="tok-number">0</span>..], <span class="tok-number">0</span>) <span class="tok-kw">orelse</span> <a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>;
+            <span class="tok-kw">return</span> out_buffer[<span class="tok-number">0</span>..len];
+        },
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // made unreachable by isGetFdPathSupportedOnTarget above
+    </span>}
+}
+
+<span class="tok-comment">/// WASI-only. Same as `fstatat` but targeting WASI.</span>
+<span class="tok-comment">/// `pathname` should be encoded as valid UTF-8.</span>
+<span class="tok-comment">/// See also `fstatat`.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fstatat_wasi</span>(dirfd: <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.fd_t">fd_t</a>, pathname: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, flags: <a href="std.os.wasi.html">wasi</a>.<a href="std.os.wasi.lookupflags_t.html">lookupflags_t</a>) <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.FStatAtError">FStatAtError</a>!<a href="std.os.wasi.html">wasi</a>.<a href="std.os.wasi.filestat_t.html">filestat_t</a> {
+    <span class="tok-kw">var</span> stat: <a href="std.os.wasi.html">wasi</a>.<a href="std.os.wasi.filestat_t.html">filestat_t</a> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">switch</span> (<a href="std.os.wasi.html">wasi</a>.<a href="std.os.wasi.html#std.os.wasi.path_filestat_get">path_filestat_get</a>(dirfd, flags, pathname.ptr, pathname.len, &amp;stat)) {
+        .SUCCESS =&gt; <span class="tok-kw">return</span> stat,
+        .INVAL =&gt; <span class="tok-kw">unreachable</span>,
+        .BADF =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // Always a race condition.
+        </span>.NOMEM =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SystemResources,
+        .ACCES =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.AccessDenied,
+        .FAULT =&gt; <span class="tok-kw">unreachable</span>,
+        .NAMETOOLONG =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.NameTooLong,
+        .NOENT =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,
+        .NOTDIR =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.FileNotFound,
+        .NOTCAPABLE =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.AccessDenied,
+        .ILSEQ =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidUtf8,
+        <span class="tok-kw">else</span> =&gt; |err| <span class="tok-kw">return</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.unexpectedErrno">unexpectedErrno</a>(err),
+    }
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fstat_wasi</span>(fd: <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.fd_t">fd_t</a>) <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.FStatError">FStatError</a>!<a href="std.os.wasi.html">wasi</a>.<a href="std.os.wasi.filestat_t.html">filestat_t</a> {
+    <span class="tok-kw">var</span> stat: <a href="std.os.wasi.html">wasi</a>.<a href="std.os.wasi.filestat_t.html">filestat_t</a> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">switch</span> (<a href="std.os.wasi.html">wasi</a>.<a href="std.os.wasi.html#std.os.wasi.fd_filestat_get">fd_filestat_get</a>(fd, &amp;stat)) {
+        .SUCCESS =&gt; <span class="tok-kw">return</span> stat,
+        .INVAL =&gt; <span class="tok-kw">unreachable</span>,
+        .BADF =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // Always a race condition.
+        </span>.NOMEM =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SystemResources,
+        .ACCES =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.AccessDenied,
+        .NOTCAPABLE =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.AccessDenied,
+        <span class="tok-kw">else</span> =&gt; |err| <span class="tok-kw">return</span> <a href="std.posix.html">posix</a>.<a href="std.posix.html#std.posix.unexpectedErrno">unexpectedErrno</a>(err),
+    }
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

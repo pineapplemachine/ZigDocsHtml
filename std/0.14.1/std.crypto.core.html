@@ -1,0 +1,726 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.crypto.html" class="">crypto</a></li><li><a href="std.crypto.core.html" class="active">core</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.crypto.core" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.crypto.core</span><a href="#src.zig-std.crypto.core">[src]</a></h1><div class="tldDocs"><p>Core functions, that should rarely be used directly by applications.</p>
+</div><div class="sectNamespaces"><h2 class="sectionHeader">Namespaces</h2><ul class="listNamespaces columns"><li><a href="std.crypto.aes.html">std.crypto.aes</a></li><li><a href="std.crypto.keccak_p.html">std.crypto.keccak_p</a></li><li><a href="std.crypto.modes.html">std.crypto.modes</a></li></ul></div><div class="sectTypes"><h2 class="sectionHeader">Types</h2><div class="listTypes"><div class="decl"><h2 id="std.crypto.ascon.State" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">State</span><a href="#src.zig-std.crypto.ascon.State">[src]</a></h2><div class="tldDocs"><p>An Ascon state.</p>
+<p>The state is represented as 5 64-bit words.</p>
+<p>The original NIST submission (v1.2) serializes these words as big-endian,
+but NIST SP 800-232 switched to a little-endian representation.
+Software implementations are free to use native endianness with no security degradation.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>endian: <a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.Endian.html">Endian</a></code></pre></div></div></div><div class="sectFields"><h3 class="sectionHeader">Fields</h3><div class="listFields"><div><pre><code>st: <a href="std.crypto.ascon.html#std.crypto.ascon.State.Block">Block</a></code></pre></div></div></div><div class="sectValues"><h3 class="sectionHeader">Values</h3><div class="listValues"><div class="decl"><h3 id="std.crypto.ascon.State.block_bytes" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">block_bytes</span><a href="#src.zig-std.crypto.ascon.State.block_bytes">[src]</a></h3><div class="tldDocs"><p>Number of bytes in the state.</p>
+</div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.ascon.State.block_bytes">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> block_bytes = <span class="tok-number">40</span></code></pre></details></div></div></div></div><div class="sectFns"><h3 class="sectionHeader">Functions</h3><div class="listFns"><div class="decl"><h3 id="std.crypto.ascon.State.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.crypto.ascon.State.init">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(initial_state: [<a href="std.crypto.ascon.html#std.crypto.ascon.State.block_bytes">block_bytes</a>]<span class="tok-type">u8</span>) <a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a></code></pre></div><div class="tldDocs"><p>Initialize the state from a slice of bytes.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>initial_state: [<a href="std.crypto.ascon.html#std.crypto.ascon.State.block_bytes">block_bytes</a>]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.ascon.State.init">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(initial_state: [<a href="std.crypto.ascon.html#std.crypto.ascon.State.block_bytes">block_bytes</a>]<span class="tok-type">u8</span>) <a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a> {
+    <span class="tok-kw">var</span> state = <a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>{ .st = <span class="tok-null">undefined</span> };
+    <span class="tok-builtin">@memcpy</span>(state.asBytes(), &amp;initial_state);
+    state.endianSwap();
+    <span class="tok-kw">return</span> state;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.ascon.State.initFromWords" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">initFromWords</span><a href="#src.zig-std.crypto.ascon.State.initFromWords">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initFromWords</span>(initial_state: [<span class="tok-number">5</span>]<span class="tok-type">u64</span>) <a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a></code></pre></div><div class="tldDocs"><p>Initialize the state from u64 words in native endianness.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>initial_state: [<span class="tok-number">5</span>]<span class="tok-type">u64</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.ascon.State.initFromWords">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initFromWords</span>(initial_state: [<span class="tok-number">5</span>]<span class="tok-type">u64</span>) <a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a> {
+    <span class="tok-kw">return</span> .{ .st = initial_state };
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.ascon.State.initXof" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">initXof</span><a href="#src.zig-std.crypto.ascon.State.initXof">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initXof</span>() <a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a></code></pre></div><div class="tldDocs"><p>Initialize the state for Ascon XOF</p>
+</div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.ascon.State.initXof">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initXof</span>() <a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a> {
+    <span class="tok-kw">return</span> <a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>{ .st = <a href="std.crypto.ascon.html#std.crypto.ascon.State.Block">Block</a>{
+        <span class="tok-number">0xb57e273b814cd416</span>,
+        <span class="tok-number">0x2b51042562ae2420</span>,
+        <span class="tok-number">0x66a3a7768ddf2218</span>,
+        <span class="tok-number">0x5aad0a7a8153650c</span>,
+        <span class="tok-number">0x4f3e0e32539493b6</span>,
+    } };
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.ascon.State.initXofA" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">initXofA</span><a href="#src.zig-std.crypto.ascon.State.initXofA">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initXofA</span>() <a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a></code></pre></div><div class="tldDocs"><p>Initialize the state for Ascon XOFa</p>
+</div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.ascon.State.initXofA">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initXofA</span>() <a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a> {
+    <span class="tok-kw">return</span> <a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>{ .st = <a href="std.crypto.ascon.html#std.crypto.ascon.State.Block">Block</a>{
+        <span class="tok-number">0x44906568b77b9832</span>,
+        <span class="tok-number">0xcd8d6cae53455532</span>,
+        <span class="tok-number">0xf7b5212756422129</span>,
+        <span class="tok-number">0x246885e1de0d225b</span>,
+        <span class="tok-number">0xa8cb5ce33449973f</span>,
+    } };
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.ascon.State.asBytes" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">asBytes</span><a href="#src.zig-std.crypto.ascon.State.asBytes">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">asBytes</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>) *[<a href="std.crypto.ascon.html#std.crypto.ascon.State.block_bytes">block_bytes</a>]<span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>A representation of the state as bytes. The byte order is architecture-dependent.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.ascon.State.asBytes">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">asBytes</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>) *[<a href="std.crypto.ascon.html#std.crypto.ascon.State.block_bytes">block_bytes</a>]<span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.asBytes">asBytes</a>(&amp;self.st);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.ascon.State.endianSwap" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">endianSwap</span><a href="#src.zig-std.crypto.ascon.State.endianSwap">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">endianSwap</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Byte-swap the entire state if the architecture doesn't match the required endianness.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.ascon.State.endianSwap">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">endianSwap</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">for</span> (&amp;self.st) |*w| {
+        w.* = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.toNative">toNative</a>(<span class="tok-type">u64</span>, w.*, endian);
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.ascon.State.setBytes" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">setBytes</span><a href="#src.zig-std.crypto.ascon.State.setBytes">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setBytes</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Set bytes starting at the beginning of the state.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a></code></pre></div><div><pre><code>bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.ascon.State.setBytes">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setBytes</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (i + <span class="tok-number">8</span> &lt;= bytes.len) : (i += <span class="tok-number">8</span>) {
+        self.st[i / <span class="tok-number">8</span>] = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u64</span>, bytes[i..][<span class="tok-number">0</span>..<span class="tok-number">8</span>], endian);
+    }
+    <span class="tok-kw">if</span> (i &lt; bytes.len) {
+        <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-number">8</span>;
+        <span class="tok-builtin">@memcpy</span>(padded[<span class="tok-number">0</span> .. bytes.len - i], bytes[i..]);
+        self.st[i / <span class="tok-number">8</span>] = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u64</span>, padded[<span class="tok-number">0</span>..], endian);
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.ascon.State.addByte" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addByte</span><a href="#src.zig-std.crypto.ascon.State.addByte">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addByte</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, byte: <span class="tok-type">u8</span>, offset: <span class="tok-type">usize</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>XOR a byte into the state at a given offset.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a></code></pre></div><div><pre><code>byte: <span class="tok-type">u8</span></code></pre></div><div><pre><code>offset: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.ascon.State.addByte">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addByte</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, byte: <span class="tok-type">u8</span>, offset: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> z = <span class="tok-kw">switch</span> (endian) {
+        .big =&gt; <span class="tok-number">64</span> - <span class="tok-number">8</span> - <span class="tok-number">8</span> * <span class="tok-builtin">@as</span>(<span class="tok-type">u6</span>, <span class="tok-builtin">@truncate</span>(offset % <span class="tok-number">8</span>)),
+        .little =&gt; <span class="tok-number">8</span> * <span class="tok-builtin">@as</span>(<span class="tok-type">u6</span>, <span class="tok-builtin">@truncate</span>(offset % <span class="tok-number">8</span>)),
+    };
+    self.st[offset / <span class="tok-number">8</span>] ^= <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, byte) &lt;&lt; z;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.ascon.State.addBytes" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">addBytes</span><a href="#src.zig-std.crypto.ascon.State.addBytes">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addBytes</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>XOR bytes into the beginning of the state.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a></code></pre></div><div><pre><code>bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.ascon.State.addBytes">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addBytes</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (i + <span class="tok-number">8</span> &lt;= bytes.len) : (i += <span class="tok-number">8</span>) {
+        self.st[i / <span class="tok-number">8</span>] ^= <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u64</span>, bytes[i..][<span class="tok-number">0</span>..<span class="tok-number">8</span>], endian);
+    }
+    <span class="tok-kw">if</span> (i &lt; bytes.len) {
+        <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-number">8</span>;
+        <span class="tok-builtin">@memcpy</span>(padded[<span class="tok-number">0</span> .. bytes.len - i], bytes[i..]);
+        self.st[i / <span class="tok-number">8</span>] ^= <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u64</span>, padded[<span class="tok-number">0</span>..], endian);
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.ascon.State.extractBytes" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">extractBytes</span><a href="#src.zig-std.crypto.ascon.State.extractBytes">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">extractBytes</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, out: []<span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Extract the first bytes of the state.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a></code></pre></div><div><pre><code>out: []<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.ascon.State.extractBytes">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">extractBytes</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, out: []<span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (i + <span class="tok-number">8</span> &lt;= out.len) : (i += <span class="tok-number">8</span>) {
+        <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u64</span>, out[i..][<span class="tok-number">0</span>..<span class="tok-number">8</span>], self.st[i / <span class="tok-number">8</span>], endian);
+    }
+    <span class="tok-kw">if</span> (i &lt; out.len) {
+        <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-number">8</span>;
+        <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u64</span>, padded[<span class="tok-number">0</span>..], self.st[i / <span class="tok-number">8</span>], endian);
+        <span class="tok-builtin">@memcpy</span>(out[i..], padded[<span class="tok-number">0</span> .. out.len - i]);
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.ascon.State.xorBytes" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">xorBytes</span><a href="#src.zig-std.crypto.ascon.State.xorBytes">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">xorBytes</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, out: []<span class="tok-type">u8</span>, in: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>XOR the first bytes of the state into a slice of bytes.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a></code></pre></div><div><pre><code>out: []<span class="tok-type">u8</span></code></pre></div><div><pre><code>in: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.ascon.State.xorBytes">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">xorBytes</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, out: []<span class="tok-type">u8</span>, in: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(out.len == in.len);
+
+    <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (i + <span class="tok-number">8</span> &lt;= in.len) : (i += <span class="tok-number">8</span>) {
+        <span class="tok-kw">const</span> x = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u64</span>, in[i..][<span class="tok-number">0</span>..<span class="tok-number">8</span>], <a href="std.crypto.ascon.html#std.crypto.ascon.native_endian">native_endian</a>) ^ <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeTo">nativeTo</a>(<span class="tok-type">u64</span>, self.st[i / <span class="tok-number">8</span>], endian);
+        <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u64</span>, out[i..][<span class="tok-number">0</span>..<span class="tok-number">8</span>], x, <a href="std.crypto.ascon.html#std.crypto.ascon.native_endian">native_endian</a>);
+    }
+    <span class="tok-kw">if</span> (i &lt; in.len) {
+        <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-number">8</span>;
+        <span class="tok-builtin">@memcpy</span>(padded[<span class="tok-number">0</span> .. in.len - i], in[i..]);
+        <span class="tok-kw">const</span> x = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u64</span>, &amp;padded, <a href="std.crypto.ascon.html#std.crypto.ascon.native_endian">native_endian</a>) ^ <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeTo">nativeTo</a>(<span class="tok-type">u64</span>, self.st[i / <span class="tok-number">8</span>], endian);
+        <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u64</span>, &amp;padded, x, <a href="std.crypto.ascon.html#std.crypto.ascon.native_endian">native_endian</a>);
+        <span class="tok-builtin">@memcpy</span>(out[i..], padded[<span class="tok-number">0</span> .. in.len - i]);
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.ascon.State.clear" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">clear</span><a href="#src.zig-std.crypto.ascon.State.clear">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">clear</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, from: <span class="tok-type">usize</span>, to: <span class="tok-type">usize</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Set the words storing the bytes of a given range to zero.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a></code></pre></div><div><pre><code>from: <span class="tok-type">usize</span></code></pre></div><div><pre><code>to: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.ascon.State.clear">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">clear</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, from: <span class="tok-type">usize</span>, to: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+    <span class="tok-builtin">@memset</span>(self.st[from / <span class="tok-number">8</span> .. (to + <span class="tok-number">7</span>) / <span class="tok-number">8</span>], <span class="tok-number">0</span>);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.ascon.State.secureZero" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">secureZero</span><a href="#src.zig-std.crypto.ascon.State.secureZero">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">secureZero</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Clear the entire state, disabling compiler optimizations.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.ascon.State.secureZero">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">secureZero</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>) <span class="tok-type">void</span> {
+    <a href="std.html">std</a>.<a href="std.crypto.html">crypto</a>.<a href="std.crypto.html#std.crypto.secureZero">secureZero</a>(<span class="tok-type">u64</span>, &amp;self.st);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.ascon.State.permuteR" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">permuteR</span><a href="#src.zig-std.crypto.ascon.State.permuteR">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">permuteR</span>(state: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, <span class="tok-kw">comptime</span> rounds: <span class="tok-type">u4</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Apply a reduced-round permutation to the state.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>state: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a></code></pre></div><div><pre><code>rounds: <span class="tok-type">u4</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.ascon.State.permuteR">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">permuteR</span>(state: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, <span class="tok-kw">comptime</span> rounds: <span class="tok-type">u4</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> rks = [<span class="tok-number">16</span>]<span class="tok-type">u64</span>{ <span class="tok-number">0x3c</span>, <span class="tok-number">0x2d</span>, <span class="tok-number">0x1e</span>, <span class="tok-number">0x0f</span>, <span class="tok-number">0xf0</span>, <span class="tok-number">0xe1</span>, <span class="tok-number">0xd2</span>, <span class="tok-number">0xc3</span>, <span class="tok-number">0xb4</span>, <span class="tok-number">0xa5</span>, <span class="tok-number">0x96</span>, <span class="tok-number">0x87</span>, <span class="tok-number">0x78</span>, <span class="tok-number">0x69</span>, <span class="tok-number">0x5a</span>, <span class="tok-number">0x4b</span> };
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (rks[rks.len - rounds ..]) |rk| {
+        state.round(rk);
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.ascon.State.permute" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">permute</span><a href="#src.zig-std.crypto.ascon.State.permute">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">permute</span>(state: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Apply a full-round permutation to the state.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>state: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.ascon.State.permute">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">permute</span>(state: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>) <span class="tok-type">void</span> {
+    state.permuteR(<span class="tok-number">12</span>);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.ascon.State.permuteRatchet" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">permuteRatchet</span><a href="#src.zig-std.crypto.ascon.State.permuteRatchet">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">permuteRatchet</span>(state: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, <span class="tok-kw">comptime</span> rounds: <span class="tok-type">u4</span>, <span class="tok-kw">comptime</span> rate: <span class="tok-type">u6</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Apply a permutation to the state and prevent backtracking.
+The rate is expressed in bytes and must be a multiple of the word size (8).</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>state: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a></code></pre></div><div><pre><code>rounds: <span class="tok-type">u4</span></code></pre></div><div><pre><code>rate: <span class="tok-type">u6</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.ascon.State.permuteRatchet">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">permuteRatchet</span>(state: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, <span class="tok-kw">comptime</span> rounds: <span class="tok-type">u4</span>, <span class="tok-kw">comptime</span> rate: <span class="tok-type">u6</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> capacity = <a href="std.crypto.ascon.html#std.crypto.ascon.State.block_bytes">block_bytes</a> - rate;
+    <a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(capacity &gt; <span class="tok-number">0</span> <span class="tok-kw">and</span> capacity % <span class="tok-number">8</span> == <span class="tok-number">0</span>);<span class="tok-comment"> // capacity must be a multiple of 64 bits
+    </span><span class="tok-kw">var</span> mask: [capacity / <span class="tok-number">8</span>]<span class="tok-type">u64</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (&amp;mask, state.st[state.st.len - mask.len ..]) |*m, x| m.* = x;
+    state.permuteR(rounds);
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (mask, state.st[state.st.len - mask.len ..]) |m, *x| x.* ^= m;
+}</code></pre></details></div></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.ascon.State">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">State</span>(<span class="tok-kw">comptime</span> endian: <a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.Endian.html">Endian</a>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+
+        <span class="tok-comment">/// Number of bytes in the state.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> block_bytes = <span class="tok-number">40</span>;
+
+        <span class="tok-kw">const</span> Block = [<span class="tok-number">5</span>]<span class="tok-type">u64</span>;
+
+        st: <a href="std.crypto.ascon.html#std.crypto.ascon.State.Block">Block</a>,
+
+        <span class="tok-comment">/// Initialize the state from a slice of bytes.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(initial_state: [<a href="std.crypto.ascon.html#std.crypto.ascon.State.block_bytes">block_bytes</a>]<span class="tok-type">u8</span>) <a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a> {
+            <span class="tok-kw">var</span> state = <a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>{ .st = <span class="tok-null">undefined</span> };
+            <span class="tok-builtin">@memcpy</span>(state.asBytes(), &amp;initial_state);
+            state.endianSwap();
+            <span class="tok-kw">return</span> state;
+        }
+
+        <span class="tok-comment">/// Initialize the state from u64 words in native endianness.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initFromWords</span>(initial_state: [<span class="tok-number">5</span>]<span class="tok-type">u64</span>) <a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a> {
+            <span class="tok-kw">return</span> .{ .st = initial_state };
+        }
+
+        <span class="tok-comment">/// Initialize the state for Ascon XOF</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initXof</span>() <a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a> {
+            <span class="tok-kw">return</span> <a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>{ .st = <a href="std.crypto.ascon.html#std.crypto.ascon.State.Block">Block</a>{
+                <span class="tok-number">0xb57e273b814cd416</span>,
+                <span class="tok-number">0x2b51042562ae2420</span>,
+                <span class="tok-number">0x66a3a7768ddf2218</span>,
+                <span class="tok-number">0x5aad0a7a8153650c</span>,
+                <span class="tok-number">0x4f3e0e32539493b6</span>,
+            } };
+        }
+
+        <span class="tok-comment">/// Initialize the state for Ascon XOFa</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initXofA</span>() <a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a> {
+            <span class="tok-kw">return</span> <a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>{ .st = <a href="std.crypto.ascon.html#std.crypto.ascon.State.Block">Block</a>{
+                <span class="tok-number">0x44906568b77b9832</span>,
+                <span class="tok-number">0xcd8d6cae53455532</span>,
+                <span class="tok-number">0xf7b5212756422129</span>,
+                <span class="tok-number">0x246885e1de0d225b</span>,
+                <span class="tok-number">0xa8cb5ce33449973f</span>,
+            } };
+        }
+
+        <span class="tok-comment">/// A representation of the state as bytes. The byte order is architecture-dependent.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">asBytes</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>) *[<a href="std.crypto.ascon.html#std.crypto.ascon.State.block_bytes">block_bytes</a>]<span class="tok-type">u8</span> {
+            <span class="tok-kw">return</span> <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.asBytes">asBytes</a>(&amp;self.st);
+        }
+
+        <span class="tok-comment">/// Byte-swap the entire state if the architecture doesn't match the required endianness.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">endianSwap</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>) <span class="tok-type">void</span> {
+            <span class="tok-kw">for</span> (&amp;self.st) |*w| {
+                w.* = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.toNative">toNative</a>(<span class="tok-type">u64</span>, w.*, endian);
+            }
+        }
+
+        <span class="tok-comment">/// Set bytes starting at the beginning of the state.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setBytes</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (i + <span class="tok-number">8</span> &lt;= bytes.len) : (i += <span class="tok-number">8</span>) {
+                self.st[i / <span class="tok-number">8</span>] = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u64</span>, bytes[i..][<span class="tok-number">0</span>..<span class="tok-number">8</span>], endian);
+            }
+            <span class="tok-kw">if</span> (i &lt; bytes.len) {
+                <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-number">8</span>;
+                <span class="tok-builtin">@memcpy</span>(padded[<span class="tok-number">0</span> .. bytes.len - i], bytes[i..]);
+                self.st[i / <span class="tok-number">8</span>] = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u64</span>, padded[<span class="tok-number">0</span>..], endian);
+            }
+        }
+
+        <span class="tok-comment">/// XOR a byte into the state at a given offset.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addByte</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, byte: <span class="tok-type">u8</span>, offset: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">const</span> z = <span class="tok-kw">switch</span> (endian) {
+                .big =&gt; <span class="tok-number">64</span> - <span class="tok-number">8</span> - <span class="tok-number">8</span> * <span class="tok-builtin">@as</span>(<span class="tok-type">u6</span>, <span class="tok-builtin">@truncate</span>(offset % <span class="tok-number">8</span>)),
+                .little =&gt; <span class="tok-number">8</span> * <span class="tok-builtin">@as</span>(<span class="tok-type">u6</span>, <span class="tok-builtin">@truncate</span>(offset % <span class="tok-number">8</span>)),
+            };
+            self.st[offset / <span class="tok-number">8</span>] ^= <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, byte) &lt;&lt; z;
+        }
+
+        <span class="tok-comment">/// XOR bytes into the beginning of the state.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">addBytes</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (i + <span class="tok-number">8</span> &lt;= bytes.len) : (i += <span class="tok-number">8</span>) {
+                self.st[i / <span class="tok-number">8</span>] ^= <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u64</span>, bytes[i..][<span class="tok-number">0</span>..<span class="tok-number">8</span>], endian);
+            }
+            <span class="tok-kw">if</span> (i &lt; bytes.len) {
+                <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-number">8</span>;
+                <span class="tok-builtin">@memcpy</span>(padded[<span class="tok-number">0</span> .. bytes.len - i], bytes[i..]);
+                self.st[i / <span class="tok-number">8</span>] ^= <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u64</span>, padded[<span class="tok-number">0</span>..], endian);
+            }
+        }
+
+        <span class="tok-comment">/// Extract the first bytes of the state.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">extractBytes</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, out: []<span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (i + <span class="tok-number">8</span> &lt;= out.len) : (i += <span class="tok-number">8</span>) {
+                <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u64</span>, out[i..][<span class="tok-number">0</span>..<span class="tok-number">8</span>], self.st[i / <span class="tok-number">8</span>], endian);
+            }
+            <span class="tok-kw">if</span> (i &lt; out.len) {
+                <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-number">8</span>;
+                <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u64</span>, padded[<span class="tok-number">0</span>..], self.st[i / <span class="tok-number">8</span>], endian);
+                <span class="tok-builtin">@memcpy</span>(out[i..], padded[<span class="tok-number">0</span> .. out.len - i]);
+            }
+        }
+
+        <span class="tok-comment">/// XOR the first bytes of the state into a slice of bytes.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">xorBytes</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, out: []<span class="tok-type">u8</span>, in: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            <a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(out.len == in.len);
+
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (i + <span class="tok-number">8</span> &lt;= in.len) : (i += <span class="tok-number">8</span>) {
+                <span class="tok-kw">const</span> x = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u64</span>, in[i..][<span class="tok-number">0</span>..<span class="tok-number">8</span>], <a href="std.crypto.ascon.html#std.crypto.ascon.native_endian">native_endian</a>) ^ <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeTo">nativeTo</a>(<span class="tok-type">u64</span>, self.st[i / <span class="tok-number">8</span>], endian);
+                <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u64</span>, out[i..][<span class="tok-number">0</span>..<span class="tok-number">8</span>], x, <a href="std.crypto.ascon.html#std.crypto.ascon.native_endian">native_endian</a>);
+            }
+            <span class="tok-kw">if</span> (i &lt; in.len) {
+                <span class="tok-kw">var</span> padded = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <span class="tok-number">8</span>;
+                <span class="tok-builtin">@memcpy</span>(padded[<span class="tok-number">0</span> .. in.len - i], in[i..]);
+                <span class="tok-kw">const</span> x = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u64</span>, &amp;padded, <a href="std.crypto.ascon.html#std.crypto.ascon.native_endian">native_endian</a>) ^ <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeTo">nativeTo</a>(<span class="tok-type">u64</span>, self.st[i / <span class="tok-number">8</span>], endian);
+                <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u64</span>, &amp;padded, x, <a href="std.crypto.ascon.html#std.crypto.ascon.native_endian">native_endian</a>);
+                <span class="tok-builtin">@memcpy</span>(out[i..], padded[<span class="tok-number">0</span> .. in.len - i]);
+            }
+        }
+
+        <span class="tok-comment">/// Set the words storing the bytes of a given range to zero.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">clear</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, from: <span class="tok-type">usize</span>, to: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+            <span class="tok-builtin">@memset</span>(self.st[from / <span class="tok-number">8</span> .. (to + <span class="tok-number">7</span>) / <span class="tok-number">8</span>], <span class="tok-number">0</span>);
+        }
+
+        <span class="tok-comment">/// Clear the entire state, disabling compiler optimizations.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">secureZero</span>(self: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>) <span class="tok-type">void</span> {
+            <a href="std.html">std</a>.<a href="std.crypto.html">crypto</a>.<a href="std.crypto.html#std.crypto.secureZero">secureZero</a>(<span class="tok-type">u64</span>, &amp;self.st);
+        }
+
+        <span class="tok-comment">/// Apply a reduced-round permutation to the state.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">permuteR</span>(state: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, <span class="tok-kw">comptime</span> rounds: <span class="tok-type">u4</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">const</span> rks = [<span class="tok-number">16</span>]<span class="tok-type">u64</span>{ <span class="tok-number">0x3c</span>, <span class="tok-number">0x2d</span>, <span class="tok-number">0x1e</span>, <span class="tok-number">0x0f</span>, <span class="tok-number">0xf0</span>, <span class="tok-number">0xe1</span>, <span class="tok-number">0xd2</span>, <span class="tok-number">0xc3</span>, <span class="tok-number">0xb4</span>, <span class="tok-number">0xa5</span>, <span class="tok-number">0x96</span>, <span class="tok-number">0x87</span>, <span class="tok-number">0x78</span>, <span class="tok-number">0x69</span>, <span class="tok-number">0x5a</span>, <span class="tok-number">0x4b</span> };
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (rks[rks.len - rounds ..]) |rk| {
+                state.round(rk);
+            }
+        }
+
+        <span class="tok-comment">/// Apply a full-round permutation to the state.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">permute</span>(state: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>) <span class="tok-type">void</span> {
+            state.permuteR(<span class="tok-number">12</span>);
+        }
+
+        <span class="tok-comment">/// Apply a permutation to the state and prevent backtracking.</span>
+        <span class="tok-comment">/// The rate is expressed in bytes and must be a multiple of the word size (8).</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">permuteRatchet</span>(state: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, <span class="tok-kw">comptime</span> rounds: <span class="tok-type">u4</span>, <span class="tok-kw">comptime</span> rate: <span class="tok-type">u6</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">const</span> capacity = <a href="std.crypto.ascon.html#std.crypto.ascon.State.block_bytes">block_bytes</a> - rate;
+            <a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(capacity &gt; <span class="tok-number">0</span> <span class="tok-kw">and</span> capacity % <span class="tok-number">8</span> == <span class="tok-number">0</span>);<span class="tok-comment"> // capacity must be a multiple of 64 bits
+            </span><span class="tok-kw">var</span> mask: [capacity / <span class="tok-number">8</span>]<span class="tok-type">u64</span> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (&amp;mask, state.st[state.st.len - mask.len ..]) |*m, x| m.* = x;
+            state.permuteR(rounds);
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (mask, state.st[state.st.len - mask.len ..]) |m, *x| x.* ^= m;
+        }<span class="tok-comment">
+
+        // Core Ascon permutation.
+        </span><span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">round</span>(state: *<a href="std.crypto.ascon.html#std.crypto.ascon.State">Self</a>, rk: <span class="tok-type">u64</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">const</span> x = &amp;state.st;
+            x[<span class="tok-number">2</span>] ^= rk;
+
+            x[<span class="tok-number">0</span>] ^= x[<span class="tok-number">4</span>];
+            x[<span class="tok-number">4</span>] ^= x[<span class="tok-number">3</span>];
+            x[<span class="tok-number">2</span>] ^= x[<span class="tok-number">1</span>];
+            <span class="tok-kw">var</span> t: <a href="std.crypto.ascon.html#std.crypto.ascon.State.Block">Block</a> = .{
+                x[<span class="tok-number">0</span>] ^ (~x[<span class="tok-number">1</span>] &amp; x[<span class="tok-number">2</span>]),
+                x[<span class="tok-number">1</span>] ^ (~x[<span class="tok-number">2</span>] &amp; x[<span class="tok-number">3</span>]),
+                x[<span class="tok-number">2</span>] ^ (~x[<span class="tok-number">3</span>] &amp; x[<span class="tok-number">4</span>]),
+                x[<span class="tok-number">3</span>] ^ (~x[<span class="tok-number">4</span>] &amp; x[<span class="tok-number">0</span>]),
+                x[<span class="tok-number">4</span>] ^ (~x[<span class="tok-number">0</span>] &amp; x[<span class="tok-number">1</span>]),
+            };
+            t[<span class="tok-number">1</span>] ^= t[<span class="tok-number">0</span>];
+            t[<span class="tok-number">3</span>] ^= t[<span class="tok-number">2</span>];
+            t[<span class="tok-number">0</span>] ^= t[<span class="tok-number">4</span>];
+
+            x[<span class="tok-number">2</span>] = t[<span class="tok-number">2</span>] ^ <a href="std.math.html#std.math.rotr">rotr</a>(<span class="tok-type">u64</span>, t[<span class="tok-number">2</span>], <span class="tok-number">6</span> - <span class="tok-number">1</span>);
+            x[<span class="tok-number">3</span>] = t[<span class="tok-number">3</span>] ^ <a href="std.math.html#std.math.rotr">rotr</a>(<span class="tok-type">u64</span>, t[<span class="tok-number">3</span>], <span class="tok-number">17</span> - <span class="tok-number">10</span>);
+            x[<span class="tok-number">4</span>] = t[<span class="tok-number">4</span>] ^ <a href="std.math.html#std.math.rotr">rotr</a>(<span class="tok-type">u64</span>, t[<span class="tok-number">4</span>], <span class="tok-number">41</span> - <span class="tok-number">7</span>);
+            x[<span class="tok-number">0</span>] = t[<span class="tok-number">0</span>] ^ <a href="std.math.html#std.math.rotr">rotr</a>(<span class="tok-type">u64</span>, t[<span class="tok-number">0</span>], <span class="tok-number">28</span> - <span class="tok-number">19</span>);
+            x[<span class="tok-number">1</span>] = t[<span class="tok-number">1</span>] ^ <a href="std.math.html#std.math.rotr">rotr</a>(<span class="tok-type">u64</span>, t[<span class="tok-number">1</span>], <span class="tok-number">61</span> - <span class="tok-number">39</span>);
+            x[<span class="tok-number">2</span>] = t[<span class="tok-number">2</span>] ^ <a href="std.math.html#std.math.rotr">rotr</a>(<span class="tok-type">u64</span>, x[<span class="tok-number">2</span>], <span class="tok-number">1</span>);
+            x[<span class="tok-number">3</span>] = t[<span class="tok-number">3</span>] ^ <a href="std.math.html#std.math.rotr">rotr</a>(<span class="tok-type">u64</span>, x[<span class="tok-number">3</span>], <span class="tok-number">10</span>);
+            x[<span class="tok-number">4</span>] = t[<span class="tok-number">4</span>] ^ <a href="std.math.html#std.math.rotr">rotr</a>(<span class="tok-type">u64</span>, x[<span class="tok-number">4</span>], <span class="tok-number">7</span>);
+            x[<span class="tok-number">0</span>] = t[<span class="tok-number">0</span>] ^ <a href="std.math.html#std.math.rotr">rotr</a>(<span class="tok-type">u64</span>, x[<span class="tok-number">0</span>], <span class="tok-number">19</span>);
+            x[<span class="tok-number">1</span>] = t[<span class="tok-number">1</span>] ^ <a href="std.math.html#std.math.rotr">rotr</a>(<span class="tok-type">u64</span>, x[<span class="tok-number">1</span>], <span class="tok-number">39</span>);
+            x[<span class="tok-number">2</span>] = ~x[<span class="tok-number">2</span>];
+        }
+    };
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.crypto.core">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> core = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> aes = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/aes.zig&quot;</span>);
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> keccak = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/keccak_p.zig&quot;</span>);
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Ascon = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/ascon.zig&quot;</span>).State;
+
+    <span class="tok-comment">/// Modes are generic compositions to construct encryption/decryption functions from block ciphers and permutations.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// These modes are designed to be building blocks for higher-level constructions, and should generally not be used directly by applications, as they may not provide the expected properties and security guarantees.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// Most applications may want to use AEADs instead.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> modes = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/modes.zig&quot;</span>);
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

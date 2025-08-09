@@ -1,0 +1,836 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.crypto.html" class="active">crypto</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.crypto" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.crypto</span><a href="#src.zig-std.crypto">[src]</a></h1><div class="tldDocs"><p>Cryptography.</p>
+</div><div class="sectNamespaces"><h2 class="sectionHeader">Namespaces</h2><ul class="listNamespaces columns"><li><a href="std.crypto.timing_safe.html">std.crypto.timing_safe</a></li><li><a href="std.crypto.aead.html">std.crypto.aead</a></li><li><a href="std.crypto.auth.html">std.crypto.auth</a></li><li><a href="std.crypto.core.html">std.crypto.core</a></li><li><a href="std.crypto.dh.html">std.crypto.dh</a></li><li><a href="std.crypto.kem.html">std.crypto.kem</a></li><li><a href="std.crypto.ecc.html">std.crypto.ecc</a></li><li><a href="std.crypto.hash.html">std.crypto.hash</a></li><li><a href="std.crypto.kdf.html">std.crypto.kdf</a></li><li><a href="std.crypto.onetimeauth.html">std.crypto.onetimeauth</a></li><li><a href="std.crypto.pwhash.html">std.crypto.pwhash</a></li><li><a href="std.crypto.sign.html">std.crypto.sign</a></li><li><a href="std.crypto.stream.html">std.crypto.stream</a></li><li><a href="std.crypto.nacl.html">std.crypto.nacl</a></li><li><a href="std.crypto.ff.html">std.crypto.ff</a></li><li><a href="std.crypto.errors.html">std.crypto.errors</a></li><li><a href="std.crypto.tls.html">std.crypto.tls</a></li><li><a href="std.crypto.asn1.html">std.crypto.asn1</a></li><li><a href="std.crypto.utils.html">std.crypto.utils</a></li></ul></div><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.crypto.Certificate.html">std.crypto.Certificate</a></li><li><a href="std.crypto.SideChannelsMitigations.html">std.crypto.SideChannelsMitigations</a></li></ul></div><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.crypto.tlcsprng.interface" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">interface</span><a href="#src.zig-std.crypto.tlcsprng.interface">[src]</a></h2><div class="tldDocs"><p>We use this as a layer of indirection because global const pointers cannot
+point to thread-local variables.</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.tlcsprng.interface">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> interface: <a href="std.html">std</a>.<a href="std.Random.html">Random</a> = .{
+    .ptr = <span class="tok-null">undefined</span>,
+    .fillFn = <a href="std.crypto.tlcsprng.html#std.crypto.tlcsprng.tlsCsprngFill">tlsCsprngFill</a>,
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.default_side_channels_mitigations" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">default_side_channels_mitigations</span><a href="#src.zig-std.crypto.default_side_channels_mitigations">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.default_side_channels_mitigations">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> default_side_channels_mitigations = .medium</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.crypto.secureZero" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">secureZero</span><a href="#src.zig-std.crypto.secureZero">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">secureZero</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, s: []<span class="tok-kw">volatile</span> T) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Sets a slice to zeroes.
+Prevents the store from being optimized out.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>T: <span class="tok-type">type</span></code></pre></div><div><pre><code>s: []<span class="tok-kw">volatile</span> T</code></pre></div></div></div><div class="sectDocTests"><h3 class="sectionHeader">Example Usage</h3><pre><code class="docTestsCode"><span class="tok-kw">test</span> secureZero {
+    <span class="tok-kw">var</span> a = [_]<span class="tok-type">u8</span>{<span class="tok-number">0xfe</span>} ** <span class="tok-number">8</span>;
+    <span class="tok-kw">var</span> b = [_]<span class="tok-type">u8</span>{<span class="tok-number">0xfe</span>} ** <span class="tok-number">8</span>;
+
+    <span class="tok-builtin">@memset</span>(&amp;a, <span class="tok-number">0</span>);
+    <a href="std.crypto.html#std.crypto.secureZero">secureZero</a>(<span class="tok-type">u8</span>, &amp;b);
+
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, &amp;a, &amp;b);
+}</code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.secureZero">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">secureZero</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, s: []<span class="tok-kw">volatile</span> T) <span class="tok-type">void</span> {
+    <span class="tok-builtin">@memset</span>(s, <span class="tok-number">0</span>);
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.crypto">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-comment">//! Cryptography.</span>
+
+<span class="tok-kw">const</span> root = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;root&quot;</span>);
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> timing_safe = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/timing_safe.zig&quot;</span>);
+
+<span class="tok-comment">/// Authenticated Encryption with Associated Data</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> aead = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> aegis = <span class="tok-kw">struct</span> {
+        <span class="tok-kw">const</span> variants = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/aegis.zig&quot;</span>);
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis128X4 = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis128X4">Aegis128X4</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis128X2 = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis128X2">Aegis128X2</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis128L = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis128L">Aegis128L</a>;
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis256X4 = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis256X4">Aegis256X4</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis256X2 = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis256X2">Aegis256X2</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis256 = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis256">Aegis256</a>;
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis128X4_256 = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis128X4_256">Aegis128X4_256</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis128X2_256 = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis128X2_256">Aegis128X2_256</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis128L_256 = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis128L_256">Aegis128L_256</a>;
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis256X4_256 = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis256X4_256">Aegis256X4_256</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis256X2_256 = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis256X2_256">Aegis256X2_256</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis256_256 = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis256_256">Aegis256_256</a>;
+    };
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> aes_gcm = <span class="tok-kw">struct</span> {
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aes128Gcm = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/aes_gcm.zig&quot;</span>).Aes128Gcm;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aes256Gcm = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/aes_gcm.zig&quot;</span>).Aes256Gcm;
+    };
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> aes_ocb = <span class="tok-kw">struct</span> {
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aes128Ocb = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/aes_ocb.zig&quot;</span>).Aes128Ocb;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aes256Ocb = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/aes_ocb.zig&quot;</span>).Aes256Ocb;
+    };
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> chacha_poly = <span class="tok-kw">struct</span> {
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ChaCha20Poly1305 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/chacha20.zig&quot;</span>).ChaCha20Poly1305;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ChaCha12Poly1305 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/chacha20.zig&quot;</span>).ChaCha12Poly1305;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ChaCha8Poly1305 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/chacha20.zig&quot;</span>).ChaCha8Poly1305;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> XChaCha20Poly1305 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/chacha20.zig&quot;</span>).XChaCha20Poly1305;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> XChaCha12Poly1305 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/chacha20.zig&quot;</span>).XChaCha12Poly1305;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> XChaCha8Poly1305 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/chacha20.zig&quot;</span>).XChaCha8Poly1305;
+    };
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> isap = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/isap.zig&quot;</span>);
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> salsa_poly = <span class="tok-kw">struct</span> {
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> XSalsa20Poly1305 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/salsa20.zig&quot;</span>).XSalsa20Poly1305;
+    };
+};
+
+<span class="tok-comment">/// Authentication (MAC) functions.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> auth = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> hmac = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/hmac.zig&quot;</span>);
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> siphash = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/siphash.zig&quot;</span>);
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> aegis = <span class="tok-kw">struct</span> {
+        <span class="tok-kw">const</span> variants = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/aegis.zig&quot;</span>);
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis128X4Mac = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis128X4Mac">Aegis128X4Mac</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis128X2Mac = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis128X2Mac">Aegis128X2Mac</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis128LMac = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis128LMac">Aegis128LMac</a>;
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis256X4Mac = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis256X4Mac">Aegis256X4Mac</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis256X2Mac = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis256X2Mac">Aegis256X2Mac</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis256Mac = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis256Mac">Aegis256Mac</a>;
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis128X4Mac_128 = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis128X4Mac_128">Aegis128X4Mac_128</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis128X2Mac_128 = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis128X2Mac_128">Aegis128X2Mac_128</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis128LMac_128 = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis128LMac_128">Aegis128LMac_128</a>;
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis256X4Mac_128 = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis256X4Mac_128">Aegis256X4Mac_128</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis256X2Mac_128 = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis256X2Mac_128">Aegis256X2Mac_128</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Aegis256Mac_128 = <a href="std.crypto.aegis.html">variants</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis256Mac_128">Aegis256Mac_128</a>;
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> cmac = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/cmac.zig&quot;</span>);
+};
+
+<span class="tok-comment">/// Core functions, that should rarely be used directly by applications.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> core = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> aes = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/aes.zig&quot;</span>);
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> keccak = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/keccak_p.zig&quot;</span>);
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Ascon = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/ascon.zig&quot;</span>).State;
+
+    <span class="tok-comment">/// Modes are generic compositions to construct encryption/decryption functions from block ciphers and permutations.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// These modes are designed to be building blocks for higher-level constructions, and should generally not be used directly by applications, as they may not provide the expected properties and security guarantees.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// Most applications may want to use AEADs instead.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> modes = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/modes.zig&quot;</span>);
+};
+
+<span class="tok-comment">/// Diffie-Hellman key exchange functions.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> dh = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> X25519 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/25519/x25519.zig&quot;</span>).X25519;
+};
+
+<span class="tok-comment">/// Key Encapsulation Mechanisms.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> kem = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> kyber_d00 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/ml_kem.zig&quot;</span>).d00;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ml_kem = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/ml_kem.zig&quot;</span>).nist;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ml_kem_01 = <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;deprecated: final version of the specification has been published, use ml_kem instead&quot;</span>);
+};
+
+<span class="tok-comment">/// Elliptic-curve arithmetic.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ecc = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Curve25519 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/25519/curve25519.zig&quot;</span>).Curve25519;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Edwards25519 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/25519/edwards25519.zig&quot;</span>).Edwards25519;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> P256 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/pcurves/p256.zig&quot;</span>).P256;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> P384 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/pcurves/p384.zig&quot;</span>).P384;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Ristretto255 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/25519/ristretto255.zig&quot;</span>).Ristretto255;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Secp256k1 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/pcurves/secp256k1.zig&quot;</span>).Secp256k1;
+};
+
+<span class="tok-comment">/// Hash functions.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> hash = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> blake2 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/blake2.zig&quot;</span>);
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Blake3 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/blake3.zig&quot;</span>).Blake3;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Md5 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/md5.zig&quot;</span>).Md5;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Sha1 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/sha1.zig&quot;</span>).Sha1;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sha2 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/sha2.zig&quot;</span>);
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sha3 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/sha3.zig&quot;</span>);
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> composition = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/hash_composition.zig&quot;</span>);
+};
+
+<span class="tok-comment">/// Key derivation functions.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> kdf = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> hkdf = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/hkdf.zig&quot;</span>);
+};
+
+<span class="tok-comment">/// MAC functions requiring single-use secret keys.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> onetimeauth = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Ghash = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/ghash_polyval.zig&quot;</span>).Ghash;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Polyval = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/ghash_polyval.zig&quot;</span>).Polyval;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Poly1305 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/poly1305.zig&quot;</span>).Poly1305;
+};
+
+<span class="tok-comment">/// A password hashing function derives a uniform key from low-entropy input material such as passwords.</span>
+<span class="tok-comment">/// It is intentionally slow or expensive.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// With the standard definition of a key derivation function, if a key space is small, an exhaustive search may be practical.</span>
+<span class="tok-comment">/// Password hashing functions make exhaustive searches way slower or way more expensive, even when implemented on GPUs and ASICs, by using different, optionally combined strategies:</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// - Requiring a lot of computation cycles to complete</span>
+<span class="tok-comment">/// - Requiring a lot of memory to complete</span>
+<span class="tok-comment">/// - Requiring multiple CPU cores to complete</span>
+<span class="tok-comment">/// - Requiring cache-local data to complete in reasonable time</span>
+<span class="tok-comment">/// - Requiring large static tables</span>
+<span class="tok-comment">/// - Avoiding precomputations and time/memory tradeoffs</span>
+<span class="tok-comment">/// - Requiring multi-party computations</span>
+<span class="tok-comment">/// - Combining the input material with random per-entry data (salts), application-specific contexts and keys</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Password hashing functions must be used whenever sensitive data has to be directly derived from a password.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwhash = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Encoding = <span class="tok-kw">enum</span> {
+        phc,
+        crypt,
+    };
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = <a href="std.crypto.pwhash.html#std.crypto.pwhash.HasherError">HasherError</a> || <span class="tok-kw">error</span>{AllocatorRequired};
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> HasherError = <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a> || <a href="std.crypto.phc_encoding.html">phc_format</a>.<a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> KdfError = <a href="std.crypto.errors.html">errors</a>.<a href="std.crypto.errors.html#std.crypto.errors.Error">Error</a> || <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>.<a href="std.mem.Allocator.html#std.mem.Allocator.Error">Error</a> || <a href="std.html">std</a>.<a href="std.Thread.html">Thread</a>.<a href="std.Thread.html#std.Thread.SpawnError">SpawnError</a>;
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> argon2 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/argon2.zig&quot;</span>);
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> bcrypt = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/bcrypt.zig&quot;</span>);
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> scrypt = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/scrypt.zig&quot;</span>);
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> pbkdf2 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/pbkdf2.zig&quot;</span>).pbkdf2;
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> phc_format = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/phc_encoding.zig&quot;</span>);
+};
+
+<span class="tok-comment">/// Digital signature functions.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> sign = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Ed25519 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/25519/ed25519.zig&quot;</span>).Ed25519;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ecdsa = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/ecdsa.zig&quot;</span>);
+};
+
+<span class="tok-comment">/// Stream ciphers. These do not provide any kind of authentication.</span>
+<span class="tok-comment">/// Most applications should be using AEAD constructions instead of stream ciphers directly.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> stream = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> chacha = <span class="tok-kw">struct</span> {
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ChaCha20IETF = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/chacha20.zig&quot;</span>).ChaCha20IETF;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ChaCha12IETF = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/chacha20.zig&quot;</span>).ChaCha12IETF;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ChaCha8IETF = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/chacha20.zig&quot;</span>).ChaCha8IETF;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ChaCha20With64BitNonce = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/chacha20.zig&quot;</span>).ChaCha20With64BitNonce;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ChaCha12With64BitNonce = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/chacha20.zig&quot;</span>).ChaCha12With64BitNonce;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ChaCha8With64BitNonce = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/chacha20.zig&quot;</span>).ChaCha8With64BitNonce;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> XChaCha20IETF = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/chacha20.zig&quot;</span>).XChaCha20IETF;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> XChaCha12IETF = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/chacha20.zig&quot;</span>).XChaCha12IETF;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> XChaCha8IETF = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/chacha20.zig&quot;</span>).XChaCha8IETF;
+    };
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> salsa = <span class="tok-kw">struct</span> {
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Salsa = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/salsa20.zig&quot;</span>).Salsa;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> XSalsa = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/salsa20.zig&quot;</span>).XSalsa;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Salsa20 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/salsa20.zig&quot;</span>).Salsa20;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> XSalsa20 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/salsa20.zig&quot;</span>).XSalsa20;
+    };
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> nacl = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">const</span> salsa20 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/salsa20.zig&quot;</span>);
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Box = <a href="std.crypto.salsa20.html">salsa20</a>.<a href="std.crypto.salsa20.Box.html">Box</a>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> SecretBox = <a href="std.crypto.salsa20.html">salsa20</a>.<a href="std.crypto.salsa20.SecretBox.html">SecretBox</a>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> SealedBox = <a href="std.crypto.salsa20.html">salsa20</a>.<a href="std.crypto.salsa20.SealedBox.html">SealedBox</a>;
+};
+
+<span class="tok-comment">/// Finite-field arithmetic.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ff = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/ff.zig&quot;</span>);
+
+<span class="tok-comment">/// This is a thread-local, cryptographically secure pseudo random number generator.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> random = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/tlcsprng.zig&quot;</span>).interface;
+
+<span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std.zig&quot;</span>);
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> errors = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/errors.zig&quot;</span>);
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> tls = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/tls.zig&quot;</span>);
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Certificate = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/Certificate.zig&quot;</span>);
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> asn1 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/asn1.zig&quot;</span>);
+
+<span class="tok-comment">/// Side-channels mitigations.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SideChannelsMitigations = <span class="tok-kw">enum</span> {
+    <span class="tok-comment">/// No additional side-channel mitigations are applied.</span>
+    <span class="tok-comment">/// This is the fastest mode.</span>
+    none,
+    <span class="tok-comment">/// The `basic` mode protects against most practical attacks, provided that the</span>
+    <span class="tok-comment">/// application or implements proper defenses against brute-force attacks.</span>
+    <span class="tok-comment">/// It offers a good balance between performance and security.</span>
+    basic,
+    <span class="tok-comment">/// The `medium` mode offers increased resilience against side-channel attacks,</span>
+    <span class="tok-comment">/// making most attacks unpractical even on shared/low latency environements.</span>
+    <span class="tok-comment">/// This is the default mode.</span>
+    medium,
+    <span class="tok-comment">/// The `full` mode offers the highest level of protection against side-channel attacks.</span>
+    <span class="tok-comment">/// Note that this doesn't cover all possible attacks (especially power analysis or</span>
+    <span class="tok-comment">/// thread-local attacks such as cachebleed), and that the performance impact is significant.</span>
+    full,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> default_side_channels_mitigations = .medium;
+
+<span class="tok-kw">test</span> {
+    _ = <a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.aegis.html">aegis</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis128L">Aegis128L</a>;
+    _ = <a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.aegis.html">aegis</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis256">Aegis256</a>;
+
+    _ = <a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.aes_gcm.html">aes_gcm</a>.<a href="std.crypto.aes_gcm.html#std.crypto.aes_gcm.Aes128Gcm">Aes128Gcm</a>;
+    _ = <a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.aes_gcm.html">aes_gcm</a>.<a href="std.crypto.aes_gcm.html#std.crypto.aes_gcm.Aes256Gcm">Aes256Gcm</a>;
+
+    _ = <a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.aes_ocb.html">aes_ocb</a>.<a href="std.crypto.aes_ocb.html#std.crypto.aes_ocb.Aes128Ocb">Aes128Ocb</a>;
+    _ = <a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.aes_ocb.html">aes_ocb</a>.<a href="std.crypto.aes_ocb.html#std.crypto.aes_ocb.Aes256Ocb">Aes256Ocb</a>;
+
+    _ = <a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.chacha_poly.html">chacha_poly</a>.<a href="std.crypto.chacha20.html#std.crypto.chacha20.ChaCha20Poly1305">ChaCha20Poly1305</a>;
+    _ = <a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.chacha_poly.html">chacha_poly</a>.<a href="std.crypto.chacha20.html#std.crypto.chacha20.ChaCha12Poly1305">ChaCha12Poly1305</a>;
+    _ = <a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.chacha_poly.html">chacha_poly</a>.<a href="std.crypto.chacha20.html#std.crypto.chacha20.ChaCha8Poly1305">ChaCha8Poly1305</a>;
+    _ = <a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.chacha_poly.html">chacha_poly</a>.<a href="std.crypto.chacha20.html#std.crypto.chacha20.XChaCha20Poly1305">XChaCha20Poly1305</a>;
+    _ = <a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.chacha_poly.html">chacha_poly</a>.<a href="std.crypto.chacha20.html#std.crypto.chacha20.XChaCha12Poly1305">XChaCha12Poly1305</a>;
+    _ = <a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.chacha_poly.html">chacha_poly</a>.<a href="std.crypto.chacha20.html#std.crypto.chacha20.XChaCha8Poly1305">XChaCha8Poly1305</a>;
+
+    _ = <a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.isap.html">isap</a>;
+    _ = <a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.salsa_poly.html">salsa_poly</a>.<a href="std.crypto.salsa20.XSalsa20Poly1305.html">XSalsa20Poly1305</a>;
+
+    _ = <a href="std.crypto.auth.html">auth</a>.<a href="std.crypto.hmac.html">hmac</a>;
+    _ = <a href="std.crypto.auth.html">auth</a>.<a href="std.crypto.cmac.html">cmac</a>;
+    _ = <a href="std.crypto.auth.html">auth</a>.<a href="std.crypto.siphash.html">siphash</a>;
+
+    _ = <a href="std.crypto.core.html">core</a>.<a href="std.crypto.aes.html">aes</a>;
+    _ = <a href="std.crypto.core.html">core</a>.<a href="std.crypto.ascon.html#std.crypto.ascon.State">Ascon</a>;
+    _ = <a href="std.crypto.core.html">core</a>.<a href="std.crypto.modes.html">modes</a>;
+
+    _ = <a href="std.crypto.dh.html">dh</a>.<a href="std.crypto.25519.x25519.X25519.html">X25519</a>;
+
+    _ = <a href="std.crypto.kem.html">kem</a>.<a href="std.crypto.ml_kem.d00.html">kyber_d00</a>;
+
+    _ = <a href="std.crypto.ecc.html">ecc</a>.<a href="std.crypto.25519.curve25519.Curve25519.html">Curve25519</a>;
+    _ = <a href="std.crypto.ecc.html">ecc</a>.<a href="std.crypto.25519.edwards25519.Edwards25519.html">Edwards25519</a>;
+    _ = <a href="std.crypto.ecc.html">ecc</a>.<a href="std.crypto.pcurves.p256.P256.html">P256</a>;
+    _ = <a href="std.crypto.ecc.html">ecc</a>.<a href="std.crypto.pcurves.p384.P384.html">P384</a>;
+    _ = <a href="std.crypto.ecc.html">ecc</a>.<a href="std.crypto.25519.ristretto255.Ristretto255.html">Ristretto255</a>;
+    _ = <a href="std.crypto.ecc.html">ecc</a>.<a href="std.crypto.pcurves.secp256k1.Secp256k1.html">Secp256k1</a>;
+
+    _ = <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.blake2.html">blake2</a>;
+    _ = <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.blake3.Blake3.html">Blake3</a>;
+    _ = <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.md5.Md5.html">Md5</a>;
+    _ = <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha1.Sha1.html">Sha1</a>;
+    _ = <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha2.html">sha2</a>;
+    _ = <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha3.html">sha3</a>;
+    _ = <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.hash_composition.html">composition</a>;
+
+    _ = <a href="std.crypto.kdf.html">kdf</a>.<a href="std.crypto.hkdf.html">hkdf</a>;
+
+    _ = <a href="std.crypto.onetimeauth.html">onetimeauth</a>.<a href="std.crypto.ghash_polyval.html#std.crypto.ghash_polyval.Ghash">Ghash</a>;
+    _ = <a href="std.crypto.onetimeauth.html">onetimeauth</a>.<a href="std.crypto.poly1305.Poly1305.html">Poly1305</a>;
+
+    _ = <a href="std.crypto.pwhash.html">pwhash</a>.<a href="std.crypto.pwhash.Encoding.html">Encoding</a>;
+
+    _ = <a href="std.crypto.pwhash.html">pwhash</a>.<a href="std.crypto.pwhash.html#std.crypto.pwhash.Error">Error</a>;
+    _ = <a href="std.crypto.pwhash.html">pwhash</a>.<a href="std.crypto.pwhash.html#std.crypto.pwhash.HasherError">HasherError</a>;
+    _ = <a href="std.crypto.pwhash.html">pwhash</a>.<a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a>;
+
+    _ = <a href="std.crypto.pwhash.html">pwhash</a>.<a href="std.crypto.argon2.html">argon2</a>;
+    _ = <a href="std.crypto.pwhash.html">pwhash</a>.<a href="std.crypto.bcrypt.html">bcrypt</a>;
+    _ = <a href="std.crypto.pwhash.html">pwhash</a>.<a href="std.crypto.scrypt.html">scrypt</a>;
+    _ = <a href="std.crypto.pwhash.html">pwhash</a>.<a href="std.crypto.pbkdf2.html#std.crypto.pbkdf2.pbkdf2">pbkdf2</a>;
+
+    _ = <a href="std.crypto.pwhash.html">pwhash</a>.<a href="std.crypto.phc_encoding.html">phc_format</a>;
+
+    _ = <a href="std.crypto.sign.html">sign</a>.<a href="std.crypto.25519.ed25519.Ed25519.html">Ed25519</a>;
+    _ = <a href="std.crypto.sign.html">sign</a>.<a href="std.crypto.ecdsa.html">ecdsa</a>;
+
+    _ = <a href="std.crypto.stream.html">stream</a>.<a href="std.crypto.stream.chacha.html">chacha</a>.<a href="std.crypto.chacha20.html#std.crypto.chacha20.ChaCha20IETF">ChaCha20IETF</a>;
+    _ = <a href="std.crypto.stream.html">stream</a>.<a href="std.crypto.stream.chacha.html">chacha</a>.<a href="std.crypto.chacha20.html#std.crypto.chacha20.ChaCha12IETF">ChaCha12IETF</a>;
+    _ = <a href="std.crypto.stream.html">stream</a>.<a href="std.crypto.stream.chacha.html">chacha</a>.<a href="std.crypto.chacha20.html#std.crypto.chacha20.ChaCha8IETF">ChaCha8IETF</a>;
+    _ = <a href="std.crypto.stream.html">stream</a>.<a href="std.crypto.stream.chacha.html">chacha</a>.<a href="std.crypto.chacha20.html#std.crypto.chacha20.ChaCha20With64BitNonce">ChaCha20With64BitNonce</a>;
+    _ = <a href="std.crypto.stream.html">stream</a>.<a href="std.crypto.stream.chacha.html">chacha</a>.<a href="std.crypto.chacha20.html#std.crypto.chacha20.ChaCha12With64BitNonce">ChaCha12With64BitNonce</a>;
+    _ = <a href="std.crypto.stream.html">stream</a>.<a href="std.crypto.stream.chacha.html">chacha</a>.<a href="std.crypto.chacha20.html#std.crypto.chacha20.ChaCha8With64BitNonce">ChaCha8With64BitNonce</a>;
+    _ = <a href="std.crypto.stream.html">stream</a>.<a href="std.crypto.stream.chacha.html">chacha</a>.<a href="std.crypto.chacha20.html#std.crypto.chacha20.XChaCha20IETF">XChaCha20IETF</a>;
+    _ = <a href="std.crypto.stream.html">stream</a>.<a href="std.crypto.stream.chacha.html">chacha</a>.<a href="std.crypto.chacha20.html#std.crypto.chacha20.XChaCha12IETF">XChaCha12IETF</a>;
+    _ = <a href="std.crypto.stream.html">stream</a>.<a href="std.crypto.stream.chacha.html">chacha</a>.<a href="std.crypto.chacha20.html#std.crypto.chacha20.XChaCha8IETF">XChaCha8IETF</a>;
+
+    _ = <a href="std.crypto.stream.html">stream</a>.<a href="std.crypto.stream.salsa.html">salsa</a>.<a href="std.crypto.salsa20.html#std.crypto.salsa20.Salsa20">Salsa20</a>;
+    _ = <a href="std.crypto.stream.html">stream</a>.<a href="std.crypto.stream.salsa.html">salsa</a>.<a href="std.crypto.salsa20.html#std.crypto.salsa20.XSalsa20">XSalsa20</a>;
+
+    _ = <a href="std.crypto.nacl.html">nacl</a>.<a href="std.crypto.salsa20.Box.html">Box</a>;
+    _ = <a href="std.crypto.nacl.html">nacl</a>.<a href="std.crypto.salsa20.SecretBox.html">SecretBox</a>;
+    _ = <a href="std.crypto.nacl.html">nacl</a>.<a href="std.crypto.salsa20.SealedBox.html">SealedBox</a>;
+
+    _ = <a href="std.crypto.html#std.crypto.secureZero">secureZero</a>;
+    _ = <a href="std.crypto.timing_safe.html">timing_safe</a>;
+    _ = <a href="std.crypto.ff.html">ff</a>;
+    _ = <a href="std.crypto.tlcsprng.html#std.crypto.tlcsprng.interface">random</a>;
+    _ = <a href="std.crypto.errors.html">errors</a>;
+    _ = <a href="std.crypto.tls.html">tls</a>;
+    _ = <a href="std.crypto.Certificate.html">Certificate</a>;
+    _ = <a href="std.crypto.asn1.html">asn1</a>;
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;CSPRNG&quot;</span> {
+    <span class="tok-kw">const</span> a = <a href="std.crypto.tlcsprng.html#std.crypto.tlcsprng.interface">random</a>.<a href="#">int</a>(<span class="tok-type">u64</span>);
+    <span class="tok-kw">const</span> b = <a href="std.crypto.tlcsprng.html#std.crypto.tlcsprng.interface">random</a>.<a href="#">int</a>(<span class="tok-type">u64</span>);
+    <span class="tok-kw">const</span> c = <a href="std.crypto.tlcsprng.html#std.crypto.tlcsprng.interface">random</a>.<a href="#">int</a>(<span class="tok-type">u64</span>);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(a ^ b ^ c != <span class="tok-number">0</span>);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;issue #4532: no index out of bounds&quot;</span> {
+    <span class="tok-kw">const</span> types = [_]<span class="tok-type">type</span>{
+        <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.md5.Md5.html">Md5</a>,
+        <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha1.Sha1.html">Sha1</a>,
+        <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha2.html">sha2</a>.<a href="std.crypto.sha2.html#std.crypto.sha2.Sha224">Sha224</a>,
+        <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha2.html">sha2</a>.<a href="std.crypto.sha2.html#std.crypto.sha2.Sha256">Sha256</a>,
+        <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha2.html">sha2</a>.<a href="std.crypto.sha2.html#std.crypto.sha2.Sha384">Sha384</a>,
+        <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha2.html">sha2</a>.<a href="std.crypto.sha2.html#std.crypto.sha2.Sha512">Sha512</a>,
+        <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha3.html">sha3</a>.<a href="std.crypto.sha3.html#std.crypto.sha3.Sha3_224">Sha3_224</a>,
+        <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha3.html">sha3</a>.<a href="std.crypto.sha3.html#std.crypto.sha3.Sha3_256">Sha3_256</a>,
+        <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha3.html">sha3</a>.<a href="std.crypto.sha3.html#std.crypto.sha3.Sha3_384">Sha3_384</a>,
+        <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha3.html">sha3</a>.<a href="std.crypto.sha3.html#std.crypto.sha3.Sha3_512">Sha3_512</a>,
+        <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.blake2.html">blake2</a>.<a href="std.crypto.blake2.html#std.crypto.blake2.Blake2s128">Blake2s128</a>,
+        <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.blake2.html">blake2</a>.<a href="std.crypto.blake2.html#std.crypto.blake2.Blake2s224">Blake2s224</a>,
+        <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.blake2.html">blake2</a>.<a href="std.crypto.blake2.html#std.crypto.blake2.Blake2s256">Blake2s256</a>,
+        <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.blake2.html">blake2</a>.<a href="std.crypto.blake2.html#std.crypto.blake2.Blake2b128">Blake2b128</a>,
+        <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.blake2.html">blake2</a>.<a href="std.crypto.blake2.html#std.crypto.blake2.Blake2b256">Blake2b256</a>,
+        <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.blake2.html">blake2</a>.<a href="std.crypto.blake2.html#std.crypto.blake2.Blake2b384">Blake2b384</a>,
+        <a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.blake2.html">blake2</a>.<a href="std.crypto.blake2.html#std.crypto.blake2.Blake2b512">Blake2b512</a>,
+    };
+
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (types) |Hasher| {
+        <span class="tok-kw">var</span> block = [_]<span class="tok-type">u8</span>{<span class="tok-str">'#'</span>} ** Hasher.block_length;
+        <span class="tok-kw">var</span> out1: [Hasher.digest_length]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">var</span> out2: [Hasher.digest_length]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">const</span> h0 = Hasher.init(.{});
+        <span class="tok-kw">var</span> h = h0;
+        h.update(block[<span class="tok-number">0</span>..]);
+        h.final(&amp;out1);
+        h = h0;
+        h.update(block[<span class="tok-number">0</span>..<span class="tok-number">1</span>]);
+        h.update(block[<span class="tok-number">1</span>..]);
+        h.final(&amp;out2);
+
+        <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(out1, out2);
+    }
+}
+
+<span class="tok-comment">/// Sets a slice to zeroes.</span>
+<span class="tok-comment">/// Prevents the store from being optimized out.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">secureZero</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, s: []<span class="tok-kw">volatile</span> T) <span class="tok-type">void</span> {
+    <span class="tok-builtin">@memset</span>(s, <span class="tok-number">0</span>);
+}
+
+<span class="tok-kw">test</span> secureZero {
+    <span class="tok-kw">var</span> a = [_]<span class="tok-type">u8</span>{<span class="tok-number">0xfe</span>} ** <span class="tok-number">8</span>;
+    <span class="tok-kw">var</span> b = [_]<span class="tok-type">u8</span>{<span class="tok-number">0xfe</span>} ** <span class="tok-number">8</span>;
+
+    <span class="tok-builtin">@memset</span>(&amp;a, <span class="tok-number">0</span>);
+    <a href="std.crypto.html#std.crypto.secureZero">secureZero</a>(<span class="tok-type">u8</span>, &amp;b);
+
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, &amp;a, &amp;b);
+}
+
+<span class="tok-comment">/// Deprecated in favor of `std.crypto`. To be removed after Zig 0.14.0 is released.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// As a reminder, never use &quot;utils&quot; in a namespace (in any programming language).</span>
+<span class="tok-comment">/// https://ziglang.org/documentation/0.13.0/#Avoid-Redundancy-in-Names</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> utils = <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Deprecated in favor of `std.crypto.secureZero`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> secureZero = <a href="std.html">std</a>.<a href="std.crypto.html">crypto</a>.<a href="std.crypto.html#std.crypto.secureZero">secureZero</a>;
+    <span class="tok-comment">/// Deprecated in favor of `std.crypto.timing_safe.eql`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> timingSafeEql = <a href="std.crypto.timing_safe.html">timing_safe</a>.<a href="std.crypto.timing_safe.html#std.crypto.timing_safe.eql">eql</a>;
+    <span class="tok-comment">/// Deprecated in favor of `std.crypto.timing_safe.compare`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> timingSafeCompare = <a href="std.crypto.timing_safe.html">timing_safe</a>.<a href="std.crypto.timing_safe.html#std.crypto.timing_safe.compare">compare</a>;
+    <span class="tok-comment">/// Deprecated in favor of `std.crypto.timing_safe.add`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> timingSafeAdd = <a href="std.crypto.timing_safe.html">timing_safe</a>.<a href="std.crypto.timing_safe.html#std.crypto.timing_safe.add">add</a>;
+    <span class="tok-comment">/// Deprecated in favor of `std.crypto.timing_safe.sub`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> timingSafeSub = <a href="std.crypto.timing_safe.html">timing_safe</a>.<a href="std.crypto.timing_safe.html#std.crypto.timing_safe.sub">sub</a>;
+};</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

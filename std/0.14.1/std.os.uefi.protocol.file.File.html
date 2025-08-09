@@ -1,0 +1,566 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">os</a></li><li><a href="std.os.html" class="">uefi</a></li><li><a href="std.os.uefi.html" class="">protocol</a></li><li><a href="std.os.uefi.protocol.file.html" class="">file</a></li><li><a href="std.os.uefi.protocol.file.File.html" class="active">File</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.os.uefi.protocol.file.File" class="declHeader"><span class="declHeaderCategory">extern struct</span><span class="declHeaderIdentifier">std.os.uefi.protocol.file.File</span><a href="#src.zig-std.os.uefi.protocol.file.File">[src]</a></h1><div class="sectTypes"><h2 class="sectionHeader">Types</h2><div class="listTypes"><div class="decl"><h2 id="std.os.uefi.protocol.file.File.SeekableStream" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">SeekableStream</span><a href="#src.zig-std.os.uefi.protocol.file.File.SeekableStream">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.SeekableStream">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SeekableStream = <a href="std.io.html">io</a>.<a href="std.io.seekable_stream.html#std.io.seekable_stream.SeekableStream">SeekableStream</a>(*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.SeekError">SeekError</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.GetSeekPosError">GetSeekPosError</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.seekTo">seekTo</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.seekBy">seekBy</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.getPos">getPos</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.getEndPos">getEndPos</a>)</code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.Reader" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">Reader</span><a href="#src.zig-std.os.uefi.protocol.file.File.Reader">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.Reader">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Reader = <a href="std.io.html">io</a>.<a href="std.io.html#std.io.GenericReader">Reader</a>(*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.ReadError">ReadError</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.readFn">readFn</a>)</code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.Writer" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">Writer</span><a href="#src.zig-std.os.uefi.protocol.file.File.Writer">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.Writer">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Writer = <a href="std.io.html">io</a>.<a href="std.io.html#std.io.GenericWriter">Writer</a>(*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.WriteError">WriteError</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.writeFn">writeFn</a>)</code></pre></details></div></div></div></div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>revision: <span class="tok-type">u64</span></code></pre></div><div><pre><code>_open: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, **<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>, <span class="tok-type">u64</span>, <span class="tok-type">u64</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div><pre><code>_close: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div><pre><code>_delete: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div><pre><code>_read: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, *<span class="tok-type">usize</span>, [*]<span class="tok-type">u8</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div><pre><code>_write: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, *<span class="tok-type">usize</span>, [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div><pre><code>_get_position: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, *<span class="tok-type">u64</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div><pre><code>_set_position: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, <span class="tok-type">u64</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div><pre><code>_get_info: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, *<span class="tok-kw">const</span> <span class="tok-type">usize</span>, [*]<span class="tok-type">u8</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div><pre><code>_set_info: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, <span class="tok-type">usize</span>, [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div><pre><code>_flush: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div></div></div><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.os.uefi.protocol.file.File.efi_file_mode_read" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">efi_file_mode_read</span><a href="#src.zig-std.os.uefi.protocol.file.File.efi_file_mode_read">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.efi_file_mode_read">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_mode_read: <span class="tok-type">u64</span> = <span class="tok-number">0x0000000000000001</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.efi_file_mode_write" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">efi_file_mode_write</span><a href="#src.zig-std.os.uefi.protocol.file.File.efi_file_mode_write">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.efi_file_mode_write">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_mode_write: <span class="tok-type">u64</span> = <span class="tok-number">0x0000000000000002</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.efi_file_mode_create" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">efi_file_mode_create</span><a href="#src.zig-std.os.uefi.protocol.file.File.efi_file_mode_create">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.efi_file_mode_create">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_mode_create: <span class="tok-type">u64</span> = <span class="tok-number">0x8000000000000000</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.efi_file_read_only" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">efi_file_read_only</span><a href="#src.zig-std.os.uefi.protocol.file.File.efi_file_read_only">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.efi_file_read_only">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_read_only: <span class="tok-type">u64</span> = <span class="tok-number">0x0000000000000001</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.efi_file_hidden" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">efi_file_hidden</span><a href="#src.zig-std.os.uefi.protocol.file.File.efi_file_hidden">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.efi_file_hidden">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_hidden: <span class="tok-type">u64</span> = <span class="tok-number">0x0000000000000002</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.efi_file_system" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">efi_file_system</span><a href="#src.zig-std.os.uefi.protocol.file.File.efi_file_system">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.efi_file_system">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_system: <span class="tok-type">u64</span> = <span class="tok-number">0x0000000000000004</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.efi_file_reserved" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">efi_file_reserved</span><a href="#src.zig-std.os.uefi.protocol.file.File.efi_file_reserved">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.efi_file_reserved">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_reserved: <span class="tok-type">u64</span> = <span class="tok-number">0x0000000000000008</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.efi_file_directory" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">efi_file_directory</span><a href="#src.zig-std.os.uefi.protocol.file.File.efi_file_directory">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.efi_file_directory">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_directory: <span class="tok-type">u64</span> = <span class="tok-number">0x0000000000000010</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.efi_file_archive" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">efi_file_archive</span><a href="#src.zig-std.os.uefi.protocol.file.File.efi_file_archive">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.efi_file_archive">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_archive: <span class="tok-type">u64</span> = <span class="tok-number">0x0000000000000020</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.efi_file_valid_attr" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">efi_file_valid_attr</span><a href="#src.zig-std.os.uefi.protocol.file.File.efi_file_valid_attr">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.efi_file_valid_attr">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_valid_attr: <span class="tok-type">u64</span> = <span class="tok-number">0x0000000000000037</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.efi_file_position_end_of_file" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">efi_file_position_end_of_file</span><a href="#src.zig-std.os.uefi.protocol.file.File.efi_file_position_end_of_file">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.efi_file_position_end_of_file">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_position_end_of_file: <span class="tok-type">u64</span> = <span class="tok-number">0xffffffffffffffff</span></code></pre></details></div></div></div></div><div class="sectErrSets"><h2 class="sectionHeader">Error Sets</h2><div class="listErrSets"><div class="decl"><h2 id="std.os.uefi.protocol.file.File.SeekError" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">SeekError</span><a href="#src.zig-std.os.uefi.protocol.file.File.SeekError">[src]</a></h2><div class="sectFnErrors"><h3 class="sectionHeader">Errors</h3><div class="fnErrorsAnyError"><p><span class="tok-type">anyerror</span> means the error set is known only at runtime.</p></div><div class="tableFnErrors"><dl class="listFnErrors"><div><dt>SeekError</dt></div></dl></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.SeekError">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SeekError = <span class="tok-kw">error</span>{SeekError}</code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.GetSeekPosError" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">GetSeekPosError</span><a href="#src.zig-std.os.uefi.protocol.file.File.GetSeekPosError">[src]</a></h2><div class="sectFnErrors"><h3 class="sectionHeader">Errors</h3><div class="fnErrorsAnyError"><p><span class="tok-type">anyerror</span> means the error set is known only at runtime.</p></div><div class="tableFnErrors"><dl class="listFnErrors"><div><dt>GetSeekPosError</dt></div></dl></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.GetSeekPosError">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> GetSeekPosError = <span class="tok-kw">error</span>{GetSeekPosError}</code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.ReadError" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">ReadError</span><a href="#src.zig-std.os.uefi.protocol.file.File.ReadError">[src]</a></h2><div class="sectFnErrors"><h3 class="sectionHeader">Errors</h3><div class="fnErrorsAnyError"><p><span class="tok-type">anyerror</span> means the error set is known only at runtime.</p></div><div class="tableFnErrors"><dl class="listFnErrors"><div><dt>ReadError</dt></div></dl></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.ReadError">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ReadError = <span class="tok-kw">error</span>{ReadError}</code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.WriteError" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">WriteError</span><a href="#src.zig-std.os.uefi.protocol.file.File.WriteError">[src]</a></h2><div class="sectFnErrors"><h3 class="sectionHeader">Errors</h3><div class="fnErrorsAnyError"><p><span class="tok-type">anyerror</span> means the error set is known only at runtime.</p></div><div class="tableFnErrors"><dl class="listFnErrors"><div><dt>WriteError</dt></div></dl></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.WriteError">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> WriteError = <span class="tok-kw">error</span>{WriteError}</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.os.uefi.protocol.file.File.seekableStream" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">seekableStream</span><a href="#src.zig-std.os.uefi.protocol.file.File.seekableStream">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">seekableStream</span>(self: *<a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.SeekableStream">SeekableStream</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.os.uefi.protocol.file.File.html">File</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.seekableStream">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">seekableStream</span>(self: *<a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.SeekableStream">SeekableStream</a> {
+    <span class="tok-kw">return</span> .{ .context = self };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.reader" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">reader</span><a href="#src.zig-std.os.uefi.protocol.file.File.reader">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">reader</span>(self: *<a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.Reader">Reader</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.os.uefi.protocol.file.File.html">File</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.reader">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">reader</span>(self: *<a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.Reader">Reader</a> {
+    <span class="tok-kw">return</span> .{ .context = self };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.writer" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">writer</span><a href="#src.zig-std.os.uefi.protocol.file.File.writer">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writer</span>(self: *<a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.Writer">Writer</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.os.uefi.protocol.file.File.html">File</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.writer">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writer</span>(self: *<a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.Writer">Writer</a> {
+    <span class="tok-kw">return</span> .{ .context = self };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.open" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">open</span><a href="#src.zig-std.os.uefi.protocol.file.File.open">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">open</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, new_handle: **<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, file_name: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>, open_mode: <span class="tok-type">u64</span>, attributes: <span class="tok-type">u64</span>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a></code></pre></div><div><pre><code>new_handle: **<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a></code></pre></div><div><pre><code>file_name: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span></code></pre></div><div><pre><code>open_mode: <span class="tok-type">u64</span></code></pre></div><div><pre><code>attributes: <span class="tok-type">u64</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.open">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">open</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, new_handle: **<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, file_name: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>, open_mode: <span class="tok-type">u64</span>, attributes: <span class="tok-type">u64</span>) <a href="std.os.uefi.status.Status.html">Status</a> {
+    <span class="tok-kw">return</span> self._open(self, new_handle, file_name, open_mode, attributes);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.close" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">close</span><a href="#src.zig-std.os.uefi.protocol.file.File.close">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">close</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.close">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">close</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.status.Status.html">Status</a> {
+    <span class="tok-kw">return</span> self._close(self);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.delete" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">delete</span><a href="#src.zig-std.os.uefi.protocol.file.File.delete">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">delete</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.delete">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">delete</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.status.Status.html">Status</a> {
+    <span class="tok-kw">return</span> self._delete(self);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.read" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">read</span><a href="#src.zig-std.os.uefi.protocol.file.File.read">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">read</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, buffer_size: *<span class="tok-type">usize</span>, buffer: [*]<span class="tok-type">u8</span>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a></code></pre></div><div><pre><code>buffer_size: *<span class="tok-type">usize</span></code></pre></div><div><pre><code>buffer: [*]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.read">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">read</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, buffer_size: *<span class="tok-type">usize</span>, buffer: [*]<span class="tok-type">u8</span>) <a href="std.os.uefi.status.Status.html">Status</a> {
+    <span class="tok-kw">return</span> self._read(self, buffer_size, buffer);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.write" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">write</span><a href="#src.zig-std.os.uefi.protocol.file.File.write">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">write</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, buffer_size: *<span class="tok-type">usize</span>, buffer: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a></code></pre></div><div><pre><code>buffer_size: *<span class="tok-type">usize</span></code></pre></div><div><pre><code>buffer: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.write">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">write</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, buffer_size: *<span class="tok-type">usize</span>, buffer: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.os.uefi.status.Status.html">Status</a> {
+    <span class="tok-kw">return</span> self._write(self, buffer_size, buffer);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.getPosition" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getPosition</span><a href="#src.zig-std.os.uefi.protocol.file.File.getPosition">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPosition</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, position: *<span class="tok-type">u64</span>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a></code></pre></div><div><pre><code>position: *<span class="tok-type">u64</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.getPosition">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPosition</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, position: *<span class="tok-type">u64</span>) <a href="std.os.uefi.status.Status.html">Status</a> {
+    <span class="tok-kw">return</span> self._get_position(self, position);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.setPosition" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">setPosition</span><a href="#src.zig-std.os.uefi.protocol.file.File.setPosition">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setPosition</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, position: <span class="tok-type">u64</span>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a></code></pre></div><div><pre><code>position: <span class="tok-type">u64</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.setPosition">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setPosition</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, position: <span class="tok-type">u64</span>) <a href="std.os.uefi.status.Status.html">Status</a> {
+    <span class="tok-kw">return</span> self._set_position(self, position);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.getInfo" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getInfo</span><a href="#src.zig-std.os.uefi.protocol.file.File.getInfo">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getInfo</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, information_type: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, buffer_size: *<span class="tok-type">usize</span>, buffer: [*]<span class="tok-type">u8</span>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a></code></pre></div><div><pre><code>information_type: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a></code></pre></div><div><pre><code>buffer_size: *<span class="tok-type">usize</span></code></pre></div><div><pre><code>buffer: [*]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.getInfo">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getInfo</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, information_type: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, buffer_size: *<span class="tok-type">usize</span>, buffer: [*]<span class="tok-type">u8</span>) <a href="std.os.uefi.status.Status.html">Status</a> {
+    <span class="tok-kw">return</span> self._get_info(self, information_type, buffer_size, buffer);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.setInfo" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">setInfo</span><a href="#src.zig-std.os.uefi.protocol.file.File.setInfo">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setInfo</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, information_type: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, buffer_size: <span class="tok-type">usize</span>, buffer: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a></code></pre></div><div><pre><code>information_type: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a></code></pre></div><div><pre><code>buffer_size: <span class="tok-type">usize</span></code></pre></div><div><pre><code>buffer: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.setInfo">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setInfo</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, information_type: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, buffer_size: <span class="tok-type">usize</span>, buffer: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.os.uefi.status.Status.html">Status</a> {
+    <span class="tok-kw">return</span> self._set_info(self, information_type, buffer_size, buffer);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.uefi.protocol.file.File.flush" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">flush</span><a href="#src.zig-std.os.uefi.protocol.file.File.flush">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">flush</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.status.Status.html">Status</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File.flush">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">flush</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.status.Status.html">Status</a> {
+    <span class="tok-kw">return</span> self._flush(self);
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.os.uefi.protocol.file.File">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> File = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    revision: <span class="tok-type">u64</span>,
+    _open: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, **<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>, <span class="tok-type">u64</span>, <span class="tok-type">u64</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+    _close: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+    _delete: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+    _read: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, *<span class="tok-type">usize</span>, [*]<span class="tok-type">u8</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+    _write: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, *<span class="tok-type">usize</span>, [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+    _get_position: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, *<span class="tok-type">u64</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+    _set_position: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, <span class="tok-type">u64</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+    _get_info: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, *<span class="tok-kw">const</span> <span class="tok-type">usize</span>, [*]<span class="tok-type">u8</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+    _set_info: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, <span class="tok-type">usize</span>, [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+    _flush: *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>) <span class="tok-kw">callconv</span>(<a href="std.os.uefi.html#std.os.uefi.cc">cc</a>) <a href="std.os.uefi.status.Status.html">Status</a>,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> SeekError = <span class="tok-kw">error</span>{SeekError};
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> GetSeekPosError = <span class="tok-kw">error</span>{GetSeekPosError};
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ReadError = <span class="tok-kw">error</span>{ReadError};
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> WriteError = <span class="tok-kw">error</span>{WriteError};
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> SeekableStream = <a href="std.io.html">io</a>.<a href="std.io.seekable_stream.html#std.io.seekable_stream.SeekableStream">SeekableStream</a>(*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.SeekError">SeekError</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.GetSeekPosError">GetSeekPosError</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.seekTo">seekTo</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.seekBy">seekBy</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.getPos">getPos</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.getEndPos">getEndPos</a>);
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Reader = <a href="std.io.html">io</a>.<a href="std.io.html#std.io.GenericReader">Reader</a>(*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.ReadError">ReadError</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.readFn">readFn</a>);
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Writer = <a href="std.io.html">io</a>.<a href="std.io.html#std.io.GenericWriter">Writer</a>(*<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.WriteError">WriteError</a>, <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.writeFn">writeFn</a>);
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">seekableStream</span>(self: *<a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.SeekableStream">SeekableStream</a> {
+        <span class="tok-kw">return</span> .{ .context = self };
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">reader</span>(self: *<a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.Reader">Reader</a> {
+        <span class="tok-kw">return</span> .{ .context = self };
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writer</span>(self: *<a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.Writer">Writer</a> {
+        <span class="tok-kw">return</span> .{ .context = self };
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">open</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, new_handle: **<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, file_name: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>, open_mode: <span class="tok-type">u64</span>, attributes: <span class="tok-type">u64</span>) <a href="std.os.uefi.status.Status.html">Status</a> {
+        <span class="tok-kw">return</span> self._open(self, new_handle, file_name, open_mode, attributes);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">close</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.status.Status.html">Status</a> {
+        <span class="tok-kw">return</span> self._close(self);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">delete</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.status.Status.html">Status</a> {
+        <span class="tok-kw">return</span> self._delete(self);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">read</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, buffer_size: *<span class="tok-type">usize</span>, buffer: [*]<span class="tok-type">u8</span>) <a href="std.os.uefi.status.Status.html">Status</a> {
+        <span class="tok-kw">return</span> self._read(self, buffer_size, buffer);
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">readFn</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, buffer: []<span class="tok-type">u8</span>) <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.ReadError">ReadError</a>!<span class="tok-type">usize</span> {
+        <span class="tok-kw">var</span> size: <span class="tok-type">usize</span> = buffer.len;
+        <span class="tok-kw">if</span> (.success != self.read(&amp;size, buffer.ptr)) <span class="tok-kw">return</span> <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.ReadError">ReadError</a>.<a href="#">ReadError</a>;
+        <span class="tok-kw">return</span> size;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">write</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, buffer_size: *<span class="tok-type">usize</span>, buffer: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.os.uefi.status.Status.html">Status</a> {
+        <span class="tok-kw">return</span> self._write(self, buffer_size, buffer);
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">writeFn</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, bytes: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.WriteError">WriteError</a>!<span class="tok-type">usize</span> {
+        <span class="tok-kw">var</span> size: <span class="tok-type">usize</span> = bytes.len;
+        <span class="tok-kw">if</span> (.success != self.write(&amp;size, bytes.ptr)) <span class="tok-kw">return</span> <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.WriteError">WriteError</a>.<a href="#">WriteError</a>;
+        <span class="tok-kw">return</span> size;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPosition</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, position: *<span class="tok-type">u64</span>) <a href="std.os.uefi.status.Status.html">Status</a> {
+        <span class="tok-kw">return</span> self._get_position(self, position);
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">getPos</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.GetSeekPosError">GetSeekPosError</a>!<span class="tok-type">u64</span> {
+        <span class="tok-kw">var</span> pos: <span class="tok-type">u64</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">if</span> (.success != self.getPosition(&amp;pos)) <span class="tok-kw">return</span> <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.GetSeekPosError">GetSeekPosError</a>.<a href="#">GetSeekPosError</a>;
+        <span class="tok-kw">return</span> pos;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">getEndPos</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.GetSeekPosError">GetSeekPosError</a>!<span class="tok-type">u64</span> {<span class="tok-comment">
+        // preserve the old file position
+        </span><span class="tok-kw">var</span> pos: <span class="tok-type">u64</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">var</span> end_pos: <span class="tok-type">u64</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">if</span> (.success != self.getPosition(&amp;pos)) <span class="tok-kw">return</span> <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.GetSeekPosError">GetSeekPosError</a>.<a href="#">GetSeekPosError</a>;<span class="tok-comment">
+        // seek to end of file to get position = file size
+        </span><span class="tok-kw">if</span> (.success != self.setPosition(<a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.efi_file_position_end_of_file">efi_file_position_end_of_file</a>)) <span class="tok-kw">return</span> <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.GetSeekPosError">GetSeekPosError</a>.<a href="#">GetSeekPosError</a>;<span class="tok-comment">
+        // get the position
+        </span><span class="tok-kw">if</span> (.success != self.getPosition(&amp;end_pos)) <span class="tok-kw">return</span> <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.GetSeekPosError">GetSeekPosError</a>.<a href="#">GetSeekPosError</a>;<span class="tok-comment">
+        // restore the old position
+        </span><span class="tok-kw">if</span> (.success != self.setPosition(pos)) <span class="tok-kw">return</span> <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.GetSeekPosError">GetSeekPosError</a>.<a href="#">GetSeekPosError</a>;<span class="tok-comment">
+        // return the file size = position
+        </span><span class="tok-kw">return</span> end_pos;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setPosition</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, position: <span class="tok-type">u64</span>) <a href="std.os.uefi.status.Status.html">Status</a> {
+        <span class="tok-kw">return</span> self._set_position(self, position);
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">seekTo</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, pos: <span class="tok-type">u64</span>) <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.SeekError">SeekError</a>!<span class="tok-type">void</span> {
+        <span class="tok-kw">if</span> (.success != self.setPosition(pos)) <span class="tok-kw">return</span> <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.SeekError">SeekError</a>.<a href="#">SeekError</a>;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">seekBy</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, offset: <span class="tok-type">i64</span>) <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.SeekError">SeekError</a>!<span class="tok-type">void</span> {<span class="tok-comment">
+        // save the old position and calculate the delta
+        </span><span class="tok-kw">var</span> pos: <span class="tok-type">u64</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">if</span> (.success != self.getPosition(&amp;pos)) <span class="tok-kw">return</span> <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.SeekError">SeekError</a>.<a href="#">SeekError</a>;
+        <span class="tok-kw">const</span> seek_back = offset &lt; <span class="tok-number">0</span>;
+        <span class="tok-kw">const</span> amt = <span class="tok-builtin">@abs</span>(offset);
+        <span class="tok-kw">if</span> (seek_back) {
+            pos += amt;
+        } <span class="tok-kw">else</span> {
+            pos -= amt;
+        }
+        <span class="tok-kw">if</span> (.success != self.setPosition(pos)) <span class="tok-kw">return</span> <a href="std.os.uefi.protocol.file.File.html#std.os.uefi.protocol.file.File.SeekError">SeekError</a>.<a href="#">SeekError</a>;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getInfo</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, information_type: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, buffer_size: *<span class="tok-type">usize</span>, buffer: [*]<span class="tok-type">u8</span>) <a href="std.os.uefi.status.Status.html">Status</a> {
+        <span class="tok-kw">return</span> self._get_info(self, information_type, buffer_size, buffer);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setInfo</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>, information_type: *<span class="tok-kw">align</span>(<span class="tok-number">8</span>) <span class="tok-kw">const</span> <a href="std.os.uefi.Guid.html">Guid</a>, buffer_size: <span class="tok-type">usize</span>, buffer: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.os.uefi.status.Status.html">Status</a> {
+        <span class="tok-kw">return</span> self._set_info(self, information_type, buffer_size, buffer);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">flush</span>(self: *<span class="tok-kw">const</span> <a href="std.os.uefi.protocol.file.File.html">File</a>) <a href="std.os.uefi.status.Status.html">Status</a> {
+        <span class="tok-kw">return</span> self._flush(self);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_mode_read: <span class="tok-type">u64</span> = <span class="tok-number">0x0000000000000001</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_mode_write: <span class="tok-type">u64</span> = <span class="tok-number">0x0000000000000002</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_mode_create: <span class="tok-type">u64</span> = <span class="tok-number">0x8000000000000000</span>;
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_read_only: <span class="tok-type">u64</span> = <span class="tok-number">0x0000000000000001</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_hidden: <span class="tok-type">u64</span> = <span class="tok-number">0x0000000000000002</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_system: <span class="tok-type">u64</span> = <span class="tok-number">0x0000000000000004</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_reserved: <span class="tok-type">u64</span> = <span class="tok-number">0x0000000000000008</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_directory: <span class="tok-type">u64</span> = <span class="tok-number">0x0000000000000010</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_archive: <span class="tok-type">u64</span> = <span class="tok-number">0x0000000000000020</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_valid_attr: <span class="tok-type">u64</span> = <span class="tok-number">0x0000000000000037</span>;
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> efi_file_position_end_of_file: <span class="tok-type">u64</span> = <span class="tok-number">0xffffffffffffffff</span>;
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,509 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">os</a></li><li><a href="std.os.linux.html" class="">linux</a></li><li><a href="std.os.linux.TCP.html" class="active">TCP</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.os.linux.TCP" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.os.linux.TCP</span><a href="#src.zig-std.os.linux.TCP">[src]</a></h1><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.os.linux.TCP.NODELAY" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">NODELAY</span><a href="#src.zig-std.os.linux.TCP.NODELAY">[src]</a></h2><div class="tldDocs"><p>Turn off Nagle's algorithm</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.NODELAY">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> NODELAY = <span class="tok-number">1</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.MAXSEG" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">MAXSEG</span><a href="#src.zig-std.os.linux.TCP.MAXSEG">[src]</a></h2><div class="tldDocs"><p>Limit MSS</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.MAXSEG">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MAXSEG = <span class="tok-number">2</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.CORK" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">CORK</span><a href="#src.zig-std.os.linux.TCP.CORK">[src]</a></h2><div class="tldDocs"><p>Never send partially complete segments.</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.CORK">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> CORK = <span class="tok-number">3</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.KEEPIDLE" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">KEEPIDLE</span><a href="#src.zig-std.os.linux.TCP.KEEPIDLE">[src]</a></h2><div class="tldDocs"><p>Start keeplives after this period, in seconds</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.KEEPIDLE">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> KEEPIDLE = <span class="tok-number">4</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.KEEPINTVL" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">KEEPINTVL</span><a href="#src.zig-std.os.linux.TCP.KEEPINTVL">[src]</a></h2><div class="tldDocs"><p>Interval between keepalives</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.KEEPINTVL">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> KEEPINTVL = <span class="tok-number">5</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.KEEPCNT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">KEEPCNT</span><a href="#src.zig-std.os.linux.TCP.KEEPCNT">[src]</a></h2><div class="tldDocs"><p>Number of keepalives before death</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.KEEPCNT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> KEEPCNT = <span class="tok-number">6</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.SYNCNT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SYNCNT</span><a href="#src.zig-std.os.linux.TCP.SYNCNT">[src]</a></h2><div class="tldDocs"><p>Number of SYN retransmits</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.SYNCNT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SYNCNT = <span class="tok-number">7</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.LINGER2" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">LINGER2</span><a href="#src.zig-std.os.linux.TCP.LINGER2">[src]</a></h2><div class="tldDocs"><p>Life time of orphaned FIN-WAIT-2 state</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.LINGER2">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> LINGER2 = <span class="tok-number">8</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.DEFER_ACCEPT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">DEFER_ACCEPT</span><a href="#src.zig-std.os.linux.TCP.DEFER_ACCEPT">[src]</a></h2><div class="tldDocs"><p>Wake up listener only when data arrive</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.DEFER_ACCEPT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> DEFER_ACCEPT = <span class="tok-number">9</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.WINDOW_CLAMP" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">WINDOW_CLAMP</span><a href="#src.zig-std.os.linux.TCP.WINDOW_CLAMP">[src]</a></h2><div class="tldDocs"><p>Bound advertised window</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.WINDOW_CLAMP">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> WINDOW_CLAMP = <span class="tok-number">10</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.INFO" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">INFO</span><a href="#src.zig-std.os.linux.TCP.INFO">[src]</a></h2><div class="tldDocs"><p>Information about this connection.</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.INFO">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> INFO = <span class="tok-number">11</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.QUICKACK" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">QUICKACK</span><a href="#src.zig-std.os.linux.TCP.QUICKACK">[src]</a></h2><div class="tldDocs"><p>Block/reenable quick acks</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.QUICKACK">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> QUICKACK = <span class="tok-number">12</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.CONGESTION" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">CONGESTION</span><a href="#src.zig-std.os.linux.TCP.CONGESTION">[src]</a></h2><div class="tldDocs"><p>Congestion control algorithm</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.CONGESTION">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> CONGESTION = <span class="tok-number">13</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.MD5SIG" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">MD5SIG</span><a href="#src.zig-std.os.linux.TCP.MD5SIG">[src]</a></h2><div class="tldDocs"><p>TCP MD5 Signature (RFC2385)</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.MD5SIG">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MD5SIG = <span class="tok-number">14</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.THIN_LINEAR_TIMEOUTS" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">THIN_LINEAR_TIMEOUTS</span><a href="#src.zig-std.os.linux.TCP.THIN_LINEAR_TIMEOUTS">[src]</a></h2><div class="tldDocs"><p>Use linear timeouts for thin streams</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.THIN_LINEAR_TIMEOUTS">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> THIN_LINEAR_TIMEOUTS = <span class="tok-number">16</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.THIN_DUPACK" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">THIN_DUPACK</span><a href="#src.zig-std.os.linux.TCP.THIN_DUPACK">[src]</a></h2><div class="tldDocs"><p>Fast retrans. after 1 dupack</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.THIN_DUPACK">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> THIN_DUPACK = <span class="tok-number">17</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.USER_TIMEOUT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">USER_TIMEOUT</span><a href="#src.zig-std.os.linux.TCP.USER_TIMEOUT">[src]</a></h2><div class="tldDocs"><p>How long for loss retry before timeout</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.USER_TIMEOUT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> USER_TIMEOUT = <span class="tok-number">18</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.REPAIR" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">REPAIR</span><a href="#src.zig-std.os.linux.TCP.REPAIR">[src]</a></h2><div class="tldDocs"><p>TCP sock is under repair right now</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.REPAIR">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> REPAIR = <span class="tok-number">19</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.REPAIR_QUEUE" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">REPAIR_QUEUE</span><a href="#src.zig-std.os.linux.TCP.REPAIR_QUEUE">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.REPAIR_QUEUE">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> REPAIR_QUEUE = <span class="tok-number">20</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.QUEUE_SEQ" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">QUEUE_SEQ</span><a href="#src.zig-std.os.linux.TCP.QUEUE_SEQ">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.QUEUE_SEQ">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> QUEUE_SEQ = <span class="tok-number">21</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.REPAIR_OPTIONS" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">REPAIR_OPTIONS</span><a href="#src.zig-std.os.linux.TCP.REPAIR_OPTIONS">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.REPAIR_OPTIONS">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> REPAIR_OPTIONS = <span class="tok-number">22</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.FASTOPEN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">FASTOPEN</span><a href="#src.zig-std.os.linux.TCP.FASTOPEN">[src]</a></h2><div class="tldDocs"><p>Enable FastOpen on listeners</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.FASTOPEN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> FASTOPEN = <span class="tok-number">23</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.TIMESTAMP" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">TIMESTAMP</span><a href="#src.zig-std.os.linux.TCP.TIMESTAMP">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.TIMESTAMP">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> TIMESTAMP = <span class="tok-number">24</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.NOTSENT_LOWAT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">NOTSENT_LOWAT</span><a href="#src.zig-std.os.linux.TCP.NOTSENT_LOWAT">[src]</a></h2><div class="tldDocs"><p>limit number of unsent bytes in write queue</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.NOTSENT_LOWAT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> NOTSENT_LOWAT = <span class="tok-number">25</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.CC_INFO" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">CC_INFO</span><a href="#src.zig-std.os.linux.TCP.CC_INFO">[src]</a></h2><div class="tldDocs"><p>Get Congestion Control (optional) info</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.CC_INFO">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> CC_INFO = <span class="tok-number">26</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.SAVE_SYN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SAVE_SYN</span><a href="#src.zig-std.os.linux.TCP.SAVE_SYN">[src]</a></h2><div class="tldDocs"><p>Record SYN headers for new connections</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.SAVE_SYN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SAVE_SYN = <span class="tok-number">27</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.SAVED_SYN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SAVED_SYN</span><a href="#src.zig-std.os.linux.TCP.SAVED_SYN">[src]</a></h2><div class="tldDocs"><p>Get SYN headers recorded for connection</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.SAVED_SYN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SAVED_SYN = <span class="tok-number">28</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.REPAIR_WINDOW" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">REPAIR_WINDOW</span><a href="#src.zig-std.os.linux.TCP.REPAIR_WINDOW">[src]</a></h2><div class="tldDocs"><p>Get/set window parameters</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.REPAIR_WINDOW">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> REPAIR_WINDOW = <span class="tok-number">29</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.FASTOPEN_CONNECT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">FASTOPEN_CONNECT</span><a href="#src.zig-std.os.linux.TCP.FASTOPEN_CONNECT">[src]</a></h2><div class="tldDocs"><p>Attempt FastOpen with connect</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.FASTOPEN_CONNECT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> FASTOPEN_CONNECT = <span class="tok-number">30</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.ULP" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ULP</span><a href="#src.zig-std.os.linux.TCP.ULP">[src]</a></h2><div class="tldDocs"><p>Attach a ULP to a TCP connection</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.ULP">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ULP = <span class="tok-number">31</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.MD5SIG_EXT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">MD5SIG_EXT</span><a href="#src.zig-std.os.linux.TCP.MD5SIG_EXT">[src]</a></h2><div class="tldDocs"><p>TCP MD5 Signature with extensions</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.MD5SIG_EXT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MD5SIG_EXT = <span class="tok-number">32</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.FASTOPEN_KEY" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">FASTOPEN_KEY</span><a href="#src.zig-std.os.linux.TCP.FASTOPEN_KEY">[src]</a></h2><div class="tldDocs"><p>Set the key for Fast Open (cookie)</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.FASTOPEN_KEY">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> FASTOPEN_KEY = <span class="tok-number">33</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.FASTOPEN_NO_COOKIE" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">FASTOPEN_NO_COOKIE</span><a href="#src.zig-std.os.linux.TCP.FASTOPEN_NO_COOKIE">[src]</a></h2><div class="tldDocs"><p>Enable TFO without a TFO cookie</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.FASTOPEN_NO_COOKIE">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> FASTOPEN_NO_COOKIE = <span class="tok-number">34</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.ZEROCOPY_RECEIVE" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ZEROCOPY_RECEIVE</span><a href="#src.zig-std.os.linux.TCP.ZEROCOPY_RECEIVE">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.ZEROCOPY_RECEIVE">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ZEROCOPY_RECEIVE = <span class="tok-number">35</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.INQ" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">INQ</span><a href="#src.zig-std.os.linux.TCP.INQ">[src]</a></h2><div class="tldDocs"><p>Notify bytes available to read as a cmsg on read</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.INQ">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> INQ = <span class="tok-number">36</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.INQ" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">INQ</span><a href="#src.zig-std.os.linux.TCP.INQ">[src]</a></h2><div class="tldDocs"><p>Notify bytes available to read as a cmsg on read</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.INQ">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> INQ = <span class="tok-number">36</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.TX_DELAY" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">TX_DELAY</span><a href="#src.zig-std.os.linux.TCP.TX_DELAY">[src]</a></h2><div class="tldDocs"><p>delay outgoing packets by XX usec</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.TX_DELAY">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> TX_DELAY = <span class="tok-number">37</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.REPAIR_ON" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">REPAIR_ON</span><a href="#src.zig-std.os.linux.TCP.REPAIR_ON">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.REPAIR_ON">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> REPAIR_ON = <span class="tok-number">1</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.REPAIR_OFF" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">REPAIR_OFF</span><a href="#src.zig-std.os.linux.TCP.REPAIR_OFF">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.REPAIR_OFF">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> REPAIR_OFF = <span class="tok-number">0</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.linux.TCP.REPAIR_OFF_NO_WP" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">REPAIR_OFF_NO_WP</span><a href="#src.zig-std.os.linux.TCP.REPAIR_OFF_NO_WP">[src]</a></h2><div class="tldDocs"><p>Turn off without window probes</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.linux.TCP.REPAIR_OFF_NO_WP">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> REPAIR_OFF_NO_WP = -<span class="tok-number">1</span></code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.os.linux.TCP">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> TCP = <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Turn off Nagle's algorithm</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> NODELAY = <span class="tok-number">1</span>;
+    <span class="tok-comment">/// Limit MSS</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> MAXSEG = <span class="tok-number">2</span>;
+    <span class="tok-comment">/// Never send partially complete segments.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> CORK = <span class="tok-number">3</span>;
+    <span class="tok-comment">/// Start keeplives after this period, in seconds</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> KEEPIDLE = <span class="tok-number">4</span>;
+    <span class="tok-comment">/// Interval between keepalives</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> KEEPINTVL = <span class="tok-number">5</span>;
+    <span class="tok-comment">/// Number of keepalives before death</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> KEEPCNT = <span class="tok-number">6</span>;
+    <span class="tok-comment">/// Number of SYN retransmits</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> SYNCNT = <span class="tok-number">7</span>;
+    <span class="tok-comment">/// Life time of orphaned FIN-WAIT-2 state</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> LINGER2 = <span class="tok-number">8</span>;
+    <span class="tok-comment">/// Wake up listener only when data arrive</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> DEFER_ACCEPT = <span class="tok-number">9</span>;
+    <span class="tok-comment">/// Bound advertised window</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> WINDOW_CLAMP = <span class="tok-number">10</span>;
+    <span class="tok-comment">/// Information about this connection.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> INFO = <span class="tok-number">11</span>;
+    <span class="tok-comment">/// Block/reenable quick acks</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> QUICKACK = <span class="tok-number">12</span>;
+    <span class="tok-comment">/// Congestion control algorithm</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> CONGESTION = <span class="tok-number">13</span>;
+    <span class="tok-comment">/// TCP MD5 Signature (RFC2385)</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> MD5SIG = <span class="tok-number">14</span>;
+    <span class="tok-comment">/// Use linear timeouts for thin streams</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> THIN_LINEAR_TIMEOUTS = <span class="tok-number">16</span>;
+    <span class="tok-comment">/// Fast retrans. after 1 dupack</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> THIN_DUPACK = <span class="tok-number">17</span>;
+    <span class="tok-comment">/// How long for loss retry before timeout</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> USER_TIMEOUT = <span class="tok-number">18</span>;
+    <span class="tok-comment">/// TCP sock is under repair right now</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> REPAIR = <span class="tok-number">19</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> REPAIR_QUEUE = <span class="tok-number">20</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> QUEUE_SEQ = <span class="tok-number">21</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> REPAIR_OPTIONS = <span class="tok-number">22</span>;
+    <span class="tok-comment">/// Enable FastOpen on listeners</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> FASTOPEN = <span class="tok-number">23</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> TIMESTAMP = <span class="tok-number">24</span>;
+    <span class="tok-comment">/// limit number of unsent bytes in write queue</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> NOTSENT_LOWAT = <span class="tok-number">25</span>;
+    <span class="tok-comment">/// Get Congestion Control (optional) info</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> CC_INFO = <span class="tok-number">26</span>;
+    <span class="tok-comment">/// Record SYN headers for new connections</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> SAVE_SYN = <span class="tok-number">27</span>;
+    <span class="tok-comment">/// Get SYN headers recorded for connection</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> SAVED_SYN = <span class="tok-number">28</span>;
+    <span class="tok-comment">/// Get/set window parameters</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> REPAIR_WINDOW = <span class="tok-number">29</span>;
+    <span class="tok-comment">/// Attempt FastOpen with connect</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> FASTOPEN_CONNECT = <span class="tok-number">30</span>;
+    <span class="tok-comment">/// Attach a ULP to a TCP connection</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ULP = <span class="tok-number">31</span>;
+    <span class="tok-comment">/// TCP MD5 Signature with extensions</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> MD5SIG_EXT = <span class="tok-number">32</span>;
+    <span class="tok-comment">/// Set the key for Fast Open (cookie)</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> FASTOPEN_KEY = <span class="tok-number">33</span>;
+    <span class="tok-comment">/// Enable TFO without a TFO cookie</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> FASTOPEN_NO_COOKIE = <span class="tok-number">34</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ZEROCOPY_RECEIVE = <span class="tok-number">35</span>;
+    <span class="tok-comment">/// Notify bytes available to read as a cmsg on read</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> INQ = <span class="tok-number">36</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> CM_INQ = <a href="std.os.linux.TCP.html#std.os.linux.TCP.INQ">INQ</a>;
+    <span class="tok-comment">/// delay outgoing packets by XX usec</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> TX_DELAY = <span class="tok-number">37</span>;
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> REPAIR_ON = <span class="tok-number">1</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> REPAIR_OFF = <span class="tok-number">0</span>;
+    <span class="tok-comment">/// Turn off without window probes</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> REPAIR_OFF_NO_WP = -<span class="tok-number">1</span>;
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1355 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">crypto</a></li><li><a href="std.crypto.tls.html" class="active">tls</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.crypto.tls" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.crypto.tls</span><a href="#src.zig-std.crypto.tls">[src]</a></h1><div class="tldDocs"><p>Plaintext:</p>
+<ul>
+<li>type: ContentType</li>
+<li>legacy_record_version: u16 = 0x0303,</li>
+<li>length: u16,<ul>
+<li>The length (in bytes) of the following TLSPlaintext.fragment.  The
+length MUST NOT exceed 2^14 bytes.</li>
+</ul>
+</li>
+<li>fragment: opaque<ul>
+<li>the data being transmitted</li>
+</ul>
+</li>
+</ul>
+<p>Ciphertext</p>
+<ul>
+<li>ContentType opaque_type = application_data; /* 23 */</li>
+<li>ProtocolVersion legacy_record_version = 0x0303; /* TLS v1.2 */</li>
+<li>uint16 length;</li>
+<li>opaque encrypted_record[TLSCiphertext.length];</li>
+</ul>
+<p>Handshake:</p>
+<ul>
+<li>type: HandshakeType</li>
+<li>length: u24</li>
+<li>data: opaque</li>
+</ul>
+<p>ServerHello:</p>
+<ul>
+<li>ProtocolVersion legacy_version = 0x0303;</li>
+<li>Random random;</li>
+<li>opaque legacy_session_id_echo&lt;0..32&gt;;</li>
+<li>CipherSuite cipher_suite;</li>
+<li>uint8 legacy_compression_method = 0;</li>
+<li>Extension extensions&lt;6..2^16-1&gt;;</li>
+</ul>
+<p>Extension:</p>
+<ul>
+<li>ExtensionType extension_type;</li>
+<li>opaque extension_data&lt;0..2^16-1&gt;;</li>
+</ul>
+</div><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.crypto.tls.Client.html">std.crypto.tls.Client</a></li><li><a href="std.crypto.tls.ProtocolVersion.html">std.crypto.tls.ProtocolVersion</a></li><li><a href="std.crypto.tls.ContentType.html">std.crypto.tls.ContentType</a></li><li><a href="std.crypto.tls.HandshakeType.html">std.crypto.tls.HandshakeType</a></li><li><a href="std.crypto.tls.ExtensionType.html">std.crypto.tls.ExtensionType</a></li><li><a href="std.crypto.tls.AlertLevel.html">std.crypto.tls.AlertLevel</a></li><li><a href="std.crypto.tls.AlertDescription.html">std.crypto.tls.AlertDescription</a></li><li><a href="std.crypto.tls.SignatureScheme.html">std.crypto.tls.SignatureScheme</a></li><li><a href="std.crypto.tls.NamedGroup.html">std.crypto.tls.NamedGroup</a></li><li><a href="std.crypto.tls.PskKeyExchangeMode.html">std.crypto.tls.PskKeyExchangeMode</a></li><li><a href="std.crypto.tls.CipherSuite.html">std.crypto.tls.CipherSuite</a></li><li><a href="std.crypto.tls.CompressionMethod.html">std.crypto.tls.CompressionMethod</a></li><li><a href="std.crypto.tls.CertificateType.html">std.crypto.tls.CertificateType</a></li><li><a href="std.crypto.tls.KeyUpdateRequest.html">std.crypto.tls.KeyUpdateRequest</a></li><li><a href="std.crypto.tls.ChangeCipherSpecType.html">std.crypto.tls.ChangeCipherSpecType</a></li><li><a href="std.crypto.tls.HandshakeCipher.html">std.crypto.tls.HandshakeCipher</a></li><li><a href="std.crypto.tls.ApplicationCipher.html">std.crypto.tls.ApplicationCipher</a></li><li><a href="std.crypto.tls.Decoder.html">std.crypto.tls.Decoder</a></li></ul></div><div class="sectTypes"><h2 class="sectionHeader">Types</h2><div class="listTypes"><div class="decl"><h2 id="std.crypto.tls.HandshakeCipherT" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">HandshakeCipherT</span><a href="#src.zig-std.crypto.tls.HandshakeCipherT">[src]</a></h2><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>AeadType: <span class="tok-type">type</span></code></pre></div><div><pre><code>HashType: <span class="tok-type">type</span></code></pre></div><div><pre><code>explicit_iv_length: <span class="tok-type">comptime_int</span></code></pre></div></div></div><div class="sectTypes"><h3 class="sectionHeader">Types</h3><div class="listTypes"><div class="decl"><h3 id="std.crypto.tls.HandshakeCipherT.A" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">A</span><a href="#src.zig-std.crypto.tls.HandshakeCipherT.A">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.tls.HandshakeCipherT.A">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> A = <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT">ApplicationCipherT</a>(AeadType, HashType, explicit_iv_length)</code></pre></details></div></div></div></div><div class="sectFields"><h3 class="sectionHeader">Fields</h3><div class="listFields"><div><pre><code>transcript_hash: <a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">Hash</a></code></pre></div><div><pre><code>version: <span class="tok-kw">union</span> {
+    tls_1_2: <span class="tok-kw">struct</span> {
+        expected_server_verify_data: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">verify_data_length</a>]<span class="tok-type">u8</span>,
+        app_cipher: <a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">Tls_1_2</a>,
+    },
+    tls_1_3: <span class="tok-kw">struct</span> {
+        handshake_secret: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">Hkdf</a>.<a href="#">prk_length</a>]<span class="tok-type">u8</span>,
+        master_secret: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">Hkdf</a>.<a href="#">prk_length</a>]<span class="tok-type">u8</span>,
+        client_handshake_key: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">AEAD</a>.<a href="#">key_length</a>]<span class="tok-type">u8</span>,
+        server_handshake_key: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">AEAD</a>.<a href="#">key_length</a>]<span class="tok-type">u8</span>,
+        client_finished_key: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">Hmac</a>.<a href="#">key_length</a>]<span class="tok-type">u8</span>,
+        server_finished_key: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">Hmac</a>.<a href="#">key_length</a>]<span class="tok-type">u8</span>,
+        client_handshake_iv: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">AEAD</a>.<a href="#">nonce_length</a>]<span class="tok-type">u8</span>,
+        server_handshake_iv: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">AEAD</a>.<a href="#">nonce_length</a>]<span class="tok-type">u8</span>,
+    },
+}</code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.tls.HandshakeCipherT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">HandshakeCipherT</span>(<span class="tok-kw">comptime</span> AeadType: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> HashType: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> explicit_iv_length: <span class="tok-type">comptime_int</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> A = <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT">ApplicationCipherT</a>(AeadType, HashType, explicit_iv_length);
+
+        transcript_hash: <a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">Hash</a>,
+        version: <span class="tok-kw">union</span> {
+            tls_1_2: <span class="tok-kw">struct</span> {
+                expected_server_verify_data: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">verify_data_length</a>]<span class="tok-type">u8</span>,
+                app_cipher: <a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">Tls_1_2</a>,
+            },
+            tls_1_3: <span class="tok-kw">struct</span> {
+                handshake_secret: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">Hkdf</a>.<a href="#">prk_length</a>]<span class="tok-type">u8</span>,
+                master_secret: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">Hkdf</a>.<a href="#">prk_length</a>]<span class="tok-type">u8</span>,
+                client_handshake_key: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">AEAD</a>.<a href="#">key_length</a>]<span class="tok-type">u8</span>,
+                server_handshake_key: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">AEAD</a>.<a href="#">key_length</a>]<span class="tok-type">u8</span>,
+                client_finished_key: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">Hmac</a>.<a href="#">key_length</a>]<span class="tok-type">u8</span>,
+                server_finished_key: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">Hmac</a>.<a href="#">key_length</a>]<span class="tok-type">u8</span>,
+                client_handshake_iv: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">AEAD</a>.<a href="#">nonce_length</a>]<span class="tok-type">u8</span>,
+                server_handshake_iv: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">AEAD</a>.<a href="#">nonce_length</a>]<span class="tok-type">u8</span>,
+            },
+        },
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.tls.ApplicationCipherT" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">ApplicationCipherT</span><a href="#src.zig-std.crypto.tls.ApplicationCipherT">[src]</a></h2><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>AeadType: <span class="tok-type">type</span></code></pre></div><div><pre><code>HashType: <span class="tok-type">type</span></code></pre></div><div><pre><code>explicit_iv_length: <span class="tok-type">comptime_int</span></code></pre></div></div></div><div class="sectContainers"><h3 class="sectionHeader">Container Types</h3><ul class="listContainers columns"><li><a href="std.crypto.tls.ApplicationCipherT.Tls_1_2.html">std.crypto.tls.ApplicationCipherT.Tls_1_2</a></li><li><a href="std.crypto.tls.ApplicationCipherT.Tls_1_3.html">std.crypto.tls.ApplicationCipherT.Tls_1_3</a></li></ul></div><div class="sectTypes"><h3 class="sectionHeader">Types</h3><div class="listTypes"><div class="decl"><h3 id="std.crypto.tls.ApplicationCipherT.Hmac" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">Hmac</span><a href="#src.zig-std.crypto.tls.ApplicationCipherT.Hmac">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.tls.ApplicationCipherT.Hmac">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Hmac = <a href="std.crypto.html">crypto</a>.<a href="std.crypto.auth.html">auth</a>.<a href="std.crypto.hmac.html">hmac</a>.<a href="std.crypto.hmac.html#std.crypto.hmac.Hmac">Hmac</a>(<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.Hash">Hash</a>)</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.tls.ApplicationCipherT.Hkdf" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">Hkdf</span><a href="#src.zig-std.crypto.tls.ApplicationCipherT.Hkdf">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.tls.ApplicationCipherT.Hkdf">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Hkdf = <a href="std.crypto.html">crypto</a>.<a href="std.crypto.kdf.html">kdf</a>.<a href="std.crypto.hkdf.html">hkdf</a>.<a href="std.crypto.hkdf.html#std.crypto.hkdf.Hkdf">Hkdf</a>(<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.Hmac">Hmac</a>)</code></pre></details></div></div></div></div><div class="sectFields"><h3 class="sectionHeader">Fields</h3><div class="listFields"><div><pre><code>tls_1_2: <a href="std.crypto.tls.ApplicationCipherT.Tls_1_2.html">Tls_1_2</a></code></pre></div><div><pre><code>tls_1_3: <a href="std.crypto.tls.ApplicationCipherT.Tls_1_3.html">Tls_1_3</a></code></pre></div></div></div><div class="sectValues"><h3 class="sectionHeader">Values</h3><div class="listValues"><div class="decl"><h3 id="std.crypto.tls.ApplicationCipherT.AEAD" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">AEAD</span><a href="#src.zig-std.crypto.tls.ApplicationCipherT.AEAD">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.tls.ApplicationCipherT.AEAD">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> AEAD = AeadType</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.tls.ApplicationCipherT.Hash" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">Hash</span><a href="#src.zig-std.crypto.tls.ApplicationCipherT.Hash">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.tls.ApplicationCipherT.Hash">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Hash = HashType</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.tls.ApplicationCipherT.enc_key_length" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">enc_key_length</span><a href="#src.zig-std.crypto.tls.ApplicationCipherT.enc_key_length">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.tls.ApplicationCipherT.enc_key_length">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> enc_key_length = <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.AEAD">AEAD</a>.<a href="#">key_length</a></code></pre></details></div></div><div class="decl"><h3 id="std.crypto.tls.ApplicationCipherT.fixed_iv_length" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">fixed_iv_length</span><a href="#src.zig-std.crypto.tls.ApplicationCipherT.fixed_iv_length">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.tls.ApplicationCipherT.fixed_iv_length">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> fixed_iv_length = <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.AEAD">AEAD</a>.<a href="#">nonce_length</a> - explicit_iv_length</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.tls.ApplicationCipherT.record_iv_length" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">record_iv_length</span><a href="#src.zig-std.crypto.tls.ApplicationCipherT.record_iv_length">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.tls.ApplicationCipherT.record_iv_length">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> record_iv_length = explicit_iv_length</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.tls.ApplicationCipherT.mac_length" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">mac_length</span><a href="#src.zig-std.crypto.tls.ApplicationCipherT.mac_length">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.tls.ApplicationCipherT.mac_length">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> mac_length = <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.AEAD">AEAD</a>.<a href="#">tag_length</a></code></pre></details></div></div><div class="decl"><h3 id="std.crypto.tls.ApplicationCipherT.mac_key_length" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">mac_key_length</span><a href="#src.zig-std.crypto.tls.ApplicationCipherT.mac_key_length">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.tls.ApplicationCipherT.mac_key_length">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> mac_key_length = <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.Hmac">Hmac</a>.<a href="#">key_length_min</a></code></pre></details></div></div><div class="decl"><h3 id="std.crypto.tls.ApplicationCipherT.verify_data_length" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">verify_data_length</span><a href="#src.zig-std.crypto.tls.ApplicationCipherT.verify_data_length">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.tls.ApplicationCipherT.verify_data_length">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> verify_data_length = <span class="tok-number">12</span></code></pre></details></div></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.tls.ApplicationCipherT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">ApplicationCipherT</span>(<span class="tok-kw">comptime</span> AeadType: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> HashType: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> explicit_iv_length: <span class="tok-type">comptime_int</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">union</span> {
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> AEAD = AeadType;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Hash = HashType;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Hmac = <a href="std.crypto.html">crypto</a>.<a href="std.crypto.auth.html">auth</a>.<a href="std.crypto.hmac.html">hmac</a>.<a href="std.crypto.hmac.html#std.crypto.hmac.Hmac">Hmac</a>(<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.Hash">Hash</a>);
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Hkdf = <a href="std.crypto.html">crypto</a>.<a href="std.crypto.kdf.html">kdf</a>.<a href="std.crypto.hkdf.html">hkdf</a>.<a href="std.crypto.hkdf.html#std.crypto.hkdf.Hkdf">Hkdf</a>(<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.Hmac">Hmac</a>);
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> enc_key_length = <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.AEAD">AEAD</a>.<a href="#">key_length</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> fixed_iv_length = <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.AEAD">AEAD</a>.<a href="#">nonce_length</a> - explicit_iv_length;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> record_iv_length = explicit_iv_length;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> mac_length = <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.AEAD">AEAD</a>.<a href="#">tag_length</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> mac_key_length = <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.Hmac">Hmac</a>.<a href="#">key_length_min</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> verify_data_length = <span class="tok-number">12</span>;
+
+        tls_1_2: <a href="std.crypto.tls.ApplicationCipherT.Tls_1_2.html">Tls_1_2</a>,
+        tls_1_3: <a href="std.crypto.tls.ApplicationCipherT.Tls_1_3.html">Tls_1_3</a>,
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Tls_1_2 = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+            client_write_MAC_key: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.mac_key_length">mac_key_length</a>]<span class="tok-type">u8</span>,
+            server_write_MAC_key: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.mac_key_length">mac_key_length</a>]<span class="tok-type">u8</span>,
+            client_write_key: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.enc_key_length">enc_key_length</a>]<span class="tok-type">u8</span>,
+            server_write_key: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.enc_key_length">enc_key_length</a>]<span class="tok-type">u8</span>,
+            client_write_IV: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.fixed_iv_length">fixed_iv_length</a>]<span class="tok-type">u8</span>,
+            server_write_IV: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.fixed_iv_length">fixed_iv_length</a>]<span class="tok-type">u8</span>,<span class="tok-comment">
+            // non-standard entropy
+            </span>client_salt: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.record_iv_length">record_iv_length</a>]<span class="tok-type">u8</span>,
+        };
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Tls_1_3 = <span class="tok-kw">struct</span> {
+            client_secret: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.Hash">Hash</a>.<a href="#">digest_length</a>]<span class="tok-type">u8</span>,
+            server_secret: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.Hash">Hash</a>.<a href="#">digest_length</a>]<span class="tok-type">u8</span>,
+            client_key: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.AEAD">AEAD</a>.<a href="#">key_length</a>]<span class="tok-type">u8</span>,
+            server_key: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.AEAD">AEAD</a>.<a href="#">key_length</a>]<span class="tok-type">u8</span>,
+            client_iv: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.AEAD">AEAD</a>.<a href="#">nonce_length</a>]<span class="tok-type">u8</span>,
+            server_iv: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.AEAD">AEAD</a>.<a href="#">nonce_length</a>]<span class="tok-type">u8</span>,
+        };
+    };
+}</code></pre></details></div></div></div></div><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.crypto.tls.record_header_len" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">record_header_len</span><a href="#src.zig-std.crypto.tls.record_header_len">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.tls.record_header_len">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> record_header_len = <span class="tok-number">5</span></code></pre></details></div></div><div class="decl"><h2 id="std.crypto.tls.max_ciphertext_inner_record_len" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">max_ciphertext_inner_record_len</span><a href="#src.zig-std.crypto.tls.max_ciphertext_inner_record_len">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.tls.max_ciphertext_inner_record_len">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> max_ciphertext_inner_record_len = <span class="tok-number">1</span> &lt;&lt; <span class="tok-number">14</span></code></pre></details></div></div><div class="decl"><h2 id="std.crypto.tls.max_ciphertext_len" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">max_ciphertext_len</span><a href="#src.zig-std.crypto.tls.max_ciphertext_len">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.tls.max_ciphertext_len">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> max_ciphertext_len = <a href="std.crypto.tls.html#std.crypto.tls.max_ciphertext_inner_record_len">max_ciphertext_inner_record_len</a> + <span class="tok-number">256</span></code></pre></details></div></div><div class="decl"><h2 id="std.crypto.tls.max_ciphertext_record_len" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">max_ciphertext_record_len</span><a href="#src.zig-std.crypto.tls.max_ciphertext_record_len">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.tls.max_ciphertext_record_len">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> max_ciphertext_record_len = <a href="std.crypto.tls.html#std.crypto.tls.max_ciphertext_len">max_ciphertext_len</a> + <a href="std.crypto.tls.html#std.crypto.tls.record_header_len">record_header_len</a></code></pre></details></div></div><div class="decl"><h2 id="std.crypto.tls.hello_retry_request_sequence" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">hello_retry_request_sequence</span><a href="#src.zig-std.crypto.tls.hello_retry_request_sequence">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.tls.hello_retry_request_sequence">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> hello_retry_request_sequence = [<span class="tok-number">32</span>]<span class="tok-type">u8</span>{
+    <span class="tok-number">0xCF</span>, <span class="tok-number">0x21</span>, <span class="tok-number">0xAD</span>, <span class="tok-number">0x74</span>, <span class="tok-number">0xE5</span>, <span class="tok-number">0x9A</span>, <span class="tok-number">0x61</span>, <span class="tok-number">0x11</span>, <span class="tok-number">0xBE</span>, <span class="tok-number">0x1D</span>, <span class="tok-number">0x8C</span>, <span class="tok-number">0x02</span>, <span class="tok-number">0x1E</span>, <span class="tok-number">0x65</span>, <span class="tok-number">0xB8</span>, <span class="tok-number">0x91</span>,
+    <span class="tok-number">0xC2</span>, <span class="tok-number">0xA2</span>, <span class="tok-number">0x11</span>, <span class="tok-number">0x16</span>, <span class="tok-number">0x7A</span>, <span class="tok-number">0xBB</span>, <span class="tok-number">0x8C</span>, <span class="tok-number">0x5E</span>, <span class="tok-number">0x07</span>, <span class="tok-number">0x9E</span>, <span class="tok-number">0x09</span>, <span class="tok-number">0xE2</span>, <span class="tok-number">0xC8</span>, <span class="tok-number">0xA8</span>, <span class="tok-number">0x33</span>, <span class="tok-number">0x9C</span>,
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.tls.close_notify_alert" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">close_notify_alert</span><a href="#src.zig-std.crypto.tls.close_notify_alert">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.tls.close_notify_alert">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> close_notify_alert = [_]<span class="tok-type">u8</span>{
+    <span class="tok-builtin">@intFromEnum</span>(<a href="std.crypto.tls.AlertLevel.html">AlertLevel</a>.<a href="#">warning</a>),
+    <span class="tok-builtin">@intFromEnum</span>(<a href="std.crypto.tls.AlertDescription.html">AlertDescription</a>.<a href="#">close_notify</a>),
+}</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.crypto.tls.hmacExpandLabel" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">hmacExpandLabel</span><a href="#src.zig-std.crypto.tls.hmacExpandLabel">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">hmacExpandLabel</span>( <span class="tok-kw">comptime</span> Hmac: <span class="tok-type">type</span>, secret: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, label_then_seed: []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, <span class="tok-kw">comptime</span> len: <span class="tok-type">usize</span>, ) [len]<span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>Hmac: <span class="tok-type">type</span></code></pre></div><div><pre><code>secret: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>label_then_seed: []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>len: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.tls.hmacExpandLabel">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">hmacExpandLabel</span>(
+    <span class="tok-kw">comptime</span> Hmac: <span class="tok-type">type</span>,
+    secret: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    label_then_seed: []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    <span class="tok-kw">comptime</span> len: <span class="tok-type">usize</span>,
+) [len]<span class="tok-type">u8</span> {
+    <span class="tok-kw">const</span> initial_hmac: Hmac = .init(secret);
+    <span class="tok-kw">var</span> a: [Hmac.mac_length]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">var</span> result: [<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.alignForwardAnyAlign">alignForwardAnyAlign</a>(<span class="tok-type">usize</span>, len, Hmac.mac_length)]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">var</span> index: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (index &lt; result.len) : (index += Hmac.mac_length) {
+        <span class="tok-kw">var</span> a_hmac = initial_hmac;
+        <span class="tok-kw">if</span> (index &gt; <span class="tok-number">0</span>) a_hmac.update(&amp;a) <span class="tok-kw">else</span> <span class="tok-kw">for</span> (label_then_seed) |part| a_hmac.update(part);
+        a_hmac.final(&amp;a);
+
+        <span class="tok-kw">var</span> result_hmac = initial_hmac;
+        result_hmac.update(&amp;a);
+        <span class="tok-kw">for</span> (label_then_seed) |part| result_hmac.update(part);
+        result_hmac.final(result[index..][<span class="tok-number">0</span>..Hmac.mac_length]);
+    }
+    <span class="tok-kw">return</span> result[<span class="tok-number">0</span>..len].*;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.tls.hkdfExpandLabel" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">hkdfExpandLabel</span><a href="#src.zig-std.crypto.tls.hkdfExpandLabel">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">hkdfExpandLabel</span>( <span class="tok-kw">comptime</span> Hkdf: <span class="tok-type">type</span>, key: [Hkdf.prk_length]<span class="tok-type">u8</span>, label: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, context: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, <span class="tok-kw">comptime</span> len: <span class="tok-type">usize</span>, ) [len]<span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>Hkdf: <span class="tok-type">type</span></code></pre></div><div><pre><code>key: [Hkdf.prk_length]<span class="tok-type">u8</span></code></pre></div><div><pre><code>label: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>context: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>len: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.tls.hkdfExpandLabel">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">hkdfExpandLabel</span>(
+    <span class="tok-kw">comptime</span> Hkdf: <span class="tok-type">type</span>,
+    key: [Hkdf.prk_length]<span class="tok-type">u8</span>,
+    label: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    context: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    <span class="tok-kw">comptime</span> len: <span class="tok-type">usize</span>,
+) [len]<span class="tok-type">u8</span> {
+    <span class="tok-kw">const</span> max_label_len = <span class="tok-number">255</span>;
+    <span class="tok-kw">const</span> max_context_len = <span class="tok-number">255</span>;
+    <span class="tok-kw">const</span> tls13 = <span class="tok-str">&quot;tls13 &quot;</span>;
+    <span class="tok-kw">var</span> buf: [<span class="tok-number">2</span> + <span class="tok-number">1</span> + tls13.len + max_label_len + <span class="tok-number">1</span> + max_context_len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u16</span>, buf[<span class="tok-number">0</span>..<span class="tok-number">2</span>], len, .big);
+    buf[<span class="tok-number">2</span>] = <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-builtin">@intCast</span>(tls13.len + label.len));
+    buf[<span class="tok-number">3</span>..][<span class="tok-number">0</span>..tls13.len].* = tls13.*;
+    <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">3</span> + tls13.len;
+    <span class="tok-builtin">@memcpy</span>(buf[i..][<span class="tok-number">0</span>..label.len], label);
+    i += label.len;
+    buf[i] = <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-builtin">@intCast</span>(context.len));
+    i += <span class="tok-number">1</span>;
+    <span class="tok-builtin">@memcpy</span>(buf[i..][<span class="tok-number">0</span>..context.len], context);
+    i += context.len;
+
+    <span class="tok-kw">var</span> result: [len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    Hkdf.expand(&amp;result, buf[<span class="tok-number">0</span>..i], key);
+    <span class="tok-kw">return</span> result;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.tls.emptyHash" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">emptyHash</span><a href="#src.zig-std.crypto.tls.emptyHash">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">emptyHash</span>(<span class="tok-kw">comptime</span> Hash: <span class="tok-type">type</span>) [Hash.digest_length]<span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>Hash: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.tls.emptyHash">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">emptyHash</span>(<span class="tok-kw">comptime</span> Hash: <span class="tok-type">type</span>) [Hash.digest_length]<span class="tok-type">u8</span> {
+    <span class="tok-kw">var</span> result: [Hash.digest_length]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    Hash.hash(&amp;.{}, &amp;result, .{});
+    <span class="tok-kw">return</span> result;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.tls.hmac" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">hmac</span><a href="#src.zig-std.crypto.tls.hmac">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">hmac</span>(<span class="tok-kw">comptime</span> Hmac: <span class="tok-type">type</span>, message: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, key: [Hmac.key_length]<span class="tok-type">u8</span>) [Hmac.mac_length]<span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>Hmac: <span class="tok-type">type</span></code></pre></div><div><pre><code>message: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>key: [Hmac.key_length]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.tls.hmac">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">hmac</span>(<span class="tok-kw">comptime</span> Hmac: <span class="tok-type">type</span>, message: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, key: [Hmac.key_length]<span class="tok-type">u8</span>) [Hmac.mac_length]<span class="tok-type">u8</span> {
+    <span class="tok-kw">var</span> result: [Hmac.mac_length]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    Hmac.create(&amp;result, message, &amp;key);
+    <span class="tok-kw">return</span> result;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.tls.extension" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">extension</span><a href="#src.zig-std.crypto.tls.extension">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">extension</span>(et: <a href="std.crypto.tls.ExtensionType.html">ExtensionType</a>, bytes: <span class="tok-kw">anytype</span>) [<span class="tok-number">2</span> + <span class="tok-number">2</span> + bytes.len]<span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>et: <a href="std.crypto.tls.ExtensionType.html">ExtensionType</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.tls.extension">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">extension</span>(et: <a href="std.crypto.tls.ExtensionType.html">ExtensionType</a>, bytes: <span class="tok-kw">anytype</span>) [<span class="tok-number">2</span> + <span class="tok-number">2</span> + bytes.len]<span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> <a href="std.crypto.tls.html#std.crypto.tls.int">int</a>(<span class="tok-type">u16</span>, <span class="tok-builtin">@intFromEnum</span>(et)) ++ <a href="std.crypto.tls.html#std.crypto.tls.array">array</a>(<span class="tok-type">u16</span>, <span class="tok-type">u8</span>, bytes);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.tls.array" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">array</span><a href="#src.zig-std.crypto.tls.array">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">array</span>( <span class="tok-kw">comptime</span> Len: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> Elem: <span class="tok-type">type</span>, elems: <span class="tok-kw">anytype</span>, ) [<span class="tok-builtin">@divExact</span>(<span class="tok-builtin">@bitSizeOf</span>(Len), <span class="tok-number">8</span>) + <span class="tok-builtin">@divExact</span>(<span class="tok-builtin">@bitSizeOf</span>(Elem), <span class="tok-number">8</span>) * elems.len]<span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>Len: <span class="tok-type">type</span></code></pre></div><div><pre><code>Elem: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.tls.array">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">array</span>(
+    <span class="tok-kw">comptime</span> Len: <span class="tok-type">type</span>,
+    <span class="tok-kw">comptime</span> Elem: <span class="tok-type">type</span>,
+    elems: <span class="tok-kw">anytype</span>,
+) [<span class="tok-builtin">@divExact</span>(<span class="tok-builtin">@bitSizeOf</span>(Len), <span class="tok-number">8</span>) + <span class="tok-builtin">@divExact</span>(<span class="tok-builtin">@bitSizeOf</span>(Elem), <span class="tok-number">8</span>) * elems.len]<span class="tok-type">u8</span> {
+    <span class="tok-kw">const</span> len_size = <span class="tok-builtin">@divExact</span>(<span class="tok-builtin">@bitSizeOf</span>(Len), <span class="tok-number">8</span>);
+    <span class="tok-kw">const</span> elem_size = <span class="tok-builtin">@divExact</span>(<span class="tok-builtin">@bitSizeOf</span>(Elem), <span class="tok-number">8</span>);
+    <span class="tok-kw">var</span> arr: [len_size + elem_size * elems.len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(Len, arr[<span class="tok-number">0</span>..len_size], <span class="tok-builtin">@intCast</span>(elem_size * elems.len), .big);
+    <span class="tok-kw">const</span> ElemInt = <span class="tok-builtin">@Type</span>(.{ .int = .{ .signedness = .unsigned, .bits = <span class="tok-builtin">@bitSizeOf</span>(Elem) } });
+    <span class="tok-kw">for</span> (<span class="tok-number">0</span>.., <span class="tok-builtin">@as</span>([elems.len]Elem, elems)) |index, elem| {
+        <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(
+            ElemInt,
+            arr[len_size + elem_size * index ..][<span class="tok-number">0</span>..elem_size],
+            <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(Elem)) {
+                .int =&gt; <span class="tok-builtin">@as</span>(Elem, elem),
+                .@&quot;enum&quot; =&gt; <span class="tok-builtin">@intFromEnum</span>(<span class="tok-builtin">@as</span>(Elem, elem)),
+                <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(Elem, elem)),
+            },
+            .big,
+        );
+    }
+    <span class="tok-kw">return</span> arr;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.tls.int" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">int</span><a href="#src.zig-std.crypto.tls.int">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">int</span>(<span class="tok-kw">comptime</span> Int: <span class="tok-type">type</span>, val: Int) [<span class="tok-builtin">@divExact</span>(<span class="tok-builtin">@bitSizeOf</span>(Int), <span class="tok-number">8</span>)]<span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>Int: <span class="tok-type">type</span></code></pre></div><div><pre><code>val: Int</code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.tls.int">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">int</span>(<span class="tok-kw">comptime</span> Int: <span class="tok-type">type</span>, val: Int) [<span class="tok-builtin">@divExact</span>(<span class="tok-builtin">@bitSizeOf</span>(Int), <span class="tok-number">8</span>)]<span class="tok-type">u8</span> {
+    <span class="tok-kw">var</span> arr: [<span class="tok-builtin">@divExact</span>(<span class="tok-builtin">@bitSizeOf</span>(Int), <span class="tok-number">8</span>)]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(Int, &amp;arr, val, .big);
+    <span class="tok-kw">return</span> arr;
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.crypto.tls">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-comment">//! Plaintext:</span>
+<span class="tok-comment">//! * type: ContentType</span>
+<span class="tok-comment">//! * legacy_record_version: u16 = 0x0303,</span>
+<span class="tok-comment">//! * length: u16,</span>
+<span class="tok-comment">//!   - The length (in bytes) of the following TLSPlaintext.fragment.  The</span>
+<span class="tok-comment">//!     length MUST NOT exceed 2^14 bytes.</span>
+<span class="tok-comment">//! * fragment: opaque</span>
+<span class="tok-comment">//!   - the data being transmitted</span>
+<span class="tok-comment">//!</span>
+<span class="tok-comment">//! Ciphertext</span>
+<span class="tok-comment">//! * ContentType opaque_type = application_data; /* 23 */</span>
+<span class="tok-comment">//! * ProtocolVersion legacy_record_version = 0x0303; /* TLS v1.2 */</span>
+<span class="tok-comment">//! * uint16 length;</span>
+<span class="tok-comment">//! * opaque encrypted_record[TLSCiphertext.length];</span>
+<span class="tok-comment">//!</span>
+<span class="tok-comment">//! Handshake:</span>
+<span class="tok-comment">//! * type: HandshakeType</span>
+<span class="tok-comment">//! * length: u24</span>
+<span class="tok-comment">//! * data: opaque</span>
+<span class="tok-comment">//!</span>
+<span class="tok-comment">//! ServerHello:</span>
+<span class="tok-comment">//! * ProtocolVersion legacy_version = 0x0303;</span>
+<span class="tok-comment">//! * Random random;</span>
+<span class="tok-comment">//! * opaque legacy_session_id_echo&lt;0..32&gt;;</span>
+<span class="tok-comment">//! * CipherSuite cipher_suite;</span>
+<span class="tok-comment">//! * uint8 legacy_compression_method = 0;</span>
+<span class="tok-comment">//! * Extension extensions&lt;6..2^16-1&gt;;</span>
+<span class="tok-comment">//!</span>
+<span class="tok-comment">//! Extension:</span>
+<span class="tok-comment">//! * ExtensionType extension_type;</span>
+<span class="tok-comment">//! * opaque extension_data&lt;0..2^16-1&gt;;</span>
+
+<span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;../std.zig&quot;</span>);
+<span class="tok-kw">const</span> Tls = <span class="tok-builtin">@This</span>();
+<span class="tok-kw">const</span> net = <a href="std.html">std</a>.<a href="std.net.html">net</a>;
+<span class="tok-kw">const</span> mem = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>;
+<span class="tok-kw">const</span> crypto = <a href="std.html">std</a>.<a href="std.crypto.html">crypto</a>;
+<span class="tok-kw">const</span> assert = <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Client = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;tls/Client.zig&quot;</span>);
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> record_header_len = <span class="tok-number">5</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> max_ciphertext_inner_record_len = <span class="tok-number">1</span> &lt;&lt; <span class="tok-number">14</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> max_ciphertext_len = <a href="std.crypto.tls.html#std.crypto.tls.max_ciphertext_inner_record_len">max_ciphertext_inner_record_len</a> + <span class="tok-number">256</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> max_ciphertext_record_len = <a href="std.crypto.tls.html#std.crypto.tls.max_ciphertext_len">max_ciphertext_len</a> + <a href="std.crypto.tls.html#std.crypto.tls.record_header_len">record_header_len</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> hello_retry_request_sequence = [<span class="tok-number">32</span>]<span class="tok-type">u8</span>{
+    <span class="tok-number">0xCF</span>, <span class="tok-number">0x21</span>, <span class="tok-number">0xAD</span>, <span class="tok-number">0x74</span>, <span class="tok-number">0xE5</span>, <span class="tok-number">0x9A</span>, <span class="tok-number">0x61</span>, <span class="tok-number">0x11</span>, <span class="tok-number">0xBE</span>, <span class="tok-number">0x1D</span>, <span class="tok-number">0x8C</span>, <span class="tok-number">0x02</span>, <span class="tok-number">0x1E</span>, <span class="tok-number">0x65</span>, <span class="tok-number">0xB8</span>, <span class="tok-number">0x91</span>,
+    <span class="tok-number">0xC2</span>, <span class="tok-number">0xA2</span>, <span class="tok-number">0x11</span>, <span class="tok-number">0x16</span>, <span class="tok-number">0x7A</span>, <span class="tok-number">0xBB</span>, <span class="tok-number">0x8C</span>, <span class="tok-number">0x5E</span>, <span class="tok-number">0x07</span>, <span class="tok-number">0x9E</span>, <span class="tok-number">0x09</span>, <span class="tok-number">0xE2</span>, <span class="tok-number">0xC8</span>, <span class="tok-number">0xA8</span>, <span class="tok-number">0x33</span>, <span class="tok-number">0x9C</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> close_notify_alert = [_]<span class="tok-type">u8</span>{
+    <span class="tok-builtin">@intFromEnum</span>(<a href="std.crypto.tls.AlertLevel.html">AlertLevel</a>.<a href="#">warning</a>),
+    <span class="tok-builtin">@intFromEnum</span>(<a href="std.crypto.tls.AlertDescription.html">AlertDescription</a>.<a href="#">close_notify</a>),
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ProtocolVersion = <span class="tok-kw">enum</span>(<span class="tok-type">u16</span>) {
+    tls_1_0 = <span class="tok-number">0x0301</span>,
+    tls_1_1 = <span class="tok-number">0x0302</span>,
+    tls_1_2 = <span class="tok-number">0x0303</span>,
+    tls_1_3 = <span class="tok-number">0x0304</span>,
+    _,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ContentType = <span class="tok-kw">enum</span>(<span class="tok-type">u8</span>) {
+    invalid = <span class="tok-number">0</span>,
+    change_cipher_spec = <span class="tok-number">20</span>,
+    alert = <span class="tok-number">21</span>,
+    handshake = <span class="tok-number">22</span>,
+    application_data = <span class="tok-number">23</span>,
+    _,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> HandshakeType = <span class="tok-kw">enum</span>(<span class="tok-type">u8</span>) {
+    hello_request = <span class="tok-number">0</span>,
+    client_hello = <span class="tok-number">1</span>,
+    server_hello = <span class="tok-number">2</span>,
+    new_session_ticket = <span class="tok-number">4</span>,
+    end_of_early_data = <span class="tok-number">5</span>,
+    encrypted_extensions = <span class="tok-number">8</span>,
+    certificate = <span class="tok-number">11</span>,
+    server_key_exchange = <span class="tok-number">12</span>,
+    certificate_request = <span class="tok-number">13</span>,
+    server_hello_done = <span class="tok-number">14</span>,
+    certificate_verify = <span class="tok-number">15</span>,
+    client_key_exchange = <span class="tok-number">16</span>,
+    finished = <span class="tok-number">20</span>,
+    key_update = <span class="tok-number">24</span>,
+    message_hash = <span class="tok-number">254</span>,
+    _,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ExtensionType = <span class="tok-kw">enum</span>(<span class="tok-type">u16</span>) {
+    <span class="tok-comment">/// RFC 6066</span>
+    server_name = <span class="tok-number">0</span>,
+    <span class="tok-comment">/// RFC 6066</span>
+    max_fragment_length = <span class="tok-number">1</span>,
+    <span class="tok-comment">/// RFC 6066</span>
+    status_request = <span class="tok-number">5</span>,
+    <span class="tok-comment">/// RFC 8422, 7919</span>
+    supported_groups = <span class="tok-number">10</span>,
+    <span class="tok-comment">/// RFC 8446</span>
+    signature_algorithms = <span class="tok-number">13</span>,
+    <span class="tok-comment">/// RFC 5764</span>
+    use_srtp = <span class="tok-number">14</span>,
+    <span class="tok-comment">/// RFC 6520</span>
+    heartbeat = <span class="tok-number">15</span>,
+    <span class="tok-comment">/// RFC 7301</span>
+    application_layer_protocol_negotiation = <span class="tok-number">16</span>,
+    <span class="tok-comment">/// RFC 6962</span>
+    signed_certificate_timestamp = <span class="tok-number">18</span>,
+    <span class="tok-comment">/// RFC 7250</span>
+    client_certificate_type = <span class="tok-number">19</span>,
+    <span class="tok-comment">/// RFC 7250</span>
+    server_certificate_type = <span class="tok-number">20</span>,
+    <span class="tok-comment">/// RFC 7685</span>
+    padding = <span class="tok-number">21</span>,
+    <span class="tok-comment">/// RFC 8446</span>
+    pre_shared_key = <span class="tok-number">41</span>,
+    <span class="tok-comment">/// RFC 8446</span>
+    early_data = <span class="tok-number">42</span>,
+    <span class="tok-comment">/// RFC 8446</span>
+    supported_versions = <span class="tok-number">43</span>,
+    <span class="tok-comment">/// RFC 8446</span>
+    cookie = <span class="tok-number">44</span>,
+    <span class="tok-comment">/// RFC 8446</span>
+    psk_key_exchange_modes = <span class="tok-number">45</span>,
+    <span class="tok-comment">/// RFC 8446</span>
+    certificate_authorities = <span class="tok-number">47</span>,
+    <span class="tok-comment">/// RFC 8446</span>
+    oid_filters = <span class="tok-number">48</span>,
+    <span class="tok-comment">/// RFC 8446</span>
+    post_handshake_auth = <span class="tok-number">49</span>,
+    <span class="tok-comment">/// RFC 8446</span>
+    signature_algorithms_cert = <span class="tok-number">50</span>,
+    <span class="tok-comment">/// RFC 8446</span>
+    key_share = <span class="tok-number">51</span>,
+
+    _,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> AlertLevel = <span class="tok-kw">enum</span>(<span class="tok-type">u8</span>) {
+    warning = <span class="tok-number">1</span>,
+    fatal = <span class="tok-number">2</span>,
+    _,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> AlertDescription = <span class="tok-kw">enum</span>(<span class="tok-type">u8</span>) {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = <span class="tok-kw">error</span>{
+        TlsAlertUnexpectedMessage,
+        TlsAlertBadRecordMac,
+        TlsAlertRecordOverflow,
+        TlsAlertHandshakeFailure,
+        TlsAlertBadCertificate,
+        TlsAlertUnsupportedCertificate,
+        TlsAlertCertificateRevoked,
+        TlsAlertCertificateExpired,
+        TlsAlertCertificateUnknown,
+        TlsAlertIllegalParameter,
+        TlsAlertUnknownCa,
+        TlsAlertAccessDenied,
+        TlsAlertDecodeError,
+        TlsAlertDecryptError,
+        TlsAlertProtocolVersion,
+        TlsAlertInsufficientSecurity,
+        TlsAlertInternalError,
+        TlsAlertInappropriateFallback,
+        TlsAlertMissingExtension,
+        TlsAlertUnsupportedExtension,
+        TlsAlertUnrecognizedName,
+        TlsAlertBadCertificateStatusResponse,
+        TlsAlertUnknownPskIdentity,
+        TlsAlertCertificateRequired,
+        TlsAlertNoApplicationProtocol,
+        TlsAlertUnknown,
+    };
+
+    close_notify = <span class="tok-number">0</span>,
+    unexpected_message = <span class="tok-number">10</span>,
+    bad_record_mac = <span class="tok-number">20</span>,
+    record_overflow = <span class="tok-number">22</span>,
+    handshake_failure = <span class="tok-number">40</span>,
+    bad_certificate = <span class="tok-number">42</span>,
+    unsupported_certificate = <span class="tok-number">43</span>,
+    certificate_revoked = <span class="tok-number">44</span>,
+    certificate_expired = <span class="tok-number">45</span>,
+    certificate_unknown = <span class="tok-number">46</span>,
+    illegal_parameter = <span class="tok-number">47</span>,
+    unknown_ca = <span class="tok-number">48</span>,
+    access_denied = <span class="tok-number">49</span>,
+    decode_error = <span class="tok-number">50</span>,
+    decrypt_error = <span class="tok-number">51</span>,
+    protocol_version = <span class="tok-number">70</span>,
+    insufficient_security = <span class="tok-number">71</span>,
+    internal_error = <span class="tok-number">80</span>,
+    inappropriate_fallback = <span class="tok-number">86</span>,
+    user_canceled = <span class="tok-number">90</span>,
+    missing_extension = <span class="tok-number">109</span>,
+    unsupported_extension = <span class="tok-number">110</span>,
+    unrecognized_name = <span class="tok-number">112</span>,
+    bad_certificate_status_response = <span class="tok-number">113</span>,
+    unknown_psk_identity = <span class="tok-number">115</span>,
+    certificate_required = <span class="tok-number">116</span>,
+    no_application_protocol = <span class="tok-number">120</span>,
+    _,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toError</span>(alert: <a href="std.crypto.tls.AlertDescription.html">AlertDescription</a>) <a href="std.crypto.tls.AlertDescription.html#std.crypto.tls.AlertDescription.Error">Error</a>!<span class="tok-type">void</span> {
+        <span class="tok-kw">switch</span> (alert) {
+            .close_notify =&gt; {},<span class="tok-comment"> // not an error
+            </span>.unexpected_message =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertUnexpectedMessage,
+            .bad_record_mac =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertBadRecordMac,
+            .record_overflow =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertRecordOverflow,
+            .handshake_failure =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertHandshakeFailure,
+            .bad_certificate =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertBadCertificate,
+            .unsupported_certificate =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertUnsupportedCertificate,
+            .certificate_revoked =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertCertificateRevoked,
+            .certificate_expired =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertCertificateExpired,
+            .certificate_unknown =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertCertificateUnknown,
+            .illegal_parameter =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertIllegalParameter,
+            .unknown_ca =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertUnknownCa,
+            .access_denied =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertAccessDenied,
+            .decode_error =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertDecodeError,
+            .decrypt_error =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertDecryptError,
+            .protocol_version =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertProtocolVersion,
+            .insufficient_security =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertInsufficientSecurity,
+            .internal_error =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertInternalError,
+            .inappropriate_fallback =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertInappropriateFallback,
+            .user_canceled =&gt; {},<span class="tok-comment"> // not an error
+            </span>.missing_extension =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertMissingExtension,
+            .unsupported_extension =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertUnsupportedExtension,
+            .unrecognized_name =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertUnrecognizedName,
+            .bad_certificate_status_response =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertBadCertificateStatusResponse,
+            .unknown_psk_identity =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertUnknownPskIdentity,
+            .certificate_required =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertCertificateRequired,
+            .no_application_protocol =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertNoApplicationProtocol,
+            _ =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsAlertUnknown,
+        }
+    }
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SignatureScheme = <span class="tok-kw">enum</span>(<span class="tok-type">u16</span>) {<span class="tok-comment">
+    // RSASSA-PKCS1-v1_5 algorithms
+    </span>rsa_pkcs1_sha256 = <span class="tok-number">0x0401</span>,
+    rsa_pkcs1_sha384 = <span class="tok-number">0x0501</span>,
+    rsa_pkcs1_sha512 = <span class="tok-number">0x0601</span>,<span class="tok-comment">
+
+    // ECDSA algorithms
+    </span>ecdsa_secp256r1_sha256 = <span class="tok-number">0x0403</span>,
+    ecdsa_secp384r1_sha384 = <span class="tok-number">0x0503</span>,
+    ecdsa_secp521r1_sha512 = <span class="tok-number">0x0603</span>,<span class="tok-comment">
+
+    // RSASSA-PSS algorithms with public key OID rsaEncryption
+    </span>rsa_pss_rsae_sha256 = <span class="tok-number">0x0804</span>,
+    rsa_pss_rsae_sha384 = <span class="tok-number">0x0805</span>,
+    rsa_pss_rsae_sha512 = <span class="tok-number">0x0806</span>,<span class="tok-comment">
+
+    // EdDSA algorithms
+    </span>ed25519 = <span class="tok-number">0x0807</span>,
+    ed448 = <span class="tok-number">0x0808</span>,<span class="tok-comment">
+
+    // RSASSA-PSS algorithms with public key OID RSASSA-PSS
+    </span>rsa_pss_pss_sha256 = <span class="tok-number">0x0809</span>,
+    rsa_pss_pss_sha384 = <span class="tok-number">0x080a</span>,
+    rsa_pss_pss_sha512 = <span class="tok-number">0x080b</span>,<span class="tok-comment">
+
+    // Legacy algorithms
+    </span>rsa_pkcs1_sha1 = <span class="tok-number">0x0201</span>,
+    ecdsa_sha1 = <span class="tok-number">0x0203</span>,
+
+    ecdsa_brainpoolP256r1tls13_sha256 = <span class="tok-number">0x081a</span>,
+    ecdsa_brainpoolP384r1tls13_sha384 = <span class="tok-number">0x081b</span>,
+    ecdsa_brainpoolP512r1tls13_sha512 = <span class="tok-number">0x081c</span>,
+
+    rsa_sha224 = <span class="tok-number">0x0301</span>,
+    dsa_sha224 = <span class="tok-number">0x0302</span>,
+    ecdsa_sha224 = <span class="tok-number">0x0303</span>,
+    dsa_sha256 = <span class="tok-number">0x0402</span>,
+    dsa_sha384 = <span class="tok-number">0x0502</span>,
+    dsa_sha512 = <span class="tok-number">0x0602</span>,
+
+    _,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> NamedGroup = <span class="tok-kw">enum</span>(<span class="tok-type">u16</span>) {<span class="tok-comment">
+    // Elliptic Curve Groups (ECDHE)
+    </span>secp256r1 = <span class="tok-number">0x0017</span>,
+    secp384r1 = <span class="tok-number">0x0018</span>,
+    secp521r1 = <span class="tok-number">0x0019</span>,
+    x25519 = <span class="tok-number">0x001D</span>,
+    x448 = <span class="tok-number">0x001E</span>,<span class="tok-comment">
+
+    // Finite Field Groups (DHE)
+    </span>ffdhe2048 = <span class="tok-number">0x0100</span>,
+    ffdhe3072 = <span class="tok-number">0x0101</span>,
+    ffdhe4096 = <span class="tok-number">0x0102</span>,
+    ffdhe6144 = <span class="tok-number">0x0103</span>,
+    ffdhe8192 = <span class="tok-number">0x0104</span>,<span class="tok-comment">
+
+    // Hybrid post-quantum key agreements
+    </span>secp256r1_ml_kem256 = <span class="tok-number">0x11EB</span>,
+    x25519_ml_kem768 = <span class="tok-number">0x11EC</span>,
+
+    _,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> PskKeyExchangeMode = <span class="tok-kw">enum</span>(<span class="tok-type">u8</span>) {
+    psk_ke = <span class="tok-number">0</span>,
+    psk_dhe_ke = <span class="tok-number">1</span>,
+    _,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CipherSuite = <span class="tok-kw">enum</span>(<span class="tok-type">u16</span>) {
+    RSA_WITH_AES_128_CBC_SHA = <span class="tok-number">0x002F</span>,
+    DHE_RSA_WITH_AES_128_CBC_SHA = <span class="tok-number">0x0033</span>,
+    RSA_WITH_AES_256_CBC_SHA = <span class="tok-number">0x0035</span>,
+    DHE_RSA_WITH_AES_256_CBC_SHA = <span class="tok-number">0x0039</span>,
+    RSA_WITH_AES_128_CBC_SHA256 = <span class="tok-number">0x003C</span>,
+    RSA_WITH_AES_256_CBC_SHA256 = <span class="tok-number">0x003D</span>,
+    DHE_RSA_WITH_AES_128_CBC_SHA256 = <span class="tok-number">0x0067</span>,
+    DHE_RSA_WITH_AES_256_CBC_SHA256 = <span class="tok-number">0x006B</span>,
+    RSA_WITH_AES_128_GCM_SHA256 = <span class="tok-number">0x009C</span>,
+    RSA_WITH_AES_256_GCM_SHA384 = <span class="tok-number">0x009D</span>,
+    DHE_RSA_WITH_AES_128_GCM_SHA256 = <span class="tok-number">0x009E</span>,
+    DHE_RSA_WITH_AES_256_GCM_SHA384 = <span class="tok-number">0x009F</span>,
+    EMPTY_RENEGOTIATION_INFO_SCSV = <span class="tok-number">0x00FF</span>,
+
+    AES_128_GCM_SHA256 = <span class="tok-number">0x1301</span>,
+    AES_256_GCM_SHA384 = <span class="tok-number">0x1302</span>,
+    CHACHA20_POLY1305_SHA256 = <span class="tok-number">0x1303</span>,
+    AES_128_CCM_SHA256 = <span class="tok-number">0x1304</span>,
+    AES_128_CCM_8_SHA256 = <span class="tok-number">0x1305</span>,
+    AEGIS_256_SHA512 = <span class="tok-number">0x1306</span>,
+    AEGIS_128L_SHA256 = <span class="tok-number">0x1307</span>,
+
+    ECDHE_ECDSA_WITH_AES_128_CBC_SHA = <span class="tok-number">0xC009</span>,
+    ECDHE_ECDSA_WITH_AES_256_CBC_SHA = <span class="tok-number">0xC00A</span>,
+    ECDHE_RSA_WITH_AES_128_CBC_SHA = <span class="tok-number">0xC013</span>,
+    ECDHE_RSA_WITH_AES_256_CBC_SHA = <span class="tok-number">0xC014</span>,
+    ECDHE_ECDSA_WITH_AES_128_CBC_SHA256 = <span class="tok-number">0xC023</span>,
+    ECDHE_ECDSA_WITH_AES_256_CBC_SHA384 = <span class="tok-number">0xC024</span>,
+    ECDHE_RSA_WITH_AES_128_CBC_SHA256 = <span class="tok-number">0xC027</span>,
+    ECDHE_RSA_WITH_AES_256_CBC_SHA384 = <span class="tok-number">0xC028</span>,
+    ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 = <span class="tok-number">0xC02B</span>,
+    ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 = <span class="tok-number">0xC02C</span>,
+    ECDHE_RSA_WITH_AES_128_GCM_SHA256 = <span class="tok-number">0xC02F</span>,
+    ECDHE_RSA_WITH_AES_256_GCM_SHA384 = <span class="tok-number">0xC030</span>,
+
+    ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 = <span class="tok-number">0xCCA8</span>,
+    ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 = <span class="tok-number">0xCCA9</span>,
+    DHE_RSA_WITH_CHACHA20_POLY1305_SHA256 = <span class="tok-number">0xCCAA</span>,
+
+    _,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> With = <span class="tok-kw">enum</span> {
+        AES_128_CBC_SHA,
+        AES_256_CBC_SHA,
+        AES_128_CBC_SHA256,
+        AES_256_CBC_SHA256,
+        AES_256_CBC_SHA384,
+
+        AES_128_GCM_SHA256,
+        AES_256_GCM_SHA384,
+
+        CHACHA20_POLY1305_SHA256,
+
+        AES_128_CCM_SHA256,
+        AES_128_CCM_8_SHA256,
+
+        AEGIS_256_SHA512,
+        AEGIS_128L_SHA256,
+    };
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">with</span>(cipher_suite: <a href="std.crypto.tls.CipherSuite.html">CipherSuite</a>) <a href="std.crypto.tls.CipherSuite.With.html">With</a> {
+        <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (cipher_suite) {
+            .RSA_WITH_AES_128_CBC_SHA,
+            .DHE_RSA_WITH_AES_128_CBC_SHA,
+            .ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
+            .ECDHE_RSA_WITH_AES_128_CBC_SHA,
+            =&gt; .AES_128_CBC_SHA,
+            .RSA_WITH_AES_256_CBC_SHA,
+            .DHE_RSA_WITH_AES_256_CBC_SHA,
+            .ECDHE_ECDSA_WITH_AES_256_CBC_SHA,
+            .ECDHE_RSA_WITH_AES_256_CBC_SHA,
+            =&gt; .AES_256_CBC_SHA,
+            .RSA_WITH_AES_128_CBC_SHA256,
+            .DHE_RSA_WITH_AES_128_CBC_SHA256,
+            .ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,
+            .ECDHE_RSA_WITH_AES_128_CBC_SHA256,
+            =&gt; .AES_128_CBC_SHA256,
+            .RSA_WITH_AES_256_CBC_SHA256,
+            .DHE_RSA_WITH_AES_256_CBC_SHA256,
+            =&gt; .AES_256_CBC_SHA256,
+            .ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,
+            .ECDHE_RSA_WITH_AES_256_CBC_SHA384,
+            =&gt; .AES_256_CBC_SHA384,
+
+            .RSA_WITH_AES_128_GCM_SHA256,
+            .DHE_RSA_WITH_AES_128_GCM_SHA256,
+            .AES_128_GCM_SHA256,
+            .ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+            .ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+            =&gt; .AES_128_GCM_SHA256,
+            .RSA_WITH_AES_256_GCM_SHA384,
+            .DHE_RSA_WITH_AES_256_GCM_SHA384,
+            .AES_256_GCM_SHA384,
+            .ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,
+            .ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+            =&gt; .AES_256_GCM_SHA384,
+
+            .CHACHA20_POLY1305_SHA256,
+            .ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256,
+            .ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,
+            .DHE_RSA_WITH_CHACHA20_POLY1305_SHA256,
+            =&gt; .CHACHA20_POLY1305_SHA256,
+
+            .AES_128_CCM_SHA256 =&gt; .AES_128_CCM_SHA256,
+            .AES_128_CCM_8_SHA256 =&gt; .AES_128_CCM_8_SHA256,
+
+            .AEGIS_256_SHA512 =&gt; .AEGIS_256_SHA512,
+            .AEGIS_128L_SHA256 =&gt; .AEGIS_128L_SHA256,
+
+            .EMPTY_RENEGOTIATION_INFO_SCSV =&gt; <span class="tok-kw">unreachable</span>,
+            _ =&gt; <span class="tok-kw">unreachable</span>,
+        };
+    }
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CompressionMethod = <span class="tok-kw">enum</span>(<span class="tok-type">u8</span>) {
+    <span class="tok-null">null</span> = <span class="tok-number">0</span>,
+    _,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CertificateType = <span class="tok-kw">enum</span>(<span class="tok-type">u8</span>) {
+    X509 = <span class="tok-number">0</span>,
+    RawPublicKey = <span class="tok-number">2</span>,
+    _,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> KeyUpdateRequest = <span class="tok-kw">enum</span>(<span class="tok-type">u8</span>) {
+    update_not_requested = <span class="tok-number">0</span>,
+    update_requested = <span class="tok-number">1</span>,
+    _,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ChangeCipherSpecType = <span class="tok-kw">enum</span>(<span class="tok-type">u8</span>) {
+    change_cipher_spec = <span class="tok-number">1</span>,
+    _,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">HandshakeCipherT</span>(<span class="tok-kw">comptime</span> AeadType: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> HashType: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> explicit_iv_length: <span class="tok-type">comptime_int</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> A = <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT">ApplicationCipherT</a>(AeadType, HashType, explicit_iv_length);
+
+        transcript_hash: <a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">Hash</a>,
+        version: <span class="tok-kw">union</span> {
+            tls_1_2: <span class="tok-kw">struct</span> {
+                expected_server_verify_data: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">verify_data_length</a>]<span class="tok-type">u8</span>,
+                app_cipher: <a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">Tls_1_2</a>,
+            },
+            tls_1_3: <span class="tok-kw">struct</span> {
+                handshake_secret: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">Hkdf</a>.<a href="#">prk_length</a>]<span class="tok-type">u8</span>,
+                master_secret: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">Hkdf</a>.<a href="#">prk_length</a>]<span class="tok-type">u8</span>,
+                client_handshake_key: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">AEAD</a>.<a href="#">key_length</a>]<span class="tok-type">u8</span>,
+                server_handshake_key: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">AEAD</a>.<a href="#">key_length</a>]<span class="tok-type">u8</span>,
+                client_finished_key: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">Hmac</a>.<a href="#">key_length</a>]<span class="tok-type">u8</span>,
+                server_finished_key: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">Hmac</a>.<a href="#">key_length</a>]<span class="tok-type">u8</span>,
+                client_handshake_iv: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">AEAD</a>.<a href="#">nonce_length</a>]<span class="tok-type">u8</span>,
+                server_handshake_iv: [<a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT.A">A</a>.<a href="#">AEAD</a>.<a href="#">nonce_length</a>]<span class="tok-type">u8</span>,
+            },
+        },
+    };
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> HandshakeCipher = <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) {
+    AES_128_GCM_SHA256: <a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT">HandshakeCipherT</a>(<a href="std.crypto.html">crypto</a>.<a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.aes_gcm.html">aes_gcm</a>.<a href="std.crypto.aes_gcm.html#std.crypto.aes_gcm.Aes128Gcm">Aes128Gcm</a>, <a href="std.crypto.html">crypto</a>.<a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha2.html">sha2</a>.<a href="std.crypto.sha2.html#std.crypto.sha2.Sha256">Sha256</a>, <span class="tok-number">8</span>),
+    AES_256_GCM_SHA384: <a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT">HandshakeCipherT</a>(<a href="std.crypto.html">crypto</a>.<a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.aes_gcm.html">aes_gcm</a>.<a href="std.crypto.aes_gcm.html#std.crypto.aes_gcm.Aes256Gcm">Aes256Gcm</a>, <a href="std.crypto.html">crypto</a>.<a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha2.html">sha2</a>.<a href="std.crypto.sha2.html#std.crypto.sha2.Sha384">Sha384</a>, <span class="tok-number">8</span>),
+    CHACHA20_POLY1305_SHA256: <a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT">HandshakeCipherT</a>(<a href="std.crypto.html">crypto</a>.<a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.chacha_poly.html">chacha_poly</a>.<a href="std.crypto.chacha20.html#std.crypto.chacha20.ChaCha20Poly1305">ChaCha20Poly1305</a>, <a href="std.crypto.html">crypto</a>.<a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha2.html">sha2</a>.<a href="std.crypto.sha2.html#std.crypto.sha2.Sha256">Sha256</a>, <span class="tok-number">0</span>),
+    AEGIS_256_SHA512: <a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT">HandshakeCipherT</a>(<a href="std.crypto.html">crypto</a>.<a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.aegis.html">aegis</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis256">Aegis256</a>, <a href="std.crypto.html">crypto</a>.<a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha2.html">sha2</a>.<a href="std.crypto.sha2.html#std.crypto.sha2.Sha512">Sha512</a>, <span class="tok-number">0</span>),
+    AEGIS_128L_SHA256: <a href="std.crypto.tls.html#std.crypto.tls.HandshakeCipherT">HandshakeCipherT</a>(<a href="std.crypto.html">crypto</a>.<a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.aegis.html">aegis</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis128L">Aegis128L</a>, <a href="std.crypto.html">crypto</a>.<a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha2.html">sha2</a>.<a href="std.crypto.sha2.html#std.crypto.sha2.Sha256">Sha256</a>, <span class="tok-number">0</span>),
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">ApplicationCipherT</span>(<span class="tok-kw">comptime</span> AeadType: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> HashType: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> explicit_iv_length: <span class="tok-type">comptime_int</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">union</span> {
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> AEAD = AeadType;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Hash = HashType;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Hmac = <a href="std.crypto.html">crypto</a>.<a href="std.crypto.auth.html">auth</a>.<a href="std.crypto.hmac.html">hmac</a>.<a href="std.crypto.hmac.html#std.crypto.hmac.Hmac">Hmac</a>(<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.Hash">Hash</a>);
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Hkdf = <a href="std.crypto.html">crypto</a>.<a href="std.crypto.kdf.html">kdf</a>.<a href="std.crypto.hkdf.html">hkdf</a>.<a href="std.crypto.hkdf.html#std.crypto.hkdf.Hkdf">Hkdf</a>(<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.Hmac">Hmac</a>);
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> enc_key_length = <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.AEAD">AEAD</a>.<a href="#">key_length</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> fixed_iv_length = <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.AEAD">AEAD</a>.<a href="#">nonce_length</a> - explicit_iv_length;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> record_iv_length = explicit_iv_length;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> mac_length = <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.AEAD">AEAD</a>.<a href="#">tag_length</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> mac_key_length = <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.Hmac">Hmac</a>.<a href="#">key_length_min</a>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> verify_data_length = <span class="tok-number">12</span>;
+
+        tls_1_2: <a href="std.crypto.tls.ApplicationCipherT.Tls_1_2.html">Tls_1_2</a>,
+        tls_1_3: <a href="std.crypto.tls.ApplicationCipherT.Tls_1_3.html">Tls_1_3</a>,
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Tls_1_2 = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+            client_write_MAC_key: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.mac_key_length">mac_key_length</a>]<span class="tok-type">u8</span>,
+            server_write_MAC_key: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.mac_key_length">mac_key_length</a>]<span class="tok-type">u8</span>,
+            client_write_key: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.enc_key_length">enc_key_length</a>]<span class="tok-type">u8</span>,
+            server_write_key: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.enc_key_length">enc_key_length</a>]<span class="tok-type">u8</span>,
+            client_write_IV: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.fixed_iv_length">fixed_iv_length</a>]<span class="tok-type">u8</span>,
+            server_write_IV: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.fixed_iv_length">fixed_iv_length</a>]<span class="tok-type">u8</span>,<span class="tok-comment">
+            // non-standard entropy
+            </span>client_salt: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.record_iv_length">record_iv_length</a>]<span class="tok-type">u8</span>,
+        };
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Tls_1_3 = <span class="tok-kw">struct</span> {
+            client_secret: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.Hash">Hash</a>.<a href="#">digest_length</a>]<span class="tok-type">u8</span>,
+            server_secret: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.Hash">Hash</a>.<a href="#">digest_length</a>]<span class="tok-type">u8</span>,
+            client_key: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.AEAD">AEAD</a>.<a href="#">key_length</a>]<span class="tok-type">u8</span>,
+            server_key: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.AEAD">AEAD</a>.<a href="#">key_length</a>]<span class="tok-type">u8</span>,
+            client_iv: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.AEAD">AEAD</a>.<a href="#">nonce_length</a>]<span class="tok-type">u8</span>,
+            server_iv: [<a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT.AEAD">AEAD</a>.<a href="#">nonce_length</a>]<span class="tok-type">u8</span>,
+        };
+    };
+}
+
+<span class="tok-comment">/// Encryption parameters for application traffic.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ApplicationCipher = <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) {
+    AES_128_GCM_SHA256: <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT">ApplicationCipherT</a>(<a href="std.crypto.html">crypto</a>.<a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.aes_gcm.html">aes_gcm</a>.<a href="std.crypto.aes_gcm.html#std.crypto.aes_gcm.Aes128Gcm">Aes128Gcm</a>, <a href="std.crypto.html">crypto</a>.<a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha2.html">sha2</a>.<a href="std.crypto.sha2.html#std.crypto.sha2.Sha256">Sha256</a>, <span class="tok-number">8</span>),
+    AES_256_GCM_SHA384: <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT">ApplicationCipherT</a>(<a href="std.crypto.html">crypto</a>.<a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.aes_gcm.html">aes_gcm</a>.<a href="std.crypto.aes_gcm.html#std.crypto.aes_gcm.Aes256Gcm">Aes256Gcm</a>, <a href="std.crypto.html">crypto</a>.<a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha2.html">sha2</a>.<a href="std.crypto.sha2.html#std.crypto.sha2.Sha384">Sha384</a>, <span class="tok-number">8</span>),
+    CHACHA20_POLY1305_SHA256: <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT">ApplicationCipherT</a>(<a href="std.crypto.html">crypto</a>.<a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.chacha_poly.html">chacha_poly</a>.<a href="std.crypto.chacha20.html#std.crypto.chacha20.ChaCha20Poly1305">ChaCha20Poly1305</a>, <a href="std.crypto.html">crypto</a>.<a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha2.html">sha2</a>.<a href="std.crypto.sha2.html#std.crypto.sha2.Sha256">Sha256</a>, <span class="tok-number">0</span>),
+    AEGIS_256_SHA512: <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT">ApplicationCipherT</a>(<a href="std.crypto.html">crypto</a>.<a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.aegis.html">aegis</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis256">Aegis256</a>, <a href="std.crypto.html">crypto</a>.<a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha2.html">sha2</a>.<a href="std.crypto.sha2.html#std.crypto.sha2.Sha512">Sha512</a>, <span class="tok-number">0</span>),
+    AEGIS_128L_SHA256: <a href="std.crypto.tls.html#std.crypto.tls.ApplicationCipherT">ApplicationCipherT</a>(<a href="std.crypto.html">crypto</a>.<a href="std.crypto.aead.html">aead</a>.<a href="std.crypto.aead.aegis.html">aegis</a>.<a href="std.crypto.aegis.html#std.crypto.aegis.Aegis128L">Aegis128L</a>, <a href="std.crypto.html">crypto</a>.<a href="std.crypto.hash.html">hash</a>.<a href="std.crypto.sha2.html">sha2</a>.<a href="std.crypto.sha2.html#std.crypto.sha2.Sha256">Sha256</a>, <span class="tok-number">0</span>),
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">hmacExpandLabel</span>(
+    <span class="tok-kw">comptime</span> Hmac: <span class="tok-type">type</span>,
+    secret: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    label_then_seed: []<span class="tok-kw">const</span> []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    <span class="tok-kw">comptime</span> len: <span class="tok-type">usize</span>,
+) [len]<span class="tok-type">u8</span> {
+    <span class="tok-kw">const</span> initial_hmac: Hmac = .init(secret);
+    <span class="tok-kw">var</span> a: [Hmac.mac_length]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">var</span> result: [<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.alignForwardAnyAlign">alignForwardAnyAlign</a>(<span class="tok-type">usize</span>, len, Hmac.mac_length)]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">var</span> index: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (index &lt; result.len) : (index += Hmac.mac_length) {
+        <span class="tok-kw">var</span> a_hmac = initial_hmac;
+        <span class="tok-kw">if</span> (index &gt; <span class="tok-number">0</span>) a_hmac.update(&amp;a) <span class="tok-kw">else</span> <span class="tok-kw">for</span> (label_then_seed) |part| a_hmac.update(part);
+        a_hmac.final(&amp;a);
+
+        <span class="tok-kw">var</span> result_hmac = initial_hmac;
+        result_hmac.update(&amp;a);
+        <span class="tok-kw">for</span> (label_then_seed) |part| result_hmac.update(part);
+        result_hmac.final(result[index..][<span class="tok-number">0</span>..Hmac.mac_length]);
+    }
+    <span class="tok-kw">return</span> result[<span class="tok-number">0</span>..len].*;
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">hkdfExpandLabel</span>(
+    <span class="tok-kw">comptime</span> Hkdf: <span class="tok-type">type</span>,
+    key: [Hkdf.prk_length]<span class="tok-type">u8</span>,
+    label: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    context: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    <span class="tok-kw">comptime</span> len: <span class="tok-type">usize</span>,
+) [len]<span class="tok-type">u8</span> {
+    <span class="tok-kw">const</span> max_label_len = <span class="tok-number">255</span>;
+    <span class="tok-kw">const</span> max_context_len = <span class="tok-number">255</span>;
+    <span class="tok-kw">const</span> tls13 = <span class="tok-str">&quot;tls13 &quot;</span>;
+    <span class="tok-kw">var</span> buf: [<span class="tok-number">2</span> + <span class="tok-number">1</span> + tls13.len + max_label_len + <span class="tok-number">1</span> + max_context_len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(<span class="tok-type">u16</span>, buf[<span class="tok-number">0</span>..<span class="tok-number">2</span>], len, .big);
+    buf[<span class="tok-number">2</span>] = <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-builtin">@intCast</span>(tls13.len + label.len));
+    buf[<span class="tok-number">3</span>..][<span class="tok-number">0</span>..tls13.len].* = tls13.*;
+    <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">3</span> + tls13.len;
+    <span class="tok-builtin">@memcpy</span>(buf[i..][<span class="tok-number">0</span>..label.len], label);
+    i += label.len;
+    buf[i] = <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-builtin">@intCast</span>(context.len));
+    i += <span class="tok-number">1</span>;
+    <span class="tok-builtin">@memcpy</span>(buf[i..][<span class="tok-number">0</span>..context.len], context);
+    i += context.len;
+
+    <span class="tok-kw">var</span> result: [len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    Hkdf.expand(&amp;result, buf[<span class="tok-number">0</span>..i], key);
+    <span class="tok-kw">return</span> result;
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">emptyHash</span>(<span class="tok-kw">comptime</span> Hash: <span class="tok-type">type</span>) [Hash.digest_length]<span class="tok-type">u8</span> {
+    <span class="tok-kw">var</span> result: [Hash.digest_length]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    Hash.hash(&amp;.{}, &amp;result, .{});
+    <span class="tok-kw">return</span> result;
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">hmac</span>(<span class="tok-kw">comptime</span> Hmac: <span class="tok-type">type</span>, message: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, key: [Hmac.key_length]<span class="tok-type">u8</span>) [Hmac.mac_length]<span class="tok-type">u8</span> {
+    <span class="tok-kw">var</span> result: [Hmac.mac_length]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    Hmac.create(&amp;result, message, &amp;key);
+    <span class="tok-kw">return</span> result;
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">extension</span>(et: <a href="std.crypto.tls.ExtensionType.html">ExtensionType</a>, bytes: <span class="tok-kw">anytype</span>) [<span class="tok-number">2</span> + <span class="tok-number">2</span> + bytes.len]<span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> <a href="std.crypto.tls.html#std.crypto.tls.int">int</a>(<span class="tok-type">u16</span>, <span class="tok-builtin">@intFromEnum</span>(et)) ++ <a href="std.crypto.tls.html#std.crypto.tls.array">array</a>(<span class="tok-type">u16</span>, <span class="tok-type">u8</span>, bytes);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">array</span>(
+    <span class="tok-kw">comptime</span> Len: <span class="tok-type">type</span>,
+    <span class="tok-kw">comptime</span> Elem: <span class="tok-type">type</span>,
+    elems: <span class="tok-kw">anytype</span>,
+) [<span class="tok-builtin">@divExact</span>(<span class="tok-builtin">@bitSizeOf</span>(Len), <span class="tok-number">8</span>) + <span class="tok-builtin">@divExact</span>(<span class="tok-builtin">@bitSizeOf</span>(Elem), <span class="tok-number">8</span>) * elems.len]<span class="tok-type">u8</span> {
+    <span class="tok-kw">const</span> len_size = <span class="tok-builtin">@divExact</span>(<span class="tok-builtin">@bitSizeOf</span>(Len), <span class="tok-number">8</span>);
+    <span class="tok-kw">const</span> elem_size = <span class="tok-builtin">@divExact</span>(<span class="tok-builtin">@bitSizeOf</span>(Elem), <span class="tok-number">8</span>);
+    <span class="tok-kw">var</span> arr: [len_size + elem_size * elems.len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(Len, arr[<span class="tok-number">0</span>..len_size], <span class="tok-builtin">@intCast</span>(elem_size * elems.len), .big);
+    <span class="tok-kw">const</span> ElemInt = <span class="tok-builtin">@Type</span>(.{ .int = .{ .signedness = .unsigned, .bits = <span class="tok-builtin">@bitSizeOf</span>(Elem) } });
+    <span class="tok-kw">for</span> (<span class="tok-number">0</span>.., <span class="tok-builtin">@as</span>([elems.len]Elem, elems)) |index, elem| {
+        <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(
+            ElemInt,
+            arr[len_size + elem_size * index ..][<span class="tok-number">0</span>..elem_size],
+            <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(Elem)) {
+                .int =&gt; <span class="tok-builtin">@as</span>(Elem, elem),
+                .@&quot;enum&quot; =&gt; <span class="tok-builtin">@intFromEnum</span>(<span class="tok-builtin">@as</span>(Elem, elem)),
+                <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(Elem, elem)),
+            },
+            .big,
+        );
+    }
+    <span class="tok-kw">return</span> arr;
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">int</span>(<span class="tok-kw">comptime</span> Int: <span class="tok-type">type</span>, val: Int) [<span class="tok-builtin">@divExact</span>(<span class="tok-builtin">@bitSizeOf</span>(Int), <span class="tok-number">8</span>)]<span class="tok-type">u8</span> {
+    <span class="tok-kw">var</span> arr: [<span class="tok-builtin">@divExact</span>(<span class="tok-builtin">@bitSizeOf</span>(Int), <span class="tok-number">8</span>)]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(Int, &amp;arr, val, .big);
+    <span class="tok-kw">return</span> arr;
+}
+
+<span class="tok-comment">/// An abstraction to ensure that protocol-parsing code does not perform an</span>
+<span class="tok-comment">/// out-of-bounds read.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Decoder = <span class="tok-kw">struct</span> {
+    buf: []<span class="tok-type">u8</span>,
+    <span class="tok-comment">/// Points to the next byte in buffer that will be decoded.</span>
+    idx: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+    <span class="tok-comment">/// Up to this point in `buf` we have already checked that `cap` is greater than it.</span>
+    our_end: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+    <span class="tok-comment">/// Beyond this point in `buf` is extra tag-along bytes beyond the amount we</span>
+    <span class="tok-comment">/// requested with `readAtLeast`.</span>
+    their_end: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+    <span class="tok-comment">/// Points to the end within buffer that has been filled. Beyond this point</span>
+    <span class="tok-comment">/// in buf is undefined bytes.</span>
+    cap: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+    <span class="tok-comment">/// Debug helper to prevent illegal calls to read functions.</span>
+    disable_reads: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fromTheirSlice</span>(buf: []<span class="tok-type">u8</span>) <a href="std.crypto.tls.Decoder.html">Decoder</a> {
+        <span class="tok-kw">return</span> .{
+            .buf = buf,
+            .their_end = buf.len,
+            .cap = buf.len,
+            .disable_reads = <span class="tok-null">true</span>,
+        };
+    }
+
+    <span class="tok-comment">/// Use this function to increase `their_end`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">readAtLeast</span>(d: *<a href="std.crypto.tls.Decoder.html">Decoder</a>, stream: <span class="tok-kw">anytype</span>, their_amt: <span class="tok-type">usize</span>) !<span class="tok-type">void</span> {
+        <a href="std.debug.html#std.debug.assert">assert</a>(!d.disable_reads);
+        <span class="tok-kw">const</span> existing_amt = d.cap - d.idx;
+        d.their_end = d.idx + their_amt;
+        <span class="tok-kw">if</span> (their_amt &lt;= existing_amt) <span class="tok-kw">return</span>;
+        <span class="tok-kw">const</span> request_amt = their_amt - existing_amt;
+        <span class="tok-kw">const</span> dest = d.buf[d.cap..];
+        <span class="tok-kw">if</span> (request_amt &gt; dest.len) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsRecordOverflow;
+        <span class="tok-kw">const</span> actual_amt = <span class="tok-kw">try</span> stream.readAtLeast(dest, request_amt);
+        <span class="tok-kw">if</span> (actual_amt &lt; request_amt) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsConnectionTruncated;
+        d.cap += actual_amt;
+    }
+
+    <span class="tok-comment">/// Same as `readAtLeast` but also increases `our_end` by exactly `our_amt`.</span>
+    <span class="tok-comment">/// Use when `our_amt` is calculated by us, not by them.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">readAtLeastOurAmt</span>(d: *<a href="std.crypto.tls.Decoder.html">Decoder</a>, stream: <span class="tok-kw">anytype</span>, our_amt: <span class="tok-type">usize</span>) !<span class="tok-type">void</span> {
+        <a href="std.debug.html#std.debug.assert">assert</a>(!d.disable_reads);
+        <span class="tok-kw">try</span> <a href="std.crypto.tls.Decoder.html#std.crypto.tls.Decoder.readAtLeast">readAtLeast</a>(d, stream, our_amt);
+        d.our_end = d.idx + our_amt;
+    }
+
+    <span class="tok-comment">/// Use this function to increase `our_end`.</span>
+    <span class="tok-comment">/// This should always be called with an amount provided by us, not them.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">ensure</span>(d: *<a href="std.crypto.tls.Decoder.html">Decoder</a>, amt: <span class="tok-type">usize</span>) !<span class="tok-type">void</span> {
+        d.our_end = <span class="tok-builtin">@max</span>(d.idx + amt, d.our_end);
+        <span class="tok-kw">if</span> (d.our_end &gt; d.their_end) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsDecodeError;
+    }
+
+    <span class="tok-comment">/// Use this function to increase `idx`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decode</span>(d: *<a href="std.crypto.tls.Decoder.html">Decoder</a>, <span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) T {
+        <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(T)) {
+            .int =&gt; |info| <span class="tok-kw">switch</span> (info.bits) {
+                <span class="tok-number">8</span> =&gt; {
+                    <a href="std.crypto.tls.Decoder.html#std.crypto.tls.Decoder.skip">skip</a>(d, <span class="tok-number">1</span>);
+                    <span class="tok-kw">return</span> d.buf[d.idx - <span class="tok-number">1</span>];
+                },
+                <span class="tok-number">16</span> =&gt; {
+                    <a href="std.crypto.tls.Decoder.html#std.crypto.tls.Decoder.skip">skip</a>(d, <span class="tok-number">2</span>);
+                    <span class="tok-kw">const</span> b0: <span class="tok-type">u16</span> = d.buf[d.idx - <span class="tok-number">2</span>];
+                    <span class="tok-kw">const</span> b1: <span class="tok-type">u16</span> = d.buf[d.idx - <span class="tok-number">1</span>];
+                    <span class="tok-kw">return</span> (b0 &lt;&lt; <span class="tok-number">8</span>) | b1;
+                },
+                <span class="tok-number">24</span> =&gt; {
+                    <a href="std.crypto.tls.Decoder.html#std.crypto.tls.Decoder.skip">skip</a>(d, <span class="tok-number">3</span>);
+                    <span class="tok-kw">const</span> b0: <span class="tok-type">u24</span> = d.buf[d.idx - <span class="tok-number">3</span>];
+                    <span class="tok-kw">const</span> b1: <span class="tok-type">u24</span> = d.buf[d.idx - <span class="tok-number">2</span>];
+                    <span class="tok-kw">const</span> b2: <span class="tok-type">u24</span> = d.buf[d.idx - <span class="tok-number">1</span>];
+                    <span class="tok-kw">return</span> (b0 &lt;&lt; <span class="tok-number">16</span>) | (b1 &lt;&lt; <span class="tok-number">8</span>) | b2;
+                },
+                <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;unsupported int type: &quot;</span> ++ <span class="tok-builtin">@typeName</span>(T)),
+            },
+            .@&quot;enum&quot; =&gt; |info| {
+                <span class="tok-kw">if</span> (info.is_exhaustive) <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;exhaustive enum cannot be used&quot;</span>);
+                <span class="tok-kw">return</span> <span class="tok-builtin">@enumFromInt</span>(d.decode(info.tag_type));
+            },
+            <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;unsupported type: &quot;</span> ++ <span class="tok-builtin">@typeName</span>(T)),
+        }
+    }
+
+    <span class="tok-comment">/// Use this function to increase `idx`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">array</span>(d: *<a href="std.crypto.tls.Decoder.html">Decoder</a>, <span class="tok-kw">comptime</span> len: <span class="tok-type">usize</span>) *[len]<span class="tok-type">u8</span> {
+        <a href="std.crypto.tls.Decoder.html#std.crypto.tls.Decoder.skip">skip</a>(d, len);
+        <span class="tok-kw">return</span> d.buf[d.idx - len ..][<span class="tok-number">0</span>..len];
+    }
+
+    <span class="tok-comment">/// Use this function to increase `idx`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">slice</span>(d: *<a href="std.crypto.tls.Decoder.html">Decoder</a>, len: <span class="tok-type">usize</span>) []<span class="tok-type">u8</span> {
+        <a href="std.crypto.tls.Decoder.html#std.crypto.tls.Decoder.skip">skip</a>(d, len);
+        <span class="tok-kw">return</span> d.buf[d.idx - len ..][<span class="tok-number">0</span>..len];
+    }
+
+    <span class="tok-comment">/// Use this function to increase `idx`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">skip</span>(d: *<a href="std.crypto.tls.Decoder.html">Decoder</a>, amt: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+        d.idx += amt;
+        <a href="std.debug.html#std.debug.assert">assert</a>(d.idx &lt;= d.our_end);<span class="tok-comment"> // insufficient ensured bytes
+    </span>}
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eof</span>(d: <a href="std.crypto.tls.Decoder.html">Decoder</a>) <span class="tok-type">bool</span> {
+        <a href="std.debug.html#std.debug.assert">assert</a>(d.our_end &lt;= d.their_end);
+        <a href="std.debug.html#std.debug.assert">assert</a>(d.idx &lt;= d.our_end);
+        <span class="tok-kw">return</span> d.idx == d.their_end;
+    }
+
+    <span class="tok-comment">/// Provide the length they claim, and receive a sub-decoder specific to that slice.</span>
+    <span class="tok-comment">/// The parent decoder is advanced to the end.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">sub</span>(d: *<a href="std.crypto.tls.Decoder.html">Decoder</a>, their_len: <span class="tok-type">usize</span>) !<a href="std.crypto.tls.Decoder.html">Decoder</a> {
+        <span class="tok-kw">const</span> end = d.idx + their_len;
+        <span class="tok-kw">if</span> (end &gt; d.their_end) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TlsDecodeError;
+        <span class="tok-kw">const</span> sub_buf = d.buf[d.idx..end];
+        d.idx = end;
+        d.our_end = end;
+        <span class="tok-kw">return</span> <a href="std.crypto.tls.Decoder.html#std.crypto.tls.Decoder.fromTheirSlice">fromTheirSlice</a>(sub_buf);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">rest</span>(d: <a href="std.crypto.tls.Decoder.html">Decoder</a>) []<span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> d.buf[d.idx..d.cap];
+    }
+};</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

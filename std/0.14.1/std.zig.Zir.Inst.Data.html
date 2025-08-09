@@ -1,0 +1,694 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">zig</a></li><li><a href="std.zig.Zir.html" class="">Zir</a></li><li><a href="std.zig.Zir.Inst.html" class="">Inst</a></li><li><a href="std.zig.Zir.Inst.Data.html" class="active">Data</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.zig.Zir.Inst.Data" class="declHeader"><span class="declHeaderCategory">union</span><span class="declHeaderIdentifier">std.zig.Zir.Inst.Data</span><a href="#src.zig-std.zig.Zir.Inst.Data">[src]</a></h1><div class="tldDocs"><p>All instructions have an 8-byte payload, which is contained within
+this union. <code><a href="std.zig.Zir.Inst.Tag.html">Tag</a></code> determines which union field is active, as well as
+how to interpret the data within.</p>
+</div><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.zig.Zir.Inst.Data.FieldEnum.html">std.zig.Zir.Inst.Data.FieldEnum</a></li></ul></div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>extended: <a href="std.zig.Zir.Inst.Extended.html">Extended</a>.<a href="std.zig.Zir.Inst.Extended.InstData.html">InstData</a></code></pre><div class="fieldDocs"><p>Used for <code>Tag.extended</code>. The extended opcode determines the meaning
+of the <code>small</code> and <code>operand</code> fields.</p>
+</div></div><div><pre><code>un_node: <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Offset from Decl AST node index.</span>
+    src_node: <span class="tok-type">i32</span>,
+    <span class="tok-comment">/// The meaning of this operand depends on the corresponding `Tag`.</span>
+    operand: <a href="std.zig.Zir.Inst.Ref.html">Ref</a>,
+}</code></pre><div class="fieldDocs"><p>Used for unary operators, with an AST node source location.</p>
+</div></div><div><pre><code>un_tok: <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Offset from Decl AST token index.</span>
+    src_tok: <a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.html#std.zig.Ast.TokenIndex">TokenIndex</a>,
+    <span class="tok-comment">/// The meaning of this operand depends on the corresponding `Tag`.</span>
+    operand: <a href="std.zig.Zir.Inst.Ref.html">Ref</a>,
+}</code></pre><div class="fieldDocs"><p>Used for unary operators, with a token source location.</p>
+</div></div><div><pre><code>pl_node: <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Offset from Decl AST node index.</span>
+    <span class="tok-comment">/// `Tag` determines which kind of AST node this points to.</span>
+    src_node: <span class="tok-type">i32</span>,
+    <span class="tok-comment">/// index into extra.</span>
+    <span class="tok-comment">/// `Tag` determines what lives there.</span>
+    payload_index: <span class="tok-type">u32</span>,
+}</code></pre></div><div><pre><code>pl_tok: <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Offset from Decl AST token index.</span>
+    src_tok: <a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.html#std.zig.Ast.TokenIndex">TokenIndex</a>,
+    <span class="tok-comment">/// index into extra.</span>
+    <span class="tok-comment">/// `Tag` determines what lives there.</span>
+    payload_index: <span class="tok-type">u32</span>,
+}</code></pre></div><div><pre><code>bin: <a href="std.zig.Zir.Inst.Bin.html">Bin</a></code></pre></div><div><pre><code>str: <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Offset into `string_bytes`.</span>
+    start: <a href="std.zig.Zir.NullTerminatedString.html">NullTerminatedString</a>,
+    <span class="tok-comment">/// Number of bytes in the string.</span>
+    len: <span class="tok-type">u32</span>,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: <span class="tok-builtin">@This</span>(), code: <a href="std.zig.Zir.html">Zir</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> code.string_bytes[<span class="tok-builtin">@intFromEnum</span>(self.start)..][<span class="tok-number">0</span>..self.len];
+    }
+}</code></pre><div class="fieldDocs"><p>For strings which may contain null bytes.</p>
+</div></div><div><pre><code>str_tok: <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Offset into `string_bytes`. Null-terminated.</span>
+    start: <a href="std.zig.Zir.NullTerminatedString.html">NullTerminatedString</a>,
+    <span class="tok-comment">/// Offset from Decl AST token index.</span>
+    src_tok: <span class="tok-type">u32</span>,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: <span class="tok-builtin">@This</span>(), code: <a href="std.zig.Zir.html">Zir</a>) [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> code.nullTerminatedString(self.start);
+    }
+}</code></pre></div><div><pre><code>tok: <a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.html#std.zig.Ast.TokenIndex">TokenIndex</a></code></pre><div class="fieldDocs"><p>Offset from Decl AST token index.</p>
+</div></div><div><pre><code>node: <span class="tok-type">i32</span></code></pre><div class="fieldDocs"><p>Offset from Decl AST node index.</p>
+</div></div><div><pre><code>int: <span class="tok-type">u64</span></code></pre></div><div><pre><code>float: <span class="tok-type">f64</span></code></pre></div><div><pre><code>ptr_type: <span class="tok-kw">struct</span> {
+    flags: <span class="tok-kw">packed</span> <span class="tok-kw">struct</span> {
+        is_allowzero: <span class="tok-type">bool</span>,
+        is_mutable: <span class="tok-type">bool</span>,
+        is_volatile: <span class="tok-type">bool</span>,
+        has_sentinel: <span class="tok-type">bool</span>,
+        has_align: <span class="tok-type">bool</span>,
+        has_addrspace: <span class="tok-type">bool</span>,
+        has_bit_range: <span class="tok-type">bool</span>,
+        _: <span class="tok-type">u1</span> = <span class="tok-null">undefined</span>,
+    },
+    size: <a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.Type.html">Type</a>.<a href="std.builtin.Type.Pointer.html">Pointer</a>.<a href="std.builtin.Type.Pointer.Size.html">Size</a>,
+    <span class="tok-comment">/// Index into extra. See `PtrType`.</span>
+    payload_index: <span class="tok-type">u32</span>,
+}</code></pre></div><div><pre><code>int_type: <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Offset from Decl AST node index.</span>
+    <span class="tok-comment">/// `Tag` determines which kind of AST node this points to.</span>
+    src_node: <span class="tok-type">i32</span>,
+    signedness: <a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.Signedness.html">Signedness</a>,
+    bit_count: <span class="tok-type">u16</span>,
+}</code></pre></div><div><pre><code>@&quot;unreachable&quot;: <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Offset from Decl AST node index.</span>
+    <span class="tok-comment">/// `Tag` determines which kind of AST node this points to.</span>
+    src_node: <span class="tok-type">i32</span>,
+}</code></pre></div><div><pre><code>@&quot;break&quot;: <span class="tok-kw">struct</span> {
+    operand: <a href="std.zig.Zir.Inst.Ref.html">Ref</a>,
+    <span class="tok-comment">/// Index of a `Break` payload.</span>
+    payload_index: <span class="tok-type">u32</span>,
+}</code></pre></div><div><pre><code>dbg_stmt: <a href="std.zig.Zir.Inst.LineColumn.html">LineColumn</a></code></pre></div><div><pre><code>inst_node: <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Offset from Decl AST node index.</span>
+    src_node: <span class="tok-type">i32</span>,
+    <span class="tok-comment">/// The meaning of this operand depends on the corresponding `Tag`.</span>
+    inst: <a href="std.zig.Zir.Inst.Index.html">Index</a>,
+}</code></pre><div class="fieldDocs"><p>Used for unary operators which reference an inst,
+with an AST node source location.</p>
+</div></div><div><pre><code>str_op: <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Offset into `string_bytes`. Null-terminated.</span>
+    str: <a href="std.zig.Zir.NullTerminatedString.html">NullTerminatedString</a>,
+    operand: <a href="std.zig.Zir.Inst.Ref.html">Ref</a>,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getStr</span>(self: <span class="tok-builtin">@This</span>(), zir: <a href="std.zig.Zir.html">Zir</a>) [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> zir.nullTerminatedString(self.str);
+    }
+}</code></pre></div><div><pre><code>@&quot;defer&quot;: <span class="tok-kw">struct</span> {
+    index: <span class="tok-type">u32</span>,
+    len: <span class="tok-type">u32</span>,
+}</code></pre></div><div><pre><code>defer_err_code: <span class="tok-kw">struct</span> {
+    err_code: <a href="std.zig.Zir.Inst.Ref.html">Ref</a>,
+    payload_index: <span class="tok-type">u32</span>,
+}</code></pre></div><div><pre><code>save_err_ret_index: <span class="tok-kw">struct</span> {
+    operand: <a href="std.zig.Zir.Inst.Ref.html">Ref</a>,<span class="tok-comment"> // If error type (or .none), save new trace index
+</span>}</code></pre></div><div><pre><code>elem_val_imm: <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// The indexable value being accessed.</span>
+    operand: <a href="std.zig.Zir.Inst.Ref.html">Ref</a>,
+    <span class="tok-comment">/// The index being accessed.</span>
+    idx: <span class="tok-type">u32</span>,
+}</code></pre></div><div><pre><code>declaration: <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// This node provides a new absolute baseline node for all instructions within this struct.</span>
+    src_node: <a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.Node.html">Node</a>.<a href="std.zig.Ast.Node.html#std.zig.Ast.Node.Index">Index</a>,
+    <span class="tok-comment">/// index into extra to a `Declaration` payload.</span>
+    payload_index: <span class="tok-type">u32</span>,
+}</code></pre></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.zig.Zir.Inst.Data.get" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">get</span><a href="#src.zig-std.zig.Zir.Inst.Data.get">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: <span class="tok-builtin">@This</span>(), code: <a href="std.zig.Zir.html">Zir</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <span class="tok-builtin">@This</span>()</code></pre></div><div><pre><code>code: <a href="std.zig.Zir.html">Zir</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.Zir.Inst.Data.get">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: <span class="tok-builtin">@This</span>(), code: <a href="std.zig.Zir.html">Zir</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> code.string_bytes[<span class="tok-builtin">@intFromEnum</span>(self.start)..][<span class="tok-number">0</span>..self.len];
+}</code></pre></details></div></div><div class="decl"><h2 id="std.zig.Zir.Inst.Data.get" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">get</span><a href="#src.zig-std.zig.Zir.Inst.Data.get">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: <span class="tok-builtin">@This</span>(), code: <a href="std.zig.Zir.html">Zir</a>) [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <span class="tok-builtin">@This</span>()</code></pre></div><div><pre><code>code: <a href="std.zig.Zir.html">Zir</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.Zir.Inst.Data.get">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: <span class="tok-builtin">@This</span>(), code: <a href="std.zig.Zir.html">Zir</a>) [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> code.nullTerminatedString(self.start);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.zig.Zir.Inst.Data.getStr" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getStr</span><a href="#src.zig-std.zig.Zir.Inst.Data.getStr">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getStr</span>(self: <span class="tok-builtin">@This</span>(), zir: <a href="std.zig.Zir.html">Zir</a>) [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <span class="tok-builtin">@This</span>()</code></pre></div><div><pre><code>zir: <a href="std.zig.Zir.html">Zir</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.Zir.Inst.Data.getStr">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getStr</span>(self: <span class="tok-builtin">@This</span>(), zir: <a href="std.zig.Zir.html">Zir</a>) [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> zir.nullTerminatedString(self.str);
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.zig.Zir.Inst.Data">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Data = <span class="tok-kw">union</span> {
+    <span class="tok-comment">/// Used for `Tag.extended`. The extended opcode determines the meaning</span>
+    <span class="tok-comment">/// of the `small` and `operand` fields.</span>
+    extended: <a href="std.zig.Zir.Inst.Extended.html">Extended</a>.<a href="std.zig.Zir.Inst.Extended.InstData.html">InstData</a>,
+    <span class="tok-comment">/// Used for unary operators, with an AST node source location.</span>
+    un_node: <span class="tok-kw">struct</span> {
+        <span class="tok-comment">/// Offset from Decl AST node index.</span>
+        src_node: <span class="tok-type">i32</span>,
+        <span class="tok-comment">/// The meaning of this operand depends on the corresponding `Tag`.</span>
+        operand: <a href="std.zig.Zir.Inst.Ref.html">Ref</a>,
+    },
+    <span class="tok-comment">/// Used for unary operators, with a token source location.</span>
+    un_tok: <span class="tok-kw">struct</span> {
+        <span class="tok-comment">/// Offset from Decl AST token index.</span>
+        src_tok: <a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.html#std.zig.Ast.TokenIndex">TokenIndex</a>,
+        <span class="tok-comment">/// The meaning of this operand depends on the corresponding `Tag`.</span>
+        operand: <a href="std.zig.Zir.Inst.Ref.html">Ref</a>,
+    },
+    pl_node: <span class="tok-kw">struct</span> {
+        <span class="tok-comment">/// Offset from Decl AST node index.</span>
+        <span class="tok-comment">/// `Tag` determines which kind of AST node this points to.</span>
+        src_node: <span class="tok-type">i32</span>,
+        <span class="tok-comment">/// index into extra.</span>
+        <span class="tok-comment">/// `Tag` determines what lives there.</span>
+        payload_index: <span class="tok-type">u32</span>,
+    },
+    pl_tok: <span class="tok-kw">struct</span> {
+        <span class="tok-comment">/// Offset from Decl AST token index.</span>
+        src_tok: <a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.html#std.zig.Ast.TokenIndex">TokenIndex</a>,
+        <span class="tok-comment">/// index into extra.</span>
+        <span class="tok-comment">/// `Tag` determines what lives there.</span>
+        payload_index: <span class="tok-type">u32</span>,
+    },
+    bin: <a href="std.zig.Zir.Inst.Bin.html">Bin</a>,
+    <span class="tok-comment">/// For strings which may contain null bytes.</span>
+    str: <span class="tok-kw">struct</span> {
+        <span class="tok-comment">/// Offset into `string_bytes`.</span>
+        start: <a href="std.zig.Zir.NullTerminatedString.html">NullTerminatedString</a>,
+        <span class="tok-comment">/// Number of bytes in the string.</span>
+        len: <span class="tok-type">u32</span>,
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: <span class="tok-builtin">@This</span>(), code: <a href="std.zig.Zir.html">Zir</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+            <span class="tok-kw">return</span> code.string_bytes[<span class="tok-builtin">@intFromEnum</span>(self.start)..][<span class="tok-number">0</span>..self.len];
+        }
+    },
+    str_tok: <span class="tok-kw">struct</span> {
+        <span class="tok-comment">/// Offset into `string_bytes`. Null-terminated.</span>
+        start: <a href="std.zig.Zir.NullTerminatedString.html">NullTerminatedString</a>,
+        <span class="tok-comment">/// Offset from Decl AST token index.</span>
+        src_tok: <span class="tok-type">u32</span>,
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: <span class="tok-builtin">@This</span>(), code: <a href="std.zig.Zir.html">Zir</a>) [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+            <span class="tok-kw">return</span> code.nullTerminatedString(self.start);
+        }
+    },
+    <span class="tok-comment">/// Offset from Decl AST token index.</span>
+    tok: <a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.html#std.zig.Ast.TokenIndex">TokenIndex</a>,
+    <span class="tok-comment">/// Offset from Decl AST node index.</span>
+    node: <span class="tok-type">i32</span>,
+    int: <span class="tok-type">u64</span>,
+    float: <span class="tok-type">f64</span>,
+    ptr_type: <span class="tok-kw">struct</span> {
+        flags: <span class="tok-kw">packed</span> <span class="tok-kw">struct</span> {
+            is_allowzero: <span class="tok-type">bool</span>,
+            is_mutable: <span class="tok-type">bool</span>,
+            is_volatile: <span class="tok-type">bool</span>,
+            has_sentinel: <span class="tok-type">bool</span>,
+            has_align: <span class="tok-type">bool</span>,
+            has_addrspace: <span class="tok-type">bool</span>,
+            has_bit_range: <span class="tok-type">bool</span>,
+            _: <span class="tok-type">u1</span> = <span class="tok-null">undefined</span>,
+        },
+        size: <a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.Type.html">Type</a>.<a href="std.builtin.Type.Pointer.html">Pointer</a>.<a href="std.builtin.Type.Pointer.Size.html">Size</a>,
+        <span class="tok-comment">/// Index into extra. See `PtrType`.</span>
+        payload_index: <span class="tok-type">u32</span>,
+    },
+    int_type: <span class="tok-kw">struct</span> {
+        <span class="tok-comment">/// Offset from Decl AST node index.</span>
+        <span class="tok-comment">/// `Tag` determines which kind of AST node this points to.</span>
+        src_node: <span class="tok-type">i32</span>,
+        signedness: <a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.Signedness.html">Signedness</a>,
+        bit_count: <span class="tok-type">u16</span>,
+    },
+    @&quot;unreachable&quot;: <span class="tok-kw">struct</span> {
+        <span class="tok-comment">/// Offset from Decl AST node index.</span>
+        <span class="tok-comment">/// `Tag` determines which kind of AST node this points to.</span>
+        src_node: <span class="tok-type">i32</span>,
+    },
+    @&quot;break&quot;: <span class="tok-kw">struct</span> {
+        operand: <a href="std.zig.Zir.Inst.Ref.html">Ref</a>,
+        <span class="tok-comment">/// Index of a `Break` payload.</span>
+        payload_index: <span class="tok-type">u32</span>,
+    },
+    dbg_stmt: <a href="std.zig.Zir.Inst.LineColumn.html">LineColumn</a>,
+    <span class="tok-comment">/// Used for unary operators which reference an inst,</span>
+    <span class="tok-comment">/// with an AST node source location.</span>
+    inst_node: <span class="tok-kw">struct</span> {
+        <span class="tok-comment">/// Offset from Decl AST node index.</span>
+        src_node: <span class="tok-type">i32</span>,
+        <span class="tok-comment">/// The meaning of this operand depends on the corresponding `Tag`.</span>
+        inst: <a href="std.zig.Zir.Inst.Index.html">Index</a>,
+    },
+    str_op: <span class="tok-kw">struct</span> {
+        <span class="tok-comment">/// Offset into `string_bytes`. Null-terminated.</span>
+        str: <a href="std.zig.Zir.NullTerminatedString.html">NullTerminatedString</a>,
+        operand: <a href="std.zig.Zir.Inst.Ref.html">Ref</a>,
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getStr</span>(self: <span class="tok-builtin">@This</span>(), zir: <a href="std.zig.Zir.html">Zir</a>) [:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+            <span class="tok-kw">return</span> zir.nullTerminatedString(self.str);
+        }
+    },
+    @&quot;defer&quot;: <span class="tok-kw">struct</span> {
+        index: <span class="tok-type">u32</span>,
+        len: <span class="tok-type">u32</span>,
+    },
+    defer_err_code: <span class="tok-kw">struct</span> {
+        err_code: <a href="std.zig.Zir.Inst.Ref.html">Ref</a>,
+        payload_index: <span class="tok-type">u32</span>,
+    },
+    save_err_ret_index: <span class="tok-kw">struct</span> {
+        operand: <a href="std.zig.Zir.Inst.Ref.html">Ref</a>,<span class="tok-comment"> // If error type (or .none), save new trace index
+    </span>},
+    elem_val_imm: <span class="tok-kw">struct</span> {
+        <span class="tok-comment">/// The indexable value being accessed.</span>
+        operand: <a href="std.zig.Zir.Inst.Ref.html">Ref</a>,
+        <span class="tok-comment">/// The index being accessed.</span>
+        idx: <span class="tok-type">u32</span>,
+    },
+    declaration: <span class="tok-kw">struct</span> {
+        <span class="tok-comment">/// This node provides a new absolute baseline node for all instructions within this struct.</span>
+        src_node: <a href="std.zig.Ast.html">Ast</a>.<a href="std.zig.Ast.Node.html">Node</a>.<a href="std.zig.Ast.Node.html#std.zig.Ast.Node.Index">Index</a>,
+        <span class="tok-comment">/// index into extra to a `Declaration` payload.</span>
+        payload_index: <span class="tok-type">u32</span>,
+    },<span class="tok-comment">
+
+    // Make sure we don't accidentally add a field to make this union
+    // bigger than expected. Note that in Debug builds, Zig is allowed
+    // to insert a secret field for safety checks.
+    </span><span class="tok-kw">comptime</span> {
+        <span class="tok-kw">if</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.mode">mode</a> != .Debug <span class="tok-kw">and</span> <a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.mode">mode</a> != .ReleaseSafe) {
+            <a href="std.debug.html#std.debug.assert">assert</a>(<span class="tok-builtin">@sizeOf</span>(<a href="std.zig.Zir.Inst.Data.html">Data</a>) == <span class="tok-number">8</span>);
+        }
+    }
+
+    <span class="tok-comment">/// TODO this has to be kept in sync with `Data` which we want to be an untagged</span>
+    <span class="tok-comment">/// union. There is some kind of language awkwardness here and it has to do with</span>
+    <span class="tok-comment">/// deserializing an untagged union (in this case `Data`) from a file, and trying</span>
+    <span class="tok-comment">/// to preserve the hidden safety field.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> FieldEnum = <span class="tok-kw">enum</span> {
+        extended,
+        un_node,
+        un_tok,
+        pl_node,
+        pl_tok,
+        bin,
+        str,
+        str_tok,
+        tok,
+        node,
+        int,
+        float,
+        ptr_type,
+        int_type,
+        @&quot;unreachable&quot;,
+        @&quot;break&quot;,
+        dbg_stmt,
+        inst_node,
+        str_op,
+        @&quot;defer&quot;,
+        defer_err_code,
+        save_err_ret_index,
+        elem_val_imm,
+        declaration,
+    };
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

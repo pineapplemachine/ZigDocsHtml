@@ -1,0 +1,962 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">crypto</a></li><li><a href="std.crypto.phc_encoding.html" class="active">phc_encoding</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.crypto.phc_encoding" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.crypto.phc_encoding</span><a href="#src.zig-std.crypto.phc_encoding">[src]</a></h1><div class="sectTypes"><h2 class="sectionHeader">Types</h2><div class="listTypes"><div class="decl"><h2 id="std.crypto.phc_encoding.BinValue" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">BinValue</span><a href="#src.zig-std.crypto.phc_encoding.BinValue">[src]</a></h2><div class="tldDocs"><p>A wrapped binary value whose maximum size is <code>max_len</code>.</p>
+<p>This type must be used whenever a binary value is encoded in a PHC-formatted string.
+This includes <code>salt</code>, <code>hash</code>, and any other binary parameters such as keys.</p>
+<p>Once initialized, the actual value can be read with the <code>constSlice()</code> function.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>max_len: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectFields"><h3 class="sectionHeader">Fields</h3><div class="listFields"><div><pre><code>buf: [max_len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span></code></pre></div><div><pre><code>len: <span class="tok-type">usize</span> = <span class="tok-number">0</span></code></pre></div></div></div><div class="sectFns"><h3 class="sectionHeader">Functions</h3><div class="listFns"><div class="decl"><h3 id="std.crypto.phc_encoding.BinValue.fromSlice" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fromSlice</span><a href="#src.zig-std.crypto.phc_encoding.BinValue.fromSlice">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fromSlice</span>(slice: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>!<a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">Self</a></code></pre></div><div class="tldDocs"><p>Wrap an existing byte slice</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>slice: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.phc_encoding.BinValue.fromSlice">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fromSlice</span>(slice: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>!<a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">Self</a> {
+    <span class="tok-kw">if</span> (slice.len &gt; <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue.capacity">capacity</a>) <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">NoSpaceLeft</a>;
+    <span class="tok-kw">var</span> bin_value: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">Self</a> = <span class="tok-null">undefined</span>;
+    <span class="tok-builtin">@memcpy</span>(bin_value.buf[<span class="tok-number">0</span>..slice.len], slice);
+    bin_value.len = slice.len;
+    <span class="tok-kw">return</span> bin_value;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.phc_encoding.BinValue.constSlice" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">constSlice</span><a href="#src.zig-std.crypto.phc_encoding.BinValue.constSlice">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">constSlice</span>(self: *<span class="tok-kw">const</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">Self</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>Return the slice containing the actual value.</p>
+</div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">Self</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.phc_encoding.BinValue.constSlice">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">constSlice</span>(self: *<span class="tok-kw">const</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">Self</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> self.buf[<span class="tok-number">0</span>..self.len];
+}</code></pre></details></div></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.phc_encoding.BinValue">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">BinValue</span>(<span class="tok-kw">comptime</span> max_len: <span class="tok-type">usize</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+        <span class="tok-kw">const</span> capacity = max_len;
+        <span class="tok-kw">const</span> max_encoded_length = <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.B64Encoder">B64Encoder</a>.<a href="#">calcSize</a>(max_len);
+
+        buf: [max_len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>,
+        len: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+
+        <span class="tok-comment">/// Wrap an existing byte slice</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fromSlice</span>(slice: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>!<a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">Self</a> {
+            <span class="tok-kw">if</span> (slice.len &gt; <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue.capacity">capacity</a>) <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">NoSpaceLeft</a>;
+            <span class="tok-kw">var</span> bin_value: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">Self</a> = <span class="tok-null">undefined</span>;
+            <span class="tok-builtin">@memcpy</span>(bin_value.buf[<span class="tok-number">0</span>..slice.len], slice);
+            bin_value.len = slice.len;
+            <span class="tok-kw">return</span> bin_value;
+        }
+
+        <span class="tok-comment">/// Return the slice containing the actual value.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">constSlice</span>(self: *<span class="tok-kw">const</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">Self</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+            <span class="tok-kw">return</span> self.buf[<span class="tok-number">0</span>..self.len];
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">fromB64</span>(self: *<a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">const</span> len = <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.B64Decoder">B64Decoder</a>.<a href="#">calcSizeForSlice</a>(str) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>;
+            <span class="tok-kw">if</span> (len &gt; self.buf.len) <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">NoSpaceLeft</a>;
+            <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.B64Decoder">B64Decoder</a>.<a href="#">decode</a>(&amp;self.buf, str) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>;
+            self.len = len;
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">toB64</span>(self: *<span class="tok-kw">const</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">Self</a>, buf: []<span class="tok-type">u8</span>) ![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+            <span class="tok-kw">const</span> value = self.constSlice();
+            <span class="tok-kw">const</span> len = <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.B64Encoder">B64Encoder</a>.<a href="#">calcSize</a>(value.len);
+            <span class="tok-kw">if</span> (len &gt; buf.len) <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">NoSpaceLeft</a>;
+            <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.B64Encoder">B64Encoder</a>.<a href="#">encode</a>(buf, value);
+        }
+    };
+}</code></pre></details></div></div></div></div><div class="sectErrSets"><h2 class="sectionHeader">Error Sets</h2><div class="listErrSets"><div class="decl"><h2 id="std.crypto.phc_encoding.Error" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">Error</span><a href="#src.zig-std.crypto.phc_encoding.Error">[src]</a></h2><div class="sectFnErrors"><h3 class="sectionHeader">Errors</h3><div class="fnErrorsAnyError"><p><span class="tok-type">anyerror</span> means the error set is known only at runtime.</p></div><div class="tableFnErrors"><dl class="listFnErrors"><div><dt>InvalidEncoding <a href="std.crypto.errors.html#std.crypto.errors.EncodingError">EncodingError</a></dt></div><div><dt>NoSpaceLeft</dt></div></dl></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.phc_encoding.Error">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = <a href="std.html">std</a>.<a href="std.crypto.html">crypto</a>.<a href="std.crypto.errors.html">errors</a>.<a href="std.crypto.errors.html#std.crypto.errors.EncodingError">EncodingError</a> || <span class="tok-kw">error</span>{NoSpaceLeft}</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.crypto.phc_encoding.deserialize" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">deserialize</span><a href="#src.zig-std.crypto.phc_encoding.deserialize">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deserialize</span>(<span class="tok-kw">comptime</span> HashResult: <span class="tok-type">type</span>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>!HashResult</code></pre></div><div class="tldDocs"><p>Deserialize a PHC-formatted string into a structure <code>HashResult</code>.</p>
+<p>Required field in the <code>HashResult</code> structure:</p>
+<ul>
+<li><code>alg_id</code>: algorithm identifier
+Optional, special fields:</li>
+<li><code>alg_version</code>: algorithm version (unsigned integer)</li>
+<li><code>salt</code>: salt</li>
+<li><code>hash</code>: output of the hash function</li>
+</ul>
+<p>Other fields will also be deserialized from the function parameters section.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>HashResult: <span class="tok-type">type</span></code></pre></div><div><pre><code>str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.phc_encoding.deserialize">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deserialize</span>(<span class="tok-kw">comptime</span> HashResult: <span class="tok-type">type</span>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>!HashResult {
+    <span class="tok-kw">if</span> (<span class="tok-builtin">@hasField</span>(HashResult, <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.version_param_name">version_param_name</a>)) {
+        <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Field name '&quot;</span> ++ <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.version_param_name">version_param_name</a> ++ <span class="tok-str">&quot;'' is reserved for the algorithm version&quot;</span>);
+    }
+
+    <span class="tok-kw">var</span> out = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.zeroes">zeroes</a>(HashResult);
+    <span class="tok-kw">var</span> it = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, str, <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.fields_delimiter_scalar">fields_delimiter_scalar</a>);
+    <span class="tok-kw">var</span> set_fields: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+
+    <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {<span class="tok-comment">
+        // Read the algorithm identifier
+        </span><span class="tok-kw">if</span> ((it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>).len != <span class="tok-number">0</span>) <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>;
+        out.alg_id = it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>;
+        set_fields += <span class="tok-number">1</span>;<span class="tok-comment">
+
+        // Read the optional version number
+        </span><span class="tok-kw">var</span> field = it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">break</span>;
+        <span class="tok-kw">if</span> (<a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.kvSplit">kvSplit</a>(field)) |opt_version| {
+            <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, opt_version.key, <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.version_param_name">version_param_name</a>)) {
+                <span class="tok-kw">if</span> (<span class="tok-builtin">@hasField</span>(HashResult, <span class="tok-str">&quot;alg_version&quot;</span>)) {
+                    <span class="tok-kw">const</span> value_type_info = <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(out.alg_version))) {
+                        .optional =&gt; |opt| <span class="tok-builtin">@typeInfo</span>(opt.child),
+                        <span class="tok-kw">else</span> =&gt; |t| t,
+                    };
+                    out.alg_version = <a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseUnsigned">parseUnsigned</a>(
+                        <span class="tok-builtin">@Type</span>(value_type_info),
+                        opt_version.value,
+                        <span class="tok-number">10</span>,
+                    ) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>;
+                    set_fields += <span class="tok-number">1</span>;
+                }
+                field = it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">break</span>;
+            }
+        } <span class="tok-kw">else</span> |_| {}<span class="tok-comment">
+
+        // Read optional parameters
+        </span><span class="tok-kw">var</span> has_params = <span class="tok-null">false</span>;
+        <span class="tok-kw">var</span> it_params = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, field, <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.params_delimiter_scalar">params_delimiter_scalar</a>);
+        <span class="tok-kw">while</span> (it_params.next()) |params| {
+            <span class="tok-kw">const</span> param = <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.kvSplit">kvSplit</a>(params) <span class="tok-kw">catch</span> <span class="tok-kw">break</span>;
+            <span class="tok-kw">var</span> found = <span class="tok-null">false</span>;
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-kw">comptime</span> <a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.fields">fields</a>(HashResult)) |p| {
+                <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, p.name, param.key)) {
+                    <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(p.<span class="tok-type">type</span>)) {
+                        .int =&gt; <span class="tok-builtin">@field</span>(out, p.name) = <a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseUnsigned">parseUnsigned</a>(
+                            p.<span class="tok-type">type</span>,
+                            param.value,
+                            <span class="tok-number">10</span>,
+                        ) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>,
+                        .pointer =&gt; |ptr| {
+                            <span class="tok-kw">if</span> (!ptr.is_const) <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Value slice must be constant&quot;</span>);
+                            <span class="tok-builtin">@field</span>(out, p.name) = param.value;
+                        },
+                        .@&quot;struct&quot; =&gt; <span class="tok-kw">try</span> <span class="tok-builtin">@field</span>(out, p.name).fromB64(param.value),
+                        <span class="tok-kw">else</span> =&gt; <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.panic">panic</a>(
+                            <span class="tok-str">&quot;Value for [{s}] must be an integer, a constant slice or a BinValue&quot;</span>,
+                            .{p.name},
+                        ),
+                    }
+                    set_fields += <span class="tok-number">1</span>;
+                    found = <span class="tok-null">true</span>;
+                    <span class="tok-kw">break</span>;
+                }
+            }
+            <span class="tok-kw">if</span> (!found) <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>;<span class="tok-comment"> // An unexpected parameter was found in the string
+            </span>has_params = <span class="tok-null">true</span>;
+        }<span class="tok-comment">
+
+        // No separator between an empty parameters set and the salt
+        </span><span class="tok-kw">if</span> (has_params) field = it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">break</span>;<span class="tok-comment">
+
+        // Read an optional salt
+        </span><span class="tok-kw">if</span> (<span class="tok-builtin">@hasField</span>(HashResult, <span class="tok-str">&quot;salt&quot;</span>)) {
+            <span class="tok-kw">try</span> out.salt.fromB64(field);
+            set_fields += <span class="tok-number">1</span>;
+        } <span class="tok-kw">else</span> {
+            <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>;
+        }<span class="tok-comment">
+
+        // Read an optional hash
+        </span>field = it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">break</span>;
+        <span class="tok-kw">if</span> (<span class="tok-builtin">@hasField</span>(HashResult, <span class="tok-str">&quot;hash&quot;</span>)) {
+            <span class="tok-kw">try</span> out.hash.fromB64(field);
+            set_fields += <span class="tok-number">1</span>;
+        } <span class="tok-kw">else</span> {
+            <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>;
+        }
+        <span class="tok-kw">break</span>;
+    }<span class="tok-comment">
+
+    // Check that all the required fields have been set, excluding optional values and parameters
+    // with default values
+    </span><span class="tok-kw">var</span> expected_fields: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-kw">comptime</span> <a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.fields">fields</a>(HashResult)) |p| {
+        <span class="tok-kw">if</span> (<span class="tok-builtin">@typeInfo</span>(p.<span class="tok-type">type</span>) != .optional <span class="tok-kw">and</span> p.default_value_ptr == <span class="tok-null">null</span>) {
+            expected_fields += <span class="tok-number">1</span>;
+        }
+    }
+    <span class="tok-kw">if</span> (set_fields &lt; expected_fields) <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>;
+
+    <span class="tok-kw">return</span> out;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.phc_encoding.serialize" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">serialize</span><a href="#src.zig-std.crypto.phc_encoding.serialize">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">serialize</span>(params: <span class="tok-kw">anytype</span>, str: []<span class="tok-type">u8</span>) <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>![]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>Serialize parameters into a PHC string.</p>
+<p>Required field for <code>params</code>:</p>
+<ul>
+<li><code>alg_id</code>: algorithm identifier
+Optional, special fields:</li>
+<li><code>alg_version</code>: algorithm version (unsigned integer)</li>
+<li><code>salt</code>: salt</li>
+<li><code>hash</code>: output of the hash function</li>
+</ul>
+<p><code>params</code> can also include any additional parameters.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>str: []<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.phc_encoding.serialize">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">serialize</span>(params: <span class="tok-kw">anytype</span>, str: []<span class="tok-type">u8</span>) <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">var</span> buf = <a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(str);
+    <span class="tok-kw">try</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.serializeTo">serializeTo</a>(params, buf.writer());
+    <span class="tok-kw">return</span> buf.getWritten();
+}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.phc_encoding.calcSize" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">calcSize</span><a href="#src.zig-std.crypto.phc_encoding.calcSize">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">calcSize</span>(params: <span class="tok-kw">anytype</span>) <span class="tok-type">usize</span></code></pre></div><div class="tldDocs"><p>Compute the number of bytes required to serialize <code>params</code></p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.phc_encoding.calcSize">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">calcSize</span>(params: <span class="tok-kw">anytype</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">var</span> buf = <a href="std.io.html">io</a>.<a href="std.io.counting_writer.html#std.io.counting_writer.countingWriter">countingWriter</a>(<a href="std.io.html">io</a>.<a href="std.io.html#std.io.null_writer">null_writer</a>);
+    <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.serializeTo">serializeTo</a>(params, buf.writer()) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+    <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(<span class="tok-type">usize</span>, <span class="tok-builtin">@intCast</span>(buf.bytes_written));
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.crypto.phc_encoding">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>);
+<span class="tok-kw">const</span> fmt = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>;
+<span class="tok-kw">const</span> io = <a href="std.html">std</a>.<a href="std.io.html">io</a>;
+<span class="tok-kw">const</span> mem = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>;
+<span class="tok-kw">const</span> meta = <a href="std.html">std</a>.<a href="std.meta.html">meta</a>;
+
+<span class="tok-kw">const</span> fields_delimiter = <span class="tok-str">&quot;{{CONTENT}}quot;</span>;
+<span class="tok-kw">const</span> fields_delimiter_scalar = <span class="tok-str">'</code></pre></details></div></span>;
+<span class="tok-kw">const</span> version_param_name = <span class="tok-str">&quot;v&quot;</span>;
+<span class="tok-kw">const</span> params_delimiter = <span class="tok-str">&quot;,&quot;</span>;
+<span class="tok-kw">const</span> params_delimiter_scalar = <span class="tok-str">','</span>;
+<span class="tok-kw">const</span> kv_delimiter = <span class="tok-str">&quot;=&quot;</span>;
+<span class="tok-kw">const</span> kv_delimiter_scalar = <span class="tok-str">'='</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = <a href="std.html">std</a>.<a href="std.crypto.html">crypto</a>.<a href="std.crypto.errors.html">errors</a>.<a href="std.crypto.errors.html#std.crypto.errors.EncodingError">EncodingError</a> || <span class="tok-kw">error</span>{NoSpaceLeft};
+
+<span class="tok-kw">const</span> B64Decoder = <a href="std.html">std</a>.<a href="std.base64.html">base64</a>.<a href="std.base64.html#std.base64.standard_no_pad">standard_no_pad</a>.<a href="#">Decoder</a>;
+<span class="tok-kw">const</span> B64Encoder = <a href="std.html">std</a>.<a href="std.base64.html">base64</a>.<a href="std.base64.html#std.base64.standard_no_pad">standard_no_pad</a>.<a href="#">Encoder</a>;
+
+<span class="tok-comment">/// A wrapped binary value whose maximum size is `max_len`.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// This type must be used whenever a binary value is encoded in a PHC-formatted string.</span>
+<span class="tok-comment">/// This includes `salt`, `hash`, and any other binary parameters such as keys.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Once initialized, the actual value can be read with the `constSlice()` function.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">BinValue</span>(<span class="tok-kw">comptime</span> max_len: <span class="tok-type">usize</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+        <span class="tok-kw">const</span> capacity = max_len;
+        <span class="tok-kw">const</span> max_encoded_length = <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.B64Encoder">B64Encoder</a>.<a href="#">calcSize</a>(max_len);
+
+        buf: [max_len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>,
+        len: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+
+        <span class="tok-comment">/// Wrap an existing byte slice</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fromSlice</span>(slice: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>!<a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">Self</a> {
+            <span class="tok-kw">if</span> (slice.len &gt; <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue.capacity">capacity</a>) <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">NoSpaceLeft</a>;
+            <span class="tok-kw">var</span> bin_value: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">Self</a> = <span class="tok-null">undefined</span>;
+            <span class="tok-builtin">@memcpy</span>(bin_value.buf[<span class="tok-number">0</span>..slice.len], slice);
+            bin_value.len = slice.len;
+            <span class="tok-kw">return</span> bin_value;
+        }
+
+        <span class="tok-comment">/// Return the slice containing the actual value.</span>
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">constSlice</span>(self: *<span class="tok-kw">const</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">Self</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+            <span class="tok-kw">return</span> self.buf[<span class="tok-number">0</span>..self.len];
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">fromB64</span>(self: *<a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">Self</a>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">const</span> len = <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.B64Decoder">B64Decoder</a>.<a href="#">calcSizeForSlice</a>(str) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>;
+            <span class="tok-kw">if</span> (len &gt; self.buf.len) <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">NoSpaceLeft</a>;
+            <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.B64Decoder">B64Decoder</a>.<a href="#">decode</a>(&amp;self.buf, str) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>;
+            self.len = len;
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">toB64</span>(self: *<span class="tok-kw">const</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">Self</a>, buf: []<span class="tok-type">u8</span>) ![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+            <span class="tok-kw">const</span> value = self.constSlice();
+            <span class="tok-kw">const</span> len = <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.B64Encoder">B64Encoder</a>.<a href="#">calcSize</a>(value.len);
+            <span class="tok-kw">if</span> (len &gt; buf.len) <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">NoSpaceLeft</a>;
+            <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.B64Encoder">B64Encoder</a>.<a href="#">encode</a>(buf, value);
+        }
+    };
+}
+
+<span class="tok-comment">/// Deserialize a PHC-formatted string into a structure `HashResult`.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Required field in the `HashResult` structure:</span>
+<span class="tok-comment">///   - `alg_id`: algorithm identifier</span>
+<span class="tok-comment">/// Optional, special fields:</span>
+<span class="tok-comment">///   - `alg_version`: algorithm version (unsigned integer)</span>
+<span class="tok-comment">///   - `salt`: salt</span>
+<span class="tok-comment">///   - `hash`: output of the hash function</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Other fields will also be deserialized from the function parameters section.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deserialize</span>(<span class="tok-kw">comptime</span> HashResult: <span class="tok-type">type</span>, str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>!HashResult {
+    <span class="tok-kw">if</span> (<span class="tok-builtin">@hasField</span>(HashResult, <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.version_param_name">version_param_name</a>)) {
+        <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Field name '&quot;</span> ++ <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.version_param_name">version_param_name</a> ++ <span class="tok-str">&quot;'' is reserved for the algorithm version&quot;</span>);
+    }
+
+    <span class="tok-kw">var</span> out = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.zeroes">zeroes</a>(HashResult);
+    <span class="tok-kw">var</span> it = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, str, <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.fields_delimiter_scalar">fields_delimiter_scalar</a>);
+    <span class="tok-kw">var</span> set_fields: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+
+    <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {<span class="tok-comment">
+        // Read the algorithm identifier
+        </span><span class="tok-kw">if</span> ((it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>).len != <span class="tok-number">0</span>) <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>;
+        out.alg_id = it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>;
+        set_fields += <span class="tok-number">1</span>;<span class="tok-comment">
+
+        // Read the optional version number
+        </span><span class="tok-kw">var</span> field = it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">break</span>;
+        <span class="tok-kw">if</span> (<a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.kvSplit">kvSplit</a>(field)) |opt_version| {
+            <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, opt_version.key, <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.version_param_name">version_param_name</a>)) {
+                <span class="tok-kw">if</span> (<span class="tok-builtin">@hasField</span>(HashResult, <span class="tok-str">&quot;alg_version&quot;</span>)) {
+                    <span class="tok-kw">const</span> value_type_info = <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(out.alg_version))) {
+                        .optional =&gt; |opt| <span class="tok-builtin">@typeInfo</span>(opt.child),
+                        <span class="tok-kw">else</span> =&gt; |t| t,
+                    };
+                    out.alg_version = <a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseUnsigned">parseUnsigned</a>(
+                        <span class="tok-builtin">@Type</span>(value_type_info),
+                        opt_version.value,
+                        <span class="tok-number">10</span>,
+                    ) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>;
+                    set_fields += <span class="tok-number">1</span>;
+                }
+                field = it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">break</span>;
+            }
+        } <span class="tok-kw">else</span> |_| {}<span class="tok-comment">
+
+        // Read optional parameters
+        </span><span class="tok-kw">var</span> has_params = <span class="tok-null">false</span>;
+        <span class="tok-kw">var</span> it_params = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, field, <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.params_delimiter_scalar">params_delimiter_scalar</a>);
+        <span class="tok-kw">while</span> (it_params.next()) |params| {
+            <span class="tok-kw">const</span> param = <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.kvSplit">kvSplit</a>(params) <span class="tok-kw">catch</span> <span class="tok-kw">break</span>;
+            <span class="tok-kw">var</span> found = <span class="tok-null">false</span>;
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-kw">comptime</span> <a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.fields">fields</a>(HashResult)) |p| {
+                <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, p.name, param.key)) {
+                    <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(p.<span class="tok-type">type</span>)) {
+                        .int =&gt; <span class="tok-builtin">@field</span>(out, p.name) = <a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseUnsigned">parseUnsigned</a>(
+                            p.<span class="tok-type">type</span>,
+                            param.value,
+                            <span class="tok-number">10</span>,
+                        ) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>,
+                        .pointer =&gt; |ptr| {
+                            <span class="tok-kw">if</span> (!ptr.is_const) <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Value slice must be constant&quot;</span>);
+                            <span class="tok-builtin">@field</span>(out, p.name) = param.value;
+                        },
+                        .@&quot;struct&quot; =&gt; <span class="tok-kw">try</span> <span class="tok-builtin">@field</span>(out, p.name).fromB64(param.value),
+                        <span class="tok-kw">else</span> =&gt; <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.panic">panic</a>(
+                            <span class="tok-str">&quot;Value for [{s}] must be an integer, a constant slice or a BinValue&quot;</span>,
+                            .{p.name},
+                        ),
+                    }
+                    set_fields += <span class="tok-number">1</span>;
+                    found = <span class="tok-null">true</span>;
+                    <span class="tok-kw">break</span>;
+                }
+            }
+            <span class="tok-kw">if</span> (!found) <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>;<span class="tok-comment"> // An unexpected parameter was found in the string
+            </span>has_params = <span class="tok-null">true</span>;
+        }<span class="tok-comment">
+
+        // No separator between an empty parameters set and the salt
+        </span><span class="tok-kw">if</span> (has_params) field = it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">break</span>;<span class="tok-comment">
+
+        // Read an optional salt
+        </span><span class="tok-kw">if</span> (<span class="tok-builtin">@hasField</span>(HashResult, <span class="tok-str">&quot;salt&quot;</span>)) {
+            <span class="tok-kw">try</span> out.salt.fromB64(field);
+            set_fields += <span class="tok-number">1</span>;
+        } <span class="tok-kw">else</span> {
+            <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>;
+        }<span class="tok-comment">
+
+        // Read an optional hash
+        </span>field = it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">break</span>;
+        <span class="tok-kw">if</span> (<span class="tok-builtin">@hasField</span>(HashResult, <span class="tok-str">&quot;hash&quot;</span>)) {
+            <span class="tok-kw">try</span> out.hash.fromB64(field);
+            set_fields += <span class="tok-number">1</span>;
+        } <span class="tok-kw">else</span> {
+            <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>;
+        }
+        <span class="tok-kw">break</span>;
+    }<span class="tok-comment">
+
+    // Check that all the required fields have been set, excluding optional values and parameters
+    // with default values
+    </span><span class="tok-kw">var</span> expected_fields: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-kw">comptime</span> <a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.fields">fields</a>(HashResult)) |p| {
+        <span class="tok-kw">if</span> (<span class="tok-builtin">@typeInfo</span>(p.<span class="tok-type">type</span>) != .optional <span class="tok-kw">and</span> p.default_value_ptr == <span class="tok-null">null</span>) {
+            expected_fields += <span class="tok-number">1</span>;
+        }
+    }
+    <span class="tok-kw">if</span> (set_fields &lt; expected_fields) <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>;
+
+    <span class="tok-kw">return</span> out;
+}
+
+<span class="tok-comment">/// Serialize parameters into a PHC string.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Required field for `params`:</span>
+<span class="tok-comment">///   - `alg_id`: algorithm identifier</span>
+<span class="tok-comment">/// Optional, special fields:</span>
+<span class="tok-comment">///   - `alg_version`: algorithm version (unsigned integer)</span>
+<span class="tok-comment">///   - `salt`: salt</span>
+<span class="tok-comment">///   - `hash`: output of the hash function</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// `params` can also include any additional parameters.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">serialize</span>(params: <span class="tok-kw">anytype</span>, str: []<span class="tok-type">u8</span>) <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">var</span> buf = <a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(str);
+    <span class="tok-kw">try</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.serializeTo">serializeTo</a>(params, buf.writer());
+    <span class="tok-kw">return</span> buf.getWritten();
+}
+
+<span class="tok-comment">/// Compute the number of bytes required to serialize `params`</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">calcSize</span>(params: <span class="tok-kw">anytype</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">var</span> buf = <a href="std.io.html">io</a>.<a href="std.io.counting_writer.html#std.io.counting_writer.countingWriter">countingWriter</a>(<a href="std.io.html">io</a>.<a href="std.io.html#std.io.null_writer">null_writer</a>);
+    <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.serializeTo">serializeTo</a>(params, buf.writer()) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+    <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(<span class="tok-type">usize</span>, <span class="tok-builtin">@intCast</span>(buf.bytes_written));
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">serializeTo</span>(params: <span class="tok-kw">anytype</span>, out: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> HashResult = <span class="tok-builtin">@TypeOf</span>(params);
+
+    <span class="tok-kw">if</span> (<span class="tok-builtin">@hasField</span>(HashResult, <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.version_param_name">version_param_name</a>)) {
+        <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Field name '&quot;</span> ++ <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.version_param_name">version_param_name</a> ++ <span class="tok-str">&quot;'' is reserved for the algorithm version&quot;</span>);
+    }
+
+    <span class="tok-kw">try</span> out.writeAll(<a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.fields_delimiter">fields_delimiter</a>);
+    <span class="tok-kw">try</span> out.writeAll(params.alg_id);
+
+    <span class="tok-kw">if</span> (<span class="tok-builtin">@hasField</span>(HashResult, <span class="tok-str">&quot;alg_version&quot;</span>)) {
+        <span class="tok-kw">if</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(params.alg_version)) == .optional) {
+            <span class="tok-kw">if</span> (params.alg_version) |alg_version| {
+                <span class="tok-kw">try</span> out.print(
+                    <span class="tok-str">&quot;{s}{s}{s}{}&quot;</span>,
+                    .{ <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.fields_delimiter">fields_delimiter</a>, <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.version_param_name">version_param_name</a>, <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.kv_delimiter">kv_delimiter</a>, alg_version },
+                );
+            }
+        } <span class="tok-kw">else</span> {
+            <span class="tok-kw">try</span> out.print(
+                <span class="tok-str">&quot;{s}{s}{s}{}&quot;</span>,
+                .{ <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.fields_delimiter">fields_delimiter</a>, <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.version_param_name">version_param_name</a>, <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.kv_delimiter">kv_delimiter</a>, params.alg_version },
+            );
+        }
+    }
+
+    <span class="tok-kw">var</span> has_params = <span class="tok-null">false</span>;
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<span class="tok-kw">comptime</span> <a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.fields">fields</a>(HashResult)) |p| {
+        <span class="tok-kw">if</span> (<span class="tok-kw">comptime</span> !(<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, p.name, <span class="tok-str">&quot;alg_id&quot;</span>) <span class="tok-kw">or</span>
+            <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, p.name, <span class="tok-str">&quot;alg_version&quot;</span>) <span class="tok-kw">or</span>
+            <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, p.name, <span class="tok-str">&quot;hash&quot;</span>) <span class="tok-kw">or</span>
+            <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, p.name, <span class="tok-str">&quot;salt&quot;</span>)))
+        {
+            <span class="tok-kw">const</span> value = <span class="tok-builtin">@field</span>(params, p.name);
+            <span class="tok-kw">try</span> out.writeAll(<span class="tok-kw">if</span> (has_params) <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.params_delimiter">params_delimiter</a> <span class="tok-kw">else</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.fields_delimiter">fields_delimiter</a>);
+            <span class="tok-kw">if</span> (<span class="tok-builtin">@typeInfo</span>(p.<span class="tok-type">type</span>) == .@&quot;struct&quot;) {
+                <span class="tok-kw">var</span> buf: [<span class="tok-builtin">@TypeOf</span>(value).max_encoded_length]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+                <span class="tok-kw">try</span> out.print(<span class="tok-str">&quot;{s}{s}{s}&quot;</span>, .{ p.name, <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.kv_delimiter">kv_delimiter</a>, <span class="tok-kw">try</span> value.toB64(&amp;buf) });
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">try</span> out.print(
+                    <span class="tok-kw">if</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(value)) == .pointer) <span class="tok-str">&quot;{s}{s}{s}&quot;</span> <span class="tok-kw">else</span> <span class="tok-str">&quot;{s}{s}{}&quot;</span>,
+                    .{ p.name, <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.kv_delimiter">kv_delimiter</a>, value },
+                );
+            }
+            has_params = <span class="tok-null">true</span>;
+        }
+    }
+
+    <span class="tok-kw">var</span> has_salt = <span class="tok-null">false</span>;
+    <span class="tok-kw">if</span> (<span class="tok-builtin">@hasField</span>(HashResult, <span class="tok-str">&quot;salt&quot;</span>)) {
+        <span class="tok-kw">var</span> buf: [<span class="tok-builtin">@TypeOf</span>(params.salt).max_encoded_length]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">try</span> out.print(<span class="tok-str">&quot;{s}{s}&quot;</span>, .{ <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.fields_delimiter">fields_delimiter</a>, <span class="tok-kw">try</span> params.salt.toB64(&amp;buf) });
+        has_salt = <span class="tok-null">true</span>;
+    }
+
+    <span class="tok-kw">if</span> (<span class="tok-builtin">@hasField</span>(HashResult, <span class="tok-str">&quot;hash&quot;</span>)) {
+        <span class="tok-kw">var</span> buf: [<span class="tok-builtin">@TypeOf</span>(params.hash).max_encoded_length]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">if</span> (!has_salt) <span class="tok-kw">try</span> out.writeAll(<a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.fields_delimiter">fields_delimiter</a>);
+        <span class="tok-kw">try</span> out.print(<span class="tok-str">&quot;{s}{s}&quot;</span>, .{ <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.fields_delimiter">fields_delimiter</a>, <span class="tok-kw">try</span> params.hash.toB64(&amp;buf) });
+    }
+}<span class="tok-comment">
+
+// Split a `key=value` string into `key` and `value`
+</span><span class="tok-kw">fn</span> <span class="tok-fn">kvSplit</span>(str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-kw">struct</span> { key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, value: []<span class="tok-kw">const</span> <span class="tok-type">u8</span> } {
+    <span class="tok-kw">var</span> it = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, str, <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.kv_delimiter_scalar">kv_delimiter_scalar</a>);
+    <span class="tok-kw">const</span> key = it.first();
+    <span class="tok-kw">const</span> value = it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>;
+    <span class="tok-kw">return</span> .{ .key = key, .value = value };
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;phc format - encoding/decoding&quot;</span> {
+    <span class="tok-kw">const</span> Input = <span class="tok-kw">struct</span> {
+        str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+        HashResult: <span class="tok-type">type</span>,
+    };
+    <span class="tok-kw">const</span> inputs = [_]Input{
+        .{
+            .str = <span class="tok-str">&quot;$argon2id$v=19$key=a2V5,m=4096,t=0,p=1$X1NhbHQAAAAAAAAAAAAAAA$bWh++MKN1OiFHKgIWTLvIi1iHicmHH7+Fv3K88ifFfI&quot;</span>,
+            .HashResult = <span class="tok-kw">struct</span> {
+                alg_id: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+                alg_version: <span class="tok-type">u16</span>,
+                key: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>(<span class="tok-number">16</span>),
+                m: <span class="tok-type">usize</span>,
+                t: <span class="tok-type">u64</span>,
+                p: <span class="tok-type">u32</span>,
+                salt: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>(<span class="tok-number">16</span>),
+                hash: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>(<span class="tok-number">32</span>),
+            },
+        },
+        .{
+            .str = <span class="tok-str">&quot;$scrypt$v=1$ln=15,r=8,p=1$c2FsdHNhbHQ$dGVzdHBhc3M&quot;</span>,
+            .HashResult = <span class="tok-kw">struct</span> {
+                alg_id: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+                alg_version: ?<span class="tok-type">u30</span>,
+                ln: <span class="tok-type">u6</span>,
+                r: <span class="tok-type">u30</span>,
+                p: <span class="tok-type">u30</span>,
+                salt: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>(<span class="tok-number">16</span>),
+                hash: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>(<span class="tok-number">16</span>),
+            },
+        },
+        .{
+            .str = <span class="tok-str">&quot;$scrypt&quot;</span>,
+            .HashResult = <span class="tok-kw">struct</span> { alg_id: []<span class="tok-kw">const</span> <span class="tok-type">u8</span> },
+        },
+        .{ .str = <span class="tok-str">&quot;$scrypt$v=1&quot;</span>, .HashResult = <span class="tok-kw">struct</span> { alg_id: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, alg_version: <span class="tok-type">u16</span> } },
+        .{
+            .str = <span class="tok-str">&quot;$scrypt$ln=15,r=8,p=1&quot;</span>,
+            .HashResult = <span class="tok-kw">struct</span> { alg_id: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, alg_version: ?<span class="tok-type">u30</span>, ln: <span class="tok-type">u6</span>, r: <span class="tok-type">u30</span>, p: <span class="tok-type">u30</span> },
+        },
+        .{
+            .str = <span class="tok-str">&quot;$scrypt$c2FsdHNhbHQ&quot;</span>,
+            .HashResult = <span class="tok-kw">struct</span> { alg_id: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, salt: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>(<span class="tok-number">16</span>) },
+        },
+        .{
+            .str = <span class="tok-str">&quot;$scrypt$v=1$ln=15,r=8,p=1$c2FsdHNhbHQ&quot;</span>,
+            .HashResult = <span class="tok-kw">struct</span> {
+                alg_id: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+                alg_version: <span class="tok-type">u16</span>,
+                ln: <span class="tok-type">u6</span>,
+                r: <span class="tok-type">u30</span>,
+                p: <span class="tok-type">u30</span>,
+                salt: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>(<span class="tok-number">16</span>),
+            },
+        },
+        .{
+            .str = <span class="tok-str">&quot;$scrypt$v=1$ln=15,r=8,p=1&quot;</span>,
+            .HashResult = <span class="tok-kw">struct</span> { alg_id: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, alg_version: ?<span class="tok-type">u30</span>, ln: <span class="tok-type">u6</span>, r: <span class="tok-type">u30</span>, p: <span class="tok-type">u30</span> },
+        },
+        .{
+            .str = <span class="tok-str">&quot;$scrypt$v=1$c2FsdHNhbHQ$dGVzdHBhc3M&quot;</span>,
+            .HashResult = <span class="tok-kw">struct</span> {
+                alg_id: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+                alg_version: <span class="tok-type">u16</span>,
+                salt: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>(<span class="tok-number">16</span>),
+                hash: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>(<span class="tok-number">16</span>),
+            },
+        },
+        .{
+            .str = <span class="tok-str">&quot;$scrypt$v=1$c2FsdHNhbHQ&quot;</span>,
+            .HashResult = <span class="tok-kw">struct</span> { alg_id: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, alg_version: <span class="tok-type">u16</span>, salt: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>(<span class="tok-number">16</span>) },
+        },
+        .{
+            .str = <span class="tok-str">&quot;$scrypt$c2FsdHNhbHQ$dGVzdHBhc3M&quot;</span>,
+            .HashResult = <span class="tok-kw">struct</span> { alg_id: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, salt: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>(<span class="tok-number">16</span>), hash: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>(<span class="tok-number">16</span>) },
+        },
+    };
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (inputs) |input| {
+        <span class="tok-kw">const</span> v = <span class="tok-kw">try</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.deserialize">deserialize</a>(input.HashResult, input.str);
+        <span class="tok-kw">var</span> buf: [input.str.len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">const</span> s1 = <span class="tok-kw">try</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.serialize">serialize</a>(v, &amp;buf);
+        <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, input.str, s1);
+    }
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;phc format - empty input string&quot;</span> {
+    <span class="tok-kw">const</span> s = <span class="tok-str">&quot;&quot;</span>;
+    <span class="tok-kw">const</span> v = <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.deserialize">deserialize</a>(<span class="tok-kw">struct</span> { alg_id: []<span class="tok-kw">const</span> <span class="tok-type">u8</span> }, s);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>, v);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;phc format - hash without salt&quot;</span> {
+    <span class="tok-kw">const</span> s = <span class="tok-str">&quot;$scrypt&quot;</span>;
+    <span class="tok-kw">const</span> v = <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.deserialize">deserialize</a>(<span class="tok-kw">struct</span> { alg_id: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, hash: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>(<span class="tok-number">16</span>) }, s);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>.<a href="#">InvalidEncoding</a>, v);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;phc format - calcSize&quot;</span> {
+    <span class="tok-kw">const</span> s = <span class="tok-str">&quot;$scrypt$v=1$ln=15,r=8,p=1$c2FsdHNhbHQ$dGVzdHBhc3M&quot;</span>;
+    <span class="tok-kw">const</span> v = <span class="tok-kw">try</span> <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.deserialize">deserialize</a>(<span class="tok-kw">struct</span> {
+        alg_id: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+        alg_version: <span class="tok-type">u16</span>,
+        ln: <span class="tok-type">u6</span>,
+        r: <span class="tok-type">u30</span>,
+        p: <span class="tok-type">u30</span>,
+        salt: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>(<span class="tok-number">8</span>),
+        hash: <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.BinValue">BinValue</a>(<span class="tok-number">8</span>),
+    }, s);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.calcSize">calcSize</a>(v), s.len);
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

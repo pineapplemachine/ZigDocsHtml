@@ -1,0 +1,936 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.SemanticVersion.html" class="active">SemanticVersion</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.SemanticVersion" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.SemanticVersion</span><a href="#src.zig-std.SemanticVersion">[src]</a></h1><div class="tldDocs"><p>A software version formatted according to the Semantic Versioning 2.0.0 specification.</p>
+<p>See: <a href="https://semver.org">https://semver.org</a></p>
+</div><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.SemanticVersion.Range.html">std.SemanticVersion.Range</a></li></ul></div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>major: <span class="tok-type">usize</span></code></pre></div><div><pre><code>minor: <span class="tok-type">usize</span></code></pre></div><div><pre><code>patch: <span class="tok-type">usize</span></code></pre></div><div><pre><code>pre: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-null">null</span></code></pre></div><div><pre><code>build: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-null">null</span></code></pre></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.SemanticVersion.order" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">order</span><a href="#src.zig-std.SemanticVersion.order">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">order</span>(lhs: <a href="std.SemanticVersion.html">Version</a>, rhs: <a href="std.SemanticVersion.html">Version</a>) <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.Order.html">Order</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>lhs: <a href="std.SemanticVersion.html">Version</a></code></pre></div><div><pre><code>rhs: <a href="std.SemanticVersion.html">Version</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.SemanticVersion.order">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">order</span>(lhs: <a href="std.SemanticVersion.html">Version</a>, rhs: <a href="std.SemanticVersion.html">Version</a>) <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.Order.html">Order</a> {
+    <span class="tok-kw">if</span> (lhs.major &lt; rhs.major) <span class="tok-kw">return</span> .lt;
+    <span class="tok-kw">if</span> (lhs.major &gt; rhs.major) <span class="tok-kw">return</span> .gt;
+    <span class="tok-kw">if</span> (lhs.minor &lt; rhs.minor) <span class="tok-kw">return</span> .lt;
+    <span class="tok-kw">if</span> (lhs.minor &gt; rhs.minor) <span class="tok-kw">return</span> .gt;
+    <span class="tok-kw">if</span> (lhs.patch &lt; rhs.patch) <span class="tok-kw">return</span> .lt;
+    <span class="tok-kw">if</span> (lhs.patch &gt; rhs.patch) <span class="tok-kw">return</span> .gt;
+    <span class="tok-kw">if</span> (lhs.pre != <span class="tok-null">null</span> <span class="tok-kw">and</span> rhs.pre == <span class="tok-null">null</span>) <span class="tok-kw">return</span> .lt;
+    <span class="tok-kw">if</span> (lhs.pre == <span class="tok-null">null</span> <span class="tok-kw">and</span> rhs.pre == <span class="tok-null">null</span>) <span class="tok-kw">return</span> .eq;
+    <span class="tok-kw">if</span> (lhs.pre == <span class="tok-null">null</span> <span class="tok-kw">and</span> rhs.pre != <span class="tok-null">null</span>) <span class="tok-kw">return</span> .gt;<span class="tok-comment">
+
+    // Iterate over pre-release identifiers until a difference is found.
+    </span><span class="tok-kw">var</span> lhs_pre_it = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, lhs.pre.?, <span class="tok-str">'.'</span>);
+    <span class="tok-kw">var</span> rhs_pre_it = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, rhs.pre.?, <span class="tok-str">'.'</span>);
+    <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+        <span class="tok-kw">const</span> next_lid = lhs_pre_it.next();
+        <span class="tok-kw">const</span> next_rid = rhs_pre_it.next();<span class="tok-comment">
+
+        // A larger set of pre-release fields has a higher precedence than a smaller set.
+        </span><span class="tok-kw">if</span> (next_lid == <span class="tok-null">null</span> <span class="tok-kw">and</span> next_rid != <span class="tok-null">null</span>) <span class="tok-kw">return</span> .lt;
+        <span class="tok-kw">if</span> (next_lid == <span class="tok-null">null</span> <span class="tok-kw">and</span> next_rid == <span class="tok-null">null</span>) <span class="tok-kw">return</span> .eq;
+        <span class="tok-kw">if</span> (next_lid != <span class="tok-null">null</span> <span class="tok-kw">and</span> next_rid == <span class="tok-null">null</span>) <span class="tok-kw">return</span> .gt;
+
+        <span class="tok-kw">const</span> lid = next_lid.?;<span class="tok-comment"> // Left identifier
+        </span><span class="tok-kw">const</span> rid = next_rid.?;<span class="tok-comment"> // Right identifier
+
+        // Attempt to parse identifiers as numbers. Overflows are checked by parse.
+        </span><span class="tok-kw">const</span> lnum: ?<span class="tok-type">usize</span> = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseUnsigned">parseUnsigned</a>(<span class="tok-type">usize</span>, lid, <span class="tok-number">10</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.InvalidCharacter =&gt; <span class="tok-null">null</span>,
+            <span class="tok-kw">error</span>.Overflow =&gt; <span class="tok-kw">unreachable</span>,
+        };
+        <span class="tok-kw">const</span> rnum: ?<span class="tok-type">usize</span> = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseUnsigned">parseUnsigned</a>(<span class="tok-type">usize</span>, rid, <span class="tok-number">10</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.InvalidCharacter =&gt; <span class="tok-null">null</span>,
+            <span class="tok-kw">error</span>.Overflow =&gt; <span class="tok-kw">unreachable</span>,
+        };<span class="tok-comment">
+
+        // Numeric identifiers always have lower precedence than non-numeric identifiers.
+        </span><span class="tok-kw">if</span> (lnum != <span class="tok-null">null</span> <span class="tok-kw">and</span> rnum == <span class="tok-null">null</span>) <span class="tok-kw">return</span> .lt;
+        <span class="tok-kw">if</span> (lnum == <span class="tok-null">null</span> <span class="tok-kw">and</span> rnum != <span class="tok-null">null</span>) <span class="tok-kw">return</span> .gt;<span class="tok-comment">
+
+        // Identifiers consisting of only digits are compared numerically.
+        // Identifiers with letters or hyphens are compared lexically in ASCII sort order.
+        </span><span class="tok-kw">if</span> (lnum != <span class="tok-null">null</span> <span class="tok-kw">and</span> rnum != <span class="tok-null">null</span>) {
+            <span class="tok-kw">if</span> (lnum.? &lt; rnum.?) <span class="tok-kw">return</span> .lt;
+            <span class="tok-kw">if</span> (lnum.? &gt; rnum.?) <span class="tok-kw">return</span> .gt;
+        } <span class="tok-kw">else</span> {
+            <span class="tok-kw">const</span> ord = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.order">order</a>(<span class="tok-type">u8</span>, lid, rid);
+            <span class="tok-kw">if</span> (ord != .eq) <span class="tok-kw">return</span> ord;
+        }
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.SemanticVersion.parse" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">parse</span><a href="#src.zig-std.SemanticVersion.parse">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parse</span>(text: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<a href="std.SemanticVersion.html">Version</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>text: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.SemanticVersion.parse">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parse</span>(text: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<a href="std.SemanticVersion.html">Version</a> {<span class="tok-comment">
+    // Parse the required major, minor, and patch numbers.
+    </span><span class="tok-kw">const</span> extra_index = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfAny">indexOfAny</a>(<span class="tok-type">u8</span>, text, <span class="tok-str">&quot;-+&quot;</span>);
+    <span class="tok-kw">const</span> required = text[<span class="tok-number">0</span>..(extra_index <span class="tok-kw">orelse</span> text.len)];
+    <span class="tok-kw">var</span> it = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, required, <span class="tok-str">'.'</span>);
+    <span class="tok-kw">var</span> ver = <a href="std.SemanticVersion.html">Version</a>{
+        .major = <span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parseNum">parseNum</a>(it.first()),
+        .minor = <span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parseNum">parseNum</a>(it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion),
+        .patch = <span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parseNum">parseNum</a>(it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion),
+    };
+    <span class="tok-kw">if</span> (it.next() != <span class="tok-null">null</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion;
+    <span class="tok-kw">if</span> (extra_index == <span class="tok-null">null</span>) <span class="tok-kw">return</span> ver;<span class="tok-comment">
+
+    // Slice optional pre-release or build metadata components.
+    </span><span class="tok-kw">const</span> extra: []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = text[extra_index.?..text.len];
+    <span class="tok-kw">if</span> (extra[<span class="tok-number">0</span>] == <span class="tok-str">'-'</span>) {
+        <span class="tok-kw">const</span> build_index = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, extra, <span class="tok-str">'+'</span>);
+        ver.pre = extra[<span class="tok-number">1</span>..(build_index <span class="tok-kw">orelse</span> extra.len)];
+        <span class="tok-kw">if</span> (build_index) |idx| ver.build = extra[(idx + <span class="tok-number">1</span>)..];
+    } <span class="tok-kw">else</span> {
+        ver.build = extra[<span class="tok-number">1</span>..];
+    }<span class="tok-comment">
+
+    // Check validity of optional pre-release identifiers.
+    // See: https://semver.org/#spec-item-9
+    </span><span class="tok-kw">if</span> (ver.pre) |pre| {
+        it = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, pre, <span class="tok-str">'.'</span>);
+        <span class="tok-kw">while</span> (it.next()) |id| {<span class="tok-comment">
+            // Identifiers MUST NOT be empty.
+            </span><span class="tok-kw">if</span> (id.len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion;<span class="tok-comment">
+
+            // Identifiers MUST comprise only ASCII alphanumerics and hyphens [0-9A-Za-z-].
+            </span><span class="tok-kw">for</span> (id) |c| <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.ascii.html">ascii</a>.<a href="std.ascii.html#std.ascii.isAlphanumeric">isAlphanumeric</a>(c) <span class="tok-kw">and</span> c != <span class="tok-str">'-'</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion;<span class="tok-comment">
+
+            // Numeric identifiers MUST NOT include leading zeroes.
+            </span><span class="tok-kw">const</span> is_num = <span class="tok-kw">for</span> (id) |c| {
+                <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.ascii.html">ascii</a>.<a href="std.ascii.html#std.ascii.isDigit">isDigit</a>(c)) <span class="tok-kw">break</span> <span class="tok-null">false</span>;
+            } <span class="tok-kw">else</span> <span class="tok-null">true</span>;
+            <span class="tok-kw">if</span> (is_num) _ = <span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parseNum">parseNum</a>(id);
+        }
+    }<span class="tok-comment">
+
+    // Check validity of optional build metadata identifiers.
+    // See: https://semver.org/#spec-item-10
+    </span><span class="tok-kw">if</span> (ver.build) |build| {
+        it = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, build, <span class="tok-str">'.'</span>);
+        <span class="tok-kw">while</span> (it.next()) |id| {<span class="tok-comment">
+            // Identifiers MUST NOT be empty.
+            </span><span class="tok-kw">if</span> (id.len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion;<span class="tok-comment">
+
+            // Identifiers MUST comprise only ASCII alphanumerics and hyphens [0-9A-Za-z-].
+            </span><span class="tok-kw">for</span> (id) |c| <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.ascii.html">ascii</a>.<a href="std.ascii.html#std.ascii.isAlphanumeric">isAlphanumeric</a>(c) <span class="tok-kw">and</span> c != <span class="tok-str">'-'</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion;
+        }
+    }
+
+    <span class="tok-kw">return</span> ver;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.SemanticVersion.format" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">format</span><a href="#src.zig-std.SemanticVersion.format">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">format</span>( self: <a href="std.SemanticVersion.html">Version</a>, <span class="tok-kw">comptime</span> fmt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, options: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.FormatOptions.html">FormatOptions</a>, out_stream: <span class="tok-kw">anytype</span>, ) !<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.SemanticVersion.html">Version</a></code></pre></div><div><pre><code>fmt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>options: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.FormatOptions.html">FormatOptions</a></code></pre></div></div></div><div class="sectDocTests"><h3 class="sectionHeader">Example Usage</h3><pre><code class="docTestsCode"><span class="tok-kw">test</span> format {<span class="tok-comment">
+    // Many of these test strings are from https://github.com/semver/semver.org/issues/59#issuecomment-390854010.
+
+    // Valid version strings should be accepted.
+    </span><span class="tok-kw">for</span> ([_][]<span class="tok-kw">const</span> <span class="tok-type">u8</span>{
+        <span class="tok-str">&quot;0.0.4&quot;</span>,
+        <span class="tok-str">&quot;1.2.3&quot;</span>,
+        <span class="tok-str">&quot;10.20.30&quot;</span>,
+        <span class="tok-str">&quot;1.1.2-prerelease+meta&quot;</span>,
+        <span class="tok-str">&quot;1.1.2+meta&quot;</span>,
+        <span class="tok-str">&quot;1.1.2+meta-valid&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-beta&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha.beta&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha.beta.1&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha.1&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha0.valid&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha.0valid&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha-a.b-c-somethinglong+build.1-aef.1-its-okay&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-rc.1+build.1&quot;</span>,
+        <span class="tok-str">&quot;2.0.0-rc.1+build.123&quot;</span>,
+        <span class="tok-str">&quot;1.2.3-beta&quot;</span>,
+        <span class="tok-str">&quot;10.2.3-DEV-SNAPSHOT&quot;</span>,
+        <span class="tok-str">&quot;1.2.3-SNAPSHOT-123&quot;</span>,
+        <span class="tok-str">&quot;1.0.0&quot;</span>,
+        <span class="tok-str">&quot;2.0.0&quot;</span>,
+        <span class="tok-str">&quot;1.1.7&quot;</span>,
+        <span class="tok-str">&quot;2.0.0+build.1848&quot;</span>,
+        <span class="tok-str">&quot;2.0.1-alpha.1227&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha+beta&quot;</span>,
+        <span class="tok-str">&quot;1.2.3----RC-SNAPSHOT.12.9.1--.12+788&quot;</span>,
+        <span class="tok-str">&quot;1.2.3----R-S.12.9.1--.12+meta&quot;</span>,
+        <span class="tok-str">&quot;1.2.3----RC-SNAPSHOT.12.9.1--.12&quot;</span>,
+        <span class="tok-str">&quot;1.0.0+0.build.1-rc.10000aaa-kk-0.1&quot;</span>,
+        <span class="tok-str">&quot;5.4.0-1018-raspi&quot;</span>,
+        <span class="tok-str">&quot;5.7.123&quot;</span>,
+    }) |valid| <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectFmt">expectFmt</a>(valid, <span class="tok-str">&quot;{}&quot;</span>, .{<span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(valid)});<span class="tok-comment">
+
+    // Invalid version strings should be rejected.
+    </span><span class="tok-kw">for</span> ([_][]<span class="tok-kw">const</span> <span class="tok-type">u8</span>{
+        <span class="tok-str">&quot;&quot;</span>,
+        <span class="tok-str">&quot;1&quot;</span>,
+        <span class="tok-str">&quot;1.2&quot;</span>,
+        <span class="tok-str">&quot;1.2.3-0123&quot;</span>,
+        <span class="tok-str">&quot;1.2.3-0123.0123&quot;</span>,
+        <span class="tok-str">&quot;1.1.2+.123&quot;</span>,
+        <span class="tok-str">&quot;+invalid&quot;</span>,
+        <span class="tok-str">&quot;-invalid&quot;</span>,
+        <span class="tok-str">&quot;-invalid+invalid&quot;</span>,
+        <span class="tok-str">&quot;-invalid.01&quot;</span>,
+        <span class="tok-str">&quot;alpha&quot;</span>,
+        <span class="tok-str">&quot;alpha.beta&quot;</span>,
+        <span class="tok-str">&quot;alpha.beta.1&quot;</span>,
+        <span class="tok-str">&quot;alpha.1&quot;</span>,
+        <span class="tok-str">&quot;alpha+beta&quot;</span>,
+        <span class="tok-str">&quot;alpha_beta&quot;</span>,
+        <span class="tok-str">&quot;alpha.&quot;</span>,
+        <span class="tok-str">&quot;alpha..&quot;</span>,
+        <span class="tok-str">&quot;beta\\&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha_beta&quot;</span>,
+        <span class="tok-str">&quot;-alpha.&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha..&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha..1&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha...1&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha....1&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha.....1&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha......1&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha.......1&quot;</span>,
+        <span class="tok-str">&quot;01.1.1&quot;</span>,
+        <span class="tok-str">&quot;1.01.1&quot;</span>,
+        <span class="tok-str">&quot;1.1.01&quot;</span>,
+        <span class="tok-str">&quot;1.2&quot;</span>,
+        <span class="tok-str">&quot;1.2.3.DEV&quot;</span>,
+        <span class="tok-str">&quot;1.2-SNAPSHOT&quot;</span>,
+        <span class="tok-str">&quot;1.2.31.2.3----RC-SNAPSHOT.12.09.1--..12+788&quot;</span>,
+        <span class="tok-str">&quot;1.2-RC-SNAPSHOT&quot;</span>,
+        <span class="tok-str">&quot;-1.0.3-gamma+b7718&quot;</span>,
+        <span class="tok-str">&quot;+justmeta&quot;</span>,
+        <span class="tok-str">&quot;9.8.7+meta+meta&quot;</span>,
+        <span class="tok-str">&quot;9.8.7-whatever+meta+meta&quot;</span>,
+        <span class="tok-str">&quot;2.6.32.11-svn21605&quot;</span>,
+        <span class="tok-str">&quot;2.11.2(0.329/5/3)&quot;</span>,
+        <span class="tok-str">&quot;2.13-DEVELOPMENT&quot;</span>,
+        <span class="tok-str">&quot;2.3-35&quot;</span>,
+        <span class="tok-str">&quot;1a.4&quot;</span>,
+        <span class="tok-str">&quot;3.b1.0&quot;</span>,
+        <span class="tok-str">&quot;1.4beta&quot;</span>,
+        <span class="tok-str">&quot;2.7.pre&quot;</span>,
+        <span class="tok-str">&quot;0..3&quot;</span>,
+        <span class="tok-str">&quot;8.008.&quot;</span>,
+        <span class="tok-str">&quot;01...&quot;</span>,
+        <span class="tok-str">&quot;55&quot;</span>,
+        <span class="tok-str">&quot;foobar&quot;</span>,
+        <span class="tok-str">&quot;&quot;</span>,
+        <span class="tok-str">&quot;-1&quot;</span>,
+        <span class="tok-str">&quot;+4&quot;</span>,
+        <span class="tok-str">&quot;.&quot;</span>,
+        <span class="tok-str">&quot;....3&quot;</span>,
+    }) |invalid| <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.InvalidVersion, <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(invalid));<span class="tok-comment">
+
+    // Valid version string that may overflow.
+    </span><span class="tok-kw">const</span> big_valid = <span class="tok-str">&quot;99999999999999999999999.999999999999999999.99999999999999999&quot;</span>;
+    <span class="tok-kw">if</span> (<a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(big_valid)) |ver| {
+        <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectFmt">expectFmt</a>(big_valid, <span class="tok-str">&quot;{}&quot;</span>, .{ver});
+    } <span class="tok-kw">else</span> |err| <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expect">expect</a>(err == <span class="tok-kw">error</span>.Overflow);<span class="tok-comment">
+
+    // Invalid version string that may overflow.
+    </span><span class="tok-kw">const</span> big_invalid = <span class="tok-str">&quot;99999999999999999999999.999999999999999999.99999999999999999----RC-SNAPSHOT.12.09.1--------------------------------..12&quot;</span>;
+    <span class="tok-kw">if</span> (<a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(big_invalid)) |ver| <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.panic">panic</a>(<span class="tok-str">&quot;expected error, found {}&quot;</span>, .{ver}) <span class="tok-kw">else</span> |_| {}
+}</code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.SemanticVersion.format">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">format</span>(
+    self: <a href="std.SemanticVersion.html">Version</a>,
+    <span class="tok-kw">comptime</span> fmt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    options: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.FormatOptions.html">FormatOptions</a>,
+    out_stream: <span class="tok-kw">anytype</span>,
+) !<span class="tok-type">void</span> {
+    _ = options;
+    <span class="tok-kw">if</span> (fmt.len != <span class="tok-number">0</span>) <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.invalidFmtError">invalidFmtError</a>(fmt, self);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.format">format</a>(out_stream, <span class="tok-str">&quot;{d}.{d}.{d}&quot;</span>, .{ self.major, self.minor, self.patch });
+    <span class="tok-kw">if</span> (self.pre) |pre| <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.format">format</a>(out_stream, <span class="tok-str">&quot;-{s}&quot;</span>, .{pre});
+    <span class="tok-kw">if</span> (self.build) |build| <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.format">format</a>(out_stream, <span class="tok-str">&quot;+{s}&quot;</span>, .{build});
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.SemanticVersion">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-comment">//! A software version formatted according to the Semantic Versioning 2.0.0 specification.</span>
+<span class="tok-comment">//!</span>
+<span class="tok-comment">//! See: https://semver.org</span>
+
+<span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>);
+<span class="tok-kw">const</span> Version = <span class="tok-builtin">@This</span>();
+
+major: <span class="tok-type">usize</span>,
+minor: <span class="tok-type">usize</span>,
+patch: <span class="tok-type">usize</span>,
+pre: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-null">null</span>,
+build: ?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> = <span class="tok-null">null</span>,
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Range = <span class="tok-kw">struct</span> {
+    min: <a href="std.SemanticVersion.html">Version</a>,
+    max: <a href="std.SemanticVersion.html">Version</a>,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">includesVersion</span>(self: <a href="std.SemanticVersion.Range.html">Range</a>, ver: <a href="std.SemanticVersion.html">Version</a>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">if</span> (self.min.order(ver) == .gt) <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        <span class="tok-kw">if</span> (self.max.order(ver) == .lt) <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+    }
+
+    <span class="tok-comment">/// Checks if system is guaranteed to be at least `version` or older than `version`.</span>
+    <span class="tok-comment">/// Returns `null` if a runtime check is required.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isAtLeast</span>(self: <a href="std.SemanticVersion.Range.html">Range</a>, ver: <a href="std.SemanticVersion.html">Version</a>) ?<span class="tok-type">bool</span> {
+        <span class="tok-kw">if</span> (self.min.order(ver) != .lt) <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+        <span class="tok-kw">if</span> (self.max.order(ver) == .lt) <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+    }
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">order</span>(lhs: <a href="std.SemanticVersion.html">Version</a>, rhs: <a href="std.SemanticVersion.html">Version</a>) <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.Order.html">Order</a> {
+    <span class="tok-kw">if</span> (lhs.major &lt; rhs.major) <span class="tok-kw">return</span> .lt;
+    <span class="tok-kw">if</span> (lhs.major &gt; rhs.major) <span class="tok-kw">return</span> .gt;
+    <span class="tok-kw">if</span> (lhs.minor &lt; rhs.minor) <span class="tok-kw">return</span> .lt;
+    <span class="tok-kw">if</span> (lhs.minor &gt; rhs.minor) <span class="tok-kw">return</span> .gt;
+    <span class="tok-kw">if</span> (lhs.patch &lt; rhs.patch) <span class="tok-kw">return</span> .lt;
+    <span class="tok-kw">if</span> (lhs.patch &gt; rhs.patch) <span class="tok-kw">return</span> .gt;
+    <span class="tok-kw">if</span> (lhs.pre != <span class="tok-null">null</span> <span class="tok-kw">and</span> rhs.pre == <span class="tok-null">null</span>) <span class="tok-kw">return</span> .lt;
+    <span class="tok-kw">if</span> (lhs.pre == <span class="tok-null">null</span> <span class="tok-kw">and</span> rhs.pre == <span class="tok-null">null</span>) <span class="tok-kw">return</span> .eq;
+    <span class="tok-kw">if</span> (lhs.pre == <span class="tok-null">null</span> <span class="tok-kw">and</span> rhs.pre != <span class="tok-null">null</span>) <span class="tok-kw">return</span> .gt;<span class="tok-comment">
+
+    // Iterate over pre-release identifiers until a difference is found.
+    </span><span class="tok-kw">var</span> lhs_pre_it = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, lhs.pre.?, <span class="tok-str">'.'</span>);
+    <span class="tok-kw">var</span> rhs_pre_it = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, rhs.pre.?, <span class="tok-str">'.'</span>);
+    <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+        <span class="tok-kw">const</span> next_lid = lhs_pre_it.next();
+        <span class="tok-kw">const</span> next_rid = rhs_pre_it.next();<span class="tok-comment">
+
+        // A larger set of pre-release fields has a higher precedence than a smaller set.
+        </span><span class="tok-kw">if</span> (next_lid == <span class="tok-null">null</span> <span class="tok-kw">and</span> next_rid != <span class="tok-null">null</span>) <span class="tok-kw">return</span> .lt;
+        <span class="tok-kw">if</span> (next_lid == <span class="tok-null">null</span> <span class="tok-kw">and</span> next_rid == <span class="tok-null">null</span>) <span class="tok-kw">return</span> .eq;
+        <span class="tok-kw">if</span> (next_lid != <span class="tok-null">null</span> <span class="tok-kw">and</span> next_rid == <span class="tok-null">null</span>) <span class="tok-kw">return</span> .gt;
+
+        <span class="tok-kw">const</span> lid = next_lid.?;<span class="tok-comment"> // Left identifier
+        </span><span class="tok-kw">const</span> rid = next_rid.?;<span class="tok-comment"> // Right identifier
+
+        // Attempt to parse identifiers as numbers. Overflows are checked by parse.
+        </span><span class="tok-kw">const</span> lnum: ?<span class="tok-type">usize</span> = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseUnsigned">parseUnsigned</a>(<span class="tok-type">usize</span>, lid, <span class="tok-number">10</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.InvalidCharacter =&gt; <span class="tok-null">null</span>,
+            <span class="tok-kw">error</span>.Overflow =&gt; <span class="tok-kw">unreachable</span>,
+        };
+        <span class="tok-kw">const</span> rnum: ?<span class="tok-type">usize</span> = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseUnsigned">parseUnsigned</a>(<span class="tok-type">usize</span>, rid, <span class="tok-number">10</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+            <span class="tok-kw">error</span>.InvalidCharacter =&gt; <span class="tok-null">null</span>,
+            <span class="tok-kw">error</span>.Overflow =&gt; <span class="tok-kw">unreachable</span>,
+        };<span class="tok-comment">
+
+        // Numeric identifiers always have lower precedence than non-numeric identifiers.
+        </span><span class="tok-kw">if</span> (lnum != <span class="tok-null">null</span> <span class="tok-kw">and</span> rnum == <span class="tok-null">null</span>) <span class="tok-kw">return</span> .lt;
+        <span class="tok-kw">if</span> (lnum == <span class="tok-null">null</span> <span class="tok-kw">and</span> rnum != <span class="tok-null">null</span>) <span class="tok-kw">return</span> .gt;<span class="tok-comment">
+
+        // Identifiers consisting of only digits are compared numerically.
+        // Identifiers with letters or hyphens are compared lexically in ASCII sort order.
+        </span><span class="tok-kw">if</span> (lnum != <span class="tok-null">null</span> <span class="tok-kw">and</span> rnum != <span class="tok-null">null</span>) {
+            <span class="tok-kw">if</span> (lnum.? &lt; rnum.?) <span class="tok-kw">return</span> .lt;
+            <span class="tok-kw">if</span> (lnum.? &gt; rnum.?) <span class="tok-kw">return</span> .gt;
+        } <span class="tok-kw">else</span> {
+            <span class="tok-kw">const</span> ord = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.order">order</a>(<span class="tok-type">u8</span>, lid, rid);
+            <span class="tok-kw">if</span> (ord != .eq) <span class="tok-kw">return</span> ord;
+        }
+    }
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parse</span>(text: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<a href="std.SemanticVersion.html">Version</a> {<span class="tok-comment">
+    // Parse the required major, minor, and patch numbers.
+    </span><span class="tok-kw">const</span> extra_index = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfAny">indexOfAny</a>(<span class="tok-type">u8</span>, text, <span class="tok-str">&quot;-+&quot;</span>);
+    <span class="tok-kw">const</span> required = text[<span class="tok-number">0</span>..(extra_index <span class="tok-kw">orelse</span> text.len)];
+    <span class="tok-kw">var</span> it = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, required, <span class="tok-str">'.'</span>);
+    <span class="tok-kw">var</span> ver = <a href="std.SemanticVersion.html">Version</a>{
+        .major = <span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parseNum">parseNum</a>(it.first()),
+        .minor = <span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parseNum">parseNum</a>(it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion),
+        .patch = <span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parseNum">parseNum</a>(it.next() <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion),
+    };
+    <span class="tok-kw">if</span> (it.next() != <span class="tok-null">null</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion;
+    <span class="tok-kw">if</span> (extra_index == <span class="tok-null">null</span>) <span class="tok-kw">return</span> ver;<span class="tok-comment">
+
+    // Slice optional pre-release or build metadata components.
+    </span><span class="tok-kw">const</span> extra: []<span class="tok-kw">const</span> <span class="tok-type">u8</span> = text[extra_index.?..text.len];
+    <span class="tok-kw">if</span> (extra[<span class="tok-number">0</span>] == <span class="tok-str">'-'</span>) {
+        <span class="tok-kw">const</span> build_index = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, extra, <span class="tok-str">'+'</span>);
+        ver.pre = extra[<span class="tok-number">1</span>..(build_index <span class="tok-kw">orelse</span> extra.len)];
+        <span class="tok-kw">if</span> (build_index) |idx| ver.build = extra[(idx + <span class="tok-number">1</span>)..];
+    } <span class="tok-kw">else</span> {
+        ver.build = extra[<span class="tok-number">1</span>..];
+    }<span class="tok-comment">
+
+    // Check validity of optional pre-release identifiers.
+    // See: https://semver.org/#spec-item-9
+    </span><span class="tok-kw">if</span> (ver.pre) |pre| {
+        it = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, pre, <span class="tok-str">'.'</span>);
+        <span class="tok-kw">while</span> (it.next()) |id| {<span class="tok-comment">
+            // Identifiers MUST NOT be empty.
+            </span><span class="tok-kw">if</span> (id.len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion;<span class="tok-comment">
+
+            // Identifiers MUST comprise only ASCII alphanumerics and hyphens [0-9A-Za-z-].
+            </span><span class="tok-kw">for</span> (id) |c| <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.ascii.html">ascii</a>.<a href="std.ascii.html#std.ascii.isAlphanumeric">isAlphanumeric</a>(c) <span class="tok-kw">and</span> c != <span class="tok-str">'-'</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion;<span class="tok-comment">
+
+            // Numeric identifiers MUST NOT include leading zeroes.
+            </span><span class="tok-kw">const</span> is_num = <span class="tok-kw">for</span> (id) |c| {
+                <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.ascii.html">ascii</a>.<a href="std.ascii.html#std.ascii.isDigit">isDigit</a>(c)) <span class="tok-kw">break</span> <span class="tok-null">false</span>;
+            } <span class="tok-kw">else</span> <span class="tok-null">true</span>;
+            <span class="tok-kw">if</span> (is_num) _ = <span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parseNum">parseNum</a>(id);
+        }
+    }<span class="tok-comment">
+
+    // Check validity of optional build metadata identifiers.
+    // See: https://semver.org/#spec-item-10
+    </span><span class="tok-kw">if</span> (ver.build) |build| {
+        it = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.splitScalar">splitScalar</a>(<span class="tok-type">u8</span>, build, <span class="tok-str">'.'</span>);
+        <span class="tok-kw">while</span> (it.next()) |id| {<span class="tok-comment">
+            // Identifiers MUST NOT be empty.
+            </span><span class="tok-kw">if</span> (id.len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion;<span class="tok-comment">
+
+            // Identifiers MUST comprise only ASCII alphanumerics and hyphens [0-9A-Za-z-].
+            </span><span class="tok-kw">for</span> (id) |c| <span class="tok-kw">if</span> (!<a href="std.html">std</a>.<a href="std.ascii.html">ascii</a>.<a href="std.ascii.html#std.ascii.isAlphanumeric">isAlphanumeric</a>(c) <span class="tok-kw">and</span> c != <span class="tok-str">'-'</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion;
+        }
+    }
+
+    <span class="tok-kw">return</span> ver;
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">parseNum</span>(text: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-kw">error</span>{ InvalidVersion, Overflow }!<span class="tok-type">usize</span> {<span class="tok-comment">
+    // Leading zeroes are not allowed.
+    </span><span class="tok-kw">if</span> (text.len &gt; <span class="tok-number">1</span> <span class="tok-kw">and</span> text[<span class="tok-number">0</span>] == <span class="tok-str">'0'</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion;
+
+    <span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseUnsigned">parseUnsigned</a>(<span class="tok-type">usize</span>, text, <span class="tok-number">10</span>) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+        <span class="tok-kw">error</span>.InvalidCharacter =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidVersion,
+        <span class="tok-kw">error</span>.Overflow =&gt; <span class="tok-kw">return</span> <span class="tok-kw">error</span>.Overflow,
+    };
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">format</span>(
+    self: <a href="std.SemanticVersion.html">Version</a>,
+    <span class="tok-kw">comptime</span> fmt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    options: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.FormatOptions.html">FormatOptions</a>,
+    out_stream: <span class="tok-kw">anytype</span>,
+) !<span class="tok-type">void</span> {
+    _ = options;
+    <span class="tok-kw">if</span> (fmt.len != <span class="tok-number">0</span>) <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.invalidFmtError">invalidFmtError</a>(fmt, self);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.format">format</a>(out_stream, <span class="tok-str">&quot;{d}.{d}.{d}&quot;</span>, .{ self.major, self.minor, self.patch });
+    <span class="tok-kw">if</span> (self.pre) |pre| <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.format">format</a>(out_stream, <span class="tok-str">&quot;-{s}&quot;</span>, .{pre});
+    <span class="tok-kw">if</span> (self.build) |build| <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.format">format</a>(out_stream, <span class="tok-str">&quot;+{s}&quot;</span>, .{build});
+}
+
+<span class="tok-kw">const</span> expect = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>;
+<span class="tok-kw">const</span> expectError = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>;
+
+<span class="tok-kw">test</span> format {<span class="tok-comment">
+    // Many of these test strings are from https://github.com/semver/semver.org/issues/59#issuecomment-390854010.
+
+    // Valid version strings should be accepted.
+    </span><span class="tok-kw">for</span> ([_][]<span class="tok-kw">const</span> <span class="tok-type">u8</span>{
+        <span class="tok-str">&quot;0.0.4&quot;</span>,
+        <span class="tok-str">&quot;1.2.3&quot;</span>,
+        <span class="tok-str">&quot;10.20.30&quot;</span>,
+        <span class="tok-str">&quot;1.1.2-prerelease+meta&quot;</span>,
+        <span class="tok-str">&quot;1.1.2+meta&quot;</span>,
+        <span class="tok-str">&quot;1.1.2+meta-valid&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-beta&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha.beta&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha.beta.1&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha.1&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha0.valid&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha.0valid&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha-a.b-c-somethinglong+build.1-aef.1-its-okay&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-rc.1+build.1&quot;</span>,
+        <span class="tok-str">&quot;2.0.0-rc.1+build.123&quot;</span>,
+        <span class="tok-str">&quot;1.2.3-beta&quot;</span>,
+        <span class="tok-str">&quot;10.2.3-DEV-SNAPSHOT&quot;</span>,
+        <span class="tok-str">&quot;1.2.3-SNAPSHOT-123&quot;</span>,
+        <span class="tok-str">&quot;1.0.0&quot;</span>,
+        <span class="tok-str">&quot;2.0.0&quot;</span>,
+        <span class="tok-str">&quot;1.1.7&quot;</span>,
+        <span class="tok-str">&quot;2.0.0+build.1848&quot;</span>,
+        <span class="tok-str">&quot;2.0.1-alpha.1227&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha+beta&quot;</span>,
+        <span class="tok-str">&quot;1.2.3----RC-SNAPSHOT.12.9.1--.12+788&quot;</span>,
+        <span class="tok-str">&quot;1.2.3----R-S.12.9.1--.12+meta&quot;</span>,
+        <span class="tok-str">&quot;1.2.3----RC-SNAPSHOT.12.9.1--.12&quot;</span>,
+        <span class="tok-str">&quot;1.0.0+0.build.1-rc.10000aaa-kk-0.1&quot;</span>,
+        <span class="tok-str">&quot;5.4.0-1018-raspi&quot;</span>,
+        <span class="tok-str">&quot;5.7.123&quot;</span>,
+    }) |valid| <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectFmt">expectFmt</a>(valid, <span class="tok-str">&quot;{}&quot;</span>, .{<span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(valid)});<span class="tok-comment">
+
+    // Invalid version strings should be rejected.
+    </span><span class="tok-kw">for</span> ([_][]<span class="tok-kw">const</span> <span class="tok-type">u8</span>{
+        <span class="tok-str">&quot;&quot;</span>,
+        <span class="tok-str">&quot;1&quot;</span>,
+        <span class="tok-str">&quot;1.2&quot;</span>,
+        <span class="tok-str">&quot;1.2.3-0123&quot;</span>,
+        <span class="tok-str">&quot;1.2.3-0123.0123&quot;</span>,
+        <span class="tok-str">&quot;1.1.2+.123&quot;</span>,
+        <span class="tok-str">&quot;+invalid&quot;</span>,
+        <span class="tok-str">&quot;-invalid&quot;</span>,
+        <span class="tok-str">&quot;-invalid+invalid&quot;</span>,
+        <span class="tok-str">&quot;-invalid.01&quot;</span>,
+        <span class="tok-str">&quot;alpha&quot;</span>,
+        <span class="tok-str">&quot;alpha.beta&quot;</span>,
+        <span class="tok-str">&quot;alpha.beta.1&quot;</span>,
+        <span class="tok-str">&quot;alpha.1&quot;</span>,
+        <span class="tok-str">&quot;alpha+beta&quot;</span>,
+        <span class="tok-str">&quot;alpha_beta&quot;</span>,
+        <span class="tok-str">&quot;alpha.&quot;</span>,
+        <span class="tok-str">&quot;alpha..&quot;</span>,
+        <span class="tok-str">&quot;beta\\&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha_beta&quot;</span>,
+        <span class="tok-str">&quot;-alpha.&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha..&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha..1&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha...1&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha....1&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha.....1&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha......1&quot;</span>,
+        <span class="tok-str">&quot;1.0.0-alpha.......1&quot;</span>,
+        <span class="tok-str">&quot;01.1.1&quot;</span>,
+        <span class="tok-str">&quot;1.01.1&quot;</span>,
+        <span class="tok-str">&quot;1.1.01&quot;</span>,
+        <span class="tok-str">&quot;1.2&quot;</span>,
+        <span class="tok-str">&quot;1.2.3.DEV&quot;</span>,
+        <span class="tok-str">&quot;1.2-SNAPSHOT&quot;</span>,
+        <span class="tok-str">&quot;1.2.31.2.3----RC-SNAPSHOT.12.09.1--..12+788&quot;</span>,
+        <span class="tok-str">&quot;1.2-RC-SNAPSHOT&quot;</span>,
+        <span class="tok-str">&quot;-1.0.3-gamma+b7718&quot;</span>,
+        <span class="tok-str">&quot;+justmeta&quot;</span>,
+        <span class="tok-str">&quot;9.8.7+meta+meta&quot;</span>,
+        <span class="tok-str">&quot;9.8.7-whatever+meta+meta&quot;</span>,
+        <span class="tok-str">&quot;2.6.32.11-svn21605&quot;</span>,
+        <span class="tok-str">&quot;2.11.2(0.329/5/3)&quot;</span>,
+        <span class="tok-str">&quot;2.13-DEVELOPMENT&quot;</span>,
+        <span class="tok-str">&quot;2.3-35&quot;</span>,
+        <span class="tok-str">&quot;1a.4&quot;</span>,
+        <span class="tok-str">&quot;3.b1.0&quot;</span>,
+        <span class="tok-str">&quot;1.4beta&quot;</span>,
+        <span class="tok-str">&quot;2.7.pre&quot;</span>,
+        <span class="tok-str">&quot;0..3&quot;</span>,
+        <span class="tok-str">&quot;8.008.&quot;</span>,
+        <span class="tok-str">&quot;01...&quot;</span>,
+        <span class="tok-str">&quot;55&quot;</span>,
+        <span class="tok-str">&quot;foobar&quot;</span>,
+        <span class="tok-str">&quot;&quot;</span>,
+        <span class="tok-str">&quot;-1&quot;</span>,
+        <span class="tok-str">&quot;+4&quot;</span>,
+        <span class="tok-str">&quot;.&quot;</span>,
+        <span class="tok-str">&quot;....3&quot;</span>,
+    }) |invalid| <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.InvalidVersion, <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(invalid));<span class="tok-comment">
+
+    // Valid version string that may overflow.
+    </span><span class="tok-kw">const</span> big_valid = <span class="tok-str">&quot;99999999999999999999999.999999999999999999.99999999999999999&quot;</span>;
+    <span class="tok-kw">if</span> (<a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(big_valid)) |ver| {
+        <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectFmt">expectFmt</a>(big_valid, <span class="tok-str">&quot;{}&quot;</span>, .{ver});
+    } <span class="tok-kw">else</span> |err| <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expect">expect</a>(err == <span class="tok-kw">error</span>.Overflow);<span class="tok-comment">
+
+    // Invalid version string that may overflow.
+    </span><span class="tok-kw">const</span> big_invalid = <span class="tok-str">&quot;99999999999999999999999.999999999999999999.99999999999999999----RC-SNAPSHOT.12.09.1--------------------------------..12&quot;</span>;
+    <span class="tok-kw">if</span> (<a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(big_invalid)) |ver| <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.panic">panic</a>(<span class="tok-str">&quot;expected error, found {}&quot;</span>, .{ver}) <span class="tok-kw">else</span> |_| {}
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;precedence&quot;</span> {<span class="tok-comment">
+    // SemVer 2 spec 11.2 example: 1.0.0 &lt; 2.0.0 &lt; 2.1.0 &lt; 2.1.1.
+    </span><span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.SemanticVersion.html#std.SemanticVersion.order">order</a>(<span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;1.0.0&quot;</span>), <span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;2.0.0&quot;</span>)) == .lt);
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.SemanticVersion.html#std.SemanticVersion.order">order</a>(<span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;2.0.0&quot;</span>), <span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;2.1.0&quot;</span>)) == .lt);
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.SemanticVersion.html#std.SemanticVersion.order">order</a>(<span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;2.1.0&quot;</span>), <span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;2.1.1&quot;</span>)) == .lt);<span class="tok-comment">
+
+    // SemVer 2 spec 11.3 example: 1.0.0-alpha &lt; 1.0.0.
+    </span><span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.SemanticVersion.html#std.SemanticVersion.order">order</a>(<span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;1.0.0-alpha&quot;</span>), <span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;1.0.0&quot;</span>)) == .lt);<span class="tok-comment">
+
+    // SemVer 2 spec 11.4 example: 1.0.0-alpha &lt; 1.0.0-alpha.1 &lt; 1.0.0-alpha.beta &lt; 1.0.0-beta &lt;
+    // 1.0.0-beta.2 &lt; 1.0.0-beta.11 &lt; 1.0.0-rc.1 &lt; 1.0.0.
+    </span><span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.SemanticVersion.html#std.SemanticVersion.order">order</a>(<span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;1.0.0-alpha&quot;</span>), <span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;1.0.0-alpha.1&quot;</span>)) == .lt);
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.SemanticVersion.html#std.SemanticVersion.order">order</a>(<span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;1.0.0-alpha.1&quot;</span>), <span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;1.0.0-alpha.beta&quot;</span>)) == .lt);
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.SemanticVersion.html#std.SemanticVersion.order">order</a>(<span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;1.0.0-alpha.beta&quot;</span>), <span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;1.0.0-beta&quot;</span>)) == .lt);
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.SemanticVersion.html#std.SemanticVersion.order">order</a>(<span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;1.0.0-beta&quot;</span>), <span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;1.0.0-beta.2&quot;</span>)) == .lt);
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.SemanticVersion.html#std.SemanticVersion.order">order</a>(<span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;1.0.0-beta.2&quot;</span>), <span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;1.0.0-beta.11&quot;</span>)) == .lt);
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.SemanticVersion.html#std.SemanticVersion.order">order</a>(<span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;1.0.0-beta.11&quot;</span>), <span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;1.0.0-rc.1&quot;</span>)) == .lt);
+    <span class="tok-kw">try</span> <a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.SemanticVersion.html#std.SemanticVersion.order">order</a>(<span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;1.0.0-rc.1&quot;</span>), <span class="tok-kw">try</span> <a href="std.SemanticVersion.html#std.SemanticVersion.parse">parse</a>(<span class="tok-str">&quot;1.0.0&quot;</span>)) == .lt);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;zig_version&quot;</span> {<span class="tok-comment">
+    // An approximate Zig build that predates this test.
+    </span><span class="tok-kw">const</span> older_version: <a href="std.SemanticVersion.html">Version</a> = .{ .major = <span class="tok-number">0</span>, .minor = <span class="tok-number">8</span>, .patch = <span class="tok-number">0</span>, .pre = <span class="tok-str">&quot;dev.874&quot;</span> };<span class="tok-comment">
+
+    // Simulated compatibility check using Zig version.
+    </span><span class="tok-kw">const</span> compatible = <span class="tok-kw">comptime</span> <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;builtin&quot;</span>).zig_version.order(older_version) == .gt;
+    <span class="tok-kw">if</span> (!compatible) <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;zig_version test failed&quot;</span>);
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

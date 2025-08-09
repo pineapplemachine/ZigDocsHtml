@@ -1,0 +1,541 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">os</a></li><li><a href="std.os.html" class="">windows</a></li><li><a href="std.os.windows.lang.html" class="active">lang</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.os.windows.lang" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.os.windows.lang</span><a href="#src.zig-std.os.windows.lang">[src]</a></h1><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.os.windows.lang.NEUTRAL" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">NEUTRAL</span><a href="#src.zig-std.os.windows.lang.NEUTRAL">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.NEUTRAL">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> NEUTRAL = <span class="tok-number">0x00</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.INVARIANT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">INVARIANT</span><a href="#src.zig-std.os.windows.lang.INVARIANT">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.INVARIANT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> INVARIANT = <span class="tok-number">0x7f</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.AFRIKAANS" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">AFRIKAANS</span><a href="#src.zig-std.os.windows.lang.AFRIKAANS">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.AFRIKAANS">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> AFRIKAANS = <span class="tok-number">0x36</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.ALBANIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ALBANIAN</span><a href="#src.zig-std.os.windows.lang.ALBANIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.ALBANIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ALBANIAN = <span class="tok-number">0x1c</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.ALSATIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ALSATIAN</span><a href="#src.zig-std.os.windows.lang.ALSATIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.ALSATIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ALSATIAN = <span class="tok-number">0x84</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.AMHARIC" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">AMHARIC</span><a href="#src.zig-std.os.windows.lang.AMHARIC">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.AMHARIC">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> AMHARIC = <span class="tok-number">0x5e</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.ARABIC" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ARABIC</span><a href="#src.zig-std.os.windows.lang.ARABIC">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.ARABIC">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ARABIC = <span class="tok-number">0x01</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.ARMENIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ARMENIAN</span><a href="#src.zig-std.os.windows.lang.ARMENIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.ARMENIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ARMENIAN = <span class="tok-number">0x2b</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.ASSAMESE" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ASSAMESE</span><a href="#src.zig-std.os.windows.lang.ASSAMESE">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.ASSAMESE">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ASSAMESE = <span class="tok-number">0x4d</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.AZERI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">AZERI</span><a href="#src.zig-std.os.windows.lang.AZERI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.AZERI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> AZERI = <span class="tok-number">0x2c</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.AZERBAIJANI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">AZERBAIJANI</span><a href="#src.zig-std.os.windows.lang.AZERBAIJANI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.AZERBAIJANI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> AZERBAIJANI = <span class="tok-number">0x2c</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.BANGLA" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">BANGLA</span><a href="#src.zig-std.os.windows.lang.BANGLA">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.BANGLA">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> BANGLA = <span class="tok-number">0x45</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.BASHKIR" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">BASHKIR</span><a href="#src.zig-std.os.windows.lang.BASHKIR">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.BASHKIR">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> BASHKIR = <span class="tok-number">0x6d</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.BASQUE" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">BASQUE</span><a href="#src.zig-std.os.windows.lang.BASQUE">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.BASQUE">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> BASQUE = <span class="tok-number">0x2d</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.BELARUSIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">BELARUSIAN</span><a href="#src.zig-std.os.windows.lang.BELARUSIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.BELARUSIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> BELARUSIAN = <span class="tok-number">0x23</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.BENGALI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">BENGALI</span><a href="#src.zig-std.os.windows.lang.BENGALI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.BENGALI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> BENGALI = <span class="tok-number">0x45</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.BRETON" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">BRETON</span><a href="#src.zig-std.os.windows.lang.BRETON">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.BRETON">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> BRETON = <span class="tok-number">0x7e</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.BOSNIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">BOSNIAN</span><a href="#src.zig-std.os.windows.lang.BOSNIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.BOSNIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> BOSNIAN = <span class="tok-number">0x1a</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.BOSNIAN_NEUTRAL" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">BOSNIAN_NEUTRAL</span><a href="#src.zig-std.os.windows.lang.BOSNIAN_NEUTRAL">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.BOSNIAN_NEUTRAL">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> BOSNIAN_NEUTRAL = <span class="tok-number">0x781a</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.BULGARIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">BULGARIAN</span><a href="#src.zig-std.os.windows.lang.BULGARIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.BULGARIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> BULGARIAN = <span class="tok-number">0x02</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.CATALAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">CATALAN</span><a href="#src.zig-std.os.windows.lang.CATALAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.CATALAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> CATALAN = <span class="tok-number">0x03</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.CENTRAL_KURDISH" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">CENTRAL_KURDISH</span><a href="#src.zig-std.os.windows.lang.CENTRAL_KURDISH">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.CENTRAL_KURDISH">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> CENTRAL_KURDISH = <span class="tok-number">0x92</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.CHEROKEE" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">CHEROKEE</span><a href="#src.zig-std.os.windows.lang.CHEROKEE">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.CHEROKEE">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> CHEROKEE = <span class="tok-number">0x5c</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.CHINESE" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">CHINESE</span><a href="#src.zig-std.os.windows.lang.CHINESE">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.CHINESE">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> CHINESE = <span class="tok-number">0x04</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.CHINESE_SIMPLIFIED" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">CHINESE_SIMPLIFIED</span><a href="#src.zig-std.os.windows.lang.CHINESE_SIMPLIFIED">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.CHINESE_SIMPLIFIED">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> CHINESE_SIMPLIFIED = <span class="tok-number">0x04</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.CHINESE_TRADITIONAL" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">CHINESE_TRADITIONAL</span><a href="#src.zig-std.os.windows.lang.CHINESE_TRADITIONAL">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.CHINESE_TRADITIONAL">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> CHINESE_TRADITIONAL = <span class="tok-number">0x7c04</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.CORSICAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">CORSICAN</span><a href="#src.zig-std.os.windows.lang.CORSICAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.CORSICAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> CORSICAN = <span class="tok-number">0x83</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.CROATIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">CROATIAN</span><a href="#src.zig-std.os.windows.lang.CROATIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.CROATIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> CROATIAN = <span class="tok-number">0x1a</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.CZECH" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">CZECH</span><a href="#src.zig-std.os.windows.lang.CZECH">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.CZECH">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> CZECH = <span class="tok-number">0x05</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.DANISH" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">DANISH</span><a href="#src.zig-std.os.windows.lang.DANISH">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.DANISH">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> DANISH = <span class="tok-number">0x06</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.DARI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">DARI</span><a href="#src.zig-std.os.windows.lang.DARI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.DARI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> DARI = <span class="tok-number">0x8c</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.DIVEHI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">DIVEHI</span><a href="#src.zig-std.os.windows.lang.DIVEHI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.DIVEHI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> DIVEHI = <span class="tok-number">0x65</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.DUTCH" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">DUTCH</span><a href="#src.zig-std.os.windows.lang.DUTCH">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.DUTCH">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> DUTCH = <span class="tok-number">0x13</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.ENGLISH" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ENGLISH</span><a href="#src.zig-std.os.windows.lang.ENGLISH">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.ENGLISH">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ENGLISH = <span class="tok-number">0x09</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.ESTONIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ESTONIAN</span><a href="#src.zig-std.os.windows.lang.ESTONIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.ESTONIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ESTONIAN = <span class="tok-number">0x25</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.FAEROESE" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">FAEROESE</span><a href="#src.zig-std.os.windows.lang.FAEROESE">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.FAEROESE">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> FAEROESE = <span class="tok-number">0x38</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.FARSI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">FARSI</span><a href="#src.zig-std.os.windows.lang.FARSI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.FARSI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> FARSI = <span class="tok-number">0x29</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.FILIPINO" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">FILIPINO</span><a href="#src.zig-std.os.windows.lang.FILIPINO">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.FILIPINO">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> FILIPINO = <span class="tok-number">0x64</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.FINNISH" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">FINNISH</span><a href="#src.zig-std.os.windows.lang.FINNISH">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.FINNISH">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> FINNISH = <span class="tok-number">0x0b</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.FRENCH" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">FRENCH</span><a href="#src.zig-std.os.windows.lang.FRENCH">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.FRENCH">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> FRENCH = <span class="tok-number">0x0c</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.FRISIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">FRISIAN</span><a href="#src.zig-std.os.windows.lang.FRISIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.FRISIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> FRISIAN = <span class="tok-number">0x62</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.FULAH" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">FULAH</span><a href="#src.zig-std.os.windows.lang.FULAH">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.FULAH">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> FULAH = <span class="tok-number">0x67</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.GALICIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">GALICIAN</span><a href="#src.zig-std.os.windows.lang.GALICIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.GALICIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> GALICIAN = <span class="tok-number">0x56</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.GEORGIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">GEORGIAN</span><a href="#src.zig-std.os.windows.lang.GEORGIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.GEORGIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> GEORGIAN = <span class="tok-number">0x37</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.GERMAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">GERMAN</span><a href="#src.zig-std.os.windows.lang.GERMAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.GERMAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> GERMAN = <span class="tok-number">0x07</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.GREEK" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">GREEK</span><a href="#src.zig-std.os.windows.lang.GREEK">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.GREEK">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> GREEK = <span class="tok-number">0x08</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.GREENLANDIC" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">GREENLANDIC</span><a href="#src.zig-std.os.windows.lang.GREENLANDIC">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.GREENLANDIC">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> GREENLANDIC = <span class="tok-number">0x6f</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.GUJARATI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">GUJARATI</span><a href="#src.zig-std.os.windows.lang.GUJARATI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.GUJARATI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> GUJARATI = <span class="tok-number">0x47</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.HAUSA" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">HAUSA</span><a href="#src.zig-std.os.windows.lang.HAUSA">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.HAUSA">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> HAUSA = <span class="tok-number">0x68</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.HAWAIIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">HAWAIIAN</span><a href="#src.zig-std.os.windows.lang.HAWAIIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.HAWAIIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> HAWAIIAN = <span class="tok-number">0x75</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.HEBREW" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">HEBREW</span><a href="#src.zig-std.os.windows.lang.HEBREW">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.HEBREW">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> HEBREW = <span class="tok-number">0x0d</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.HINDI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">HINDI</span><a href="#src.zig-std.os.windows.lang.HINDI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.HINDI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> HINDI = <span class="tok-number">0x39</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.HUNGARIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">HUNGARIAN</span><a href="#src.zig-std.os.windows.lang.HUNGARIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.HUNGARIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> HUNGARIAN = <span class="tok-number">0x0e</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.ICELANDIC" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ICELANDIC</span><a href="#src.zig-std.os.windows.lang.ICELANDIC">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.ICELANDIC">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ICELANDIC = <span class="tok-number">0x0f</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.IGBO" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">IGBO</span><a href="#src.zig-std.os.windows.lang.IGBO">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.IGBO">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> IGBO = <span class="tok-number">0x70</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.INDONESIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">INDONESIAN</span><a href="#src.zig-std.os.windows.lang.INDONESIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.INDONESIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> INDONESIAN = <span class="tok-number">0x21</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.INUKTITUT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">INUKTITUT</span><a href="#src.zig-std.os.windows.lang.INUKTITUT">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.INUKTITUT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> INUKTITUT = <span class="tok-number">0x5d</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.IRISH" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">IRISH</span><a href="#src.zig-std.os.windows.lang.IRISH">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.IRISH">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> IRISH = <span class="tok-number">0x3c</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.ITALIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ITALIAN</span><a href="#src.zig-std.os.windows.lang.ITALIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.ITALIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ITALIAN = <span class="tok-number">0x10</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.JAPANESE" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">JAPANESE</span><a href="#src.zig-std.os.windows.lang.JAPANESE">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.JAPANESE">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> JAPANESE = <span class="tok-number">0x11</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.KANNADA" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">KANNADA</span><a href="#src.zig-std.os.windows.lang.KANNADA">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.KANNADA">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> KANNADA = <span class="tok-number">0x4b</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.KASHMIRI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">KASHMIRI</span><a href="#src.zig-std.os.windows.lang.KASHMIRI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.KASHMIRI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> KASHMIRI = <span class="tok-number">0x60</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.KAZAK" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">KAZAK</span><a href="#src.zig-std.os.windows.lang.KAZAK">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.KAZAK">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> KAZAK = <span class="tok-number">0x3f</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.KHMER" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">KHMER</span><a href="#src.zig-std.os.windows.lang.KHMER">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.KHMER">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> KHMER = <span class="tok-number">0x53</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.KICHE" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">KICHE</span><a href="#src.zig-std.os.windows.lang.KICHE">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.KICHE">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> KICHE = <span class="tok-number">0x86</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.KINYARWANDA" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">KINYARWANDA</span><a href="#src.zig-std.os.windows.lang.KINYARWANDA">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.KINYARWANDA">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> KINYARWANDA = <span class="tok-number">0x87</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.KONKANI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">KONKANI</span><a href="#src.zig-std.os.windows.lang.KONKANI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.KONKANI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> KONKANI = <span class="tok-number">0x57</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.KOREAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">KOREAN</span><a href="#src.zig-std.os.windows.lang.KOREAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.KOREAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> KOREAN = <span class="tok-number">0x12</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.KYRGYZ" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">KYRGYZ</span><a href="#src.zig-std.os.windows.lang.KYRGYZ">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.KYRGYZ">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> KYRGYZ = <span class="tok-number">0x40</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.LAO" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">LAO</span><a href="#src.zig-std.os.windows.lang.LAO">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.LAO">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> LAO = <span class="tok-number">0x54</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.LATVIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">LATVIAN</span><a href="#src.zig-std.os.windows.lang.LATVIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.LATVIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> LATVIAN = <span class="tok-number">0x26</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.LITHUANIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">LITHUANIAN</span><a href="#src.zig-std.os.windows.lang.LITHUANIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.LITHUANIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> LITHUANIAN = <span class="tok-number">0x27</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.LOWER_SORBIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">LOWER_SORBIAN</span><a href="#src.zig-std.os.windows.lang.LOWER_SORBIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.LOWER_SORBIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> LOWER_SORBIAN = <span class="tok-number">0x2e</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.LUXEMBOURGISH" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">LUXEMBOURGISH</span><a href="#src.zig-std.os.windows.lang.LUXEMBOURGISH">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.LUXEMBOURGISH">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> LUXEMBOURGISH = <span class="tok-number">0x6e</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.MACEDONIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">MACEDONIAN</span><a href="#src.zig-std.os.windows.lang.MACEDONIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.MACEDONIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MACEDONIAN = <span class="tok-number">0x2f</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.MALAY" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">MALAY</span><a href="#src.zig-std.os.windows.lang.MALAY">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.MALAY">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MALAY = <span class="tok-number">0x3e</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.MALAYALAM" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">MALAYALAM</span><a href="#src.zig-std.os.windows.lang.MALAYALAM">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.MALAYALAM">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MALAYALAM = <span class="tok-number">0x4c</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.MALTESE" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">MALTESE</span><a href="#src.zig-std.os.windows.lang.MALTESE">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.MALTESE">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MALTESE = <span class="tok-number">0x3a</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.MANIPURI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">MANIPURI</span><a href="#src.zig-std.os.windows.lang.MANIPURI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.MANIPURI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MANIPURI = <span class="tok-number">0x58</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.MAORI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">MAORI</span><a href="#src.zig-std.os.windows.lang.MAORI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.MAORI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MAORI = <span class="tok-number">0x81</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.MAPUDUNGUN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">MAPUDUNGUN</span><a href="#src.zig-std.os.windows.lang.MAPUDUNGUN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.MAPUDUNGUN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MAPUDUNGUN = <span class="tok-number">0x7a</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.MARATHI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">MARATHI</span><a href="#src.zig-std.os.windows.lang.MARATHI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.MARATHI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MARATHI = <span class="tok-number">0x4e</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.MOHAWK" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">MOHAWK</span><a href="#src.zig-std.os.windows.lang.MOHAWK">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.MOHAWK">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MOHAWK = <span class="tok-number">0x7c</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.MONGOLIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">MONGOLIAN</span><a href="#src.zig-std.os.windows.lang.MONGOLIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.MONGOLIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MONGOLIAN = <span class="tok-number">0x50</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.NEPALI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">NEPALI</span><a href="#src.zig-std.os.windows.lang.NEPALI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.NEPALI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> NEPALI = <span class="tok-number">0x61</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.NORWEGIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">NORWEGIAN</span><a href="#src.zig-std.os.windows.lang.NORWEGIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.NORWEGIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> NORWEGIAN = <span class="tok-number">0x14</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.OCCITAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">OCCITAN</span><a href="#src.zig-std.os.windows.lang.OCCITAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.OCCITAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> OCCITAN = <span class="tok-number">0x82</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.ODIA" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ODIA</span><a href="#src.zig-std.os.windows.lang.ODIA">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.ODIA">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ODIA = <span class="tok-number">0x48</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.ORIYA" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ORIYA</span><a href="#src.zig-std.os.windows.lang.ORIYA">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.ORIYA">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ORIYA = <span class="tok-number">0x48</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.PASHTO" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PASHTO</span><a href="#src.zig-std.os.windows.lang.PASHTO">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.PASHTO">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PASHTO = <span class="tok-number">0x63</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.PERSIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PERSIAN</span><a href="#src.zig-std.os.windows.lang.PERSIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.PERSIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PERSIAN = <span class="tok-number">0x29</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.POLISH" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">POLISH</span><a href="#src.zig-std.os.windows.lang.POLISH">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.POLISH">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> POLISH = <span class="tok-number">0x15</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.PORTUGUESE" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PORTUGUESE</span><a href="#src.zig-std.os.windows.lang.PORTUGUESE">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.PORTUGUESE">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PORTUGUESE = <span class="tok-number">0x16</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.PULAR" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PULAR</span><a href="#src.zig-std.os.windows.lang.PULAR">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.PULAR">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PULAR = <span class="tok-number">0x67</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.PUNJABI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PUNJABI</span><a href="#src.zig-std.os.windows.lang.PUNJABI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.PUNJABI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PUNJABI = <span class="tok-number">0x46</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.QUECHUA" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">QUECHUA</span><a href="#src.zig-std.os.windows.lang.QUECHUA">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.QUECHUA">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> QUECHUA = <span class="tok-number">0x6b</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.ROMANIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ROMANIAN</span><a href="#src.zig-std.os.windows.lang.ROMANIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.ROMANIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ROMANIAN = <span class="tok-number">0x18</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.ROMANSH" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ROMANSH</span><a href="#src.zig-std.os.windows.lang.ROMANSH">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.ROMANSH">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ROMANSH = <span class="tok-number">0x17</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.RUSSIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">RUSSIAN</span><a href="#src.zig-std.os.windows.lang.RUSSIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.RUSSIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> RUSSIAN = <span class="tok-number">0x19</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.SAKHA" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SAKHA</span><a href="#src.zig-std.os.windows.lang.SAKHA">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.SAKHA">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SAKHA = <span class="tok-number">0x85</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.SAMI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SAMI</span><a href="#src.zig-std.os.windows.lang.SAMI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.SAMI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SAMI = <span class="tok-number">0x3b</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.SANSKRIT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SANSKRIT</span><a href="#src.zig-std.os.windows.lang.SANSKRIT">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.SANSKRIT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SANSKRIT = <span class="tok-number">0x4f</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.SCOTTISH_GAELIC" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SCOTTISH_GAELIC</span><a href="#src.zig-std.os.windows.lang.SCOTTISH_GAELIC">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.SCOTTISH_GAELIC">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SCOTTISH_GAELIC = <span class="tok-number">0x91</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.SERBIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SERBIAN</span><a href="#src.zig-std.os.windows.lang.SERBIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.SERBIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SERBIAN = <span class="tok-number">0x1a</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.SERBIAN_NEUTRAL" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SERBIAN_NEUTRAL</span><a href="#src.zig-std.os.windows.lang.SERBIAN_NEUTRAL">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.SERBIAN_NEUTRAL">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SERBIAN_NEUTRAL = <span class="tok-number">0x7c1a</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.SINDHI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SINDHI</span><a href="#src.zig-std.os.windows.lang.SINDHI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.SINDHI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SINDHI = <span class="tok-number">0x59</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.SINHALESE" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SINHALESE</span><a href="#src.zig-std.os.windows.lang.SINHALESE">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.SINHALESE">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SINHALESE = <span class="tok-number">0x5b</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.SLOVAK" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SLOVAK</span><a href="#src.zig-std.os.windows.lang.SLOVAK">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.SLOVAK">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SLOVAK = <span class="tok-number">0x1b</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.SLOVENIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SLOVENIAN</span><a href="#src.zig-std.os.windows.lang.SLOVENIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.SLOVENIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SLOVENIAN = <span class="tok-number">0x24</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.SOTHO" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SOTHO</span><a href="#src.zig-std.os.windows.lang.SOTHO">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.SOTHO">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SOTHO = <span class="tok-number">0x6c</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.SPANISH" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SPANISH</span><a href="#src.zig-std.os.windows.lang.SPANISH">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.SPANISH">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SPANISH = <span class="tok-number">0x0a</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.SWAHILI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SWAHILI</span><a href="#src.zig-std.os.windows.lang.SWAHILI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.SWAHILI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SWAHILI = <span class="tok-number">0x41</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.SWEDISH" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SWEDISH</span><a href="#src.zig-std.os.windows.lang.SWEDISH">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.SWEDISH">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SWEDISH = <span class="tok-number">0x1d</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.SYRIAC" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">SYRIAC</span><a href="#src.zig-std.os.windows.lang.SYRIAC">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.SYRIAC">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SYRIAC = <span class="tok-number">0x5a</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.TAJIK" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">TAJIK</span><a href="#src.zig-std.os.windows.lang.TAJIK">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.TAJIK">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> TAJIK = <span class="tok-number">0x28</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.TAMAZIGHT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">TAMAZIGHT</span><a href="#src.zig-std.os.windows.lang.TAMAZIGHT">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.TAMAZIGHT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> TAMAZIGHT = <span class="tok-number">0x5f</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.TAMIL" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">TAMIL</span><a href="#src.zig-std.os.windows.lang.TAMIL">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.TAMIL">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> TAMIL = <span class="tok-number">0x49</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.TATAR" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">TATAR</span><a href="#src.zig-std.os.windows.lang.TATAR">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.TATAR">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> TATAR = <span class="tok-number">0x44</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.TELUGU" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">TELUGU</span><a href="#src.zig-std.os.windows.lang.TELUGU">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.TELUGU">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> TELUGU = <span class="tok-number">0x4a</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.THAI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">THAI</span><a href="#src.zig-std.os.windows.lang.THAI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.THAI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> THAI = <span class="tok-number">0x1e</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.TIBETAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">TIBETAN</span><a href="#src.zig-std.os.windows.lang.TIBETAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.TIBETAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> TIBETAN = <span class="tok-number">0x51</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.TIGRIGNA" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">TIGRIGNA</span><a href="#src.zig-std.os.windows.lang.TIGRIGNA">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.TIGRIGNA">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> TIGRIGNA = <span class="tok-number">0x73</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.TIGRINYA" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">TIGRINYA</span><a href="#src.zig-std.os.windows.lang.TIGRINYA">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.TIGRINYA">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> TIGRINYA = <span class="tok-number">0x73</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.TSWANA" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">TSWANA</span><a href="#src.zig-std.os.windows.lang.TSWANA">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.TSWANA">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> TSWANA = <span class="tok-number">0x32</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.TURKISH" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">TURKISH</span><a href="#src.zig-std.os.windows.lang.TURKISH">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.TURKISH">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> TURKISH = <span class="tok-number">0x1f</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.TURKMEN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">TURKMEN</span><a href="#src.zig-std.os.windows.lang.TURKMEN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.TURKMEN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> TURKMEN = <span class="tok-number">0x42</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.UIGHUR" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">UIGHUR</span><a href="#src.zig-std.os.windows.lang.UIGHUR">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.UIGHUR">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> UIGHUR = <span class="tok-number">0x80</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.UKRAINIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">UKRAINIAN</span><a href="#src.zig-std.os.windows.lang.UKRAINIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.UKRAINIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> UKRAINIAN = <span class="tok-number">0x22</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.UPPER_SORBIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">UPPER_SORBIAN</span><a href="#src.zig-std.os.windows.lang.UPPER_SORBIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.UPPER_SORBIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> UPPER_SORBIAN = <span class="tok-number">0x2e</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.URDU" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">URDU</span><a href="#src.zig-std.os.windows.lang.URDU">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.URDU">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> URDU = <span class="tok-number">0x20</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.UZBEK" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">UZBEK</span><a href="#src.zig-std.os.windows.lang.UZBEK">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.UZBEK">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> UZBEK = <span class="tok-number">0x43</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.VALENCIAN" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">VALENCIAN</span><a href="#src.zig-std.os.windows.lang.VALENCIAN">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.VALENCIAN">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> VALENCIAN = <span class="tok-number">0x03</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.VIETNAMESE" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">VIETNAMESE</span><a href="#src.zig-std.os.windows.lang.VIETNAMESE">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.VIETNAMESE">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> VIETNAMESE = <span class="tok-number">0x2a</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.WELSH" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">WELSH</span><a href="#src.zig-std.os.windows.lang.WELSH">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.WELSH">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> WELSH = <span class="tok-number">0x52</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.WOLOF" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">WOLOF</span><a href="#src.zig-std.os.windows.lang.WOLOF">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.WOLOF">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> WOLOF = <span class="tok-number">0x88</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.XHOSA" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">XHOSA</span><a href="#src.zig-std.os.windows.lang.XHOSA">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.XHOSA">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> XHOSA = <span class="tok-number">0x34</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.YAKUT" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">YAKUT</span><a href="#src.zig-std.os.windows.lang.YAKUT">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.YAKUT">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> YAKUT = <span class="tok-number">0x85</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.YI" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">YI</span><a href="#src.zig-std.os.windows.lang.YI">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.YI">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> YI = <span class="tok-number">0x78</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.YORUBA" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">YORUBA</span><a href="#src.zig-std.os.windows.lang.YORUBA">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.YORUBA">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> YORUBA = <span class="tok-number">0x6a</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.lang.ZULU" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ZULU</span><a href="#src.zig-std.os.windows.lang.ZULU">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.lang.ZULU">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ZULU = <span class="tok-number">0x35</span></code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.os.windows.lang">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> NEUTRAL = <span class="tok-number">0x00</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> INVARIANT = <span class="tok-number">0x7f</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> AFRIKAANS = <span class="tok-number">0x36</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ALBANIAN = <span class="tok-number">0x1c</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ALSATIAN = <span class="tok-number">0x84</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> AMHARIC = <span class="tok-number">0x5e</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ARABIC = <span class="tok-number">0x01</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ARMENIAN = <span class="tok-number">0x2b</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ASSAMESE = <span class="tok-number">0x4d</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> AZERI = <span class="tok-number">0x2c</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> AZERBAIJANI = <span class="tok-number">0x2c</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> BANGLA = <span class="tok-number">0x45</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> BASHKIR = <span class="tok-number">0x6d</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> BASQUE = <span class="tok-number">0x2d</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> BELARUSIAN = <span class="tok-number">0x23</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> BENGALI = <span class="tok-number">0x45</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> BRETON = <span class="tok-number">0x7e</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> BOSNIAN = <span class="tok-number">0x1a</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> BOSNIAN_NEUTRAL = <span class="tok-number">0x781a</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> BULGARIAN = <span class="tok-number">0x02</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CATALAN = <span class="tok-number">0x03</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CENTRAL_KURDISH = <span class="tok-number">0x92</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CHEROKEE = <span class="tok-number">0x5c</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CHINESE = <span class="tok-number">0x04</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CHINESE_SIMPLIFIED = <span class="tok-number">0x04</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CHINESE_TRADITIONAL = <span class="tok-number">0x7c04</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CORSICAN = <span class="tok-number">0x83</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CROATIAN = <span class="tok-number">0x1a</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CZECH = <span class="tok-number">0x05</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> DANISH = <span class="tok-number">0x06</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> DARI = <span class="tok-number">0x8c</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> DIVEHI = <span class="tok-number">0x65</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> DUTCH = <span class="tok-number">0x13</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ENGLISH = <span class="tok-number">0x09</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ESTONIAN = <span class="tok-number">0x25</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> FAEROESE = <span class="tok-number">0x38</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> FARSI = <span class="tok-number">0x29</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> FILIPINO = <span class="tok-number">0x64</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> FINNISH = <span class="tok-number">0x0b</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> FRENCH = <span class="tok-number">0x0c</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> FRISIAN = <span class="tok-number">0x62</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> FULAH = <span class="tok-number">0x67</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> GALICIAN = <span class="tok-number">0x56</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> GEORGIAN = <span class="tok-number">0x37</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> GERMAN = <span class="tok-number">0x07</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> GREEK = <span class="tok-number">0x08</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> GREENLANDIC = <span class="tok-number">0x6f</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> GUJARATI = <span class="tok-number">0x47</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> HAUSA = <span class="tok-number">0x68</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> HAWAIIAN = <span class="tok-number">0x75</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> HEBREW = <span class="tok-number">0x0d</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> HINDI = <span class="tok-number">0x39</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> HUNGARIAN = <span class="tok-number">0x0e</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ICELANDIC = <span class="tok-number">0x0f</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> IGBO = <span class="tok-number">0x70</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> INDONESIAN = <span class="tok-number">0x21</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> INUKTITUT = <span class="tok-number">0x5d</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> IRISH = <span class="tok-number">0x3c</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ITALIAN = <span class="tok-number">0x10</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> JAPANESE = <span class="tok-number">0x11</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> KANNADA = <span class="tok-number">0x4b</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> KASHMIRI = <span class="tok-number">0x60</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> KAZAK = <span class="tok-number">0x3f</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> KHMER = <span class="tok-number">0x53</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> KICHE = <span class="tok-number">0x86</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> KINYARWANDA = <span class="tok-number">0x87</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> KONKANI = <span class="tok-number">0x57</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> KOREAN = <span class="tok-number">0x12</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> KYRGYZ = <span class="tok-number">0x40</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> LAO = <span class="tok-number">0x54</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> LATVIAN = <span class="tok-number">0x26</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> LITHUANIAN = <span class="tok-number">0x27</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> LOWER_SORBIAN = <span class="tok-number">0x2e</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> LUXEMBOURGISH = <span class="tok-number">0x6e</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> MACEDONIAN = <span class="tok-number">0x2f</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> MALAY = <span class="tok-number">0x3e</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> MALAYALAM = <span class="tok-number">0x4c</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> MALTESE = <span class="tok-number">0x3a</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> MANIPURI = <span class="tok-number">0x58</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> MAORI = <span class="tok-number">0x81</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> MAPUDUNGUN = <span class="tok-number">0x7a</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> MARATHI = <span class="tok-number">0x4e</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> MOHAWK = <span class="tok-number">0x7c</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> MONGOLIAN = <span class="tok-number">0x50</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> NEPALI = <span class="tok-number">0x61</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> NORWEGIAN = <span class="tok-number">0x14</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> OCCITAN = <span class="tok-number">0x82</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ODIA = <span class="tok-number">0x48</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ORIYA = <span class="tok-number">0x48</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> PASHTO = <span class="tok-number">0x63</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> PERSIAN = <span class="tok-number">0x29</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> POLISH = <span class="tok-number">0x15</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> PORTUGUESE = <span class="tok-number">0x16</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> PULAR = <span class="tok-number">0x67</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> PUNJABI = <span class="tok-number">0x46</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> QUECHUA = <span class="tok-number">0x6b</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ROMANIAN = <span class="tok-number">0x18</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ROMANSH = <span class="tok-number">0x17</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> RUSSIAN = <span class="tok-number">0x19</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SAKHA = <span class="tok-number">0x85</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SAMI = <span class="tok-number">0x3b</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SANSKRIT = <span class="tok-number">0x4f</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SCOTTISH_GAELIC = <span class="tok-number">0x91</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SERBIAN = <span class="tok-number">0x1a</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SERBIAN_NEUTRAL = <span class="tok-number">0x7c1a</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SINDHI = <span class="tok-number">0x59</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SINHALESE = <span class="tok-number">0x5b</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SLOVAK = <span class="tok-number">0x1b</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SLOVENIAN = <span class="tok-number">0x24</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SOTHO = <span class="tok-number">0x6c</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SPANISH = <span class="tok-number">0x0a</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SWAHILI = <span class="tok-number">0x41</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SWEDISH = <span class="tok-number">0x1d</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SYRIAC = <span class="tok-number">0x5a</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> TAJIK = <span class="tok-number">0x28</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> TAMAZIGHT = <span class="tok-number">0x5f</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> TAMIL = <span class="tok-number">0x49</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> TATAR = <span class="tok-number">0x44</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> TELUGU = <span class="tok-number">0x4a</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> THAI = <span class="tok-number">0x1e</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> TIBETAN = <span class="tok-number">0x51</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> TIGRIGNA = <span class="tok-number">0x73</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> TIGRINYA = <span class="tok-number">0x73</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> TSWANA = <span class="tok-number">0x32</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> TURKISH = <span class="tok-number">0x1f</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> TURKMEN = <span class="tok-number">0x42</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> UIGHUR = <span class="tok-number">0x80</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> UKRAINIAN = <span class="tok-number">0x22</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> UPPER_SORBIAN = <span class="tok-number">0x2e</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> URDU = <span class="tok-number">0x20</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> UZBEK = <span class="tok-number">0x43</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> VALENCIAN = <span class="tok-number">0x03</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> VIETNAMESE = <span class="tok-number">0x2a</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> WELSH = <span class="tok-number">0x52</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> WOLOF = <span class="tok-number">0x88</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> XHOSA = <span class="tok-number">0x34</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> YAKUT = <span class="tok-number">0x85</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> YI = <span class="tok-number">0x78</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> YORUBA = <span class="tok-number">0x6a</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ZULU = <span class="tok-number">0x35</span>;</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

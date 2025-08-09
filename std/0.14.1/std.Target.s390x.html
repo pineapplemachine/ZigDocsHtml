@@ -1,0 +1,1323 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">Target</a></li><li><a href="std.Target.s390x.html" class="active">s390x</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.Target.s390x" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.Target.s390x</span><a href="#src.zig-std.Target.s390x">[src]</a></h1><div class="tldDocs"><p>This file is auto-generated by tools/update_cpu_features.zig.</p>
+</div><div class="sectNamespaces"><h2 class="sectionHeader">Namespaces</h2><ul class="listNamespaces columns"><li><a href="std.Target.s390x.cpu.html">std.Target.s390x.cpu</a></li></ul></div><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.Target.s390x.Feature.html">std.Target.s390x.Feature</a></li></ul></div><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.Target.s390x.featureSet" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">featureSet</span><a href="#src.zig-std.Target.s390x.featureSet">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.s390x.featureSet">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> featureSet = <a href="std.Target.Cpu.Feature.html">CpuFeature</a>.<a href="std.Target.Cpu.Feature.html#std.Target.Cpu.Feature.FeatureSetFns">FeatureSetFns</a>(<a href="std.Target.s390x.Feature.html">Feature</a>).featureSet</code></pre></details></div></div><div class="decl"><h2 id="std.Target.s390x.featureSetHas" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">featureSetHas</span><a href="#src.zig-std.Target.s390x.featureSetHas">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.s390x.featureSetHas">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> featureSetHas = <a href="std.Target.Cpu.Feature.html">CpuFeature</a>.<a href="std.Target.Cpu.Feature.html#std.Target.Cpu.Feature.FeatureSetFns">FeatureSetFns</a>(<a href="std.Target.s390x.Feature.html">Feature</a>).featureSetHas</code></pre></details></div></div><div class="decl"><h2 id="std.Target.s390x.featureSetHasAny" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">featureSetHasAny</span><a href="#src.zig-std.Target.s390x.featureSetHasAny">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.s390x.featureSetHasAny">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> featureSetHasAny = <a href="std.Target.Cpu.Feature.html">CpuFeature</a>.<a href="std.Target.Cpu.Feature.html#std.Target.Cpu.Feature.FeatureSetFns">FeatureSetFns</a>(<a href="std.Target.s390x.Feature.html">Feature</a>).featureSetHasAny</code></pre></details></div></div><div class="decl"><h2 id="std.Target.s390x.featureSetHasAll" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">featureSetHasAll</span><a href="#src.zig-std.Target.s390x.featureSetHasAll">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.s390x.featureSetHasAll">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> featureSetHasAll = <a href="std.Target.Cpu.Feature.html">CpuFeature</a>.<a href="std.Target.Cpu.Feature.html#std.Target.Cpu.Feature.FeatureSetFns">FeatureSetFns</a>(<a href="std.Target.s390x.Feature.html">Feature</a>).featureSetHasAll</code></pre></details></div></div><div class="decl"><h2 id="std.Target.s390x.all_features" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">all_features</span><a href="#src.zig-std.Target.s390x.all_features">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Target.s390x.all_features">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> all_features = blk: {
+    <span class="tok-kw">const</span> len = <span class="tok-builtin">@typeInfo</span>(<a href="std.Target.s390x.Feature.html">Feature</a>).@&quot;enum&quot;.fields.len;
+    <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(len &lt;= <a href="std.Target.Cpu.Feature.html">CpuFeature</a>.<a href="std.Target.Cpu.Feature.Set.html">Set</a>.<a href="std.Target.Cpu.Feature.Set.html#std.Target.Cpu.Feature.Set.needed_bit_count">needed_bit_count</a>);
+    <span class="tok-kw">var</span> result: [len]<a href="std.Target.Cpu.Feature.html">CpuFeature</a> = <span class="tok-null">undefined</span>;
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">backchain</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;backchain&quot;</span>,
+        .description = <span class="tok-str">&quot;Store the address of the caller's frame into the callee's stack frame&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">bear_enhancement</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;bear-enhancement&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the BEAR-enhancement facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">deflate_conversion</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;deflate-conversion&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the deflate-conversion facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">dfp_packed_conversion</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;dfp-packed-conversion&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the DFP packed-conversion facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">dfp_zoned_conversion</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;dfp-zoned-conversion&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the DFP zoned-conversion facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">distinct_ops</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;distinct-ops&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the distinct-operands facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">enhanced_dat_2</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;enhanced-dat-2&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the enhanced-DAT facility 2 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">enhanced_sort</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;enhanced-sort&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the enhanced-sort facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">execution_hint</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;execution-hint&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the execution-hint facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">fast_serialization</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;fast-serialization&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the fast-serialization facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">fp_extension</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;fp-extension&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the floating-point extension facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">guarded_storage</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;guarded-storage&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the guarded-storage facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">high_word</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;high-word&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the high-word facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">insert_reference_bits_multiple</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;insert-reference-bits-multiple&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the insert-reference-bits-multiple facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">interlocked_access1</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;interlocked-access1&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that interlocked-access facility 1 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">load_and_trap</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;load-and-trap&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the load-and-trap facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">load_and_zero_rightmost_byte</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;load-and-zero-rightmost-byte&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the load-and-zero-rightmost-byte facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">load_store_on_cond</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;load-store-on-cond&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the load/store-on-condition facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">load_store_on_cond_2</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;load-store-on-cond-2&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the load/store-on-condition facility 2 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">message_security_assist_extension3</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;message-security-assist-extension3&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the message-security-assist extension facility 3 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">message_security_assist_extension4</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;message-security-assist-extension4&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the message-security-assist extension facility 4 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">message_security_assist_extension5</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;message-security-assist-extension5&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the message-security-assist extension facility 5 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">message_security_assist_extension7</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;message-security-assist-extension7&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the message-security-assist extension facility 7 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">message_security_assist_extension8</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;message-security-assist-extension8&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the message-security-assist extension facility 8 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">message_security_assist_extension9</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;message-security-assist-extension9&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the message-security-assist extension facility 9 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">miscellaneous_extensions</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;miscellaneous-extensions&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the miscellaneous-extensions facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">miscellaneous_extensions_2</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;miscellaneous-extensions-2&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the miscellaneous-extensions facility 2 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">miscellaneous_extensions_3</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;miscellaneous-extensions-3&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the miscellaneous-extensions facility 3 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">nnp_assist</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;nnp-assist&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the NNP-assist facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">population_count</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;population-count&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the population-count facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">processor_activity_instrumentation</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;processor-activity-instrumentation&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the processor-activity-instrumentation facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">processor_assist</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;processor-assist&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the processor-assist facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">reset_dat_protection</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;reset-dat-protection&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the reset-DAT-protection facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">reset_reference_bits_multiple</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;reset-reference-bits-multiple&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the reset-reference-bits-multiple facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">soft_float</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;soft-float&quot;</span>,
+        .description = <span class="tok-str">&quot;Use software emulation for floating point&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">test_pending_external_interruption</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;test-pending-external-interruption&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the test-pending-external-interruption facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">transactional_execution</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;transactional-execution&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the transactional-execution facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">unaligned_symbols</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;unaligned-symbols&quot;</span>,
+        .description = <span class="tok-str">&quot;Don't apply the ABI minimum alignment to external symbols.&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">vector</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;vector&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the vectory facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">vector_enhancements_1</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;vector-enhancements-1&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the vector enhancements facility 1 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">vector_enhancements_2</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;vector-enhancements-2&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the vector enhancements facility 2 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">vector_packed_decimal</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;vector-packed-decimal&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the vector packed decimal facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">vector_packed_decimal_enhancement</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;vector-packed-decimal-enhancement&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the vector packed decimal enhancement facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">vector_packed_decimal_enhancement_2</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;vector-packed-decimal-enhancement-2&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the vector packed decimal enhancement facility 2 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    <span class="tok-kw">const</span> ti = <span class="tok-builtin">@typeInfo</span>(<a href="std.Target.s390x.Feature.html">Feature</a>);
+    <span class="tok-kw">for</span> (&amp;result, <span class="tok-number">0</span>..) |*elem, i| {
+        elem.index = i;
+        elem.name = ti.@&quot;enum&quot;.fields[i].name;
+    }
+    <span class="tok-kw">break</span> :blk result;
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.Target.s390x">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-comment">//! This file is auto-generated by tools/update_cpu_features.zig.</span>
+
+<span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;../std.zig&quot;</span>);
+<span class="tok-kw">const</span> CpuFeature = <a href="std.html">std</a>.<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Feature.html">Feature</a>;
+<span class="tok-kw">const</span> CpuModel = <a href="std.html">std</a>.<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Model.html">Model</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Feature = <span class="tok-kw">enum</span> {
+    backchain,
+    bear_enhancement,
+    deflate_conversion,
+    dfp_packed_conversion,
+    dfp_zoned_conversion,
+    distinct_ops,
+    enhanced_dat_2,
+    enhanced_sort,
+    execution_hint,
+    fast_serialization,
+    fp_extension,
+    guarded_storage,
+    high_word,
+    insert_reference_bits_multiple,
+    interlocked_access1,
+    load_and_trap,
+    load_and_zero_rightmost_byte,
+    load_store_on_cond,
+    load_store_on_cond_2,
+    message_security_assist_extension3,
+    message_security_assist_extension4,
+    message_security_assist_extension5,
+    message_security_assist_extension7,
+    message_security_assist_extension8,
+    message_security_assist_extension9,
+    miscellaneous_extensions,
+    miscellaneous_extensions_2,
+    miscellaneous_extensions_3,
+    nnp_assist,
+    population_count,
+    processor_activity_instrumentation,
+    processor_assist,
+    reset_dat_protection,
+    reset_reference_bits_multiple,
+    soft_float,
+    test_pending_external_interruption,
+    transactional_execution,
+    unaligned_symbols,
+    vector,
+    vector_enhancements_1,
+    vector_enhancements_2,
+    vector_packed_decimal,
+    vector_packed_decimal_enhancement,
+    vector_packed_decimal_enhancement_2,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> featureSet = <a href="std.Target.Cpu.Feature.html">CpuFeature</a>.<a href="std.Target.Cpu.Feature.html#std.Target.Cpu.Feature.FeatureSetFns">FeatureSetFns</a>(<a href="std.Target.s390x.Feature.html">Feature</a>).featureSet;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> featureSetHas = <a href="std.Target.Cpu.Feature.html">CpuFeature</a>.<a href="std.Target.Cpu.Feature.html#std.Target.Cpu.Feature.FeatureSetFns">FeatureSetFns</a>(<a href="std.Target.s390x.Feature.html">Feature</a>).featureSetHas;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> featureSetHasAny = <a href="std.Target.Cpu.Feature.html">CpuFeature</a>.<a href="std.Target.Cpu.Feature.html#std.Target.Cpu.Feature.FeatureSetFns">FeatureSetFns</a>(<a href="std.Target.s390x.Feature.html">Feature</a>).featureSetHasAny;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> featureSetHasAll = <a href="std.Target.Cpu.Feature.html">CpuFeature</a>.<a href="std.Target.Cpu.Feature.html#std.Target.Cpu.Feature.FeatureSetFns">FeatureSetFns</a>(<a href="std.Target.s390x.Feature.html">Feature</a>).featureSetHasAll;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> all_features = blk: {
+    <span class="tok-kw">const</span> len = <span class="tok-builtin">@typeInfo</span>(<a href="std.Target.s390x.Feature.html">Feature</a>).@&quot;enum&quot;.fields.len;
+    <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(len &lt;= <a href="std.Target.Cpu.Feature.html">CpuFeature</a>.<a href="std.Target.Cpu.Feature.Set.html">Set</a>.<a href="std.Target.Cpu.Feature.Set.html#std.Target.Cpu.Feature.Set.needed_bit_count">needed_bit_count</a>);
+    <span class="tok-kw">var</span> result: [len]<a href="std.Target.Cpu.Feature.html">CpuFeature</a> = <span class="tok-null">undefined</span>;
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">backchain</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;backchain&quot;</span>,
+        .description = <span class="tok-str">&quot;Store the address of the caller's frame into the callee's stack frame&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">bear_enhancement</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;bear-enhancement&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the BEAR-enhancement facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">deflate_conversion</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;deflate-conversion&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the deflate-conversion facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">dfp_packed_conversion</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;dfp-packed-conversion&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the DFP packed-conversion facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">dfp_zoned_conversion</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;dfp-zoned-conversion&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the DFP zoned-conversion facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">distinct_ops</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;distinct-ops&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the distinct-operands facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">enhanced_dat_2</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;enhanced-dat-2&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the enhanced-DAT facility 2 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">enhanced_sort</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;enhanced-sort&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the enhanced-sort facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">execution_hint</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;execution-hint&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the execution-hint facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">fast_serialization</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;fast-serialization&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the fast-serialization facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">fp_extension</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;fp-extension&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the floating-point extension facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">guarded_storage</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;guarded-storage&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the guarded-storage facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">high_word</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;high-word&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the high-word facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">insert_reference_bits_multiple</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;insert-reference-bits-multiple&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the insert-reference-bits-multiple facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">interlocked_access1</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;interlocked-access1&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that interlocked-access facility 1 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">load_and_trap</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;load-and-trap&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the load-and-trap facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">load_and_zero_rightmost_byte</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;load-and-zero-rightmost-byte&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the load-and-zero-rightmost-byte facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">load_store_on_cond</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;load-store-on-cond&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the load/store-on-condition facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">load_store_on_cond_2</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;load-store-on-cond-2&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the load/store-on-condition facility 2 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">message_security_assist_extension3</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;message-security-assist-extension3&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the message-security-assist extension facility 3 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">message_security_assist_extension4</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;message-security-assist-extension4&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the message-security-assist extension facility 4 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">message_security_assist_extension5</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;message-security-assist-extension5&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the message-security-assist extension facility 5 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">message_security_assist_extension7</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;message-security-assist-extension7&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the message-security-assist extension facility 7 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">message_security_assist_extension8</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;message-security-assist-extension8&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the message-security-assist extension facility 8 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">message_security_assist_extension9</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;message-security-assist-extension9&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the message-security-assist extension facility 9 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">miscellaneous_extensions</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;miscellaneous-extensions&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the miscellaneous-extensions facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">miscellaneous_extensions_2</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;miscellaneous-extensions-2&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the miscellaneous-extensions facility 2 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">miscellaneous_extensions_3</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;miscellaneous-extensions-3&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the miscellaneous-extensions facility 3 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">nnp_assist</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;nnp-assist&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the NNP-assist facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">population_count</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;population-count&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the population-count facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">processor_activity_instrumentation</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;processor-activity-instrumentation&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the processor-activity-instrumentation facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">processor_assist</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;processor-assist&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the processor-assist facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">reset_dat_protection</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;reset-dat-protection&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the reset-DAT-protection facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">reset_reference_bits_multiple</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;reset-reference-bits-multiple&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the reset-reference-bits-multiple facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">soft_float</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;soft-float&quot;</span>,
+        .description = <span class="tok-str">&quot;Use software emulation for floating point&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">test_pending_external_interruption</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;test-pending-external-interruption&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the test-pending-external-interruption facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">transactional_execution</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;transactional-execution&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the transactional-execution facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">unaligned_symbols</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;unaligned-symbols&quot;</span>,
+        .description = <span class="tok-str">&quot;Don't apply the ABI minimum alignment to external symbols.&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">vector</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;vector&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the vectory facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">vector_enhancements_1</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;vector-enhancements-1&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the vector enhancements facility 1 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">vector_enhancements_2</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;vector-enhancements-2&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the vector enhancements facility 2 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">vector_packed_decimal</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;vector-packed-decimal&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the vector packed decimal facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">vector_packed_decimal_enhancement</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;vector-packed-decimal-enhancement&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the vector packed decimal enhancement facility is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    result[<span class="tok-builtin">@intFromEnum</span>(<a href="std.Target.s390x.Feature.html">Feature</a>.<a href="#">vector_packed_decimal_enhancement_2</a>)] = .{
+        .llvm_name = <span class="tok-str">&quot;vector-packed-decimal-enhancement-2&quot;</span>,
+        .description = <span class="tok-str">&quot;Assume that the vector packed decimal enhancement facility 2 is installed&quot;</span>,
+        .dependencies = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    <span class="tok-kw">const</span> ti = <span class="tok-builtin">@typeInfo</span>(<a href="std.Target.s390x.Feature.html">Feature</a>);
+    <span class="tok-kw">for</span> (&amp;result, <span class="tok-number">0</span>..) |*elem, i| {
+        elem.index = i;
+        elem.name = ti.@&quot;enum&quot;.fields[i].name;
+    }
+    <span class="tok-kw">break</span> :blk result;
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> cpu = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> arch10: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;arch10&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;arch10&quot;</span>,
+        .features = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{
+            .dfp_zoned_conversion,
+            .distinct_ops,
+            .enhanced_dat_2,
+            .execution_hint,
+            .fast_serialization,
+            .fp_extension,
+            .high_word,
+            .interlocked_access1,
+            .load_and_trap,
+            .load_store_on_cond,
+            .message_security_assist_extension3,
+            .message_security_assist_extension4,
+            .miscellaneous_extensions,
+            .population_count,
+            .processor_assist,
+            .reset_reference_bits_multiple,
+            .transactional_execution,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> arch11: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;arch11&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;arch11&quot;</span>,
+        .features = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{
+            .dfp_packed_conversion,
+            .dfp_zoned_conversion,
+            .distinct_ops,
+            .enhanced_dat_2,
+            .execution_hint,
+            .fast_serialization,
+            .fp_extension,
+            .high_word,
+            .interlocked_access1,
+            .load_and_trap,
+            .load_and_zero_rightmost_byte,
+            .load_store_on_cond,
+            .load_store_on_cond_2,
+            .message_security_assist_extension3,
+            .message_security_assist_extension4,
+            .message_security_assist_extension5,
+            .miscellaneous_extensions,
+            .population_count,
+            .processor_assist,
+            .reset_reference_bits_multiple,
+            .transactional_execution,
+            .vector,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> arch12: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;arch12&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;arch12&quot;</span>,
+        .features = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{
+            .dfp_packed_conversion,
+            .dfp_zoned_conversion,
+            .distinct_ops,
+            .enhanced_dat_2,
+            .execution_hint,
+            .fast_serialization,
+            .fp_extension,
+            .guarded_storage,
+            .high_word,
+            .insert_reference_bits_multiple,
+            .interlocked_access1,
+            .load_and_trap,
+            .load_and_zero_rightmost_byte,
+            .load_store_on_cond,
+            .load_store_on_cond_2,
+            .message_security_assist_extension3,
+            .message_security_assist_extension4,
+            .message_security_assist_extension5,
+            .message_security_assist_extension7,
+            .message_security_assist_extension8,
+            .miscellaneous_extensions,
+            .miscellaneous_extensions_2,
+            .population_count,
+            .processor_assist,
+            .reset_reference_bits_multiple,
+            .test_pending_external_interruption,
+            .transactional_execution,
+            .vector,
+            .vector_enhancements_1,
+            .vector_packed_decimal,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> arch13: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;arch13&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;arch13&quot;</span>,
+        .features = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{
+            .deflate_conversion,
+            .dfp_packed_conversion,
+            .dfp_zoned_conversion,
+            .distinct_ops,
+            .enhanced_dat_2,
+            .enhanced_sort,
+            .execution_hint,
+            .fast_serialization,
+            .fp_extension,
+            .guarded_storage,
+            .high_word,
+            .insert_reference_bits_multiple,
+            .interlocked_access1,
+            .load_and_trap,
+            .load_and_zero_rightmost_byte,
+            .load_store_on_cond,
+            .load_store_on_cond_2,
+            .message_security_assist_extension3,
+            .message_security_assist_extension4,
+            .message_security_assist_extension5,
+            .message_security_assist_extension7,
+            .message_security_assist_extension8,
+            .message_security_assist_extension9,
+            .miscellaneous_extensions,
+            .miscellaneous_extensions_2,
+            .miscellaneous_extensions_3,
+            .population_count,
+            .processor_assist,
+            .reset_reference_bits_multiple,
+            .test_pending_external_interruption,
+            .transactional_execution,
+            .vector,
+            .vector_enhancements_1,
+            .vector_enhancements_2,
+            .vector_packed_decimal,
+            .vector_packed_decimal_enhancement,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> arch14: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;arch14&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;arch14&quot;</span>,
+        .features = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{
+            .bear_enhancement,
+            .deflate_conversion,
+            .dfp_packed_conversion,
+            .dfp_zoned_conversion,
+            .distinct_ops,
+            .enhanced_dat_2,
+            .enhanced_sort,
+            .execution_hint,
+            .fast_serialization,
+            .fp_extension,
+            .guarded_storage,
+            .high_word,
+            .insert_reference_bits_multiple,
+            .interlocked_access1,
+            .load_and_trap,
+            .load_and_zero_rightmost_byte,
+            .load_store_on_cond,
+            .load_store_on_cond_2,
+            .message_security_assist_extension3,
+            .message_security_assist_extension4,
+            .message_security_assist_extension5,
+            .message_security_assist_extension7,
+            .message_security_assist_extension8,
+            .message_security_assist_extension9,
+            .miscellaneous_extensions,
+            .miscellaneous_extensions_2,
+            .miscellaneous_extensions_3,
+            .nnp_assist,
+            .population_count,
+            .processor_activity_instrumentation,
+            .processor_assist,
+            .reset_dat_protection,
+            .reset_reference_bits_multiple,
+            .test_pending_external_interruption,
+            .transactional_execution,
+            .vector,
+            .vector_enhancements_1,
+            .vector_enhancements_2,
+            .vector_packed_decimal,
+            .vector_packed_decimal_enhancement,
+            .vector_packed_decimal_enhancement_2,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> arch8: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;arch8&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;arch8&quot;</span>,
+        .features = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> arch9: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;arch9&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;arch9&quot;</span>,
+        .features = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{
+            .distinct_ops,
+            .fast_serialization,
+            .fp_extension,
+            .high_word,
+            .interlocked_access1,
+            .load_store_on_cond,
+            .message_security_assist_extension3,
+            .message_security_assist_extension4,
+            .population_count,
+            .reset_reference_bits_multiple,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> generic: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;generic&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;generic&quot;</span>,
+        .features = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> z10: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;z10&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;z10&quot;</span>,
+        .features = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{}),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> z13: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;z13&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;z13&quot;</span>,
+        .features = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{
+            .dfp_packed_conversion,
+            .dfp_zoned_conversion,
+            .distinct_ops,
+            .enhanced_dat_2,
+            .execution_hint,
+            .fast_serialization,
+            .fp_extension,
+            .high_word,
+            .interlocked_access1,
+            .load_and_trap,
+            .load_and_zero_rightmost_byte,
+            .load_store_on_cond,
+            .load_store_on_cond_2,
+            .message_security_assist_extension3,
+            .message_security_assist_extension4,
+            .message_security_assist_extension5,
+            .miscellaneous_extensions,
+            .population_count,
+            .processor_assist,
+            .reset_reference_bits_multiple,
+            .transactional_execution,
+            .vector,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> z14: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;z14&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;z14&quot;</span>,
+        .features = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{
+            .dfp_packed_conversion,
+            .dfp_zoned_conversion,
+            .distinct_ops,
+            .enhanced_dat_2,
+            .execution_hint,
+            .fast_serialization,
+            .fp_extension,
+            .guarded_storage,
+            .high_word,
+            .insert_reference_bits_multiple,
+            .interlocked_access1,
+            .load_and_trap,
+            .load_and_zero_rightmost_byte,
+            .load_store_on_cond,
+            .load_store_on_cond_2,
+            .message_security_assist_extension3,
+            .message_security_assist_extension4,
+            .message_security_assist_extension5,
+            .message_security_assist_extension7,
+            .message_security_assist_extension8,
+            .miscellaneous_extensions,
+            .miscellaneous_extensions_2,
+            .population_count,
+            .processor_assist,
+            .reset_reference_bits_multiple,
+            .test_pending_external_interruption,
+            .transactional_execution,
+            .vector,
+            .vector_enhancements_1,
+            .vector_packed_decimal,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> z15: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;z15&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;z15&quot;</span>,
+        .features = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{
+            .deflate_conversion,
+            .dfp_packed_conversion,
+            .dfp_zoned_conversion,
+            .distinct_ops,
+            .enhanced_dat_2,
+            .enhanced_sort,
+            .execution_hint,
+            .fast_serialization,
+            .fp_extension,
+            .guarded_storage,
+            .high_word,
+            .insert_reference_bits_multiple,
+            .interlocked_access1,
+            .load_and_trap,
+            .load_and_zero_rightmost_byte,
+            .load_store_on_cond,
+            .load_store_on_cond_2,
+            .message_security_assist_extension3,
+            .message_security_assist_extension4,
+            .message_security_assist_extension5,
+            .message_security_assist_extension7,
+            .message_security_assist_extension8,
+            .message_security_assist_extension9,
+            .miscellaneous_extensions,
+            .miscellaneous_extensions_2,
+            .miscellaneous_extensions_3,
+            .population_count,
+            .processor_assist,
+            .reset_reference_bits_multiple,
+            .test_pending_external_interruption,
+            .transactional_execution,
+            .vector,
+            .vector_enhancements_1,
+            .vector_enhancements_2,
+            .vector_packed_decimal,
+            .vector_packed_decimal_enhancement,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> z16: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;z16&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;z16&quot;</span>,
+        .features = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{
+            .bear_enhancement,
+            .deflate_conversion,
+            .dfp_packed_conversion,
+            .dfp_zoned_conversion,
+            .distinct_ops,
+            .enhanced_dat_2,
+            .enhanced_sort,
+            .execution_hint,
+            .fast_serialization,
+            .fp_extension,
+            .guarded_storage,
+            .high_word,
+            .insert_reference_bits_multiple,
+            .interlocked_access1,
+            .load_and_trap,
+            .load_and_zero_rightmost_byte,
+            .load_store_on_cond,
+            .load_store_on_cond_2,
+            .message_security_assist_extension3,
+            .message_security_assist_extension4,
+            .message_security_assist_extension5,
+            .message_security_assist_extension7,
+            .message_security_assist_extension8,
+            .message_security_assist_extension9,
+            .miscellaneous_extensions,
+            .miscellaneous_extensions_2,
+            .miscellaneous_extensions_3,
+            .nnp_assist,
+            .population_count,
+            .processor_activity_instrumentation,
+            .processor_assist,
+            .reset_dat_protection,
+            .reset_reference_bits_multiple,
+            .test_pending_external_interruption,
+            .transactional_execution,
+            .vector,
+            .vector_enhancements_1,
+            .vector_enhancements_2,
+            .vector_packed_decimal,
+            .vector_packed_decimal_enhancement,
+            .vector_packed_decimal_enhancement_2,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> z196: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;z196&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;z196&quot;</span>,
+        .features = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{
+            .distinct_ops,
+            .fast_serialization,
+            .fp_extension,
+            .high_word,
+            .interlocked_access1,
+            .load_store_on_cond,
+            .message_security_assist_extension3,
+            .message_security_assist_extension4,
+            .population_count,
+            .reset_reference_bits_multiple,
+        }),
+    };
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> zEC12: <a href="std.Target.Cpu.Model.html">CpuModel</a> = .{
+        .name = <span class="tok-str">&quot;zEC12&quot;</span>,
+        .llvm_name = <span class="tok-str">&quot;zEC12&quot;</span>,
+        .features = <a href="std.Target.s390x.html#std.Target.s390x.featureSet">featureSet</a>(&amp;[_]<a href="std.Target.s390x.Feature.html">Feature</a>{
+            .dfp_zoned_conversion,
+            .distinct_ops,
+            .enhanced_dat_2,
+            .execution_hint,
+            .fast_serialization,
+            .fp_extension,
+            .high_word,
+            .interlocked_access1,
+            .load_and_trap,
+            .load_store_on_cond,
+            .message_security_assist_extension3,
+            .message_security_assist_extension4,
+            .miscellaneous_extensions,
+            .population_count,
+            .processor_assist,
+            .reset_reference_bits_multiple,
+            .transactional_execution,
+        }),
+    };
+};</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

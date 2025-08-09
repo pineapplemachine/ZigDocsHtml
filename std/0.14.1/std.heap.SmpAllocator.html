@@ -1,0 +1,651 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">heap</a></li><li><a href="std.heap.SmpAllocator.html" class="active">SmpAllocator</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.heap.SmpAllocator" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.heap.SmpAllocator</span><a href="#src.zig-std.heap.SmpAllocator">[src]</a></h1><div class="tldDocs"><p>An allocator that is designed for ReleaseFast optimization mode, with
+multi-threading enabled.</p>
+<p>This allocator is a singleton; it uses global state and only one should be
+instantiated for the entire process.</p>
+<h2>Basic Design</h2>
+<p>Each thread gets a separate freelist, however, the data must be recoverable
+when the thread exits. We do not directly learn when a thread exits, so
+occasionally, one thread must attempt to reclaim another thread's
+resources.</p>
+<p>Above a certain size, those allocations are memory mapped directly, with no
+storage of allocation metadata. This works because the implementation
+refuses resizes that would move an allocation from small category to large
+category or vice versa.</p>
+<p>Each allocator operation checks the thread identifier from a threadlocal
+variable to find out which metadata in the global state to access, and
+attempts to grab its lock. This will usually succeed without contention,
+unless another thread has been assigned the same id. In the case of such
+contention, the thread moves on to the next thread metadata slot and
+repeats the process of attempting to obtain the lock.</p>
+<p>By limiting the thread-local metadata array to the same number as the CPU
+count, ensures that as threads are created and destroyed, they cycle
+through the full set of freelists.</p>
+</div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>cpu_count: <span class="tok-type">u32</span></code></pre></div><div><pre><code>threads: [<a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.max_thread_count">max_thread_count</a>]<a href="std.heap.SmpAllocator.Thread.html">Thread</a></code></pre></div></div></div><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.heap.SmpAllocator.vtable" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">vtable</span><a href="#src.zig-std.heap.SmpAllocator.vtable">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.heap.SmpAllocator.vtable">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> vtable: <a href="std.mem.Allocator.html">Allocator</a>.<a href="std.mem.Allocator.VTable.html">VTable</a> = .{
+    .alloc = <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.alloc">alloc</a>,
+    .resize = <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.resize">resize</a>,
+    .remap = <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.remap">remap</a>,
+    .free = <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.free">free</a>,
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.heap.SmpAllocator">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-comment">//! An allocator that is designed for ReleaseFast optimization mode, with</span>
+<span class="tok-comment">//! multi-threading enabled.</span>
+<span class="tok-comment">//!</span>
+<span class="tok-comment">//! This allocator is a singleton; it uses global state and only one should be</span>
+<span class="tok-comment">//! instantiated for the entire process.</span>
+<span class="tok-comment">//!</span>
+<span class="tok-comment">//! ## Basic Design</span>
+<span class="tok-comment">//!</span>
+<span class="tok-comment">//! Each thread gets a separate freelist, however, the data must be recoverable</span>
+<span class="tok-comment">//! when the thread exits. We do not directly learn when a thread exits, so</span>
+<span class="tok-comment">//! occasionally, one thread must attempt to reclaim another thread's</span>
+<span class="tok-comment">//! resources.</span>
+<span class="tok-comment">//!</span>
+<span class="tok-comment">//! Above a certain size, those allocations are memory mapped directly, with no</span>
+<span class="tok-comment">//! storage of allocation metadata. This works because the implementation</span>
+<span class="tok-comment">//! refuses resizes that would move an allocation from small category to large</span>
+<span class="tok-comment">//! category or vice versa.</span>
+<span class="tok-comment">//!</span>
+<span class="tok-comment">//! Each allocator operation checks the thread identifier from a threadlocal</span>
+<span class="tok-comment">//! variable to find out which metadata in the global state to access, and</span>
+<span class="tok-comment">//! attempts to grab its lock. This will usually succeed without contention,</span>
+<span class="tok-comment">//! unless another thread has been assigned the same id. In the case of such</span>
+<span class="tok-comment">//! contention, the thread moves on to the next thread metadata slot and</span>
+<span class="tok-comment">//! repeats the process of attempting to obtain the lock.</span>
+<span class="tok-comment">//!</span>
+<span class="tok-comment">//! By limiting the thread-local metadata array to the same number as the CPU</span>
+<span class="tok-comment">//! count, ensures that as threads are created and destroyed, they cycle</span>
+<span class="tok-comment">//! through the full set of freelists.</span>
+
+<span class="tok-kw">const</span> builtin = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;builtin&quot;</span>);
+
+<span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;../std.zig&quot;</span>);
+<span class="tok-kw">const</span> assert = <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>;
+<span class="tok-kw">const</span> mem = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>;
+<span class="tok-kw">const</span> math = <a href="std.html">std</a>.<a href="std.math.html">math</a>;
+<span class="tok-kw">const</span> Allocator = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>;
+<span class="tok-kw">const</span> SmpAllocator = <span class="tok-builtin">@This</span>();
+<span class="tok-kw">const</span> PageAllocator = <a href="std.html">std</a>.<a href="std.heap.html">heap</a>.<a href="std.heap.PageAllocator.html">PageAllocator</a>;
+
+cpu_count: <span class="tok-type">u32</span>,
+threads: [<a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.max_thread_count">max_thread_count</a>]<a href="std.heap.SmpAllocator.Thread.html">Thread</a>,
+
+<span class="tok-kw">var</span> global: <a href="std.heap.SmpAllocator.html">SmpAllocator</a> = .{
+    .threads = <span class="tok-builtin">@splat</span>(.{}),
+    .cpu_count = <span class="tok-number">0</span>,
+};
+<span class="tok-kw">threadlocal</span> <span class="tok-kw">var</span> thread_index: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+
+<span class="tok-kw">const</span> max_thread_count = <span class="tok-number">128</span>;
+<span class="tok-kw">const</span> slab_len: <span class="tok-type">usize</span> = <span class="tok-builtin">@max</span>(<a href="std.html">std</a>.<a href="std.heap.html">heap</a>.<a href="std.heap.html#std.heap.page_size_max">page_size_max</a>, <span class="tok-number">64</span> * <span class="tok-number">1024</span>);
+<span class="tok-comment">/// Because of storing free list pointers, the minimum size class is 3.</span>
+<span class="tok-kw">const</span> min_class = <a href="std.math.html">math</a>.<a href="std.math.log2.html#std.math.log2.log2">log2</a>(<span class="tok-builtin">@sizeOf</span>(<span class="tok-type">usize</span>));
+<span class="tok-kw">const</span> size_class_count = <a href="std.math.html">math</a>.<a href="std.math.log2.html#std.math.log2.log2">log2</a>(<a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.slab_len">slab_len</a>) - <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.min_class">min_class</a>;
+<span class="tok-comment">/// Before mapping a fresh page, `alloc` will rotate this many times.</span>
+<span class="tok-kw">const</span> max_alloc_search = <span class="tok-number">1</span>;
+
+<span class="tok-kw">const</span> Thread = <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Avoid false sharing.</span>
+    _: <span class="tok-type">void</span> <span class="tok-kw">align</span>(<a href="std.html">std</a>.<a href="std.atomic.html">atomic</a>.<a href="std.atomic.html#std.atomic.cache_line">cache_line</a>) = {},
+
+    <span class="tok-comment">/// Protects the state in this struct (per-thread state).</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// Threads lock this before accessing their own state in order</span>
+    <span class="tok-comment">/// to support freelist reclamation.</span>
+    mutex: <a href="std.html">std</a>.<a href="std.Thread.html">Thread</a>.<a href="std.Thread.Mutex.html">Mutex</a> = .{},
+
+    <span class="tok-comment">/// For each size class, tracks the next address to be returned from</span>
+    <span class="tok-comment">/// `alloc` when the freelist is empty.</span>
+    next_addrs: [<a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.size_class_count">size_class_count</a>]<span class="tok-type">usize</span> = <span class="tok-builtin">@splat</span>(<span class="tok-number">0</span>),
+    <span class="tok-comment">/// For each size class, points to the freed pointer.</span>
+    frees: [<a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.size_class_count">size_class_count</a>]<span class="tok-type">usize</span> = <span class="tok-builtin">@splat</span>(<span class="tok-number">0</span>),
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">lock</span>() *<a href="std.heap.SmpAllocator.Thread.html">Thread</a> {
+        <span class="tok-kw">var</span> index = <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.thread_index">thread_index</a>;
+        {
+            <span class="tok-kw">const</span> t = &amp;<a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.global">global</a>.<a href="#">threads</a>[index];
+            <span class="tok-kw">if</span> (t.mutex.tryLock()) {
+                <span class="tok-builtin">@branchHint</span>(.likely);
+                <span class="tok-kw">return</span> t;
+            }
+        }
+        <span class="tok-kw">const</span> cpu_count = <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.getCpuCount">getCpuCount</a>();
+        <a href="std.debug.html#std.debug.assert">assert</a>(cpu_count != <span class="tok-number">0</span>);
+        <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+            index = (index + <span class="tok-number">1</span>) % cpu_count;
+            <span class="tok-kw">const</span> t = &amp;<a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.global">global</a>.<a href="#">threads</a>[index];
+            <span class="tok-kw">if</span> (t.mutex.tryLock()) {
+                <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.thread_index">thread_index</a> = index;
+                <span class="tok-kw">return</span> t;
+            }
+        }
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">unlock</span>(t: *<a href="std.heap.SmpAllocator.Thread.html">Thread</a>) <span class="tok-type">void</span> {
+        t.mutex.unlock();
+    }
+};
+
+<span class="tok-kw">fn</span> <span class="tok-fn">getCpuCount</span>() <span class="tok-type">u32</span> {
+    <span class="tok-kw">const</span> cpu_count = <span class="tok-builtin">@atomicLoad</span>(<span class="tok-type">u32</span>, &amp;<a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.global">global</a>.<a href="#">cpu_count</a>, .unordered);
+    <span class="tok-kw">if</span> (cpu_count != <span class="tok-number">0</span>) <span class="tok-kw">return</span> cpu_count;
+    <span class="tok-kw">const</span> n: <span class="tok-type">u32</span> = <span class="tok-builtin">@min</span>(<a href="std.html">std</a>.<a href="std.Thread.html">Thread</a>.<a href="std.Thread.html#std.Thread.getCpuCount">getCpuCount</a>() <span class="tok-kw">catch</span> <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.max_thread_count">max_thread_count</a>, <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.max_thread_count">max_thread_count</a>);
+    <span class="tok-kw">return</span> <span class="tok-kw">if</span> (<span class="tok-builtin">@cmpxchgStrong</span>(<span class="tok-type">u32</span>, &amp;<a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.global">global</a>.<a href="#">cpu_count</a>, <span class="tok-number">0</span>, n, .monotonic, .monotonic)) |other| other <span class="tok-kw">else</span> n;
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> vtable: <a href="std.mem.Allocator.html">Allocator</a>.<a href="std.mem.Allocator.VTable.html">VTable</a> = .{
+    .alloc = <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.alloc">alloc</a>,
+    .resize = <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.resize">resize</a>,
+    .remap = <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.remap">remap</a>,
+    .free = <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.free">free</a>,
+};
+
+<span class="tok-kw">comptime</span> {
+    <a href="std.debug.html#std.debug.assert">assert</a>(!<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.single_threaded">single_threaded</a>);<span class="tok-comment"> // you're holding it wrong
+</span>}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">alloc</span>(context: *<span class="tok-type">anyopaque</span>, len: <span class="tok-type">usize</span>, alignment: <a href="std.mem.html">mem</a>.<a href="std.mem.Alignment.html">Alignment</a>, ra: <span class="tok-type">usize</span>) ?[*]<span class="tok-type">u8</span> {
+    _ = context;
+    _ = ra;
+    <span class="tok-kw">const</span> class = <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.sizeClassIndex">sizeClassIndex</a>(len, alignment);
+    <span class="tok-kw">if</span> (class &gt;= <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.size_class_count">size_class_count</a>) {
+        <span class="tok-builtin">@branchHint</span>(.unlikely);
+        <span class="tok-kw">return</span> <a href="std.heap.PageAllocator.html">PageAllocator</a>.<a href="std.heap.PageAllocator.html#std.heap.PageAllocator.map">map</a>(len, alignment);
+    }
+
+    <span class="tok-kw">const</span> slot_size = <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.slotSize">slotSize</a>(class);
+    <a href="std.debug.html#std.debug.assert">assert</a>(<a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.slab_len">slab_len</a> % slot_size == <span class="tok-number">0</span>);
+    <span class="tok-kw">var</span> search_count: <span class="tok-type">u8</span> = <span class="tok-number">0</span>;
+
+    <span class="tok-kw">var</span> t = <a href="std.heap.SmpAllocator.Thread.html">Thread</a>.<a href="std.heap.SmpAllocator.Thread.html#std.heap.SmpAllocator.Thread.lock">lock</a>();
+
+    outer: <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+        <span class="tok-kw">const</span> top_free_ptr = t.frees[class];
+        <span class="tok-kw">if</span> (top_free_ptr != <span class="tok-number">0</span>) {
+            <span class="tok-builtin">@branchHint</span>(.likely);
+            <span class="tok-kw">defer</span> t.unlock();
+            <span class="tok-kw">const</span> node: *<span class="tok-type">usize</span> = <span class="tok-builtin">@ptrFromInt</span>(top_free_ptr);
+            t.frees[class] = node.*;
+            <span class="tok-kw">return</span> <span class="tok-builtin">@ptrFromInt</span>(top_free_ptr);
+        }
+
+        <span class="tok-kw">const</span> next_addr = t.next_addrs[class];
+        <span class="tok-kw">if</span> ((next_addr % <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.slab_len">slab_len</a>) != <span class="tok-number">0</span>) {
+            <span class="tok-builtin">@branchHint</span>(.likely);
+            <span class="tok-kw">defer</span> t.unlock();
+            t.next_addrs[class] = next_addr + slot_size;
+            <span class="tok-kw">return</span> <span class="tok-builtin">@ptrFromInt</span>(next_addr);
+        }
+
+        <span class="tok-kw">if</span> (search_count &gt;= <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.max_alloc_search">max_alloc_search</a>) {
+            <span class="tok-builtin">@branchHint</span>(.likely);
+            <span class="tok-kw">defer</span> t.unlock();<span class="tok-comment">
+            // slab alignment here ensures the % slab len earlier catches the end of slots.
+            </span><span class="tok-kw">const</span> slab = <a href="std.heap.PageAllocator.html">PageAllocator</a>.<a href="std.heap.PageAllocator.html#std.heap.PageAllocator.map">map</a>(<a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.slab_len">slab_len</a>, .fromByteUnits(<a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.slab_len">slab_len</a>)) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+            t.next_addrs[class] = <span class="tok-builtin">@intFromPtr</span>(slab) + slot_size;
+            <span class="tok-kw">return</span> slab;
+        }
+
+        t.unlock();
+        <span class="tok-kw">const</span> cpu_count = <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.getCpuCount">getCpuCount</a>();
+        <a href="std.debug.html#std.debug.assert">assert</a>(cpu_count != <span class="tok-number">0</span>);
+        <span class="tok-kw">var</span> index = <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.thread_index">thread_index</a>;
+        <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+            index = (index + <span class="tok-number">1</span>) % cpu_count;
+            t = &amp;<a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.global">global</a>.<a href="#">threads</a>[index];
+            <span class="tok-kw">if</span> (t.mutex.tryLock()) {
+                <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.thread_index">thread_index</a> = index;
+                search_count += <span class="tok-number">1</span>;
+                <span class="tok-kw">continue</span> :outer;
+            }
+        }
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">resize</span>(context: *<span class="tok-type">anyopaque</span>, memory: []<span class="tok-type">u8</span>, alignment: <a href="std.mem.html">mem</a>.<a href="std.mem.Alignment.html">Alignment</a>, new_len: <span class="tok-type">usize</span>, ra: <span class="tok-type">usize</span>) <span class="tok-type">bool</span> {
+    _ = context;
+    _ = ra;
+    <span class="tok-kw">const</span> class = <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.sizeClassIndex">sizeClassIndex</a>(memory.len, alignment);
+    <span class="tok-kw">const</span> new_class = <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.sizeClassIndex">sizeClassIndex</a>(new_len, alignment);
+    <span class="tok-kw">if</span> (class &gt;= <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.size_class_count">size_class_count</a>) {
+        <span class="tok-kw">if</span> (new_class &lt; <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.size_class_count">size_class_count</a>) <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        <span class="tok-kw">return</span> <a href="std.heap.PageAllocator.html">PageAllocator</a>.<a href="std.heap.PageAllocator.html#std.heap.PageAllocator.realloc">realloc</a>(memory, new_len, <span class="tok-null">false</span>) != <span class="tok-null">null</span>;
+    }
+    <span class="tok-kw">return</span> new_class == class;
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">remap</span>(context: *<span class="tok-type">anyopaque</span>, memory: []<span class="tok-type">u8</span>, alignment: <a href="std.mem.html">mem</a>.<a href="std.mem.Alignment.html">Alignment</a>, new_len: <span class="tok-type">usize</span>, ra: <span class="tok-type">usize</span>) ?[*]<span class="tok-type">u8</span> {
+    _ = context;
+    _ = ra;
+    <span class="tok-kw">const</span> class = <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.sizeClassIndex">sizeClassIndex</a>(memory.len, alignment);
+    <span class="tok-kw">const</span> new_class = <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.sizeClassIndex">sizeClassIndex</a>(new_len, alignment);
+    <span class="tok-kw">if</span> (class &gt;= <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.size_class_count">size_class_count</a>) {
+        <span class="tok-kw">if</span> (new_class &lt; <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.size_class_count">size_class_count</a>) <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+        <span class="tok-kw">return</span> <a href="std.heap.PageAllocator.html">PageAllocator</a>.<a href="std.heap.PageAllocator.html#std.heap.PageAllocator.realloc">realloc</a>(memory, new_len, <span class="tok-null">true</span>);
+    }
+    <span class="tok-kw">return</span> <span class="tok-kw">if</span> (new_class == class) memory.ptr <span class="tok-kw">else</span> <span class="tok-null">null</span>;
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">free</span>(context: *<span class="tok-type">anyopaque</span>, memory: []<span class="tok-type">u8</span>, alignment: <a href="std.mem.html">mem</a>.<a href="std.mem.Alignment.html">Alignment</a>, ra: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+    _ = context;
+    _ = ra;
+    <span class="tok-kw">const</span> class = <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.sizeClassIndex">sizeClassIndex</a>(memory.len, alignment);
+    <span class="tok-kw">if</span> (class &gt;= <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.size_class_count">size_class_count</a>) {
+        <span class="tok-builtin">@branchHint</span>(.unlikely);
+        <span class="tok-kw">return</span> <a href="std.heap.PageAllocator.html">PageAllocator</a>.<a href="std.heap.PageAllocator.html#std.heap.PageAllocator.unmap">unmap</a>(<span class="tok-builtin">@alignCast</span>(memory));
+    }
+
+    <span class="tok-kw">const</span> node: *<span class="tok-type">usize</span> = <span class="tok-builtin">@alignCast</span>(<span class="tok-builtin">@ptrCast</span>(memory.ptr));
+
+    <span class="tok-kw">const</span> t = <a href="std.heap.SmpAllocator.Thread.html">Thread</a>.<a href="std.heap.SmpAllocator.Thread.html#std.heap.SmpAllocator.Thread.lock">lock</a>();
+    <span class="tok-kw">defer</span> t.unlock();
+
+    node.* = t.frees[class];
+    t.frees[class] = <span class="tok-builtin">@intFromPtr</span>(node);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">sizeClassIndex</span>(len: <span class="tok-type">usize</span>, alignment: <a href="std.mem.html">mem</a>.<a href="std.mem.Alignment.html">Alignment</a>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <span class="tok-builtin">@max</span>(<span class="tok-builtin">@bitSizeOf</span>(<span class="tok-type">usize</span>) - <span class="tok-builtin">@clz</span>(len - <span class="tok-number">1</span>), <span class="tok-builtin">@intFromEnum</span>(alignment), <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.min_class">min_class</a>) - <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.min_class">min_class</a>;
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">slotSize</span>(class: <span class="tok-type">usize</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(<span class="tok-type">usize</span>, <span class="tok-number">1</span>) &lt;&lt; <span class="tok-builtin">@intCast</span>(class + <a href="std.heap.SmpAllocator.html#std.heap.SmpAllocator.min_class">min_class</a>);
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

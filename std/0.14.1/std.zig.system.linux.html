@@ -1,0 +1,870 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">zig</a></li><li><a href="std.zig.html" class="">system</a></li><li><a href="std.zig.system.linux.html" class="active">linux</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.zig.system.linux" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.zig.system.linux</span><a href="#src.zig-std.zig.system.linux">[src]</a></h1><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.zig.system.linux.detectNativeCpuAndFeatures" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">detectNativeCpuAndFeatures</span><a href="#src.zig-std.zig.system.linux.detectNativeCpuAndFeatures">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">detectNativeCpuAndFeatures</span>() ?<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.system.linux.detectNativeCpuAndFeatures">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">detectNativeCpuAndFeatures</span>() ?<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a> {
+    <span class="tok-kw">var</span> f = <a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.openFileAbsolute">openFileAbsolute</a>(<span class="tok-str">&quot;/proc/cpuinfo&quot;</span>, .{}) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-null">null</span>,
+    };
+    <span class="tok-kw">defer</span> f.close();
+
+    <span class="tok-kw">const</span> current_arch = <a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.cpu">cpu</a>.<a href="#">arch</a>;
+    <span class="tok-kw">switch</span> (current_arch) {
+        .arm, .armeb, .thumb, .thumbeb =&gt; {
+            <span class="tok-kw">return</span> <a href="std.zig.system.linux.html#std.zig.system.linux.ArmCpuinfoParser">ArmCpuinfoParser</a>.<a href="#">parse</a>(current_arch, f.reader()) <span class="tok-kw">catch</span> <span class="tok-null">null</span>;
+        },
+        .aarch64, .aarch64_be =&gt; {
+            <span class="tok-kw">const</span> registers = [<span class="tok-number">12</span>]<span class="tok-type">u64</span>{
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;MIDR_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64PFR0_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64PFR1_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64DFR0_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64DFR1_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64AFR0_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64AFR1_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64ISAR0_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64ISAR1_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64MMFR0_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64MMFR1_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64MMFR2_EL1&quot;</span>),
+            };
+
+            <span class="tok-kw">const</span> core = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;arm.zig&quot;</span>).aarch64.detectNativeCpuAndFeatures(current_arch, registers);
+            <span class="tok-kw">return</span> core;
+        },
+        .sparc64 =&gt; {
+            <span class="tok-kw">return</span> <a href="std.zig.system.linux.html#std.zig.system.linux.SparcCpuinfoParser">SparcCpuinfoParser</a>.<a href="#">parse</a>(current_arch, f.reader()) <span class="tok-kw">catch</span> <span class="tok-null">null</span>;
+        },
+        .powerpc, .powerpcle, .powerpc64, .powerpc64le =&gt; {
+            <span class="tok-kw">return</span> <a href="std.zig.system.linux.html#std.zig.system.linux.PowerpcCpuinfoParser">PowerpcCpuinfoParser</a>.<a href="#">parse</a>(current_arch, f.reader()) <span class="tok-kw">catch</span> <span class="tok-null">null</span>;
+        },
+        .riscv64, .riscv32 =&gt; {
+            <span class="tok-kw">return</span> <a href="std.zig.system.linux.html#std.zig.system.linux.RiscvCpuinfoParser">RiscvCpuinfoParser</a>.<a href="#">parse</a>(current_arch, f.reader()) <span class="tok-kw">catch</span> <span class="tok-null">null</span>;
+        },
+        <span class="tok-kw">else</span> =&gt; {},
+    }
+
+    <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.zig.system.linux">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>);
+<span class="tok-kw">const</span> builtin = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;builtin&quot;</span>);
+<span class="tok-kw">const</span> mem = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>;
+<span class="tok-kw">const</span> io = <a href="std.html">std</a>.<a href="std.io.html">io</a>;
+<span class="tok-kw">const</span> fs = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>;
+<span class="tok-kw">const</span> fmt = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>;
+<span class="tok-kw">const</span> testing = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>;
+<span class="tok-kw">const</span> Target = <a href="std.html">std</a>.<a href="std.Target.html">Target</a>;
+<span class="tok-kw">const</span> assert = <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>;
+
+<span class="tok-kw">const</span> SparcCpuinfoImpl = <span class="tok-kw">struct</span> {
+    model: ?*<span class="tok-kw">const</span> <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Model.html">Model</a> = <span class="tok-null">null</span>,
+    is_64bit: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+
+    <span class="tok-kw">const</span> cpu_names = .{
+        .{ <span class="tok-str">&quot;SuperSparc&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.sparc.html">sparc</a>.<a href="std.Target.sparc.cpu.html">cpu</a>.<a href="std.Target.sparc.cpu.html#std.Target.sparc.cpu.supersparc">supersparc</a> },
+        .{ <span class="tok-str">&quot;HyperSparc&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.sparc.html">sparc</a>.<a href="std.Target.sparc.cpu.html">cpu</a>.<a href="std.Target.sparc.cpu.html#std.Target.sparc.cpu.hypersparc">hypersparc</a> },
+        .{ <span class="tok-str">&quot;SpitFire&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.sparc.html">sparc</a>.<a href="std.Target.sparc.cpu.html">cpu</a>.<a href="std.Target.sparc.cpu.html#std.Target.sparc.cpu.ultrasparc">ultrasparc</a> },
+        .{ <span class="tok-str">&quot;BlackBird&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.sparc.html">sparc</a>.<a href="std.Target.sparc.cpu.html">cpu</a>.<a href="std.Target.sparc.cpu.html#std.Target.sparc.cpu.ultrasparc">ultrasparc</a> },
+        .{ <span class="tok-str">&quot;Sabre&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.sparc.html">sparc</a>.<a href="std.Target.sparc.cpu.html">cpu</a>.<a href="std.Target.sparc.cpu.html#std.Target.sparc.cpu.ultrasparc">ultrasparc</a> },
+        .{ <span class="tok-str">&quot;Hummingbird&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.sparc.html">sparc</a>.<a href="std.Target.sparc.cpu.html">cpu</a>.<a href="std.Target.sparc.cpu.html#std.Target.sparc.cpu.ultrasparc">ultrasparc</a> },
+        .{ <span class="tok-str">&quot;Cheetah&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.sparc.html">sparc</a>.<a href="std.Target.sparc.cpu.html">cpu</a>.<a href="std.Target.sparc.cpu.html#std.Target.sparc.cpu.ultrasparc3">ultrasparc3</a> },
+        .{ <span class="tok-str">&quot;Jalapeno&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.sparc.html">sparc</a>.<a href="std.Target.sparc.cpu.html">cpu</a>.<a href="std.Target.sparc.cpu.html#std.Target.sparc.cpu.ultrasparc3">ultrasparc3</a> },
+        .{ <span class="tok-str">&quot;Jaguar&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.sparc.html">sparc</a>.<a href="std.Target.sparc.cpu.html">cpu</a>.<a href="std.Target.sparc.cpu.html#std.Target.sparc.cpu.ultrasparc3">ultrasparc3</a> },
+        .{ <span class="tok-str">&quot;Panther&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.sparc.html">sparc</a>.<a href="std.Target.sparc.cpu.html">cpu</a>.<a href="std.Target.sparc.cpu.html#std.Target.sparc.cpu.ultrasparc3">ultrasparc3</a> },
+        .{ <span class="tok-str">&quot;Serrano&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.sparc.html">sparc</a>.<a href="std.Target.sparc.cpu.html">cpu</a>.<a href="std.Target.sparc.cpu.html#std.Target.sparc.cpu.ultrasparc3">ultrasparc3</a> },
+        .{ <span class="tok-str">&quot;UltraSparc T1&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.sparc.html">sparc</a>.<a href="std.Target.sparc.cpu.html">cpu</a>.<a href="std.Target.sparc.cpu.html#std.Target.sparc.cpu.niagara">niagara</a> },
+        .{ <span class="tok-str">&quot;UltraSparc T2&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.sparc.html">sparc</a>.<a href="std.Target.sparc.cpu.html">cpu</a>.<a href="std.Target.sparc.cpu.html#std.Target.sparc.cpu.niagara2">niagara2</a> },
+        .{ <span class="tok-str">&quot;UltraSparc T3&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.sparc.html">sparc</a>.<a href="std.Target.sparc.cpu.html">cpu</a>.<a href="std.Target.sparc.cpu.html#std.Target.sparc.cpu.niagara3">niagara3</a> },
+        .{ <span class="tok-str">&quot;UltraSparc T4&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.sparc.html">sparc</a>.<a href="std.Target.sparc.cpu.html">cpu</a>.<a href="std.Target.sparc.cpu.html#std.Target.sparc.cpu.niagara4">niagara4</a> },
+        .{ <span class="tok-str">&quot;UltraSparc T5&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.sparc.html">sparc</a>.<a href="std.Target.sparc.cpu.html">cpu</a>.<a href="std.Target.sparc.cpu.html#std.Target.sparc.cpu.niagara4">niagara4</a> },
+        .{ <span class="tok-str">&quot;LEON&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.sparc.html">sparc</a>.<a href="std.Target.sparc.cpu.html">cpu</a>.<a href="std.Target.sparc.cpu.html#std.Target.sparc.cpu.leon3">leon3</a> },
+    };
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">line_hook</span>(self: *<a href="std.zig.system.linux.SparcCpuinfoImpl.html">SparcCpuinfoImpl</a>, key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, value: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">bool</span> {
+        <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, key, <span class="tok-str">&quot;cpu&quot;</span>)) {
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<a href="std.zig.system.linux.SparcCpuinfoImpl.html#std.zig.system.linux.SparcCpuinfoImpl.cpu_names">cpu_names</a>) |pair| {
+                <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfPos">indexOfPos</a>(<span class="tok-type">u8</span>, value, <span class="tok-number">0</span>, pair[<span class="tok-number">0</span>]) != <span class="tok-null">null</span>) {
+                    self.model = pair[<span class="tok-number">1</span>];
+                    <span class="tok-kw">break</span>;
+                }
+            }
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, key, <span class="tok-str">&quot;type&quot;</span>)) {
+            self.is_64bit = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, value, <span class="tok-str">&quot;sun4u&quot;</span>) <span class="tok-kw">or</span> <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, value, <span class="tok-str">&quot;sun4v&quot;</span>);
+        }
+
+        <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">finalize</span>(self: *<span class="tok-kw">const</span> <a href="std.zig.system.linux.SparcCpuinfoImpl.html">SparcCpuinfoImpl</a>, arch: <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Arch.html">Arch</a>) ?<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a> {<span class="tok-comment">
+        // At the moment we only support 64bit SPARC systems.
+        </span><a href="std.debug.html#std.debug.assert">assert</a>(self.is_64bit);
+
+        <span class="tok-kw">const</span> model = self.model <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+        <span class="tok-kw">return</span> <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>{
+            .arch = arch,
+            .model = model,
+            .features = model.features,
+        };
+    }
+};
+
+<span class="tok-kw">const</span> SparcCpuinfoParser = <a href="std.zig.system.linux.html#std.zig.system.linux.CpuinfoParser">CpuinfoParser</a>(<a href="std.zig.system.linux.SparcCpuinfoImpl.html">SparcCpuinfoImpl</a>);
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;cpuinfo: SPARC&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.zig.system.linux.html#std.zig.system.linux.testParser">testParser</a>(<a href="std.zig.system.linux.html#std.zig.system.linux.SparcCpuinfoParser">SparcCpuinfoParser</a>, .sparc64, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.sparc.html">sparc</a>.<a href="std.Target.sparc.cpu.html">cpu</a>.<a href="std.Target.sparc.cpu.html#std.Target.sparc.cpu.niagara2">niagara2</a>,
+        <span class="tok-str">\\cpu             : UltraSparc T2 (Niagara2)</span>
+        <span class="tok-str">\\fpu             : UltraSparc T2 integrated FPU</span>
+        <span class="tok-str">\\pmu             : niagara2</span>
+        <span class="tok-str">\\type            : sun4v</span>
+    );
+}
+
+<span class="tok-kw">const</span> RiscvCpuinfoImpl = <span class="tok-kw">struct</span> {
+    model: ?*<span class="tok-kw">const</span> <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Model.html">Model</a> = <span class="tok-null">null</span>,
+
+    <span class="tok-kw">const</span> cpu_names = .{
+        .{ <span class="tok-str">&quot;sifive,u54&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.riscv.html">riscv</a>.<a href="std.Target.riscv.cpu.html">cpu</a>.<a href="std.Target.riscv.cpu.html#std.Target.riscv.cpu.sifive_u54">sifive_u54</a> },
+        .{ <span class="tok-str">&quot;sifive,u7&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.riscv.html">riscv</a>.<a href="std.Target.riscv.cpu.html">cpu</a>.<a href="std.Target.riscv.cpu.html#std.Target.riscv.cpu.sifive_7_series">sifive_7_series</a> },
+        .{ <span class="tok-str">&quot;sifive,u74&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.riscv.html">riscv</a>.<a href="std.Target.riscv.cpu.html">cpu</a>.<a href="std.Target.riscv.cpu.html#std.Target.riscv.cpu.sifive_u74">sifive_u74</a> },
+        .{ <span class="tok-str">&quot;sifive,u74-mc&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.riscv.html">riscv</a>.<a href="std.Target.riscv.cpu.html">cpu</a>.<a href="std.Target.riscv.cpu.html#std.Target.riscv.cpu.sifive_u74">sifive_u74</a> },
+    };
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">line_hook</span>(self: *<a href="std.zig.system.linux.RiscvCpuinfoImpl.html">RiscvCpuinfoImpl</a>, key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, value: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">bool</span> {
+        <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, key, <span class="tok-str">&quot;uarch&quot;</span>)) {
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<a href="std.zig.system.linux.RiscvCpuinfoImpl.html#std.zig.system.linux.RiscvCpuinfoImpl.cpu_names">cpu_names</a>) |pair| {
+                <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, value, pair[<span class="tok-number">0</span>])) {
+                    self.model = pair[<span class="tok-number">1</span>];
+                    <span class="tok-kw">break</span>;
+                }
+            }
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        }
+
+        <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">finalize</span>(self: *<span class="tok-kw">const</span> <a href="std.zig.system.linux.RiscvCpuinfoImpl.html">RiscvCpuinfoImpl</a>, arch: <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Arch.html">Arch</a>) ?<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a> {
+        <span class="tok-kw">const</span> model = self.model <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+        <span class="tok-kw">return</span> <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>{
+            .arch = arch,
+            .model = model,
+            .features = model.features,
+        };
+    }
+};
+
+<span class="tok-kw">const</span> RiscvCpuinfoParser = <a href="std.zig.system.linux.html#std.zig.system.linux.CpuinfoParser">CpuinfoParser</a>(<a href="std.zig.system.linux.RiscvCpuinfoImpl.html">RiscvCpuinfoImpl</a>);
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;cpuinfo: RISC-V&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.zig.system.linux.html#std.zig.system.linux.testParser">testParser</a>(<a href="std.zig.system.linux.html#std.zig.system.linux.RiscvCpuinfoParser">RiscvCpuinfoParser</a>, .riscv64, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.riscv.html">riscv</a>.<a href="std.Target.riscv.cpu.html">cpu</a>.<a href="std.Target.riscv.cpu.html#std.Target.riscv.cpu.sifive_u74">sifive_u74</a>,
+        <span class="tok-str">\\processor : 0</span>
+        <span class="tok-str">\\hart      : 1</span>
+        <span class="tok-str">\\isa       : rv64imafdc</span>
+        <span class="tok-str">\\mmu       : sv39</span>
+        <span class="tok-str">\\isa-ext   :</span>
+        <span class="tok-str">\\uarch     : sifive,u74-mc</span>
+    );
+}
+
+<span class="tok-kw">const</span> PowerpcCpuinfoImpl = <span class="tok-kw">struct</span> {
+    model: ?*<span class="tok-kw">const</span> <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Model.html">Model</a> = <span class="tok-null">null</span>,
+
+    <span class="tok-kw">const</span> cpu_names = .{
+        .{ <span class="tok-str">&quot;604e&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="#"604e"">@&quot;604e&quot;</a> },
+        .{ <span class="tok-str">&quot;604&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="#"604"">@&quot;604&quot;</a> },
+        .{ <span class="tok-str">&quot;7400&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="#"7400"">@&quot;7400&quot;</a> },
+        .{ <span class="tok-str">&quot;7410&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="#"7400"">@&quot;7400&quot;</a> },
+        .{ <span class="tok-str">&quot;7447&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="#"7400"">@&quot;7400&quot;</a> },
+        .{ <span class="tok-str">&quot;7455&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="#"7450"">@&quot;7450&quot;</a> },
+        .{ <span class="tok-str">&quot;G4&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="std.Target.powerpc.cpu.html#std.Target.powerpc.cpu.g4">g4</a> },
+        .{ <span class="tok-str">&quot;POWER4&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="#"970"">@&quot;970&quot;</a> },
+        .{ <span class="tok-str">&quot;PPC970FX&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="#"970"">@&quot;970&quot;</a> },
+        .{ <span class="tok-str">&quot;PPC970MP&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="#"970"">@&quot;970&quot;</a> },
+        .{ <span class="tok-str">&quot;G5&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="std.Target.powerpc.cpu.html#std.Target.powerpc.cpu.g5">g5</a> },
+        .{ <span class="tok-str">&quot;POWER5&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="std.Target.powerpc.cpu.html#std.Target.powerpc.cpu.g5">g5</a> },
+        .{ <span class="tok-str">&quot;A2&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="std.Target.powerpc.cpu.html#std.Target.powerpc.cpu.a2">a2</a> },
+        .{ <span class="tok-str">&quot;POWER6&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="std.Target.powerpc.cpu.html#std.Target.powerpc.cpu.pwr6">pwr6</a> },
+        .{ <span class="tok-str">&quot;POWER7&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="std.Target.powerpc.cpu.html#std.Target.powerpc.cpu.pwr7">pwr7</a> },
+        .{ <span class="tok-str">&quot;POWER8&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="std.Target.powerpc.cpu.html#std.Target.powerpc.cpu.pwr8">pwr8</a> },
+        .{ <span class="tok-str">&quot;POWER8E&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="std.Target.powerpc.cpu.html#std.Target.powerpc.cpu.pwr8">pwr8</a> },
+        .{ <span class="tok-str">&quot;POWER8NVL&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="std.Target.powerpc.cpu.html#std.Target.powerpc.cpu.pwr8">pwr8</a> },
+        .{ <span class="tok-str">&quot;POWER9&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="std.Target.powerpc.cpu.html#std.Target.powerpc.cpu.pwr9">pwr9</a> },
+        .{ <span class="tok-str">&quot;POWER10&quot;</span>, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="std.Target.powerpc.cpu.html#std.Target.powerpc.cpu.pwr10">pwr10</a> },
+    };
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">line_hook</span>(self: *<a href="std.zig.system.linux.PowerpcCpuinfoImpl.html">PowerpcCpuinfoImpl</a>, key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, value: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">bool</span> {
+        <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, key, <span class="tok-str">&quot;cpu&quot;</span>)) {<span class="tok-comment">
+            // The model name is often followed by a comma or space and extra
+            // info.
+            </span><span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<a href="std.zig.system.linux.PowerpcCpuinfoImpl.html#std.zig.system.linux.PowerpcCpuinfoImpl.cpu_names">cpu_names</a>) |pair| {
+                <span class="tok-kw">const</span> end_index = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfAny">indexOfAny</a>(<span class="tok-type">u8</span>, value, <span class="tok-str">&quot;, &quot;</span>) <span class="tok-kw">orelse</span> value.len;
+                <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, value[<span class="tok-number">0</span>..end_index], pair[<span class="tok-number">0</span>])) {
+                    self.model = pair[<span class="tok-number">1</span>];
+                    <span class="tok-kw">break</span>;
+                }
+            }<span class="tok-comment">
+
+            // Stop the detection once we've seen the first core.
+            </span><span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        }
+
+        <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">finalize</span>(self: *<span class="tok-kw">const</span> <a href="std.zig.system.linux.PowerpcCpuinfoImpl.html">PowerpcCpuinfoImpl</a>, arch: <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Arch.html">Arch</a>) ?<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a> {
+        <span class="tok-kw">const</span> model = self.model <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+        <span class="tok-kw">return</span> <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>{
+            .arch = arch,
+            .model = model,
+            .features = model.features,
+        };
+    }
+};
+
+<span class="tok-kw">const</span> PowerpcCpuinfoParser = <a href="std.zig.system.linux.html#std.zig.system.linux.CpuinfoParser">CpuinfoParser</a>(<a href="std.zig.system.linux.PowerpcCpuinfoImpl.html">PowerpcCpuinfoImpl</a>);
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;cpuinfo: PowerPC&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.zig.system.linux.html#std.zig.system.linux.testParser">testParser</a>(<a href="std.zig.system.linux.html#std.zig.system.linux.PowerpcCpuinfoParser">PowerpcCpuinfoParser</a>, .powerpc, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="#"970"">@&quot;970&quot;</a>,
+        <span class="tok-str">\\processor : 0</span>
+        <span class="tok-str">\\cpu       : PPC970MP, altivec supported</span>
+        <span class="tok-str">\\clock     : 1250.000000MHz</span>
+        <span class="tok-str">\\revision  : 1.1 (pvr 0044 0101)</span>
+    );
+    <span class="tok-kw">try</span> <a href="std.zig.system.linux.html#std.zig.system.linux.testParser">testParser</a>(<a href="std.zig.system.linux.html#std.zig.system.linux.PowerpcCpuinfoParser">PowerpcCpuinfoParser</a>, .powerpc64le, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.powerpc.html">powerpc</a>.<a href="std.Target.powerpc.cpu.html">cpu</a>.<a href="std.Target.powerpc.cpu.html#std.Target.powerpc.cpu.pwr8">pwr8</a>,
+        <span class="tok-str">\\processor : 0</span>
+        <span class="tok-str">\\cpu       : POWER8 (raw), altivec supported</span>
+        <span class="tok-str">\\clock     : 2926.000000MHz</span>
+        <span class="tok-str">\\revision  : 2.0 (pvr 004d 0200)</span>
+    );
+}
+
+<span class="tok-kw">const</span> ArmCpuinfoImpl = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">const</span> num_cores = <span class="tok-number">4</span>;
+
+    cores: [<a href="std.zig.system.linux.ArmCpuinfoImpl.html#std.zig.system.linux.ArmCpuinfoImpl.num_cores">num_cores</a>]<a href="std.zig.system.linux.ArmCpuinfoImpl.CoreInfo.html">CoreInfo</a> = <span class="tok-null">undefined</span>,
+    core_no: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+    have_fields: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+
+    <span class="tok-kw">const</span> CoreInfo = <span class="tok-kw">struct</span> {
+        architecture: <span class="tok-type">u8</span> = <span class="tok-number">0</span>,
+        implementer: <span class="tok-type">u8</span> = <span class="tok-number">0</span>,
+        variant: <span class="tok-type">u8</span> = <span class="tok-number">0</span>,
+        part: <span class="tok-type">u16</span> = <span class="tok-number">0</span>,
+        is_really_v6: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    };
+
+    <span class="tok-kw">const</span> cpu_models = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;arm.zig&quot;</span>).cpu_models;
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">addOne</span>(self: *<a href="std.zig.system.linux.ArmCpuinfoImpl.html">ArmCpuinfoImpl</a>) <span class="tok-type">void</span> {
+        <span class="tok-kw">if</span> (self.have_fields == <span class="tok-number">4</span> <span class="tok-kw">and</span> self.core_no &lt; <a href="std.zig.system.linux.ArmCpuinfoImpl.html#std.zig.system.linux.ArmCpuinfoImpl.num_cores">num_cores</a>) {
+            <span class="tok-kw">if</span> (self.core_no &gt; <span class="tok-number">0</span>) {<span class="tok-comment">
+                // Deduplicate the core info.
+                </span><span class="tok-kw">for</span> (self.cores[<span class="tok-number">0</span>..self.core_no]) |it| {
+                    <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.eql">eql</a>(it, self.cores[self.core_no]))
+                        <span class="tok-kw">return</span>;
+                }
+            }
+            self.core_no += <span class="tok-number">1</span>;
+        }
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">line_hook</span>(self: *<a href="std.zig.system.linux.ArmCpuinfoImpl.html">ArmCpuinfoImpl</a>, key: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, value: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">bool</span> {
+        <span class="tok-kw">const</span> info = &amp;self.cores[self.core_no];
+
+        <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, key, <span class="tok-str">&quot;processor&quot;</span>)) {<span class="tok-comment">
+            // Handle both old-style and new-style cpuinfo formats.
+            // The former prints a sequence of &quot;processor: N&quot; lines for each
+            // core and then the info for the core that's executing this code(!)
+            // while the latter prints the infos for each core right after the
+            // &quot;processor&quot; key.
+            </span>self.have_fields = <span class="tok-number">0</span>;
+            self.cores[self.core_no] = .{};
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, key, <span class="tok-str">&quot;CPU implementer&quot;</span>)) {
+            info.implementer = <span class="tok-kw">try</span> <a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseInt">parseInt</a>(<span class="tok-type">u8</span>, value, <span class="tok-number">0</span>);
+            self.have_fields += <span class="tok-number">1</span>;
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, key, <span class="tok-str">&quot;CPU architecture&quot;</span>)) {<span class="tok-comment">
+            // &quot;AArch64&quot; on older kernels.
+            </span>info.architecture = <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.startsWith">startsWith</a>(<span class="tok-type">u8</span>, value, <span class="tok-str">&quot;AArch64&quot;</span>))
+                <span class="tok-number">8</span>
+            <span class="tok-kw">else</span>
+                <span class="tok-kw">try</span> <a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseInt">parseInt</a>(<span class="tok-type">u8</span>, value, <span class="tok-number">0</span>);
+            self.have_fields += <span class="tok-number">1</span>;
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, key, <span class="tok-str">&quot;CPU variant&quot;</span>)) {
+            info.variant = <span class="tok-kw">try</span> <a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseInt">parseInt</a>(<span class="tok-type">u8</span>, value, <span class="tok-number">0</span>);
+            self.have_fields += <span class="tok-number">1</span>;
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, key, <span class="tok-str">&quot;CPU part&quot;</span>)) {
+            info.part = <span class="tok-kw">try</span> <a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseInt">parseInt</a>(<span class="tok-type">u16</span>, value, <span class="tok-number">0</span>);
+            self.have_fields += <span class="tok-number">1</span>;
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, key, <span class="tok-str">&quot;model name&quot;</span>)) {<span class="tok-comment">
+            // ARMv6 cores report &quot;CPU architecture&quot; equal to 7.
+            </span><span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOf">indexOf</a>(<span class="tok-type">u8</span>, value, <span class="tok-str">&quot;(v6l)&quot;</span>)) |_| {
+                info.is_really_v6 = <span class="tok-null">true</span>;
+            }
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, key, <span class="tok-str">&quot;CPU revision&quot;</span>)) {<span class="tok-comment">
+            // This field is always the last one for each CPU section.
+            </span>_ = self.addOne();
+        }
+
+        <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">finalize</span>(self: *<a href="std.zig.system.linux.ArmCpuinfoImpl.html">ArmCpuinfoImpl</a>, arch: <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Arch.html">Arch</a>) ?<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a> {
+        <span class="tok-kw">if</span> (self.core_no == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+        <span class="tok-kw">const</span> is_64bit = <span class="tok-kw">switch</span> (arch) {
+            .aarch64, .aarch64_be =&gt; <span class="tok-null">true</span>,
+            <span class="tok-kw">else</span> =&gt; <span class="tok-null">false</span>,
+        };
+
+        <span class="tok-kw">var</span> known_models: [<a href="std.zig.system.linux.ArmCpuinfoImpl.html#std.zig.system.linux.ArmCpuinfoImpl.num_cores">num_cores</a>]?*<span class="tok-kw">const</span> <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Model.html">Model</a> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">for</span> (self.cores[<span class="tok-number">0</span>..self.core_no], <span class="tok-number">0</span>..) |core, i| {
+            known_models[i] = <a href="std.zig.system.arm.cpu_models.html">cpu_models</a>.<a href="std.zig.system.arm.cpu_models.html#std.zig.system.arm.cpu_models.isKnown">isKnown</a>(.{
+                .architecture = core.architecture,
+                .implementer = core.implementer,
+                .variant = core.variant,
+                .part = core.part,
+            }, is_64bit);
+        }<span class="tok-comment">
+
+        // XXX We pick the first core on big.LITTLE systems, hopefully the
+        // LITTLE one.
+        </span><span class="tok-kw">const</span> model = known_models[<span class="tok-number">0</span>] <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+        <span class="tok-kw">return</span> <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>{
+            .arch = arch,
+            .model = model,
+            .features = model.features,
+        };
+    }
+};
+
+<span class="tok-kw">const</span> ArmCpuinfoParser = <a href="std.zig.system.linux.html#std.zig.system.linux.CpuinfoParser">CpuinfoParser</a>(<a href="std.zig.system.linux.ArmCpuinfoImpl.html">ArmCpuinfoImpl</a>);
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;cpuinfo: ARM&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.zig.system.linux.html#std.zig.system.linux.testParser">testParser</a>(<a href="std.zig.system.linux.html#std.zig.system.linux.ArmCpuinfoParser">ArmCpuinfoParser</a>, .arm, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.arm.html">arm</a>.<a href="std.Target.arm.cpu.html">cpu</a>.<a href="std.Target.arm.cpu.html#std.Target.arm.cpu.arm1176jz_s">arm1176jz_s</a>,
+        <span class="tok-str">\\processor       : 0</span>
+        <span class="tok-str">\\model name      : ARMv6-compatible processor rev 7 (v6l)</span>
+        <span class="tok-str">\\BogoMIPS        : 997.08</span>
+        <span class="tok-str">\\Features        : half thumb fastmult vfp edsp java tls</span>
+        <span class="tok-str">\\CPU implementer : 0x41</span>
+        <span class="tok-str">\\CPU architecture: 7</span>
+        <span class="tok-str">\\CPU variant     : 0x0</span>
+        <span class="tok-str">\\CPU part        : 0xb76</span>
+        <span class="tok-str">\\CPU revision    : 7</span>
+    );
+    <span class="tok-kw">try</span> <a href="std.zig.system.linux.html#std.zig.system.linux.testParser">testParser</a>(<a href="std.zig.system.linux.html#std.zig.system.linux.ArmCpuinfoParser">ArmCpuinfoParser</a>, .arm, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.arm.html">arm</a>.<a href="std.Target.arm.cpu.html">cpu</a>.<a href="std.Target.arm.cpu.html#std.Target.arm.cpu.cortex_a7">cortex_a7</a>,
+        <span class="tok-str">\\processor : 0</span>
+        <span class="tok-str">\\model name : ARMv7 Processor rev 3 (v7l)</span>
+        <span class="tok-str">\\BogoMIPS : 18.00</span>
+        <span class="tok-str">\\Features : half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae</span>
+        <span class="tok-str">\\CPU implementer : 0x41</span>
+        <span class="tok-str">\\CPU architecture: 7</span>
+        <span class="tok-str">\\CPU variant : 0x0</span>
+        <span class="tok-str">\\CPU part : 0xc07</span>
+        <span class="tok-str">\\CPU revision : 3</span>
+        <span class="tok-str">\\</span>
+        <span class="tok-str">\\processor : 4</span>
+        <span class="tok-str">\\model name : ARMv7 Processor rev 3 (v7l)</span>
+        <span class="tok-str">\\BogoMIPS : 90.00</span>
+        <span class="tok-str">\\Features : half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae</span>
+        <span class="tok-str">\\CPU implementer : 0x41</span>
+        <span class="tok-str">\\CPU architecture: 7</span>
+        <span class="tok-str">\\CPU variant : 0x2</span>
+        <span class="tok-str">\\CPU part : 0xc0f</span>
+        <span class="tok-str">\\CPU revision : 3</span>
+    );
+    <span class="tok-kw">try</span> <a href="std.zig.system.linux.html#std.zig.system.linux.testParser">testParser</a>(<a href="std.zig.system.linux.html#std.zig.system.linux.ArmCpuinfoParser">ArmCpuinfoParser</a>, .aarch64, &amp;<a href="std.Target.html">Target</a>.<a href="std.Target.aarch64.html">aarch64</a>.<a href="std.Target.aarch64.cpu.html">cpu</a>.<a href="std.Target.aarch64.cpu.html#std.Target.aarch64.cpu.cortex_a72">cortex_a72</a>,
+        <span class="tok-str">\\processor       : 0</span>
+        <span class="tok-str">\\BogoMIPS        : 108.00</span>
+        <span class="tok-str">\\Features        : fp asimd evtstrm crc32 cpuid</span>
+        <span class="tok-str">\\CPU implementer : 0x41</span>
+        <span class="tok-str">\\CPU architecture: 8</span>
+        <span class="tok-str">\\CPU variant     : 0x0</span>
+        <span class="tok-str">\\CPU part        : 0xd08</span>
+        <span class="tok-str">\\CPU revision    : 3</span>
+    );
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">testParser</span>(
+    parser: <span class="tok-kw">anytype</span>,
+    arch: <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Arch.html">Arch</a>,
+    expected_model: *<span class="tok-kw">const</span> <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Model.html">Model</a>,
+    input: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+) !<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> fbs = <a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(input);
+    <span class="tok-kw">const</span> result = <span class="tok-kw">try</span> parser.parse(arch, fbs.reader());
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(expected_model, result.?.model);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(expected_model.features.eql(result.?.features));
+}<span class="tok-comment">
+
+// The generic implementation of a /proc/cpuinfo parser.
+// For every line it invokes the line_hook method with the key and value strings
+// as first and second parameters. Returning false from the hook function stops
+// the iteration without raising an error.
+// When all the lines have been analyzed the finalize method is called.
+</span><span class="tok-kw">fn</span> <span class="tok-fn">CpuinfoParser</span>(<span class="tok-kw">comptime</span> impl: <span class="tok-kw">anytype</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        <span class="tok-kw">fn</span> <span class="tok-fn">parse</span>(arch: <a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a>.<a href="std.Target.Cpu.Arch.html">Arch</a>, reader: <span class="tok-kw">anytype</span>) <span class="tok-type">anyerror</span>!?<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a> {
+            <span class="tok-kw">var</span> line_buf: [<span class="tok-number">1024</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+            <span class="tok-kw">var</span> obj: impl = .{};
+
+            <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+                <span class="tok-kw">const</span> line = (<span class="tok-kw">try</span> reader.readUntilDelimiterOrEof(&amp;line_buf, <span class="tok-str">'\n'</span>)) <span class="tok-kw">orelse</span> <span class="tok-kw">break</span>;
+                <span class="tok-kw">const</span> colon_pos = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, line, <span class="tok-str">':'</span>) <span class="tok-kw">orelse</span> <span class="tok-kw">continue</span>;
+                <span class="tok-kw">const</span> key = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.trimRight">trimRight</a>(<span class="tok-type">u8</span>, line[<span class="tok-number">0</span>..colon_pos], <span class="tok-str">&quot; \t&quot;</span>);
+                <span class="tok-kw">const</span> value = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.trimLeft">trimLeft</a>(<span class="tok-type">u8</span>, line[colon_pos + <span class="tok-number">1</span> ..], <span class="tok-str">&quot; \t&quot;</span>);
+
+                <span class="tok-kw">if</span> (!<span class="tok-kw">try</span> obj.line_hook(key, value))
+                    <span class="tok-kw">break</span>;
+            }
+
+            <span class="tok-kw">return</span> obj.finalize(arch);
+        }
+    };
+}
+
+<span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">getAArch64CpuFeature</span>(<span class="tok-kw">comptime</span> feat_reg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">u64</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">asm</span> (<span class="tok-str">&quot;mrs %[ret], &quot;</span> ++ feat_reg
+        : [ret] <span class="tok-str">&quot;=r&quot;</span> (-&gt; <span class="tok-type">u64</span>),
+    );
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">detectNativeCpuAndFeatures</span>() ?<a href="std.Target.html">Target</a>.<a href="std.Target.Cpu.html">Cpu</a> {
+    <span class="tok-kw">var</span> f = <a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.openFileAbsolute">openFileAbsolute</a>(<span class="tok-str">&quot;/proc/cpuinfo&quot;</span>, .{}) <span class="tok-kw">catch</span> |err| <span class="tok-kw">switch</span> (err) {
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">return</span> <span class="tok-null">null</span>,
+    };
+    <span class="tok-kw">defer</span> f.close();
+
+    <span class="tok-kw">const</span> current_arch = <a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.cpu">cpu</a>.<a href="#">arch</a>;
+    <span class="tok-kw">switch</span> (current_arch) {
+        .arm, .armeb, .thumb, .thumbeb =&gt; {
+            <span class="tok-kw">return</span> <a href="std.zig.system.linux.html#std.zig.system.linux.ArmCpuinfoParser">ArmCpuinfoParser</a>.<a href="#">parse</a>(current_arch, f.reader()) <span class="tok-kw">catch</span> <span class="tok-null">null</span>;
+        },
+        .aarch64, .aarch64_be =&gt; {
+            <span class="tok-kw">const</span> registers = [<span class="tok-number">12</span>]<span class="tok-type">u64</span>{
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;MIDR_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64PFR0_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64PFR1_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64DFR0_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64DFR1_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64AFR0_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64AFR1_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64ISAR0_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64ISAR1_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64MMFR0_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64MMFR1_EL1&quot;</span>),
+                <a href="std.zig.system.linux.html#std.zig.system.linux.getAArch64CpuFeature">getAArch64CpuFeature</a>(<span class="tok-str">&quot;ID_AA64MMFR2_EL1&quot;</span>),
+            };
+
+            <span class="tok-kw">const</span> core = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;arm.zig&quot;</span>).aarch64.detectNativeCpuAndFeatures(current_arch, registers);
+            <span class="tok-kw">return</span> core;
+        },
+        .sparc64 =&gt; {
+            <span class="tok-kw">return</span> <a href="std.zig.system.linux.html#std.zig.system.linux.SparcCpuinfoParser">SparcCpuinfoParser</a>.<a href="#">parse</a>(current_arch, f.reader()) <span class="tok-kw">catch</span> <span class="tok-null">null</span>;
+        },
+        .powerpc, .powerpcle, .powerpc64, .powerpc64le =&gt; {
+            <span class="tok-kw">return</span> <a href="std.zig.system.linux.html#std.zig.system.linux.PowerpcCpuinfoParser">PowerpcCpuinfoParser</a>.<a href="#">parse</a>(current_arch, f.reader()) <span class="tok-kw">catch</span> <span class="tok-null">null</span>;
+        },
+        .riscv64, .riscv32 =&gt; {
+            <span class="tok-kw">return</span> <a href="std.zig.system.linux.html#std.zig.system.linux.RiscvCpuinfoParser">RiscvCpuinfoParser</a>.<a href="#">parse</a>(current_arch, f.reader()) <span class="tok-kw">catch</span> <span class="tok-null">null</span>;
+        },
+        <span class="tok-kw">else</span> =&gt; {},
+    }
+
+    <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

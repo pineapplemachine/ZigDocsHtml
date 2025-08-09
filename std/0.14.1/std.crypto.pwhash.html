@@ -1,0 +1,598 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.crypto.html" class="">crypto</a></li><li><a href="std.crypto.pwhash.html" class="active">pwhash</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.crypto.pwhash" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.crypto.pwhash</span><a href="#src.zig-std.crypto.pwhash">[src]</a></h1><div class="tldDocs"><p>A password hashing function derives a uniform key from low-entropy input material such as passwords.
+It is intentionally slow or expensive.</p>
+<p>With the standard definition of a key derivation function, if a key space is small, an exhaustive search may be practical.
+Password hashing functions make exhaustive searches way slower or way more expensive, even when implemented on GPUs and ASICs, by using different, optionally combined strategies:</p>
+<ul>
+<li>Requiring a lot of computation cycles to complete</li>
+<li>Requiring a lot of memory to complete</li>
+<li>Requiring multiple CPU cores to complete</li>
+<li>Requiring cache-local data to complete in reasonable time</li>
+<li>Requiring large static tables</li>
+<li>Avoiding precomputations and time/memory tradeoffs</li>
+<li>Requiring multi-party computations</li>
+<li>Combining the input material with random per-entry data (salts), application-specific contexts and keys</li>
+</ul>
+<p>Password hashing functions must be used whenever sensitive data has to be directly derived from a password.</p>
+</div><div class="sectNamespaces"><h2 class="sectionHeader">Namespaces</h2><ul class="listNamespaces columns"><li><a href="std.crypto.argon2.html">std.crypto.argon2</a></li><li><a href="std.crypto.bcrypt.html">std.crypto.bcrypt</a></li><li><a href="std.crypto.scrypt.html">std.crypto.scrypt</a></li><li><a href="std.crypto.phc_encoding.html">std.crypto.phc_encoding</a></li></ul></div><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.crypto.pwhash.Encoding.html">std.crypto.pwhash.Encoding</a></li></ul></div><div class="sectErrSets"><h2 class="sectionHeader">Error Sets</h2><div class="listErrSets"><div class="decl"><h2 id="std.crypto.pwhash.Error" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">Error</span><a href="#src.zig-std.crypto.pwhash.Error">[src]</a></h2><div class="sectFnErrors"><h3 class="sectionHeader">Errors</h3><div class="fnErrorsAnyError"><p><span class="tok-type">anyerror</span> means the error set is known only at runtime.</p></div><div class="tableFnErrors"><dl class="listFnErrors"><div><dt>AllocatorRequired</dt></div><div><dt>AuthenticationFailed <a href="std.crypto.errors.html#std.crypto.errors.AuthenticationError">AuthenticationError</a></dt></div><div><dt>IdentityElement <a href="std.crypto.errors.html#std.crypto.errors.IdentityElementError">IdentityElementError</a></dt></div><div><dt>InvalidEncoding <a href="std.crypto.errors.html#std.crypto.errors.EncodingError">EncodingError</a></dt></div><div><dt>KeyMismatch <a href="std.crypto.errors.html#std.crypto.errors.KeyMismatchError">KeyMismatchError</a></dt></div><div><dt>LockedMemoryLimitExceeded <a href="std.Thread.html#std.Thread.SpawnError">SpawnError</a></dt><dd><p><code>mlockall</code> is enabled, and the memory needed to spawn the thread
+would exceed the limit.</p>
+</dd></div><div><dt>NoSpaceLeft <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a></dt></div><div><dt>NonCanonical <a href="std.crypto.errors.html#std.crypto.errors.NonCanonicalError">NonCanonicalError</a></dt></div><div><dt>NotSquare <a href="std.crypto.errors.html#std.crypto.errors.NotSquareError">NotSquareError</a></dt></div><div><dt>OutOfMemory <a href="std.Thread.html#std.Thread.SpawnError">SpawnError</a></dt><dd><p>Not enough userland memory to spawn the thread.</p>
+</dd></div><div><dt>OutputTooLong <a href="std.crypto.errors.html#std.crypto.errors.OutputTooLongError">OutputTooLongError</a></dt></div><div><dt>PasswordVerificationFailed <a href="std.crypto.errors.html#std.crypto.errors.PasswordVerificationError">PasswordVerificationError</a></dt></div><div><dt>SignatureVerificationFailed <a href="std.crypto.errors.html#std.crypto.errors.SignatureVerificationError">SignatureVerificationError</a></dt></div><div><dt>SystemResources <a href="std.Thread.html#std.Thread.SpawnError">SpawnError</a></dt><dd><p>The kernel cannot allocate sufficient memory to allocate a task structure
+for the child, or to copy those parts of the caller's context that need to
+be copied.</p>
+</dd></div><div><dt>ThreadQuotaExceeded <a href="std.Thread.html#std.Thread.SpawnError">SpawnError</a></dt><dd><p>A system-imposed limit on the number of threads was encountered.
+There are a number of limits that may trigger this error:</p>
+<ul>
+<li>the  RLIMIT_NPROC soft resource limit (set via setrlimit(2)),
+which limits the number of processes and threads for  a  real
+user ID, was reached;</li>
+<li>the kernel's system-wide limit on the number of processes and
+threads,  /proc/sys/kernel/threads-max,  was   reached   (see
+proc(5));</li>
+<li>the  maximum  number  of  PIDs, /proc/sys/kernel/pid_max, was
+reached (see proc(5)); or</li>
+<li>the PID limit (pids.max) imposed by the cgroup &quot;process  num‐
+ber&quot; (PIDs) controller was reached.</li>
+</ul>
+</dd></div><div><dt>Unexpected <a href="std.Thread.html#std.Thread.SpawnError">SpawnError</a></dt></div><div><dt>UnexpectedSubgroup <a href="std.crypto.errors.html#std.crypto.errors.UnexpectedSubgroupError">UnexpectedSubgroupError</a></dt></div><div><dt>WeakParameters <a href="std.crypto.errors.html#std.crypto.errors.WeakParametersError">WeakParametersError</a></dt></div><div><dt>WeakPublicKey <a href="std.crypto.errors.html#std.crypto.errors.WeakPublicKeyError">WeakPublicKeyError</a></dt></div></dl></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.pwhash.Error">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = <a href="std.crypto.pwhash.html#std.crypto.pwhash.HasherError">HasherError</a> || <span class="tok-kw">error</span>{AllocatorRequired}</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.pwhash.HasherError" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">HasherError</span><a href="#src.zig-std.crypto.pwhash.HasherError">[src]</a></h2><div class="sectFnErrors"><h3 class="sectionHeader">Errors</h3><div class="fnErrorsAnyError"><p><span class="tok-type">anyerror</span> means the error set is known only at runtime.</p></div><div class="tableFnErrors"><dl class="listFnErrors"><div><dt>AuthenticationFailed <a href="std.crypto.errors.html#std.crypto.errors.AuthenticationError">AuthenticationError</a></dt></div><div><dt>IdentityElement <a href="std.crypto.errors.html#std.crypto.errors.IdentityElementError">IdentityElementError</a></dt></div><div><dt>InvalidEncoding <a href="std.crypto.errors.html#std.crypto.errors.EncodingError">EncodingError</a></dt></div><div><dt>KeyMismatch <a href="std.crypto.errors.html#std.crypto.errors.KeyMismatchError">KeyMismatchError</a></dt></div><div><dt>LockedMemoryLimitExceeded <a href="std.Thread.html#std.Thread.SpawnError">SpawnError</a></dt><dd><p><code>mlockall</code> is enabled, and the memory needed to spawn the thread
+would exceed the limit.</p>
+</dd></div><div><dt>NoSpaceLeft <a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a></dt></div><div><dt>NonCanonical <a href="std.crypto.errors.html#std.crypto.errors.NonCanonicalError">NonCanonicalError</a></dt></div><div><dt>NotSquare <a href="std.crypto.errors.html#std.crypto.errors.NotSquareError">NotSquareError</a></dt></div><div><dt>OutOfMemory <a href="std.Thread.html#std.Thread.SpawnError">SpawnError</a></dt><dd><p>Not enough userland memory to spawn the thread.</p>
+</dd></div><div><dt>OutputTooLong <a href="std.crypto.errors.html#std.crypto.errors.OutputTooLongError">OutputTooLongError</a></dt></div><div><dt>PasswordVerificationFailed <a href="std.crypto.errors.html#std.crypto.errors.PasswordVerificationError">PasswordVerificationError</a></dt></div><div><dt>SignatureVerificationFailed <a href="std.crypto.errors.html#std.crypto.errors.SignatureVerificationError">SignatureVerificationError</a></dt></div><div><dt>SystemResources <a href="std.Thread.html#std.Thread.SpawnError">SpawnError</a></dt><dd><p>The kernel cannot allocate sufficient memory to allocate a task structure
+for the child, or to copy those parts of the caller's context that need to
+be copied.</p>
+</dd></div><div><dt>ThreadQuotaExceeded <a href="std.Thread.html#std.Thread.SpawnError">SpawnError</a></dt><dd><p>A system-imposed limit on the number of threads was encountered.
+There are a number of limits that may trigger this error:</p>
+<ul>
+<li>the  RLIMIT_NPROC soft resource limit (set via setrlimit(2)),
+which limits the number of processes and threads for  a  real
+user ID, was reached;</li>
+<li>the kernel's system-wide limit on the number of processes and
+threads,  /proc/sys/kernel/threads-max,  was   reached   (see
+proc(5));</li>
+<li>the  maximum  number  of  PIDs, /proc/sys/kernel/pid_max, was
+reached (see proc(5)); or</li>
+<li>the PID limit (pids.max) imposed by the cgroup &quot;process  num‐
+ber&quot; (PIDs) controller was reached.</li>
+</ul>
+</dd></div><div><dt>Unexpected <a href="std.Thread.html#std.Thread.SpawnError">SpawnError</a></dt></div><div><dt>UnexpectedSubgroup <a href="std.crypto.errors.html#std.crypto.errors.UnexpectedSubgroupError">UnexpectedSubgroupError</a></dt></div><div><dt>WeakParameters <a href="std.crypto.errors.html#std.crypto.errors.WeakParametersError">WeakParametersError</a></dt></div><div><dt>WeakPublicKey <a href="std.crypto.errors.html#std.crypto.errors.WeakPublicKeyError">WeakPublicKeyError</a></dt></div></dl></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.pwhash.HasherError">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> HasherError = <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a> || <a href="std.crypto.phc_encoding.html">phc_format</a>.<a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a></code></pre></details></div></div><div class="decl"><h2 id="std.crypto.pwhash.KdfError" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">KdfError</span><a href="#src.zig-std.crypto.pwhash.KdfError">[src]</a></h2><div class="sectFnErrors"><h3 class="sectionHeader">Errors</h3><div class="fnErrorsAnyError"><p><span class="tok-type">anyerror</span> means the error set is known only at runtime.</p></div><div class="tableFnErrors"><dl class="listFnErrors"><div><dt>AuthenticationFailed <a href="std.crypto.errors.html#std.crypto.errors.AuthenticationError">AuthenticationError</a></dt></div><div><dt>IdentityElement <a href="std.crypto.errors.html#std.crypto.errors.IdentityElementError">IdentityElementError</a></dt></div><div><dt>InvalidEncoding <a href="std.crypto.errors.html#std.crypto.errors.EncodingError">EncodingError</a></dt></div><div><dt>KeyMismatch <a href="std.crypto.errors.html#std.crypto.errors.KeyMismatchError">KeyMismatchError</a></dt></div><div><dt>LockedMemoryLimitExceeded <a href="std.Thread.html#std.Thread.SpawnError">SpawnError</a></dt><dd><p><code>mlockall</code> is enabled, and the memory needed to spawn the thread
+would exceed the limit.</p>
+</dd></div><div><dt>NonCanonical <a href="std.crypto.errors.html#std.crypto.errors.NonCanonicalError">NonCanonicalError</a></dt></div><div><dt>NotSquare <a href="std.crypto.errors.html#std.crypto.errors.NotSquareError">NotSquareError</a></dt></div><div><dt>OutOfMemory <a href="std.Thread.html#std.Thread.SpawnError">SpawnError</a></dt><dd><p>Not enough userland memory to spawn the thread.</p>
+</dd></div><div><dt>OutputTooLong <a href="std.crypto.errors.html#std.crypto.errors.OutputTooLongError">OutputTooLongError</a></dt></div><div><dt>PasswordVerificationFailed <a href="std.crypto.errors.html#std.crypto.errors.PasswordVerificationError">PasswordVerificationError</a></dt></div><div><dt>SignatureVerificationFailed <a href="std.crypto.errors.html#std.crypto.errors.SignatureVerificationError">SignatureVerificationError</a></dt></div><div><dt>SystemResources <a href="std.Thread.html#std.Thread.SpawnError">SpawnError</a></dt><dd><p>The kernel cannot allocate sufficient memory to allocate a task structure
+for the child, or to copy those parts of the caller's context that need to
+be copied.</p>
+</dd></div><div><dt>ThreadQuotaExceeded <a href="std.Thread.html#std.Thread.SpawnError">SpawnError</a></dt><dd><p>A system-imposed limit on the number of threads was encountered.
+There are a number of limits that may trigger this error:</p>
+<ul>
+<li>the  RLIMIT_NPROC soft resource limit (set via setrlimit(2)),
+which limits the number of processes and threads for  a  real
+user ID, was reached;</li>
+<li>the kernel's system-wide limit on the number of processes and
+threads,  /proc/sys/kernel/threads-max,  was   reached   (see
+proc(5));</li>
+<li>the  maximum  number  of  PIDs, /proc/sys/kernel/pid_max, was
+reached (see proc(5)); or</li>
+<li>the PID limit (pids.max) imposed by the cgroup &quot;process  num‐
+ber&quot; (PIDs) controller was reached.</li>
+</ul>
+</dd></div><div><dt>Unexpected <a href="std.Thread.html#std.Thread.SpawnError">SpawnError</a></dt></div><div><dt>UnexpectedSubgroup <a href="std.crypto.errors.html#std.crypto.errors.UnexpectedSubgroupError">UnexpectedSubgroupError</a></dt></div><div><dt>WeakParameters <a href="std.crypto.errors.html#std.crypto.errors.WeakParametersError">WeakParametersError</a></dt></div><div><dt>WeakPublicKey <a href="std.crypto.errors.html#std.crypto.errors.WeakPublicKeyError">WeakPublicKeyError</a></dt></div></dl></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.pwhash.KdfError">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> KdfError = <a href="std.crypto.errors.html">errors</a>.<a href="std.crypto.errors.html#std.crypto.errors.Error">Error</a> || <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>.<a href="std.mem.Allocator.html#std.mem.Allocator.Error">Error</a> || <a href="std.html">std</a>.<a href="std.Thread.html">Thread</a>.<a href="std.Thread.html#std.Thread.SpawnError">SpawnError</a></code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.crypto.pbkdf2.pbkdf2" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">pbkdf2</span><a href="#src.zig-std.crypto.pbkdf2.pbkdf2">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">pbkdf2</span>(dk: []<span class="tok-type">u8</span>, password: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, salt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, rounds: <span class="tok-type">u32</span>, <span class="tok-kw">comptime</span> Prf: <span class="tok-type">type</span>) (<a href="std.crypto.errors.html#std.crypto.errors.WeakParametersError">WeakParametersError</a> || <a href="std.crypto.errors.html#std.crypto.errors.OutputTooLongError">OutputTooLongError</a>)!<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Apply PBKDF2 to generate a key from a password.</p>
+<p>PBKDF2 is defined in RFC 2898, and is a recommendation of NIST SP 800-132.</p>
+<p>dk: Slice of appropriate size for generated key. Generally 16 or 32 bytes in length.
+May be uninitialized. All bytes will be overwritten.
+Maximum size is <code>maxInt(u32) * Hash.digest_length</code>
+It is a programming error to pass buffer longer than the maximum size.</p>
+<p>password: Arbitrary sequence of bytes of any length, including empty.</p>
+<p>salt: Arbitrary sequence of bytes of any length, including empty. A common length is 8 bytes.</p>
+<p>rounds: Iteration count. Must be greater than 0. Common values range from 1,000 to 100,000.
+Larger iteration counts improve security by increasing the time required to compute
+the dk. It is common to tune this parameter to achieve approximately 100ms.</p>
+<p>Prf: Pseudo-random function to use. A common choice is <code><a href="std.crypto.hmac.sha2.html#std.crypto.hmac.sha2.HmacSha256">std.crypto.auth.hmac.sha2.HmacSha256</a></code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>dk: []<span class="tok-type">u8</span></code></pre></div><div><pre><code>password: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>salt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>rounds: <span class="tok-type">u32</span></code></pre></div><div><pre><code>Prf: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.pbkdf2.pbkdf2">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">pbkdf2</span>(dk: []<span class="tok-type">u8</span>, password: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, salt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, rounds: <span class="tok-type">u32</span>, <span class="tok-kw">comptime</span> Prf: <span class="tok-type">type</span>) (<a href="std.crypto.errors.html#std.crypto.errors.WeakParametersError">WeakParametersError</a> || <a href="std.crypto.errors.html#std.crypto.errors.OutputTooLongError">OutputTooLongError</a>)!<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (rounds &lt; <span class="tok-number">1</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.WeakParameters;
+
+    <span class="tok-kw">const</span> dk_len = dk.len;
+    <span class="tok-kw">const</span> h_len = Prf.mac_length;
+    <span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(h_len &gt;= <span class="tok-number">1</span>);<span class="tok-comment">
+
+    // FromSpec:
+    //
+    //   1. If dk_len &gt; maxInt(u32) * h_len, output &quot;derived key too long&quot; and
+    //      stop.
+    //
+    </span><span class="tok-kw">if</span> (dk_len / h_len &gt;= <a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">u32</span>)) {<span class="tok-comment">
+        // Counter starts at 1 and is 32 bit, so if we have to return more blocks, we would overflow
+        </span><span class="tok-kw">return</span> <span class="tok-kw">error</span>.OutputTooLong;
+    }<span class="tok-comment">
+
+    // FromSpec:
+    //
+    //   2. Let l be the number of h_len-long blocks of bytes in the derived key,
+    //      rounding up, and let r be the number of bytes in the last
+    //      block
+    //
+
+    </span><span class="tok-kw">const</span> blocks_count = <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-builtin">@intCast</span>(<a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.divCeil">divCeil</a>(<span class="tok-type">usize</span>, dk_len, h_len) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>));
+    <span class="tok-kw">var</span> r = dk_len % h_len;
+    <span class="tok-kw">if</span> (r == <span class="tok-number">0</span>) {
+        r = h_len;
+    }<span class="tok-comment">
+
+    // FromSpec:
+    //
+    //   3. For each block of the derived key apply the function F defined
+    //      below to the password P, the salt S, the iteration count c, and
+    //      the block index to compute the block:
+    //
+    //                T_1 = F (P, S, c, 1) ,
+    //                T_2 = F (P, S, c, 2) ,
+    //                ...
+    //                T_l = F (P, S, c, l) ,
+    //
+    //      where the function F is defined as the exclusive-or sum of the
+    //      first c iterates of the underlying pseudorandom function PRF
+    //      applied to the password P and the concatenation of the salt S
+    //      and the block index i:
+    //
+    //                F (P, S, c, i) = U_1 \xor U_2 \xor ... \xor U_c
+    //
+    //  where
+    //
+    //            U_1 = PRF (P, S || INT (i)) ,
+    //            U_2 = PRF (P, U_1) ,
+    //            ...
+    //            U_c = PRF (P, U_{c-1}) .
+    //
+    //  Here, INT (i) is a four-octet encoding of the integer i, most
+    //  significant octet first.
+    //
+    //  4. Concatenate the blocks and extract the first dk_len octets to
+    //  produce a derived key DK:
+    //
+    //            DK = T_1 || T_2 ||  ...  || T_l&lt;0..r-1&gt;
+
+    </span><span class="tok-kw">var</span> block: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (block &lt; blocks_count) : (block += <span class="tok-number">1</span>) {
+        <span class="tok-kw">var</span> prev_block: [h_len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">var</span> new_block: [h_len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;<span class="tok-comment">
+
+        // U_1 = PRF (P, S || INT (i))
+        </span><span class="tok-kw">const</span> block_index = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.toBytes">toBytes</a>(<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeToBig">nativeToBig</a>(<span class="tok-type">u32</span>, block + <span class="tok-number">1</span>));<span class="tok-comment"> // Block index starts at 0001
+        </span><span class="tok-kw">var</span> ctx = Prf.init(password);
+        ctx.update(salt);
+        ctx.update(block_index[<span class="tok-number">0</span>..]);
+        ctx.final(prev_block[<span class="tok-number">0</span>..]);<span class="tok-comment">
+
+        // Choose portion of DK to write into (T_n) and initialize
+        </span><span class="tok-kw">const</span> offset = block * h_len;
+        <span class="tok-kw">const</span> block_len = <span class="tok-kw">if</span> (block != blocks_count - <span class="tok-number">1</span>) h_len <span class="tok-kw">else</span> r;
+        <span class="tok-kw">const</span> dk_block: []<span class="tok-type">u8</span> = dk[offset..][<span class="tok-number">0</span>..block_len];
+        <span class="tok-builtin">@memcpy</span>(dk_block, prev_block[<span class="tok-number">0</span>..dk_block.len]);
+
+        <span class="tok-kw">var</span> i: <span class="tok-type">u32</span> = <span class="tok-number">1</span>;
+        <span class="tok-kw">while</span> (i &lt; rounds) : (i += <span class="tok-number">1</span>) {<span class="tok-comment">
+            // U_c = PRF (P, U_{c-1})
+            </span>Prf.create(&amp;new_block, prev_block[<span class="tok-number">0</span>..], password);
+            prev_block = new_block;<span class="tok-comment">
+
+            // F (P, S, c, i) = U_1 \xor U_2 \xor ... \xor U_c
+            </span><span class="tok-kw">for</span> (dk_block, <span class="tok-number">0</span>..) |_, j| {
+                dk_block[j] ^= new_block[j];
+            }
+        }
+    }
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.crypto.pwhash">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> pwhash = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Encoding = <span class="tok-kw">enum</span> {
+        phc,
+        crypt,
+    };
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = <a href="std.crypto.pwhash.html#std.crypto.pwhash.HasherError">HasherError</a> || <span class="tok-kw">error</span>{AllocatorRequired};
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> HasherError = <a href="std.crypto.pwhash.html#std.crypto.pwhash.KdfError">KdfError</a> || <a href="std.crypto.phc_encoding.html">phc_format</a>.<a href="std.crypto.phc_encoding.html#std.crypto.phc_encoding.Error">Error</a>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> KdfError = <a href="std.crypto.errors.html">errors</a>.<a href="std.crypto.errors.html#std.crypto.errors.Error">Error</a> || <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>.<a href="std.mem.Allocator.html#std.mem.Allocator.Error">Error</a> || <a href="std.html">std</a>.<a href="std.Thread.html">Thread</a>.<a href="std.Thread.html#std.Thread.SpawnError">SpawnError</a>;
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> argon2 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/argon2.zig&quot;</span>);
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> bcrypt = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/bcrypt.zig&quot;</span>);
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> scrypt = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/scrypt.zig&quot;</span>);
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> pbkdf2 = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/pbkdf2.zig&quot;</span>).pbkdf2;
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> phc_format = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;crypto/phc_encoding.zig&quot;</span>);
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

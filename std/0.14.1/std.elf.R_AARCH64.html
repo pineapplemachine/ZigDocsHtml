@@ -1,0 +1,808 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.elf.html" class="">elf</a></li><li><a href="std.elf.R_AARCH64.html" class="active">R_AARCH64</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.elf.R_AARCH64" class="declHeader"><span class="declHeaderCategory">enum</span><span class="declHeaderIdentifier">std.elf.R_AARCH64</span><a href="#src.zig-std.elf.R_AARCH64">[src]</a></h1><div class="tldDocs"><p>AArch64 relocations.</p>
+</div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>NONE = <span class="tok-number">0</span></code></pre><div class="fieldDocs"><p>No relocation.</p>
+</div></div><div><pre><code>P32_ABS32 = <span class="tok-number">1</span></code></pre><div class="fieldDocs"><p>ILP32 AArch64 relocs.
+Direct 32 bit.</p>
+</div></div><div><pre><code>P32_COPY = <span class="tok-number">180</span></code></pre><div class="fieldDocs"><p>Copy symbol at runtime.</p>
+</div></div><div><pre><code>P32_GLOB_DAT = <span class="tok-number">181</span></code></pre><div class="fieldDocs"><p>Create GOT entry.</p>
+</div></div><div><pre><code>P32_JUMP_SLOT = <span class="tok-number">182</span></code></pre><div class="fieldDocs"><p>Create PLT entry.</p>
+</div></div><div><pre><code>P32_RELATIVE = <span class="tok-number">183</span></code></pre><div class="fieldDocs"><p>Adjust by program base.</p>
+</div></div><div><pre><code>P32_TLS_DTPMOD = <span class="tok-number">184</span></code></pre><div class="fieldDocs"><p>Module number, 32 bit.</p>
+</div></div><div><pre><code>P32_TLS_DTPREL = <span class="tok-number">185</span></code></pre><div class="fieldDocs"><p>Module-relative offset, 32 bit.</p>
+</div></div><div><pre><code>P32_TLS_TPREL = <span class="tok-number">186</span></code></pre><div class="fieldDocs"><p>TP-relative offset, 32 bit.</p>
+</div></div><div><pre><code>P32_TLSDESC = <span class="tok-number">187</span></code></pre><div class="fieldDocs"><p>TLS Descriptor.</p>
+</div></div><div><pre><code>P32_IRELATIVE = <span class="tok-number">188</span></code></pre><div class="fieldDocs"><p>STT_GNU_IFUNC relocation.</p>
+</div></div><div><pre><code>ABS64 = <span class="tok-number">257</span></code></pre><div class="fieldDocs"><p>LP64 AArch64 relocs.
+Direct 64 bit.</p>
+</div></div><div><pre><code>ABS32 = <span class="tok-number">258</span></code></pre><div class="fieldDocs"><p>Direct 32 bit.</p>
+</div></div><div><pre><code>ABS16 = <span class="tok-number">259</span></code></pre><div class="fieldDocs"><p>Direct 16-bit.</p>
+</div></div><div><pre><code>PREL64 = <span class="tok-number">260</span></code></pre><div class="fieldDocs"><p>PC-relative 64-bit.</p>
+</div></div><div><pre><code>PREL32 = <span class="tok-number">261</span></code></pre><div class="fieldDocs"><p>PC-relative 32-bit.</p>
+</div></div><div><pre><code>PREL16 = <span class="tok-number">262</span></code></pre><div class="fieldDocs"><p>PC-relative 16-bit.</p>
+</div></div><div><pre><code>MOVW_UABS_G0 = <span class="tok-number">263</span></code></pre><div class="fieldDocs"><p>Dir. MOVZ imm. from bits 15:0.</p>
+</div></div><div><pre><code>MOVW_UABS_G0_NC = <span class="tok-number">264</span></code></pre><div class="fieldDocs"><p>Likewise for MOVK; no check.</p>
+</div></div><div><pre><code>MOVW_UABS_G1 = <span class="tok-number">265</span></code></pre><div class="fieldDocs"><p>Dir. MOVZ imm. from bits 31:16.</p>
+</div></div><div><pre><code>MOVW_UABS_G1_NC = <span class="tok-number">266</span></code></pre><div class="fieldDocs"><p>Likewise for MOVK; no check.</p>
+</div></div><div><pre><code>MOVW_UABS_G2 = <span class="tok-number">267</span></code></pre><div class="fieldDocs"><p>Dir. MOVZ imm. from bits 47:32.</p>
+</div></div><div><pre><code>MOVW_UABS_G2_NC = <span class="tok-number">268</span></code></pre><div class="fieldDocs"><p>Likewise for MOVK; no check.</p>
+</div></div><div><pre><code>MOVW_UABS_G3 = <span class="tok-number">269</span></code></pre><div class="fieldDocs"><p>Dir. MOV{K,Z} imm. from 63:48.</p>
+</div></div><div><pre><code>MOVW_SABS_G0 = <span class="tok-number">270</span></code></pre><div class="fieldDocs"><p>Dir. MOV{N,Z} imm. from 15:0.</p>
+</div></div><div><pre><code>MOVW_SABS_G1 = <span class="tok-number">271</span></code></pre><div class="fieldDocs"><p>Dir. MOV{N,Z} imm. from 31:16.</p>
+</div></div><div><pre><code>MOVW_SABS_G2 = <span class="tok-number">272</span></code></pre><div class="fieldDocs"><p>Dir. MOV{N,Z} imm. from 47:32.</p>
+</div></div><div><pre><code>LD_PREL_LO19 = <span class="tok-number">273</span></code></pre><div class="fieldDocs"><p>PC-rel. LD imm. from bits 20:2.</p>
+</div></div><div><pre><code>ADR_PREL_LO21 = <span class="tok-number">274</span></code></pre><div class="fieldDocs"><p>PC-rel. ADR imm. from bits 20:0.</p>
+</div></div><div><pre><code>ADR_PREL_PG_HI21 = <span class="tok-number">275</span></code></pre><div class="fieldDocs"><p>Page-rel. ADRP imm. from 32:12.</p>
+</div></div><div><pre><code>ADR_PREL_PG_HI21_NC = <span class="tok-number">276</span></code></pre><div class="fieldDocs"><p>Likewise; no overflow check.</p>
+</div></div><div><pre><code>ADD_ABS_LO12_NC = <span class="tok-number">277</span></code></pre><div class="fieldDocs"><p>Dir. ADD imm. from bits 11:0.</p>
+</div></div><div><pre><code>LDST8_ABS_LO12_NC = <span class="tok-number">278</span></code></pre><div class="fieldDocs"><p>Likewise for LD/ST; no check.</p>
+</div></div><div><pre><code>TSTBR14 = <span class="tok-number">279</span></code></pre><div class="fieldDocs"><p>PC-rel. TBZ/TBNZ imm. from 15:2.</p>
+</div></div><div><pre><code>CONDBR19 = <span class="tok-number">280</span></code></pre><div class="fieldDocs"><p>PC-rel. cond. br. imm. from 20:2.</p>
+</div></div><div><pre><code>JUMP26 = <span class="tok-number">282</span></code></pre><div class="fieldDocs"><p>PC-rel. B imm. from bits 27:2.</p>
+</div></div><div><pre><code>CALL26 = <span class="tok-number">283</span></code></pre><div class="fieldDocs"><p>Likewise for CALL.</p>
+</div></div><div><pre><code>LDST16_ABS_LO12_NC = <span class="tok-number">284</span></code></pre><div class="fieldDocs"><p>Dir. ADD imm. from bits 11:1.</p>
+</div></div><div><pre><code>LDST32_ABS_LO12_NC = <span class="tok-number">285</span></code></pre><div class="fieldDocs"><p>Likewise for bits 11:2.</p>
+</div></div><div><pre><code>LDST64_ABS_LO12_NC = <span class="tok-number">286</span></code></pre><div class="fieldDocs"><p>Likewise for bits 11:3.</p>
+</div></div><div><pre><code>MOVW_PREL_G0 = <span class="tok-number">287</span></code></pre><div class="fieldDocs"><p>PC-rel. MOV{N,Z} imm. from 15:0.</p>
+</div></div><div><pre><code>MOVW_PREL_G0_NC = <span class="tok-number">288</span></code></pre><div class="fieldDocs"><p>Likewise for MOVK; no check.</p>
+</div></div><div><pre><code>MOVW_PREL_G1 = <span class="tok-number">289</span></code></pre><div class="fieldDocs"><p>PC-rel. MOV{N,Z} imm. from 31:16.</p>
+</div></div><div><pre><code>MOVW_PREL_G1_NC = <span class="tok-number">290</span></code></pre><div class="fieldDocs"><p>Likewise for MOVK; no check.</p>
+</div></div><div><pre><code>MOVW_PREL_G2 = <span class="tok-number">291</span></code></pre><div class="fieldDocs"><p>PC-rel. MOV{N,Z} imm. from 47:32.</p>
+</div></div><div><pre><code>MOVW_PREL_G2_NC = <span class="tok-number">292</span></code></pre><div class="fieldDocs"><p>Likewise for MOVK; no check.</p>
+</div></div><div><pre><code>MOVW_PREL_G3 = <span class="tok-number">293</span></code></pre><div class="fieldDocs"><p>PC-rel. MOV{N,Z} imm. from 63:48.</p>
+</div></div><div><pre><code>LDST128_ABS_LO12_NC = <span class="tok-number">299</span></code></pre><div class="fieldDocs"><p>Dir. ADD imm. from bits 11:4.</p>
+</div></div><div><pre><code>MOVW_GOTOFF_G0 = <span class="tok-number">300</span></code></pre><div class="fieldDocs"><p>GOT-rel. off. MOV{N,Z} imm. 15:0.</p>
+</div></div><div><pre><code>MOVW_GOTOFF_G0_NC = <span class="tok-number">301</span></code></pre><div class="fieldDocs"><p>Likewise for MOVK; no check.</p>
+</div></div><div><pre><code>MOVW_GOTOFF_G1 = <span class="tok-number">302</span></code></pre><div class="fieldDocs"><p>GOT-rel. o. MOV{N,Z} imm. 31:16.</p>
+</div></div><div><pre><code>MOVW_GOTOFF_G1_NC = <span class="tok-number">303</span></code></pre><div class="fieldDocs"><p>Likewise for MOVK; no check.</p>
+</div></div><div><pre><code>MOVW_GOTOFF_G2 = <span class="tok-number">304</span></code></pre><div class="fieldDocs"><p>GOT-rel. o. MOV{N,Z} imm. 47:32.</p>
+</div></div><div><pre><code>MOVW_GOTOFF_G2_NC = <span class="tok-number">305</span></code></pre><div class="fieldDocs"><p>Likewise for MOVK; no check.</p>
+</div></div><div><pre><code>MOVW_GOTOFF_G3 = <span class="tok-number">306</span></code></pre><div class="fieldDocs"><p>GOT-rel. o. MOV{N,Z} imm. 63:48.</p>
+</div></div><div><pre><code>GOTREL64 = <span class="tok-number">307</span></code></pre><div class="fieldDocs"><p>GOT-relative 64-bit.</p>
+</div></div><div><pre><code>GOTREL32 = <span class="tok-number">308</span></code></pre><div class="fieldDocs"><p>GOT-relative 32-bit.</p>
+</div></div><div><pre><code>GOT_LD_PREL19 = <span class="tok-number">309</span></code></pre><div class="fieldDocs"><p>PC-rel. GOT off. load imm. 20:2.</p>
+</div></div><div><pre><code>LD64_GOTOFF_LO15 = <span class="tok-number">310</span></code></pre><div class="fieldDocs"><p>GOT-rel. off. LD/ST imm. 14:3.</p>
+</div></div><div><pre><code>ADR_GOT_PAGE = <span class="tok-number">311</span></code></pre><div class="fieldDocs"><p>P-page-rel. GOT off. ADRP 32:12.</p>
+</div></div><div><pre><code>LD64_GOT_LO12_NC = <span class="tok-number">312</span></code></pre><div class="fieldDocs"><p>Dir. GOT off. LD/ST imm. 11:3.</p>
+</div></div><div><pre><code>LD64_GOTPAGE_LO15 = <span class="tok-number">313</span></code></pre><div class="fieldDocs"><p>GOT-page-rel. GOT off. LD/ST 14:3</p>
+</div></div><div><pre><code>TLSGD_ADR_PREL21 = <span class="tok-number">512</span></code></pre><div class="fieldDocs"><p>PC-relative ADR imm. 20:0.</p>
+</div></div><div><pre><code>TLSGD_ADR_PAGE21 = <span class="tok-number">513</span></code></pre><div class="fieldDocs"><p>page-rel. ADRP imm. 32:12.</p>
+</div></div><div><pre><code>TLSGD_ADD_LO12_NC = <span class="tok-number">514</span></code></pre><div class="fieldDocs"><p>direct ADD imm. from 11:0.</p>
+</div></div><div><pre><code>TLSGD_MOVW_G1 = <span class="tok-number">515</span></code></pre><div class="fieldDocs"><p>GOT-rel. MOV{N,Z} 31:16.</p>
+</div></div><div><pre><code>TLSGD_MOVW_G0_NC = <span class="tok-number">516</span></code></pre><div class="fieldDocs"><p>GOT-rel. MOVK imm. 15:0.</p>
+</div></div><div><pre><code>TLSLD_ADR_PREL21 = <span class="tok-number">517</span></code></pre><div class="fieldDocs"><p>Like 512; local dynamic model.</p>
+</div></div><div><pre><code>TLSLD_ADR_PAGE21 = <span class="tok-number">518</span></code></pre><div class="fieldDocs"><p>Like 513; local dynamic model.</p>
+</div></div><div><pre><code>TLSLD_ADD_LO12_NC = <span class="tok-number">519</span></code></pre><div class="fieldDocs"><p>Like 514; local dynamic model.</p>
+</div></div><div><pre><code>TLSLD_MOVW_G1 = <span class="tok-number">520</span></code></pre><div class="fieldDocs"><p>Like 515; local dynamic model.</p>
+</div></div><div><pre><code>TLSLD_MOVW_G0_NC = <span class="tok-number">521</span></code></pre><div class="fieldDocs"><p>Like 516; local dynamic model.</p>
+</div></div><div><pre><code>TLSLD_LD_PREL19 = <span class="tok-number">522</span></code></pre><div class="fieldDocs"><p>TLS PC-rel. load imm. 20:2.</p>
+</div></div><div><pre><code>TLSLD_MOVW_DTPREL_G2 = <span class="tok-number">523</span></code></pre><div class="fieldDocs"><p>TLS DTP-rel. MOV{N,Z} 47:32.</p>
+</div></div><div><pre><code>TLSLD_MOVW_DTPREL_G1 = <span class="tok-number">524</span></code></pre><div class="fieldDocs"><p>TLS DTP-rel. MOV{N,Z} 31:16.</p>
+</div></div><div><pre><code>TLSLD_MOVW_DTPREL_G1_NC = <span class="tok-number">525</span></code></pre><div class="fieldDocs"><p>Likewise; MOVK; no check.</p>
+</div></div><div><pre><code>TLSLD_MOVW_DTPREL_G0 = <span class="tok-number">526</span></code></pre><div class="fieldDocs"><p>TLS DTP-rel. MOV{N,Z} 15:0.</p>
+</div></div><div><pre><code>TLSLD_MOVW_DTPREL_G0_NC = <span class="tok-number">527</span></code></pre><div class="fieldDocs"><p>Likewise; MOVK; no check.</p>
+</div></div><div><pre><code>TLSLD_ADD_DTPREL_HI12 = <span class="tok-number">528</span></code></pre><div class="fieldDocs"><p>DTP-rel. ADD imm. from 23:12.</p>
+</div></div><div><pre><code>TLSLD_ADD_DTPREL_LO12 = <span class="tok-number">529</span></code></pre><div class="fieldDocs"><p>DTP-rel. ADD imm. from 11:0.</p>
+</div></div><div><pre><code>TLSLD_ADD_DTPREL_LO12_NC = <span class="tok-number">530</span></code></pre><div class="fieldDocs"><p>Likewise; no ovfl. check.</p>
+</div></div><div><pre><code>TLSLD_LDST8_DTPREL_LO12 = <span class="tok-number">531</span></code></pre><div class="fieldDocs"><p>DTP-rel. LD/ST imm. 11:0.</p>
+</div></div><div><pre><code>TLSLD_LDST8_DTPREL_LO12_NC = <span class="tok-number">532</span></code></pre><div class="fieldDocs"><p>Likewise; no check.</p>
+</div></div><div><pre><code>TLSLD_LDST16_DTPREL_LO12 = <span class="tok-number">533</span></code></pre><div class="fieldDocs"><p>DTP-rel. LD/ST imm. 11:1.</p>
+</div></div><div><pre><code>TLSLD_LDST16_DTPREL_LO12_NC = <span class="tok-number">534</span></code></pre><div class="fieldDocs"><p>Likewise; no check.</p>
+</div></div><div><pre><code>TLSLD_LDST32_DTPREL_LO12 = <span class="tok-number">535</span></code></pre><div class="fieldDocs"><p>DTP-rel. LD/ST imm. 11:2.</p>
+</div></div><div><pre><code>TLSLD_LDST32_DTPREL_LO12_NC = <span class="tok-number">536</span></code></pre><div class="fieldDocs"><p>Likewise; no check.</p>
+</div></div><div><pre><code>TLSLD_LDST64_DTPREL_LO12 = <span class="tok-number">537</span></code></pre><div class="fieldDocs"><p>DTP-rel. LD/ST imm. 11:3.</p>
+</div></div><div><pre><code>TLSLD_LDST64_DTPREL_LO12_NC = <span class="tok-number">538</span></code></pre><div class="fieldDocs"><p>Likewise; no check.</p>
+</div></div><div><pre><code>TLSIE_MOVW_GOTTPREL_G1 = <span class="tok-number">539</span></code></pre><div class="fieldDocs"><p>GOT-rel. MOV{N,Z} 31:16.</p>
+</div></div><div><pre><code>TLSIE_MOVW_GOTTPREL_G0_NC = <span class="tok-number">540</span></code></pre><div class="fieldDocs"><p>GOT-rel. MOVK 15:0.</p>
+</div></div><div><pre><code>TLSIE_ADR_GOTTPREL_PAGE21 = <span class="tok-number">541</span></code></pre><div class="fieldDocs"><p>Page-rel. ADRP 32:12.</p>
+</div></div><div><pre><code>TLSIE_LD64_GOTTPREL_LO12_NC = <span class="tok-number">542</span></code></pre><div class="fieldDocs"><p>Direct LD off. 11:3.</p>
+</div></div><div><pre><code>TLSIE_LD_GOTTPREL_PREL19 = <span class="tok-number">543</span></code></pre><div class="fieldDocs"><p>PC-rel. load imm. 20:2.</p>
+</div></div><div><pre><code>TLSLE_MOVW_TPREL_G2 = <span class="tok-number">544</span></code></pre><div class="fieldDocs"><p>TLS TP-rel. MOV{N,Z} 47:32.</p>
+</div></div><div><pre><code>TLSLE_MOVW_TPREL_G1 = <span class="tok-number">545</span></code></pre><div class="fieldDocs"><p>TLS TP-rel. MOV{N,Z} 31:16.</p>
+</div></div><div><pre><code>TLSLE_MOVW_TPREL_G1_NC = <span class="tok-number">546</span></code></pre><div class="fieldDocs"><p>Likewise; MOVK; no check.</p>
+</div></div><div><pre><code>TLSLE_MOVW_TPREL_G0 = <span class="tok-number">547</span></code></pre><div class="fieldDocs"><p>TLS TP-rel. MOV{N,Z} 15:0.</p>
+</div></div><div><pre><code>TLSLE_MOVW_TPREL_G0_NC = <span class="tok-number">548</span></code></pre><div class="fieldDocs"><p>Likewise; MOVK; no check.</p>
+</div></div><div><pre><code>TLSLE_ADD_TPREL_HI12 = <span class="tok-number">549</span></code></pre><div class="fieldDocs"><p>TP-rel. ADD imm. 23:12.</p>
+</div></div><div><pre><code>TLSLE_ADD_TPREL_LO12 = <span class="tok-number">550</span></code></pre><div class="fieldDocs"><p>TP-rel. ADD imm. 11:0.</p>
+</div></div><div><pre><code>TLSLE_ADD_TPREL_LO12_NC = <span class="tok-number">551</span></code></pre><div class="fieldDocs"><p>Likewise; no ovfl. check.</p>
+</div></div><div><pre><code>TLSLE_LDST8_TPREL_LO12 = <span class="tok-number">552</span></code></pre><div class="fieldDocs"><p>TP-rel. LD/ST off. 11:0.</p>
+</div></div><div><pre><code>TLSLE_LDST8_TPREL_LO12_NC = <span class="tok-number">553</span></code></pre><div class="fieldDocs"><p>Likewise; no ovfl. check.</p>
+</div></div><div><pre><code>TLSLE_LDST16_TPREL_LO12 = <span class="tok-number">554</span></code></pre><div class="fieldDocs"><p>TP-rel. LD/ST off. 11:1.</p>
+</div></div><div><pre><code>TLSLE_LDST16_TPREL_LO12_NC = <span class="tok-number">555</span></code></pre><div class="fieldDocs"><p>Likewise; no check.</p>
+</div></div><div><pre><code>TLSLE_LDST32_TPREL_LO12 = <span class="tok-number">556</span></code></pre><div class="fieldDocs"><p>TP-rel. LD/ST off. 11:2.</p>
+</div></div><div><pre><code>TLSLE_LDST32_TPREL_LO12_NC = <span class="tok-number">557</span></code></pre><div class="fieldDocs"><p>Likewise; no check.</p>
+</div></div><div><pre><code>TLSLE_LDST64_TPREL_LO12 = <span class="tok-number">558</span></code></pre><div class="fieldDocs"><p>TP-rel. LD/ST off. 11:3.</p>
+</div></div><div><pre><code>TLSLE_LDST64_TPREL_LO12_NC = <span class="tok-number">559</span></code></pre><div class="fieldDocs"><p>Likewise; no check.</p>
+</div></div><div><pre><code>TLSDESC_LD_PREL19 = <span class="tok-number">560</span></code></pre><div class="fieldDocs"><p>PC-rel. load immediate 20:2.</p>
+</div></div><div><pre><code>TLSDESC_ADR_PREL21 = <span class="tok-number">561</span></code></pre><div class="fieldDocs"><p>PC-rel. ADR immediate 20:0.</p>
+</div></div><div><pre><code>TLSDESC_ADR_PAGE21 = <span class="tok-number">562</span></code></pre><div class="fieldDocs"><p>Page-rel. ADRP imm. 32:12.</p>
+</div></div><div><pre><code>TLSDESC_LD64_LO12 = <span class="tok-number">563</span></code></pre><div class="fieldDocs"><p>Direct LD off. from 11:3.</p>
+</div></div><div><pre><code>TLSDESC_ADD_LO12 = <span class="tok-number">564</span></code></pre><div class="fieldDocs"><p>Direct ADD imm. from 11:0.</p>
+</div></div><div><pre><code>TLSDESC_OFF_G1 = <span class="tok-number">565</span></code></pre><div class="fieldDocs"><p>GOT-rel. MOV{N,Z} imm. 31:16.</p>
+</div></div><div><pre><code>TLSDESC_OFF_G0_NC = <span class="tok-number">566</span></code></pre><div class="fieldDocs"><p>GOT-rel. MOVK imm. 15:0; no ck.</p>
+</div></div><div><pre><code>TLSDESC_LDR = <span class="tok-number">567</span></code></pre><div class="fieldDocs"><p>Relax LDR.</p>
+</div></div><div><pre><code>TLSDESC_ADD = <span class="tok-number">568</span></code></pre><div class="fieldDocs"><p>Relax ADD.</p>
+</div></div><div><pre><code>TLSDESC_CALL = <span class="tok-number">569</span></code></pre><div class="fieldDocs"><p>Relax BLR.</p>
+</div></div><div><pre><code>TLSLE_LDST128_TPREL_LO12 = <span class="tok-number">570</span></code></pre><div class="fieldDocs"><p>TP-rel. LD/ST off. 11:4.</p>
+</div></div><div><pre><code>TLSLE_LDST128_TPREL_LO12_NC = <span class="tok-number">571</span></code></pre><div class="fieldDocs"><p>Likewise; no check.</p>
+</div></div><div><pre><code>TLSLD_LDST128_DTPREL_LO12 = <span class="tok-number">572</span></code></pre><div class="fieldDocs"><p>DTP-rel. LD/ST imm. 11:4.</p>
+</div></div><div><pre><code>TLSLD_LDST128_DTPREL_LO12_NC = <span class="tok-number">573</span></code></pre><div class="fieldDocs"><p>Likewise; no check.</p>
+</div></div><div><pre><code>COPY = <span class="tok-number">1024</span></code></pre><div class="fieldDocs"><p>Copy symbol at runtime.</p>
+</div></div><div><pre><code>GLOB_DAT = <span class="tok-number">1025</span></code></pre><div class="fieldDocs"><p>Create GOT entry.</p>
+</div></div><div><pre><code>JUMP_SLOT = <span class="tok-number">1026</span></code></pre><div class="fieldDocs"><p>Create PLT entry.</p>
+</div></div><div><pre><code>RELATIVE = <span class="tok-number">1027</span></code></pre><div class="fieldDocs"><p>Adjust by program base.</p>
+</div></div><div><pre><code>TLS_DTPMOD = <span class="tok-number">1028</span></code></pre><div class="fieldDocs"><p>Module number, 64 bit.</p>
+</div></div><div><pre><code>TLS_DTPREL = <span class="tok-number">1029</span></code></pre><div class="fieldDocs"><p>Module-relative offset, 64 bit.</p>
+</div></div><div><pre><code>TLS_TPREL = <span class="tok-number">1030</span></code></pre><div class="fieldDocs"><p>TP-relative offset, 64 bit.</p>
+</div></div><div><pre><code>TLSDESC = <span class="tok-number">1031</span></code></pre><div class="fieldDocs"><p>TLS Descriptor.</p>
+</div></div><div><pre><code>IRELATIVE = <span class="tok-number">1032</span></code></pre><div class="fieldDocs"><p>STT_GNU_IFUNC relocation.</p>
+</div></div><div><pre><code>_</code></pre></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.elf.R_AARCH64">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> R_AARCH64 = <span class="tok-kw">enum</span>(<span class="tok-type">u32</span>) {
+    <span class="tok-comment">/// No relocation.</span>
+    NONE = <span class="tok-number">0</span>,
+    <span class="tok-comment">/// ILP32 AArch64 relocs.</span>
+    <span class="tok-comment">/// Direct 32 bit.</span>
+    P32_ABS32 = <span class="tok-number">1</span>,
+    <span class="tok-comment">/// Copy symbol at runtime.</span>
+    P32_COPY = <span class="tok-number">180</span>,
+    <span class="tok-comment">/// Create GOT entry.</span>
+    P32_GLOB_DAT = <span class="tok-number">181</span>,
+    <span class="tok-comment">/// Create PLT entry.</span>
+    P32_JUMP_SLOT = <span class="tok-number">182</span>,
+    <span class="tok-comment">/// Adjust by program base.</span>
+    P32_RELATIVE = <span class="tok-number">183</span>,
+    <span class="tok-comment">/// Module number, 32 bit.</span>
+    P32_TLS_DTPMOD = <span class="tok-number">184</span>,
+    <span class="tok-comment">/// Module-relative offset, 32 bit.</span>
+    P32_TLS_DTPREL = <span class="tok-number">185</span>,
+    <span class="tok-comment">/// TP-relative offset, 32 bit.</span>
+    P32_TLS_TPREL = <span class="tok-number">186</span>,
+    <span class="tok-comment">/// TLS Descriptor.</span>
+    P32_TLSDESC = <span class="tok-number">187</span>,
+    <span class="tok-comment">/// STT_GNU_IFUNC relocation.</span>
+    P32_IRELATIVE = <span class="tok-number">188</span>,
+    <span class="tok-comment">/// LP64 AArch64 relocs.</span>
+    <span class="tok-comment">/// Direct 64 bit.</span>
+    ABS64 = <span class="tok-number">257</span>,
+    <span class="tok-comment">/// Direct 32 bit.</span>
+    ABS32 = <span class="tok-number">258</span>,
+    <span class="tok-comment">/// Direct 16-bit.</span>
+    ABS16 = <span class="tok-number">259</span>,
+    <span class="tok-comment">/// PC-relative 64-bit.</span>
+    PREL64 = <span class="tok-number">260</span>,
+    <span class="tok-comment">/// PC-relative 32-bit.</span>
+    PREL32 = <span class="tok-number">261</span>,
+    <span class="tok-comment">/// PC-relative 16-bit.</span>
+    PREL16 = <span class="tok-number">262</span>,
+    <span class="tok-comment">/// Dir. MOVZ imm. from bits 15:0.</span>
+    MOVW_UABS_G0 = <span class="tok-number">263</span>,
+    <span class="tok-comment">/// Likewise for MOVK; no check.</span>
+    MOVW_UABS_G0_NC = <span class="tok-number">264</span>,
+    <span class="tok-comment">/// Dir. MOVZ imm. from bits 31:16.</span>
+    MOVW_UABS_G1 = <span class="tok-number">265</span>,
+    <span class="tok-comment">/// Likewise for MOVK; no check.</span>
+    MOVW_UABS_G1_NC = <span class="tok-number">266</span>,
+    <span class="tok-comment">/// Dir. MOVZ imm. from bits 47:32.</span>
+    MOVW_UABS_G2 = <span class="tok-number">267</span>,
+    <span class="tok-comment">/// Likewise for MOVK; no check.</span>
+    MOVW_UABS_G2_NC = <span class="tok-number">268</span>,
+    <span class="tok-comment">/// Dir. MOV{K,Z} imm. from 63:48.</span>
+    MOVW_UABS_G3 = <span class="tok-number">269</span>,
+    <span class="tok-comment">/// Dir. MOV{N,Z} imm. from 15:0.</span>
+    MOVW_SABS_G0 = <span class="tok-number">270</span>,
+    <span class="tok-comment">/// Dir. MOV{N,Z} imm. from 31:16.</span>
+    MOVW_SABS_G1 = <span class="tok-number">271</span>,
+    <span class="tok-comment">/// Dir. MOV{N,Z} imm. from 47:32.</span>
+    MOVW_SABS_G2 = <span class="tok-number">272</span>,
+    <span class="tok-comment">/// PC-rel. LD imm. from bits 20:2.</span>
+    LD_PREL_LO19 = <span class="tok-number">273</span>,
+    <span class="tok-comment">/// PC-rel. ADR imm. from bits 20:0.</span>
+    ADR_PREL_LO21 = <span class="tok-number">274</span>,
+    <span class="tok-comment">/// Page-rel. ADRP imm. from 32:12.</span>
+    ADR_PREL_PG_HI21 = <span class="tok-number">275</span>,
+    <span class="tok-comment">/// Likewise; no overflow check.</span>
+    ADR_PREL_PG_HI21_NC = <span class="tok-number">276</span>,
+    <span class="tok-comment">/// Dir. ADD imm. from bits 11:0.</span>
+    ADD_ABS_LO12_NC = <span class="tok-number">277</span>,
+    <span class="tok-comment">/// Likewise for LD/ST; no check.</span>
+    LDST8_ABS_LO12_NC = <span class="tok-number">278</span>,
+    <span class="tok-comment">/// PC-rel. TBZ/TBNZ imm. from 15:2.</span>
+    TSTBR14 = <span class="tok-number">279</span>,
+    <span class="tok-comment">/// PC-rel. cond. br. imm. from 20:2.</span>
+    CONDBR19 = <span class="tok-number">280</span>,
+    <span class="tok-comment">/// PC-rel. B imm. from bits 27:2.</span>
+    JUMP26 = <span class="tok-number">282</span>,
+    <span class="tok-comment">/// Likewise for CALL.</span>
+    CALL26 = <span class="tok-number">283</span>,
+    <span class="tok-comment">/// Dir. ADD imm. from bits 11:1.</span>
+    LDST16_ABS_LO12_NC = <span class="tok-number">284</span>,
+    <span class="tok-comment">/// Likewise for bits 11:2.</span>
+    LDST32_ABS_LO12_NC = <span class="tok-number">285</span>,
+    <span class="tok-comment">/// Likewise for bits 11:3.</span>
+    LDST64_ABS_LO12_NC = <span class="tok-number">286</span>,
+    <span class="tok-comment">/// PC-rel. MOV{N,Z} imm. from 15:0.</span>
+    MOVW_PREL_G0 = <span class="tok-number">287</span>,
+    <span class="tok-comment">/// Likewise for MOVK; no check.</span>
+    MOVW_PREL_G0_NC = <span class="tok-number">288</span>,
+    <span class="tok-comment">/// PC-rel. MOV{N,Z} imm. from 31:16.</span>
+    MOVW_PREL_G1 = <span class="tok-number">289</span>,
+    <span class="tok-comment">/// Likewise for MOVK; no check.</span>
+    MOVW_PREL_G1_NC = <span class="tok-number">290</span>,
+    <span class="tok-comment">/// PC-rel. MOV{N,Z} imm. from 47:32.</span>
+    MOVW_PREL_G2 = <span class="tok-number">291</span>,
+    <span class="tok-comment">/// Likewise for MOVK; no check.</span>
+    MOVW_PREL_G2_NC = <span class="tok-number">292</span>,
+    <span class="tok-comment">/// PC-rel. MOV{N,Z} imm. from 63:48.</span>
+    MOVW_PREL_G3 = <span class="tok-number">293</span>,
+    <span class="tok-comment">/// Dir. ADD imm. from bits 11:4.</span>
+    LDST128_ABS_LO12_NC = <span class="tok-number">299</span>,
+    <span class="tok-comment">/// GOT-rel. off. MOV{N,Z} imm. 15:0.</span>
+    MOVW_GOTOFF_G0 = <span class="tok-number">300</span>,
+    <span class="tok-comment">/// Likewise for MOVK; no check.</span>
+    MOVW_GOTOFF_G0_NC = <span class="tok-number">301</span>,
+    <span class="tok-comment">/// GOT-rel. o. MOV{N,Z} imm. 31:16.</span>
+    MOVW_GOTOFF_G1 = <span class="tok-number">302</span>,
+    <span class="tok-comment">/// Likewise for MOVK; no check.</span>
+    MOVW_GOTOFF_G1_NC = <span class="tok-number">303</span>,
+    <span class="tok-comment">/// GOT-rel. o. MOV{N,Z} imm. 47:32.</span>
+    MOVW_GOTOFF_G2 = <span class="tok-number">304</span>,
+    <span class="tok-comment">/// Likewise for MOVK; no check.</span>
+    MOVW_GOTOFF_G2_NC = <span class="tok-number">305</span>,
+    <span class="tok-comment">/// GOT-rel. o. MOV{N,Z} imm. 63:48.</span>
+    MOVW_GOTOFF_G3 = <span class="tok-number">306</span>,
+    <span class="tok-comment">/// GOT-relative 64-bit.</span>
+    GOTREL64 = <span class="tok-number">307</span>,
+    <span class="tok-comment">/// GOT-relative 32-bit.</span>
+    GOTREL32 = <span class="tok-number">308</span>,
+    <span class="tok-comment">/// PC-rel. GOT off. load imm. 20:2.</span>
+    GOT_LD_PREL19 = <span class="tok-number">309</span>,
+    <span class="tok-comment">/// GOT-rel. off. LD/ST imm. 14:3.</span>
+    LD64_GOTOFF_LO15 = <span class="tok-number">310</span>,
+    <span class="tok-comment">/// P-page-rel. GOT off. ADRP 32:12.</span>
+    ADR_GOT_PAGE = <span class="tok-number">311</span>,
+    <span class="tok-comment">/// Dir. GOT off. LD/ST imm. 11:3.</span>
+    LD64_GOT_LO12_NC = <span class="tok-number">312</span>,
+    <span class="tok-comment">/// GOT-page-rel. GOT off. LD/ST 14:3</span>
+    LD64_GOTPAGE_LO15 = <span class="tok-number">313</span>,
+    <span class="tok-comment">/// PC-relative ADR imm. 20:0.</span>
+    TLSGD_ADR_PREL21 = <span class="tok-number">512</span>,
+    <span class="tok-comment">/// page-rel. ADRP imm. 32:12.</span>
+    TLSGD_ADR_PAGE21 = <span class="tok-number">513</span>,
+    <span class="tok-comment">/// direct ADD imm. from 11:0.</span>
+    TLSGD_ADD_LO12_NC = <span class="tok-number">514</span>,
+    <span class="tok-comment">/// GOT-rel. MOV{N,Z} 31:16.</span>
+    TLSGD_MOVW_G1 = <span class="tok-number">515</span>,
+    <span class="tok-comment">/// GOT-rel. MOVK imm. 15:0.</span>
+    TLSGD_MOVW_G0_NC = <span class="tok-number">516</span>,
+    <span class="tok-comment">/// Like 512; local dynamic model.</span>
+    TLSLD_ADR_PREL21 = <span class="tok-number">517</span>,
+    <span class="tok-comment">/// Like 513; local dynamic model.</span>
+    TLSLD_ADR_PAGE21 = <span class="tok-number">518</span>,
+    <span class="tok-comment">/// Like 514; local dynamic model.</span>
+    TLSLD_ADD_LO12_NC = <span class="tok-number">519</span>,
+    <span class="tok-comment">/// Like 515; local dynamic model.</span>
+    TLSLD_MOVW_G1 = <span class="tok-number">520</span>,
+    <span class="tok-comment">/// Like 516; local dynamic model.</span>
+    TLSLD_MOVW_G0_NC = <span class="tok-number">521</span>,
+    <span class="tok-comment">/// TLS PC-rel. load imm. 20:2.</span>
+    TLSLD_LD_PREL19 = <span class="tok-number">522</span>,
+    <span class="tok-comment">/// TLS DTP-rel. MOV{N,Z} 47:32.</span>
+    TLSLD_MOVW_DTPREL_G2 = <span class="tok-number">523</span>,
+    <span class="tok-comment">/// TLS DTP-rel. MOV{N,Z} 31:16.</span>
+    TLSLD_MOVW_DTPREL_G1 = <span class="tok-number">524</span>,
+    <span class="tok-comment">/// Likewise; MOVK; no check.</span>
+    TLSLD_MOVW_DTPREL_G1_NC = <span class="tok-number">525</span>,
+    <span class="tok-comment">/// TLS DTP-rel. MOV{N,Z} 15:0.</span>
+    TLSLD_MOVW_DTPREL_G0 = <span class="tok-number">526</span>,
+    <span class="tok-comment">/// Likewise; MOVK; no check.</span>
+    TLSLD_MOVW_DTPREL_G0_NC = <span class="tok-number">527</span>,
+    <span class="tok-comment">/// DTP-rel. ADD imm. from 23:12.</span>
+    TLSLD_ADD_DTPREL_HI12 = <span class="tok-number">528</span>,
+    <span class="tok-comment">/// DTP-rel. ADD imm. from 11:0.</span>
+    TLSLD_ADD_DTPREL_LO12 = <span class="tok-number">529</span>,
+    <span class="tok-comment">/// Likewise; no ovfl. check.</span>
+    TLSLD_ADD_DTPREL_LO12_NC = <span class="tok-number">530</span>,
+    <span class="tok-comment">/// DTP-rel. LD/ST imm. 11:0.</span>
+    TLSLD_LDST8_DTPREL_LO12 = <span class="tok-number">531</span>,
+    <span class="tok-comment">/// Likewise; no check.</span>
+    TLSLD_LDST8_DTPREL_LO12_NC = <span class="tok-number">532</span>,
+    <span class="tok-comment">/// DTP-rel. LD/ST imm. 11:1.</span>
+    TLSLD_LDST16_DTPREL_LO12 = <span class="tok-number">533</span>,
+    <span class="tok-comment">/// Likewise; no check.</span>
+    TLSLD_LDST16_DTPREL_LO12_NC = <span class="tok-number">534</span>,
+    <span class="tok-comment">/// DTP-rel. LD/ST imm. 11:2.</span>
+    TLSLD_LDST32_DTPREL_LO12 = <span class="tok-number">535</span>,
+    <span class="tok-comment">/// Likewise; no check.</span>
+    TLSLD_LDST32_DTPREL_LO12_NC = <span class="tok-number">536</span>,
+    <span class="tok-comment">/// DTP-rel. LD/ST imm. 11:3.</span>
+    TLSLD_LDST64_DTPREL_LO12 = <span class="tok-number">537</span>,
+    <span class="tok-comment">/// Likewise; no check.</span>
+    TLSLD_LDST64_DTPREL_LO12_NC = <span class="tok-number">538</span>,
+    <span class="tok-comment">/// GOT-rel. MOV{N,Z} 31:16.</span>
+    TLSIE_MOVW_GOTTPREL_G1 = <span class="tok-number">539</span>,
+    <span class="tok-comment">/// GOT-rel. MOVK 15:0.</span>
+    TLSIE_MOVW_GOTTPREL_G0_NC = <span class="tok-number">540</span>,
+    <span class="tok-comment">/// Page-rel. ADRP 32:12.</span>
+    TLSIE_ADR_GOTTPREL_PAGE21 = <span class="tok-number">541</span>,
+    <span class="tok-comment">/// Direct LD off. 11:3.</span>
+    TLSIE_LD64_GOTTPREL_LO12_NC = <span class="tok-number">542</span>,
+    <span class="tok-comment">/// PC-rel. load imm. 20:2.</span>
+    TLSIE_LD_GOTTPREL_PREL19 = <span class="tok-number">543</span>,
+    <span class="tok-comment">/// TLS TP-rel. MOV{N,Z} 47:32.</span>
+    TLSLE_MOVW_TPREL_G2 = <span class="tok-number">544</span>,
+    <span class="tok-comment">/// TLS TP-rel. MOV{N,Z} 31:16.</span>
+    TLSLE_MOVW_TPREL_G1 = <span class="tok-number">545</span>,
+    <span class="tok-comment">/// Likewise; MOVK; no check.</span>
+    TLSLE_MOVW_TPREL_G1_NC = <span class="tok-number">546</span>,
+    <span class="tok-comment">/// TLS TP-rel. MOV{N,Z} 15:0.</span>
+    TLSLE_MOVW_TPREL_G0 = <span class="tok-number">547</span>,
+    <span class="tok-comment">/// Likewise; MOVK; no check.</span>
+    TLSLE_MOVW_TPREL_G0_NC = <span class="tok-number">548</span>,
+    <span class="tok-comment">/// TP-rel. ADD imm. 23:12.</span>
+    TLSLE_ADD_TPREL_HI12 = <span class="tok-number">549</span>,
+    <span class="tok-comment">/// TP-rel. ADD imm. 11:0.</span>
+    TLSLE_ADD_TPREL_LO12 = <span class="tok-number">550</span>,
+    <span class="tok-comment">/// Likewise; no ovfl. check.</span>
+    TLSLE_ADD_TPREL_LO12_NC = <span class="tok-number">551</span>,
+    <span class="tok-comment">/// TP-rel. LD/ST off. 11:0.</span>
+    TLSLE_LDST8_TPREL_LO12 = <span class="tok-number">552</span>,
+    <span class="tok-comment">/// Likewise; no ovfl. check.</span>
+    TLSLE_LDST8_TPREL_LO12_NC = <span class="tok-number">553</span>,
+    <span class="tok-comment">/// TP-rel. LD/ST off. 11:1.</span>
+    TLSLE_LDST16_TPREL_LO12 = <span class="tok-number">554</span>,
+    <span class="tok-comment">/// Likewise; no check.</span>
+    TLSLE_LDST16_TPREL_LO12_NC = <span class="tok-number">555</span>,
+    <span class="tok-comment">/// TP-rel. LD/ST off. 11:2.</span>
+    TLSLE_LDST32_TPREL_LO12 = <span class="tok-number">556</span>,
+    <span class="tok-comment">/// Likewise; no check.</span>
+    TLSLE_LDST32_TPREL_LO12_NC = <span class="tok-number">557</span>,
+    <span class="tok-comment">/// TP-rel. LD/ST off. 11:3.</span>
+    TLSLE_LDST64_TPREL_LO12 = <span class="tok-number">558</span>,
+    <span class="tok-comment">/// Likewise; no check.</span>
+    TLSLE_LDST64_TPREL_LO12_NC = <span class="tok-number">559</span>,
+    <span class="tok-comment">///  PC-rel. load immediate 20:2.</span>
+    TLSDESC_LD_PREL19 = <span class="tok-number">560</span>,
+    <span class="tok-comment">/// PC-rel. ADR immediate 20:0.</span>
+    TLSDESC_ADR_PREL21 = <span class="tok-number">561</span>,
+    <span class="tok-comment">/// Page-rel. ADRP imm. 32:12.</span>
+    TLSDESC_ADR_PAGE21 = <span class="tok-number">562</span>,
+    <span class="tok-comment">/// Direct LD off. from 11:3.</span>
+    TLSDESC_LD64_LO12 = <span class="tok-number">563</span>,
+    <span class="tok-comment">/// Direct ADD imm. from 11:0.</span>
+    TLSDESC_ADD_LO12 = <span class="tok-number">564</span>,
+    <span class="tok-comment">/// GOT-rel. MOV{N,Z} imm. 31:16.</span>
+    TLSDESC_OFF_G1 = <span class="tok-number">565</span>,
+    <span class="tok-comment">/// GOT-rel. MOVK imm. 15:0; no ck.</span>
+    TLSDESC_OFF_G0_NC = <span class="tok-number">566</span>,
+    <span class="tok-comment">/// Relax LDR.</span>
+    TLSDESC_LDR = <span class="tok-number">567</span>,
+    <span class="tok-comment">/// Relax ADD.</span>
+    TLSDESC_ADD = <span class="tok-number">568</span>,
+    <span class="tok-comment">/// Relax BLR.</span>
+    TLSDESC_CALL = <span class="tok-number">569</span>,
+    <span class="tok-comment">/// TP-rel. LD/ST off. 11:4.</span>
+    TLSLE_LDST128_TPREL_LO12 = <span class="tok-number">570</span>,
+    <span class="tok-comment">/// Likewise; no check.</span>
+    TLSLE_LDST128_TPREL_LO12_NC = <span class="tok-number">571</span>,
+    <span class="tok-comment">/// DTP-rel. LD/ST imm. 11:4.</span>
+    TLSLD_LDST128_DTPREL_LO12 = <span class="tok-number">572</span>,
+    <span class="tok-comment">/// Likewise; no check.</span>
+    TLSLD_LDST128_DTPREL_LO12_NC = <span class="tok-number">573</span>,
+    <span class="tok-comment">/// Copy symbol at runtime.</span>
+    COPY = <span class="tok-number">1024</span>,
+    <span class="tok-comment">/// Create GOT entry.</span>
+    GLOB_DAT = <span class="tok-number">1025</span>,
+    <span class="tok-comment">/// Create PLT entry.</span>
+    JUMP_SLOT = <span class="tok-number">1026</span>,
+    <span class="tok-comment">/// Adjust by program base.</span>
+    RELATIVE = <span class="tok-number">1027</span>,
+    <span class="tok-comment">/// Module number, 64 bit.</span>
+    TLS_DTPMOD = <span class="tok-number">1028</span>,
+    <span class="tok-comment">/// Module-relative offset, 64 bit.</span>
+    TLS_DTPREL = <span class="tok-number">1029</span>,
+    <span class="tok-comment">/// TP-relative offset, 64 bit.</span>
+    TLS_TPREL = <span class="tok-number">1030</span>,
+    <span class="tok-comment">/// TLS Descriptor.</span>
+    TLSDESC = <span class="tok-number">1031</span>,
+    <span class="tok-comment">/// STT_GNU_IFUNC relocation.</span>
+    IRELATIVE = <span class="tok-number">1032</span>,
+    _,
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,608 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">debug</a></li><li><a href="std.debug.simple_panic.html" class="active">simple_panic</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.debug.simple_panic" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.debug.simple_panic</span><a href="#src.zig-std.debug.simple_panic">[src]</a></h1><div class="tldDocs"><p>This namespace is the default one used by the Zig compiler to emit various
+kinds of safety panics, due to the logic in <code><a href="std.builtin.html#std.builtin.panic">std.builtin.panic</a></code>.</p>
+<p>Since Zig does not have interfaces, this file serves as an example template
+for users to provide their own alternative panic handling.</p>
+<p>As an alternative, see <code><a href="std.debug.html#std.debug.FullPanic">std.debug.FullPanic</a></code>.</p>
+</div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.debug.simple_panic.call" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">call</span><a href="#src.zig-std.debug.simple_panic.call">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">call</span>(msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, ra: ?<span class="tok-type">usize</span>) <span class="tok-type">noreturn</span></code></pre></div><div class="tldDocs"><p>Prints the message to stderr without a newline and then traps.</p>
+<p>Explicit calls to <code>@panic</code> lower to calling this function.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>ra: ?<span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.call">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">call</span>(msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, ra: ?<span class="tok-type">usize</span>) <span class="tok-type">noreturn</span> {
+    <span class="tok-builtin">@branchHint</span>(.cold);
+    _ = ra;
+    <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.lockStdErr">lockStdErr</a>();
+    <span class="tok-kw">const</span> stderr = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.html#std.io.getStdErr">getStdErr</a>();
+    stderr.writeAll(msg) <span class="tok-kw">catch</span> {};
+    <span class="tok-builtin">@trap</span>();
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.sentinelMismatch" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">sentinelMismatch</span><a href="#src.zig-std.debug.simple_panic.sentinelMismatch">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">sentinelMismatch</span>(expected: <span class="tok-kw">anytype</span>, found: <span class="tok-builtin">@TypeOf</span>(expected)) <span class="tok-type">noreturn</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>found: <span class="tok-builtin">@TypeOf</span>(expected)</code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.sentinelMismatch">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">sentinelMismatch</span>(expected: <span class="tok-kw">anytype</span>, found: <span class="tok-builtin">@TypeOf</span>(expected)) <span class="tok-type">noreturn</span> {
+    _ = found;
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;sentinel mismatch&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.unwrapError" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">unwrapError</span><a href="#src.zig-std.debug.simple_panic.unwrapError">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">unwrapError</span>(err: <span class="tok-type">anyerror</span>) <span class="tok-type">noreturn</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>err: <span class="tok-type">anyerror</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.unwrapError">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">unwrapError</span>(err: <span class="tok-type">anyerror</span>) <span class="tok-type">noreturn</span> {
+    _ = &amp;err;
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;attempt to unwrap error&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.outOfBounds" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">outOfBounds</span><a href="#src.zig-std.debug.simple_panic.outOfBounds">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">outOfBounds</span>(index: <span class="tok-type">usize</span>, len: <span class="tok-type">usize</span>) <span class="tok-type">noreturn</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>index: <span class="tok-type">usize</span></code></pre></div><div><pre><code>len: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.outOfBounds">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">outOfBounds</span>(index: <span class="tok-type">usize</span>, len: <span class="tok-type">usize</span>) <span class="tok-type">noreturn</span> {
+    _ = index;
+    _ = len;
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;index out of bounds&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.startGreaterThanEnd" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">startGreaterThanEnd</span><a href="#src.zig-std.debug.simple_panic.startGreaterThanEnd">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">startGreaterThanEnd</span>(start: <span class="tok-type">usize</span>, end: <span class="tok-type">usize</span>) <span class="tok-type">noreturn</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>start: <span class="tok-type">usize</span></code></pre></div><div><pre><code>end: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.startGreaterThanEnd">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">startGreaterThanEnd</span>(start: <span class="tok-type">usize</span>, end: <span class="tok-type">usize</span>) <span class="tok-type">noreturn</span> {
+    _ = start;
+    _ = end;
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;start index is larger than end index&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.inactiveUnionField" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">inactiveUnionField</span><a href="#src.zig-std.debug.simple_panic.inactiveUnionField">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">inactiveUnionField</span>(active: <span class="tok-kw">anytype</span>, accessed: <span class="tok-builtin">@TypeOf</span>(active)) <span class="tok-type">noreturn</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>accessed: <span class="tok-builtin">@TypeOf</span>(active)</code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.inactiveUnionField">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">inactiveUnionField</span>(active: <span class="tok-kw">anytype</span>, accessed: <span class="tok-builtin">@TypeOf</span>(active)) <span class="tok-type">noreturn</span> {
+    _ = accessed;
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;access of inactive union field&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.sliceCastLenRemainder" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">sliceCastLenRemainder</span><a href="#src.zig-std.debug.simple_panic.sliceCastLenRemainder">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">sliceCastLenRemainder</span>(src_len: <span class="tok-type">usize</span>) <span class="tok-type">noreturn</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>src_len: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.sliceCastLenRemainder">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">sliceCastLenRemainder</span>(src_len: <span class="tok-type">usize</span>) <span class="tok-type">noreturn</span> {
+    _ = src_len;
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;slice length does not divide exactly into destination elements&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.reachedUnreachable" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">reachedUnreachable</span><a href="#src.zig-std.debug.simple_panic.reachedUnreachable">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">reachedUnreachable</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.reachedUnreachable">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">reachedUnreachable</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;reached unreachable code&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.unwrapNull" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">unwrapNull</span><a href="#src.zig-std.debug.simple_panic.unwrapNull">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">unwrapNull</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.unwrapNull">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">unwrapNull</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;attempt to use null value&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.castToNull" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">castToNull</span><a href="#src.zig-std.debug.simple_panic.castToNull">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">castToNull</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.castToNull">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">castToNull</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;cast causes pointer to be null&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.incorrectAlignment" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">incorrectAlignment</span><a href="#src.zig-std.debug.simple_panic.incorrectAlignment">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">incorrectAlignment</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.incorrectAlignment">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">incorrectAlignment</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;incorrect alignment&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.invalidErrorCode" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">invalidErrorCode</span><a href="#src.zig-std.debug.simple_panic.invalidErrorCode">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">invalidErrorCode</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.invalidErrorCode">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">invalidErrorCode</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;invalid error code&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.castTruncatedData" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">castTruncatedData</span><a href="#src.zig-std.debug.simple_panic.castTruncatedData">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">castTruncatedData</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.castTruncatedData">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">castTruncatedData</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;integer cast truncated bits&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.negativeToUnsigned" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">negativeToUnsigned</span><a href="#src.zig-std.debug.simple_panic.negativeToUnsigned">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">negativeToUnsigned</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.negativeToUnsigned">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">negativeToUnsigned</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;attempt to cast negative value to unsigned integer&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.integerOverflow" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">integerOverflow</span><a href="#src.zig-std.debug.simple_panic.integerOverflow">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">integerOverflow</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.integerOverflow">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">integerOverflow</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;integer overflow&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.shlOverflow" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">shlOverflow</span><a href="#src.zig-std.debug.simple_panic.shlOverflow">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">shlOverflow</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.shlOverflow">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">shlOverflow</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;left shift overflowed bits&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.shrOverflow" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">shrOverflow</span><a href="#src.zig-std.debug.simple_panic.shrOverflow">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">shrOverflow</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.shrOverflow">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">shrOverflow</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;right shift overflowed bits&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.divideByZero" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">divideByZero</span><a href="#src.zig-std.debug.simple_panic.divideByZero">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">divideByZero</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.divideByZero">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">divideByZero</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;division by zero&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.exactDivisionRemainder" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">exactDivisionRemainder</span><a href="#src.zig-std.debug.simple_panic.exactDivisionRemainder">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">exactDivisionRemainder</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.exactDivisionRemainder">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">exactDivisionRemainder</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;exact division produced remainder&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.integerPartOutOfBounds" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">integerPartOutOfBounds</span><a href="#src.zig-std.debug.simple_panic.integerPartOutOfBounds">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">integerPartOutOfBounds</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.integerPartOutOfBounds">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">integerPartOutOfBounds</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;integer part of floating point value out of bounds&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.corruptSwitch" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">corruptSwitch</span><a href="#src.zig-std.debug.simple_panic.corruptSwitch">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">corruptSwitch</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.corruptSwitch">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">corruptSwitch</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;switch on corrupt value&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.shiftRhsTooBig" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">shiftRhsTooBig</span><a href="#src.zig-std.debug.simple_panic.shiftRhsTooBig">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">shiftRhsTooBig</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.shiftRhsTooBig">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">shiftRhsTooBig</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;shift amount is greater than the type size&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.invalidEnumValue" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">invalidEnumValue</span><a href="#src.zig-std.debug.simple_panic.invalidEnumValue">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">invalidEnumValue</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.invalidEnumValue">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">invalidEnumValue</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;invalid enum value&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.forLenMismatch" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">forLenMismatch</span><a href="#src.zig-std.debug.simple_panic.forLenMismatch">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">forLenMismatch</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.forLenMismatch">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">forLenMismatch</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;for loop over objects with non-equal lengths&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.memcpyLenMismatch" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">memcpyLenMismatch</span><a href="#src.zig-std.debug.simple_panic.memcpyLenMismatch">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">memcpyLenMismatch</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.memcpyLenMismatch">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">memcpyLenMismatch</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;@memcpy arguments have non-equal lengths&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.memcpyAlias" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">memcpyAlias</span><a href="#src.zig-std.debug.simple_panic.memcpyAlias">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">memcpyAlias</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.memcpyAlias">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">memcpyAlias</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;@memcpy arguments alias&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.debug.simple_panic.noreturnReturned" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">noreturnReturned</span><a href="#src.zig-std.debug.simple_panic.noreturnReturned">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">noreturnReturned</span>() <span class="tok-type">noreturn</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.debug.simple_panic.noreturnReturned">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">noreturnReturned</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;'noreturn' function returned&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.debug.simple_panic">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-comment">//! This namespace is the default one used by the Zig compiler to emit various</span>
+<span class="tok-comment">//! kinds of safety panics, due to the logic in `std.builtin.panic`.</span>
+<span class="tok-comment">//!</span>
+<span class="tok-comment">//! Since Zig does not have interfaces, this file serves as an example template</span>
+<span class="tok-comment">//! for users to provide their own alternative panic handling.</span>
+<span class="tok-comment">//!</span>
+<span class="tok-comment">//! As an alternative, see `std.debug.FullPanic`.</span>
+
+<span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;../std.zig&quot;</span>);
+
+<span class="tok-comment">/// Prints the message to stderr without a newline and then traps.</span>
+<span class="tok-comment">///</span>
+<span class="tok-comment">/// Explicit calls to `@panic` lower to calling this function.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">call</span>(msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, ra: ?<span class="tok-type">usize</span>) <span class="tok-type">noreturn</span> {
+    <span class="tok-builtin">@branchHint</span>(.cold);
+    _ = ra;
+    <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.lockStdErr">lockStdErr</a>();
+    <span class="tok-kw">const</span> stderr = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.html#std.io.getStdErr">getStdErr</a>();
+    stderr.writeAll(msg) <span class="tok-kw">catch</span> {};
+    <span class="tok-builtin">@trap</span>();
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">sentinelMismatch</span>(expected: <span class="tok-kw">anytype</span>, found: <span class="tok-builtin">@TypeOf</span>(expected)) <span class="tok-type">noreturn</span> {
+    _ = found;
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;sentinel mismatch&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">unwrapError</span>(err: <span class="tok-type">anyerror</span>) <span class="tok-type">noreturn</span> {
+    _ = &amp;err;
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;attempt to unwrap error&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">outOfBounds</span>(index: <span class="tok-type">usize</span>, len: <span class="tok-type">usize</span>) <span class="tok-type">noreturn</span> {
+    _ = index;
+    _ = len;
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;index out of bounds&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">startGreaterThanEnd</span>(start: <span class="tok-type">usize</span>, end: <span class="tok-type">usize</span>) <span class="tok-type">noreturn</span> {
+    _ = start;
+    _ = end;
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;start index is larger than end index&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">inactiveUnionField</span>(active: <span class="tok-kw">anytype</span>, accessed: <span class="tok-builtin">@TypeOf</span>(active)) <span class="tok-type">noreturn</span> {
+    _ = accessed;
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;access of inactive union field&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">sliceCastLenRemainder</span>(src_len: <span class="tok-type">usize</span>) <span class="tok-type">noreturn</span> {
+    _ = src_len;
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;slice length does not divide exactly into destination elements&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">reachedUnreachable</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;reached unreachable code&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">unwrapNull</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;attempt to use null value&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">castToNull</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;cast causes pointer to be null&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">incorrectAlignment</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;incorrect alignment&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">invalidErrorCode</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;invalid error code&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">castTruncatedData</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;integer cast truncated bits&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">negativeToUnsigned</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;attempt to cast negative value to unsigned integer&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">integerOverflow</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;integer overflow&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">shlOverflow</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;left shift overflowed bits&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">shrOverflow</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;right shift overflowed bits&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">divideByZero</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;division by zero&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">exactDivisionRemainder</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;exact division produced remainder&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">integerPartOutOfBounds</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;integer part of floating point value out of bounds&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">corruptSwitch</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;switch on corrupt value&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">shiftRhsTooBig</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;shift amount is greater than the type size&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">invalidEnumValue</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;invalid enum value&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">forLenMismatch</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;for loop over objects with non-equal lengths&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">memcpyLenMismatch</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;@memcpy arguments have non-equal lengths&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">memcpyAlias</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;@memcpy arguments alias&quot;</span>, <span class="tok-null">null</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">noreturnReturned</span>() <span class="tok-type">noreturn</span> {
+    <a href="std.debug.simple_panic.html#std.debug.simple_panic.call">call</a>(<span class="tok-str">&quot;'noreturn' function returned&quot;</span>, <span class="tok-null">null</span>);
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

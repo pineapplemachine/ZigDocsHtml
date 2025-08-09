@@ -1,0 +1,786 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.coff.html" class="">coff</a></li><li><a href="std.coff.Coff.html" class="active">Coff</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.coff.Coff" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.coff.Coff</span><a href="#src.zig-std.coff.Coff">[src]</a></h1><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>data: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>is_loaded: <span class="tok-type">bool</span></code></pre></div><div><pre><code>is_image: <span class="tok-type">bool</span></code></pre></div><div><pre><code>coff_header_offset: <span class="tok-type">usize</span></code></pre></div><div><pre><code>guid: [<span class="tok-number">16</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span></code></pre></div><div><pre><code>age: <span class="tok-type">u32</span> = <span class="tok-null">undefined</span></code></pre></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.coff.Coff.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.coff.Coff.init">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(data: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, is_loaded: <span class="tok-type">bool</span>) !<a href="std.coff.Coff.html">Coff</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>data: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>is_loaded: <span class="tok-type">bool</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.coff.Coff.init">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(data: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, is_loaded: <span class="tok-type">bool</span>) !<a href="std.coff.Coff.html">Coff</a> {
+    <span class="tok-kw">const</span> pe_pointer_offset = <span class="tok-number">0x3C</span>;
+    <span class="tok-kw">const</span> pe_magic = <span class="tok-str">&quot;PE\x00\x00&quot;</span>;
+
+    <span class="tok-kw">var</span> stream = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(data);
+    <span class="tok-kw">const</span> reader = stream.reader();
+    <span class="tok-kw">try</span> stream.seekTo(pe_pointer_offset);
+    <span class="tok-kw">const</span> coff_header_offset = <span class="tok-kw">try</span> reader.readInt(<span class="tok-type">u32</span>, .little);
+    <span class="tok-kw">try</span> stream.seekTo(coff_header_offset);
+    <span class="tok-kw">var</span> buf: [<span class="tok-number">4</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">try</span> reader.readNoEof(&amp;buf);
+    <span class="tok-kw">const</span> is_image = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, pe_magic, &amp;buf);
+
+    <span class="tok-kw">var</span> coff = <span class="tok-builtin">@This</span>(){
+        .data = data,
+        .is_image = is_image,
+        .is_loaded = is_loaded,
+        .coff_header_offset = coff_header_offset,
+    };<span class="tok-comment">
+
+    // Do some basic validation upfront
+    </span><span class="tok-kw">if</span> (is_image) {
+        coff.coff_header_offset = coff.coff_header_offset + <span class="tok-number">4</span>;
+        <span class="tok-kw">const</span> coff_header = coff.getCoffHeader();
+        <span class="tok-kw">if</span> (coff_header.size_of_optional_header == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MissingPEHeader;
+    }<span class="tok-comment">
+
+    // JK: we used to check for architecture here and throw an error if not x86 or derivative.
+    // However I am willing to take a leap of faith and let aarch64 have a shot also.
+
+    </span><span class="tok-kw">return</span> coff;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.coff.Coff.getPdbPath" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getPdbPath</span><a href="#src.zig-std.coff.Coff.getPdbPath">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPdbPath</span>(self: *<a href="std.coff.Coff.html">Coff</a>) !?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.coff.Coff.html">Coff</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.coff.Coff.getPdbPath">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPdbPath</span>(self: *<a href="std.coff.Coff.html">Coff</a>) !?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <a href="std.debug.html#std.debug.assert">assert</a>(self.is_image);
+
+    <span class="tok-kw">const</span> data_dirs = self.getDataDirectories();
+    <span class="tok-kw">if</span> (<span class="tok-builtin">@intFromEnum</span>(<a href="std.coff.DirectoryEntry.html">DirectoryEntry</a>.<a href="#">DEBUG</a>) &gt;= data_dirs.len) <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+    <span class="tok-kw">const</span> debug_dir = data_dirs[<span class="tok-builtin">@intFromEnum</span>(<a href="std.coff.DirectoryEntry.html">DirectoryEntry</a>.<a href="#">DEBUG</a>)];
+    <span class="tok-kw">var</span> stream = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(self.data);
+    <span class="tok-kw">const</span> reader = stream.reader();
+
+    <span class="tok-kw">if</span> (self.is_loaded) {
+        <span class="tok-kw">try</span> stream.seekTo(debug_dir.virtual_address);
+    } <span class="tok-kw">else</span> {<span class="tok-comment">
+        // Find what section the debug_dir is in, in order to convert the RVA to a file offset
+        </span><span class="tok-kw">for</span> (self.getSectionHeaders()) |*sect| {
+            <span class="tok-kw">if</span> (debug_dir.virtual_address &gt;= sect.virtual_address <span class="tok-kw">and</span> debug_dir.virtual_address &lt; sect.virtual_address + sect.virtual_size) {
+                <span class="tok-kw">try</span> stream.seekTo(sect.pointer_to_raw_data + (debug_dir.virtual_address - sect.virtual_address));
+                <span class="tok-kw">break</span>;
+            }
+        } <span class="tok-kw">else</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugDirectory;
+    }<span class="tok-comment">
+
+    // Find the correct DebugDirectoryEntry, and where its data is stored.
+    // It can be in any section.
+    </span><span class="tok-kw">const</span> debug_dir_entry_count = debug_dir.size / <span class="tok-builtin">@sizeOf</span>(<a href="std.coff.DebugDirectoryEntry.html">DebugDirectoryEntry</a>);
+    <span class="tok-kw">var</span> i: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (i &lt; debug_dir_entry_count) : (i += <span class="tok-number">1</span>) {
+        <span class="tok-kw">const</span> debug_dir_entry = <span class="tok-kw">try</span> reader.readStruct(<a href="std.coff.DebugDirectoryEntry.html">DebugDirectoryEntry</a>);
+        <span class="tok-kw">if</span> (debug_dir_entry.<span class="tok-type">type</span> == .CODEVIEW) {
+            <span class="tok-kw">const</span> dir_offset = <span class="tok-kw">if</span> (self.is_loaded) debug_dir_entry.address_of_raw_data <span class="tok-kw">else</span> debug_dir_entry.pointer_to_raw_data;
+            <span class="tok-kw">try</span> stream.seekTo(dir_offset);
+            <span class="tok-kw">break</span>;
+        }
+    } <span class="tok-kw">else</span> <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+    <span class="tok-kw">var</span> cv_signature: [<span class="tok-number">4</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;<span class="tok-comment"> // CodeView signature
+    </span><span class="tok-kw">try</span> reader.readNoEof(cv_signature[<span class="tok-number">0</span>..]);<span class="tok-comment">
+    // 'RSDS' indicates PDB70 format, used by lld.
+    </span><span class="tok-kw">if</span> (!<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, &amp;cv_signature, <span class="tok-str">&quot;RSDS&quot;</span>))
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidPEMagic;
+    <span class="tok-kw">try</span> reader.readNoEof(self.guid[<span class="tok-number">0</span>..]);
+    self.age = <span class="tok-kw">try</span> reader.readInt(<span class="tok-type">u32</span>, .little);<span class="tok-comment">
+
+    // Finally read the null-terminated string.
+    </span><span class="tok-kw">const</span> start = reader.context.pos;
+    <span class="tok-kw">const</span> len = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, self.data[start..], <span class="tok-number">0</span>) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+    <span class="tok-kw">return</span> self.data[start .. start + len];
+}</code></pre></details></div></div><div class="decl"><h2 id="std.coff.Coff.getCoffHeader" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getCoffHeader</span><a href="#src.zig-std.coff.Coff.getCoffHeader">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getCoffHeader</span>(self: <a href="std.coff.Coff.html">Coff</a>) <a href="std.coff.CoffHeader.html">CoffHeader</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.coff.Coff.html">Coff</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.coff.Coff.getCoffHeader">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getCoffHeader</span>(self: <a href="std.coff.Coff.html">Coff</a>) <a href="std.coff.CoffHeader.html">CoffHeader</a> {
+    <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(*<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.CoffHeader.html">CoffHeader</a>, <span class="tok-builtin">@ptrCast</span>(self.data[self.coff_header_offset..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(<a href="std.coff.CoffHeader.html">CoffHeader</a>)])).*;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.coff.Coff.getOptionalHeader" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getOptionalHeader</span><a href="#src.zig-std.coff.Coff.getOptionalHeader">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getOptionalHeader</span>(self: <a href="std.coff.Coff.html">Coff</a>) <a href="std.coff.OptionalHeader.html">OptionalHeader</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.coff.Coff.html">Coff</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.coff.Coff.getOptionalHeader">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getOptionalHeader</span>(self: <a href="std.coff.Coff.html">Coff</a>) <a href="std.coff.OptionalHeader.html">OptionalHeader</a> {
+    <a href="std.debug.html#std.debug.assert">assert</a>(self.is_image);
+    <span class="tok-kw">const</span> offset = self.coff_header_offset + <span class="tok-builtin">@sizeOf</span>(<a href="std.coff.CoffHeader.html">CoffHeader</a>);
+    <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(*<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.OptionalHeader.html">OptionalHeader</a>, <span class="tok-builtin">@ptrCast</span>(self.data[offset..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(<a href="std.coff.OptionalHeader.html">OptionalHeader</a>)])).*;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.coff.Coff.getOptionalHeader32" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getOptionalHeader32</span><a href="#src.zig-std.coff.Coff.getOptionalHeader32">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getOptionalHeader32</span>(self: <a href="std.coff.Coff.html">Coff</a>) <a href="std.coff.OptionalHeaderPE32.html">OptionalHeaderPE32</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.coff.Coff.html">Coff</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.coff.Coff.getOptionalHeader32">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getOptionalHeader32</span>(self: <a href="std.coff.Coff.html">Coff</a>) <a href="std.coff.OptionalHeaderPE32.html">OptionalHeaderPE32</a> {
+    <a href="std.debug.html#std.debug.assert">assert</a>(self.is_image);
+    <span class="tok-kw">const</span> offset = self.coff_header_offset + <span class="tok-builtin">@sizeOf</span>(<a href="std.coff.CoffHeader.html">CoffHeader</a>);
+    <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(*<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.OptionalHeaderPE32.html">OptionalHeaderPE32</a>, <span class="tok-builtin">@ptrCast</span>(self.data[offset..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(<a href="std.coff.OptionalHeaderPE32.html">OptionalHeaderPE32</a>)])).*;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.coff.Coff.getOptionalHeader64" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getOptionalHeader64</span><a href="#src.zig-std.coff.Coff.getOptionalHeader64">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getOptionalHeader64</span>(self: <a href="std.coff.Coff.html">Coff</a>) <a href="std.coff.OptionalHeaderPE64.html">OptionalHeaderPE64</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.coff.Coff.html">Coff</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.coff.Coff.getOptionalHeader64">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getOptionalHeader64</span>(self: <a href="std.coff.Coff.html">Coff</a>) <a href="std.coff.OptionalHeaderPE64.html">OptionalHeaderPE64</a> {
+    <a href="std.debug.html#std.debug.assert">assert</a>(self.is_image);
+    <span class="tok-kw">const</span> offset = self.coff_header_offset + <span class="tok-builtin">@sizeOf</span>(<a href="std.coff.CoffHeader.html">CoffHeader</a>);
+    <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(*<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.OptionalHeaderPE64.html">OptionalHeaderPE64</a>, <span class="tok-builtin">@ptrCast</span>(self.data[offset..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(<a href="std.coff.OptionalHeaderPE64.html">OptionalHeaderPE64</a>)])).*;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.coff.Coff.getImageBase" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getImageBase</span><a href="#src.zig-std.coff.Coff.getImageBase">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getImageBase</span>(self: <a href="std.coff.Coff.html">Coff</a>) <span class="tok-type">u64</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.coff.Coff.html">Coff</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.coff.Coff.getImageBase">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getImageBase</span>(self: <a href="std.coff.Coff.html">Coff</a>) <span class="tok-type">u64</span> {
+    <span class="tok-kw">const</span> hdr = self.getOptionalHeader();
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (hdr.magic) {
+        <a href="std.coff.html#std.coff.IMAGE_NT_OPTIONAL_HDR32_MAGIC">IMAGE_NT_OPTIONAL_HDR32_MAGIC</a> =&gt; self.getOptionalHeader32().image_base,
+        <a href="std.coff.html#std.coff.IMAGE_NT_OPTIONAL_HDR64_MAGIC">IMAGE_NT_OPTIONAL_HDR64_MAGIC</a> =&gt; self.getOptionalHeader64().image_base,
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // We assume we have validated the header already
+    </span>};
+}</code></pre></details></div></div><div class="decl"><h2 id="std.coff.Coff.getNumberOfDataDirectories" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getNumberOfDataDirectories</span><a href="#src.zig-std.coff.Coff.getNumberOfDataDirectories">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getNumberOfDataDirectories</span>(self: <a href="std.coff.Coff.html">Coff</a>) <span class="tok-type">u32</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.coff.Coff.html">Coff</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.coff.Coff.getNumberOfDataDirectories">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getNumberOfDataDirectories</span>(self: <a href="std.coff.Coff.html">Coff</a>) <span class="tok-type">u32</span> {
+    <span class="tok-kw">const</span> hdr = self.getOptionalHeader();
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (hdr.magic) {
+        <a href="std.coff.html#std.coff.IMAGE_NT_OPTIONAL_HDR32_MAGIC">IMAGE_NT_OPTIONAL_HDR32_MAGIC</a> =&gt; self.getOptionalHeader32().number_of_rva_and_sizes,
+        <a href="std.coff.html#std.coff.IMAGE_NT_OPTIONAL_HDR64_MAGIC">IMAGE_NT_OPTIONAL_HDR64_MAGIC</a> =&gt; self.getOptionalHeader64().number_of_rva_and_sizes,
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // We assume we have validated the header already
+    </span>};
+}</code></pre></details></div></div><div class="decl"><h2 id="std.coff.Coff.getDataDirectories" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getDataDirectories</span><a href="#src.zig-std.coff.Coff.getDataDirectories">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getDataDirectories</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>) []<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.ImageDataDirectory.html">ImageDataDirectory</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.coff.Coff.getDataDirectories">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getDataDirectories</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>) []<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.ImageDataDirectory.html">ImageDataDirectory</a> {
+    <span class="tok-kw">const</span> hdr = self.getOptionalHeader();
+    <span class="tok-kw">const</span> size: <span class="tok-type">usize</span> = <span class="tok-kw">switch</span> (hdr.magic) {
+        <a href="std.coff.html#std.coff.IMAGE_NT_OPTIONAL_HDR32_MAGIC">IMAGE_NT_OPTIONAL_HDR32_MAGIC</a> =&gt; <span class="tok-builtin">@sizeOf</span>(<a href="std.coff.OptionalHeaderPE32.html">OptionalHeaderPE32</a>),
+        <a href="std.coff.html#std.coff.IMAGE_NT_OPTIONAL_HDR64_MAGIC">IMAGE_NT_OPTIONAL_HDR64_MAGIC</a> =&gt; <span class="tok-builtin">@sizeOf</span>(<a href="std.coff.OptionalHeaderPE64.html">OptionalHeaderPE64</a>),
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // We assume we have validated the header already
+    </span>};
+    <span class="tok-kw">const</span> offset = self.coff_header_offset + <span class="tok-builtin">@sizeOf</span>(<a href="std.coff.CoffHeader.html">CoffHeader</a>) + size;
+    <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>([*]<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.ImageDataDirectory.html">ImageDataDirectory</a>, <span class="tok-builtin">@ptrCast</span>(self.data[offset..]))[<span class="tok-number">0</span>..self.getNumberOfDataDirectories()];
+}</code></pre></details></div></div><div class="decl"><h2 id="std.coff.Coff.getSymtab" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getSymtab</span><a href="#src.zig-std.coff.Coff.getSymtab">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSymtab</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>) ?<a href="std.coff.Symtab.html">Symtab</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.coff.Coff.getSymtab">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSymtab</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>) ?<a href="std.coff.Symtab.html">Symtab</a> {
+    <span class="tok-kw">const</span> coff_header = self.getCoffHeader();
+    <span class="tok-kw">if</span> (coff_header.pointer_to_symbol_table == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+    <span class="tok-kw">const</span> offset = coff_header.pointer_to_symbol_table;
+    <span class="tok-kw">const</span> size = coff_header.number_of_symbols * <a href="std.coff.Symbol.html">Symbol</a>.<a href="std.coff.Symbol.html#std.coff.Symbol.sizeOf">sizeOf</a>();
+    <span class="tok-kw">return</span> .{ .buffer = self.data[offset..][<span class="tok-number">0</span>..size] };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.coff.Coff.getStrtab" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getStrtab</span><a href="#src.zig-std.coff.Coff.getStrtab">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getStrtab</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>) <span class="tok-kw">error</span>{InvalidStrtabSize}!?<a href="std.coff.Strtab.html">Strtab</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.coff.Coff.getStrtab">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getStrtab</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>) <span class="tok-kw">error</span>{InvalidStrtabSize}!?<a href="std.coff.Strtab.html">Strtab</a> {
+    <span class="tok-kw">const</span> coff_header = self.getCoffHeader();
+    <span class="tok-kw">if</span> (coff_header.pointer_to_symbol_table == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+    <span class="tok-kw">const</span> offset = coff_header.pointer_to_symbol_table + <a href="std.coff.Symbol.html">Symbol</a>.<a href="std.coff.Symbol.html#std.coff.Symbol.sizeOf">sizeOf</a>() * coff_header.number_of_symbols;
+    <span class="tok-kw">const</span> size = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u32</span>, self.data[offset..][<span class="tok-number">0</span>..<span class="tok-number">4</span>], .little);
+    <span class="tok-kw">if</span> ((offset + size) &gt; self.data.len) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidStrtabSize;
+
+    <span class="tok-kw">return</span> <a href="std.coff.Strtab.html">Strtab</a>{ .buffer = self.data[offset..][<span class="tok-number">0</span>..size] };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.coff.Coff.strtabRequired" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">strtabRequired</span><a href="#src.zig-std.coff.Coff.strtabRequired">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">strtabRequired</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>) <span class="tok-type">bool</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.coff.Coff.strtabRequired">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">strtabRequired</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">for</span> (self.getSectionHeaders()) |*sect_hdr| <span class="tok-kw">if</span> (sect_hdr.getName() == <span class="tok-null">null</span>) <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+    <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.coff.Coff.getSectionHeaders" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getSectionHeaders</span><a href="#src.zig-std.coff.Coff.getSectionHeaders">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSectionHeaders</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>) []<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.coff.Coff.getSectionHeaders">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSectionHeaders</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>) []<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a> {
+    <span class="tok-kw">const</span> coff_header = self.getCoffHeader();
+    <span class="tok-kw">const</span> offset = self.coff_header_offset + <span class="tok-builtin">@sizeOf</span>(<a href="std.coff.CoffHeader.html">CoffHeader</a>) + coff_header.size_of_optional_header;
+    <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>([*]<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a>, <span class="tok-builtin">@ptrCast</span>(self.data.ptr + offset))[<span class="tok-number">0</span>..coff_header.number_of_sections];
+}</code></pre></details></div></div><div class="decl"><h2 id="std.coff.Coff.getSectionHeadersAlloc" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getSectionHeadersAlloc</span><a href="#src.zig-std.coff.Coff.getSectionHeadersAlloc">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSectionHeadersAlloc</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>, allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) ![]<a href="std.coff.SectionHeader.html">SectionHeader</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a></code></pre></div><div><pre><code>allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.coff.Coff.getSectionHeadersAlloc">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSectionHeadersAlloc</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>, allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) ![]<a href="std.coff.SectionHeader.html">SectionHeader</a> {
+    <span class="tok-kw">const</span> section_headers = self.getSectionHeaders();
+    <span class="tok-kw">const</span> out_buff = <span class="tok-kw">try</span> allocator.alloc(<a href="std.coff.SectionHeader.html">SectionHeader</a>, section_headers.len);
+    <span class="tok-kw">for</span> (out_buff, <span class="tok-number">0</span>..) |*section_header, i| {
+        section_header.* = section_headers[i];
+    }
+
+    <span class="tok-kw">return</span> out_buff;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.coff.Coff.getSectionName" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getSectionName</span><a href="#src.zig-std.coff.Coff.getSectionName">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSectionName</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>, sect_hdr: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a>) <span class="tok-kw">error</span>{InvalidStrtabSize}![]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a></code></pre></div><div><pre><code>sect_hdr: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.coff.Coff.getSectionName">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSectionName</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>, sect_hdr: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a>) <span class="tok-kw">error</span>{InvalidStrtabSize}![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">const</span> name = sect_hdr.getName() <span class="tok-kw">orelse</span> blk: {
+        <span class="tok-kw">const</span> strtab = (<span class="tok-kw">try</span> self.getStrtab()).?;
+        <span class="tok-kw">const</span> name_offset = sect_hdr.getNameOffset().?;
+        <span class="tok-kw">break</span> :blk strtab.get(name_offset);
+    };
+    <span class="tok-kw">return</span> name;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.coff.Coff.getSectionByName" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getSectionByName</span><a href="#src.zig-std.coff.Coff.getSectionByName">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSectionByName</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>, <span class="tok-kw">comptime</span> name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?*<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a></code></pre></div><div><pre><code>name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.coff.Coff.getSectionByName">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSectionByName</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>, <span class="tok-kw">comptime</span> name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?*<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a> {
+    <span class="tok-kw">for</span> (self.getSectionHeaders()) |*sect| {
+        <span class="tok-kw">const</span> section_name = self.getSectionName(sect) <span class="tok-kw">catch</span> |e| <span class="tok-kw">switch</span> (e) {
+            <span class="tok-kw">error</span>.InvalidStrtabSize =&gt; <span class="tok-kw">continue</span>,<span class="tok-comment"> //ignore invalid(?) strtab entries - see also GitHub issue #15238
+        </span>};
+        <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, section_name, name)) {
+            <span class="tok-kw">return</span> sect;
+        }
+    }
+    <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.coff.Coff.getSectionData" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getSectionData</span><a href="#src.zig-std.coff.Coff.getSectionData">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSectionData</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>, sec: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a></code></pre></div><div><pre><code>sec: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.coff.Coff.getSectionData">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSectionData</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>, sec: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    <span class="tok-kw">const</span> offset = <span class="tok-kw">if</span> (self.is_loaded) sec.virtual_address <span class="tok-kw">else</span> sec.pointer_to_raw_data;
+    <span class="tok-kw">return</span> self.data[offset..][<span class="tok-number">0</span>..sec.virtual_size];
+}</code></pre></details></div></div><div class="decl"><h2 id="std.coff.Coff.getSectionDataAlloc" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getSectionDataAlloc</span><a href="#src.zig-std.coff.Coff.getSectionDataAlloc">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSectionDataAlloc</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>, sec: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a>, allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) ![]<span class="tok-type">u8</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a></code></pre></div><div><pre><code>sec: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a></code></pre></div><div><pre><code>allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.coff.Coff.getSectionDataAlloc">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSectionDataAlloc</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>, sec: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a>, allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) ![]<span class="tok-type">u8</span> {
+    <span class="tok-kw">const</span> section_data = self.getSectionData(sec);
+    <span class="tok-kw">return</span> allocator.dupe(<span class="tok-type">u8</span>, section_data);
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.coff.Coff">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Coff = <span class="tok-kw">struct</span> {
+    data: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,<span class="tok-comment">
+    // Set if `data` is backed by the image as loaded by the loader
+    </span>is_loaded: <span class="tok-type">bool</span>,
+    is_image: <span class="tok-type">bool</span>,
+    coff_header_offset: <span class="tok-type">usize</span>,
+
+    guid: [<span class="tok-number">16</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>,
+    age: <span class="tok-type">u32</span> = <span class="tok-null">undefined</span>,<span class="tok-comment">
+
+    // The lifetime of `data` must be longer than the lifetime of the returned Coff
+    </span><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(data: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, is_loaded: <span class="tok-type">bool</span>) !<a href="std.coff.Coff.html">Coff</a> {
+        <span class="tok-kw">const</span> pe_pointer_offset = <span class="tok-number">0x3C</span>;
+        <span class="tok-kw">const</span> pe_magic = <span class="tok-str">&quot;PE\x00\x00&quot;</span>;
+
+        <span class="tok-kw">var</span> stream = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(data);
+        <span class="tok-kw">const</span> reader = stream.reader();
+        <span class="tok-kw">try</span> stream.seekTo(pe_pointer_offset);
+        <span class="tok-kw">const</span> coff_header_offset = <span class="tok-kw">try</span> reader.readInt(<span class="tok-type">u32</span>, .little);
+        <span class="tok-kw">try</span> stream.seekTo(coff_header_offset);
+        <span class="tok-kw">var</span> buf: [<span class="tok-number">4</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">try</span> reader.readNoEof(&amp;buf);
+        <span class="tok-kw">const</span> is_image = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, pe_magic, &amp;buf);
+
+        <span class="tok-kw">var</span> coff = <span class="tok-builtin">@This</span>(){
+            .data = data,
+            .is_image = is_image,
+            .is_loaded = is_loaded,
+            .coff_header_offset = coff_header_offset,
+        };<span class="tok-comment">
+
+        // Do some basic validation upfront
+        </span><span class="tok-kw">if</span> (is_image) {
+            coff.coff_header_offset = coff.coff_header_offset + <span class="tok-number">4</span>;
+            <span class="tok-kw">const</span> coff_header = coff.getCoffHeader();
+            <span class="tok-kw">if</span> (coff_header.size_of_optional_header == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.MissingPEHeader;
+        }<span class="tok-comment">
+
+        // JK: we used to check for architecture here and throw an error if not x86 or derivative.
+        // However I am willing to take a leap of faith and let aarch64 have a shot also.
+
+        </span><span class="tok-kw">return</span> coff;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getPdbPath</span>(self: *<a href="std.coff.Coff.html">Coff</a>) !?[]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <a href="std.debug.html#std.debug.assert">assert</a>(self.is_image);
+
+        <span class="tok-kw">const</span> data_dirs = self.getDataDirectories();
+        <span class="tok-kw">if</span> (<span class="tok-builtin">@intFromEnum</span>(<a href="std.coff.DirectoryEntry.html">DirectoryEntry</a>.<a href="#">DEBUG</a>) &gt;= data_dirs.len) <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+        <span class="tok-kw">const</span> debug_dir = data_dirs[<span class="tok-builtin">@intFromEnum</span>(<a href="std.coff.DirectoryEntry.html">DirectoryEntry</a>.<a href="#">DEBUG</a>)];
+        <span class="tok-kw">var</span> stream = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(self.data);
+        <span class="tok-kw">const</span> reader = stream.reader();
+
+        <span class="tok-kw">if</span> (self.is_loaded) {
+            <span class="tok-kw">try</span> stream.seekTo(debug_dir.virtual_address);
+        } <span class="tok-kw">else</span> {<span class="tok-comment">
+            // Find what section the debug_dir is in, in order to convert the RVA to a file offset
+            </span><span class="tok-kw">for</span> (self.getSectionHeaders()) |*sect| {
+                <span class="tok-kw">if</span> (debug_dir.virtual_address &gt;= sect.virtual_address <span class="tok-kw">and</span> debug_dir.virtual_address &lt; sect.virtual_address + sect.virtual_size) {
+                    <span class="tok-kw">try</span> stream.seekTo(sect.pointer_to_raw_data + (debug_dir.virtual_address - sect.virtual_address));
+                    <span class="tok-kw">break</span>;
+                }
+            } <span class="tok-kw">else</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidDebugDirectory;
+        }<span class="tok-comment">
+
+        // Find the correct DebugDirectoryEntry, and where its data is stored.
+        // It can be in any section.
+        </span><span class="tok-kw">const</span> debug_dir_entry_count = debug_dir.size / <span class="tok-builtin">@sizeOf</span>(<a href="std.coff.DebugDirectoryEntry.html">DebugDirectoryEntry</a>);
+        <span class="tok-kw">var</span> i: <span class="tok-type">u32</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">while</span> (i &lt; debug_dir_entry_count) : (i += <span class="tok-number">1</span>) {
+            <span class="tok-kw">const</span> debug_dir_entry = <span class="tok-kw">try</span> reader.readStruct(<a href="std.coff.DebugDirectoryEntry.html">DebugDirectoryEntry</a>);
+            <span class="tok-kw">if</span> (debug_dir_entry.<span class="tok-type">type</span> == .CODEVIEW) {
+                <span class="tok-kw">const</span> dir_offset = <span class="tok-kw">if</span> (self.is_loaded) debug_dir_entry.address_of_raw_data <span class="tok-kw">else</span> debug_dir_entry.pointer_to_raw_data;
+                <span class="tok-kw">try</span> stream.seekTo(dir_offset);
+                <span class="tok-kw">break</span>;
+            }
+        } <span class="tok-kw">else</span> <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+        <span class="tok-kw">var</span> cv_signature: [<span class="tok-number">4</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;<span class="tok-comment"> // CodeView signature
+        </span><span class="tok-kw">try</span> reader.readNoEof(cv_signature[<span class="tok-number">0</span>..]);<span class="tok-comment">
+        // 'RSDS' indicates PDB70 format, used by lld.
+        </span><span class="tok-kw">if</span> (!<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, &amp;cv_signature, <span class="tok-str">&quot;RSDS&quot;</span>))
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidPEMagic;
+        <span class="tok-kw">try</span> reader.readNoEof(self.guid[<span class="tok-number">0</span>..]);
+        self.age = <span class="tok-kw">try</span> reader.readInt(<span class="tok-type">u32</span>, .little);<span class="tok-comment">
+
+        // Finally read the null-terminated string.
+        </span><span class="tok-kw">const</span> start = reader.context.pos;
+        <span class="tok-kw">const</span> len = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, self.data[start..], <span class="tok-number">0</span>) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+        <span class="tok-kw">return</span> self.data[start .. start + len];
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getCoffHeader</span>(self: <a href="std.coff.Coff.html">Coff</a>) <a href="std.coff.CoffHeader.html">CoffHeader</a> {
+        <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(*<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.CoffHeader.html">CoffHeader</a>, <span class="tok-builtin">@ptrCast</span>(self.data[self.coff_header_offset..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(<a href="std.coff.CoffHeader.html">CoffHeader</a>)])).*;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getOptionalHeader</span>(self: <a href="std.coff.Coff.html">Coff</a>) <a href="std.coff.OptionalHeader.html">OptionalHeader</a> {
+        <a href="std.debug.html#std.debug.assert">assert</a>(self.is_image);
+        <span class="tok-kw">const</span> offset = self.coff_header_offset + <span class="tok-builtin">@sizeOf</span>(<a href="std.coff.CoffHeader.html">CoffHeader</a>);
+        <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(*<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.OptionalHeader.html">OptionalHeader</a>, <span class="tok-builtin">@ptrCast</span>(self.data[offset..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(<a href="std.coff.OptionalHeader.html">OptionalHeader</a>)])).*;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getOptionalHeader32</span>(self: <a href="std.coff.Coff.html">Coff</a>) <a href="std.coff.OptionalHeaderPE32.html">OptionalHeaderPE32</a> {
+        <a href="std.debug.html#std.debug.assert">assert</a>(self.is_image);
+        <span class="tok-kw">const</span> offset = self.coff_header_offset + <span class="tok-builtin">@sizeOf</span>(<a href="std.coff.CoffHeader.html">CoffHeader</a>);
+        <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(*<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.OptionalHeaderPE32.html">OptionalHeaderPE32</a>, <span class="tok-builtin">@ptrCast</span>(self.data[offset..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(<a href="std.coff.OptionalHeaderPE32.html">OptionalHeaderPE32</a>)])).*;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getOptionalHeader64</span>(self: <a href="std.coff.Coff.html">Coff</a>) <a href="std.coff.OptionalHeaderPE64.html">OptionalHeaderPE64</a> {
+        <a href="std.debug.html#std.debug.assert">assert</a>(self.is_image);
+        <span class="tok-kw">const</span> offset = self.coff_header_offset + <span class="tok-builtin">@sizeOf</span>(<a href="std.coff.CoffHeader.html">CoffHeader</a>);
+        <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(*<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.OptionalHeaderPE64.html">OptionalHeaderPE64</a>, <span class="tok-builtin">@ptrCast</span>(self.data[offset..][<span class="tok-number">0</span>..<span class="tok-builtin">@sizeOf</span>(<a href="std.coff.OptionalHeaderPE64.html">OptionalHeaderPE64</a>)])).*;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getImageBase</span>(self: <a href="std.coff.Coff.html">Coff</a>) <span class="tok-type">u64</span> {
+        <span class="tok-kw">const</span> hdr = self.getOptionalHeader();
+        <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (hdr.magic) {
+            <a href="std.coff.html#std.coff.IMAGE_NT_OPTIONAL_HDR32_MAGIC">IMAGE_NT_OPTIONAL_HDR32_MAGIC</a> =&gt; self.getOptionalHeader32().image_base,
+            <a href="std.coff.html#std.coff.IMAGE_NT_OPTIONAL_HDR64_MAGIC">IMAGE_NT_OPTIONAL_HDR64_MAGIC</a> =&gt; self.getOptionalHeader64().image_base,
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // We assume we have validated the header already
+        </span>};
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getNumberOfDataDirectories</span>(self: <a href="std.coff.Coff.html">Coff</a>) <span class="tok-type">u32</span> {
+        <span class="tok-kw">const</span> hdr = self.getOptionalHeader();
+        <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (hdr.magic) {
+            <a href="std.coff.html#std.coff.IMAGE_NT_OPTIONAL_HDR32_MAGIC">IMAGE_NT_OPTIONAL_HDR32_MAGIC</a> =&gt; self.getOptionalHeader32().number_of_rva_and_sizes,
+            <a href="std.coff.html#std.coff.IMAGE_NT_OPTIONAL_HDR64_MAGIC">IMAGE_NT_OPTIONAL_HDR64_MAGIC</a> =&gt; self.getOptionalHeader64().number_of_rva_and_sizes,
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // We assume we have validated the header already
+        </span>};
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getDataDirectories</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>) []<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.ImageDataDirectory.html">ImageDataDirectory</a> {
+        <span class="tok-kw">const</span> hdr = self.getOptionalHeader();
+        <span class="tok-kw">const</span> size: <span class="tok-type">usize</span> = <span class="tok-kw">switch</span> (hdr.magic) {
+            <a href="std.coff.html#std.coff.IMAGE_NT_OPTIONAL_HDR32_MAGIC">IMAGE_NT_OPTIONAL_HDR32_MAGIC</a> =&gt; <span class="tok-builtin">@sizeOf</span>(<a href="std.coff.OptionalHeaderPE32.html">OptionalHeaderPE32</a>),
+            <a href="std.coff.html#std.coff.IMAGE_NT_OPTIONAL_HDR64_MAGIC">IMAGE_NT_OPTIONAL_HDR64_MAGIC</a> =&gt; <span class="tok-builtin">@sizeOf</span>(<a href="std.coff.OptionalHeaderPE64.html">OptionalHeaderPE64</a>),
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // We assume we have validated the header already
+        </span>};
+        <span class="tok-kw">const</span> offset = self.coff_header_offset + <span class="tok-builtin">@sizeOf</span>(<a href="std.coff.CoffHeader.html">CoffHeader</a>) + size;
+        <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>([*]<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.ImageDataDirectory.html">ImageDataDirectory</a>, <span class="tok-builtin">@ptrCast</span>(self.data[offset..]))[<span class="tok-number">0</span>..self.getNumberOfDataDirectories()];
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSymtab</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>) ?<a href="std.coff.Symtab.html">Symtab</a> {
+        <span class="tok-kw">const</span> coff_header = self.getCoffHeader();
+        <span class="tok-kw">if</span> (coff_header.pointer_to_symbol_table == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+        <span class="tok-kw">const</span> offset = coff_header.pointer_to_symbol_table;
+        <span class="tok-kw">const</span> size = coff_header.number_of_symbols * <a href="std.coff.Symbol.html">Symbol</a>.<a href="std.coff.Symbol.html#std.coff.Symbol.sizeOf">sizeOf</a>();
+        <span class="tok-kw">return</span> .{ .buffer = self.data[offset..][<span class="tok-number">0</span>..size] };
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getStrtab</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>) <span class="tok-kw">error</span>{InvalidStrtabSize}!?<a href="std.coff.Strtab.html">Strtab</a> {
+        <span class="tok-kw">const</span> coff_header = self.getCoffHeader();
+        <span class="tok-kw">if</span> (coff_header.pointer_to_symbol_table == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+
+        <span class="tok-kw">const</span> offset = coff_header.pointer_to_symbol_table + <a href="std.coff.Symbol.html">Symbol</a>.<a href="std.coff.Symbol.html#std.coff.Symbol.sizeOf">sizeOf</a>() * coff_header.number_of_symbols;
+        <span class="tok-kw">const</span> size = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(<span class="tok-type">u32</span>, self.data[offset..][<span class="tok-number">0</span>..<span class="tok-number">4</span>], .little);
+        <span class="tok-kw">if</span> ((offset + size) &gt; self.data.len) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidStrtabSize;
+
+        <span class="tok-kw">return</span> <a href="std.coff.Strtab.html">Strtab</a>{ .buffer = self.data[offset..][<span class="tok-number">0</span>..size] };
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">strtabRequired</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">for</span> (self.getSectionHeaders()) |*sect_hdr| <span class="tok-kw">if</span> (sect_hdr.getName() == <span class="tok-null">null</span>) <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+        <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSectionHeaders</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>) []<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a> {
+        <span class="tok-kw">const</span> coff_header = self.getCoffHeader();
+        <span class="tok-kw">const</span> offset = self.coff_header_offset + <span class="tok-builtin">@sizeOf</span>(<a href="std.coff.CoffHeader.html">CoffHeader</a>) + coff_header.size_of_optional_header;
+        <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>([*]<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a>, <span class="tok-builtin">@ptrCast</span>(self.data.ptr + offset))[<span class="tok-number">0</span>..coff_header.number_of_sections];
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSectionHeadersAlloc</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>, allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) ![]<a href="std.coff.SectionHeader.html">SectionHeader</a> {
+        <span class="tok-kw">const</span> section_headers = self.getSectionHeaders();
+        <span class="tok-kw">const</span> out_buff = <span class="tok-kw">try</span> allocator.alloc(<a href="std.coff.SectionHeader.html">SectionHeader</a>, section_headers.len);
+        <span class="tok-kw">for</span> (out_buff, <span class="tok-number">0</span>..) |*section_header, i| {
+            section_header.* = section_headers[i];
+        }
+
+        <span class="tok-kw">return</span> out_buff;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSectionName</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>, sect_hdr: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a>) <span class="tok-kw">error</span>{InvalidStrtabSize}![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">const</span> name = sect_hdr.getName() <span class="tok-kw">orelse</span> blk: {
+            <span class="tok-kw">const</span> strtab = (<span class="tok-kw">try</span> self.getStrtab()).?;
+            <span class="tok-kw">const</span> name_offset = sect_hdr.getNameOffset().?;
+            <span class="tok-kw">break</span> :blk strtab.get(name_offset);
+        };
+        <span class="tok-kw">return</span> name;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSectionByName</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>, <span class="tok-kw">comptime</span> name: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) ?*<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a> {
+        <span class="tok-kw">for</span> (self.getSectionHeaders()) |*sect| {
+            <span class="tok-kw">const</span> section_name = self.getSectionName(sect) <span class="tok-kw">catch</span> |e| <span class="tok-kw">switch</span> (e) {
+                <span class="tok-kw">error</span>.InvalidStrtabSize =&gt; <span class="tok-kw">continue</span>,<span class="tok-comment"> //ignore invalid(?) strtab entries - see also GitHub issue #15238
+            </span>};
+            <span class="tok-kw">if</span> (<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, section_name, name)) {
+                <span class="tok-kw">return</span> sect;
+            }
+        }
+        <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSectionData</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>, sec: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">const</span> offset = <span class="tok-kw">if</span> (self.is_loaded) sec.virtual_address <span class="tok-kw">else</span> sec.pointer_to_raw_data;
+        <span class="tok-kw">return</span> self.data[offset..][<span class="tok-number">0</span>..sec.virtual_size];
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getSectionDataAlloc</span>(self: *<span class="tok-kw">const</span> <a href="std.coff.Coff.html">Coff</a>, sec: *<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <a href="std.coff.SectionHeader.html">SectionHeader</a>, allocator: <a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>) ![]<span class="tok-type">u8</span> {
+        <span class="tok-kw">const</span> section_data = self.getSectionData(sec);
+        <span class="tok-kw">return</span> allocator.dupe(<span class="tok-type">u8</span>, section_data);
+    }
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

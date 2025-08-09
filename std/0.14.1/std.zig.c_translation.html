@@ -1,0 +1,1265 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">zig</a></li><li><a href="std.zig.c_translation.html" class="active">c_translation</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.zig.c_translation" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.zig.c_translation</span><a href="#src.zig-std.zig.c_translation">[src]</a></h1><div class="sectNamespaces"><h2 class="sectionHeader">Namespaces</h2><ul class="listNamespaces columns"><li><a href="std.zig.c_translation.Macros.html">std.zig.c_translation.Macros</a></li><li><a href="std.zig.c_translation.MacroArithmetic.html">std.zig.c_translation.MacroArithmetic</a></li></ul></div><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.zig.c_translation.CIntLiteralBase.html">std.zig.c_translation.CIntLiteralBase</a></li><li><a href="std.zig.c_translation.CIntLiteralBase.html">std.zig.c_translation.CIntLiteralBase</a></li></ul></div><div class="sectTypes"><h2 class="sectionHeader">Types</h2><div class="listTypes"><div class="decl"><h2 id="std.zig.c_translation.FlexibleArrayType" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">FlexibleArrayType</span><a href="#src.zig-std.zig.c_translation.FlexibleArrayType">[src]</a></h2><div class="tldDocs"><p>Constructs a [*c] pointer with the const and volatile annotations
+from SelfType for pointing to a C flexible array of ElementType.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>SelfType: <span class="tok-type">type</span></code></pre></div><div><pre><code>ElementType: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.c_translation.FlexibleArrayType">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">FlexibleArrayType</span>(<span class="tok-kw">comptime</span> SelfType: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> ElementType: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(SelfType)) {
+        .pointer =&gt; |ptr| {
+            <span class="tok-kw">return</span> <span class="tok-builtin">@Type</span>(.{ .pointer = .{
+                .size = .c,
+                .is_const = ptr.is_const,
+                .is_volatile = ptr.is_volatile,
+                .alignment = <span class="tok-builtin">@alignOf</span>(ElementType),
+                .address_space = .generic,
+                .child = ElementType,
+                .is_allowzero = <span class="tok-null">true</span>,
+                .sentinel_ptr = <span class="tok-null">null</span>,
+            } });
+        },
+        <span class="tok-kw">else</span> =&gt; |info| <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Invalid self type \&quot;&quot;</span> ++ <span class="tok-builtin">@tagName</span>(info) ++ <span class="tok-str">&quot;\&quot; for flexible array getter: &quot;</span> ++ <span class="tok-builtin">@typeName</span>(SelfType)),
+    }
+}</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.zig.c_translation.cast" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">cast</span><a href="#src.zig-std.zig.c_translation.cast">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">cast</span>(<span class="tok-kw">comptime</span> DestType: <span class="tok-type">type</span>, target: <span class="tok-kw">anytype</span>) DestType</code></pre></div><div class="tldDocs"><p>Given a type and value, cast the value to the type as c would.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>DestType: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.c_translation.cast">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">cast</span>(<span class="tok-kw">comptime</span> DestType: <span class="tok-type">type</span>, target: <span class="tok-kw">anytype</span>) DestType {<span class="tok-comment">
+    // this function should behave like transCCast in translate-c, except it's for macros
+    </span><span class="tok-kw">const</span> SourceType = <span class="tok-builtin">@TypeOf</span>(target);
+    <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(DestType)) {
+        .@&quot;fn&quot; =&gt; <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.castToPtr">castToPtr</a>(*<span class="tok-kw">const</span> DestType, SourceType, target),
+        .pointer =&gt; <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.castToPtr">castToPtr</a>(DestType, SourceType, target),
+        .optional =&gt; |dest_opt| {
+            <span class="tok-kw">if</span> (<span class="tok-builtin">@typeInfo</span>(dest_opt.child) == .pointer) {
+                <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.castToPtr">castToPtr</a>(DestType, SourceType, target);
+            } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<span class="tok-builtin">@typeInfo</span>(dest_opt.child) == .@&quot;fn&quot;) {
+                <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.castToPtr">castToPtr</a>(?*<span class="tok-kw">const</span> dest_opt.child, SourceType, target);
+            }
+        },
+        .int =&gt; {
+            <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(SourceType)) {
+                .pointer =&gt; {
+                    <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.castInt">castInt</a>(DestType, <span class="tok-builtin">@intFromPtr</span>(target));
+                },
+                .optional =&gt; |opt| {
+                    <span class="tok-kw">if</span> (<span class="tok-builtin">@typeInfo</span>(opt.child) == .pointer) {
+                        <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.castInt">castInt</a>(DestType, <span class="tok-builtin">@intFromPtr</span>(target));
+                    }
+                },
+                .int =&gt; {
+                    <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.castInt">castInt</a>(DestType, target);
+                },
+                .@&quot;fn&quot; =&gt; {
+                    <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.castInt">castInt</a>(DestType, <span class="tok-builtin">@intFromPtr</span>(&amp;target));
+                },
+                .<span class="tok-type">bool</span> =&gt; {
+                    <span class="tok-kw">return</span> <span class="tok-builtin">@intFromBool</span>(target);
+                },
+                <span class="tok-kw">else</span> =&gt; {},
+            }
+        },
+        .float =&gt; {
+            <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(SourceType)) {
+                .int =&gt; <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(DestType, <span class="tok-builtin">@floatFromInt</span>(target)),
+                .float =&gt; <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(DestType, <span class="tok-builtin">@floatCast</span>(target)),
+                .<span class="tok-type">bool</span> =&gt; <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(DestType, <span class="tok-builtin">@floatFromInt</span>(<span class="tok-builtin">@intFromBool</span>(target))),
+                <span class="tok-kw">else</span> =&gt; {},
+            }
+        },
+        .@&quot;union&quot; =&gt; |info| {
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (info.fields) |field| {
+                <span class="tok-kw">if</span> (field.<span class="tok-type">type</span> == SourceType) <span class="tok-kw">return</span> <span class="tok-builtin">@unionInit</span>(DestType, field.name, target);
+            }
+            <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;cast to union type '&quot;</span> ++ <span class="tok-builtin">@typeName</span>(DestType) ++ <span class="tok-str">&quot;' from type '&quot;</span> ++ <span class="tok-builtin">@typeName</span>(SourceType) ++ <span class="tok-str">&quot;' which is not present in union&quot;</span>);
+        },
+        .<span class="tok-type">bool</span> =&gt; <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(<span class="tok-type">usize</span>, target) != <span class="tok-number">0</span>,
+        <span class="tok-kw">else</span> =&gt; {},
+    }
+    <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(DestType, target);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.zig.c_translation.sizeof" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">sizeof</span><a href="#src.zig-std.zig.c_translation.sizeof">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">sizeof</span>(target: <span class="tok-kw">anytype</span>) <span class="tok-type">usize</span></code></pre></div><div class="tldDocs"><p>Given a value returns its size as C's sizeof operator would.</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.c_translation.sizeof">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">sizeof</span>(target: <span class="tok-kw">anytype</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">const</span> T: <span class="tok-type">type</span> = <span class="tok-kw">if</span> (<span class="tok-builtin">@TypeOf</span>(target) == <span class="tok-type">type</span>) target <span class="tok-kw">else</span> <span class="tok-builtin">@TypeOf</span>(target);
+    <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(T)) {
+        .float, .int, .@&quot;struct&quot;, .@&quot;union&quot;, .array, .<span class="tok-type">bool</span>, .vector =&gt; <span class="tok-kw">return</span> <span class="tok-builtin">@sizeOf</span>(T),
+        .@&quot;fn&quot; =&gt; {<span class="tok-comment">
+            // sizeof(main) in C returns 1
+            </span><span class="tok-kw">return</span> <span class="tok-number">1</span>;
+        },
+        .<span class="tok-null">null</span> =&gt; <span class="tok-kw">return</span> <span class="tok-builtin">@sizeOf</span>(*<span class="tok-type">anyopaque</span>),
+        .<span class="tok-type">void</span> =&gt; {<span class="tok-comment">
+            // Note: sizeof(void) is 1 on clang/gcc and 0 on MSVC.
+            </span><span class="tok-kw">return</span> <span class="tok-number">1</span>;
+        },
+        .@&quot;opaque&quot; =&gt; {
+            <span class="tok-kw">if</span> (T == <span class="tok-type">anyopaque</span>) {<span class="tok-comment">
+                // Note: sizeof(void) is 1 on clang/gcc and 0 on MSVC.
+                </span><span class="tok-kw">return</span> <span class="tok-number">1</span>;
+            } <span class="tok-kw">else</span> {
+                <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Cannot use C sizeof on opaque type &quot;</span> ++ <span class="tok-builtin">@typeName</span>(T));
+            }
+        },
+        .optional =&gt; |opt| {
+            <span class="tok-kw">if</span> (<span class="tok-builtin">@typeInfo</span>(opt.child) == .pointer) {
+                <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(opt.child);
+            } <span class="tok-kw">else</span> {
+                <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Cannot use C sizeof on non-pointer optional &quot;</span> ++ <span class="tok-builtin">@typeName</span>(T));
+            }
+        },
+        .pointer =&gt; |ptr| {
+            <span class="tok-kw">if</span> (ptr.size == .slice) {
+                <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Cannot use C sizeof on slice type &quot;</span> ++ <span class="tok-builtin">@typeName</span>(T));
+            }<span class="tok-comment">
+            // for strings, sizeof(&quot;a&quot;) returns 2.
+            // normal pointer decay scenarios from C are handled
+            // in the .array case above, but strings remain literals
+            // and are therefore always pointers, so they need to be
+            // specially handled here.
+            </span><span class="tok-kw">if</span> (ptr.size == .one <span class="tok-kw">and</span> ptr.is_const <span class="tok-kw">and</span> <span class="tok-builtin">@typeInfo</span>(ptr.child) == .array) {
+                <span class="tok-kw">const</span> array_info = <span class="tok-builtin">@typeInfo</span>(ptr.child).array;
+                <span class="tok-kw">if</span> ((array_info.child == <span class="tok-type">u8</span> <span class="tok-kw">or</span> array_info.child == <span class="tok-type">u16</span>) <span class="tok-kw">and</span> array_info.sentinel() == <span class="tok-number">0</span>) {<span class="tok-comment">
+                    // length of the string plus one for the null terminator.
+                    </span><span class="tok-kw">return</span> (array_info.len + <span class="tok-number">1</span>) * <span class="tok-builtin">@sizeOf</span>(array_info.child);
+                }
+            }<span class="tok-comment">
+            // When zero sized pointers are removed, this case will no
+            // longer be reachable and can be deleted.
+            </span><span class="tok-kw">if</span> (<span class="tok-builtin">@sizeOf</span>(T) == <span class="tok-number">0</span>) {
+                <span class="tok-kw">return</span> <span class="tok-builtin">@sizeOf</span>(*<span class="tok-type">anyopaque</span>);
+            }
+            <span class="tok-kw">return</span> <span class="tok-builtin">@sizeOf</span>(T);
+        },
+        .<span class="tok-type">comptime_float</span> =&gt; <span class="tok-kw">return</span> <span class="tok-builtin">@sizeOf</span>(<span class="tok-type">f64</span>),<span class="tok-comment"> // TODO c_double #3999
+        </span>.<span class="tok-type">comptime_int</span> =&gt; {<span class="tok-comment">
+            // TODO to get the correct result we have to translate
+            // `1073741824 * 4` as `int(1073741824) *% int(4)` since
+            // sizeof(1073741824 * 4) != sizeof(4294967296).
+
+            // TODO test if target fits in int, long or long long
+            </span><span class="tok-kw">return</span> <span class="tok-builtin">@sizeOf</span>(<span class="tok-type">c_int</span>);
+        },
+        <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;std.meta.sizeof does not support type &quot;</span> ++ <span class="tok-builtin">@typeName</span>(T)),
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.zig.c_translation.promoteIntLiteral" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">promoteIntLiteral</span><a href="#src.zig-std.zig.c_translation.promoteIntLiteral">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">promoteIntLiteral</span>( <span class="tok-kw">comptime</span> SuffixType: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> number: <span class="tok-type">comptime_int</span>, <span class="tok-kw">comptime</span> base: <a href="std.zig.c_translation.CIntLiteralBase.html">CIntLiteralBase</a>, ) <a href="std.zig.c_translation.html#std.zig.c_translation.PromoteIntLiteralReturnType">PromoteIntLiteralReturnType</a>(SuffixType, number, base)</code></pre></div><div class="tldDocs"><p>Promote the type of an integer literal until it fits as C would.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>SuffixType: <span class="tok-type">type</span></code></pre></div><div><pre><code>number: <span class="tok-type">comptime_int</span></code></pre></div><div><pre><code>base: <a href="std.zig.c_translation.CIntLiteralBase.html">CIntLiteralBase</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.c_translation.promoteIntLiteral">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">promoteIntLiteral</span>(
+    <span class="tok-kw">comptime</span> SuffixType: <span class="tok-type">type</span>,
+    <span class="tok-kw">comptime</span> number: <span class="tok-type">comptime_int</span>,
+    <span class="tok-kw">comptime</span> base: <a href="std.zig.c_translation.CIntLiteralBase.html">CIntLiteralBase</a>,
+) <a href="std.zig.c_translation.html#std.zig.c_translation.PromoteIntLiteralReturnType">PromoteIntLiteralReturnType</a>(SuffixType, number, base) {
+    <span class="tok-kw">return</span> number;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.zig.c_translation.shuffleVectorIndex" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">shuffleVectorIndex</span><a href="#src.zig-std.zig.c_translation.shuffleVectorIndex">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">shuffleVectorIndex</span>(<span class="tok-kw">comptime</span> this_index: <span class="tok-type">c_int</span>, <span class="tok-kw">comptime</span> source_vector_len: <span class="tok-type">usize</span>) <span class="tok-type">i32</span></code></pre></div><div class="tldDocs"><p>Convert from clang __builtin_shufflevector index to Zig @shuffle index
+clang requires __builtin_shufflevector index arguments to be integer constants.
+negative values for <code>this_index</code> indicate &quot;don't care&quot;.
+clang enforces that <code>this_index</code> is less than the total number of vector elements
+See <a href="https://ziglang.org/documentation/master/#shuffle">https://ziglang.org/documentation/master/#shuffle</a>
+See <a href="https://clang.llvm.org/docs/LanguageExtensions.html#langext-builtin-shufflevector">https://clang.llvm.org/docs/LanguageExtensions.html#langext-builtin-shufflevector</a></p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>this_index: <span class="tok-type">c_int</span></code></pre></div><div><pre><code>source_vector_len: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.c_translation.shuffleVectorIndex">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">shuffleVectorIndex</span>(<span class="tok-kw">comptime</span> this_index: <span class="tok-type">c_int</span>, <span class="tok-kw">comptime</span> source_vector_len: <span class="tok-type">usize</span>) <span class="tok-type">i32</span> {
+    <span class="tok-kw">const</span> positive_index = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.cast">cast</a>(<span class="tok-type">usize</span>, this_index) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-null">undefined</span>;
+    <span class="tok-kw">if</span> (positive_index &lt; source_vector_len) <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(<span class="tok-type">i32</span>, <span class="tok-builtin">@intCast</span>(this_index));
+    <span class="tok-kw">const</span> b_index = positive_index - source_vector_len;
+    <span class="tok-kw">return</span> ~<span class="tok-builtin">@as</span>(<span class="tok-type">i32</span>, <span class="tok-builtin">@intCast</span>(b_index));
+}</code></pre></details></div></div><div class="decl"><h2 id="std.zig.c_translation.signedRemainder" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">signedRemainder</span><a href="#src.zig-std.zig.c_translation.signedRemainder">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">signedRemainder</span>(numerator: <span class="tok-kw">anytype</span>, denominator: <span class="tok-kw">anytype</span>) <span class="tok-builtin">@TypeOf</span>(numerator, denominator)</code></pre></div><div class="tldDocs"><p>C <code>%</code> operator for signed integers
+C standard states: &quot;If the quotient a/b is representable, the expression (a/b)*b + a%b shall equal a&quot;
+The quotient is not representable if denominator is zero, or if numerator is the minimum integer for
+the type and denominator is -1. C has undefined behavior for those two cases; this function has safety
+checked undefined behavior</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.c_translation.signedRemainder">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">signedRemainder</span>(numerator: <span class="tok-kw">anytype</span>, denominator: <span class="tok-kw">anytype</span>) <span class="tok-builtin">@TypeOf</span>(numerator, denominator) {
+    <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(numerator, denominator)).int.signedness == .signed);
+    <span class="tok-kw">if</span> (denominator &gt; <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-builtin">@rem</span>(numerator, denominator);
+    <span class="tok-kw">return</span> numerator - <span class="tok-builtin">@divTrunc</span>(numerator, denominator) * denominator;
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.zig.c_translation">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>);
+<span class="tok-kw">const</span> builtin = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;builtin&quot;</span>);
+<span class="tok-kw">const</span> testing = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>;
+<span class="tok-kw">const</span> math = <a href="std.html">std</a>.<a href="std.math.html">math</a>;
+<span class="tok-kw">const</span> mem = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>;
+
+<span class="tok-comment">/// Given a type and value, cast the value to the type as c would.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">cast</span>(<span class="tok-kw">comptime</span> DestType: <span class="tok-type">type</span>, target: <span class="tok-kw">anytype</span>) DestType {<span class="tok-comment">
+    // this function should behave like transCCast in translate-c, except it's for macros
+    </span><span class="tok-kw">const</span> SourceType = <span class="tok-builtin">@TypeOf</span>(target);
+    <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(DestType)) {
+        .@&quot;fn&quot; =&gt; <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.castToPtr">castToPtr</a>(*<span class="tok-kw">const</span> DestType, SourceType, target),
+        .pointer =&gt; <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.castToPtr">castToPtr</a>(DestType, SourceType, target),
+        .optional =&gt; |dest_opt| {
+            <span class="tok-kw">if</span> (<span class="tok-builtin">@typeInfo</span>(dest_opt.child) == .pointer) {
+                <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.castToPtr">castToPtr</a>(DestType, SourceType, target);
+            } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<span class="tok-builtin">@typeInfo</span>(dest_opt.child) == .@&quot;fn&quot;) {
+                <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.castToPtr">castToPtr</a>(?*<span class="tok-kw">const</span> dest_opt.child, SourceType, target);
+            }
+        },
+        .int =&gt; {
+            <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(SourceType)) {
+                .pointer =&gt; {
+                    <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.castInt">castInt</a>(DestType, <span class="tok-builtin">@intFromPtr</span>(target));
+                },
+                .optional =&gt; |opt| {
+                    <span class="tok-kw">if</span> (<span class="tok-builtin">@typeInfo</span>(opt.child) == .pointer) {
+                        <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.castInt">castInt</a>(DestType, <span class="tok-builtin">@intFromPtr</span>(target));
+                    }
+                },
+                .int =&gt; {
+                    <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.castInt">castInt</a>(DestType, target);
+                },
+                .@&quot;fn&quot; =&gt; {
+                    <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.castInt">castInt</a>(DestType, <span class="tok-builtin">@intFromPtr</span>(&amp;target));
+                },
+                .<span class="tok-type">bool</span> =&gt; {
+                    <span class="tok-kw">return</span> <span class="tok-builtin">@intFromBool</span>(target);
+                },
+                <span class="tok-kw">else</span> =&gt; {},
+            }
+        },
+        .float =&gt; {
+            <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(SourceType)) {
+                .int =&gt; <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(DestType, <span class="tok-builtin">@floatFromInt</span>(target)),
+                .float =&gt; <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(DestType, <span class="tok-builtin">@floatCast</span>(target)),
+                .<span class="tok-type">bool</span> =&gt; <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(DestType, <span class="tok-builtin">@floatFromInt</span>(<span class="tok-builtin">@intFromBool</span>(target))),
+                <span class="tok-kw">else</span> =&gt; {},
+            }
+        },
+        .@&quot;union&quot; =&gt; |info| {
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (info.fields) |field| {
+                <span class="tok-kw">if</span> (field.<span class="tok-type">type</span> == SourceType) <span class="tok-kw">return</span> <span class="tok-builtin">@unionInit</span>(DestType, field.name, target);
+            }
+            <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;cast to union type '&quot;</span> ++ <span class="tok-builtin">@typeName</span>(DestType) ++ <span class="tok-str">&quot;' from type '&quot;</span> ++ <span class="tok-builtin">@typeName</span>(SourceType) ++ <span class="tok-str">&quot;' which is not present in union&quot;</span>);
+        },
+        .<span class="tok-type">bool</span> =&gt; <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(<span class="tok-type">usize</span>, target) != <span class="tok-number">0</span>,
+        <span class="tok-kw">else</span> =&gt; {},
+    }
+    <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(DestType, target);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">castInt</span>(<span class="tok-kw">comptime</span> DestType: <span class="tok-type">type</span>, target: <span class="tok-kw">anytype</span>) DestType {
+    <span class="tok-kw">const</span> dest = <span class="tok-builtin">@typeInfo</span>(DestType).int;
+    <span class="tok-kw">const</span> source = <span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(target)).int;
+
+    <span class="tok-kw">if</span> (dest.bits &lt; source.bits)
+        <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(DestType, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.Int">Int</a>(source.signedness, dest.bits), <span class="tok-builtin">@truncate</span>(target))))
+    <span class="tok-kw">else</span>
+        <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(DestType, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.Int">Int</a>(source.signedness, dest.bits), target)));
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">castPtr</span>(<span class="tok-kw">comptime</span> DestType: <span class="tok-type">type</span>, target: <span class="tok-kw">anytype</span>) DestType {
+    <span class="tok-kw">return</span> <span class="tok-builtin">@constCast</span>(<span class="tok-builtin">@volatileCast</span>(<span class="tok-builtin">@alignCast</span>(<span class="tok-builtin">@ptrCast</span>(target))));
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">castToPtr</span>(<span class="tok-kw">comptime</span> DestType: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> SourceType: <span class="tok-type">type</span>, target: <span class="tok-kw">anytype</span>) DestType {
+    <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(SourceType)) {
+        .int =&gt; {
+            <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(DestType, <span class="tok-builtin">@ptrFromInt</span>(<a href="std.zig.c_translation.html#std.zig.c_translation.castInt">castInt</a>(<span class="tok-type">usize</span>, target)));
+        },
+        .<span class="tok-type">comptime_int</span> =&gt; {
+            <span class="tok-kw">if</span> (target &lt; <span class="tok-number">0</span>)
+                <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(DestType, <span class="tok-builtin">@ptrFromInt</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">usize</span>, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, <span class="tok-builtin">@intCast</span>(target))))))
+            <span class="tok-kw">else</span>
+                <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(DestType, <span class="tok-builtin">@ptrFromInt</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">usize</span>, <span class="tok-builtin">@intCast</span>(target))));
+        },
+        .pointer =&gt; {
+            <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.castPtr">castPtr</a>(DestType, target);
+        },
+        .@&quot;fn&quot; =&gt; {
+            <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.castPtr">castPtr</a>(DestType, &amp;target);
+        },
+        .optional =&gt; |target_opt| {
+            <span class="tok-kw">if</span> (<span class="tok-builtin">@typeInfo</span>(target_opt.child) == .pointer) {
+                <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.castPtr">castPtr</a>(DestType, target);
+            }
+        },
+        <span class="tok-kw">else</span> =&gt; {},
+    }
+    <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(DestType, target);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">ptrInfo</span>(<span class="tok-kw">comptime</span> PtrType: <span class="tok-type">type</span>) <a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.Type.html">Type</a>.<a href="std.builtin.Type.Pointer.html">Pointer</a> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(PtrType)) {
+        .optional =&gt; |opt_info| <span class="tok-builtin">@typeInfo</span>(opt_info.child).pointer,
+        .pointer =&gt; |ptr_info| ptr_info,
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+    };
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;cast&quot;</span> {
+    <span class="tok-kw">var</span> i = <span class="tok-builtin">@as</span>(<span class="tok-type">i64</span>, <span class="tok-number">10</span>);
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(*<span class="tok-type">u8</span>, <span class="tok-number">16</span>) == <span class="tok-builtin">@as</span>(*<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrFromInt</span>(<span class="tok-number">16</span>)));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(*<span class="tok-type">u64</span>, &amp;i).* == <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, <span class="tok-number">10</span>));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(*<span class="tok-type">i64</span>, <span class="tok-builtin">@as</span>(?*<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-type">i64</span>, &amp;i)) == &amp;i);
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(?*<span class="tok-type">u8</span>, <span class="tok-number">2</span>) == <span class="tok-builtin">@as</span>(*<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrFromInt</span>(<span class="tok-number">2</span>)));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(?*<span class="tok-type">i64</span>, <span class="tok-builtin">@as</span>(*<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-type">i64</span>, &amp;i)) == &amp;i);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(?*<span class="tok-type">i64</span>, <span class="tok-builtin">@as</span>(?*<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-type">i64</span>, &amp;i)) == &amp;i);
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-number">4</span>), <a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(<span class="tok-type">u32</span>, <span class="tok-builtin">@as</span>(*<span class="tok-type">u32</span>, <span class="tok-builtin">@ptrFromInt</span>(<span class="tok-number">4</span>))));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-number">4</span>), <a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(<span class="tok-type">u32</span>, <span class="tok-builtin">@as</span>(?*<span class="tok-type">u32</span>, <span class="tok-builtin">@ptrFromInt</span>(<span class="tok-number">4</span>))));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-number">10</span>), <a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(<span class="tok-type">u32</span>, <span class="tok-builtin">@as</span>(<span class="tok-type">u64</span>, <span class="tok-number">10</span>)));
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">i32</span>, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-number">0x8000_0000</span>))), <a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(<span class="tok-type">i32</span>, <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-number">0x8000_0000</span>)));
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@as</span>(*<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrFromInt</span>(<span class="tok-number">2</span>)), <a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(*<span class="tok-type">u8</span>, <span class="tok-builtin">@as</span>(*<span class="tok-kw">const</span> <span class="tok-type">u8</span>, <span class="tok-builtin">@ptrFromInt</span>(<span class="tok-number">2</span>))));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@as</span>(*<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrFromInt</span>(<span class="tok-number">2</span>)), <a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(*<span class="tok-type">u8</span>, <span class="tok-builtin">@as</span>(*<span class="tok-kw">volatile</span> <span class="tok-type">u8</span>, <span class="tok-builtin">@ptrFromInt</span>(<span class="tok-number">2</span>))));
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@as</span>(?*<span class="tok-type">anyopaque</span>, <span class="tok-builtin">@ptrFromInt</span>(<span class="tok-number">2</span>)), <a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(?*<span class="tok-type">anyopaque</span>, <span class="tok-builtin">@as</span>(*<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrFromInt</span>(<span class="tok-number">2</span>))));
+
+    <span class="tok-kw">var</span> foo: <span class="tok-type">c_int</span> = -<span class="tok-number">1</span>;
+    _ = &amp;foo;
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(*<span class="tok-type">anyopaque</span>, -<span class="tok-number">1</span>) == <span class="tok-builtin">@as</span>(*<span class="tok-type">anyopaque</span>, <span class="tok-builtin">@ptrFromInt</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">usize</span>, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, -<span class="tok-number">1</span>))))));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(*<span class="tok-type">anyopaque</span>, foo) == <span class="tok-builtin">@as</span>(*<span class="tok-type">anyopaque</span>, <span class="tok-builtin">@ptrFromInt</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">usize</span>, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, -<span class="tok-number">1</span>))))));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(?*<span class="tok-type">anyopaque</span>, -<span class="tok-number">1</span>) == <span class="tok-builtin">@as</span>(?*<span class="tok-type">anyopaque</span>, <span class="tok-builtin">@ptrFromInt</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">usize</span>, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, -<span class="tok-number">1</span>))))));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(?*<span class="tok-type">anyopaque</span>, foo) == <span class="tok-builtin">@as</span>(?*<span class="tok-type">anyopaque</span>, <span class="tok-builtin">@ptrFromInt</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">usize</span>, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, -<span class="tok-number">1</span>))))));
+
+    <span class="tok-kw">const</span> FnPtr = ?*<span class="tok-kw">align</span>(<span class="tok-number">1</span>) <span class="tok-kw">const</span> <span class="tok-kw">fn</span> (*<span class="tok-type">anyopaque</span>) <span class="tok-type">void</span>;
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(FnPtr, <span class="tok-number">0</span>) == <span class="tok-builtin">@as</span>(FnPtr, <span class="tok-builtin">@ptrFromInt</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">usize</span>, <span class="tok-number">0</span>))));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(FnPtr, foo) == <span class="tok-builtin">@as</span>(FnPtr, <span class="tok-builtin">@ptrFromInt</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">usize</span>, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, -<span class="tok-number">1</span>))))));
+}
+
+<span class="tok-comment">/// Given a value returns its size as C's sizeof operator would.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">sizeof</span>(target: <span class="tok-kw">anytype</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">const</span> T: <span class="tok-type">type</span> = <span class="tok-kw">if</span> (<span class="tok-builtin">@TypeOf</span>(target) == <span class="tok-type">type</span>) target <span class="tok-kw">else</span> <span class="tok-builtin">@TypeOf</span>(target);
+    <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(T)) {
+        .float, .int, .@&quot;struct&quot;, .@&quot;union&quot;, .array, .<span class="tok-type">bool</span>, .vector =&gt; <span class="tok-kw">return</span> <span class="tok-builtin">@sizeOf</span>(T),
+        .@&quot;fn&quot; =&gt; {<span class="tok-comment">
+            // sizeof(main) in C returns 1
+            </span><span class="tok-kw">return</span> <span class="tok-number">1</span>;
+        },
+        .<span class="tok-null">null</span> =&gt; <span class="tok-kw">return</span> <span class="tok-builtin">@sizeOf</span>(*<span class="tok-type">anyopaque</span>),
+        .<span class="tok-type">void</span> =&gt; {<span class="tok-comment">
+            // Note: sizeof(void) is 1 on clang/gcc and 0 on MSVC.
+            </span><span class="tok-kw">return</span> <span class="tok-number">1</span>;
+        },
+        .@&quot;opaque&quot; =&gt; {
+            <span class="tok-kw">if</span> (T == <span class="tok-type">anyopaque</span>) {<span class="tok-comment">
+                // Note: sizeof(void) is 1 on clang/gcc and 0 on MSVC.
+                </span><span class="tok-kw">return</span> <span class="tok-number">1</span>;
+            } <span class="tok-kw">else</span> {
+                <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Cannot use C sizeof on opaque type &quot;</span> ++ <span class="tok-builtin">@typeName</span>(T));
+            }
+        },
+        .optional =&gt; |opt| {
+            <span class="tok-kw">if</span> (<span class="tok-builtin">@typeInfo</span>(opt.child) == .pointer) {
+                <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(opt.child);
+            } <span class="tok-kw">else</span> {
+                <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Cannot use C sizeof on non-pointer optional &quot;</span> ++ <span class="tok-builtin">@typeName</span>(T));
+            }
+        },
+        .pointer =&gt; |ptr| {
+            <span class="tok-kw">if</span> (ptr.size == .slice) {
+                <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Cannot use C sizeof on slice type &quot;</span> ++ <span class="tok-builtin">@typeName</span>(T));
+            }<span class="tok-comment">
+            // for strings, sizeof(&quot;a&quot;) returns 2.
+            // normal pointer decay scenarios from C are handled
+            // in the .array case above, but strings remain literals
+            // and are therefore always pointers, so they need to be
+            // specially handled here.
+            </span><span class="tok-kw">if</span> (ptr.size == .one <span class="tok-kw">and</span> ptr.is_const <span class="tok-kw">and</span> <span class="tok-builtin">@typeInfo</span>(ptr.child) == .array) {
+                <span class="tok-kw">const</span> array_info = <span class="tok-builtin">@typeInfo</span>(ptr.child).array;
+                <span class="tok-kw">if</span> ((array_info.child == <span class="tok-type">u8</span> <span class="tok-kw">or</span> array_info.child == <span class="tok-type">u16</span>) <span class="tok-kw">and</span> array_info.sentinel() == <span class="tok-number">0</span>) {<span class="tok-comment">
+                    // length of the string plus one for the null terminator.
+                    </span><span class="tok-kw">return</span> (array_info.len + <span class="tok-number">1</span>) * <span class="tok-builtin">@sizeOf</span>(array_info.child);
+                }
+            }<span class="tok-comment">
+            // When zero sized pointers are removed, this case will no
+            // longer be reachable and can be deleted.
+            </span><span class="tok-kw">if</span> (<span class="tok-builtin">@sizeOf</span>(T) == <span class="tok-number">0</span>) {
+                <span class="tok-kw">return</span> <span class="tok-builtin">@sizeOf</span>(*<span class="tok-type">anyopaque</span>);
+            }
+            <span class="tok-kw">return</span> <span class="tok-builtin">@sizeOf</span>(T);
+        },
+        .<span class="tok-type">comptime_float</span> =&gt; <span class="tok-kw">return</span> <span class="tok-builtin">@sizeOf</span>(<span class="tok-type">f64</span>),<span class="tok-comment"> // TODO c_double #3999
+        </span>.<span class="tok-type">comptime_int</span> =&gt; {<span class="tok-comment">
+            // TODO to get the correct result we have to translate
+            // `1073741824 * 4` as `int(1073741824) *% int(4)` since
+            // sizeof(1073741824 * 4) != sizeof(4294967296).
+
+            // TODO test if target fits in int, long or long long
+            </span><span class="tok-kw">return</span> <span class="tok-builtin">@sizeOf</span>(<span class="tok-type">c_int</span>);
+        },
+        <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;std.meta.sizeof does not support type &quot;</span> ++ <span class="tok-builtin">@typeName</span>(T)),
+    }
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;sizeof&quot;</span> {
+    <span class="tok-kw">const</span> S = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> { a: <span class="tok-type">u32</span> };
+
+    <span class="tok-kw">const</span> ptr_size = <span class="tok-builtin">@sizeOf</span>(*<span class="tok-type">anyopaque</span>);
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(<span class="tok-type">u32</span>) == <span class="tok-number">4</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-number">2</span>)) == <span class="tok-number">4</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(<span class="tok-number">2</span>) == <span class="tok-builtin">@sizeOf</span>(<span class="tok-type">c_int</span>));
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(<span class="tok-number">2.0</span>) == <span class="tok-builtin">@sizeOf</span>(<span class="tok-type">f64</span>));
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(S) == <span class="tok-number">4</span>);
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>([_]<span class="tok-type">u32</span>{ <span class="tok-number">4</span>, <span class="tok-number">5</span>, <span class="tok-number">6</span> }) == <span class="tok-number">12</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>([<span class="tok-number">3</span>]<span class="tok-type">u32</span>) == <span class="tok-number">12</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>([<span class="tok-number">3</span>:<span class="tok-number">0</span>]<span class="tok-type">u32</span>) == <span class="tok-number">16</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(&amp;[_]<span class="tok-type">u32</span>{ <span class="tok-number">4</span>, <span class="tok-number">5</span>, <span class="tok-number">6</span> }) == ptr_size);
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(*<span class="tok-type">u32</span>) == ptr_size);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>([*]<span class="tok-type">u32</span>) == ptr_size);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>([*c]<span class="tok-type">u32</span>) == ptr_size);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(?*<span class="tok-type">u32</span>) == ptr_size);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(?[*]<span class="tok-type">u32</span>) == ptr_size);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(*<span class="tok-type">anyopaque</span>) == ptr_size);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(*<span class="tok-type">void</span>) == ptr_size);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(<span class="tok-null">null</span>) == ptr_size);
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(<span class="tok-str">&quot;foobar&quot;</span>) == <span class="tok-number">7</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(&amp;[_:<span class="tok-number">0</span>]<span class="tok-type">u16</span>{ <span class="tok-str">'f'</span>, <span class="tok-str">'o'</span>, <span class="tok-str">'o'</span>, <span class="tok-str">'b'</span>, <span class="tok-str">'a'</span>, <span class="tok-str">'r'</span> }) == <span class="tok-number">14</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(*<span class="tok-kw">const</span> [<span class="tok-number">4</span>:<span class="tok-number">0</span>]<span class="tok-type">u8</span>) == <span class="tok-number">5</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(*[<span class="tok-number">4</span>:<span class="tok-number">0</span>]<span class="tok-type">u8</span>) == ptr_size);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>([*]<span class="tok-kw">const</span> [<span class="tok-number">4</span>:<span class="tok-number">0</span>]<span class="tok-type">u8</span>) == ptr_size);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(*<span class="tok-kw">const</span> *<span class="tok-kw">const</span> [<span class="tok-number">4</span>:<span class="tok-number">0</span>]<span class="tok-type">u8</span>) == ptr_size);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(*<span class="tok-kw">const</span> [<span class="tok-number">4</span>]<span class="tok-type">u8</span>) == ptr_size);
+
+    <span class="tok-kw">if</span> (<span class="tok-null">false</span>) {<span class="tok-comment"> // TODO
+        </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(&amp;<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>) == <span class="tok-builtin">@sizeOf</span>(<span class="tok-builtin">@TypeOf</span>(&amp;<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>)));
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>) == <span class="tok-number">1</span>);
+    }
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(<span class="tok-type">void</span>) == <span class="tok-number">1</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.sizeof">sizeof</a>(<span class="tok-type">anyopaque</span>) == <span class="tok-number">1</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CIntLiteralBase = <span class="tok-kw">enum</span> { decimal, octal, hex };
+
+<span class="tok-comment">/// Deprecated: use `CIntLiteralBase`</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CIntLiteralRadix = <a href="std.zig.c_translation.CIntLiteralBase.html">CIntLiteralBase</a>;
+
+<span class="tok-kw">fn</span> <span class="tok-fn">PromoteIntLiteralReturnType</span>(<span class="tok-kw">comptime</span> SuffixType: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> number: <span class="tok-type">comptime_int</span>, <span class="tok-kw">comptime</span> base: <a href="std.zig.c_translation.CIntLiteralBase.html">CIntLiteralBase</a>) <span class="tok-type">type</span> {
+    <span class="tok-kw">const</span> signed_decimal = [_]<span class="tok-type">type</span>{ <span class="tok-type">c_int</span>, <span class="tok-type">c_long</span>, <span class="tok-type">c_longlong</span>, <span class="tok-type">c_ulonglong</span> };
+    <span class="tok-kw">const</span> signed_oct_hex = [_]<span class="tok-type">type</span>{ <span class="tok-type">c_int</span>, <span class="tok-type">c_uint</span>, <span class="tok-type">c_long</span>, <span class="tok-type">c_ulong</span>, <span class="tok-type">c_longlong</span>, <span class="tok-type">c_ulonglong</span> };
+    <span class="tok-kw">const</span> unsigned = [_]<span class="tok-type">type</span>{ <span class="tok-type">c_uint</span>, <span class="tok-type">c_ulong</span>, <span class="tok-type">c_ulonglong</span> };
+
+    <span class="tok-kw">const</span> list: []<span class="tok-kw">const</span> <span class="tok-type">type</span> = <span class="tok-kw">if</span> (<span class="tok-builtin">@typeInfo</span>(SuffixType).int.signedness == .unsigned)
+        &amp;unsigned
+    <span class="tok-kw">else</span> <span class="tok-kw">if</span> (base == .decimal)
+        &amp;signed_decimal
+    <span class="tok-kw">else</span>
+        &amp;signed_oct_hex;
+
+    <span class="tok-kw">var</span> pos = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">type</span>, list, SuffixType).?;
+
+    <span class="tok-kw">while</span> (pos &lt; list.len) : (pos += <span class="tok-number">1</span>) {
+        <span class="tok-kw">if</span> (number &gt;= <a href="std.math.html">math</a>.<a href="std.math.html#std.math.minInt">minInt</a>(list[pos]) <span class="tok-kw">and</span> number &lt;= <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(list[pos])) {
+            <span class="tok-kw">return</span> list[pos];
+        }
+    }
+    <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Integer literal is too large&quot;</span>);
+}
+
+<span class="tok-comment">/// Promote the type of an integer literal until it fits as C would.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">promoteIntLiteral</span>(
+    <span class="tok-kw">comptime</span> SuffixType: <span class="tok-type">type</span>,
+    <span class="tok-kw">comptime</span> number: <span class="tok-type">comptime_int</span>,
+    <span class="tok-kw">comptime</span> base: <a href="std.zig.c_translation.CIntLiteralBase.html">CIntLiteralBase</a>,
+) <a href="std.zig.c_translation.html#std.zig.c_translation.PromoteIntLiteralReturnType">PromoteIntLiteralReturnType</a>(SuffixType, number, base) {
+    <span class="tok-kw">return</span> number;
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;promoteIntLiteral&quot;</span> {
+    <span class="tok-kw">const</span> signed_hex = <a href="std.zig.c_translation.html#std.zig.c_translation.promoteIntLiteral">promoteIntLiteral</a>(<span class="tok-type">c_int</span>, <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_int</span>) + <span class="tok-number">1</span>, .hex);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-type">c_uint</span>, <span class="tok-builtin">@TypeOf</span>(signed_hex));
+
+    <span class="tok-kw">if</span> (<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_longlong</span>) == <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_int</span>)) <span class="tok-kw">return</span>;
+
+    <span class="tok-kw">const</span> signed_decimal = <a href="std.zig.c_translation.html#std.zig.c_translation.promoteIntLiteral">promoteIntLiteral</a>(<span class="tok-type">c_int</span>, <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_int</span>) + <span class="tok-number">1</span>, .decimal);
+    <span class="tok-kw">const</span> unsigned = <a href="std.zig.c_translation.html#std.zig.c_translation.promoteIntLiteral">promoteIntLiteral</a>(<span class="tok-type">c_uint</span>, <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_uint</span>) + <span class="tok-number">1</span>, .hex);
+
+    <span class="tok-kw">if</span> (<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_long</span>) &gt; <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_int</span>)) {
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-type">c_long</span>, <span class="tok-builtin">@TypeOf</span>(signed_decimal));
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-type">c_ulong</span>, <span class="tok-builtin">@TypeOf</span>(unsigned));
+    } <span class="tok-kw">else</span> {
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-type">c_longlong</span>, <span class="tok-builtin">@TypeOf</span>(signed_decimal));
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-type">c_ulonglong</span>, <span class="tok-builtin">@TypeOf</span>(unsigned));
+    }
+}
+
+<span class="tok-comment">/// Convert from clang __builtin_shufflevector index to Zig @shuffle index</span>
+<span class="tok-comment">/// clang requires __builtin_shufflevector index arguments to be integer constants.</span>
+<span class="tok-comment">/// negative values for `this_index` indicate &quot;don't care&quot;.</span>
+<span class="tok-comment">/// clang enforces that `this_index` is less than the total number of vector elements</span>
+<span class="tok-comment">/// See https://ziglang.org/documentation/master/#shuffle</span>
+<span class="tok-comment">/// See https://clang.llvm.org/docs/LanguageExtensions.html#langext-builtin-shufflevector</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">shuffleVectorIndex</span>(<span class="tok-kw">comptime</span> this_index: <span class="tok-type">c_int</span>, <span class="tok-kw">comptime</span> source_vector_len: <span class="tok-type">usize</span>) <span class="tok-type">i32</span> {
+    <span class="tok-kw">const</span> positive_index = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.cast">cast</a>(<span class="tok-type">usize</span>, this_index) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-null">undefined</span>;
+    <span class="tok-kw">if</span> (positive_index &lt; source_vector_len) <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(<span class="tok-type">i32</span>, <span class="tok-builtin">@intCast</span>(this_index));
+    <span class="tok-kw">const</span> b_index = positive_index - source_vector_len;
+    <span class="tok-kw">return</span> ~<span class="tok-builtin">@as</span>(<span class="tok-type">i32</span>, <span class="tok-builtin">@intCast</span>(b_index));
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;shuffleVectorIndex&quot;</span> {
+    <span class="tok-kw">const</span> vector_len: <span class="tok-type">usize</span> = <span class="tok-number">4</span>;
+
+    _ = <a href="std.zig.c_translation.html#std.zig.c_translation.shuffleVectorIndex">shuffleVectorIndex</a>(-<span class="tok-number">1</span>, vector_len);
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.shuffleVectorIndex">shuffleVectorIndex</a>(<span class="tok-number">0</span>, vector_len) == <span class="tok-number">0</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.shuffleVectorIndex">shuffleVectorIndex</a>(<span class="tok-number">1</span>, vector_len) == <span class="tok-number">1</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.shuffleVectorIndex">shuffleVectorIndex</a>(<span class="tok-number">2</span>, vector_len) == <span class="tok-number">2</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.shuffleVectorIndex">shuffleVectorIndex</a>(<span class="tok-number">3</span>, vector_len) == <span class="tok-number">3</span>);
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.shuffleVectorIndex">shuffleVectorIndex</a>(<span class="tok-number">4</span>, vector_len) == -<span class="tok-number">1</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.shuffleVectorIndex">shuffleVectorIndex</a>(<span class="tok-number">5</span>, vector_len) == -<span class="tok-number">2</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.shuffleVectorIndex">shuffleVectorIndex</a>(<span class="tok-number">6</span>, vector_len) == -<span class="tok-number">3</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.shuffleVectorIndex">shuffleVectorIndex</a>(<span class="tok-number">7</span>, vector_len) == -<span class="tok-number">4</span>);
+}
+
+<span class="tok-comment">/// Constructs a [*c] pointer with the const and volatile annotations</span>
+<span class="tok-comment">/// from SelfType for pointing to a C flexible array of ElementType.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">FlexibleArrayType</span>(<span class="tok-kw">comptime</span> SelfType: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> ElementType: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(SelfType)) {
+        .pointer =&gt; |ptr| {
+            <span class="tok-kw">return</span> <span class="tok-builtin">@Type</span>(.{ .pointer = .{
+                .size = .c,
+                .is_const = ptr.is_const,
+                .is_volatile = ptr.is_volatile,
+                .alignment = <span class="tok-builtin">@alignOf</span>(ElementType),
+                .address_space = .generic,
+                .child = ElementType,
+                .is_allowzero = <span class="tok-null">true</span>,
+                .sentinel_ptr = <span class="tok-null">null</span>,
+            } });
+        },
+        <span class="tok-kw">else</span> =&gt; |info| <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Invalid self type \&quot;&quot;</span> ++ <span class="tok-builtin">@tagName</span>(info) ++ <span class="tok-str">&quot;\&quot; for flexible array getter: &quot;</span> ++ <span class="tok-builtin">@typeName</span>(SelfType)),
+    }
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;Flexible Array Type&quot;</span> {
+    <span class="tok-kw">const</span> Container = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+        size: <span class="tok-type">usize</span>,
+    };
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.FlexibleArrayType">FlexibleArrayType</a>(*Container, <span class="tok-type">c_int</span>), [*c]<span class="tok-type">c_int</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.FlexibleArrayType">FlexibleArrayType</a>(*<span class="tok-kw">const</span> Container, <span class="tok-type">c_int</span>), [*c]<span class="tok-kw">const</span> <span class="tok-type">c_int</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.FlexibleArrayType">FlexibleArrayType</a>(*<span class="tok-kw">volatile</span> Container, <span class="tok-type">c_int</span>), [*c]<span class="tok-kw">volatile</span> <span class="tok-type">c_int</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.FlexibleArrayType">FlexibleArrayType</a>(*<span class="tok-kw">const</span> <span class="tok-kw">volatile</span> Container, <span class="tok-type">c_int</span>), [*c]<span class="tok-kw">const</span> <span class="tok-kw">volatile</span> <span class="tok-type">c_int</span>);
+}
+
+<span class="tok-comment">/// C `%` operator for signed integers</span>
+<span class="tok-comment">/// C standard states: &quot;If the quotient a/b is representable, the expression (a/b)*b + a%b shall equal a&quot;</span>
+<span class="tok-comment">/// The quotient is not representable if denominator is zero, or if numerator is the minimum integer for</span>
+<span class="tok-comment">/// the type and denominator is -1. C has undefined behavior for those two cases; this function has safety</span>
+<span class="tok-comment">/// checked undefined behavior</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">signedRemainder</span>(numerator: <span class="tok-kw">anytype</span>, denominator: <span class="tok-kw">anytype</span>) <span class="tok-builtin">@TypeOf</span>(numerator, denominator) {
+    <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(numerator, denominator)).int.signedness == .signed);
+    <span class="tok-kw">if</span> (denominator &gt; <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-builtin">@rem</span>(numerator, denominator);
+    <span class="tok-kw">return</span> numerator - <span class="tok-builtin">@divTrunc</span>(numerator, denominator) * denominator;
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Macros = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">U_SUFFIX</span>(<span class="tok-kw">comptime</span> n: <span class="tok-type">comptime_int</span>) <span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.html#std.zig.c_translation.promoteIntLiteral">promoteIntLiteral</a>(<span class="tok-type">c_uint</span>, n, .decimal)) {
+        <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.promoteIntLiteral">promoteIntLiteral</a>(<span class="tok-type">c_uint</span>, n, .decimal);
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">L_SUFFIX_ReturnType</span>(<span class="tok-kw">comptime</span> number: <span class="tok-kw">anytype</span>) <span class="tok-type">type</span> {
+        <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(number))) {
+            .int, .<span class="tok-type">comptime_int</span> =&gt; <span class="tok-kw">return</span> <span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.html#std.zig.c_translation.promoteIntLiteral">promoteIntLiteral</a>(<span class="tok-type">c_long</span>, number, .decimal)),
+            .float, .<span class="tok-type">comptime_float</span> =&gt; <span class="tok-kw">return</span> <span class="tok-type">c_longdouble</span>,
+            <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Invalid value for L suffix&quot;</span>),
+        }
+    }
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">L_SUFFIX</span>(<span class="tok-kw">comptime</span> number: <span class="tok-kw">anytype</span>) <a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.L_SUFFIX_ReturnType">L_SUFFIX_ReturnType</a>(number) {
+        <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(number))) {
+            .int, .<span class="tok-type">comptime_int</span> =&gt; <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.promoteIntLiteral">promoteIntLiteral</a>(<span class="tok-type">c_long</span>, number, .decimal),
+            .float, .<span class="tok-type">comptime_float</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;TODO: c_longdouble initialization from comptime_float not supported&quot;</span>),
+            <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Invalid value for L suffix&quot;</span>),
+        }
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">UL_SUFFIX</span>(<span class="tok-kw">comptime</span> n: <span class="tok-type">comptime_int</span>) <span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.html#std.zig.c_translation.promoteIntLiteral">promoteIntLiteral</a>(<span class="tok-type">c_ulong</span>, n, .decimal)) {
+        <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.promoteIntLiteral">promoteIntLiteral</a>(<span class="tok-type">c_ulong</span>, n, .decimal);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">LL_SUFFIX</span>(<span class="tok-kw">comptime</span> n: <span class="tok-type">comptime_int</span>) <span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.html#std.zig.c_translation.promoteIntLiteral">promoteIntLiteral</a>(<span class="tok-type">c_longlong</span>, n, .decimal)) {
+        <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.promoteIntLiteral">promoteIntLiteral</a>(<span class="tok-type">c_longlong</span>, n, .decimal);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">ULL_SUFFIX</span>(<span class="tok-kw">comptime</span> n: <span class="tok-type">comptime_int</span>) <span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.html#std.zig.c_translation.promoteIntLiteral">promoteIntLiteral</a>(<span class="tok-type">c_ulonglong</span>, n, .decimal)) {
+        <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.promoteIntLiteral">promoteIntLiteral</a>(<span class="tok-type">c_ulonglong</span>, n, .decimal);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">F_SUFFIX</span>(<span class="tok-kw">comptime</span> f: <span class="tok-type">comptime_float</span>) <span class="tok-type">f32</span> {
+        <span class="tok-kw">return</span> <span class="tok-builtin">@as</span>(<span class="tok-type">f32</span>, f);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">WL_CONTAINER_OF</span>(ptr: <span class="tok-kw">anytype</span>, sample: <span class="tok-kw">anytype</span>, <span class="tok-kw">comptime</span> member: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-builtin">@TypeOf</span>(sample) {
+        <span class="tok-kw">return</span> <span class="tok-builtin">@fieldParentPtr</span>(member, ptr);
+    }
+
+    <span class="tok-comment">/// A 2-argument function-like macro defined as #define FOO(A, B) (A)(B)</span>
+    <span class="tok-comment">/// could be either: cast B to A, or call A with the value B.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">CAST_OR_CALL</span>(a: <span class="tok-kw">anytype</span>, b: <span class="tok-kw">anytype</span>) <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(a))) {
+        .<span class="tok-type">type</span> =&gt; a,
+        .@&quot;fn&quot; =&gt; |fn_info| fn_info.return_type <span class="tok-kw">orelse</span> <span class="tok-type">void</span>,
+        <span class="tok-kw">else</span> =&gt; |info| <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Unexpected argument type: &quot;</span> ++ <span class="tok-builtin">@tagName</span>(info)),
+    } {
+        <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(a))) {
+            .<span class="tok-type">type</span> =&gt; <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(a, b),
+            .@&quot;fn&quot; =&gt; <span class="tok-kw">return</span> a(b),
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,<span class="tok-comment"> // return type will be a compile error otherwise
+        </span>}
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">DISCARD</span>(x: <span class="tok-kw">anytype</span>) <span class="tok-type">void</span> {
+        _ = x;
+    }
+};
+
+<span class="tok-comment">/// Integer promotion described in C11 6.3.1.1.2</span>
+<span class="tok-kw">fn</span> <span class="tok-fn">PromotedIntType</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (T) {
+        <span class="tok-type">bool</span>, <span class="tok-type">c_short</span> =&gt; <span class="tok-type">c_int</span>,
+        <span class="tok-type">c_ushort</span> =&gt; <span class="tok-kw">if</span> (<span class="tok-builtin">@sizeOf</span>(<span class="tok-type">c_ushort</span>) == <span class="tok-builtin">@sizeOf</span>(<span class="tok-type">c_int</span>)) <span class="tok-type">c_uint</span> <span class="tok-kw">else</span> <span class="tok-type">c_int</span>,
+        <span class="tok-type">c_int</span>, <span class="tok-type">c_uint</span>, <span class="tok-type">c_long</span>, <span class="tok-type">c_ulong</span>, <span class="tok-type">c_longlong</span>, <span class="tok-type">c_ulonglong</span> =&gt; T,
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(T)) {
+            .<span class="tok-type">comptime_int</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Cannot promote `&quot;</span> ++ <span class="tok-builtin">@typeName</span>(T) ++ <span class="tok-str">&quot;`; a fixed-size number type is required&quot;</span>),<span class="tok-comment">
+            // promote to c_int if it can represent all values of T
+            </span>.int =&gt; |int_info| <span class="tok-kw">if</span> (int_info.bits &lt; <span class="tok-builtin">@bitSizeOf</span>(<span class="tok-type">c_int</span>))
+                <span class="tok-type">c_int</span><span class="tok-comment">
+                // otherwise, restore the original C type
+            </span><span class="tok-kw">else</span> <span class="tok-kw">if</span> (int_info.bits == <span class="tok-builtin">@bitSizeOf</span>(<span class="tok-type">c_int</span>))
+                <span class="tok-kw">if</span> (int_info.signedness == .unsigned) <span class="tok-type">c_uint</span> <span class="tok-kw">else</span> <span class="tok-type">c_int</span>
+            <span class="tok-kw">else</span> <span class="tok-kw">if</span> (int_info.bits &lt;= <span class="tok-builtin">@bitSizeOf</span>(<span class="tok-type">c_long</span>))
+                <span class="tok-kw">if</span> (int_info.signedness == .unsigned) <span class="tok-type">c_ulong</span> <span class="tok-kw">else</span> <span class="tok-type">c_long</span>
+            <span class="tok-kw">else</span> <span class="tok-kw">if</span> (int_info.bits &lt;= <span class="tok-builtin">@bitSizeOf</span>(<span class="tok-type">c_longlong</span>))
+                <span class="tok-kw">if</span> (int_info.signedness == .unsigned) <span class="tok-type">c_ulonglong</span> <span class="tok-kw">else</span> <span class="tok-type">c_longlong</span>
+            <span class="tok-kw">else</span>
+                <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Cannot promote `&quot;</span> ++ <span class="tok-builtin">@typeName</span>(T) ++ <span class="tok-str">&quot;`; a C ABI type is required&quot;</span>),
+            <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Attempted to promote invalid type `&quot;</span> ++ <span class="tok-builtin">@typeName</span>(T) ++ <span class="tok-str">&quot;`&quot;</span>),
+        },
+    };
+}
+
+<span class="tok-comment">/// C11 6.3.1.1.1</span>
+<span class="tok-kw">fn</span> <span class="tok-fn">integerRank</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (T) {
+        <span class="tok-type">bool</span> =&gt; <span class="tok-number">0</span>,
+        <span class="tok-type">u8</span>, <span class="tok-type">i8</span> =&gt; <span class="tok-number">1</span>,
+        <span class="tok-type">c_short</span>, <span class="tok-type">c_ushort</span> =&gt; <span class="tok-number">2</span>,
+        <span class="tok-type">c_int</span>, <span class="tok-type">c_uint</span> =&gt; <span class="tok-number">3</span>,
+        <span class="tok-type">c_long</span>, <span class="tok-type">c_ulong</span> =&gt; <span class="tok-number">4</span>,
+        <span class="tok-type">c_longlong</span>, <span class="tok-type">c_ulonglong</span> =&gt; <span class="tok-number">5</span>,
+        <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;integer rank not supported for `&quot;</span> ++ <span class="tok-builtin">@typeName</span>(T) ++ <span class="tok-str">&quot;`&quot;</span>),
+    };
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">ToUnsigned</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (T) {
+        <span class="tok-type">c_int</span> =&gt; <span class="tok-type">c_uint</span>,
+        <span class="tok-type">c_long</span> =&gt; <span class="tok-type">c_ulong</span>,
+        <span class="tok-type">c_longlong</span> =&gt; <span class="tok-type">c_ulonglong</span>,
+        <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Cannot convert `&quot;</span> ++ <span class="tok-builtin">@typeName</span>(T) ++ <span class="tok-str">&quot;` to unsigned&quot;</span>),
+    };
+}
+
+<span class="tok-comment">/// &quot;Usual arithmetic conversions&quot; from C11 standard 6.3.1.8</span>
+<span class="tok-kw">fn</span> <span class="tok-fn">ArithmeticConversion</span>(<span class="tok-kw">comptime</span> A: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> B: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">if</span> (A == <span class="tok-type">c_longdouble</span> <span class="tok-kw">or</span> B == <span class="tok-type">c_longdouble</span>) <span class="tok-kw">return</span> <span class="tok-type">c_longdouble</span>;
+    <span class="tok-kw">if</span> (A == <span class="tok-type">f80</span> <span class="tok-kw">or</span> B == <span class="tok-type">f80</span>) <span class="tok-kw">return</span> <span class="tok-type">f80</span>;
+    <span class="tok-kw">if</span> (A == <span class="tok-type">f64</span> <span class="tok-kw">or</span> B == <span class="tok-type">f64</span>) <span class="tok-kw">return</span> <span class="tok-type">f64</span>;
+    <span class="tok-kw">if</span> (A == <span class="tok-type">f32</span> <span class="tok-kw">or</span> B == <span class="tok-type">f32</span>) <span class="tok-kw">return</span> <span class="tok-type">f32</span>;
+
+    <span class="tok-kw">const</span> A_Promoted = <a href="std.zig.c_translation.html#std.zig.c_translation.PromotedIntType">PromotedIntType</a>(A);
+    <span class="tok-kw">const</span> B_Promoted = <a href="std.zig.c_translation.html#std.zig.c_translation.PromotedIntType">PromotedIntType</a>(B);
+    <span class="tok-kw">comptime</span> {
+        <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.integerRank">integerRank</a>(A_Promoted) &gt;= <a href="std.zig.c_translation.html#std.zig.c_translation.integerRank">integerRank</a>(<span class="tok-type">c_int</span>));
+        <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.integerRank">integerRank</a>(B_Promoted) &gt;= <a href="std.zig.c_translation.html#std.zig.c_translation.integerRank">integerRank</a>(<span class="tok-type">c_int</span>));
+    }
+
+    <span class="tok-kw">if</span> (A_Promoted == B_Promoted) <span class="tok-kw">return</span> A_Promoted;
+
+    <span class="tok-kw">const</span> a_signed = <span class="tok-builtin">@typeInfo</span>(A_Promoted).int.signedness == .signed;
+    <span class="tok-kw">const</span> b_signed = <span class="tok-builtin">@typeInfo</span>(B_Promoted).int.signedness == .signed;
+
+    <span class="tok-kw">if</span> (a_signed == b_signed) {
+        <span class="tok-kw">return</span> <span class="tok-kw">if</span> (<a href="std.zig.c_translation.html#std.zig.c_translation.integerRank">integerRank</a>(A_Promoted) &gt; <a href="std.zig.c_translation.html#std.zig.c_translation.integerRank">integerRank</a>(B_Promoted)) A_Promoted <span class="tok-kw">else</span> B_Promoted;
+    }
+
+    <span class="tok-kw">const</span> SignedType = <span class="tok-kw">if</span> (a_signed) A_Promoted <span class="tok-kw">else</span> B_Promoted;
+    <span class="tok-kw">const</span> UnsignedType = <span class="tok-kw">if</span> (!a_signed) A_Promoted <span class="tok-kw">else</span> B_Promoted;
+
+    <span class="tok-kw">if</span> (<a href="std.zig.c_translation.html#std.zig.c_translation.integerRank">integerRank</a>(UnsignedType) &gt;= <a href="std.zig.c_translation.html#std.zig.c_translation.integerRank">integerRank</a>(SignedType)) <span class="tok-kw">return</span> UnsignedType;
+
+    <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(SignedType) &gt;= <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(UnsignedType)) <span class="tok-kw">return</span> SignedType;
+
+    <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.ToUnsigned">ToUnsigned</a>(SignedType);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;ArithmeticConversion&quot;</span> {<span class="tok-comment">
+    // Promotions not necessarily the same for other platforms
+    </span><span class="tok-kw">if</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.target">target</a>.<a href="#">cpu</a>.<a href="#">arch</a> != .x86_64 <span class="tok-kw">or</span> <a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.target">target</a>.<a href="#">os</a>.<a href="#">tag</a> != .linux) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.SkipZigTest;
+
+    <span class="tok-kw">const</span> Test = <span class="tok-kw">struct</span> {
+        <span class="tok-comment">/// Order of operands should not matter for arithmetic conversions</span>
+        <span class="tok-kw">fn</span> <span class="tok-fn">checkPromotion</span>(<span class="tok-kw">comptime</span> A: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> B: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> Expected: <span class="tok-type">type</span>) !<span class="tok-type">void</span> {
+            <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.ArithmeticConversion">ArithmeticConversion</a>(A, B) == Expected);
+            <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.ArithmeticConversion">ArithmeticConversion</a>(B, A) == Expected);
+        }
+    };
+
+    <span class="tok-kw">try</span> Test.checkPromotion(<span class="tok-type">c_longdouble</span>, <span class="tok-type">c_int</span>, <span class="tok-type">c_longdouble</span>);
+    <span class="tok-kw">try</span> Test.checkPromotion(<span class="tok-type">c_int</span>, <span class="tok-type">f64</span>, <span class="tok-type">f64</span>);
+    <span class="tok-kw">try</span> Test.checkPromotion(<span class="tok-type">f32</span>, <span class="tok-type">bool</span>, <span class="tok-type">f32</span>);
+
+    <span class="tok-kw">try</span> Test.checkPromotion(<span class="tok-type">bool</span>, <span class="tok-type">c_short</span>, <span class="tok-type">c_int</span>);
+    <span class="tok-kw">try</span> Test.checkPromotion(<span class="tok-type">c_int</span>, <span class="tok-type">c_int</span>, <span class="tok-type">c_int</span>);
+    <span class="tok-kw">try</span> Test.checkPromotion(<span class="tok-type">c_short</span>, <span class="tok-type">c_int</span>, <span class="tok-type">c_int</span>);
+
+    <span class="tok-kw">try</span> Test.checkPromotion(<span class="tok-type">c_int</span>, <span class="tok-type">c_long</span>, <span class="tok-type">c_long</span>);
+
+    <span class="tok-kw">try</span> Test.checkPromotion(<span class="tok-type">c_ulonglong</span>, <span class="tok-type">c_uint</span>, <span class="tok-type">c_ulonglong</span>);
+
+    <span class="tok-kw">try</span> Test.checkPromotion(<span class="tok-type">c_uint</span>, <span class="tok-type">c_int</span>, <span class="tok-type">c_uint</span>);
+
+    <span class="tok-kw">try</span> Test.checkPromotion(<span class="tok-type">c_uint</span>, <span class="tok-type">c_long</span>, <span class="tok-type">c_long</span>);
+
+    <span class="tok-kw">try</span> Test.checkPromotion(<span class="tok-type">c_ulong</span>, <span class="tok-type">c_longlong</span>, <span class="tok-type">c_ulonglong</span>);<span class="tok-comment">
+
+    // stdint.h
+    </span><span class="tok-kw">try</span> Test.checkPromotion(<span class="tok-type">u8</span>, <span class="tok-type">i8</span>, <span class="tok-type">c_int</span>);
+    <span class="tok-kw">try</span> Test.checkPromotion(<span class="tok-type">u16</span>, <span class="tok-type">i16</span>, <span class="tok-type">c_int</span>);
+    <span class="tok-kw">try</span> Test.checkPromotion(<span class="tok-type">i32</span>, <span class="tok-type">c_int</span>, <span class="tok-type">c_int</span>);
+    <span class="tok-kw">try</span> Test.checkPromotion(<span class="tok-type">u32</span>, <span class="tok-type">c_int</span>, <span class="tok-type">c_uint</span>);
+    <span class="tok-kw">try</span> Test.checkPromotion(<span class="tok-type">i64</span>, <span class="tok-type">c_int</span>, <span class="tok-type">c_long</span>);
+    <span class="tok-kw">try</span> Test.checkPromotion(<span class="tok-type">u64</span>, <span class="tok-type">c_int</span>, <span class="tok-type">c_ulong</span>);
+    <span class="tok-kw">try</span> Test.checkPromotion(<span class="tok-type">isize</span>, <span class="tok-type">c_int</span>, <span class="tok-type">c_long</span>);
+    <span class="tok-kw">try</span> Test.checkPromotion(<span class="tok-type">usize</span>, <span class="tok-type">c_int</span>, <span class="tok-type">c_ulong</span>);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> MacroArithmetic = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">div</span>(a: <span class="tok-kw">anytype</span>, b: <span class="tok-kw">anytype</span>) <a href="std.zig.c_translation.html#std.zig.c_translation.ArithmeticConversion">ArithmeticConversion</a>(<span class="tok-builtin">@TypeOf</span>(a), <span class="tok-builtin">@TypeOf</span>(b)) {
+        <span class="tok-kw">const</span> ResType = <a href="std.zig.c_translation.html#std.zig.c_translation.ArithmeticConversion">ArithmeticConversion</a>(<span class="tok-builtin">@TypeOf</span>(a), <span class="tok-builtin">@TypeOf</span>(b));
+        <span class="tok-kw">const</span> a_casted = <a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(ResType, a);
+        <span class="tok-kw">const</span> b_casted = <a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(ResType, b);
+        <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(ResType)) {
+            .float =&gt; <span class="tok-kw">return</span> a_casted / b_casted,
+            .int =&gt; <span class="tok-kw">return</span> <span class="tok-builtin">@divTrunc</span>(a_casted, b_casted),
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+        }
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">rem</span>(a: <span class="tok-kw">anytype</span>, b: <span class="tok-kw">anytype</span>) <a href="std.zig.c_translation.html#std.zig.c_translation.ArithmeticConversion">ArithmeticConversion</a>(<span class="tok-builtin">@TypeOf</span>(a), <span class="tok-builtin">@TypeOf</span>(b)) {
+        <span class="tok-kw">const</span> ResType = <a href="std.zig.c_translation.html#std.zig.c_translation.ArithmeticConversion">ArithmeticConversion</a>(<span class="tok-builtin">@TypeOf</span>(a), <span class="tok-builtin">@TypeOf</span>(b));
+        <span class="tok-kw">const</span> a_casted = <a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(ResType, a);
+        <span class="tok-kw">const</span> b_casted = <a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(ResType, b);
+        <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(ResType)) {
+            .int =&gt; {
+                <span class="tok-kw">if</span> (<span class="tok-builtin">@typeInfo</span>(ResType).int.signedness == .signed) {
+                    <span class="tok-kw">return</span> <a href="std.zig.c_translation.html#std.zig.c_translation.signedRemainder">signedRemainder</a>(a_casted, b_casted);
+                } <span class="tok-kw">else</span> {
+                    <span class="tok-kw">return</span> a_casted % b_casted;
+                }
+            },
+            <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+        }
+    }
+};
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;Macro suffix functions&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.F_SUFFIX">F_SUFFIX</a>(<span class="tok-number">1</span>)) == <span class="tok-type">f32</span>);
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.U_SUFFIX">U_SUFFIX</a>(<span class="tok-number">1</span>)) == <span class="tok-type">c_uint</span>);
+    <span class="tok-kw">if</span> (<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_ulong</span>) &gt; <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_uint</span>)) {
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.U_SUFFIX">U_SUFFIX</a>(<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_uint</span>) + <span class="tok-number">1</span>)) == <span class="tok-type">c_ulong</span>);
+    }
+    <span class="tok-kw">if</span> (<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_ulonglong</span>) &gt; <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_ulong</span>)) {
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.U_SUFFIX">U_SUFFIX</a>(<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_ulong</span>) + <span class="tok-number">1</span>)) == <span class="tok-type">c_ulonglong</span>);
+    }
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.L_SUFFIX">L_SUFFIX</a>(<span class="tok-number">1</span>)) == <span class="tok-type">c_long</span>);
+    <span class="tok-kw">if</span> (<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_long</span>) &gt; <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_int</span>)) {
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.L_SUFFIX">L_SUFFIX</a>(<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_int</span>) + <span class="tok-number">1</span>)) == <span class="tok-type">c_long</span>);
+    }
+    <span class="tok-kw">if</span> (<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_longlong</span>) &gt; <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_long</span>)) {
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.L_SUFFIX">L_SUFFIX</a>(<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_long</span>) + <span class="tok-number">1</span>)) == <span class="tok-type">c_longlong</span>);
+    }
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.UL_SUFFIX">UL_SUFFIX</a>(<span class="tok-number">1</span>)) == <span class="tok-type">c_ulong</span>);
+    <span class="tok-kw">if</span> (<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_ulonglong</span>) &gt; <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_ulong</span>)) {
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.UL_SUFFIX">UL_SUFFIX</a>(<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_ulong</span>) + <span class="tok-number">1</span>)) == <span class="tok-type">c_ulonglong</span>);
+    }
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.LL_SUFFIX">LL_SUFFIX</a>(<span class="tok-number">1</span>)) == <span class="tok-type">c_longlong</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.ULL_SUFFIX">ULL_SUFFIX</a>(<span class="tok-number">1</span>)) == <span class="tok-type">c_ulonglong</span>);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;WL_CONTAINER_OF&quot;</span> {
+    <span class="tok-kw">const</span> S = <span class="tok-kw">struct</span> {
+        a: <span class="tok-type">u32</span> = <span class="tok-number">0</span>,
+        b: <span class="tok-type">u32</span> = <span class="tok-number">0</span>,
+    };
+    <span class="tok-kw">const</span> x = S{};
+    <span class="tok-kw">const</span> y = S{};
+    <span class="tok-kw">const</span> ptr = <a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.WL_CONTAINER_OF">WL_CONTAINER_OF</a>(&amp;x.b, &amp;y, <span class="tok-str">&quot;b&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(&amp;x, ptr);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;CAST_OR_CALL casting&quot;</span> {
+    <span class="tok-kw">const</span> arg: <span class="tok-type">c_int</span> = <span class="tok-number">1000</span>;
+    <span class="tok-kw">const</span> casted = <a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.CAST_OR_CALL">CAST_OR_CALL</a>(<span class="tok-type">u8</span>, arg);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(<span class="tok-type">u8</span>, arg), casted);
+
+    <span class="tok-kw">const</span> S = <span class="tok-kw">struct</span> {
+        x: <span class="tok-type">u32</span> = <span class="tok-number">0</span>,
+    };
+    <span class="tok-kw">var</span> s: S = .{};
+    <span class="tok-kw">const</span> casted_ptr = <a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.CAST_OR_CALL">CAST_OR_CALL</a>(*<span class="tok-type">u8</span>, &amp;s);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(*<span class="tok-type">u8</span>, &amp;s), casted_ptr);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;CAST_OR_CALL calling&quot;</span> {
+    <span class="tok-kw">const</span> Helper = <span class="tok-kw">struct</span> {
+        <span class="tok-kw">var</span> last_val: <span class="tok-type">bool</span> = <span class="tok-null">false</span>;
+        <span class="tok-kw">fn</span> <span class="tok-fn">returnsVoid</span>(val: <span class="tok-type">bool</span>) <span class="tok-type">void</span> {
+            <a href="std.zig.c_translation.html#std.zig.c_translation.last_val">last_val</a> = val;
+        }
+        <span class="tok-kw">fn</span> <span class="tok-fn">returnsBool</span>(f: <span class="tok-type">f32</span>) <span class="tok-type">bool</span> {
+            <span class="tok-kw">return</span> f &gt; <span class="tok-number">0</span>;
+        }
+        <span class="tok-kw">fn</span> <span class="tok-fn">identity</span>(self: <span class="tok-type">c_uint</span>) <span class="tok-type">c_uint</span> {
+            <span class="tok-kw">return</span> self;
+        }
+    };
+
+    <a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.CAST_OR_CALL">CAST_OR_CALL</a>(Helper.returnsVoid, <span class="tok-null">true</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-null">true</span>, Helper.last_val);
+    <a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.CAST_OR_CALL">CAST_OR_CALL</a>(Helper.returnsVoid, <span class="tok-null">false</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-null">false</span>, Helper.last_val);
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(Helper.returnsBool(<span class="tok-number">1</span>), <a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.CAST_OR_CALL">CAST_OR_CALL</a>(Helper.returnsBool, <span class="tok-builtin">@as</span>(<span class="tok-type">f32</span>, <span class="tok-number">1</span>)));
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(Helper.returnsBool(-<span class="tok-number">1</span>), <a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.CAST_OR_CALL">CAST_OR_CALL</a>(Helper.returnsBool, <span class="tok-builtin">@as</span>(<span class="tok-type">f32</span>, -<span class="tok-number">1</span>)));
+
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(Helper.identity(<span class="tok-builtin">@as</span>(<span class="tok-type">c_uint</span>, <span class="tok-number">100</span>)), <a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.CAST_OR_CALL">CAST_OR_CALL</a>(Helper.identity, <span class="tok-builtin">@as</span>(<span class="tok-type">c_uint</span>, <span class="tok-number">100</span>)));
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;Extended C ABI casting&quot;</span> {
+    <span class="tok-kw">if</span> (<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_long</span>) &gt; <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_char</span>)) {
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.L_SUFFIX">L_SUFFIX</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">c_char</span>, <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_char</span>) - <span class="tok-number">1</span>))) == <span class="tok-type">c_long</span>);<span class="tok-comment"> // c_char
+    </span>}
+    <span class="tok-kw">if</span> (<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_long</span>) &gt; <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_short</span>)) {
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.L_SUFFIX">L_SUFFIX</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">c_short</span>, <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_short</span>) - <span class="tok-number">1</span>))) == <span class="tok-type">c_long</span>);<span class="tok-comment"> // c_short
+    </span>}
+
+    <span class="tok-kw">if</span> (<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_long</span>) &gt; <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_ushort</span>)) {
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.L_SUFFIX">L_SUFFIX</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">c_ushort</span>, <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_ushort</span>) - <span class="tok-number">1</span>))) == <span class="tok-type">c_long</span>);<span class="tok-comment"> //c_ushort
+    </span>}
+
+    <span class="tok-kw">if</span> (<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_long</span>) &gt; <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_int</span>)) {
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.L_SUFFIX">L_SUFFIX</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">c_int</span>, <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_int</span>) - <span class="tok-number">1</span>))) == <span class="tok-type">c_long</span>);<span class="tok-comment"> // c_int
+    </span>}
+
+    <span class="tok-kw">if</span> (<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_long</span>) &gt; <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_uint</span>)) {
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.L_SUFFIX">L_SUFFIX</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">c_uint</span>, <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_uint</span>) - <span class="tok-number">1</span>))) == <span class="tok-type">c_long</span>);<span class="tok-comment"> // c_uint
+        </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.L_SUFFIX">L_SUFFIX</a>(<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_uint</span>) + <span class="tok-number">1</span>)) == <span class="tok-type">c_long</span>);<span class="tok-comment"> // comptime_int -&gt; c_long
+    </span>}
+
+    <span class="tok-kw">if</span> (<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_longlong</span>) &gt; <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_long</span>)) {
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.L_SUFFIX">L_SUFFIX</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">c_long</span>, <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_long</span>) - <span class="tok-number">1</span>))) == <span class="tok-type">c_long</span>);<span class="tok-comment"> // c_long
+        </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(<span class="tok-builtin">@TypeOf</span>(<a href="std.zig.c_translation.Macros.html">Macros</a>.<a href="std.zig.c_translation.Macros.html#std.zig.c_translation.Macros.L_SUFFIX">L_SUFFIX</a>(<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<span class="tok-type">c_long</span>) + <span class="tok-number">1</span>)) == <span class="tok-type">c_longlong</span>);<span class="tok-comment"> // comptime_int -&gt; c_longlong
+    </span>}
+}<span class="tok-comment">
+
+// Function with complex signature for testing the SDL case
+</span><span class="tok-kw">fn</span> <span class="tok-fn">complexFunction</span>(_: ?*<span class="tok-type">anyopaque</span>, _: <span class="tok-type">c_uint</span>, _: ?*<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (?*<span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(.c) <span class="tok-type">c_uint</span>, _: ?*<span class="tok-type">anyopaque</span>, _: <span class="tok-type">c_uint</span>, _: [*c]<span class="tok-type">c_uint</span>) <span class="tok-kw">callconv</span>(.c) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <span class="tok-number">0</span>;
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;function pointer casting&quot;</span> {
+    <span class="tok-kw">const</span> SDL_FunctionPointer = ?*<span class="tok-kw">const</span> <span class="tok-kw">fn</span> () <span class="tok-kw">callconv</span>(.c) <span class="tok-type">void</span>;
+    <span class="tok-kw">const</span> fn_ptr = <a href="std.zig.c_translation.html#std.zig.c_translation.cast">cast</a>(SDL_FunctionPointer, <a href="std.zig.c_translation.html#std.zig.c_translation.complexFunction">complexFunction</a>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expect">expect</a>(fn_ptr != <span class="tok-null">null</span>);
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

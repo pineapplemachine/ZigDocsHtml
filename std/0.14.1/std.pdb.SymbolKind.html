@@ -1,0 +1,601 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.pdb.html" class="">pdb</a></li><li><a href="std.pdb.SymbolKind.html" class="active">SymbolKind</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.pdb.SymbolKind" class="declHeader"><span class="declHeaderCategory">enum</span><span class="declHeaderIdentifier">std.pdb.SymbolKind</span><a href="#src.zig-std.pdb.SymbolKind">[src]</a></h1><div class="tldDocs"><p>Duplicate copy of SymbolRecordKind, but using the official CV names. Useful
+for reference purposes and when dealing with unknown record types.</p>
+</div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>compile = <span class="tok-number">1</span></code></pre></div><div><pre><code>register_16t = <span class="tok-number">2</span></code></pre></div><div><pre><code>constant_16t = <span class="tok-number">3</span></code></pre></div><div><pre><code>udt_16t = <span class="tok-number">4</span></code></pre></div><div><pre><code>ssearch = <span class="tok-number">5</span></code></pre></div><div><pre><code>skip = <span class="tok-number">7</span></code></pre></div><div><pre><code>cvreserve = <span class="tok-number">8</span></code></pre></div><div><pre><code>objname_st = <span class="tok-number">9</span></code></pre></div><div><pre><code>endarg = <span class="tok-number">10</span></code></pre></div><div><pre><code>coboludt_16t = <span class="tok-number">11</span></code></pre></div><div><pre><code>manyreg_16t = <span class="tok-number">12</span></code></pre></div><div><pre><code>@&quot;return&quot; = <span class="tok-number">13</span></code></pre></div><div><pre><code>entrythis = <span class="tok-number">14</span></code></pre></div><div><pre><code>bprel16 = <span class="tok-number">256</span></code></pre></div><div><pre><code>ldata16 = <span class="tok-number">257</span></code></pre></div><div><pre><code>gdata16 = <span class="tok-number">258</span></code></pre></div><div><pre><code>pub16 = <span class="tok-number">259</span></code></pre></div><div><pre><code>lproc16 = <span class="tok-number">260</span></code></pre></div><div><pre><code>gproc16 = <span class="tok-number">261</span></code></pre></div><div><pre><code>thunk16 = <span class="tok-number">262</span></code></pre></div><div><pre><code>block16 = <span class="tok-number">263</span></code></pre></div><div><pre><code>with16 = <span class="tok-number">264</span></code></pre></div><div><pre><code>label16 = <span class="tok-number">265</span></code></pre></div><div><pre><code>cexmodel16 = <span class="tok-number">266</span></code></pre></div><div><pre><code>vftable16 = <span class="tok-number">267</span></code></pre></div><div><pre><code>regrel16 = <span class="tok-number">268</span></code></pre></div><div><pre><code>bprel32_16t = <span class="tok-number">512</span></code></pre></div><div><pre><code>ldata32_16t = <span class="tok-number">513</span></code></pre></div><div><pre><code>gdata32_16t = <span class="tok-number">514</span></code></pre></div><div><pre><code>pub32_16t = <span class="tok-number">515</span></code></pre></div><div><pre><code>lproc32_16t = <span class="tok-number">516</span></code></pre></div><div><pre><code>gproc32_16t = <span class="tok-number">517</span></code></pre></div><div><pre><code>thunk32_st = <span class="tok-number">518</span></code></pre></div><div><pre><code>block32_st = <span class="tok-number">519</span></code></pre></div><div><pre><code>with32_st = <span class="tok-number">520</span></code></pre></div><div><pre><code>label32_st = <span class="tok-number">521</span></code></pre></div><div><pre><code>cexmodel32 = <span class="tok-number">522</span></code></pre></div><div><pre><code>vftable32_16t = <span class="tok-number">523</span></code></pre></div><div><pre><code>regrel32_16t = <span class="tok-number">524</span></code></pre></div><div><pre><code>lthread32_16t = <span class="tok-number">525</span></code></pre></div><div><pre><code>gthread32_16t = <span class="tok-number">526</span></code></pre></div><div><pre><code>slink32 = <span class="tok-number">527</span></code></pre></div><div><pre><code>lprocmips_16t = <span class="tok-number">768</span></code></pre></div><div><pre><code>gprocmips_16t = <span class="tok-number">769</span></code></pre></div><div><pre><code>procref_st = <span class="tok-number">1024</span></code></pre></div><div><pre><code>dataref_st = <span class="tok-number">1025</span></code></pre></div><div><pre><code>@&quot;align&quot; = <span class="tok-number">1026</span></code></pre></div><div><pre><code>lprocref_st = <span class="tok-number">1027</span></code></pre></div><div><pre><code>oem = <span class="tok-number">1028</span></code></pre></div><div><pre><code>ti16_max = <span class="tok-number">4096</span></code></pre></div><div><pre><code>register_st = <span class="tok-number">4097</span></code></pre></div><div><pre><code>constant_st = <span class="tok-number">4098</span></code></pre></div><div><pre><code>udt_st = <span class="tok-number">4099</span></code></pre></div><div><pre><code>coboludt_st = <span class="tok-number">4100</span></code></pre></div><div><pre><code>manyreg_st = <span class="tok-number">4101</span></code></pre></div><div><pre><code>bprel32_st = <span class="tok-number">4102</span></code></pre></div><div><pre><code>ldata32_st = <span class="tok-number">4103</span></code></pre></div><div><pre><code>gdata32_st = <span class="tok-number">4104</span></code></pre></div><div><pre><code>pub32_st = <span class="tok-number">4105</span></code></pre></div><div><pre><code>lproc32_st = <span class="tok-number">4106</span></code></pre></div><div><pre><code>gproc32_st = <span class="tok-number">4107</span></code></pre></div><div><pre><code>vftable32 = <span class="tok-number">4108</span></code></pre></div><div><pre><code>regrel32_st = <span class="tok-number">4109</span></code></pre></div><div><pre><code>lthread32_st = <span class="tok-number">4110</span></code></pre></div><div><pre><code>gthread32_st = <span class="tok-number">4111</span></code></pre></div><div><pre><code>lprocmips_st = <span class="tok-number">4112</span></code></pre></div><div><pre><code>gprocmips_st = <span class="tok-number">4113</span></code></pre></div><div><pre><code>compile2_st = <span class="tok-number">4115</span></code></pre></div><div><pre><code>manyreg2_st = <span class="tok-number">4116</span></code></pre></div><div><pre><code>lprocia64_st = <span class="tok-number">4117</span></code></pre></div><div><pre><code>gprocia64_st = <span class="tok-number">4118</span></code></pre></div><div><pre><code>localslot_st = <span class="tok-number">4119</span></code></pre></div><div><pre><code>paramslot_st = <span class="tok-number">4120</span></code></pre></div><div><pre><code>annotation = <span class="tok-number">4121</span></code></pre></div><div><pre><code>gmanproc_st = <span class="tok-number">4122</span></code></pre></div><div><pre><code>lmanproc_st = <span class="tok-number">4123</span></code></pre></div><div><pre><code>reserved1 = <span class="tok-number">4124</span></code></pre></div><div><pre><code>reserved2 = <span class="tok-number">4125</span></code></pre></div><div><pre><code>reserved3 = <span class="tok-number">4126</span></code></pre></div><div><pre><code>reserved4 = <span class="tok-number">4127</span></code></pre></div><div><pre><code>lmandata_st = <span class="tok-number">4128</span></code></pre></div><div><pre><code>gmandata_st = <span class="tok-number">4129</span></code></pre></div><div><pre><code>manframerel_st = <span class="tok-number">4130</span></code></pre></div><div><pre><code>manregister_st = <span class="tok-number">4131</span></code></pre></div><div><pre><code>manslot_st = <span class="tok-number">4132</span></code></pre></div><div><pre><code>manmanyreg_st = <span class="tok-number">4133</span></code></pre></div><div><pre><code>manregrel_st = <span class="tok-number">4134</span></code></pre></div><div><pre><code>manmanyreg2_st = <span class="tok-number">4135</span></code></pre></div><div><pre><code>mantypref = <span class="tok-number">4136</span></code></pre></div><div><pre><code>unamespace_st = <span class="tok-number">4137</span></code></pre></div><div><pre><code>st_max = <span class="tok-number">4352</span></code></pre></div><div><pre><code>with32 = <span class="tok-number">4356</span></code></pre></div><div><pre><code>manyreg = <span class="tok-number">4362</span></code></pre></div><div><pre><code>lprocmips = <span class="tok-number">4372</span></code></pre></div><div><pre><code>gprocmips = <span class="tok-number">4373</span></code></pre></div><div><pre><code>manyreg2 = <span class="tok-number">4375</span></code></pre></div><div><pre><code>lprocia64 = <span class="tok-number">4376</span></code></pre></div><div><pre><code>gprocia64 = <span class="tok-number">4377</span></code></pre></div><div><pre><code>localslot = <span class="tok-number">4378</span></code></pre></div><div><pre><code>paramslot = <span class="tok-number">4379</span></code></pre></div><div><pre><code>manframerel = <span class="tok-number">4382</span></code></pre></div><div><pre><code>manregister = <span class="tok-number">4383</span></code></pre></div><div><pre><code>manslot = <span class="tok-number">4384</span></code></pre></div><div><pre><code>manmanyreg = <span class="tok-number">4385</span></code></pre></div><div><pre><code>manregrel = <span class="tok-number">4386</span></code></pre></div><div><pre><code>manmanyreg2 = <span class="tok-number">4387</span></code></pre></div><div><pre><code>unamespace = <span class="tok-number">4388</span></code></pre></div><div><pre><code>dataref = <span class="tok-number">4390</span></code></pre></div><div><pre><code>annotationref = <span class="tok-number">4392</span></code></pre></div><div><pre><code>tokenref = <span class="tok-number">4393</span></code></pre></div><div><pre><code>gmanproc = <span class="tok-number">4394</span></code></pre></div><div><pre><code>lmanproc = <span class="tok-number">4395</span></code></pre></div><div><pre><code>attr_framerel = <span class="tok-number">4398</span></code></pre></div><div><pre><code>attr_register = <span class="tok-number">4399</span></code></pre></div><div><pre><code>attr_regrel = <span class="tok-number">4400</span></code></pre></div><div><pre><code>attr_manyreg = <span class="tok-number">4401</span></code></pre></div><div><pre><code>sepcode = <span class="tok-number">4402</span></code></pre></div><div><pre><code>local_2005 = <span class="tok-number">4403</span></code></pre></div><div><pre><code>defrange_2005 = <span class="tok-number">4404</span></code></pre></div><div><pre><code>defrange2_2005 = <span class="tok-number">4405</span></code></pre></div><div><pre><code>discarded = <span class="tok-number">4411</span></code></pre></div><div><pre><code>lprocmips_id = <span class="tok-number">4424</span></code></pre></div><div><pre><code>gprocmips_id = <span class="tok-number">4425</span></code></pre></div><div><pre><code>lprocia64_id = <span class="tok-number">4426</span></code></pre></div><div><pre><code>gprocia64_id = <span class="tok-number">4427</span></code></pre></div><div><pre><code>defrange_hlsl = <span class="tok-number">4432</span></code></pre></div><div><pre><code>gdata_hlsl = <span class="tok-number">4433</span></code></pre></div><div><pre><code>ldata_hlsl = <span class="tok-number">4434</span></code></pre></div><div><pre><code>local_dpc_groupshared = <span class="tok-number">4436</span></code></pre></div><div><pre><code>defrange_dpc_ptr_tag = <span class="tok-number">4439</span></code></pre></div><div><pre><code>dpc_sym_tag_map = <span class="tok-number">4440</span></code></pre></div><div><pre><code>armswitchtable = <span class="tok-number">4441</span></code></pre></div><div><pre><code>pogodata = <span class="tok-number">4444</span></code></pre></div><div><pre><code>inlinesite2 = <span class="tok-number">4445</span></code></pre></div><div><pre><code>mod_typeref = <span class="tok-number">4447</span></code></pre></div><div><pre><code>ref_minipdb = <span class="tok-number">4448</span></code></pre></div><div><pre><code>pdbmap = <span class="tok-number">4449</span></code></pre></div><div><pre><code>gdata_hlsl32 = <span class="tok-number">4450</span></code></pre></div><div><pre><code>ldata_hlsl32 = <span class="tok-number">4451</span></code></pre></div><div><pre><code>gdata_hlsl32_ex = <span class="tok-number">4452</span></code></pre></div><div><pre><code>ldata_hlsl32_ex = <span class="tok-number">4453</span></code></pre></div><div><pre><code>fastlink = <span class="tok-number">4455</span></code></pre></div><div><pre><code>inlinees = <span class="tok-number">4456</span></code></pre></div><div><pre><code>end = <span class="tok-number">6</span></code></pre></div><div><pre><code>inlinesite_end = <span class="tok-number">4430</span></code></pre></div><div><pre><code>proc_id_end = <span class="tok-number">4431</span></code></pre></div><div><pre><code>thunk32 = <span class="tok-number">4354</span></code></pre></div><div><pre><code>trampoline = <span class="tok-number">4396</span></code></pre></div><div><pre><code>section = <span class="tok-number">4406</span></code></pre></div><div><pre><code>coffgroup = <span class="tok-number">4407</span></code></pre></div><div><pre><code>@&quot;export&quot; = <span class="tok-number">4408</span></code></pre></div><div><pre><code>lproc32 = <span class="tok-number">4367</span></code></pre></div><div><pre><code>gproc32 = <span class="tok-number">4368</span></code></pre></div><div><pre><code>lproc32_id = <span class="tok-number">4422</span></code></pre></div><div><pre><code>gproc32_id = <span class="tok-number">4423</span></code></pre></div><div><pre><code>lproc32_dpc = <span class="tok-number">4437</span></code></pre></div><div><pre><code>lproc32_dpc_id = <span class="tok-number">4438</span></code></pre></div><div><pre><code>register = <span class="tok-number">4358</span></code></pre></div><div><pre><code>pub32 = <span class="tok-number">4366</span></code></pre></div><div><pre><code>procref = <span class="tok-number">4389</span></code></pre></div><div><pre><code>lprocref = <span class="tok-number">4391</span></code></pre></div><div><pre><code>envblock = <span class="tok-number">4413</span></code></pre></div><div><pre><code>inlinesite = <span class="tok-number">4429</span></code></pre></div><div><pre><code>local = <span class="tok-number">4414</span></code></pre></div><div><pre><code>defrange = <span class="tok-number">4415</span></code></pre></div><div><pre><code>defrange_subfield = <span class="tok-number">4416</span></code></pre></div><div><pre><code>defrange_register = <span class="tok-number">4417</span></code></pre></div><div><pre><code>defrange_framepointer_rel = <span class="tok-number">4418</span></code></pre></div><div><pre><code>defrange_subfield_register = <span class="tok-number">4419</span></code></pre></div><div><pre><code>defrange_framepointer_rel_full_scope = <span class="tok-number">4420</span></code></pre></div><div><pre><code>defrange_register_rel = <span class="tok-number">4421</span></code></pre></div><div><pre><code>block32 = <span class="tok-number">4355</span></code></pre></div><div><pre><code>label32 = <span class="tok-number">4357</span></code></pre></div><div><pre><code>objname = <span class="tok-number">4353</span></code></pre></div><div><pre><code>compile2 = <span class="tok-number">4374</span></code></pre></div><div><pre><code>compile3 = <span class="tok-number">4412</span></code></pre></div><div><pre><code>frameproc = <span class="tok-number">4114</span></code></pre></div><div><pre><code>callsiteinfo = <span class="tok-number">4409</span></code></pre></div><div><pre><code>filestatic = <span class="tok-number">4435</span></code></pre></div><div><pre><code>heapallocsite = <span class="tok-number">4446</span></code></pre></div><div><pre><code>framecookie = <span class="tok-number">4410</span></code></pre></div><div><pre><code>callees = <span class="tok-number">4442</span></code></pre></div><div><pre><code>callers = <span class="tok-number">4443</span></code></pre></div><div><pre><code>udt = <span class="tok-number">4360</span></code></pre></div><div><pre><code>coboludt = <span class="tok-number">4361</span></code></pre></div><div><pre><code>buildinfo = <span class="tok-number">4428</span></code></pre></div><div><pre><code>bprel32 = <span class="tok-number">4363</span></code></pre></div><div><pre><code>regrel32 = <span class="tok-number">4369</span></code></pre></div><div><pre><code>constant = <span class="tok-number">4359</span></code></pre></div><div><pre><code>manconstant = <span class="tok-number">4397</span></code></pre></div><div><pre><code>ldata32 = <span class="tok-number">4364</span></code></pre></div><div><pre><code>gdata32 = <span class="tok-number">4365</span></code></pre></div><div><pre><code>lmandata = <span class="tok-number">4380</span></code></pre></div><div><pre><code>gmandata = <span class="tok-number">4381</span></code></pre></div><div><pre><code>lthread32 = <span class="tok-number">4370</span></code></pre></div><div><pre><code>gthread32 = <span class="tok-number">4371</span></code></pre></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.pdb.SymbolKind">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> SymbolKind = <span class="tok-kw">enum</span>(<span class="tok-type">u16</span>) {
+    compile = <span class="tok-number">1</span>,
+    register_16t = <span class="tok-number">2</span>,
+    constant_16t = <span class="tok-number">3</span>,
+    udt_16t = <span class="tok-number">4</span>,
+    ssearch = <span class="tok-number">5</span>,
+    skip = <span class="tok-number">7</span>,
+    cvreserve = <span class="tok-number">8</span>,
+    objname_st = <span class="tok-number">9</span>,
+    endarg = <span class="tok-number">10</span>,
+    coboludt_16t = <span class="tok-number">11</span>,
+    manyreg_16t = <span class="tok-number">12</span>,
+    @&quot;return&quot; = <span class="tok-number">13</span>,
+    entrythis = <span class="tok-number">14</span>,
+    bprel16 = <span class="tok-number">256</span>,
+    ldata16 = <span class="tok-number">257</span>,
+    gdata16 = <span class="tok-number">258</span>,
+    pub16 = <span class="tok-number">259</span>,
+    lproc16 = <span class="tok-number">260</span>,
+    gproc16 = <span class="tok-number">261</span>,
+    thunk16 = <span class="tok-number">262</span>,
+    block16 = <span class="tok-number">263</span>,
+    with16 = <span class="tok-number">264</span>,
+    label16 = <span class="tok-number">265</span>,
+    cexmodel16 = <span class="tok-number">266</span>,
+    vftable16 = <span class="tok-number">267</span>,
+    regrel16 = <span class="tok-number">268</span>,
+    bprel32_16t = <span class="tok-number">512</span>,
+    ldata32_16t = <span class="tok-number">513</span>,
+    gdata32_16t = <span class="tok-number">514</span>,
+    pub32_16t = <span class="tok-number">515</span>,
+    lproc32_16t = <span class="tok-number">516</span>,
+    gproc32_16t = <span class="tok-number">517</span>,
+    thunk32_st = <span class="tok-number">518</span>,
+    block32_st = <span class="tok-number">519</span>,
+    with32_st = <span class="tok-number">520</span>,
+    label32_st = <span class="tok-number">521</span>,
+    cexmodel32 = <span class="tok-number">522</span>,
+    vftable32_16t = <span class="tok-number">523</span>,
+    regrel32_16t = <span class="tok-number">524</span>,
+    lthread32_16t = <span class="tok-number">525</span>,
+    gthread32_16t = <span class="tok-number">526</span>,
+    slink32 = <span class="tok-number">527</span>,
+    lprocmips_16t = <span class="tok-number">768</span>,
+    gprocmips_16t = <span class="tok-number">769</span>,
+    procref_st = <span class="tok-number">1024</span>,
+    dataref_st = <span class="tok-number">1025</span>,
+    @&quot;align&quot; = <span class="tok-number">1026</span>,
+    lprocref_st = <span class="tok-number">1027</span>,
+    oem = <span class="tok-number">1028</span>,
+    ti16_max = <span class="tok-number">4096</span>,
+    register_st = <span class="tok-number">4097</span>,
+    constant_st = <span class="tok-number">4098</span>,
+    udt_st = <span class="tok-number">4099</span>,
+    coboludt_st = <span class="tok-number">4100</span>,
+    manyreg_st = <span class="tok-number">4101</span>,
+    bprel32_st = <span class="tok-number">4102</span>,
+    ldata32_st = <span class="tok-number">4103</span>,
+    gdata32_st = <span class="tok-number">4104</span>,
+    pub32_st = <span class="tok-number">4105</span>,
+    lproc32_st = <span class="tok-number">4106</span>,
+    gproc32_st = <span class="tok-number">4107</span>,
+    vftable32 = <span class="tok-number">4108</span>,
+    regrel32_st = <span class="tok-number">4109</span>,
+    lthread32_st = <span class="tok-number">4110</span>,
+    gthread32_st = <span class="tok-number">4111</span>,
+    lprocmips_st = <span class="tok-number">4112</span>,
+    gprocmips_st = <span class="tok-number">4113</span>,
+    compile2_st = <span class="tok-number">4115</span>,
+    manyreg2_st = <span class="tok-number">4116</span>,
+    lprocia64_st = <span class="tok-number">4117</span>,
+    gprocia64_st = <span class="tok-number">4118</span>,
+    localslot_st = <span class="tok-number">4119</span>,
+    paramslot_st = <span class="tok-number">4120</span>,
+    annotation = <span class="tok-number">4121</span>,
+    gmanproc_st = <span class="tok-number">4122</span>,
+    lmanproc_st = <span class="tok-number">4123</span>,
+    reserved1 = <span class="tok-number">4124</span>,
+    reserved2 = <span class="tok-number">4125</span>,
+    reserved3 = <span class="tok-number">4126</span>,
+    reserved4 = <span class="tok-number">4127</span>,
+    lmandata_st = <span class="tok-number">4128</span>,
+    gmandata_st = <span class="tok-number">4129</span>,
+    manframerel_st = <span class="tok-number">4130</span>,
+    manregister_st = <span class="tok-number">4131</span>,
+    manslot_st = <span class="tok-number">4132</span>,
+    manmanyreg_st = <span class="tok-number">4133</span>,
+    manregrel_st = <span class="tok-number">4134</span>,
+    manmanyreg2_st = <span class="tok-number">4135</span>,
+    mantypref = <span class="tok-number">4136</span>,
+    unamespace_st = <span class="tok-number">4137</span>,
+    st_max = <span class="tok-number">4352</span>,
+    with32 = <span class="tok-number">4356</span>,
+    manyreg = <span class="tok-number">4362</span>,
+    lprocmips = <span class="tok-number">4372</span>,
+    gprocmips = <span class="tok-number">4373</span>,
+    manyreg2 = <span class="tok-number">4375</span>,
+    lprocia64 = <span class="tok-number">4376</span>,
+    gprocia64 = <span class="tok-number">4377</span>,
+    localslot = <span class="tok-number">4378</span>,
+    paramslot = <span class="tok-number">4379</span>,
+    manframerel = <span class="tok-number">4382</span>,
+    manregister = <span class="tok-number">4383</span>,
+    manslot = <span class="tok-number">4384</span>,
+    manmanyreg = <span class="tok-number">4385</span>,
+    manregrel = <span class="tok-number">4386</span>,
+    manmanyreg2 = <span class="tok-number">4387</span>,
+    unamespace = <span class="tok-number">4388</span>,
+    dataref = <span class="tok-number">4390</span>,
+    annotationref = <span class="tok-number">4392</span>,
+    tokenref = <span class="tok-number">4393</span>,
+    gmanproc = <span class="tok-number">4394</span>,
+    lmanproc = <span class="tok-number">4395</span>,
+    attr_framerel = <span class="tok-number">4398</span>,
+    attr_register = <span class="tok-number">4399</span>,
+    attr_regrel = <span class="tok-number">4400</span>,
+    attr_manyreg = <span class="tok-number">4401</span>,
+    sepcode = <span class="tok-number">4402</span>,
+    local_2005 = <span class="tok-number">4403</span>,
+    defrange_2005 = <span class="tok-number">4404</span>,
+    defrange2_2005 = <span class="tok-number">4405</span>,
+    discarded = <span class="tok-number">4411</span>,
+    lprocmips_id = <span class="tok-number">4424</span>,
+    gprocmips_id = <span class="tok-number">4425</span>,
+    lprocia64_id = <span class="tok-number">4426</span>,
+    gprocia64_id = <span class="tok-number">4427</span>,
+    defrange_hlsl = <span class="tok-number">4432</span>,
+    gdata_hlsl = <span class="tok-number">4433</span>,
+    ldata_hlsl = <span class="tok-number">4434</span>,
+    local_dpc_groupshared = <span class="tok-number">4436</span>,
+    defrange_dpc_ptr_tag = <span class="tok-number">4439</span>,
+    dpc_sym_tag_map = <span class="tok-number">4440</span>,
+    armswitchtable = <span class="tok-number">4441</span>,
+    pogodata = <span class="tok-number">4444</span>,
+    inlinesite2 = <span class="tok-number">4445</span>,
+    mod_typeref = <span class="tok-number">4447</span>,
+    ref_minipdb = <span class="tok-number">4448</span>,
+    pdbmap = <span class="tok-number">4449</span>,
+    gdata_hlsl32 = <span class="tok-number">4450</span>,
+    ldata_hlsl32 = <span class="tok-number">4451</span>,
+    gdata_hlsl32_ex = <span class="tok-number">4452</span>,
+    ldata_hlsl32_ex = <span class="tok-number">4453</span>,
+    fastlink = <span class="tok-number">4455</span>,
+    inlinees = <span class="tok-number">4456</span>,
+    end = <span class="tok-number">6</span>,
+    inlinesite_end = <span class="tok-number">4430</span>,
+    proc_id_end = <span class="tok-number">4431</span>,
+    thunk32 = <span class="tok-number">4354</span>,
+    trampoline = <span class="tok-number">4396</span>,
+    section = <span class="tok-number">4406</span>,
+    coffgroup = <span class="tok-number">4407</span>,
+    @&quot;export&quot; = <span class="tok-number">4408</span>,
+    lproc32 = <span class="tok-number">4367</span>,
+    gproc32 = <span class="tok-number">4368</span>,
+    lproc32_id = <span class="tok-number">4422</span>,
+    gproc32_id = <span class="tok-number">4423</span>,
+    lproc32_dpc = <span class="tok-number">4437</span>,
+    lproc32_dpc_id = <span class="tok-number">4438</span>,
+    register = <span class="tok-number">4358</span>,
+    pub32 = <span class="tok-number">4366</span>,
+    procref = <span class="tok-number">4389</span>,
+    lprocref = <span class="tok-number">4391</span>,
+    envblock = <span class="tok-number">4413</span>,
+    inlinesite = <span class="tok-number">4429</span>,
+    local = <span class="tok-number">4414</span>,
+    defrange = <span class="tok-number">4415</span>,
+    defrange_subfield = <span class="tok-number">4416</span>,
+    defrange_register = <span class="tok-number">4417</span>,
+    defrange_framepointer_rel = <span class="tok-number">4418</span>,
+    defrange_subfield_register = <span class="tok-number">4419</span>,
+    defrange_framepointer_rel_full_scope = <span class="tok-number">4420</span>,
+    defrange_register_rel = <span class="tok-number">4421</span>,
+    block32 = <span class="tok-number">4355</span>,
+    label32 = <span class="tok-number">4357</span>,
+    objname = <span class="tok-number">4353</span>,
+    compile2 = <span class="tok-number">4374</span>,
+    compile3 = <span class="tok-number">4412</span>,
+    frameproc = <span class="tok-number">4114</span>,
+    callsiteinfo = <span class="tok-number">4409</span>,
+    filestatic = <span class="tok-number">4435</span>,
+    heapallocsite = <span class="tok-number">4446</span>,
+    framecookie = <span class="tok-number">4410</span>,
+    callees = <span class="tok-number">4442</span>,
+    callers = <span class="tok-number">4443</span>,
+    udt = <span class="tok-number">4360</span>,
+    coboludt = <span class="tok-number">4361</span>,
+    buildinfo = <span class="tok-number">4428</span>,
+    bprel32 = <span class="tok-number">4363</span>,
+    regrel32 = <span class="tok-number">4369</span>,
+    constant = <span class="tok-number">4359</span>,
+    manconstant = <span class="tok-number">4397</span>,
+    ldata32 = <span class="tok-number">4364</span>,
+    gdata32 = <span class="tok-number">4365</span>,
+    lmandata = <span class="tok-number">4380</span>,
+    gmandata = <span class="tok-number">4381</span>,
+    lthread32 = <span class="tok-number">4370</span>,
+    gthread32 = <span class="tok-number">4371</span>,
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

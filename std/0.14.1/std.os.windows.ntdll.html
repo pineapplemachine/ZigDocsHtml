@@ -1,0 +1,1006 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">os</a></li><li><a href="std.os.html" class="">windows</a></li><li><a href="std.os.windows.ntdll.html" class="active">ntdll</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.os.windows.ntdll" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.os.windows.ntdll</span><a href="#src.zig-std.os.windows.ntdll">[src]</a></h1><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.os.windows.ntdll.NtQueryInformationProcess" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtQueryInformationProcess</span><a href="#src.zig-std.os.windows.ntdll.NtQueryInformationProcess">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryInformationProcess</span>( ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, ProcessInformationClass: <a href="std.os.windows.PROCESSINFOCLASS.html">PROCESSINFOCLASS</a>, ProcessInformation: *<span class="tok-type">anyopaque</span>, ProcessInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, ReturnLength: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>ProcessInformationClass: <a href="std.os.windows.PROCESSINFOCLASS.html">PROCESSINFOCLASS</a></code></pre></div><div><pre><code>ProcessInformation: *<span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>ProcessInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>ReturnLength: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtQueryInformationProcess">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryInformationProcess</span>(
+    ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    ProcessInformationClass: <a href="std.os.windows.PROCESSINFOCLASS.html">PROCESSINFOCLASS</a>,
+    ProcessInformation: *<span class="tok-type">anyopaque</span>,
+    ProcessInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    ReturnLength: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtQueryInformationThread" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtQueryInformationThread</span><a href="#src.zig-std.os.windows.ntdll.NtQueryInformationThread">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryInformationThread</span>( ThreadHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, ThreadInformationClass: <a href="std.os.windows.THREADINFOCLASS.html">THREADINFOCLASS</a>, ThreadInformation: *<span class="tok-type">anyopaque</span>, ThreadInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, ReturnLength: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>ThreadHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>ThreadInformationClass: <a href="std.os.windows.THREADINFOCLASS.html">THREADINFOCLASS</a></code></pre></div><div><pre><code>ThreadInformation: *<span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>ThreadInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>ReturnLength: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtQueryInformationThread">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryInformationThread</span>(
+    ThreadHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    ThreadInformationClass: <a href="std.os.windows.THREADINFOCLASS.html">THREADINFOCLASS</a>,
+    ThreadInformation: *<span class="tok-type">anyopaque</span>,
+    ThreadInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    ReturnLength: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtQuerySystemInformation" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtQuerySystemInformation</span><a href="#src.zig-std.os.windows.ntdll.NtQuerySystemInformation">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQuerySystemInformation</span>( SystemInformationClass: <a href="std.os.windows.SYSTEM_INFORMATION_CLASS.html">SYSTEM_INFORMATION_CLASS</a>, SystemInformation: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>, SystemInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, ReturnLength: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>SystemInformationClass: <a href="std.os.windows.SYSTEM_INFORMATION_CLASS.html">SYSTEM_INFORMATION_CLASS</a></code></pre></div><div><pre><code>SystemInformation: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>SystemInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>ReturnLength: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtQuerySystemInformation">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQuerySystemInformation</span>(
+    SystemInformationClass: <a href="std.os.windows.SYSTEM_INFORMATION_CLASS.html">SYSTEM_INFORMATION_CLASS</a>,
+    SystemInformation: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    SystemInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    ReturnLength: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtSetInformationThread" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtSetInformationThread</span><a href="#src.zig-std.os.windows.ntdll.NtSetInformationThread">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtSetInformationThread</span>( ThreadHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, ThreadInformationClass: <a href="std.os.windows.THREADINFOCLASS.html">THREADINFOCLASS</a>, ThreadInformation: *<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>, ThreadInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>ThreadHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>ThreadInformationClass: <a href="std.os.windows.THREADINFOCLASS.html">THREADINFOCLASS</a></code></pre></div><div><pre><code>ThreadInformation: *<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>ThreadInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtSetInformationThread">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtSetInformationThread</span>(
+    ThreadHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    ThreadInformationClass: <a href="std.os.windows.THREADINFOCLASS.html">THREADINFOCLASS</a>,
+    ThreadInformation: *<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>,
+    ThreadInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.RtlGetVersion" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">RtlGetVersion</span><a href="#src.zig-std.os.windows.ntdll.RtlGetVersion">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlGetVersion</span>( lpVersionInformation: *<a href="std.os.windows.OSVERSIONINFOW.html">RTL_OSVERSIONINFOW</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>lpVersionInformation: *<a href="std.os.windows.OSVERSIONINFOW.html">RTL_OSVERSIONINFOW</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.RtlGetVersion">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlGetVersion</span>(
+    lpVersionInformation: *<a href="std.os.windows.OSVERSIONINFOW.html">RTL_OSVERSIONINFOW</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.RtlCaptureStackBackTrace" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">RtlCaptureStackBackTrace</span><a href="#src.zig-std.os.windows.ntdll.RtlCaptureStackBackTrace">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlCaptureStackBackTrace</span>( FramesToSkip: <a href="std.os.windows.html#std.os.windows.DWORD">DWORD</a>, FramesToCapture: <a href="std.os.windows.html#std.os.windows.DWORD">DWORD</a>, BackTrace: **<span class="tok-type">anyopaque</span>, BackTraceHash: ?*<a href="std.os.windows.html#std.os.windows.DWORD">DWORD</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html#std.os.windows.WORD">WORD</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>FramesToSkip: <a href="std.os.windows.html#std.os.windows.DWORD">DWORD</a></code></pre></div><div><pre><code>FramesToCapture: <a href="std.os.windows.html#std.os.windows.DWORD">DWORD</a></code></pre></div><div><pre><code>BackTrace: **<span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>BackTraceHash: ?*<a href="std.os.windows.html#std.os.windows.DWORD">DWORD</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.RtlCaptureStackBackTrace">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlCaptureStackBackTrace</span>(
+    FramesToSkip: <a href="std.os.windows.html#std.os.windows.DWORD">DWORD</a>,
+    FramesToCapture: <a href="std.os.windows.html#std.os.windows.DWORD">DWORD</a>,
+    BackTrace: **<span class="tok-type">anyopaque</span>,
+    BackTraceHash: ?*<a href="std.os.windows.html#std.os.windows.DWORD">DWORD</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html#std.os.windows.WORD">WORD</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.RtlCaptureContext" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">RtlCaptureContext</span><a href="#src.zig-std.os.windows.ntdll.RtlCaptureContext">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlCaptureContext</span>(ContextRecord: *<a href="std.os.windows.html#std.os.windows.CONTEXT">CONTEXT</a>) <span class="tok-kw">callconv</span>(.winapi) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>ContextRecord: *<a href="std.os.windows.html#std.os.windows.CONTEXT">CONTEXT</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.RtlCaptureContext">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlCaptureContext</span>(ContextRecord: *<a href="std.os.windows.html#std.os.windows.CONTEXT">CONTEXT</a>) <span class="tok-kw">callconv</span>(.winapi) <span class="tok-type">void</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.RtlLookupFunctionEntry" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">RtlLookupFunctionEntry</span><a href="#src.zig-std.os.windows.ntdll.RtlLookupFunctionEntry">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlLookupFunctionEntry</span>( ControlPc: <a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a>, ImageBase: *<a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a>, HistoryTable: *<a href="std.os.windows.UNWIND_HISTORY_TABLE.html">UNWIND_HISTORY_TABLE</a>, ) <span class="tok-kw">callconv</span>(.winapi) ?*<a href="std.os.windows.html#std.os.windows.RUNTIME_FUNCTION">RUNTIME_FUNCTION</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>ControlPc: <a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a></code></pre></div><div><pre><code>ImageBase: *<a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a></code></pre></div><div><pre><code>HistoryTable: *<a href="std.os.windows.UNWIND_HISTORY_TABLE.html">UNWIND_HISTORY_TABLE</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.RtlLookupFunctionEntry">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlLookupFunctionEntry</span>(
+    ControlPc: <a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a>,
+    ImageBase: *<a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a>,
+    HistoryTable: *<a href="std.os.windows.UNWIND_HISTORY_TABLE.html">UNWIND_HISTORY_TABLE</a>,
+) <span class="tok-kw">callconv</span>(.winapi) ?*<a href="std.os.windows.html#std.os.windows.RUNTIME_FUNCTION">RUNTIME_FUNCTION</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.RtlVirtualUnwind" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">RtlVirtualUnwind</span><a href="#src.zig-std.os.windows.ntdll.RtlVirtualUnwind">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlVirtualUnwind</span>( HandlerType: <a href="std.os.windows.html#std.os.windows.DWORD">DWORD</a>, ImageBase: <a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a>, ControlPc: <a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a>, FunctionEntry: *<a href="std.os.windows.html#std.os.windows.RUNTIME_FUNCTION">RUNTIME_FUNCTION</a>, ContextRecord: *<a href="std.os.windows.html#std.os.windows.CONTEXT">CONTEXT</a>, HandlerData: *?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>, EstablisherFrame: *<a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a>, ContextPointers: ?*<a href="std.os.windows.html#std.os.windows.KNONVOLATILE_CONTEXT_POINTERS">KNONVOLATILE_CONTEXT_POINTERS</a>, ) <span class="tok-kw">callconv</span>(.winapi) *<a href="std.os.windows.html#std.os.windows.EXCEPTION_ROUTINE">EXCEPTION_ROUTINE</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>HandlerType: <a href="std.os.windows.html#std.os.windows.DWORD">DWORD</a></code></pre></div><div><pre><code>ImageBase: <a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a></code></pre></div><div><pre><code>ControlPc: <a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a></code></pre></div><div><pre><code>FunctionEntry: *<a href="std.os.windows.html#std.os.windows.RUNTIME_FUNCTION">RUNTIME_FUNCTION</a></code></pre></div><div><pre><code>ContextRecord: *<a href="std.os.windows.html#std.os.windows.CONTEXT">CONTEXT</a></code></pre></div><div><pre><code>HandlerData: *?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>EstablisherFrame: *<a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a></code></pre></div><div><pre><code>ContextPointers: ?*<a href="std.os.windows.html#std.os.windows.KNONVOLATILE_CONTEXT_POINTERS">KNONVOLATILE_CONTEXT_POINTERS</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.RtlVirtualUnwind">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlVirtualUnwind</span>(
+    HandlerType: <a href="std.os.windows.html#std.os.windows.DWORD">DWORD</a>,
+    ImageBase: <a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a>,
+    ControlPc: <a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a>,
+    FunctionEntry: *<a href="std.os.windows.html#std.os.windows.RUNTIME_FUNCTION">RUNTIME_FUNCTION</a>,
+    ContextRecord: *<a href="std.os.windows.html#std.os.windows.CONTEXT">CONTEXT</a>,
+    HandlerData: *?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    EstablisherFrame: *<a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a>,
+    ContextPointers: ?*<a href="std.os.windows.html#std.os.windows.KNONVOLATILE_CONTEXT_POINTERS">KNONVOLATILE_CONTEXT_POINTERS</a>,
+) <span class="tok-kw">callconv</span>(.winapi) *<a href="std.os.windows.html#std.os.windows.EXCEPTION_ROUTINE">EXCEPTION_ROUTINE</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.RtlGetSystemTimePrecise" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">RtlGetSystemTimePrecise</span><a href="#src.zig-std.os.windows.ntdll.RtlGetSystemTimePrecise">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlGetSystemTimePrecise</span>() <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.RtlGetSystemTimePrecise">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlGetSystemTimePrecise</span>() <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtQueryInformationFile" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtQueryInformationFile</span><a href="#src.zig-std.os.windows.ntdll.NtQueryInformationFile">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryInformationFile</span>( FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>, FileInformation: *<span class="tok-type">anyopaque</span>, Length: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, FileInformationClass: <a href="std.os.windows.FILE_INFORMATION_CLASS.html">FILE_INFORMATION_CLASS</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a></code></pre></div><div><pre><code>FileInformation: *<span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>Length: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>FileInformationClass: <a href="std.os.windows.FILE_INFORMATION_CLASS.html">FILE_INFORMATION_CLASS</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtQueryInformationFile">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryInformationFile</span>(
+    FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    FileInformation: *<span class="tok-type">anyopaque</span>,
+    Length: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    FileInformationClass: <a href="std.os.windows.FILE_INFORMATION_CLASS.html">FILE_INFORMATION_CLASS</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtSetInformationFile" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtSetInformationFile</span><a href="#src.zig-std.os.windows.ntdll.NtSetInformationFile">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtSetInformationFile</span>( FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>, FileInformation: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>, Length: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, FileInformationClass: <a href="std.os.windows.FILE_INFORMATION_CLASS.html">FILE_INFORMATION_CLASS</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a></code></pre></div><div><pre><code>FileInformation: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>Length: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>FileInformationClass: <a href="std.os.windows.FILE_INFORMATION_CLASS.html">FILE_INFORMATION_CLASS</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtSetInformationFile">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtSetInformationFile</span>(
+    FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    FileInformation: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    Length: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    FileInformationClass: <a href="std.os.windows.FILE_INFORMATION_CLASS.html">FILE_INFORMATION_CLASS</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtQueryAttributesFile" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtQueryAttributesFile</span><a href="#src.zig-std.os.windows.ntdll.NtQueryAttributesFile">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryAttributesFile</span>( ObjectAttributes: *<a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a>, FileAttributes: *<a href="std.os.windows.FILE_BASIC_INFORMATION.html">FILE_BASIC_INFORMATION</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>ObjectAttributes: *<a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a></code></pre></div><div><pre><code>FileAttributes: *<a href="std.os.windows.FILE_BASIC_INFORMATION.html">FILE_BASIC_INFORMATION</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtQueryAttributesFile">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryAttributesFile</span>(
+    ObjectAttributes: *<a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a>,
+    FileAttributes: *<a href="std.os.windows.FILE_BASIC_INFORMATION.html">FILE_BASIC_INFORMATION</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.RtlQueryPerformanceCounter" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">RtlQueryPerformanceCounter</span><a href="#src.zig-std.os.windows.ntdll.RtlQueryPerformanceCounter">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlQueryPerformanceCounter</span>(PerformanceCounter: *<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html#std.os.windows.BOOL">BOOL</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>PerformanceCounter: *<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.RtlQueryPerformanceCounter">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlQueryPerformanceCounter</span>(PerformanceCounter: *<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html#std.os.windows.BOOL">BOOL</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.RtlQueryPerformanceFrequency" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">RtlQueryPerformanceFrequency</span><a href="#src.zig-std.os.windows.ntdll.RtlQueryPerformanceFrequency">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlQueryPerformanceFrequency</span>(PerformanceFrequency: *<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html#std.os.windows.BOOL">BOOL</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>PerformanceFrequency: *<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.RtlQueryPerformanceFrequency">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlQueryPerformanceFrequency</span>(PerformanceFrequency: *<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html#std.os.windows.BOOL">BOOL</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtQueryPerformanceCounter" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtQueryPerformanceCounter</span><a href="#src.zig-std.os.windows.ntdll.NtQueryPerformanceCounter">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryPerformanceCounter</span>( PerformanceCounter: *<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>, PerformanceFrequency: ?*<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>PerformanceCounter: *<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a></code></pre></div><div><pre><code>PerformanceFrequency: ?*<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtQueryPerformanceCounter">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryPerformanceCounter</span>(
+    PerformanceCounter: *<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+    PerformanceFrequency: ?*<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtCreateFile" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtCreateFile</span><a href="#src.zig-std.os.windows.ntdll.NtCreateFile">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtCreateFile</span>( FileHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, DesiredAccess: <a href="std.os.windows.html#std.os.windows.DWORD">ACCESS_MASK</a>, ObjectAttributes: *<a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a>, IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>, AllocationSize: ?*<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>, FileAttributes: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, ShareAccess: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, CreateDisposition: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, CreateOptions: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, EaBuffer: ?*<span class="tok-type">anyopaque</span>, EaLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>FileHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>DesiredAccess: <a href="std.os.windows.html#std.os.windows.DWORD">ACCESS_MASK</a></code></pre></div><div><pre><code>ObjectAttributes: *<a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a></code></pre></div><div><pre><code>IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a></code></pre></div><div><pre><code>AllocationSize: ?*<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a></code></pre></div><div><pre><code>FileAttributes: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>ShareAccess: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>CreateDisposition: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>CreateOptions: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>EaBuffer: ?*<span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>EaLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtCreateFile">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtCreateFile</span>(
+    FileHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    DesiredAccess: <a href="std.os.windows.html#std.os.windows.DWORD">ACCESS_MASK</a>,
+    ObjectAttributes: *<a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    AllocationSize: ?*<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+    FileAttributes: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    ShareAccess: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    CreateDisposition: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    CreateOptions: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    EaBuffer: ?*<span class="tok-type">anyopaque</span>,
+    EaLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtCreateSection" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtCreateSection</span><a href="#src.zig-std.os.windows.ntdll.NtCreateSection">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtCreateSection</span>( SectionHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, DesiredAccess: <a href="std.os.windows.html#std.os.windows.DWORD">ACCESS_MASK</a>, ObjectAttributes: ?*<a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a>, MaximumSize: ?*<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>, SectionPageProtection: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, AllocationAttributes: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, FileHandle: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>SectionHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>DesiredAccess: <a href="std.os.windows.html#std.os.windows.DWORD">ACCESS_MASK</a></code></pre></div><div><pre><code>ObjectAttributes: ?*<a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a></code></pre></div><div><pre><code>MaximumSize: ?*<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a></code></pre></div><div><pre><code>SectionPageProtection: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>AllocationAttributes: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>FileHandle: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtCreateSection">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtCreateSection</span>(
+    SectionHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    DesiredAccess: <a href="std.os.windows.html#std.os.windows.DWORD">ACCESS_MASK</a>,
+    ObjectAttributes: ?*<a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a>,
+    MaximumSize: ?*<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+    SectionPageProtection: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    AllocationAttributes: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    FileHandle: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtMapViewOfSection" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtMapViewOfSection</span><a href="#src.zig-std.os.windows.ntdll.NtMapViewOfSection">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtMapViewOfSection</span>( SectionHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, BaseAddress: *<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>, ZeroBits: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, CommitSize: <a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>, SectionOffset: ?*<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>, ViewSize: *<a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>, InheritDispostion: <a href="std.os.windows.SECTION_INHERIT.html">SECTION_INHERIT</a>, AllocationType: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, Win32Protect: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>SectionHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>BaseAddress: *<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>ZeroBits: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>CommitSize: <a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a></code></pre></div><div><pre><code>SectionOffset: ?*<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a></code></pre></div><div><pre><code>ViewSize: *<a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a></code></pre></div><div><pre><code>InheritDispostion: <a href="std.os.windows.SECTION_INHERIT.html">SECTION_INHERIT</a></code></pre></div><div><pre><code>AllocationType: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>Win32Protect: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtMapViewOfSection">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtMapViewOfSection</span>(
+    SectionHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    BaseAddress: *<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    ZeroBits: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    CommitSize: <a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>,
+    SectionOffset: ?*<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+    ViewSize: *<a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>,
+    InheritDispostion: <a href="std.os.windows.SECTION_INHERIT.html">SECTION_INHERIT</a>,
+    AllocationType: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    Win32Protect: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtUnmapViewOfSection" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtUnmapViewOfSection</span><a href="#src.zig-std.os.windows.ntdll.NtUnmapViewOfSection">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtUnmapViewOfSection</span>( ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, BaseAddress: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>BaseAddress: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtUnmapViewOfSection">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtUnmapViewOfSection</span>(
+    ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    BaseAddress: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtDeviceIoControlFile" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtDeviceIoControlFile</span><a href="#src.zig-std.os.windows.ntdll.NtDeviceIoControlFile">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtDeviceIoControlFile</span>( FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, Event: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, ApcRoutine: ?<a href="std.os.windows.html#std.os.windows.IO_APC_ROUTINE">IO_APC_ROUTINE</a>, ApcContext: ?*<span class="tok-type">anyopaque</span>, IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>, IoControlCode: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, InputBuffer: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>, InputBufferLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, OutputBuffer: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>, OutputBufferLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>Event: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>ApcRoutine: ?<a href="std.os.windows.html#std.os.windows.IO_APC_ROUTINE">IO_APC_ROUTINE</a></code></pre></div><div><pre><code>ApcContext: ?*<span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a></code></pre></div><div><pre><code>IoControlCode: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>InputBuffer: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>InputBufferLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>OutputBuffer: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>OutputBufferLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtDeviceIoControlFile">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtDeviceIoControlFile</span>(
+    FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    Event: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    ApcRoutine: ?<a href="std.os.windows.html#std.os.windows.IO_APC_ROUTINE">IO_APC_ROUTINE</a>,
+    ApcContext: ?*<span class="tok-type">anyopaque</span>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    IoControlCode: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    InputBuffer: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>,
+    InputBufferLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    OutputBuffer: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    OutputBufferLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtFsControlFile" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtFsControlFile</span><a href="#src.zig-std.os.windows.ntdll.NtFsControlFile">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtFsControlFile</span>( FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, Event: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, ApcRoutine: ?<a href="std.os.windows.html#std.os.windows.IO_APC_ROUTINE">IO_APC_ROUTINE</a>, ApcContext: ?*<span class="tok-type">anyopaque</span>, IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>, FsControlCode: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, InputBuffer: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>, InputBufferLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, OutputBuffer: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>, OutputBufferLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>Event: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>ApcRoutine: ?<a href="std.os.windows.html#std.os.windows.IO_APC_ROUTINE">IO_APC_ROUTINE</a></code></pre></div><div><pre><code>ApcContext: ?*<span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a></code></pre></div><div><pre><code>FsControlCode: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>InputBuffer: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>InputBufferLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>OutputBuffer: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>OutputBufferLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtFsControlFile">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtFsControlFile</span>(
+    FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    Event: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    ApcRoutine: ?<a href="std.os.windows.html#std.os.windows.IO_APC_ROUTINE">IO_APC_ROUTINE</a>,
+    ApcContext: ?*<span class="tok-type">anyopaque</span>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    FsControlCode: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    InputBuffer: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>,
+    InputBufferLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    OutputBuffer: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    OutputBufferLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtClose" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtClose</span><a href="#src.zig-std.os.windows.ntdll.NtClose">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtClose</span>(Handle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>Handle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtClose">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtClose</span>(Handle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.RtlDosPathNameToNtPathName_U" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">RtlDosPathNameToNtPathName_U</span><a href="#src.zig-std.os.windows.ntdll.RtlDosPathNameToNtPathName_U">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlDosPathNameToNtPathName_U</span>( DosPathName: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>, NtPathName: *<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>, NtFileNamePart: ?*?[*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>, DirectoryInfo: ?*<a href="std.os.windows.CURDIR.html">CURDIR</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html#std.os.windows.BOOL">BOOL</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>DosPathName: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span></code></pre></div><div><pre><code>NtPathName: *<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a></code></pre></div><div><pre><code>NtFileNamePart: ?*?[*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span></code></pre></div><div><pre><code>DirectoryInfo: ?*<a href="std.os.windows.CURDIR.html">CURDIR</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.RtlDosPathNameToNtPathName_U">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlDosPathNameToNtPathName_U</span>(
+    DosPathName: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>,
+    NtPathName: *<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>,
+    NtFileNamePart: ?*?[*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>,
+    DirectoryInfo: ?*<a href="std.os.windows.CURDIR.html">CURDIR</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html#std.os.windows.BOOL">BOOL</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.RtlFreeUnicodeString" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">RtlFreeUnicodeString</span><a href="#src.zig-std.os.windows.ntdll.RtlFreeUnicodeString">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlFreeUnicodeString</span>(UnicodeString: *<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>) <span class="tok-kw">callconv</span>(.winapi) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>UnicodeString: *<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.RtlFreeUnicodeString">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlFreeUnicodeString</span>(UnicodeString: *<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>) <span class="tok-kw">callconv</span>(.winapi) <span class="tok-type">void</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.RtlGetFullPathName_U" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">RtlGetFullPathName_U</span><a href="#src.zig-std.os.windows.ntdll.RtlGetFullPathName_U">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlGetFullPathName_U</span>( FileName: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>, BufferByteLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, Buffer: [*]<span class="tok-type">u16</span>, ShortName: ?*[*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div class="tldDocs"><p>Returns the number of bytes written to <code>Buffer</code>.
+If the returned count is larger than <code>BufferByteLength</code>, the buffer was too small.
+If the returned count is zero, an error occurred.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>FileName: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span></code></pre></div><div><pre><code>BufferByteLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>Buffer: [*]<span class="tok-type">u16</span></code></pre></div><div><pre><code>ShortName: ?*[*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.RtlGetFullPathName_U">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlGetFullPathName_U</span>(
+    FileName: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>,
+    BufferByteLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    Buffer: [*]<span class="tok-type">u16</span>,
+    ShortName: ?*[*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtQueryDirectoryFile" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtQueryDirectoryFile</span><a href="#src.zig-std.os.windows.ntdll.NtQueryDirectoryFile">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryDirectoryFile</span>( FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, Event: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, ApcRoutine: ?<a href="std.os.windows.html#std.os.windows.IO_APC_ROUTINE">IO_APC_ROUTINE</a>, ApcContext: ?*<span class="tok-type">anyopaque</span>, IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>, FileInformation: *<span class="tok-type">anyopaque</span>, Length: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, FileInformationClass: <a href="std.os.windows.FILE_INFORMATION_CLASS.html">FILE_INFORMATION_CLASS</a>, ReturnSingleEntry: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>, FileName: ?*<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>, RestartScan: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>Event: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>ApcRoutine: ?<a href="std.os.windows.html#std.os.windows.IO_APC_ROUTINE">IO_APC_ROUTINE</a></code></pre></div><div><pre><code>ApcContext: ?*<span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a></code></pre></div><div><pre><code>FileInformation: *<span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>Length: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>FileInformationClass: <a href="std.os.windows.FILE_INFORMATION_CLASS.html">FILE_INFORMATION_CLASS</a></code></pre></div><div><pre><code>ReturnSingleEntry: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a></code></pre></div><div><pre><code>FileName: ?*<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a></code></pre></div><div><pre><code>RestartScan: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtQueryDirectoryFile">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryDirectoryFile</span>(
+    FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    Event: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    ApcRoutine: ?<a href="std.os.windows.html#std.os.windows.IO_APC_ROUTINE">IO_APC_ROUTINE</a>,
+    ApcContext: ?*<span class="tok-type">anyopaque</span>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    FileInformation: *<span class="tok-type">anyopaque</span>,
+    Length: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    FileInformationClass: <a href="std.os.windows.FILE_INFORMATION_CLASS.html">FILE_INFORMATION_CLASS</a>,
+    ReturnSingleEntry: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>,
+    FileName: ?*<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>,
+    RestartScan: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtCreateKeyedEvent" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtCreateKeyedEvent</span><a href="#src.zig-std.os.windows.ntdll.NtCreateKeyedEvent">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtCreateKeyedEvent</span>( KeyedEventHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, DesiredAccess: <a href="std.os.windows.html#std.os.windows.DWORD">ACCESS_MASK</a>, ObjectAttributes: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>, Flags: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>KeyedEventHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>DesiredAccess: <a href="std.os.windows.html#std.os.windows.DWORD">ACCESS_MASK</a></code></pre></div><div><pre><code>ObjectAttributes: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>Flags: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtCreateKeyedEvent">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtCreateKeyedEvent</span>(
+    KeyedEventHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    DesiredAccess: <a href="std.os.windows.html#std.os.windows.DWORD">ACCESS_MASK</a>,
+    ObjectAttributes: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    Flags: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtReleaseKeyedEvent" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtReleaseKeyedEvent</span><a href="#src.zig-std.os.windows.ntdll.NtReleaseKeyedEvent">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtReleaseKeyedEvent</span>( EventHandle: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, Key: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>, Alertable: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>, Timeout: ?*<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>EventHandle: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>Key: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>Alertable: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a></code></pre></div><div><pre><code>Timeout: ?*<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtReleaseKeyedEvent">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtReleaseKeyedEvent</span>(
+    EventHandle: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    Key: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>,
+    Alertable: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>,
+    Timeout: ?*<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtWaitForKeyedEvent" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtWaitForKeyedEvent</span><a href="#src.zig-std.os.windows.ntdll.NtWaitForKeyedEvent">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtWaitForKeyedEvent</span>( EventHandle: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, Key: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>, Alertable: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>, Timeout: ?*<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>EventHandle: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>Key: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>Alertable: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a></code></pre></div><div><pre><code>Timeout: ?*<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtWaitForKeyedEvent">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtWaitForKeyedEvent</span>(
+    EventHandle: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    Key: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>,
+    Alertable: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>,
+    Timeout: ?*<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.RtlSetCurrentDirectory_U" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">RtlSetCurrentDirectory_U</span><a href="#src.zig-std.os.windows.ntdll.RtlSetCurrentDirectory_U">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlSetCurrentDirectory_U</span>(PathName: *<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>PathName: *<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.RtlSetCurrentDirectory_U">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlSetCurrentDirectory_U</span>(PathName: *<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtQueryObject" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtQueryObject</span><a href="#src.zig-std.os.windows.ntdll.NtQueryObject">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryObject</span>( Handle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, ObjectInformationClass: <a href="std.os.windows.OBJECT_INFORMATION_CLASS.html">OBJECT_INFORMATION_CLASS</a>, ObjectInformation: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>, ObjectInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, ReturnLength: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>Handle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>ObjectInformationClass: <a href="std.os.windows.OBJECT_INFORMATION_CLASS.html">OBJECT_INFORMATION_CLASS</a></code></pre></div><div><pre><code>ObjectInformation: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>ObjectInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>ReturnLength: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtQueryObject">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryObject</span>(
+    Handle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    ObjectInformationClass: <a href="std.os.windows.OBJECT_INFORMATION_CLASS.html">OBJECT_INFORMATION_CLASS</a>,
+    ObjectInformation: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    ObjectInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    ReturnLength: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtQueryVolumeInformationFile" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtQueryVolumeInformationFile</span><a href="#src.zig-std.os.windows.ntdll.NtQueryVolumeInformationFile">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryVolumeInformationFile</span>( FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>, FsInformation: *<span class="tok-type">anyopaque</span>, Length: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, FsInformationClass: <a href="std.os.windows.FS_INFORMATION_CLASS.html">FS_INFORMATION_CLASS</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a></code></pre></div><div><pre><code>FsInformation: *<span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>Length: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>FsInformationClass: <a href="std.os.windows.FS_INFORMATION_CLASS.html">FS_INFORMATION_CLASS</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtQueryVolumeInformationFile">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryVolumeInformationFile</span>(
+    FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    FsInformation: *<span class="tok-type">anyopaque</span>,
+    Length: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    FsInformationClass: <a href="std.os.windows.FS_INFORMATION_CLASS.html">FS_INFORMATION_CLASS</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.RtlWakeAddressAll" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">RtlWakeAddressAll</span><a href="#src.zig-std.os.windows.ntdll.RtlWakeAddressAll">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlWakeAddressAll</span>( Address: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>, ) <span class="tok-kw">callconv</span>(.winapi) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>Address: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.RtlWakeAddressAll">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlWakeAddressAll</span>(
+    Address: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>,
+) <span class="tok-kw">callconv</span>(.winapi) <span class="tok-type">void</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.RtlWakeAddressSingle" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">RtlWakeAddressSingle</span><a href="#src.zig-std.os.windows.ntdll.RtlWakeAddressSingle">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlWakeAddressSingle</span>( Address: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>, ) <span class="tok-kw">callconv</span>(.winapi) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>Address: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.RtlWakeAddressSingle">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlWakeAddressSingle</span>(
+    Address: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>,
+) <span class="tok-kw">callconv</span>(.winapi) <span class="tok-type">void</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.RtlWaitOnAddress" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">RtlWaitOnAddress</span><a href="#src.zig-std.os.windows.ntdll.RtlWaitOnAddress">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlWaitOnAddress</span>( Address: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>, CompareAddress: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>, AddressSize: <a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>, Timeout: ?*<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>Address: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>CompareAddress: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>AddressSize: <a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a></code></pre></div><div><pre><code>Timeout: ?*<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.RtlWaitOnAddress">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlWaitOnAddress</span>(
+    Address: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>,
+    CompareAddress: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>,
+    AddressSize: <a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>,
+    Timeout: ?*<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.RtlEqualUnicodeString" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">RtlEqualUnicodeString</span><a href="#src.zig-std.os.windows.ntdll.RtlEqualUnicodeString">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlEqualUnicodeString</span>( String1: *<span class="tok-kw">const</span> <a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>, String2: *<span class="tok-kw">const</span> <a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>, CaseInSensitive: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>String1: *<span class="tok-kw">const</span> <a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a></code></pre></div><div><pre><code>String2: *<span class="tok-kw">const</span> <a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a></code></pre></div><div><pre><code>CaseInSensitive: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.RtlEqualUnicodeString">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlEqualUnicodeString</span>(
+    String1: *<span class="tok-kw">const</span> <a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>,
+    String2: *<span class="tok-kw">const</span> <a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>,
+    CaseInSensitive: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.RtlUpcaseUnicodeChar" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">RtlUpcaseUnicodeChar</span><a href="#src.zig-std.os.windows.ntdll.RtlUpcaseUnicodeChar">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlUpcaseUnicodeChar</span>( SourceCharacter: <span class="tok-type">u16</span>, ) <span class="tok-kw">callconv</span>(.winapi) <span class="tok-type">u16</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>SourceCharacter: <span class="tok-type">u16</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.RtlUpcaseUnicodeChar">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlUpcaseUnicodeChar</span>(
+    SourceCharacter: <span class="tok-type">u16</span>,
+) <span class="tok-kw">callconv</span>(.winapi) <span class="tok-type">u16</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtLockFile" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtLockFile</span><a href="#src.zig-std.os.windows.ntdll.NtLockFile">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtLockFile</span>( FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, Event: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, ApcRoutine: ?*<a href="std.os.windows.html#std.os.windows.IO_APC_ROUTINE">IO_APC_ROUTINE</a>, ApcContext: ?*<span class="tok-type">anyopaque</span>, IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>, ByteOffset: *<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>, Length: *<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>, Key: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, FailImmediately: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>, ExclusiveLock: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>Event: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>ApcRoutine: ?*<a href="std.os.windows.html#std.os.windows.IO_APC_ROUTINE">IO_APC_ROUTINE</a></code></pre></div><div><pre><code>ApcContext: ?*<span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a></code></pre></div><div><pre><code>ByteOffset: *<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a></code></pre></div><div><pre><code>Length: *<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a></code></pre></div><div><pre><code>Key: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>FailImmediately: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a></code></pre></div><div><pre><code>ExclusiveLock: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtLockFile">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtLockFile</span>(
+    FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    Event: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    ApcRoutine: ?*<a href="std.os.windows.html#std.os.windows.IO_APC_ROUTINE">IO_APC_ROUTINE</a>,
+    ApcContext: ?*<span class="tok-type">anyopaque</span>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    ByteOffset: *<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+    Length: *<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+    Key: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    FailImmediately: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>,
+    ExclusiveLock: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtUnlockFile" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtUnlockFile</span><a href="#src.zig-std.os.windows.ntdll.NtUnlockFile">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtUnlockFile</span>( FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>, ByteOffset: *<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>, Length: *<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>, Key: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a></code></pre></div><div><pre><code>ByteOffset: *<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a></code></pre></div><div><pre><code>Length: *<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a></code></pre></div><div><pre><code>Key: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtUnlockFile">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtUnlockFile</span>(
+    FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    ByteOffset: *<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+    Length: *<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+    Key: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtOpenKey" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtOpenKey</span><a href="#src.zig-std.os.windows.ntdll.NtOpenKey">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtOpenKey</span>( KeyHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, DesiredAccess: <a href="std.os.windows.html#std.os.windows.DWORD">ACCESS_MASK</a>, ObjectAttributes: <a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>KeyHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>DesiredAccess: <a href="std.os.windows.html#std.os.windows.DWORD">ACCESS_MASK</a></code></pre></div><div><pre><code>ObjectAttributes: <a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtOpenKey">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtOpenKey</span>(
+    KeyHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    DesiredAccess: <a href="std.os.windows.html#std.os.windows.DWORD">ACCESS_MASK</a>,
+    ObjectAttributes: <a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.RtlQueryRegistryValues" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">RtlQueryRegistryValues</span><a href="#src.zig-std.os.windows.ntdll.RtlQueryRegistryValues">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlQueryRegistryValues</span>( RelativeTo: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, Path: <a href="std.os.windows.html#std.os.windows.PCWSTR">PCWSTR</a>, QueryTable: [*]<a href="std.os.windows.RTL_QUERY_REGISTRY_TABLE.html">RTL_QUERY_REGISTRY_TABLE</a>, Context: ?*<span class="tok-type">anyopaque</span>, Environment: ?*<span class="tok-type">anyopaque</span>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>RelativeTo: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>Path: <a href="std.os.windows.html#std.os.windows.PCWSTR">PCWSTR</a></code></pre></div><div><pre><code>QueryTable: [*]<a href="std.os.windows.RTL_QUERY_REGISTRY_TABLE.html">RTL_QUERY_REGISTRY_TABLE</a></code></pre></div><div><pre><code>Context: ?*<span class="tok-type">anyopaque</span></code></pre></div><div><pre><code>Environment: ?*<span class="tok-type">anyopaque</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.RtlQueryRegistryValues">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlQueryRegistryValues</span>(
+    RelativeTo: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    Path: <a href="std.os.windows.html#std.os.windows.PCWSTR">PCWSTR</a>,
+    QueryTable: [*]<a href="std.os.windows.RTL_QUERY_REGISTRY_TABLE.html">RTL_QUERY_REGISTRY_TABLE</a>,
+    Context: ?*<span class="tok-type">anyopaque</span>,
+    Environment: ?*<span class="tok-type">anyopaque</span>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtReadVirtualMemory" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtReadVirtualMemory</span><a href="#src.zig-std.os.windows.ntdll.NtReadVirtualMemory">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtReadVirtualMemory</span>( ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, BaseAddress: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>, Buffer: <a href="std.os.windows.html#std.os.windows.LPVOID">LPVOID</a>, NumberOfBytesToRead: <a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>, NumberOfBytesRead: ?*<a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>BaseAddress: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>Buffer: <a href="std.os.windows.html#std.os.windows.LPVOID">LPVOID</a></code></pre></div><div><pre><code>NumberOfBytesToRead: <a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a></code></pre></div><div><pre><code>NumberOfBytesRead: ?*<a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtReadVirtualMemory">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtReadVirtualMemory</span>(
+    ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    BaseAddress: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    Buffer: <a href="std.os.windows.html#std.os.windows.LPVOID">LPVOID</a>,
+    NumberOfBytesToRead: <a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>,
+    NumberOfBytesRead: ?*<a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtWriteVirtualMemory" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtWriteVirtualMemory</span><a href="#src.zig-std.os.windows.ntdll.NtWriteVirtualMemory">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtWriteVirtualMemory</span>( ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, BaseAddress: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>, Buffer: <a href="std.os.windows.html#std.os.windows.LPCVOID">LPCVOID</a>, NumberOfBytesToWrite: <a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>, NumberOfBytesWritten: ?*<a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>BaseAddress: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>Buffer: <a href="std.os.windows.html#std.os.windows.LPCVOID">LPCVOID</a></code></pre></div><div><pre><code>NumberOfBytesToWrite: <a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a></code></pre></div><div><pre><code>NumberOfBytesWritten: ?*<a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtWriteVirtualMemory">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtWriteVirtualMemory</span>(
+    ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    BaseAddress: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    Buffer: <a href="std.os.windows.html#std.os.windows.LPCVOID">LPCVOID</a>,
+    NumberOfBytesToWrite: <a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>,
+    NumberOfBytesWritten: ?*<a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtProtectVirtualMemory" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtProtectVirtualMemory</span><a href="#src.zig-std.os.windows.ntdll.NtProtectVirtualMemory">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtProtectVirtualMemory</span>( ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, BaseAddress: *?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>, NumberOfBytesToProtect: *<a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>, NewAccessProtection: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, OldAccessProtection: *<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>BaseAddress: *?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a></code></pre></div><div><pre><code>NumberOfBytesToProtect: *<a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a></code></pre></div><div><pre><code>NewAccessProtection: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>OldAccessProtection: *<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtProtectVirtualMemory">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtProtectVirtualMemory</span>(
+    ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    BaseAddress: *?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    NumberOfBytesToProtect: *<a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>,
+    NewAccessProtection: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    OldAccessProtection: *<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.RtlExitUserProcess" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">RtlExitUserProcess</span><a href="#src.zig-std.os.windows.ntdll.RtlExitUserProcess">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlExitUserProcess</span>( ExitStatus: <span class="tok-type">u32</span>, ) <span class="tok-kw">callconv</span>(.winapi) <span class="tok-type">noreturn</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>ExitStatus: <span class="tok-type">u32</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.RtlExitUserProcess">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlExitUserProcess</span>(
+    ExitStatus: <span class="tok-type">u32</span>,
+) <span class="tok-kw">callconv</span>(.winapi) <span class="tok-type">noreturn</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.windows.ntdll.NtCreateNamedPipeFile" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">NtCreateNamedPipeFile</span><a href="#src.zig-std.os.windows.ntdll.NtCreateNamedPipeFile">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtCreateNamedPipeFile</span>( FileHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>, DesiredAccess: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, ObjectAttributes: *<a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a>, IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>, ShareAccess: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, CreateDisposition: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, CreateOptions: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, NamedPipeType: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, ReadMode: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, CompletionMode: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, MaximumInstances: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, InboundQuota: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, OutboundQuota: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>, DefaultTimeout: *<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>, ) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>FileHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a></code></pre></div><div><pre><code>DesiredAccess: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>ObjectAttributes: *<a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a></code></pre></div><div><pre><code>IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a></code></pre></div><div><pre><code>ShareAccess: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>CreateDisposition: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>CreateOptions: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>NamedPipeType: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>ReadMode: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>CompletionMode: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>MaximumInstances: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>InboundQuota: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>OutboundQuota: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a></code></pre></div><div><pre><code>DefaultTimeout: *<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.windows.ntdll.NtCreateNamedPipeFile">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtCreateNamedPipeFile</span>(
+    FileHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    DesiredAccess: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    ObjectAttributes: *<a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    ShareAccess: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    CreateDisposition: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    CreateOptions: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    NamedPipeType: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    ReadMode: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    CompletionMode: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    MaximumInstances: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    InboundQuota: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    OutboundQuota: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    DefaultTimeout: *<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a></code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.os.windows.ntdll">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;../../std.zig&quot;</span>);
+<span class="tok-kw">const</span> windows = <a href="std.html">std</a>.<a href="std.os.html">os</a>.<a href="std.os.windows.html">windows</a>;
+
+<span class="tok-kw">const</span> BOOL = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.BOOL">BOOL</a>;
+<span class="tok-kw">const</span> DWORD = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.DWORD">DWORD</a>;
+<span class="tok-kw">const</span> DWORD64 = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a>;
+<span class="tok-kw">const</span> ULONG = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>;
+<span class="tok-kw">const</span> NTSTATUS = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+<span class="tok-kw">const</span> WORD = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.WORD">WORD</a>;
+<span class="tok-kw">const</span> HANDLE = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>;
+<span class="tok-kw">const</span> ACCESS_MASK = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.DWORD">ACCESS_MASK</a>;
+<span class="tok-kw">const</span> IO_APC_ROUTINE = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.IO_APC_ROUTINE">IO_APC_ROUTINE</a>;
+<span class="tok-kw">const</span> BOOLEAN = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>;
+<span class="tok-kw">const</span> OBJECT_ATTRIBUTES = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a>;
+<span class="tok-kw">const</span> PVOID = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>;
+<span class="tok-kw">const</span> IO_STATUS_BLOCK = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>;
+<span class="tok-kw">const</span> LARGE_INTEGER = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>;
+<span class="tok-kw">const</span> OBJECT_INFORMATION_CLASS = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.OBJECT_INFORMATION_CLASS.html">OBJECT_INFORMATION_CLASS</a>;
+<span class="tok-kw">const</span> FILE_INFORMATION_CLASS = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.FILE_INFORMATION_CLASS.html">FILE_INFORMATION_CLASS</a>;
+<span class="tok-kw">const</span> FS_INFORMATION_CLASS = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.FS_INFORMATION_CLASS.html">FS_INFORMATION_CLASS</a>;
+<span class="tok-kw">const</span> UNICODE_STRING = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>;
+<span class="tok-kw">const</span> RTL_OSVERSIONINFOW = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.OSVERSIONINFOW.html">RTL_OSVERSIONINFOW</a>;
+<span class="tok-kw">const</span> FILE_BASIC_INFORMATION = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.FILE_BASIC_INFORMATION.html">FILE_BASIC_INFORMATION</a>;
+<span class="tok-kw">const</span> SIZE_T = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>;
+<span class="tok-kw">const</span> CURDIR = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.CURDIR.html">CURDIR</a>;
+<span class="tok-kw">const</span> PCWSTR = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.PCWSTR">PCWSTR</a>;
+<span class="tok-kw">const</span> RTL_QUERY_REGISTRY_TABLE = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.RTL_QUERY_REGISTRY_TABLE.html">RTL_QUERY_REGISTRY_TABLE</a>;
+<span class="tok-kw">const</span> CONTEXT = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.CONTEXT">CONTEXT</a>;
+<span class="tok-kw">const</span> UNWIND_HISTORY_TABLE = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.UNWIND_HISTORY_TABLE.html">UNWIND_HISTORY_TABLE</a>;
+<span class="tok-kw">const</span> RUNTIME_FUNCTION = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.RUNTIME_FUNCTION">RUNTIME_FUNCTION</a>;
+<span class="tok-kw">const</span> KNONVOLATILE_CONTEXT_POINTERS = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.KNONVOLATILE_CONTEXT_POINTERS">KNONVOLATILE_CONTEXT_POINTERS</a>;
+<span class="tok-kw">const</span> EXCEPTION_ROUTINE = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.EXCEPTION_ROUTINE">EXCEPTION_ROUTINE</a>;
+<span class="tok-kw">const</span> SYSTEM_INFORMATION_CLASS = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.SYSTEM_INFORMATION_CLASS.html">SYSTEM_INFORMATION_CLASS</a>;
+<span class="tok-kw">const</span> THREADINFOCLASS = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.THREADINFOCLASS.html">THREADINFOCLASS</a>;
+<span class="tok-kw">const</span> PROCESSINFOCLASS = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.PROCESSINFOCLASS.html">PROCESSINFOCLASS</a>;
+<span class="tok-kw">const</span> LPVOID = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.LPVOID">LPVOID</a>;
+<span class="tok-kw">const</span> LPCVOID = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.LPCVOID">LPCVOID</a>;
+<span class="tok-kw">const</span> SECTION_INHERIT = <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.SECTION_INHERIT.html">SECTION_INHERIT</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryInformationProcess</span>(
+    ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    ProcessInformationClass: <a href="std.os.windows.PROCESSINFOCLASS.html">PROCESSINFOCLASS</a>,
+    ProcessInformation: *<span class="tok-type">anyopaque</span>,
+    ProcessInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    ReturnLength: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryInformationThread</span>(
+    ThreadHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    ThreadInformationClass: <a href="std.os.windows.THREADINFOCLASS.html">THREADINFOCLASS</a>,
+    ThreadInformation: *<span class="tok-type">anyopaque</span>,
+    ThreadInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    ReturnLength: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQuerySystemInformation</span>(
+    SystemInformationClass: <a href="std.os.windows.SYSTEM_INFORMATION_CLASS.html">SYSTEM_INFORMATION_CLASS</a>,
+    SystemInformation: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    SystemInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    ReturnLength: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtSetInformationThread</span>(
+    ThreadHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    ThreadInformationClass: <a href="std.os.windows.THREADINFOCLASS.html">THREADINFOCLASS</a>,
+    ThreadInformation: *<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>,
+    ThreadInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlGetVersion</span>(
+    lpVersionInformation: *<a href="std.os.windows.OSVERSIONINFOW.html">RTL_OSVERSIONINFOW</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlCaptureStackBackTrace</span>(
+    FramesToSkip: <a href="std.os.windows.html#std.os.windows.DWORD">DWORD</a>,
+    FramesToCapture: <a href="std.os.windows.html#std.os.windows.DWORD">DWORD</a>,
+    BackTrace: **<span class="tok-type">anyopaque</span>,
+    BackTraceHash: ?*<a href="std.os.windows.html#std.os.windows.DWORD">DWORD</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html#std.os.windows.WORD">WORD</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlCaptureContext</span>(ContextRecord: *<a href="std.os.windows.html#std.os.windows.CONTEXT">CONTEXT</a>) <span class="tok-kw">callconv</span>(.winapi) <span class="tok-type">void</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlLookupFunctionEntry</span>(
+    ControlPc: <a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a>,
+    ImageBase: *<a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a>,
+    HistoryTable: *<a href="std.os.windows.UNWIND_HISTORY_TABLE.html">UNWIND_HISTORY_TABLE</a>,
+) <span class="tok-kw">callconv</span>(.winapi) ?*<a href="std.os.windows.html#std.os.windows.RUNTIME_FUNCTION">RUNTIME_FUNCTION</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlVirtualUnwind</span>(
+    HandlerType: <a href="std.os.windows.html#std.os.windows.DWORD">DWORD</a>,
+    ImageBase: <a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a>,
+    ControlPc: <a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a>,
+    FunctionEntry: *<a href="std.os.windows.html#std.os.windows.RUNTIME_FUNCTION">RUNTIME_FUNCTION</a>,
+    ContextRecord: *<a href="std.os.windows.html#std.os.windows.CONTEXT">CONTEXT</a>,
+    HandlerData: *?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    EstablisherFrame: *<a href="std.os.windows.html#std.os.windows.DWORD64">DWORD64</a>,
+    ContextPointers: ?*<a href="std.os.windows.html#std.os.windows.KNONVOLATILE_CONTEXT_POINTERS">KNONVOLATILE_CONTEXT_POINTERS</a>,
+) <span class="tok-kw">callconv</span>(.winapi) *<a href="std.os.windows.html#std.os.windows.EXCEPTION_ROUTINE">EXCEPTION_ROUTINE</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlGetSystemTimePrecise</span>() <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryInformationFile</span>(
+    FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    FileInformation: *<span class="tok-type">anyopaque</span>,
+    Length: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    FileInformationClass: <a href="std.os.windows.FILE_INFORMATION_CLASS.html">FILE_INFORMATION_CLASS</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtSetInformationFile</span>(
+    FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    FileInformation: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    Length: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    FileInformationClass: <a href="std.os.windows.FILE_INFORMATION_CLASS.html">FILE_INFORMATION_CLASS</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryAttributesFile</span>(
+    ObjectAttributes: *<a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a>,
+    FileAttributes: *<a href="std.os.windows.FILE_BASIC_INFORMATION.html">FILE_BASIC_INFORMATION</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlQueryPerformanceCounter</span>(PerformanceCounter: *<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html#std.os.windows.BOOL">BOOL</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlQueryPerformanceFrequency</span>(PerformanceFrequency: *<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html#std.os.windows.BOOL">BOOL</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryPerformanceCounter</span>(
+    PerformanceCounter: *<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+    PerformanceFrequency: ?*<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtCreateFile</span>(
+    FileHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    DesiredAccess: <a href="std.os.windows.html#std.os.windows.DWORD">ACCESS_MASK</a>,
+    ObjectAttributes: *<a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    AllocationSize: ?*<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+    FileAttributes: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    ShareAccess: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    CreateDisposition: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    CreateOptions: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    EaBuffer: ?*<span class="tok-type">anyopaque</span>,
+    EaLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtCreateSection</span>(
+    SectionHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    DesiredAccess: <a href="std.os.windows.html#std.os.windows.DWORD">ACCESS_MASK</a>,
+    ObjectAttributes: ?*<a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a>,
+    MaximumSize: ?*<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+    SectionPageProtection: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    AllocationAttributes: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    FileHandle: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtMapViewOfSection</span>(
+    SectionHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    BaseAddress: *<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    ZeroBits: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    CommitSize: <a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>,
+    SectionOffset: ?*<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+    ViewSize: *<a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>,
+    InheritDispostion: <a href="std.os.windows.SECTION_INHERIT.html">SECTION_INHERIT</a>,
+    AllocationType: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    Win32Protect: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtUnmapViewOfSection</span>(
+    ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    BaseAddress: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtDeviceIoControlFile</span>(
+    FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    Event: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    ApcRoutine: ?<a href="std.os.windows.html#std.os.windows.IO_APC_ROUTINE">IO_APC_ROUTINE</a>,
+    ApcContext: ?*<span class="tok-type">anyopaque</span>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    IoControlCode: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    InputBuffer: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>,
+    InputBufferLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    OutputBuffer: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    OutputBufferLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtFsControlFile</span>(
+    FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    Event: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    ApcRoutine: ?<a href="std.os.windows.html#std.os.windows.IO_APC_ROUTINE">IO_APC_ROUTINE</a>,
+    ApcContext: ?*<span class="tok-type">anyopaque</span>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    FsControlCode: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    InputBuffer: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>,
+    InputBufferLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    OutputBuffer: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    OutputBufferLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtClose</span>(Handle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlDosPathNameToNtPathName_U</span>(
+    DosPathName: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>,
+    NtPathName: *<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>,
+    NtFileNamePart: ?*?[*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>,
+    DirectoryInfo: ?*<a href="std.os.windows.CURDIR.html">CURDIR</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html#std.os.windows.BOOL">BOOL</a>;
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlFreeUnicodeString</span>(UnicodeString: *<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>) <span class="tok-kw">callconv</span>(.winapi) <span class="tok-type">void</span>;
+
+<span class="tok-comment">/// Returns the number of bytes written to `Buffer`.</span>
+<span class="tok-comment">/// If the returned count is larger than `BufferByteLength`, the buffer was too small.</span>
+<span class="tok-comment">/// If the returned count is zero, an error occurred.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlGetFullPathName_U</span>(
+    FileName: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>,
+    BufferByteLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    Buffer: [*]<span class="tok-type">u16</span>,
+    ShortName: ?*[*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u16</span>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html">windows</a>.<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryDirectoryFile</span>(
+    FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    Event: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    ApcRoutine: ?<a href="std.os.windows.html#std.os.windows.IO_APC_ROUTINE">IO_APC_ROUTINE</a>,
+    ApcContext: ?*<span class="tok-type">anyopaque</span>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    FileInformation: *<span class="tok-type">anyopaque</span>,
+    Length: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    FileInformationClass: <a href="std.os.windows.FILE_INFORMATION_CLASS.html">FILE_INFORMATION_CLASS</a>,
+    ReturnSingleEntry: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>,
+    FileName: ?*<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>,
+    RestartScan: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtCreateKeyedEvent</span>(
+    KeyedEventHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    DesiredAccess: <a href="std.os.windows.html#std.os.windows.DWORD">ACCESS_MASK</a>,
+    ObjectAttributes: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    Flags: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtReleaseKeyedEvent</span>(
+    EventHandle: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    Key: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>,
+    Alertable: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>,
+    Timeout: ?*<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtWaitForKeyedEvent</span>(
+    EventHandle: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    Key: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>,
+    Alertable: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>,
+    Timeout: ?*<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlSetCurrentDirectory_U</span>(PathName: *<a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryObject</span>(
+    Handle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    ObjectInformationClass: <a href="std.os.windows.OBJECT_INFORMATION_CLASS.html">OBJECT_INFORMATION_CLASS</a>,
+    ObjectInformation: <a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    ObjectInformationLength: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    ReturnLength: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtQueryVolumeInformationFile</span>(
+    FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    FsInformation: *<span class="tok-type">anyopaque</span>,
+    Length: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    FsInformationClass: <a href="std.os.windows.FS_INFORMATION_CLASS.html">FS_INFORMATION_CLASS</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlWakeAddressAll</span>(
+    Address: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>,
+) <span class="tok-kw">callconv</span>(.winapi) <span class="tok-type">void</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlWakeAddressSingle</span>(
+    Address: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>,
+) <span class="tok-kw">callconv</span>(.winapi) <span class="tok-type">void</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlWaitOnAddress</span>(
+    Address: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>,
+    CompareAddress: ?*<span class="tok-kw">const</span> <span class="tok-type">anyopaque</span>,
+    AddressSize: <a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>,
+    Timeout: ?*<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlEqualUnicodeString</span>(
+    String1: *<span class="tok-kw">const</span> <a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>,
+    String2: *<span class="tok-kw">const</span> <a href="std.os.windows.UNICODE_STRING.html">UNICODE_STRING</a>,
+    CaseInSensitive: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlUpcaseUnicodeChar</span>(
+    SourceCharacter: <span class="tok-type">u16</span>,
+) <span class="tok-kw">callconv</span>(.winapi) <span class="tok-type">u16</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtLockFile</span>(
+    FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    Event: ?<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    ApcRoutine: ?*<a href="std.os.windows.html#std.os.windows.IO_APC_ROUTINE">IO_APC_ROUTINE</a>,
+    ApcContext: ?*<span class="tok-type">anyopaque</span>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    ByteOffset: *<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+    Length: *<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+    Key: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    FailImmediately: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>,
+    ExclusiveLock: <a href="std.os.windows.html#std.os.windows.BYTE">BOOLEAN</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtUnlockFile</span>(
+    FileHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    ByteOffset: *<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+    Length: *<span class="tok-kw">const</span> <a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+    Key: ?*<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtOpenKey</span>(
+    KeyHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    DesiredAccess: <a href="std.os.windows.html#std.os.windows.DWORD">ACCESS_MASK</a>,
+    ObjectAttributes: <a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlQueryRegistryValues</span>(
+    RelativeTo: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    Path: <a href="std.os.windows.html#std.os.windows.PCWSTR">PCWSTR</a>,
+    QueryTable: [*]<a href="std.os.windows.RTL_QUERY_REGISTRY_TABLE.html">RTL_QUERY_REGISTRY_TABLE</a>,
+    Context: ?*<span class="tok-type">anyopaque</span>,
+    Environment: ?*<span class="tok-type">anyopaque</span>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtReadVirtualMemory</span>(
+    ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    BaseAddress: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    Buffer: <a href="std.os.windows.html#std.os.windows.LPVOID">LPVOID</a>,
+    NumberOfBytesToRead: <a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>,
+    NumberOfBytesRead: ?*<a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtWriteVirtualMemory</span>(
+    ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    BaseAddress: ?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    Buffer: <a href="std.os.windows.html#std.os.windows.LPCVOID">LPCVOID</a>,
+    NumberOfBytesToWrite: <a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>,
+    NumberOfBytesWritten: ?*<a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtProtectVirtualMemory</span>(
+    ProcessHandle: <a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    BaseAddress: *?<a href="std.os.windows.html#std.os.windows.PVOID">PVOID</a>,
+    NumberOfBytesToProtect: *<a href="std.os.windows.html#std.os.windows.SIZE_T">SIZE_T</a>,
+    NewAccessProtection: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    OldAccessProtection: *<a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">RtlExitUserProcess</span>(
+    ExitStatus: <span class="tok-type">u32</span>,
+) <span class="tok-kw">callconv</span>(.winapi) <span class="tok-type">noreturn</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-str">&quot;ntdll&quot;</span> <span class="tok-kw">fn</span> <span class="tok-fn">NtCreateNamedPipeFile</span>(
+    FileHandle: *<a href="std.os.windows.html#std.os.windows.HANDLE">HANDLE</a>,
+    DesiredAccess: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    ObjectAttributes: *<a href="std.os.windows.OBJECT_ATTRIBUTES.html">OBJECT_ATTRIBUTES</a>,
+    IoStatusBlock: *<a href="std.os.windows.IO_STATUS_BLOCK.html">IO_STATUS_BLOCK</a>,
+    ShareAccess: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    CreateDisposition: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    CreateOptions: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    NamedPipeType: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    ReadMode: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    CompletionMode: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    MaximumInstances: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    InboundQuota: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    OutboundQuota: <a href="std.os.windows.html#std.os.windows.ULONG">ULONG</a>,
+    DefaultTimeout: *<a href="std.os.windows.html#std.os.windows.LARGE_INTEGER">LARGE_INTEGER</a>,
+) <span class="tok-kw">callconv</span>(.winapi) <a href="std.os.windows.ntstatus.NTSTATUS.html">NTSTATUS</a>;</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

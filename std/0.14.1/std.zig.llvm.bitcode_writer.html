@@ -1,0 +1,1324 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">zig</a></li><li><a href="std.zig.html" class="">llvm</a></li><li><a href="std.zig.llvm.bitcode_writer.html" class="active">bitcode_writer</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.zig.llvm.bitcode_writer" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.zig.llvm.bitcode_writer</span><a href="#src.zig-std.zig.llvm.bitcode_writer">[src]</a></h1><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.zig.llvm.bitcode_writer.AbbrevOp.html">std.zig.llvm.bitcode_writer.AbbrevOp</a></li></ul></div><div class="sectTypes"><h2 class="sectionHeader">Types</h2><div class="listTypes"><div class="decl"><h2 id="std.zig.llvm.bitcode_writer.BitcodeWriter" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">BitcodeWriter</span><a href="#src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter">[src]</a></h2><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>types: []<span class="tok-kw">const</span> <span class="tok-type">type</span></code></pre></div></div></div><div class="sectFields"><h3 class="sectionHeader">Fields</h3><div class="listFields"><div><pre><code>buffer: <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u32</span>)</code></pre></div><div><pre><code>bit_buffer: <span class="tok-type">u32</span> = <span class="tok-number">0</span></code></pre></div><div><pre><code>bit_count: <span class="tok-type">u5</span> = <span class="tok-number">0</span></code></pre></div><div><pre><code>widths: [types.len]<span class="tok-type">u16</span></code></pre></div></div></div><div class="sectFns"><h3 class="sectionHeader">Functions</h3><div class="listFns"><div class="decl"><h3 id="std.zig.llvm.bitcode_writer.BitcodeWriter.getTypeWidth" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getTypeWidth</span><a href="#src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.getTypeWidth">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getTypeWidth</span>(self: <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, <span class="tok-kw">comptime</span> Type: <span class="tok-type">type</span>) <span class="tok-type">u16</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a></code></pre></div><div><pre><code>Type: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.getTypeWidth">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getTypeWidth</span>(self: <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, <span class="tok-kw">comptime</span> Type: <span class="tok-type">type</span>) <span class="tok-type">u16</span> {
+    <span class="tok-kw">return</span> self.widths[<span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">type</span>, types, Type).?];
+}</code></pre></details></div></div><div class="decl"><h3 id="std.zig.llvm.bitcode_writer.BitcodeWriter.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.init">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, widths: [types.len]<span class="tok-type">u16</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a></code></pre></div><div><pre><code>widths: [types.len]<span class="tok-type">u16</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.init">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, widths: [types.len]<span class="tok-type">u16</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a> {
+    <span class="tok-kw">return</span> .{
+        .buffer = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u32</span>).init(allocator),
+        .widths = widths,
+    };
+}</code></pre></details></div></div><div class="decl"><h3 id="std.zig.llvm.bitcode_writer.BitcodeWriter.deinit" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">deinit</span><a href="#src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.deinit">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.deinit">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>) <span class="tok-type">void</span> {
+    self.buffer.deinit();
+}</code></pre></details></div></div><div class="decl"><h3 id="std.zig.llvm.bitcode_writer.BitcodeWriter.toOwnedSlice" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">toOwnedSlice</span><a href="#src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.toOwnedSlice">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toOwnedSlice</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>![]<span class="tok-kw">const</span> <span class="tok-type">u32</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.toOwnedSlice">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toOwnedSlice</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>![]<span class="tok-kw">const</span> <span class="tok-type">u32</span> {
+    <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(self.bit_count == <span class="tok-number">0</span>);
+    <span class="tok-kw">return</span> self.buffer.toOwnedSlice();
+}</code></pre></details></div></div><div class="decl"><h3 id="std.zig.llvm.bitcode_writer.BitcodeWriter.length" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">length</span><a href="#src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.length">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">length</span>(self: <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>) <span class="tok-type">usize</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.length">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">length</span>(self: <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>) <span class="tok-type">usize</span> {
+    <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(self.bit_count == <span class="tok-number">0</span>);
+    <span class="tok-kw">return</span> self.buffer.items.len;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.zig.llvm.bitcode_writer.BitcodeWriter.writeBits" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">writeBits</span><a href="#src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.writeBits">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeBits</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, value: <span class="tok-kw">anytype</span>, bits: <span class="tok-type">u16</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a></code></pre></div><div><pre><code>bits: <span class="tok-type">u16</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.writeBits">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeBits</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, value: <span class="tok-kw">anytype</span>, bits: <span class="tok-type">u16</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (bits == <span class="tok-number">0</span>) <span class="tok-kw">return</span>;
+
+    <span class="tok-kw">var</span> in_buffer = <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.bufValue">bufValue</a>(value, <span class="tok-number">32</span>);
+    <span class="tok-kw">var</span> in_bits = bits;<span class="tok-comment">
+
+    // Store input bits in buffer if they fit otherwise store as many as possible and flush
+    </span><span class="tok-kw">if</span> (self.bit_count &gt; <span class="tok-number">0</span>) {
+        <span class="tok-kw">const</span> bits_remaining = <span class="tok-number">31</span> - self.bit_count + <span class="tok-number">1</span>;
+        <span class="tok-kw">const</span> n: <span class="tok-type">u5</span> = <span class="tok-builtin">@intCast</span>(<span class="tok-builtin">@min</span>(bits_remaining, in_bits));
+        <span class="tok-kw">const</span> v = <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-builtin">@truncate</span>(in_buffer)) &lt;&lt; self.bit_count;
+        self.bit_buffer |= v;
+        in_buffer &gt;&gt;= n;
+
+        self.bit_count +%= n;
+        in_bits -= n;
+
+        <span class="tok-kw">if</span> (self.bit_count != <span class="tok-number">0</span>) <span class="tok-kw">return</span>;
+        <span class="tok-kw">try</span> self.buffer.append(<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeToLittle">nativeToLittle</a>(<span class="tok-type">u32</span>, self.bit_buffer));
+        self.bit_buffer = <span class="tok-number">0</span>;
+    }<span class="tok-comment">
+
+    // Write 32-bit chunks of input bits
+    </span><span class="tok-kw">while</span> (in_bits &gt;= <span class="tok-number">32</span>) {
+        <span class="tok-kw">try</span> self.buffer.append(<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeToLittle">nativeToLittle</a>(<span class="tok-type">u32</span>, <span class="tok-builtin">@truncate</span>(in_buffer)));
+
+        in_buffer &gt;&gt;= <span class="tok-number">31</span>;
+        in_buffer &gt;&gt;= <span class="tok-number">1</span>;
+        in_bits -= <span class="tok-number">32</span>;
+    }<span class="tok-comment">
+
+    // Store remaining input bits in buffer
+    </span><span class="tok-kw">if</span> (in_bits &gt; <span class="tok-number">0</span>) {
+        self.bit_count = <span class="tok-builtin">@intCast</span>(in_bits);
+        self.bit_buffer = <span class="tok-builtin">@truncate</span>(in_buffer);
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.zig.llvm.bitcode_writer.BitcodeWriter.writeVBR" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">writeVBR</span><a href="#src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.writeVBR">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeVBR</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, value: <span class="tok-kw">anytype</span>, <span class="tok-kw">comptime</span> vbr_bits: <span class="tok-type">usize</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a></code></pre></div><div><pre><code>vbr_bits: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.writeVBR">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeVBR</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, value: <span class="tok-kw">anytype</span>, <span class="tok-kw">comptime</span> vbr_bits: <span class="tok-type">usize</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+    <span class="tok-kw">comptime</span> {
+        <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(vbr_bits &gt; <span class="tok-number">1</span>);
+        <span class="tok-kw">if</span> (<span class="tok-builtin">@bitSizeOf</span>(<span class="tok-builtin">@TypeOf</span>(value)) &gt; <span class="tok-number">64</span>) <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Unsupported VBR block type: &quot;</span> ++ <span class="tok-builtin">@typeName</span>(<span class="tok-builtin">@TypeOf</span>(value)));
+    }
+
+    <span class="tok-kw">var</span> in_buffer = <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.bufValue">bufValue</a>(value, vbr_bits);
+
+    <span class="tok-kw">const</span> continue_bit = <span class="tok-builtin">@as</span>(<span class="tok-builtin">@TypeOf</span>(in_buffer), <span class="tok-number">1</span>) &lt;&lt; <span class="tok-builtin">@intCast</span>(vbr_bits - <span class="tok-number">1</span>);
+    <span class="tok-kw">const</span> mask = continue_bit - <span class="tok-number">1</span>;<span class="tok-comment">
+
+    // If input is larger than one VBR block can store
+    // then store vbr_bits - 1 bits and a continue bit
+    </span><span class="tok-kw">while</span> (in_buffer &gt; mask) {
+        <span class="tok-kw">try</span> self.writeBits(in_buffer &amp; mask | continue_bit, vbr_bits);
+        in_buffer &gt;&gt;= <span class="tok-builtin">@intCast</span>(vbr_bits - <span class="tok-number">1</span>);
+    }<span class="tok-comment">
+
+    // Store remaining bits
+    </span><span class="tok-kw">try</span> self.writeBits(in_buffer, vbr_bits);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.zig.llvm.bitcode_writer.BitcodeWriter.bitsVBR" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">bitsVBR</span><a href="#src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.bitsVBR">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">bitsVBR</span>(_: *<span class="tok-kw">const</span> <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, value: <span class="tok-kw">anytype</span>, <span class="tok-kw">comptime</span> vbr_bits: <span class="tok-type">usize</span>) <span class="tok-type">u16</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>_: *<span class="tok-kw">const</span> <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a></code></pre></div><div><pre><code>vbr_bits: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.bitsVBR">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">bitsVBR</span>(_: *<span class="tok-kw">const</span> <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, value: <span class="tok-kw">anytype</span>, <span class="tok-kw">comptime</span> vbr_bits: <span class="tok-type">usize</span>) <span class="tok-type">u16</span> {
+    <span class="tok-kw">comptime</span> {
+        <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(vbr_bits &gt; <span class="tok-number">1</span>);
+        <span class="tok-kw">if</span> (<span class="tok-builtin">@bitSizeOf</span>(<span class="tok-builtin">@TypeOf</span>(value)) &gt; <span class="tok-number">64</span>) <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Unsupported VBR block type: &quot;</span> ++ <span class="tok-builtin">@typeName</span>(<span class="tok-builtin">@TypeOf</span>(value)));
+    }
+
+    <span class="tok-kw">var</span> bits: <span class="tok-type">u16</span> = <span class="tok-number">0</span>;
+
+    <span class="tok-kw">var</span> in_buffer = <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.bufValue">bufValue</a>(value, vbr_bits);
+
+    <span class="tok-kw">const</span> continue_bit = <span class="tok-builtin">@as</span>(<span class="tok-builtin">@TypeOf</span>(in_buffer), <span class="tok-number">1</span>) &lt;&lt; <span class="tok-builtin">@intCast</span>(vbr_bits - <span class="tok-number">1</span>);
+    <span class="tok-kw">const</span> mask = continue_bit - <span class="tok-number">1</span>;<span class="tok-comment">
+
+    // If input is larger than one VBR block can store
+    // then store vbr_bits - 1 bits and a continue bit
+    </span><span class="tok-kw">while</span> (in_buffer &gt; mask) {
+        bits += <span class="tok-builtin">@intCast</span>(vbr_bits);
+        in_buffer &gt;&gt;= <span class="tok-builtin">@intCast</span>(vbr_bits - <span class="tok-number">1</span>);
+    }<span class="tok-comment">
+
+    // Store remaining bits
+    </span>bits += <span class="tok-builtin">@intCast</span>(vbr_bits);
+    <span class="tok-kw">return</span> bits;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.zig.llvm.bitcode_writer.BitcodeWriter.write6BitChar" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">write6BitChar</span><a href="#src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.write6BitChar">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">write6BitChar</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, c: <span class="tok-type">u8</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a></code></pre></div><div><pre><code>c: <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.write6BitChar">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">write6BitChar</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, c: <span class="tok-type">u8</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+    <span class="tok-kw">try</span> self.writeBits(<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.charTo6Bit">charTo6Bit</a>(c), <span class="tok-number">6</span>);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.zig.llvm.bitcode_writer.BitcodeWriter.writeBlob" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">writeBlob</span><a href="#src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.writeBlob">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeBlob</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, blob: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a></code></pre></div><div><pre><code>blob: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.writeBlob">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeBlob</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, blob: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> blob_word_size = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.alignForward">alignForward</a>(<span class="tok-type">usize</span>, blob.len, <span class="tok-number">4</span>);
+    <span class="tok-kw">try</span> self.buffer.ensureUnusedCapacity(blob_word_size + <span class="tok-number">1</span>);
+    self.alignTo32() <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+
+    <span class="tok-kw">const</span> slice = self.buffer.addManyAsSliceAssumeCapacity(blob_word_size / <span class="tok-number">4</span>);
+    <span class="tok-kw">const</span> slice_bytes = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.sliceAsBytes">sliceAsBytes</a>(slice);
+    <span class="tok-builtin">@memcpy</span>(slice_bytes[<span class="tok-number">0</span>..blob.len], blob);
+    <span class="tok-builtin">@memset</span>(slice_bytes[blob.len..], <span class="tok-number">0</span>);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.zig.llvm.bitcode_writer.BitcodeWriter.alignTo32" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">alignTo32</span><a href="#src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.alignTo32">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">alignTo32</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.alignTo32">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">alignTo32</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (self.bit_count == <span class="tok-number">0</span>) <span class="tok-kw">return</span>;
+
+    <span class="tok-kw">try</span> self.buffer.append(<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeToLittle">nativeToLittle</a>(<span class="tok-type">u32</span>, self.bit_buffer));
+    self.bit_buffer = <span class="tok-number">0</span>;
+    self.bit_count = <span class="tok-number">0</span>;
+}</code></pre></details></div></div><div class="decl"><h3 id="std.zig.llvm.bitcode_writer.BitcodeWriter.enterTopBlock" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">enterTopBlock</span><a href="#src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.enterTopBlock">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">enterTopBlock</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, <span class="tok-kw">comptime</span> SubBlock: <span class="tok-type">type</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">BlockWriter</a>(SubBlock)</code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a></code></pre></div><div><pre><code>SubBlock: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter.enterTopBlock">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">enterTopBlock</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, <span class="tok-kw">comptime</span> SubBlock: <span class="tok-type">type</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">BlockWriter</a>(SubBlock) {
+    <span class="tok-kw">return</span> <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">BlockWriter</a>(SubBlock).init(self, <span class="tok-number">2</span>, <span class="tok-null">true</span>);
+}</code></pre></details></div></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.llvm.bitcode_writer.BitcodeWriter">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">BitcodeWriter</span>(<span class="tok-kw">comptime</span> types: []<span class="tok-kw">const</span> <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        <span class="tok-kw">const</span> BcWriter = <span class="tok-builtin">@This</span>();
+
+        buffer: <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u32</span>),
+        bit_buffer: <span class="tok-type">u32</span> = <span class="tok-number">0</span>,
+        bit_count: <span class="tok-type">u5</span> = <span class="tok-number">0</span>,
+
+        widths: [types.len]<span class="tok-type">u16</span>,
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getTypeWidth</span>(self: <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, <span class="tok-kw">comptime</span> Type: <span class="tok-type">type</span>) <span class="tok-type">u16</span> {
+            <span class="tok-kw">return</span> self.widths[<span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">type</span>, types, Type).?];
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, widths: [types.len]<span class="tok-type">u16</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a> {
+            <span class="tok-kw">return</span> .{
+                .buffer = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u32</span>).init(allocator),
+                .widths = widths,
+            };
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>) <span class="tok-type">void</span> {
+            self.buffer.deinit();
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toOwnedSlice</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>![]<span class="tok-kw">const</span> <span class="tok-type">u32</span> {
+            <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(self.bit_count == <span class="tok-number">0</span>);
+            <span class="tok-kw">return</span> self.buffer.toOwnedSlice();
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">length</span>(self: <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>) <span class="tok-type">usize</span> {
+            <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(self.bit_count == <span class="tok-number">0</span>);
+            <span class="tok-kw">return</span> self.buffer.items.len;
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeBits</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, value: <span class="tok-kw">anytype</span>, bits: <span class="tok-type">u16</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+            <span class="tok-kw">if</span> (bits == <span class="tok-number">0</span>) <span class="tok-kw">return</span>;
+
+            <span class="tok-kw">var</span> in_buffer = <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.bufValue">bufValue</a>(value, <span class="tok-number">32</span>);
+            <span class="tok-kw">var</span> in_bits = bits;<span class="tok-comment">
+
+            // Store input bits in buffer if they fit otherwise store as many as possible and flush
+            </span><span class="tok-kw">if</span> (self.bit_count &gt; <span class="tok-number">0</span>) {
+                <span class="tok-kw">const</span> bits_remaining = <span class="tok-number">31</span> - self.bit_count + <span class="tok-number">1</span>;
+                <span class="tok-kw">const</span> n: <span class="tok-type">u5</span> = <span class="tok-builtin">@intCast</span>(<span class="tok-builtin">@min</span>(bits_remaining, in_bits));
+                <span class="tok-kw">const</span> v = <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-builtin">@truncate</span>(in_buffer)) &lt;&lt; self.bit_count;
+                self.bit_buffer |= v;
+                in_buffer &gt;&gt;= n;
+
+                self.bit_count +%= n;
+                in_bits -= n;
+
+                <span class="tok-kw">if</span> (self.bit_count != <span class="tok-number">0</span>) <span class="tok-kw">return</span>;
+                <span class="tok-kw">try</span> self.buffer.append(<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeToLittle">nativeToLittle</a>(<span class="tok-type">u32</span>, self.bit_buffer));
+                self.bit_buffer = <span class="tok-number">0</span>;
+            }<span class="tok-comment">
+
+            // Write 32-bit chunks of input bits
+            </span><span class="tok-kw">while</span> (in_bits &gt;= <span class="tok-number">32</span>) {
+                <span class="tok-kw">try</span> self.buffer.append(<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeToLittle">nativeToLittle</a>(<span class="tok-type">u32</span>, <span class="tok-builtin">@truncate</span>(in_buffer)));
+
+                in_buffer &gt;&gt;= <span class="tok-number">31</span>;
+                in_buffer &gt;&gt;= <span class="tok-number">1</span>;
+                in_bits -= <span class="tok-number">32</span>;
+            }<span class="tok-comment">
+
+            // Store remaining input bits in buffer
+            </span><span class="tok-kw">if</span> (in_bits &gt; <span class="tok-number">0</span>) {
+                self.bit_count = <span class="tok-builtin">@intCast</span>(in_bits);
+                self.bit_buffer = <span class="tok-builtin">@truncate</span>(in_buffer);
+            }
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeVBR</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, value: <span class="tok-kw">anytype</span>, <span class="tok-kw">comptime</span> vbr_bits: <span class="tok-type">usize</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+            <span class="tok-kw">comptime</span> {
+                <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(vbr_bits &gt; <span class="tok-number">1</span>);
+                <span class="tok-kw">if</span> (<span class="tok-builtin">@bitSizeOf</span>(<span class="tok-builtin">@TypeOf</span>(value)) &gt; <span class="tok-number">64</span>) <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Unsupported VBR block type: &quot;</span> ++ <span class="tok-builtin">@typeName</span>(<span class="tok-builtin">@TypeOf</span>(value)));
+            }
+
+            <span class="tok-kw">var</span> in_buffer = <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.bufValue">bufValue</a>(value, vbr_bits);
+
+            <span class="tok-kw">const</span> continue_bit = <span class="tok-builtin">@as</span>(<span class="tok-builtin">@TypeOf</span>(in_buffer), <span class="tok-number">1</span>) &lt;&lt; <span class="tok-builtin">@intCast</span>(vbr_bits - <span class="tok-number">1</span>);
+            <span class="tok-kw">const</span> mask = continue_bit - <span class="tok-number">1</span>;<span class="tok-comment">
+
+            // If input is larger than one VBR block can store
+            // then store vbr_bits - 1 bits and a continue bit
+            </span><span class="tok-kw">while</span> (in_buffer &gt; mask) {
+                <span class="tok-kw">try</span> self.writeBits(in_buffer &amp; mask | continue_bit, vbr_bits);
+                in_buffer &gt;&gt;= <span class="tok-builtin">@intCast</span>(vbr_bits - <span class="tok-number">1</span>);
+            }<span class="tok-comment">
+
+            // Store remaining bits
+            </span><span class="tok-kw">try</span> self.writeBits(in_buffer, vbr_bits);
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">bitsVBR</span>(_: *<span class="tok-kw">const</span> <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, value: <span class="tok-kw">anytype</span>, <span class="tok-kw">comptime</span> vbr_bits: <span class="tok-type">usize</span>) <span class="tok-type">u16</span> {
+            <span class="tok-kw">comptime</span> {
+                <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(vbr_bits &gt; <span class="tok-number">1</span>);
+                <span class="tok-kw">if</span> (<span class="tok-builtin">@bitSizeOf</span>(<span class="tok-builtin">@TypeOf</span>(value)) &gt; <span class="tok-number">64</span>) <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Unsupported VBR block type: &quot;</span> ++ <span class="tok-builtin">@typeName</span>(<span class="tok-builtin">@TypeOf</span>(value)));
+            }
+
+            <span class="tok-kw">var</span> bits: <span class="tok-type">u16</span> = <span class="tok-number">0</span>;
+
+            <span class="tok-kw">var</span> in_buffer = <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.bufValue">bufValue</a>(value, vbr_bits);
+
+            <span class="tok-kw">const</span> continue_bit = <span class="tok-builtin">@as</span>(<span class="tok-builtin">@TypeOf</span>(in_buffer), <span class="tok-number">1</span>) &lt;&lt; <span class="tok-builtin">@intCast</span>(vbr_bits - <span class="tok-number">1</span>);
+            <span class="tok-kw">const</span> mask = continue_bit - <span class="tok-number">1</span>;<span class="tok-comment">
+
+            // If input is larger than one VBR block can store
+            // then store vbr_bits - 1 bits and a continue bit
+            </span><span class="tok-kw">while</span> (in_buffer &gt; mask) {
+                bits += <span class="tok-builtin">@intCast</span>(vbr_bits);
+                in_buffer &gt;&gt;= <span class="tok-builtin">@intCast</span>(vbr_bits - <span class="tok-number">1</span>);
+            }<span class="tok-comment">
+
+            // Store remaining bits
+            </span>bits += <span class="tok-builtin">@intCast</span>(vbr_bits);
+            <span class="tok-kw">return</span> bits;
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">write6BitChar</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, c: <span class="tok-type">u8</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+            <span class="tok-kw">try</span> self.writeBits(<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.charTo6Bit">charTo6Bit</a>(c), <span class="tok-number">6</span>);
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeBlob</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, blob: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+            <span class="tok-kw">const</span> blob_word_size = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.alignForward">alignForward</a>(<span class="tok-type">usize</span>, blob.len, <span class="tok-number">4</span>);
+            <span class="tok-kw">try</span> self.buffer.ensureUnusedCapacity(blob_word_size + <span class="tok-number">1</span>);
+            self.alignTo32() <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+
+            <span class="tok-kw">const</span> slice = self.buffer.addManyAsSliceAssumeCapacity(blob_word_size / <span class="tok-number">4</span>);
+            <span class="tok-kw">const</span> slice_bytes = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.sliceAsBytes">sliceAsBytes</a>(slice);
+            <span class="tok-builtin">@memcpy</span>(slice_bytes[<span class="tok-number">0</span>..blob.len], blob);
+            <span class="tok-builtin">@memset</span>(slice_bytes[blob.len..], <span class="tok-number">0</span>);
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">alignTo32</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+            <span class="tok-kw">if</span> (self.bit_count == <span class="tok-number">0</span>) <span class="tok-kw">return</span>;
+
+            <span class="tok-kw">try</span> self.buffer.append(<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeToLittle">nativeToLittle</a>(<span class="tok-type">u32</span>, self.bit_buffer));
+            self.bit_buffer = <span class="tok-number">0</span>;
+            self.bit_count = <span class="tok-number">0</span>;
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">enterTopBlock</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, <span class="tok-kw">comptime</span> SubBlock: <span class="tok-type">type</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">BlockWriter</a>(SubBlock) {
+            <span class="tok-kw">return</span> <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">BlockWriter</a>(SubBlock).init(self, <span class="tok-number">2</span>, <span class="tok-null">true</span>);
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">BlockWriter</span>(<span class="tok-kw">comptime</span> Block: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+            <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+                <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();<span class="tok-comment">
+
+                // The minimum abbrev id length based on the number of abbrevs present in the block
+                </span><span class="tok-kw">pub</span> <span class="tok-kw">const</span> abbrev_len = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.log2_int_ceil">log2_int_ceil</a>(
+                    <span class="tok-type">u6</span>,
+                    <span class="tok-number">4</span> + (<span class="tok-kw">if</span> (<span class="tok-builtin">@hasDecl</span>(Block, <span class="tok-str">&quot;abbrevs&quot;</span>)) Block.abbrevs.len <span class="tok-kw">else</span> <span class="tok-number">0</span>),
+                );
+
+                start: <span class="tok-type">usize</span>,
+                bitcode: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>,
+
+                <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(bitcode: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, <span class="tok-kw">comptime</span> parent_abbrev_len: <span class="tok-type">u6</span>, <span class="tok-kw">comptime</span> define_abbrevs: <span class="tok-type">bool</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">Self</a> {
+                    <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">1</span>, parent_abbrev_len);
+                    <span class="tok-kw">try</span> bitcode.writeVBR(Block.id, <span class="tok-number">8</span>);
+                    <span class="tok-kw">try</span> bitcode.writeVBR(<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter.abbrev_len">abbrev_len</a>, <span class="tok-number">4</span>);
+                    <span class="tok-kw">try</span> bitcode.alignTo32();<span class="tok-comment">
+
+                    // We store the index of the block size and store a dummy value as the number of words in the block
+                    </span><span class="tok-kw">const</span> start = bitcode.length();
+                    <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">32</span>);
+
+                    <span class="tok-kw">var</span> self = <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">Self</a>{
+                        .start = start,
+                        .bitcode = bitcode,
+                    };<span class="tok-comment">
+
+                    // Predefine all block abbrevs
+                    </span><span class="tok-kw">if</span> (define_abbrevs) {
+                        <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (Block.abbrevs) |Abbrev| {
+                            <span class="tok-kw">try</span> self.defineAbbrev(&amp;Abbrev.ops);
+                        }
+                    }
+
+                    <span class="tok-kw">return</span> self;
+                }
+
+                <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">enterSubBlock</span>(self: <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">Self</a>, <span class="tok-kw">comptime</span> SubBlock: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> define_abbrevs: <span class="tok-type">bool</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">BlockWriter</a>(SubBlock) {
+                    <span class="tok-kw">return</span> <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">BlockWriter</a>(SubBlock).init(self.bitcode, <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter.abbrev_len">abbrev_len</a>, define_abbrevs);
+                }
+
+                <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">end</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">Self</a>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+                    <span class="tok-kw">try</span> self.bitcode.writeBits(<span class="tok-number">0</span>, <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter.abbrev_len">abbrev_len</a>);
+                    <span class="tok-kw">try</span> self.bitcode.alignTo32();<span class="tok-comment">
+
+                    // Set the number of words in the block at the start of the block
+                    </span>self.bitcode.buffer.items[self.start] = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeToLittle">nativeToLittle</a>(<span class="tok-type">u32</span>, <span class="tok-builtin">@truncate</span>(self.bitcode.length() - self.start - <span class="tok-number">1</span>));
+                }
+
+                <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeUnabbrev</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">Self</a>, code: <span class="tok-type">u32</span>, values: []<span class="tok-kw">const</span> <span class="tok-type">u64</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+                    <span class="tok-kw">try</span> self.bitcode.writeBits(<span class="tok-number">3</span>, <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter.abbrev_len">abbrev_len</a>);
+                    <span class="tok-kw">try</span> self.bitcode.writeVBR(code, <span class="tok-number">6</span>);
+                    <span class="tok-kw">try</span> self.bitcode.writeVBR(values.len, <span class="tok-number">6</span>);
+                    <span class="tok-kw">for</span> (values) |val| {
+                        <span class="tok-kw">try</span> self.bitcode.writeVBR(val, <span class="tok-number">6</span>);
+                    }
+                }
+
+                <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeAbbrev</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">Self</a>, params: <span class="tok-kw">anytype</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+                    <span class="tok-kw">return</span> self.writeAbbrevAdapted(params, <span class="tok-kw">struct</span> {
+                        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(_: <span class="tok-builtin">@This</span>(), param: <span class="tok-kw">anytype</span>, <span class="tok-kw">comptime</span> _: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-builtin">@TypeOf</span>(param) {
+                            <span class="tok-kw">return</span> param;
+                        }
+                    }{});
+                }
+
+                <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">abbrevId</span>(<span class="tok-kw">comptime</span> Abbrev: <span class="tok-type">type</span>) <span class="tok-type">u32</span> {
+                    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (Block.abbrevs, <span class="tok-number">0</span>..) |abbrev, i| {
+                        <span class="tok-kw">if</span> (Abbrev == abbrev) <span class="tok-kw">return</span> i + <span class="tok-number">4</span>;
+                    }
+
+                    <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Unknown abbrev: &quot;</span> ++ <span class="tok-builtin">@typeName</span>(Abbrev));
+                }
+
+                <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeAbbrevAdapted</span>(
+                    self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">Self</a>,
+                    params: <span class="tok-kw">anytype</span>,
+                    adapter: <span class="tok-kw">anytype</span>,
+                ) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+                    <span class="tok-kw">const</span> Abbrev = <span class="tok-builtin">@TypeOf</span>(params);
+
+                    <span class="tok-kw">try</span> self.bitcode.writeBits(<span class="tok-kw">comptime</span> <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter.abbrevId">abbrevId</a>(Abbrev), <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter.abbrev_len">abbrev_len</a>);
+
+                    <span class="tok-kw">const</span> fields = <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.fields">fields</a>(Abbrev);<span class="tok-comment">
+
+                    // This abbreviation might only contain literals
+                    </span><span class="tok-kw">if</span> (fields.len == <span class="tok-number">0</span>) <span class="tok-kw">return</span>;
+
+                    <span class="tok-kw">comptime</span> <span class="tok-kw">var</span> field_index: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+                    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (Abbrev.ops) |ty| {
+                        <span class="tok-kw">const</span> field_name = fields[field_index].name;
+                        <span class="tok-kw">const</span> param = <span class="tok-builtin">@field</span>(params, field_name);
+
+                        <span class="tok-kw">switch</span> (ty) {
+                            .literal =&gt; <span class="tok-kw">continue</span>,
+                            .fixed =&gt; |len| <span class="tok-kw">try</span> self.bitcode.writeBits(adapter.get(param, field_name), len),
+                            .fixed_runtime =&gt; |width_ty| <span class="tok-kw">try</span> self.bitcode.writeBits(
+                                adapter.get(param, field_name),
+                                self.bitcode.getTypeWidth(width_ty),
+                            ),
+                            .vbr =&gt; |len| <span class="tok-kw">try</span> self.bitcode.writeVBR(adapter.get(param, field_name), len),
+                            .char6 =&gt; <span class="tok-kw">try</span> self.bitcode.write6BitChar(adapter.get(param, field_name)),
+                            .blob =&gt; {
+                                <span class="tok-kw">try</span> self.bitcode.writeVBR(param.len, <span class="tok-number">6</span>);
+                                <span class="tok-kw">try</span> self.bitcode.writeBlob(param);
+                            },
+                            .array_fixed =&gt; |len| {
+                                <span class="tok-kw">try</span> self.bitcode.writeVBR(param.len, <span class="tok-number">6</span>);
+                                <span class="tok-kw">for</span> (param) |x| {
+                                    <span class="tok-kw">try</span> self.bitcode.writeBits(adapter.get(x, field_name), len);
+                                }
+                            },
+                            .array_fixed_runtime =&gt; |width_ty| {
+                                <span class="tok-kw">try</span> self.bitcode.writeVBR(param.len, <span class="tok-number">6</span>);
+                                <span class="tok-kw">for</span> (param) |x| {
+                                    <span class="tok-kw">try</span> self.bitcode.writeBits(
+                                        adapter.get(x, field_name),
+                                        self.bitcode.getTypeWidth(width_ty),
+                                    );
+                                }
+                            },
+                            .array_vbr =&gt; |len| {
+                                <span class="tok-kw">try</span> self.bitcode.writeVBR(param.len, <span class="tok-number">6</span>);
+                                <span class="tok-kw">for</span> (param) |x| {
+                                    <span class="tok-kw">try</span> self.bitcode.writeVBR(adapter.get(x, field_name), len);
+                                }
+                            },
+                            .array_char6 =&gt; {
+                                <span class="tok-kw">try</span> self.bitcode.writeVBR(param.len, <span class="tok-number">6</span>);
+                                <span class="tok-kw">for</span> (param) |x| {
+                                    <span class="tok-kw">try</span> self.bitcode.write6BitChar(adapter.get(x, field_name));
+                                }
+                            },
+                        }
+                        field_index += <span class="tok-number">1</span>;
+                        <span class="tok-kw">if</span> (field_index == fields.len) <span class="tok-kw">break</span>;
+                    }
+                }
+
+                <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">defineAbbrev</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">Self</a>, <span class="tok-kw">comptime</span> ops: []<span class="tok-kw">const</span> <a href="std.zig.llvm.bitcode_writer.AbbrevOp.html">AbbrevOp</a>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+                    <span class="tok-kw">const</span> bitcode = self.bitcode;
+                    <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">2</span>, <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter.abbrev_len">abbrev_len</a>);<span class="tok-comment">
+
+                    // ops.len is not accurate because arrays are actually two ops
+                    </span><span class="tok-kw">try</span> bitcode.writeVBR(blk: {
+                        <span class="tok-kw">var</span> count: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+                        <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (ops) |op| {
+                            count += <span class="tok-kw">switch</span> (op) {
+                                .literal, .fixed, .fixed_runtime, .vbr, .char6, .blob =&gt; <span class="tok-number">1</span>,
+                                .array_fixed, .array_fixed_runtime, .array_vbr, .array_char6 =&gt; <span class="tok-number">2</span>,
+                            };
+                        }
+                        <span class="tok-kw">break</span> :blk count;
+                    }, <span class="tok-number">5</span>);
+
+                    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (ops) |op| {
+                        <span class="tok-kw">switch</span> (op) {
+                            .literal =&gt; |value| {
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">1</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeVBR(value, <span class="tok-number">8</span>);
+                            },
+                            .fixed =&gt; |width| {
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">1</span>, <span class="tok-number">3</span>);
+                                <span class="tok-kw">try</span> bitcode.writeVBR(width, <span class="tok-number">5</span>);
+                            },
+                            .fixed_runtime =&gt; |width_ty| {
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">1</span>, <span class="tok-number">3</span>);
+                                <span class="tok-kw">try</span> bitcode.writeVBR(bitcode.getTypeWidth(width_ty), <span class="tok-number">5</span>);
+                            },
+                            .vbr =&gt; |width| {
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">2</span>, <span class="tok-number">3</span>);
+                                <span class="tok-kw">try</span> bitcode.writeVBR(width, <span class="tok-number">5</span>);
+                            },
+                            .char6 =&gt; {
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">4</span>, <span class="tok-number">3</span>);
+                            },
+                            .blob =&gt; {
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">5</span>, <span class="tok-number">3</span>);
+                            },
+                            .array_fixed =&gt; |width| {<span class="tok-comment">
+                                // Array op
+                                </span><span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">3</span>, <span class="tok-number">3</span>);<span class="tok-comment">
+
+                                // Fixed or VBR op
+                                </span><span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">1</span>, <span class="tok-number">3</span>);
+                                <span class="tok-kw">try</span> bitcode.writeVBR(width, <span class="tok-number">5</span>);
+                            },
+                            .array_fixed_runtime =&gt; |width_ty| {<span class="tok-comment">
+                                // Array op
+                                </span><span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">3</span>, <span class="tok-number">3</span>);<span class="tok-comment">
+
+                                // Fixed or VBR op
+                                </span><span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">1</span>, <span class="tok-number">3</span>);
+                                <span class="tok-kw">try</span> bitcode.writeVBR(bitcode.getTypeWidth(width_ty), <span class="tok-number">5</span>);
+                            },
+                            .array_vbr =&gt; |width| {<span class="tok-comment">
+                                // Array op
+                                </span><span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">3</span>, <span class="tok-number">3</span>);<span class="tok-comment">
+
+                                // Fixed or VBR op
+                                </span><span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">2</span>, <span class="tok-number">3</span>);
+                                <span class="tok-kw">try</span> bitcode.writeVBR(width, <span class="tok-number">5</span>);
+                            },
+                            .array_char6 =&gt; {<span class="tok-comment">
+                                // Array op
+                                </span><span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">3</span>, <span class="tok-number">3</span>);<span class="tok-comment">
+
+                                // Char6 op
+                                </span><span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">4</span>, <span class="tok-number">3</span>);
+                            },
+                        }
+                    }
+                }
+            };
+        }
+    };
+}</code></pre></details></div></div></div></div><div class="sectErrSets"><h2 class="sectionHeader">Error Sets</h2><div class="listErrSets"><div class="decl"><h2 id="std.zig.llvm.bitcode_writer.Error" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">Error</span><a href="#src.zig-std.zig.llvm.bitcode_writer.Error">[src]</a></h2><div class="sectFnErrors"><h3 class="sectionHeader">Errors</h3><div class="fnErrorsAnyError"><p><span class="tok-type">anyerror</span> means the error set is known only at runtime.</p></div><div class="tableFnErrors"><dl class="listFnErrors"><div><dt>OutOfMemory</dt></div></dl></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.zig.llvm.bitcode_writer.Error">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = <span class="tok-kw">error</span>{OutOfMemory}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.zig.llvm.bitcode_writer">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;../../std.zig&quot;</span>);
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> AbbrevOp = <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) {
+    literal: <span class="tok-type">u32</span>,<span class="tok-comment"> // 0
+    </span>fixed: <span class="tok-type">u16</span>,<span class="tok-comment"> // 1
+    </span>fixed_runtime: <span class="tok-type">type</span>,<span class="tok-comment"> // 1
+    </span>vbr: <span class="tok-type">u16</span>,<span class="tok-comment"> // 2
+    </span>char6: <span class="tok-type">void</span>,<span class="tok-comment"> // 4
+    </span>blob: <span class="tok-type">void</span>,<span class="tok-comment"> // 5
+    </span>array_fixed: <span class="tok-type">u16</span>,<span class="tok-comment"> // 3, 1
+    </span>array_fixed_runtime: <span class="tok-type">type</span>,<span class="tok-comment"> // 3, 1
+    </span>array_vbr: <span class="tok-type">u16</span>,<span class="tok-comment"> // 3, 2
+    </span>array_char6: <span class="tok-type">void</span>,<span class="tok-comment"> // 3, 4
+</span>};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Error = <span class="tok-kw">error</span>{OutOfMemory};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">BitcodeWriter</span>(<span class="tok-kw">comptime</span> types: []<span class="tok-kw">const</span> <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        <span class="tok-kw">const</span> BcWriter = <span class="tok-builtin">@This</span>();
+
+        buffer: <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u32</span>),
+        bit_buffer: <span class="tok-type">u32</span> = <span class="tok-number">0</span>,
+        bit_count: <span class="tok-type">u5</span> = <span class="tok-number">0</span>,
+
+        widths: [types.len]<span class="tok-type">u16</span>,
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getTypeWidth</span>(self: <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, <span class="tok-kw">comptime</span> Type: <span class="tok-type">type</span>) <span class="tok-type">u16</span> {
+            <span class="tok-kw">return</span> self.widths[<span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">type</span>, types, Type).?];
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(allocator: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>, widths: [types.len]<span class="tok-type">u16</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a> {
+            <span class="tok-kw">return</span> .{
+                .buffer = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u32</span>).init(allocator),
+                .widths = widths,
+            };
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>) <span class="tok-type">void</span> {
+            self.buffer.deinit();
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toOwnedSlice</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>![]<span class="tok-kw">const</span> <span class="tok-type">u32</span> {
+            <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(self.bit_count == <span class="tok-number">0</span>);
+            <span class="tok-kw">return</span> self.buffer.toOwnedSlice();
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">length</span>(self: <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>) <span class="tok-type">usize</span> {
+            <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(self.bit_count == <span class="tok-number">0</span>);
+            <span class="tok-kw">return</span> self.buffer.items.len;
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeBits</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, value: <span class="tok-kw">anytype</span>, bits: <span class="tok-type">u16</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+            <span class="tok-kw">if</span> (bits == <span class="tok-number">0</span>) <span class="tok-kw">return</span>;
+
+            <span class="tok-kw">var</span> in_buffer = <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.bufValue">bufValue</a>(value, <span class="tok-number">32</span>);
+            <span class="tok-kw">var</span> in_bits = bits;<span class="tok-comment">
+
+            // Store input bits in buffer if they fit otherwise store as many as possible and flush
+            </span><span class="tok-kw">if</span> (self.bit_count &gt; <span class="tok-number">0</span>) {
+                <span class="tok-kw">const</span> bits_remaining = <span class="tok-number">31</span> - self.bit_count + <span class="tok-number">1</span>;
+                <span class="tok-kw">const</span> n: <span class="tok-type">u5</span> = <span class="tok-builtin">@intCast</span>(<span class="tok-builtin">@min</span>(bits_remaining, in_bits));
+                <span class="tok-kw">const</span> v = <span class="tok-builtin">@as</span>(<span class="tok-type">u32</span>, <span class="tok-builtin">@truncate</span>(in_buffer)) &lt;&lt; self.bit_count;
+                self.bit_buffer |= v;
+                in_buffer &gt;&gt;= n;
+
+                self.bit_count +%= n;
+                in_bits -= n;
+
+                <span class="tok-kw">if</span> (self.bit_count != <span class="tok-number">0</span>) <span class="tok-kw">return</span>;
+                <span class="tok-kw">try</span> self.buffer.append(<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeToLittle">nativeToLittle</a>(<span class="tok-type">u32</span>, self.bit_buffer));
+                self.bit_buffer = <span class="tok-number">0</span>;
+            }<span class="tok-comment">
+
+            // Write 32-bit chunks of input bits
+            </span><span class="tok-kw">while</span> (in_bits &gt;= <span class="tok-number">32</span>) {
+                <span class="tok-kw">try</span> self.buffer.append(<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeToLittle">nativeToLittle</a>(<span class="tok-type">u32</span>, <span class="tok-builtin">@truncate</span>(in_buffer)));
+
+                in_buffer &gt;&gt;= <span class="tok-number">31</span>;
+                in_buffer &gt;&gt;= <span class="tok-number">1</span>;
+                in_bits -= <span class="tok-number">32</span>;
+            }<span class="tok-comment">
+
+            // Store remaining input bits in buffer
+            </span><span class="tok-kw">if</span> (in_bits &gt; <span class="tok-number">0</span>) {
+                self.bit_count = <span class="tok-builtin">@intCast</span>(in_bits);
+                self.bit_buffer = <span class="tok-builtin">@truncate</span>(in_buffer);
+            }
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeVBR</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, value: <span class="tok-kw">anytype</span>, <span class="tok-kw">comptime</span> vbr_bits: <span class="tok-type">usize</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+            <span class="tok-kw">comptime</span> {
+                <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(vbr_bits &gt; <span class="tok-number">1</span>);
+                <span class="tok-kw">if</span> (<span class="tok-builtin">@bitSizeOf</span>(<span class="tok-builtin">@TypeOf</span>(value)) &gt; <span class="tok-number">64</span>) <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Unsupported VBR block type: &quot;</span> ++ <span class="tok-builtin">@typeName</span>(<span class="tok-builtin">@TypeOf</span>(value)));
+            }
+
+            <span class="tok-kw">var</span> in_buffer = <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.bufValue">bufValue</a>(value, vbr_bits);
+
+            <span class="tok-kw">const</span> continue_bit = <span class="tok-builtin">@as</span>(<span class="tok-builtin">@TypeOf</span>(in_buffer), <span class="tok-number">1</span>) &lt;&lt; <span class="tok-builtin">@intCast</span>(vbr_bits - <span class="tok-number">1</span>);
+            <span class="tok-kw">const</span> mask = continue_bit - <span class="tok-number">1</span>;<span class="tok-comment">
+
+            // If input is larger than one VBR block can store
+            // then store vbr_bits - 1 bits and a continue bit
+            </span><span class="tok-kw">while</span> (in_buffer &gt; mask) {
+                <span class="tok-kw">try</span> self.writeBits(in_buffer &amp; mask | continue_bit, vbr_bits);
+                in_buffer &gt;&gt;= <span class="tok-builtin">@intCast</span>(vbr_bits - <span class="tok-number">1</span>);
+            }<span class="tok-comment">
+
+            // Store remaining bits
+            </span><span class="tok-kw">try</span> self.writeBits(in_buffer, vbr_bits);
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">bitsVBR</span>(_: *<span class="tok-kw">const</span> <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, value: <span class="tok-kw">anytype</span>, <span class="tok-kw">comptime</span> vbr_bits: <span class="tok-type">usize</span>) <span class="tok-type">u16</span> {
+            <span class="tok-kw">comptime</span> {
+                <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(vbr_bits &gt; <span class="tok-number">1</span>);
+                <span class="tok-kw">if</span> (<span class="tok-builtin">@bitSizeOf</span>(<span class="tok-builtin">@TypeOf</span>(value)) &gt; <span class="tok-number">64</span>) <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Unsupported VBR block type: &quot;</span> ++ <span class="tok-builtin">@typeName</span>(<span class="tok-builtin">@TypeOf</span>(value)));
+            }
+
+            <span class="tok-kw">var</span> bits: <span class="tok-type">u16</span> = <span class="tok-number">0</span>;
+
+            <span class="tok-kw">var</span> in_buffer = <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.bufValue">bufValue</a>(value, vbr_bits);
+
+            <span class="tok-kw">const</span> continue_bit = <span class="tok-builtin">@as</span>(<span class="tok-builtin">@TypeOf</span>(in_buffer), <span class="tok-number">1</span>) &lt;&lt; <span class="tok-builtin">@intCast</span>(vbr_bits - <span class="tok-number">1</span>);
+            <span class="tok-kw">const</span> mask = continue_bit - <span class="tok-number">1</span>;<span class="tok-comment">
+
+            // If input is larger than one VBR block can store
+            // then store vbr_bits - 1 bits and a continue bit
+            </span><span class="tok-kw">while</span> (in_buffer &gt; mask) {
+                bits += <span class="tok-builtin">@intCast</span>(vbr_bits);
+                in_buffer &gt;&gt;= <span class="tok-builtin">@intCast</span>(vbr_bits - <span class="tok-number">1</span>);
+            }<span class="tok-comment">
+
+            // Store remaining bits
+            </span>bits += <span class="tok-builtin">@intCast</span>(vbr_bits);
+            <span class="tok-kw">return</span> bits;
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">write6BitChar</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, c: <span class="tok-type">u8</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+            <span class="tok-kw">try</span> self.writeBits(<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.charTo6Bit">charTo6Bit</a>(c), <span class="tok-number">6</span>);
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeBlob</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, blob: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+            <span class="tok-kw">const</span> blob_word_size = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.alignForward">alignForward</a>(<span class="tok-type">usize</span>, blob.len, <span class="tok-number">4</span>);
+            <span class="tok-kw">try</span> self.buffer.ensureUnusedCapacity(blob_word_size + <span class="tok-number">1</span>);
+            self.alignTo32() <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;
+
+            <span class="tok-kw">const</span> slice = self.buffer.addManyAsSliceAssumeCapacity(blob_word_size / <span class="tok-number">4</span>);
+            <span class="tok-kw">const</span> slice_bytes = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.sliceAsBytes">sliceAsBytes</a>(slice);
+            <span class="tok-builtin">@memcpy</span>(slice_bytes[<span class="tok-number">0</span>..blob.len], blob);
+            <span class="tok-builtin">@memset</span>(slice_bytes[blob.len..], <span class="tok-number">0</span>);
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">alignTo32</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+            <span class="tok-kw">if</span> (self.bit_count == <span class="tok-number">0</span>) <span class="tok-kw">return</span>;
+
+            <span class="tok-kw">try</span> self.buffer.append(<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeToLittle">nativeToLittle</a>(<span class="tok-type">u32</span>, self.bit_buffer));
+            self.bit_buffer = <span class="tok-number">0</span>;
+            self.bit_count = <span class="tok-number">0</span>;
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">enterTopBlock</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, <span class="tok-kw">comptime</span> SubBlock: <span class="tok-type">type</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">BlockWriter</a>(SubBlock) {
+            <span class="tok-kw">return</span> <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">BlockWriter</a>(SubBlock).init(self, <span class="tok-number">2</span>, <span class="tok-null">true</span>);
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">BlockWriter</span>(<span class="tok-kw">comptime</span> Block: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+            <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+                <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();<span class="tok-comment">
+
+                // The minimum abbrev id length based on the number of abbrevs present in the block
+                </span><span class="tok-kw">pub</span> <span class="tok-kw">const</span> abbrev_len = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.log2_int_ceil">log2_int_ceil</a>(
+                    <span class="tok-type">u6</span>,
+                    <span class="tok-number">4</span> + (<span class="tok-kw">if</span> (<span class="tok-builtin">@hasDecl</span>(Block, <span class="tok-str">&quot;abbrevs&quot;</span>)) Block.abbrevs.len <span class="tok-kw">else</span> <span class="tok-number">0</span>),
+                );
+
+                start: <span class="tok-type">usize</span>,
+                bitcode: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>,
+
+                <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(bitcode: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter">BcWriter</a>, <span class="tok-kw">comptime</span> parent_abbrev_len: <span class="tok-type">u6</span>, <span class="tok-kw">comptime</span> define_abbrevs: <span class="tok-type">bool</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">Self</a> {
+                    <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">1</span>, parent_abbrev_len);
+                    <span class="tok-kw">try</span> bitcode.writeVBR(Block.id, <span class="tok-number">8</span>);
+                    <span class="tok-kw">try</span> bitcode.writeVBR(<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter.abbrev_len">abbrev_len</a>, <span class="tok-number">4</span>);
+                    <span class="tok-kw">try</span> bitcode.alignTo32();<span class="tok-comment">
+
+                    // We store the index of the block size and store a dummy value as the number of words in the block
+                    </span><span class="tok-kw">const</span> start = bitcode.length();
+                    <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">32</span>);
+
+                    <span class="tok-kw">var</span> self = <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">Self</a>{
+                        .start = start,
+                        .bitcode = bitcode,
+                    };<span class="tok-comment">
+
+                    // Predefine all block abbrevs
+                    </span><span class="tok-kw">if</span> (define_abbrevs) {
+                        <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (Block.abbrevs) |Abbrev| {
+                            <span class="tok-kw">try</span> self.defineAbbrev(&amp;Abbrev.ops);
+                        }
+                    }
+
+                    <span class="tok-kw">return</span> self;
+                }
+
+                <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">enterSubBlock</span>(self: <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">Self</a>, <span class="tok-kw">comptime</span> SubBlock: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> define_abbrevs: <span class="tok-type">bool</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">BlockWriter</a>(SubBlock) {
+                    <span class="tok-kw">return</span> <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">BlockWriter</a>(SubBlock).init(self.bitcode, <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter.abbrev_len">abbrev_len</a>, define_abbrevs);
+                }
+
+                <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">end</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">Self</a>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+                    <span class="tok-kw">try</span> self.bitcode.writeBits(<span class="tok-number">0</span>, <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter.abbrev_len">abbrev_len</a>);
+                    <span class="tok-kw">try</span> self.bitcode.alignTo32();<span class="tok-comment">
+
+                    // Set the number of words in the block at the start of the block
+                    </span>self.bitcode.buffer.items[self.start] = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.nativeToLittle">nativeToLittle</a>(<span class="tok-type">u32</span>, <span class="tok-builtin">@truncate</span>(self.bitcode.length() - self.start - <span class="tok-number">1</span>));
+                }
+
+                <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeUnabbrev</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">Self</a>, code: <span class="tok-type">u32</span>, values: []<span class="tok-kw">const</span> <span class="tok-type">u64</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+                    <span class="tok-kw">try</span> self.bitcode.writeBits(<span class="tok-number">3</span>, <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter.abbrev_len">abbrev_len</a>);
+                    <span class="tok-kw">try</span> self.bitcode.writeVBR(code, <span class="tok-number">6</span>);
+                    <span class="tok-kw">try</span> self.bitcode.writeVBR(values.len, <span class="tok-number">6</span>);
+                    <span class="tok-kw">for</span> (values) |val| {
+                        <span class="tok-kw">try</span> self.bitcode.writeVBR(val, <span class="tok-number">6</span>);
+                    }
+                }
+
+                <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeAbbrev</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">Self</a>, params: <span class="tok-kw">anytype</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+                    <span class="tok-kw">return</span> self.writeAbbrevAdapted(params, <span class="tok-kw">struct</span> {
+                        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(_: <span class="tok-builtin">@This</span>(), param: <span class="tok-kw">anytype</span>, <span class="tok-kw">comptime</span> _: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-builtin">@TypeOf</span>(param) {
+                            <span class="tok-kw">return</span> param;
+                        }
+                    }{});
+                }
+
+                <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">abbrevId</span>(<span class="tok-kw">comptime</span> Abbrev: <span class="tok-type">type</span>) <span class="tok-type">u32</span> {
+                    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (Block.abbrevs, <span class="tok-number">0</span>..) |abbrev, i| {
+                        <span class="tok-kw">if</span> (Abbrev == abbrev) <span class="tok-kw">return</span> i + <span class="tok-number">4</span>;
+                    }
+
+                    <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Unknown abbrev: &quot;</span> ++ <span class="tok-builtin">@typeName</span>(Abbrev));
+                }
+
+                <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeAbbrevAdapted</span>(
+                    self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">Self</a>,
+                    params: <span class="tok-kw">anytype</span>,
+                    adapter: <span class="tok-kw">anytype</span>,
+                ) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+                    <span class="tok-kw">const</span> Abbrev = <span class="tok-builtin">@TypeOf</span>(params);
+
+                    <span class="tok-kw">try</span> self.bitcode.writeBits(<span class="tok-kw">comptime</span> <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter.abbrevId">abbrevId</a>(Abbrev), <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter.abbrev_len">abbrev_len</a>);
+
+                    <span class="tok-kw">const</span> fields = <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.fields">fields</a>(Abbrev);<span class="tok-comment">
+
+                    // This abbreviation might only contain literals
+                    </span><span class="tok-kw">if</span> (fields.len == <span class="tok-number">0</span>) <span class="tok-kw">return</span>;
+
+                    <span class="tok-kw">comptime</span> <span class="tok-kw">var</span> field_index: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+                    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (Abbrev.ops) |ty| {
+                        <span class="tok-kw">const</span> field_name = fields[field_index].name;
+                        <span class="tok-kw">const</span> param = <span class="tok-builtin">@field</span>(params, field_name);
+
+                        <span class="tok-kw">switch</span> (ty) {
+                            .literal =&gt; <span class="tok-kw">continue</span>,
+                            .fixed =&gt; |len| <span class="tok-kw">try</span> self.bitcode.writeBits(adapter.get(param, field_name), len),
+                            .fixed_runtime =&gt; |width_ty| <span class="tok-kw">try</span> self.bitcode.writeBits(
+                                adapter.get(param, field_name),
+                                self.bitcode.getTypeWidth(width_ty),
+                            ),
+                            .vbr =&gt; |len| <span class="tok-kw">try</span> self.bitcode.writeVBR(adapter.get(param, field_name), len),
+                            .char6 =&gt; <span class="tok-kw">try</span> self.bitcode.write6BitChar(adapter.get(param, field_name)),
+                            .blob =&gt; {
+                                <span class="tok-kw">try</span> self.bitcode.writeVBR(param.len, <span class="tok-number">6</span>);
+                                <span class="tok-kw">try</span> self.bitcode.writeBlob(param);
+                            },
+                            .array_fixed =&gt; |len| {
+                                <span class="tok-kw">try</span> self.bitcode.writeVBR(param.len, <span class="tok-number">6</span>);
+                                <span class="tok-kw">for</span> (param) |x| {
+                                    <span class="tok-kw">try</span> self.bitcode.writeBits(adapter.get(x, field_name), len);
+                                }
+                            },
+                            .array_fixed_runtime =&gt; |width_ty| {
+                                <span class="tok-kw">try</span> self.bitcode.writeVBR(param.len, <span class="tok-number">6</span>);
+                                <span class="tok-kw">for</span> (param) |x| {
+                                    <span class="tok-kw">try</span> self.bitcode.writeBits(
+                                        adapter.get(x, field_name),
+                                        self.bitcode.getTypeWidth(width_ty),
+                                    );
+                                }
+                            },
+                            .array_vbr =&gt; |len| {
+                                <span class="tok-kw">try</span> self.bitcode.writeVBR(param.len, <span class="tok-number">6</span>);
+                                <span class="tok-kw">for</span> (param) |x| {
+                                    <span class="tok-kw">try</span> self.bitcode.writeVBR(adapter.get(x, field_name), len);
+                                }
+                            },
+                            .array_char6 =&gt; {
+                                <span class="tok-kw">try</span> self.bitcode.writeVBR(param.len, <span class="tok-number">6</span>);
+                                <span class="tok-kw">for</span> (param) |x| {
+                                    <span class="tok-kw">try</span> self.bitcode.write6BitChar(adapter.get(x, field_name));
+                                }
+                            },
+                        }
+                        field_index += <span class="tok-number">1</span>;
+                        <span class="tok-kw">if</span> (field_index == fields.len) <span class="tok-kw">break</span>;
+                    }
+                }
+
+                <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">defineAbbrev</span>(self: *<a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter">Self</a>, <span class="tok-kw">comptime</span> ops: []<span class="tok-kw">const</span> <a href="std.zig.llvm.bitcode_writer.AbbrevOp.html">AbbrevOp</a>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.Error">Error</a>!<span class="tok-type">void</span> {
+                    <span class="tok-kw">const</span> bitcode = self.bitcode;
+                    <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">2</span>, <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BitcodeWriter.BlockWriter.abbrev_len">abbrev_len</a>);<span class="tok-comment">
+
+                    // ops.len is not accurate because arrays are actually two ops
+                    </span><span class="tok-kw">try</span> bitcode.writeVBR(blk: {
+                        <span class="tok-kw">var</span> count: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+                        <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (ops) |op| {
+                            count += <span class="tok-kw">switch</span> (op) {
+                                .literal, .fixed, .fixed_runtime, .vbr, .char6, .blob =&gt; <span class="tok-number">1</span>,
+                                .array_fixed, .array_fixed_runtime, .array_vbr, .array_char6 =&gt; <span class="tok-number">2</span>,
+                            };
+                        }
+                        <span class="tok-kw">break</span> :blk count;
+                    }, <span class="tok-number">5</span>);
+
+                    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (ops) |op| {
+                        <span class="tok-kw">switch</span> (op) {
+                            .literal =&gt; |value| {
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">1</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeVBR(value, <span class="tok-number">8</span>);
+                            },
+                            .fixed =&gt; |width| {
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">1</span>, <span class="tok-number">3</span>);
+                                <span class="tok-kw">try</span> bitcode.writeVBR(width, <span class="tok-number">5</span>);
+                            },
+                            .fixed_runtime =&gt; |width_ty| {
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">1</span>, <span class="tok-number">3</span>);
+                                <span class="tok-kw">try</span> bitcode.writeVBR(bitcode.getTypeWidth(width_ty), <span class="tok-number">5</span>);
+                            },
+                            .vbr =&gt; |width| {
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">2</span>, <span class="tok-number">3</span>);
+                                <span class="tok-kw">try</span> bitcode.writeVBR(width, <span class="tok-number">5</span>);
+                            },
+                            .char6 =&gt; {
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">4</span>, <span class="tok-number">3</span>);
+                            },
+                            .blob =&gt; {
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">5</span>, <span class="tok-number">3</span>);
+                            },
+                            .array_fixed =&gt; |width| {<span class="tok-comment">
+                                // Array op
+                                </span><span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">3</span>, <span class="tok-number">3</span>);<span class="tok-comment">
+
+                                // Fixed or VBR op
+                                </span><span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">1</span>, <span class="tok-number">3</span>);
+                                <span class="tok-kw">try</span> bitcode.writeVBR(width, <span class="tok-number">5</span>);
+                            },
+                            .array_fixed_runtime =&gt; |width_ty| {<span class="tok-comment">
+                                // Array op
+                                </span><span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">3</span>, <span class="tok-number">3</span>);<span class="tok-comment">
+
+                                // Fixed or VBR op
+                                </span><span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">1</span>, <span class="tok-number">3</span>);
+                                <span class="tok-kw">try</span> bitcode.writeVBR(bitcode.getTypeWidth(width_ty), <span class="tok-number">5</span>);
+                            },
+                            .array_vbr =&gt; |width| {<span class="tok-comment">
+                                // Array op
+                                </span><span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">3</span>, <span class="tok-number">3</span>);<span class="tok-comment">
+
+                                // Fixed or VBR op
+                                </span><span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">2</span>, <span class="tok-number">3</span>);
+                                <span class="tok-kw">try</span> bitcode.writeVBR(width, <span class="tok-number">5</span>);
+                            },
+                            .array_char6 =&gt; {<span class="tok-comment">
+                                // Array op
+                                </span><span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">3</span>, <span class="tok-number">3</span>);<span class="tok-comment">
+
+                                // Char6 op
+                                </span><span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">0</span>, <span class="tok-number">1</span>);
+                                <span class="tok-kw">try</span> bitcode.writeBits(<span class="tok-number">4</span>, <span class="tok-number">3</span>);
+                            },
+                        }
+                    }
+                }
+            };
+        }
+    };
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">charTo6Bit</span>(c: <span class="tok-type">u8</span>) <span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (c) {
+        <span class="tok-str">'a'</span>...<span class="tok-str">'z'</span> =&gt; c - <span class="tok-str">'a'</span>,
+        <span class="tok-str">'A'</span>...<span class="tok-str">'Z'</span> =&gt; c - <span class="tok-str">'A'</span> + <span class="tok-number">26</span>,
+        <span class="tok-str">'0'</span>...<span class="tok-str">'9'</span> =&gt; c - <span class="tok-str">'0'</span> + <span class="tok-number">52</span>,
+        <span class="tok-str">'.'</span> =&gt; <span class="tok-number">62</span>,
+        <span class="tok-str">'_'</span> =&gt; <span class="tok-number">63</span>,
+        <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@panic</span>(<span class="tok-str">&quot;Failed to encode byte as 6-bit char&quot;</span>),
+    };
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">BufType</span>(<span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>, <span class="tok-kw">comptime</span> min_len: <span class="tok-type">usize</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.Int">Int</a>(.unsigned, <span class="tok-builtin">@max</span>(min_len, <span class="tok-builtin">@bitSizeOf</span>(<span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(T)) {
+        .<span class="tok-type">comptime_int</span> =&gt; <span class="tok-type">u32</span>,
+        .int =&gt; |info| <span class="tok-kw">if</span> (info.signedness == .unsigned)
+            T
+        <span class="tok-kw">else</span>
+            <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Unsupported type: &quot;</span> ++ <span class="tok-builtin">@typeName</span>(T)),
+        .@&quot;enum&quot; =&gt; |info| info.tag_type,
+        .<span class="tok-type">bool</span> =&gt; <span class="tok-type">u1</span>,
+        .@&quot;struct&quot; =&gt; |info| <span class="tok-kw">switch</span> (info.layout) {
+            .auto, .@&quot;extern&quot; =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Unsupported type: &quot;</span> ++ <span class="tok-builtin">@typeName</span>(T)),
+            .@&quot;packed&quot; =&gt; <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.Int">Int</a>(.unsigned, <span class="tok-builtin">@bitSizeOf</span>(T)),
+        },
+        <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;Unsupported type: &quot;</span> ++ <span class="tok-builtin">@typeName</span>(T)),
+    })));
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">bufValue</span>(value: <span class="tok-kw">anytype</span>, <span class="tok-kw">comptime</span> min_len: <span class="tok-type">usize</span>) <a href="std.zig.llvm.bitcode_writer.html#std.zig.llvm.bitcode_writer.BufType">BufType</a>(<span class="tok-builtin">@TypeOf</span>(value), min_len) {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(value))) {
+        .<span class="tok-type">comptime_int</span>, .int =&gt; <span class="tok-builtin">@intCast</span>(value),
+        .@&quot;enum&quot; =&gt; <span class="tok-builtin">@intFromEnum</span>(value),
+        .<span class="tok-type">bool</span> =&gt; <span class="tok-builtin">@intFromBool</span>(value),
+        .@&quot;struct&quot; =&gt; <span class="tok-builtin">@intCast</span>(<span class="tok-builtin">@as</span>(<a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.Int">Int</a>(.unsigned, <span class="tok-builtin">@bitSizeOf</span>(<span class="tok-builtin">@TypeOf</span>(value))), <span class="tok-builtin">@bitCast</span>(value))),
+        <span class="tok-kw">else</span> =&gt; <span class="tok-kw">unreachable</span>,
+    };
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

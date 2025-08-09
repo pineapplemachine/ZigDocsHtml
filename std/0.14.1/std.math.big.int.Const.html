@@ -1,0 +1,1532 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">math</a></li><li><a href="std.math.html" class="">big</a></li><li><a href="std.math.big.int.html" class="">int</a></li><li><a href="std.math.big.int.Const.html" class="active">Const</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.math.big.int.Const" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.math.big.int.Const</span><a href="#src.zig-std.math.big.int.Const">[src]</a></h1><div class="tldDocs"><p>A arbitrary-precision big integer, with a fixed set of immutable limbs.</p>
+</div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>limbs: []<span class="tok-kw">const</span> <a href="std.math.big.html#std.math.big.Limb">Limb</a></code></pre><div class="fieldDocs"><p>Raw digits. These are:</p>
+<ul>
+<li>Little-endian ordered</li>
+<li>limbs.len &gt;= 1</li>
+<li>Zero is represented as limbs.len == 1 with limbs[0] == 0.</li>
+</ul>
+<p>Accessing limbs directly should be avoided.</p>
+</div></div><div><pre><code>positive: <span class="tok-type">bool</span></code></pre></div></div></div><div class="sectErrSets"><h2 class="sectionHeader">Error Sets</h2><div class="listErrSets"><div class="decl"><h2 id="std.math.big.int.Const.ConvertError" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">ConvertError</span><a href="#src.zig-std.math.big.int.Const.ConvertError">[src]</a></h2><div class="sectFnErrors"><h3 class="sectionHeader">Errors</h3><div class="fnErrorsAnyError"><p><span class="tok-type">anyerror</span> means the error set is known only at runtime.</p></div><div class="tableFnErrors"><dl class="listFnErrors"><div><dt>NegativeIntoUnsigned</dt></div><div><dt>TargetTooSmall</dt></div></dl></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.ConvertError">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ConvertError = <span class="tok-kw">error</span>{
+    NegativeIntoUnsigned,
+    TargetTooSmall,
+}</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.math.big.int.Const.toManaged" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">toManaged</span><a href="#src.zig-std.math.big.int.Const.toManaged">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toManaged</span>(self: <a href="std.math.big.int.Const.html">Const</a>, allocator: <a href="std.mem.Allocator.html">Allocator</a>) <a href="std.mem.Allocator.html">Allocator</a>.<a href="std.mem.Allocator.html#std.mem.Allocator.Error">Error</a>!<a href="std.math.big.int.Managed.html">Managed</a></code></pre></div><div class="tldDocs"><p>The result is an independent resource which is managed by the caller.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>allocator: <a href="std.mem.Allocator.html">Allocator</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.toManaged">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toManaged</span>(self: <a href="std.math.big.int.Const.html">Const</a>, allocator: <a href="std.mem.Allocator.html">Allocator</a>) <a href="std.mem.Allocator.html">Allocator</a>.<a href="std.mem.Allocator.html#std.mem.Allocator.Error">Error</a>!<a href="std.math.big.int.Managed.html">Managed</a> {
+    <span class="tok-kw">const</span> limbs = <span class="tok-kw">try</span> allocator.alloc(<a href="std.math.big.html#std.math.big.Limb">Limb</a>, <span class="tok-builtin">@max</span>(<a href="std.math.big.int.Managed.html">Managed</a>.<a href="std.math.big.int.Managed.html#std.math.big.int.Managed.default_capacity">default_capacity</a>, self.limbs.len));
+    <span class="tok-builtin">@memcpy</span>(limbs[<span class="tok-number">0</span>..self.limbs.len], self.limbs);
+    <span class="tok-kw">return</span> <a href="std.math.big.int.Managed.html">Managed</a>{
+        .allocator = allocator,
+        .limbs = limbs,
+        .metadata = <span class="tok-kw">if</span> (self.positive)
+            self.limbs.len &amp; ~<a href="std.math.big.int.Managed.html">Managed</a>.<a href="std.math.big.int.Managed.html#std.math.big.int.Managed.sign_bit">sign_bit</a>
+        <span class="tok-kw">else</span>
+            self.limbs.len | <a href="std.math.big.int.Managed.html">Managed</a>.<a href="std.math.big.int.Managed.html#std.math.big.int.Managed.sign_bit">sign_bit</a>,
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.toMutable" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">toMutable</span><a href="#src.zig-std.math.big.int.Const.toMutable">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toMutable</span>(self: <a href="std.math.big.int.Const.html">Const</a>, limbs: []<a href="std.math.big.html#std.math.big.Limb">Limb</a>) <a href="std.math.big.int.Mutable.html">Mutable</a></code></pre></div><div class="tldDocs"><p>Asserts <code>limbs</code> is big enough to store the value.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>limbs: []<a href="std.math.big.html#std.math.big.Limb">Limb</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.toMutable">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toMutable</span>(self: <a href="std.math.big.int.Const.html">Const</a>, limbs: []<a href="std.math.big.html#std.math.big.Limb">Limb</a>) <a href="std.math.big.int.Mutable.html">Mutable</a> {
+    <span class="tok-builtin">@memcpy</span>(limbs[<span class="tok-number">0</span>..self.limbs.len], self.limbs[<span class="tok-number">0</span>..self.limbs.len]);
+    <span class="tok-kw">return</span> .{
+        .limbs = limbs,
+        .positive = self.positive,
+        .len = self.limbs.len,
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.dump" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">dump</span><a href="#src.zig-std.math.big.int.Const.dump">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">dump</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.dump">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">dump</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">for</span> (self.limbs[<span class="tok-number">0</span>..self.limbs.len]) |limb| {
+        <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.print">print</a>(<span class="tok-str">&quot;{x} &quot;</span>, .{limb});
+    }
+    <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.print">print</a>(<span class="tok-str">&quot;positive={}\n&quot;</span>, .{self.positive});
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.abs" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">abs</span><a href="#src.zig-std.math.big.int.Const.abs">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">abs</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.abs">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">abs</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <a href="std.math.big.int.Const.html">Const</a> {
+    <span class="tok-kw">return</span> .{
+        .limbs = self.limbs,
+        .positive = <span class="tok-null">true</span>,
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.negate" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">negate</span><a href="#src.zig-std.math.big.int.Const.negate">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">negate</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.negate">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">negate</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <a href="std.math.big.int.Const.html">Const</a> {
+    <span class="tok-kw">return</span> .{
+        .limbs = self.limbs,
+        .positive = !self.positive,
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.isOdd" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">isOdd</span><a href="#src.zig-std.math.big.int.Const.isOdd">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isOdd</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">bool</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.isOdd">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isOdd</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> self.limbs[<span class="tok-number">0</span>] &amp; <span class="tok-number">1</span> != <span class="tok-number">0</span>;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.isEven" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">isEven</span><a href="#src.zig-std.math.big.int.Const.isEven">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isEven</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">bool</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.isEven">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isEven</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> !self.isOdd();
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.bitCountAbs" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">bitCountAbs</span><a href="#src.zig-std.math.big.int.Const.bitCountAbs">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">bitCountAbs</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">usize</span></code></pre></div><div class="tldDocs"><p>Returns the number of bits required to represent the absolute value of an integer.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.bitCountAbs">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">bitCountAbs</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> (self.limbs.len - <span class="tok-number">1</span>) * <a href="std.math.big.int.html#std.math.big.int.limb_bits">limb_bits</a> + (<a href="std.math.big.int.html#std.math.big.int.limb_bits">limb_bits</a> - <span class="tok-builtin">@clz</span>(self.limbs[self.limbs.len - <span class="tok-number">1</span>]));
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.bitCountTwosComp" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">bitCountTwosComp</span><a href="#src.zig-std.math.big.int.Const.bitCountTwosComp">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">bitCountTwosComp</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">usize</span></code></pre></div><div class="tldDocs"><p>Returns the number of bits required to represent the integer in twos-complement form.</p>
+<p>If the integer is negative the value returned is the number of bits needed by a signed
+integer to represent the value. If positive the value is the number of bits for an
+unsigned integer. Any unsigned integer will fit in the signed integer with bitcount
+one greater than the returned value.</p>
+<p>e.g. -127 returns 8 as it will fit in an i8. 127 returns 7 since it fits in a u7.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.bitCountTwosComp">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">bitCountTwosComp</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">var</span> bits = self.bitCountAbs();<span class="tok-comment">
+
+    // If the entire value has only one bit set (e.g. 0b100000000) then the negation in twos
+    // complement requires one less bit.
+    </span><span class="tok-kw">if</span> (!self.positive) block: {
+        bits += <span class="tok-number">1</span>;
+
+        <span class="tok-kw">if</span> (<span class="tok-builtin">@popCount</span>(self.limbs[self.limbs.len - <span class="tok-number">1</span>]) == <span class="tok-number">1</span>) {
+            <span class="tok-kw">for</span> (self.limbs[<span class="tok-number">0</span> .. self.limbs.len - <span class="tok-number">1</span>]) |limb| {
+                <span class="tok-kw">if</span> (<span class="tok-builtin">@popCount</span>(limb) != <span class="tok-number">0</span>) {
+                    <span class="tok-kw">break</span> :block;
+                }
+            }
+
+            bits -= <span class="tok-number">1</span>;
+        }
+    }
+
+    <span class="tok-kw">return</span> bits;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.bitCountTwosCompForSignedness" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">bitCountTwosCompForSignedness</span><a href="#src.zig-std.math.big.int.Const.bitCountTwosCompForSignedness">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">bitCountTwosCompForSignedness</span>(self: <a href="std.math.big.int.Const.html">Const</a>, signedness: <a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.Signedness.html">Signedness</a>) <span class="tok-type">usize</span></code></pre></div><div class="tldDocs"><p>Returns the number of bits required to represent the integer in twos-complement form
+with the given signedness.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>signedness: <a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.Signedness.html">Signedness</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.bitCountTwosCompForSignedness">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">bitCountTwosCompForSignedness</span>(self: <a href="std.math.big.int.Const.html">Const</a>, signedness: <a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.Signedness.html">Signedness</a>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> self.bitCountTwosComp() + <span class="tok-builtin">@intFromBool</span>(self.positive <span class="tok-kw">and</span> signedness == .signed);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.popCount" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">popCount</span><a href="#src.zig-std.math.big.int.Const.popCount">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">popCount</span>(self: <a href="std.math.big.int.Const.html">Const</a>, bit_count: <span class="tok-type">usize</span>) <span class="tok-type">usize</span></code></pre></div><div class="tldDocs"><p>@popCount with two's complement semantics.</p>
+<p>This returns the number of 1 bits set when the value would be represented in
+two's complement with the given integer width (bit_count).
+This includes the leading sign bit, which will be set for negative values.</p>
+<p>Asserts that bit_count is enough to represent value in two's compliment
+and that the final result fits in a usize.
+Asserts that there are no trailing empty limbs on the most significant end,
+i.e. that limb count matches <code>calcLimbLen()</code> and zero is not negative.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>bit_count: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.popCount">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">popCount</span>(self: <a href="std.math.big.int.Const.html">Const</a>, bit_count: <span class="tok-type">usize</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">var</span> sum: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">if</span> (self.positive) {
+        <span class="tok-kw">for</span> (self.limbs) |limb| {
+            sum += <span class="tok-builtin">@popCount</span>(limb);
+        }
+    } <span class="tok-kw">else</span> {
+        <a href="std.debug.html#std.debug.assert">assert</a>(self.fitsInTwosComp(.signed, bit_count));
+        <a href="std.debug.html#std.debug.assert">assert</a>(self.limbs[self.limbs.len - <span class="tok-number">1</span>] != <span class="tok-number">0</span>);
+
+        <span class="tok-kw">var</span> remaining_bits = bit_count;
+        <span class="tok-kw">var</span> carry: <span class="tok-type">u1</span> = <span class="tok-number">1</span>;
+        <span class="tok-kw">var</span> add_res: <a href="std.math.big.html#std.math.big.Limb">Limb</a> = <span class="tok-null">undefined</span>;<span class="tok-comment">
+
+        // All but the most significant limb.
+        </span><span class="tok-kw">for</span> (self.limbs[<span class="tok-number">0</span> .. self.limbs.len - <span class="tok-number">1</span>]) |limb| {
+            <span class="tok-kw">const</span> ov = <span class="tok-builtin">@addWithOverflow</span>(~limb, carry);
+            add_res = ov[<span class="tok-number">0</span>];
+            carry = ov[<span class="tok-number">1</span>];
+            sum += <span class="tok-builtin">@popCount</span>(add_res);
+            remaining_bits -= <a href="std.math.big.int.html#std.math.big.int.limb_bits">limb_bits</a>;<span class="tok-comment"> // Asserted not to underflow by fitsInTwosComp
+        </span>}<span class="tok-comment">
+
+        // The most significant limb may have fewer than @bitSizeOf(Limb) meaningful bits,
+        // which we can detect with @clz().
+        // There may also be fewer limbs than needed to fill bit_count.
+        </span><span class="tok-kw">const</span> limb = self.limbs[self.limbs.len - <span class="tok-number">1</span>];
+        <span class="tok-kw">const</span> leading_zeroes = <span class="tok-builtin">@clz</span>(limb);<span class="tok-comment">
+        // The most significant limb is asserted not to be all 0s (above),
+        // so ~limb cannot be all 1s, and ~limb + 1 cannot overflow.
+        </span>sum += <span class="tok-builtin">@popCount</span>(~limb + carry);
+        sum -= leading_zeroes;<span class="tok-comment"> // All leading zeroes were flipped and added to sum, so undo those
+        </span><span class="tok-kw">const</span> remaining_ones = remaining_bits - (<a href="std.math.big.int.html#std.math.big.int.limb_bits">limb_bits</a> - leading_zeroes);<span class="tok-comment"> // All bits not covered by limbs
+        </span>sum += remaining_ones;
+    }
+    <span class="tok-kw">return</span> sum;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.fitsInTwosComp" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fitsInTwosComp</span><a href="#src.zig-std.math.big.int.Const.fitsInTwosComp">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fitsInTwosComp</span>(self: <a href="std.math.big.int.Const.html">Const</a>, signedness: <a href="std.builtin.Signedness.html">Signedness</a>, bit_count: <span class="tok-type">usize</span>) <span class="tok-type">bool</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>signedness: <a href="std.builtin.Signedness.html">Signedness</a></code></pre></div><div><pre><code>bit_count: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.fitsInTwosComp">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fitsInTwosComp</span>(self: <a href="std.math.big.int.Const.html">Const</a>, signedness: <a href="std.builtin.Signedness.html">Signedness</a>, bit_count: <span class="tok-type">usize</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">if</span> (self.eqlZero()) {
+        <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+    }
+    <span class="tok-kw">if</span> (signedness == .unsigned <span class="tok-kw">and</span> !self.positive) {
+        <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+    }
+    <span class="tok-kw">return</span> bit_count &gt;= self.bitCountTwosCompForSignedness(signedness);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.fits" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fits</span><a href="#src.zig-std.math.big.int.Const.fits">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fits</span>(self: <a href="std.math.big.int.Const.html">Const</a>, <span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) <span class="tok-type">bool</span></code></pre></div><div class="tldDocs"><p>Returns whether self can fit into an integer of the requested type.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>T: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.fits">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fits</span>(self: <a href="std.math.big.int.Const.html">Const</a>, <span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">const</span> info = <span class="tok-builtin">@typeInfo</span>(T).int;
+    <span class="tok-kw">return</span> self.fitsInTwosComp(info.signedness, info.bits);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.sizeInBaseUpperBound" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">sizeInBaseUpperBound</span><a href="#src.zig-std.math.big.int.Const.sizeInBaseUpperBound">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">sizeInBaseUpperBound</span>(self: <a href="std.math.big.int.Const.html">Const</a>, base: <span class="tok-type">usize</span>) <span class="tok-type">usize</span></code></pre></div><div class="tldDocs"><p>Returns the approximate size of the integer in the given base. Negative values accommodate for
+the minus sign. This is used for determining the number of characters needed to print the
+value. It is inexact and may exceed the given value by ~1-2 bytes.
+TODO See if we can make this exact.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>base: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.sizeInBaseUpperBound">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">sizeInBaseUpperBound</span>(self: <a href="std.math.big.int.Const.html">Const</a>, base: <span class="tok-type">usize</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">const</span> bit_count = <span class="tok-builtin">@as</span>(<span class="tok-type">usize</span>, <span class="tok-builtin">@intFromBool</span>(!self.positive)) + self.bitCountAbs();
+    <span class="tok-kw">return</span> (bit_count / <a href="std.math.html">math</a>.<a href="std.math.log2.html#std.math.log2.log2">log2</a>(base)) + <span class="tok-number">2</span>;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.toInt" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">toInt</span><a href="#src.zig-std.math.big.int.Const.toInt">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toInt</span>(self: <a href="std.math.big.int.Const.html">Const</a>, <span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) <a href="std.math.big.int.Const.html#std.math.big.int.Const.ConvertError">ConvertError</a>!T</code></pre></div><div class="tldDocs"><p>Convert self to integer type T.</p>
+<p>Returns an error if self cannot be narrowed into the requested type without truncation.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>T: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.toInt">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toInt</span>(self: <a href="std.math.big.int.Const.html">Const</a>, <span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) <a href="std.math.big.int.Const.html#std.math.big.int.Const.ConvertError">ConvertError</a>!T {
+    <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(T)) {
+        .int =&gt; |info| {<span class="tok-comment">
+            // Make sure -0 is handled correctly.
+            </span><span class="tok-kw">if</span> (self.eqlZero()) <span class="tok-kw">return</span> <span class="tok-number">0</span>;
+
+            <span class="tok-kw">const</span> UT = <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.Int">Int</a>(.unsigned, info.bits);
+
+            <span class="tok-kw">if</span> (!self.fitsInTwosComp(info.signedness, info.bits)) {
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TargetTooSmall;
+            }
+
+            <span class="tok-kw">var</span> r: UT = <span class="tok-number">0</span>;
+
+            <span class="tok-kw">if</span> (<span class="tok-builtin">@sizeOf</span>(UT) &lt;= <span class="tok-builtin">@sizeOf</span>(<a href="std.math.big.html#std.math.big.Limb">Limb</a>)) {
+                r = <span class="tok-builtin">@as</span>(UT, <span class="tok-builtin">@intCast</span>(self.limbs[<span class="tok-number">0</span>]));
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">for</span> (self.limbs[<span class="tok-number">0</span>..self.limbs.len], <span class="tok-number">0</span>..) |_, ri| {
+                    <span class="tok-kw">const</span> limb = self.limbs[self.limbs.len - ri - <span class="tok-number">1</span>];
+                    r &lt;&lt;= <a href="std.math.big.int.html#std.math.big.int.limb_bits">limb_bits</a>;
+                    r |= limb;
+                }
+            }
+
+            <span class="tok-kw">if</span> (info.signedness == .unsigned) {
+                <span class="tok-kw">return</span> <span class="tok-kw">if</span> (self.positive) <span class="tok-builtin">@as</span>(T, <span class="tok-builtin">@intCast</span>(r)) <span class="tok-kw">else</span> <span class="tok-kw">error</span>.NegativeIntoUnsigned;
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">if</span> (self.positive) {
+                    <span class="tok-kw">return</span> <span class="tok-builtin">@intCast</span>(r);
+                } <span class="tok-kw">else</span> {
+                    <span class="tok-kw">if</span> (<a href="std.math.html">math</a>.<a href="std.math.html#std.math.cast">cast</a>(T, r)) |ok| {
+                        <span class="tok-kw">return</span> -ok;
+                    } <span class="tok-kw">else</span> {
+                        <span class="tok-kw">return</span> <a href="std.math.html#std.math.minInt">minInt</a>(T);
+                    }
+                }
+            }
+        },
+        <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;expected int type, found '&quot;</span> ++ <span class="tok-builtin">@typeName</span>(T) ++ <span class="tok-str">&quot;'&quot;</span>),
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.toInt" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">toInt</span><a href="#src.zig-std.math.big.int.Const.toInt">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toInt</span>(self: <a href="std.math.big.int.Const.html">Const</a>, <span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) <a href="std.math.big.int.Const.html#std.math.big.int.Const.ConvertError">ConvertError</a>!T</code></pre></div><div class="tldDocs"><p>Convert self to integer type T.</p>
+<p>Returns an error if self cannot be narrowed into the requested type without truncation.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>T: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.toInt">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toInt</span>(self: <a href="std.math.big.int.Const.html">Const</a>, <span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) <a href="std.math.big.int.Const.html#std.math.big.int.Const.ConvertError">ConvertError</a>!T {
+    <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(T)) {
+        .int =&gt; |info| {<span class="tok-comment">
+            // Make sure -0 is handled correctly.
+            </span><span class="tok-kw">if</span> (self.eqlZero()) <span class="tok-kw">return</span> <span class="tok-number">0</span>;
+
+            <span class="tok-kw">const</span> UT = <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.Int">Int</a>(.unsigned, info.bits);
+
+            <span class="tok-kw">if</span> (!self.fitsInTwosComp(info.signedness, info.bits)) {
+                <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TargetTooSmall;
+            }
+
+            <span class="tok-kw">var</span> r: UT = <span class="tok-number">0</span>;
+
+            <span class="tok-kw">if</span> (<span class="tok-builtin">@sizeOf</span>(UT) &lt;= <span class="tok-builtin">@sizeOf</span>(<a href="std.math.big.html#std.math.big.Limb">Limb</a>)) {
+                r = <span class="tok-builtin">@as</span>(UT, <span class="tok-builtin">@intCast</span>(self.limbs[<span class="tok-number">0</span>]));
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">for</span> (self.limbs[<span class="tok-number">0</span>..self.limbs.len], <span class="tok-number">0</span>..) |_, ri| {
+                    <span class="tok-kw">const</span> limb = self.limbs[self.limbs.len - ri - <span class="tok-number">1</span>];
+                    r &lt;&lt;= <a href="std.math.big.int.html#std.math.big.int.limb_bits">limb_bits</a>;
+                    r |= limb;
+                }
+            }
+
+            <span class="tok-kw">if</span> (info.signedness == .unsigned) {
+                <span class="tok-kw">return</span> <span class="tok-kw">if</span> (self.positive) <span class="tok-builtin">@as</span>(T, <span class="tok-builtin">@intCast</span>(r)) <span class="tok-kw">else</span> <span class="tok-kw">error</span>.NegativeIntoUnsigned;
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">if</span> (self.positive) {
+                    <span class="tok-kw">return</span> <span class="tok-builtin">@intCast</span>(r);
+                } <span class="tok-kw">else</span> {
+                    <span class="tok-kw">if</span> (<a href="std.math.html">math</a>.<a href="std.math.html#std.math.cast">cast</a>(T, r)) |ok| {
+                        <span class="tok-kw">return</span> -ok;
+                    } <span class="tok-kw">else</span> {
+                        <span class="tok-kw">return</span> <a href="std.math.html#std.math.minInt">minInt</a>(T);
+                    }
+                }
+            }
+        },
+        <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;expected int type, found '&quot;</span> ++ <span class="tok-builtin">@typeName</span>(T) ++ <span class="tok-str">&quot;'&quot;</span>),
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.toFloat" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">toFloat</span><a href="#src.zig-std.math.big.int.Const.toFloat">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toFloat</span>(self: <a href="std.math.big.int.Const.html">Const</a>, <span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) T</code></pre></div><div class="tldDocs"><p>Convert self to float type T.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>T: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.toFloat">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toFloat</span>(self: <a href="std.math.big.int.Const.html">Const</a>, <span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) T {
+    <span class="tok-kw">if</span> (self.limbs.len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-number">0</span>;
+
+    <span class="tok-kw">const</span> base = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.big.html">big</a>.<a href="std.math.big.html#std.math.big.Limb">Limb</a>) + <span class="tok-number">1</span>;
+    <span class="tok-kw">var</span> result: <span class="tok-type">f128</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = self.limbs.len;
+    <span class="tok-kw">while</span> (i != <span class="tok-number">0</span>) {
+        i -= <span class="tok-number">1</span>;
+        <span class="tok-kw">const</span> limb: <span class="tok-type">f128</span> = <span class="tok-builtin">@floatFromInt</span>(self.limbs[i]);
+        result = <span class="tok-builtin">@mulAdd</span>(<span class="tok-type">f128</span>, base, result, limb);
+    }
+    <span class="tok-kw">if</span> (self.positive) {
+        <span class="tok-kw">return</span> <span class="tok-builtin">@floatCast</span>(result);
+    } <span class="tok-kw">else</span> {
+        <span class="tok-kw">return</span> <span class="tok-builtin">@floatCast</span>(-result);
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.format" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">format</span><a href="#src.zig-std.math.big.int.Const.format">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">format</span>( self: <a href="std.math.big.int.Const.html">Const</a>, <span class="tok-kw">comptime</span> fmt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, options: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.FormatOptions.html">FormatOptions</a>, out_stream: <span class="tok-kw">anytype</span>, ) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>To allow <code>std.fmt.format</code> to work with this type.
+If the absolute value of integer is greater than or equal to <code>pow(2, 64 * @sizeOf(usize) * 8)</code>,
+this function will fail to print the string, printing &quot;(BigInt)&quot; instead of a number.
+This is because the rendering algorithm requires reversing a string, which requires O(N) memory.
+See <code>toString</code> and <code>toStringAlloc</code> for a way to print big integers without failure.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>fmt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>options: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.FormatOptions.html">FormatOptions</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.format">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">format</span>(
+    self: <a href="std.math.big.int.Const.html">Const</a>,
+    <span class="tok-kw">comptime</span> fmt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    options: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.FormatOptions.html">FormatOptions</a>,
+    out_stream: <span class="tok-kw">anytype</span>,
+) !<span class="tok-type">void</span> {
+    _ = options;
+    <span class="tok-kw">comptime</span> <span class="tok-kw">var</span> base = <span class="tok-number">10</span>;
+    <span class="tok-kw">comptime</span> <span class="tok-kw">var</span> case: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.Case.html">Case</a> = .lower;
+
+    <span class="tok-kw">if</span> (fmt.len == <span class="tok-number">0</span> <span class="tok-kw">or</span> <span class="tok-kw">comptime</span> <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, fmt, <span class="tok-str">&quot;d&quot;</span>)) {
+        base = <span class="tok-number">10</span>;
+        case = .lower;
+    } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<span class="tok-kw">comptime</span> <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, fmt, <span class="tok-str">&quot;b&quot;</span>)) {
+        base = <span class="tok-number">2</span>;
+        case = .lower;
+    } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<span class="tok-kw">comptime</span> <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, fmt, <span class="tok-str">&quot;x&quot;</span>)) {
+        base = <span class="tok-number">16</span>;
+        case = .lower;
+    } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<span class="tok-kw">comptime</span> <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, fmt, <span class="tok-str">&quot;X&quot;</span>)) {
+        base = <span class="tok-number">16</span>;
+        case = .upper;
+    } <span class="tok-kw">else</span> {
+        <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.invalidFmtError">invalidFmtError</a>(fmt, self);
+    }
+
+    <span class="tok-kw">const</span> available_len = <span class="tok-number">64</span>;
+    <span class="tok-kw">if</span> (self.limbs.len &gt; available_len)
+        <span class="tok-kw">return</span> out_stream.writeAll(<span class="tok-str">&quot;(BigInt)&quot;</span>);
+
+    <span class="tok-kw">var</span> limbs: [<a href="std.math.big.int.html#std.math.big.int.calcToStringLimbsBufferLen">calcToStringLimbsBufferLen</a>(available_len, base)]<a href="std.math.big.html#std.math.big.Limb">Limb</a> = <span class="tok-null">undefined</span>;
+
+    <span class="tok-kw">const</span> biggest: <a href="std.math.big.int.Const.html">Const</a> = .{
+        .limbs = &amp;([<span class="tok-number">1</span>]<a href="std.math.big.html#std.math.big.Limb">Limb</a>{<span class="tok-kw">comptime</span> <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<a href="std.math.big.html#std.math.big.Limb">Limb</a>)} ** available_len),
+        .positive = <span class="tok-null">false</span>,
+    };
+    <span class="tok-kw">var</span> buf: [biggest.sizeInBaseUpperBound(base)]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">const</span> len = self.toString(&amp;buf, base, case, &amp;limbs);
+    <span class="tok-kw">return</span> out_stream.writeAll(buf[<span class="tok-number">0</span>..len]);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.toStringAlloc" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">toStringAlloc</span><a href="#src.zig-std.math.big.int.Const.toStringAlloc">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toStringAlloc</span>(self: <a href="std.math.big.int.Const.html">Const</a>, allocator: <a href="std.mem.Allocator.html">Allocator</a>, base: <span class="tok-type">u8</span>, case: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.Case.html">Case</a>) <a href="std.mem.Allocator.html">Allocator</a>.<a href="std.mem.Allocator.html#std.mem.Allocator.Error">Error</a>![]<span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>Converts self to a string in the requested base.
+Caller owns returned memory.
+Asserts that <code>base</code> is in the range [2, 36].
+See also <code>toString</code>, a lower level function than this.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>allocator: <a href="std.mem.Allocator.html">Allocator</a></code></pre></div><div><pre><code>base: <span class="tok-type">u8</span></code></pre></div><div><pre><code>case: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.Case.html">Case</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.toStringAlloc">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toStringAlloc</span>(self: <a href="std.math.big.int.Const.html">Const</a>, allocator: <a href="std.mem.Allocator.html">Allocator</a>, base: <span class="tok-type">u8</span>, case: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.Case.html">Case</a>) <a href="std.mem.Allocator.html">Allocator</a>.<a href="std.mem.Allocator.html#std.mem.Allocator.Error">Error</a>![]<span class="tok-type">u8</span> {
+    <a href="std.debug.html#std.debug.assert">assert</a>(base &gt;= <span class="tok-number">2</span>);
+    <a href="std.debug.html#std.debug.assert">assert</a>(base &lt;= <span class="tok-number">36</span>);
+
+    <span class="tok-kw">if</span> (self.eqlZero()) {
+        <span class="tok-kw">return</span> allocator.dupe(<span class="tok-type">u8</span>, <span class="tok-str">&quot;0&quot;</span>);
+    }
+    <span class="tok-kw">const</span> string = <span class="tok-kw">try</span> allocator.alloc(<span class="tok-type">u8</span>, self.sizeInBaseUpperBound(base));
+    <span class="tok-kw">errdefer</span> allocator.free(string);
+
+    <span class="tok-kw">const</span> limbs = <span class="tok-kw">try</span> allocator.alloc(<a href="std.math.big.html#std.math.big.Limb">Limb</a>, <a href="std.math.big.int.html#std.math.big.int.calcToStringLimbsBufferLen">calcToStringLimbsBufferLen</a>(self.limbs.len, base));
+    <span class="tok-kw">defer</span> allocator.free(limbs);
+
+    <span class="tok-kw">return</span> allocator.realloc(string, self.toString(string, base, case, limbs));
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.toString" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">toString</span><a href="#src.zig-std.math.big.int.Const.toString">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toString</span>(self: <a href="std.math.big.int.Const.html">Const</a>, string: []<span class="tok-type">u8</span>, base: <span class="tok-type">u8</span>, case: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.Case.html">Case</a>, limbs_buffer: []<a href="std.math.big.html#std.math.big.Limb">Limb</a>) <span class="tok-type">usize</span></code></pre></div><div class="tldDocs"><p>Converts self to a string in the requested base.
+Asserts that <code>base</code> is in the range [2, 36].
+<code>string</code> is a caller-provided slice of at least <code>sizeInBaseUpperBound</code> bytes,
+where the result is written to.
+Returns the length of the string.
+<code>limbs_buffer</code> is caller-provided memory for <code>toString</code> to use as a working area. It must have
+length of at least <code>calcToStringLimbsBufferLen</code>.
+In the case of power-of-two base, <code>limbs_buffer</code> is ignored.
+See also <code>toStringAlloc</code>, a higher level function than this.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>string: []<span class="tok-type">u8</span></code></pre></div><div><pre><code>base: <span class="tok-type">u8</span></code></pre></div><div><pre><code>case: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.Case.html">Case</a></code></pre></div><div><pre><code>limbs_buffer: []<a href="std.math.big.html#std.math.big.Limb">Limb</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.toString">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toString</span>(self: <a href="std.math.big.int.Const.html">Const</a>, string: []<span class="tok-type">u8</span>, base: <span class="tok-type">u8</span>, case: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.Case.html">Case</a>, limbs_buffer: []<a href="std.math.big.html#std.math.big.Limb">Limb</a>) <span class="tok-type">usize</span> {
+    <a href="std.debug.html#std.debug.assert">assert</a>(base &gt;= <span class="tok-number">2</span>);
+    <a href="std.debug.html#std.debug.assert">assert</a>(base &lt;= <span class="tok-number">36</span>);
+
+    <span class="tok-kw">if</span> (self.eqlZero()) {
+        string[<span class="tok-number">0</span>] = <span class="tok-str">'0'</span>;
+        <span class="tok-kw">return</span> <span class="tok-number">1</span>;
+    }
+
+    <span class="tok-kw">var</span> digits_len: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;<span class="tok-comment">
+
+    // Power of two: can do a single pass and use masks to extract digits.
+    </span><span class="tok-kw">if</span> (<a href="std.math.html">math</a>.<a href="std.math.html#std.math.isPowerOfTwo">isPowerOfTwo</a>(base)) {
+        <span class="tok-kw">const</span> base_shift = <a href="std.math.html">math</a>.<a href="std.math.html#std.math.log2_int">log2_int</a>(<a href="std.math.big.html#std.math.big.Limb">Limb</a>, base);
+
+        outer: <span class="tok-kw">for</span> (self.limbs[<span class="tok-number">0</span>..self.limbs.len]) |limb| {
+            <span class="tok-kw">var</span> shift: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (shift &lt; <a href="std.math.big.int.html#std.math.big.int.limb_bits">limb_bits</a>) : (shift += base_shift) {
+                <span class="tok-kw">const</span> r = <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-builtin">@intCast</span>((limb &gt;&gt; <span class="tok-builtin">@as</span>(<a href="std.math.big.html#std.math.big.Log2Limb">Log2Limb</a>, <span class="tok-builtin">@intCast</span>(shift))) &amp; <span class="tok-builtin">@as</span>(<a href="std.math.big.html#std.math.big.Limb">Limb</a>, base - <span class="tok-number">1</span>)));
+                <span class="tok-kw">const</span> ch = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.digitToChar">digitToChar</a>(r, case);
+                string[digits_len] = ch;
+                digits_len += <span class="tok-number">1</span>;<span class="tok-comment">
+                // If we hit the end, it must be all zeroes from here.
+                </span><span class="tok-kw">if</span> (digits_len == string.len) <span class="tok-kw">break</span> :outer;
+            }
+        }<span class="tok-comment">
+
+        // Always will have a non-zero digit somewhere.
+        </span><span class="tok-kw">while</span> (string[digits_len - <span class="tok-number">1</span>] == <span class="tok-str">'0'</span>) {
+            digits_len -= <span class="tok-number">1</span>;
+        }
+    } <span class="tok-kw">else</span> {<span class="tok-comment">
+        // Non power-of-two: batch divisions per word size.
+        // We use a HalfLimb here so the division uses the faster lldiv0p5 over lldiv1 codepath.
+        </span><span class="tok-kw">const</span> digits_per_limb = <a href="std.math.html">math</a>.<a href="std.math.log.html#std.math.log.log">log</a>(<a href="std.math.big.html#std.math.big.HalfLimb">HalfLimb</a>, base, <a href="std.math.html#std.math.maxInt">maxInt</a>(<a href="std.math.big.html#std.math.big.HalfLimb">HalfLimb</a>));
+        <span class="tok-kw">var</span> limb_base: <a href="std.math.big.html#std.math.big.Limb">Limb</a> = <span class="tok-number">1</span>;
+        <span class="tok-kw">var</span> j: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">while</span> (j &lt; digits_per_limb) : (j += <span class="tok-number">1</span>) {
+            limb_base *= base;
+        }
+        <span class="tok-kw">const</span> b: <a href="std.math.big.int.Const.html">Const</a> = .{ .limbs = &amp;[_]<a href="std.math.big.html#std.math.big.Limb">Limb</a>{limb_base}, .positive = <span class="tok-null">true</span> };
+
+        <span class="tok-kw">var</span> q: <a href="std.math.big.int.Mutable.html">Mutable</a> = .{
+            .limbs = limbs_buffer[<span class="tok-number">0</span> .. self.limbs.len + <span class="tok-number">2</span>],
+            .positive = <span class="tok-null">true</span>,<span class="tok-comment"> // Make absolute by ignoring self.positive.
+            </span>.len = self.limbs.len,
+        };
+        <span class="tok-builtin">@memcpy</span>(q.limbs[<span class="tok-number">0</span>..self.limbs.len], self.limbs);
+
+        <span class="tok-kw">var</span> r: <a href="std.math.big.int.Mutable.html">Mutable</a> = .{
+            .limbs = limbs_buffer[q.limbs.len..][<span class="tok-number">0</span>..self.limbs.len],
+            .positive = <span class="tok-null">true</span>,
+            .len = <span class="tok-number">1</span>,
+        };
+        r.limbs[<span class="tok-number">0</span>] = <span class="tok-number">0</span>;
+
+        <span class="tok-kw">const</span> rest_of_the_limbs_buf = limbs_buffer[q.limbs.len + r.limbs.len ..];
+
+        <span class="tok-kw">while</span> (q.len &gt;= <span class="tok-number">2</span>) {<span class="tok-comment">
+            // Passing an allocator here would not be helpful since this division is destroying
+            // information, not creating it. [TODO citation needed]
+            </span>q.divTrunc(&amp;r, q.toConst(), b, rest_of_the_limbs_buf);
+
+            <span class="tok-kw">var</span> r_word = r.limbs[<span class="tok-number">0</span>];
+            <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (i &lt; digits_per_limb) : (i += <span class="tok-number">1</span>) {
+                <span class="tok-kw">const</span> ch = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.digitToChar">digitToChar</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-builtin">@intCast</span>(r_word % base)), case);
+                r_word /= base;
+                string[digits_len] = ch;
+                digits_len += <span class="tok-number">1</span>;
+            }
+        }
+
+        {
+            <a href="std.debug.html#std.debug.assert">assert</a>(q.len == <span class="tok-number">1</span>);
+
+            <span class="tok-kw">var</span> r_word = q.limbs[<span class="tok-number">0</span>];
+            <span class="tok-kw">while</span> (r_word != <span class="tok-number">0</span>) {
+                <span class="tok-kw">const</span> ch = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.digitToChar">digitToChar</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-builtin">@intCast</span>(r_word % base)), case);
+                r_word /= base;
+                string[digits_len] = ch;
+                digits_len += <span class="tok-number">1</span>;
+            }
+        }
+    }
+
+    <span class="tok-kw">if</span> (!self.positive) {
+        string[digits_len] = <span class="tok-str">'-'</span>;
+        digits_len += <span class="tok-number">1</span>;
+    }
+
+    <span class="tok-kw">const</span> s = string[<span class="tok-number">0</span>..digits_len];
+    <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.reverse">reverse</a>(<span class="tok-type">u8</span>, s);
+    <span class="tok-kw">return</span> s.len;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.writeTwosComplement" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">writeTwosComplement</span><a href="#src.zig-std.math.big.int.Const.writeTwosComplement">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeTwosComplement</span>(x: <a href="std.math.big.int.Const.html">Const</a>, buffer: []<span class="tok-type">u8</span>, endian: <a href="std.builtin.Endian.html">Endian</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Write the value of <code>x</code> into <code>buffer</code>
+Asserts that <code>buffer</code> is large enough to store the value.</p>
+<p><code>buffer</code> is filled so that its contents match what would be observed via
+@ptrCast(*[buffer.len]const u8, &amp;x). Byte ordering is determined by <code>endian</code>,
+and any required padding bits are added on the MSB end.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>x: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>buffer: []<span class="tok-type">u8</span></code></pre></div><div><pre><code>endian: <a href="std.builtin.Endian.html">Endian</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.writeTwosComplement">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeTwosComplement</span>(x: <a href="std.math.big.int.Const.html">Const</a>, buffer: []<span class="tok-type">u8</span>, endian: <a href="std.builtin.Endian.html">Endian</a>) <span class="tok-type">void</span> {
+    <span class="tok-kw">return</span> <a href="std.math.big.int.Const.html#std.math.big.int.Const.writePackedTwosComplement">writePackedTwosComplement</a>(x, buffer, <span class="tok-number">0</span>, <span class="tok-number">8</span> * buffer.len, endian);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.writePackedTwosComplement" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">writePackedTwosComplement</span><a href="#src.zig-std.math.big.int.Const.writePackedTwosComplement">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writePackedTwosComplement</span>(x: <a href="std.math.big.int.Const.html">Const</a>, buffer: []<span class="tok-type">u8</span>, bit_offset: <span class="tok-type">usize</span>, bit_count: <span class="tok-type">usize</span>, endian: <a href="std.builtin.Endian.html">Endian</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Write the value of <code>x</code> to a packed memory <code>buffer</code>.
+Asserts that <code>buffer</code> is large enough to contain a value of bit-size <code>bit_count</code>
+at offset <code>bit_offset</code>.</p>
+<p>This is equivalent to storing the value of an integer with <code>bit_count</code> bits as
+if it were a field in packed memory at the provided bit offset.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>x: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>buffer: []<span class="tok-type">u8</span></code></pre></div><div><pre><code>bit_offset: <span class="tok-type">usize</span></code></pre></div><div><pre><code>bit_count: <span class="tok-type">usize</span></code></pre></div><div><pre><code>endian: <a href="std.builtin.Endian.html">Endian</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.writePackedTwosComplement">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writePackedTwosComplement</span>(x: <a href="std.math.big.int.Const.html">Const</a>, buffer: []<span class="tok-type">u8</span>, bit_offset: <span class="tok-type">usize</span>, bit_count: <span class="tok-type">usize</span>, endian: <a href="std.builtin.Endian.html">Endian</a>) <span class="tok-type">void</span> {
+    <a href="std.debug.html#std.debug.assert">assert</a>(x.fitsInTwosComp(<span class="tok-kw">if</span> (x.positive) .unsigned <span class="tok-kw">else</span> .signed, bit_count));<span class="tok-comment">
+
+    // Copy all complete limbs
+    </span><span class="tok-kw">var</span> carry: <span class="tok-type">u1</span> = <span class="tok-number">1</span>;
+    <span class="tok-kw">var</span> limb_index: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">var</span> bit_index: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (limb_index &lt; bit_count / <span class="tok-builtin">@bitSizeOf</span>(<a href="std.math.big.html#std.math.big.Limb">Limb</a>)) : (limb_index += <span class="tok-number">1</span>) {
+        <span class="tok-kw">var</span> limb: <a href="std.math.big.html#std.math.big.Limb">Limb</a> = <span class="tok-kw">if</span> (limb_index &lt; x.limbs.len) x.limbs[limb_index] <span class="tok-kw">else</span> <span class="tok-number">0</span>;<span class="tok-comment">
+
+        // 2's complement (bitwise not, then add carry bit)
+        </span><span class="tok-kw">if</span> (!x.positive) {
+            <span class="tok-kw">const</span> ov = <span class="tok-builtin">@addWithOverflow</span>(~limb, carry);
+            limb = ov[<span class="tok-number">0</span>];
+            carry = ov[<span class="tok-number">1</span>];
+        }<span class="tok-comment">
+
+        // Write one Limb of bits
+        </span><a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writePackedInt">writePackedInt</a>(<a href="std.math.big.html#std.math.big.Limb">Limb</a>, buffer, bit_index + bit_offset, limb, endian);
+        bit_index += <span class="tok-builtin">@bitSizeOf</span>(<a href="std.math.big.html#std.math.big.Limb">Limb</a>);
+    }<span class="tok-comment">
+
+    // Copy the remaining bits
+    </span><span class="tok-kw">if</span> (bit_count != bit_index) {
+        <span class="tok-kw">var</span> limb: <a href="std.math.big.html#std.math.big.Limb">Limb</a> = <span class="tok-kw">if</span> (limb_index &lt; x.limbs.len) x.limbs[limb_index] <span class="tok-kw">else</span> <span class="tok-number">0</span>;<span class="tok-comment">
+
+        // 2's complement (bitwise not, then add carry bit)
+        </span><span class="tok-kw">if</span> (!x.positive) limb = ~limb +% carry;<span class="tok-comment">
+
+        // Write all remaining bits
+        </span><a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeVarPackedInt">writeVarPackedInt</a>(buffer, bit_index + bit_offset, bit_count - bit_index, limb, endian);
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.orderAbs" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">orderAbs</span><a href="#src.zig-std.math.big.int.Const.orderAbs">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">orderAbs</span>(a: <a href="std.math.big.int.Const.html">Const</a>, b: <a href="std.math.big.int.Const.html">Const</a>) <a href="std.math.html">math</a>.<a href="std.math.Order.html">Order</a></code></pre></div><div class="tldDocs"><p>Returns <code>math.Order.lt</code>, <code>math.Order.eq</code>, <code>math.Order.gt</code> if
+<code>|a| &lt; |b|</code>, <code>|a| == |b|</code>, or <code>|a| &gt; |b|</code> respectively.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>a: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>b: <a href="std.math.big.int.Const.html">Const</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.orderAbs">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">orderAbs</span>(a: <a href="std.math.big.int.Const.html">Const</a>, b: <a href="std.math.big.int.Const.html">Const</a>) <a href="std.math.html">math</a>.<a href="std.math.Order.html">Order</a> {
+    <span class="tok-kw">if</span> (a.limbs.len &lt; b.limbs.len) {
+        <span class="tok-kw">return</span> .lt;
+    }
+    <span class="tok-kw">if</span> (a.limbs.len &gt; b.limbs.len) {
+        <span class="tok-kw">return</span> .gt;
+    }
+
+    <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = a.limbs.len - <span class="tok-number">1</span>;
+    <span class="tok-kw">while</span> (i != <span class="tok-number">0</span>) : (i -= <span class="tok-number">1</span>) {
+        <span class="tok-kw">if</span> (a.limbs[i] != b.limbs[i]) {
+            <span class="tok-kw">break</span>;
+        }
+    }
+
+    <span class="tok-kw">if</span> (a.limbs[i] &lt; b.limbs[i]) {
+        <span class="tok-kw">return</span> .lt;
+    } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (a.limbs[i] &gt; b.limbs[i]) {
+        <span class="tok-kw">return</span> .gt;
+    } <span class="tok-kw">else</span> {
+        <span class="tok-kw">return</span> .eq;
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.order" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">order</span><a href="#src.zig-std.math.big.int.Const.order">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">order</span>(a: <a href="std.math.big.int.Const.html">Const</a>, b: <a href="std.math.big.int.Const.html">Const</a>) <a href="std.math.html">math</a>.<a href="std.math.Order.html">Order</a></code></pre></div><div class="tldDocs"><p>Returns <code>math.Order.lt</code>, <code>math.Order.eq</code>, <code>math.Order.gt</code> if <code>a &lt; b</code>, <code>a == b</code> or <code>a &gt; b</code> respectively.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>a: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>b: <a href="std.math.big.int.Const.html">Const</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.order">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">order</span>(a: <a href="std.math.big.int.Const.html">Const</a>, b: <a href="std.math.big.int.Const.html">Const</a>) <a href="std.math.html">math</a>.<a href="std.math.Order.html">Order</a> {
+    <span class="tok-kw">if</span> (a.positive != b.positive) {
+        <span class="tok-kw">if</span> (<a href="std.math.big.int.Const.html#std.math.big.int.Const.eqlZero">eqlZero</a>(a) <span class="tok-kw">and</span> <a href="std.math.big.int.Const.html#std.math.big.int.Const.eqlZero">eqlZero</a>(b)) {
+            <span class="tok-kw">return</span> .eq;
+        } <span class="tok-kw">else</span> {
+            <span class="tok-kw">return</span> <span class="tok-kw">if</span> (a.positive) .gt <span class="tok-kw">else</span> .lt;
+        }
+    } <span class="tok-kw">else</span> {
+        <span class="tok-kw">const</span> r = <a href="std.math.big.int.Const.html#std.math.big.int.Const.orderAbs">orderAbs</a>(a, b);
+        <span class="tok-kw">return</span> <span class="tok-kw">if</span> (a.positive) r <span class="tok-kw">else</span> <span class="tok-kw">switch</span> (r) {
+            .lt =&gt; <a href="std.math.html">math</a>.<a href="std.math.Order.html">Order</a>.<a href="#">gt</a>,
+            .eq =&gt; <a href="std.math.html">math</a>.<a href="std.math.Order.html">Order</a>.<a href="#">eq</a>,
+            .gt =&gt; <a href="std.math.html">math</a>.<a href="std.math.Order.html">Order</a>.<a href="#">lt</a>,
+        };
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.orderAgainstScalar" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">orderAgainstScalar</span><a href="#src.zig-std.math.big.int.Const.orderAgainstScalar">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">orderAgainstScalar</span>(lhs: <a href="std.math.big.int.Const.html">Const</a>, scalar: <span class="tok-kw">anytype</span>) <a href="std.math.html">math</a>.<a href="std.math.Order.html">Order</a></code></pre></div><div class="tldDocs"><p>Same as <code>order</code> but the right-hand operand is a primitive integer.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>lhs: <a href="std.math.big.int.Const.html">Const</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.orderAgainstScalar">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">orderAgainstScalar</span>(lhs: <a href="std.math.big.int.Const.html">Const</a>, scalar: <span class="tok-kw">anytype</span>) <a href="std.math.html">math</a>.<a href="std.math.Order.html">Order</a> {<span class="tok-comment">
+    // Normally we could just determine the number of limbs needed with calcLimbLen,
+    // but that is not comptime-known when scalar is not a comptime_int.  Instead, we
+    // use calcTwosCompLimbCount for a non-comptime_int scalar, which can be pessimistic
+    // in the case that scalar happens to be small in magnitude within its type, but it
+    // is well worth being able to use the stack and not needing an allocator passed in.
+    // Note that Mutable.init still sets len to calcLimbLen(scalar) in any case.
+    </span><span class="tok-kw">const</span> limb_len = <span class="tok-kw">comptime</span> <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(scalar))) {
+        .<span class="tok-type">comptime_int</span> =&gt; <a href="std.math.big.int.html#std.math.big.int.calcLimbLen">calcLimbLen</a>(scalar),
+        .int =&gt; |info| <a href="std.math.big.int.html#std.math.big.int.calcTwosCompLimbCount">calcTwosCompLimbCount</a>(info.bits),
+        <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;expected scalar to be an int&quot;</span>),
+    };
+    <span class="tok-kw">var</span> limbs: [limb_len]<a href="std.math.big.html#std.math.big.Limb">Limb</a> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">const</span> rhs = <a href="std.math.big.int.Mutable.html">Mutable</a>.<a href="std.math.big.int.Mutable.html#std.math.big.int.Mutable.init">init</a>(&amp;limbs, scalar);
+    <span class="tok-kw">return</span> <a href="std.math.big.int.Const.html#std.math.big.int.Const.order">order</a>(lhs, rhs.toConst());
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.eqlZero" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">eqlZero</span><a href="#src.zig-std.math.big.int.Const.eqlZero">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eqlZero</span>(a: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">bool</span></code></pre></div><div class="tldDocs"><p>Returns true if <code>a == 0</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>a: <a href="std.math.big.int.Const.html">Const</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.eqlZero">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eqlZero</span>(a: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">var</span> d: <a href="std.math.big.html#std.math.big.Limb">Limb</a> = <span class="tok-number">0</span>;
+    <span class="tok-kw">for</span> (a.limbs) |limb| d |= limb;
+    <span class="tok-kw">return</span> d == <span class="tok-number">0</span>;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.eqlAbs" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">eqlAbs</span><a href="#src.zig-std.math.big.int.Const.eqlAbs">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eqlAbs</span>(a: <a href="std.math.big.int.Const.html">Const</a>, b: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">bool</span></code></pre></div><div class="tldDocs"><p>Returns true if <code>|a| == |b|</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>a: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>b: <a href="std.math.big.int.Const.html">Const</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.eqlAbs">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eqlAbs</span>(a: <a href="std.math.big.int.Const.html">Const</a>, b: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <a href="std.math.big.int.Const.html#std.math.big.int.Const.orderAbs">orderAbs</a>(a, b) == .eq;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.eql" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">eql</span><a href="#src.zig-std.math.big.int.Const.eql">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eql</span>(a: <a href="std.math.big.int.Const.html">Const</a>, b: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">bool</span></code></pre></div><div class="tldDocs"><p>Returns true if <code>a == b</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>a: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>b: <a href="std.math.big.int.Const.html">Const</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.eql">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eql</span>(a: <a href="std.math.big.int.Const.html">Const</a>, b: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <a href="std.math.big.int.Const.html#std.math.big.int.Const.order">order</a>(a, b) == .eq;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.clz" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">clz</span><a href="#src.zig-std.math.big.int.Const.clz">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">clz</span>(a: <a href="std.math.big.int.Const.html">Const</a>, bits: <a href="std.math.big.html#std.math.big.Limb">Limb</a>) <a href="std.math.big.html#std.math.big.Limb">Limb</a></code></pre></div><div class="tldDocs"><p>Returns the number of leading zeros in twos-complement form.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>a: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>bits: <a href="std.math.big.html#std.math.big.Limb">Limb</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.clz">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">clz</span>(a: <a href="std.math.big.int.Const.html">Const</a>, bits: <a href="std.math.big.html#std.math.big.Limb">Limb</a>) <a href="std.math.big.html#std.math.big.Limb">Limb</a> {<span class="tok-comment">
+    // Limbs are stored in little-endian order but we need to iterate big-endian.
+    </span><span class="tok-kw">if</span> (!a.positive <span class="tok-kw">and</span> !a.eqlZero()) <span class="tok-kw">return</span> <span class="tok-number">0</span>;
+    <span class="tok-kw">var</span> total_limb_lz: <a href="std.math.big.html#std.math.big.Limb">Limb</a> = <span class="tok-number">0</span>;
+    <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = a.limbs.len;
+    <span class="tok-kw">const</span> bits_per_limb = <span class="tok-builtin">@bitSizeOf</span>(<a href="std.math.big.html#std.math.big.Limb">Limb</a>);
+    <span class="tok-kw">while</span> (i != <span class="tok-number">0</span>) {
+        i -= <span class="tok-number">1</span>;
+        <span class="tok-kw">const</span> this_limb_lz = <span class="tok-builtin">@clz</span>(a.limbs[i]);
+        total_limb_lz += this_limb_lz;
+        <span class="tok-kw">if</span> (this_limb_lz != bits_per_limb) <span class="tok-kw">break</span>;
+    }
+    <span class="tok-kw">const</span> total_limb_bits = a.limbs.len * bits_per_limb;
+    <span class="tok-kw">return</span> total_limb_lz + bits - total_limb_bits;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.math.big.int.Const.ctz" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">ctz</span><a href="#src.zig-std.math.big.int.Const.ctz">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">ctz</span>(a: <a href="std.math.big.int.Const.html">Const</a>, bits: <a href="std.math.big.html#std.math.big.Limb">Limb</a>) <a href="std.math.big.html#std.math.big.Limb">Limb</a></code></pre></div><div class="tldDocs"><p>Returns the number of trailing zeros in twos-complement form.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>a: <a href="std.math.big.int.Const.html">Const</a></code></pre></div><div><pre><code>bits: <a href="std.math.big.html#std.math.big.Limb">Limb</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.math.big.int.Const.ctz">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">ctz</span>(a: <a href="std.math.big.int.Const.html">Const</a>, bits: <a href="std.math.big.html#std.math.big.Limb">Limb</a>) <a href="std.math.big.html#std.math.big.Limb">Limb</a> {<span class="tok-comment">
+    // Limbs are stored in little-endian order. Converting a negative number to twos-complement
+    // flips all bits above the lowest set bit, which does not affect the trailing zero count.
+    </span><span class="tok-kw">if</span> (a.eqlZero()) <span class="tok-kw">return</span> bits;
+    <span class="tok-kw">var</span> result: <a href="std.math.big.html#std.math.big.Limb">Limb</a> = <span class="tok-number">0</span>;
+    <span class="tok-kw">for</span> (a.limbs) |limb| {
+        <span class="tok-kw">const</span> limb_tz = <span class="tok-builtin">@ctz</span>(limb);
+        result += limb_tz;
+        <span class="tok-kw">if</span> (limb_tz != <span class="tok-builtin">@bitSizeOf</span>(<a href="std.math.big.html#std.math.big.Limb">Limb</a>)) <span class="tok-kw">break</span>;
+    }
+    <span class="tok-kw">return</span> <span class="tok-builtin">@min</span>(result, bits);
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.math.big.int.Const">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Const = <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Raw digits. These are:</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// * Little-endian ordered</span>
+    <span class="tok-comment">/// * limbs.len &gt;= 1</span>
+    <span class="tok-comment">/// * Zero is represented as limbs.len == 1 with limbs[0] == 0.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// Accessing limbs directly should be avoided.</span>
+    limbs: []<span class="tok-kw">const</span> <a href="std.math.big.html#std.math.big.Limb">Limb</a>,
+    positive: <span class="tok-type">bool</span>,
+
+    <span class="tok-comment">/// The result is an independent resource which is managed by the caller.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toManaged</span>(self: <a href="std.math.big.int.Const.html">Const</a>, allocator: <a href="std.mem.Allocator.html">Allocator</a>) <a href="std.mem.Allocator.html">Allocator</a>.<a href="std.mem.Allocator.html#std.mem.Allocator.Error">Error</a>!<a href="std.math.big.int.Managed.html">Managed</a> {
+        <span class="tok-kw">const</span> limbs = <span class="tok-kw">try</span> allocator.alloc(<a href="std.math.big.html#std.math.big.Limb">Limb</a>, <span class="tok-builtin">@max</span>(<a href="std.math.big.int.Managed.html">Managed</a>.<a href="std.math.big.int.Managed.html#std.math.big.int.Managed.default_capacity">default_capacity</a>, self.limbs.len));
+        <span class="tok-builtin">@memcpy</span>(limbs[<span class="tok-number">0</span>..self.limbs.len], self.limbs);
+        <span class="tok-kw">return</span> <a href="std.math.big.int.Managed.html">Managed</a>{
+            .allocator = allocator,
+            .limbs = limbs,
+            .metadata = <span class="tok-kw">if</span> (self.positive)
+                self.limbs.len &amp; ~<a href="std.math.big.int.Managed.html">Managed</a>.<a href="std.math.big.int.Managed.html#std.math.big.int.Managed.sign_bit">sign_bit</a>
+            <span class="tok-kw">else</span>
+                self.limbs.len | <a href="std.math.big.int.Managed.html">Managed</a>.<a href="std.math.big.int.Managed.html#std.math.big.int.Managed.sign_bit">sign_bit</a>,
+        };
+    }
+
+    <span class="tok-comment">/// Asserts `limbs` is big enough to store the value.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toMutable</span>(self: <a href="std.math.big.int.Const.html">Const</a>, limbs: []<a href="std.math.big.html#std.math.big.Limb">Limb</a>) <a href="std.math.big.int.Mutable.html">Mutable</a> {
+        <span class="tok-builtin">@memcpy</span>(limbs[<span class="tok-number">0</span>..self.limbs.len], self.limbs[<span class="tok-number">0</span>..self.limbs.len]);
+        <span class="tok-kw">return</span> .{
+            .limbs = limbs,
+            .positive = self.positive,
+            .len = self.limbs.len,
+        };
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">dump</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">void</span> {
+        <span class="tok-kw">for</span> (self.limbs[<span class="tok-number">0</span>..self.limbs.len]) |limb| {
+            <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.print">print</a>(<span class="tok-str">&quot;{x} &quot;</span>, .{limb});
+        }
+        <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.print">print</a>(<span class="tok-str">&quot;positive={}\n&quot;</span>, .{self.positive});
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">abs</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <a href="std.math.big.int.Const.html">Const</a> {
+        <span class="tok-kw">return</span> .{
+            .limbs = self.limbs,
+            .positive = <span class="tok-null">true</span>,
+        };
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">negate</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <a href="std.math.big.int.Const.html">Const</a> {
+        <span class="tok-kw">return</span> .{
+            .limbs = self.limbs,
+            .positive = !self.positive,
+        };
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isOdd</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">return</span> self.limbs[<span class="tok-number">0</span>] &amp; <span class="tok-number">1</span> != <span class="tok-number">0</span>;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isEven</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">return</span> !self.isOdd();
+    }
+
+    <span class="tok-comment">/// Returns the number of bits required to represent the absolute value of an integer.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">bitCountAbs</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">usize</span> {
+        <span class="tok-kw">return</span> (self.limbs.len - <span class="tok-number">1</span>) * <a href="std.math.big.int.html#std.math.big.int.limb_bits">limb_bits</a> + (<a href="std.math.big.int.html#std.math.big.int.limb_bits">limb_bits</a> - <span class="tok-builtin">@clz</span>(self.limbs[self.limbs.len - <span class="tok-number">1</span>]));
+    }
+
+    <span class="tok-comment">/// Returns the number of bits required to represent the integer in twos-complement form.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// If the integer is negative the value returned is the number of bits needed by a signed</span>
+    <span class="tok-comment">/// integer to represent the value. If positive the value is the number of bits for an</span>
+    <span class="tok-comment">/// unsigned integer. Any unsigned integer will fit in the signed integer with bitcount</span>
+    <span class="tok-comment">/// one greater than the returned value.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// e.g. -127 returns 8 as it will fit in an i8. 127 returns 7 since it fits in a u7.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">bitCountTwosComp</span>(self: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">usize</span> {
+        <span class="tok-kw">var</span> bits = self.bitCountAbs();<span class="tok-comment">
+
+        // If the entire value has only one bit set (e.g. 0b100000000) then the negation in twos
+        // complement requires one less bit.
+        </span><span class="tok-kw">if</span> (!self.positive) block: {
+            bits += <span class="tok-number">1</span>;
+
+            <span class="tok-kw">if</span> (<span class="tok-builtin">@popCount</span>(self.limbs[self.limbs.len - <span class="tok-number">1</span>]) == <span class="tok-number">1</span>) {
+                <span class="tok-kw">for</span> (self.limbs[<span class="tok-number">0</span> .. self.limbs.len - <span class="tok-number">1</span>]) |limb| {
+                    <span class="tok-kw">if</span> (<span class="tok-builtin">@popCount</span>(limb) != <span class="tok-number">0</span>) {
+                        <span class="tok-kw">break</span> :block;
+                    }
+                }
+
+                bits -= <span class="tok-number">1</span>;
+            }
+        }
+
+        <span class="tok-kw">return</span> bits;
+    }
+
+    <span class="tok-comment">/// Returns the number of bits required to represent the integer in twos-complement form</span>
+    <span class="tok-comment">/// with the given signedness.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">bitCountTwosCompForSignedness</span>(self: <a href="std.math.big.int.Const.html">Const</a>, signedness: <a href="std.html">std</a>.<a href="std.builtin.html">builtin</a>.<a href="std.builtin.Signedness.html">Signedness</a>) <span class="tok-type">usize</span> {
+        <span class="tok-kw">return</span> self.bitCountTwosComp() + <span class="tok-builtin">@intFromBool</span>(self.positive <span class="tok-kw">and</span> signedness == .signed);
+    }
+
+    <span class="tok-comment">/// @popCount with two's complement semantics.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// This returns the number of 1 bits set when the value would be represented in</span>
+    <span class="tok-comment">/// two's complement with the given integer width (bit_count).</span>
+    <span class="tok-comment">/// This includes the leading sign bit, which will be set for negative values.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// Asserts that bit_count is enough to represent value in two's compliment</span>
+    <span class="tok-comment">/// and that the final result fits in a usize.</span>
+    <span class="tok-comment">/// Asserts that there are no trailing empty limbs on the most significant end,</span>
+    <span class="tok-comment">/// i.e. that limb count matches `calcLimbLen()` and zero is not negative.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">popCount</span>(self: <a href="std.math.big.int.Const.html">Const</a>, bit_count: <span class="tok-type">usize</span>) <span class="tok-type">usize</span> {
+        <span class="tok-kw">var</span> sum: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">if</span> (self.positive) {
+            <span class="tok-kw">for</span> (self.limbs) |limb| {
+                sum += <span class="tok-builtin">@popCount</span>(limb);
+            }
+        } <span class="tok-kw">else</span> {
+            <a href="std.debug.html#std.debug.assert">assert</a>(self.fitsInTwosComp(.signed, bit_count));
+            <a href="std.debug.html#std.debug.assert">assert</a>(self.limbs[self.limbs.len - <span class="tok-number">1</span>] != <span class="tok-number">0</span>);
+
+            <span class="tok-kw">var</span> remaining_bits = bit_count;
+            <span class="tok-kw">var</span> carry: <span class="tok-type">u1</span> = <span class="tok-number">1</span>;
+            <span class="tok-kw">var</span> add_res: <a href="std.math.big.html#std.math.big.Limb">Limb</a> = <span class="tok-null">undefined</span>;<span class="tok-comment">
+
+            // All but the most significant limb.
+            </span><span class="tok-kw">for</span> (self.limbs[<span class="tok-number">0</span> .. self.limbs.len - <span class="tok-number">1</span>]) |limb| {
+                <span class="tok-kw">const</span> ov = <span class="tok-builtin">@addWithOverflow</span>(~limb, carry);
+                add_res = ov[<span class="tok-number">0</span>];
+                carry = ov[<span class="tok-number">1</span>];
+                sum += <span class="tok-builtin">@popCount</span>(add_res);
+                remaining_bits -= <a href="std.math.big.int.html#std.math.big.int.limb_bits">limb_bits</a>;<span class="tok-comment"> // Asserted not to underflow by fitsInTwosComp
+            </span>}<span class="tok-comment">
+
+            // The most significant limb may have fewer than @bitSizeOf(Limb) meaningful bits,
+            // which we can detect with @clz().
+            // There may also be fewer limbs than needed to fill bit_count.
+            </span><span class="tok-kw">const</span> limb = self.limbs[self.limbs.len - <span class="tok-number">1</span>];
+            <span class="tok-kw">const</span> leading_zeroes = <span class="tok-builtin">@clz</span>(limb);<span class="tok-comment">
+            // The most significant limb is asserted not to be all 0s (above),
+            // so ~limb cannot be all 1s, and ~limb + 1 cannot overflow.
+            </span>sum += <span class="tok-builtin">@popCount</span>(~limb + carry);
+            sum -= leading_zeroes;<span class="tok-comment"> // All leading zeroes were flipped and added to sum, so undo those
+            </span><span class="tok-kw">const</span> remaining_ones = remaining_bits - (<a href="std.math.big.int.html#std.math.big.int.limb_bits">limb_bits</a> - leading_zeroes);<span class="tok-comment"> // All bits not covered by limbs
+            </span>sum += remaining_ones;
+        }
+        <span class="tok-kw">return</span> sum;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fitsInTwosComp</span>(self: <a href="std.math.big.int.Const.html">Const</a>, signedness: <a href="std.builtin.Signedness.html">Signedness</a>, bit_count: <span class="tok-type">usize</span>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">if</span> (self.eqlZero()) {
+            <span class="tok-kw">return</span> <span class="tok-null">true</span>;
+        }
+        <span class="tok-kw">if</span> (signedness == .unsigned <span class="tok-kw">and</span> !self.positive) {
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        }
+        <span class="tok-kw">return</span> bit_count &gt;= self.bitCountTwosCompForSignedness(signedness);
+    }
+
+    <span class="tok-comment">/// Returns whether self can fit into an integer of the requested type.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fits</span>(self: <a href="std.math.big.int.Const.html">Const</a>, <span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">const</span> info = <span class="tok-builtin">@typeInfo</span>(T).int;
+        <span class="tok-kw">return</span> self.fitsInTwosComp(info.signedness, info.bits);
+    }
+
+    <span class="tok-comment">/// Returns the approximate size of the integer in the given base. Negative values accommodate for</span>
+    <span class="tok-comment">/// the minus sign. This is used for determining the number of characters needed to print the</span>
+    <span class="tok-comment">/// value. It is inexact and may exceed the given value by ~1-2 bytes.</span>
+    <span class="tok-comment">/// TODO See if we can make this exact.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">sizeInBaseUpperBound</span>(self: <a href="std.math.big.int.Const.html">Const</a>, base: <span class="tok-type">usize</span>) <span class="tok-type">usize</span> {
+        <span class="tok-kw">const</span> bit_count = <span class="tok-builtin">@as</span>(<span class="tok-type">usize</span>, <span class="tok-builtin">@intFromBool</span>(!self.positive)) + self.bitCountAbs();
+        <span class="tok-kw">return</span> (bit_count / <a href="std.math.html">math</a>.<a href="std.math.log2.html#std.math.log2.log2">log2</a>(base)) + <span class="tok-number">2</span>;
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ConvertError = <span class="tok-kw">error</span>{
+        NegativeIntoUnsigned,
+        TargetTooSmall,
+    };
+
+    <span class="tok-comment">/// Deprecated; use `toInt`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> to = <a href="std.math.big.int.Const.html#std.math.big.int.Const.toInt">toInt</a>;
+
+    <span class="tok-comment">/// Convert self to integer type T.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// Returns an error if self cannot be narrowed into the requested type without truncation.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toInt</span>(self: <a href="std.math.big.int.Const.html">Const</a>, <span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) <a href="std.math.big.int.Const.html#std.math.big.int.Const.ConvertError">ConvertError</a>!T {
+        <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(T)) {
+            .int =&gt; |info| {<span class="tok-comment">
+                // Make sure -0 is handled correctly.
+                </span><span class="tok-kw">if</span> (self.eqlZero()) <span class="tok-kw">return</span> <span class="tok-number">0</span>;
+
+                <span class="tok-kw">const</span> UT = <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.Int">Int</a>(.unsigned, info.bits);
+
+                <span class="tok-kw">if</span> (!self.fitsInTwosComp(info.signedness, info.bits)) {
+                    <span class="tok-kw">return</span> <span class="tok-kw">error</span>.TargetTooSmall;
+                }
+
+                <span class="tok-kw">var</span> r: UT = <span class="tok-number">0</span>;
+
+                <span class="tok-kw">if</span> (<span class="tok-builtin">@sizeOf</span>(UT) &lt;= <span class="tok-builtin">@sizeOf</span>(<a href="std.math.big.html#std.math.big.Limb">Limb</a>)) {
+                    r = <span class="tok-builtin">@as</span>(UT, <span class="tok-builtin">@intCast</span>(self.limbs[<span class="tok-number">0</span>]));
+                } <span class="tok-kw">else</span> {
+                    <span class="tok-kw">for</span> (self.limbs[<span class="tok-number">0</span>..self.limbs.len], <span class="tok-number">0</span>..) |_, ri| {
+                        <span class="tok-kw">const</span> limb = self.limbs[self.limbs.len - ri - <span class="tok-number">1</span>];
+                        r &lt;&lt;= <a href="std.math.big.int.html#std.math.big.int.limb_bits">limb_bits</a>;
+                        r |= limb;
+                    }
+                }
+
+                <span class="tok-kw">if</span> (info.signedness == .unsigned) {
+                    <span class="tok-kw">return</span> <span class="tok-kw">if</span> (self.positive) <span class="tok-builtin">@as</span>(T, <span class="tok-builtin">@intCast</span>(r)) <span class="tok-kw">else</span> <span class="tok-kw">error</span>.NegativeIntoUnsigned;
+                } <span class="tok-kw">else</span> {
+                    <span class="tok-kw">if</span> (self.positive) {
+                        <span class="tok-kw">return</span> <span class="tok-builtin">@intCast</span>(r);
+                    } <span class="tok-kw">else</span> {
+                        <span class="tok-kw">if</span> (<a href="std.math.html">math</a>.<a href="std.math.html#std.math.cast">cast</a>(T, r)) |ok| {
+                            <span class="tok-kw">return</span> -ok;
+                        } <span class="tok-kw">else</span> {
+                            <span class="tok-kw">return</span> <a href="std.math.html#std.math.minInt">minInt</a>(T);
+                        }
+                    }
+                }
+            },
+            <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;expected int type, found '&quot;</span> ++ <span class="tok-builtin">@typeName</span>(T) ++ <span class="tok-str">&quot;'&quot;</span>),
+        }
+    }
+
+    <span class="tok-comment">/// Convert self to float type T.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toFloat</span>(self: <a href="std.math.big.int.Const.html">Const</a>, <span class="tok-kw">comptime</span> T: <span class="tok-type">type</span>) T {
+        <span class="tok-kw">if</span> (self.limbs.len == <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-number">0</span>;
+
+        <span class="tok-kw">const</span> base = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.big.html">big</a>.<a href="std.math.big.html#std.math.big.Limb">Limb</a>) + <span class="tok-number">1</span>;
+        <span class="tok-kw">var</span> result: <span class="tok-type">f128</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = self.limbs.len;
+        <span class="tok-kw">while</span> (i != <span class="tok-number">0</span>) {
+            i -= <span class="tok-number">1</span>;
+            <span class="tok-kw">const</span> limb: <span class="tok-type">f128</span> = <span class="tok-builtin">@floatFromInt</span>(self.limbs[i]);
+            result = <span class="tok-builtin">@mulAdd</span>(<span class="tok-type">f128</span>, base, result, limb);
+        }
+        <span class="tok-kw">if</span> (self.positive) {
+            <span class="tok-kw">return</span> <span class="tok-builtin">@floatCast</span>(result);
+        } <span class="tok-kw">else</span> {
+            <span class="tok-kw">return</span> <span class="tok-builtin">@floatCast</span>(-result);
+        }
+    }
+
+    <span class="tok-comment">/// To allow `std.fmt.format` to work with this type.</span>
+    <span class="tok-comment">/// If the absolute value of integer is greater than or equal to `pow(2, 64 * @sizeOf(usize) * 8)`,</span>
+    <span class="tok-comment">/// this function will fail to print the string, printing &quot;(BigInt)&quot; instead of a number.</span>
+    <span class="tok-comment">/// This is because the rendering algorithm requires reversing a string, which requires O(N) memory.</span>
+    <span class="tok-comment">/// See `toString` and `toStringAlloc` for a way to print big integers without failure.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">format</span>(
+        self: <a href="std.math.big.int.Const.html">Const</a>,
+        <span class="tok-kw">comptime</span> fmt: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+        options: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.FormatOptions.html">FormatOptions</a>,
+        out_stream: <span class="tok-kw">anytype</span>,
+    ) !<span class="tok-type">void</span> {
+        _ = options;
+        <span class="tok-kw">comptime</span> <span class="tok-kw">var</span> base = <span class="tok-number">10</span>;
+        <span class="tok-kw">comptime</span> <span class="tok-kw">var</span> case: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.Case.html">Case</a> = .lower;
+
+        <span class="tok-kw">if</span> (fmt.len == <span class="tok-number">0</span> <span class="tok-kw">or</span> <span class="tok-kw">comptime</span> <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, fmt, <span class="tok-str">&quot;d&quot;</span>)) {
+            base = <span class="tok-number">10</span>;
+            case = .lower;
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<span class="tok-kw">comptime</span> <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, fmt, <span class="tok-str">&quot;b&quot;</span>)) {
+            base = <span class="tok-number">2</span>;
+            case = .lower;
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<span class="tok-kw">comptime</span> <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, fmt, <span class="tok-str">&quot;x&quot;</span>)) {
+            base = <span class="tok-number">16</span>;
+            case = .lower;
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<span class="tok-kw">comptime</span> <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, fmt, <span class="tok-str">&quot;X&quot;</span>)) {
+            base = <span class="tok-number">16</span>;
+            case = .upper;
+        } <span class="tok-kw">else</span> {
+            <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.invalidFmtError">invalidFmtError</a>(fmt, self);
+        }
+
+        <span class="tok-kw">const</span> available_len = <span class="tok-number">64</span>;
+        <span class="tok-kw">if</span> (self.limbs.len &gt; available_len)
+            <span class="tok-kw">return</span> out_stream.writeAll(<span class="tok-str">&quot;(BigInt)&quot;</span>);
+
+        <span class="tok-kw">var</span> limbs: [<a href="std.math.big.int.html#std.math.big.int.calcToStringLimbsBufferLen">calcToStringLimbsBufferLen</a>(available_len, base)]<a href="std.math.big.html#std.math.big.Limb">Limb</a> = <span class="tok-null">undefined</span>;
+
+        <span class="tok-kw">const</span> biggest: <a href="std.math.big.int.Const.html">Const</a> = .{
+            .limbs = &amp;([<span class="tok-number">1</span>]<a href="std.math.big.html#std.math.big.Limb">Limb</a>{<span class="tok-kw">comptime</span> <a href="std.math.html">math</a>.<a href="std.math.html#std.math.maxInt">maxInt</a>(<a href="std.math.big.html#std.math.big.Limb">Limb</a>)} ** available_len),
+            .positive = <span class="tok-null">false</span>,
+        };
+        <span class="tok-kw">var</span> buf: [biggest.sizeInBaseUpperBound(base)]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">const</span> len = self.toString(&amp;buf, base, case, &amp;limbs);
+        <span class="tok-kw">return</span> out_stream.writeAll(buf[<span class="tok-number">0</span>..len]);
+    }
+
+    <span class="tok-comment">/// Converts self to a string in the requested base.</span>
+    <span class="tok-comment">/// Caller owns returned memory.</span>
+    <span class="tok-comment">/// Asserts that `base` is in the range [2, 36].</span>
+    <span class="tok-comment">/// See also `toString`, a lower level function than this.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toStringAlloc</span>(self: <a href="std.math.big.int.Const.html">Const</a>, allocator: <a href="std.mem.Allocator.html">Allocator</a>, base: <span class="tok-type">u8</span>, case: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.Case.html">Case</a>) <a href="std.mem.Allocator.html">Allocator</a>.<a href="std.mem.Allocator.html#std.mem.Allocator.Error">Error</a>![]<span class="tok-type">u8</span> {
+        <a href="std.debug.html#std.debug.assert">assert</a>(base &gt;= <span class="tok-number">2</span>);
+        <a href="std.debug.html#std.debug.assert">assert</a>(base &lt;= <span class="tok-number">36</span>);
+
+        <span class="tok-kw">if</span> (self.eqlZero()) {
+            <span class="tok-kw">return</span> allocator.dupe(<span class="tok-type">u8</span>, <span class="tok-str">&quot;0&quot;</span>);
+        }
+        <span class="tok-kw">const</span> string = <span class="tok-kw">try</span> allocator.alloc(<span class="tok-type">u8</span>, self.sizeInBaseUpperBound(base));
+        <span class="tok-kw">errdefer</span> allocator.free(string);
+
+        <span class="tok-kw">const</span> limbs = <span class="tok-kw">try</span> allocator.alloc(<a href="std.math.big.html#std.math.big.Limb">Limb</a>, <a href="std.math.big.int.html#std.math.big.int.calcToStringLimbsBufferLen">calcToStringLimbsBufferLen</a>(self.limbs.len, base));
+        <span class="tok-kw">defer</span> allocator.free(limbs);
+
+        <span class="tok-kw">return</span> allocator.realloc(string, self.toString(string, base, case, limbs));
+    }
+
+    <span class="tok-comment">/// Converts self to a string in the requested base.</span>
+    <span class="tok-comment">/// Asserts that `base` is in the range [2, 36].</span>
+    <span class="tok-comment">/// `string` is a caller-provided slice of at least `sizeInBaseUpperBound` bytes,</span>
+    <span class="tok-comment">/// where the result is written to.</span>
+    <span class="tok-comment">/// Returns the length of the string.</span>
+    <span class="tok-comment">/// `limbs_buffer` is caller-provided memory for `toString` to use as a working area. It must have</span>
+    <span class="tok-comment">/// length of at least `calcToStringLimbsBufferLen`.</span>
+    <span class="tok-comment">/// In the case of power-of-two base, `limbs_buffer` is ignored.</span>
+    <span class="tok-comment">/// See also `toStringAlloc`, a higher level function than this.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toString</span>(self: <a href="std.math.big.int.Const.html">Const</a>, string: []<span class="tok-type">u8</span>, base: <span class="tok-type">u8</span>, case: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.Case.html">Case</a>, limbs_buffer: []<a href="std.math.big.html#std.math.big.Limb">Limb</a>) <span class="tok-type">usize</span> {
+        <a href="std.debug.html#std.debug.assert">assert</a>(base &gt;= <span class="tok-number">2</span>);
+        <a href="std.debug.html#std.debug.assert">assert</a>(base &lt;= <span class="tok-number">36</span>);
+
+        <span class="tok-kw">if</span> (self.eqlZero()) {
+            string[<span class="tok-number">0</span>] = <span class="tok-str">'0'</span>;
+            <span class="tok-kw">return</span> <span class="tok-number">1</span>;
+        }
+
+        <span class="tok-kw">var</span> digits_len: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;<span class="tok-comment">
+
+        // Power of two: can do a single pass and use masks to extract digits.
+        </span><span class="tok-kw">if</span> (<a href="std.math.html">math</a>.<a href="std.math.html#std.math.isPowerOfTwo">isPowerOfTwo</a>(base)) {
+            <span class="tok-kw">const</span> base_shift = <a href="std.math.html">math</a>.<a href="std.math.html#std.math.log2_int">log2_int</a>(<a href="std.math.big.html#std.math.big.Limb">Limb</a>, base);
+
+            outer: <span class="tok-kw">for</span> (self.limbs[<span class="tok-number">0</span>..self.limbs.len]) |limb| {
+                <span class="tok-kw">var</span> shift: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+                <span class="tok-kw">while</span> (shift &lt; <a href="std.math.big.int.html#std.math.big.int.limb_bits">limb_bits</a>) : (shift += base_shift) {
+                    <span class="tok-kw">const</span> r = <span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-builtin">@intCast</span>((limb &gt;&gt; <span class="tok-builtin">@as</span>(<a href="std.math.big.html#std.math.big.Log2Limb">Log2Limb</a>, <span class="tok-builtin">@intCast</span>(shift))) &amp; <span class="tok-builtin">@as</span>(<a href="std.math.big.html#std.math.big.Limb">Limb</a>, base - <span class="tok-number">1</span>)));
+                    <span class="tok-kw">const</span> ch = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.digitToChar">digitToChar</a>(r, case);
+                    string[digits_len] = ch;
+                    digits_len += <span class="tok-number">1</span>;<span class="tok-comment">
+                    // If we hit the end, it must be all zeroes from here.
+                    </span><span class="tok-kw">if</span> (digits_len == string.len) <span class="tok-kw">break</span> :outer;
+                }
+            }<span class="tok-comment">
+
+            // Always will have a non-zero digit somewhere.
+            </span><span class="tok-kw">while</span> (string[digits_len - <span class="tok-number">1</span>] == <span class="tok-str">'0'</span>) {
+                digits_len -= <span class="tok-number">1</span>;
+            }
+        } <span class="tok-kw">else</span> {<span class="tok-comment">
+            // Non power-of-two: batch divisions per word size.
+            // We use a HalfLimb here so the division uses the faster lldiv0p5 over lldiv1 codepath.
+            </span><span class="tok-kw">const</span> digits_per_limb = <a href="std.math.html">math</a>.<a href="std.math.log.html#std.math.log.log">log</a>(<a href="std.math.big.html#std.math.big.HalfLimb">HalfLimb</a>, base, <a href="std.math.html#std.math.maxInt">maxInt</a>(<a href="std.math.big.html#std.math.big.HalfLimb">HalfLimb</a>));
+            <span class="tok-kw">var</span> limb_base: <a href="std.math.big.html#std.math.big.Limb">Limb</a> = <span class="tok-number">1</span>;
+            <span class="tok-kw">var</span> j: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+            <span class="tok-kw">while</span> (j &lt; digits_per_limb) : (j += <span class="tok-number">1</span>) {
+                limb_base *= base;
+            }
+            <span class="tok-kw">const</span> b: <a href="std.math.big.int.Const.html">Const</a> = .{ .limbs = &amp;[_]<a href="std.math.big.html#std.math.big.Limb">Limb</a>{limb_base}, .positive = <span class="tok-null">true</span> };
+
+            <span class="tok-kw">var</span> q: <a href="std.math.big.int.Mutable.html">Mutable</a> = .{
+                .limbs = limbs_buffer[<span class="tok-number">0</span> .. self.limbs.len + <span class="tok-number">2</span>],
+                .positive = <span class="tok-null">true</span>,<span class="tok-comment"> // Make absolute by ignoring self.positive.
+                </span>.len = self.limbs.len,
+            };
+            <span class="tok-builtin">@memcpy</span>(q.limbs[<span class="tok-number">0</span>..self.limbs.len], self.limbs);
+
+            <span class="tok-kw">var</span> r: <a href="std.math.big.int.Mutable.html">Mutable</a> = .{
+                .limbs = limbs_buffer[q.limbs.len..][<span class="tok-number">0</span>..self.limbs.len],
+                .positive = <span class="tok-null">true</span>,
+                .len = <span class="tok-number">1</span>,
+            };
+            r.limbs[<span class="tok-number">0</span>] = <span class="tok-number">0</span>;
+
+            <span class="tok-kw">const</span> rest_of_the_limbs_buf = limbs_buffer[q.limbs.len + r.limbs.len ..];
+
+            <span class="tok-kw">while</span> (q.len &gt;= <span class="tok-number">2</span>) {<span class="tok-comment">
+                // Passing an allocator here would not be helpful since this division is destroying
+                // information, not creating it. [TODO citation needed]
+                </span>q.divTrunc(&amp;r, q.toConst(), b, rest_of_the_limbs_buf);
+
+                <span class="tok-kw">var</span> r_word = r.limbs[<span class="tok-number">0</span>];
+                <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+                <span class="tok-kw">while</span> (i &lt; digits_per_limb) : (i += <span class="tok-number">1</span>) {
+                    <span class="tok-kw">const</span> ch = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.digitToChar">digitToChar</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-builtin">@intCast</span>(r_word % base)), case);
+                    r_word /= base;
+                    string[digits_len] = ch;
+                    digits_len += <span class="tok-number">1</span>;
+                }
+            }
+
+            {
+                <a href="std.debug.html#std.debug.assert">assert</a>(q.len == <span class="tok-number">1</span>);
+
+                <span class="tok-kw">var</span> r_word = q.limbs[<span class="tok-number">0</span>];
+                <span class="tok-kw">while</span> (r_word != <span class="tok-number">0</span>) {
+                    <span class="tok-kw">const</span> ch = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.digitToChar">digitToChar</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u8</span>, <span class="tok-builtin">@intCast</span>(r_word % base)), case);
+                    r_word /= base;
+                    string[digits_len] = ch;
+                    digits_len += <span class="tok-number">1</span>;
+                }
+            }
+        }
+
+        <span class="tok-kw">if</span> (!self.positive) {
+            string[digits_len] = <span class="tok-str">'-'</span>;
+            digits_len += <span class="tok-number">1</span>;
+        }
+
+        <span class="tok-kw">const</span> s = string[<span class="tok-number">0</span>..digits_len];
+        <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.reverse">reverse</a>(<span class="tok-type">u8</span>, s);
+        <span class="tok-kw">return</span> s.len;
+    }
+
+    <span class="tok-comment">/// Write the value of `x` into `buffer`</span>
+    <span class="tok-comment">/// Asserts that `buffer` is large enough to store the value.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// `buffer` is filled so that its contents match what would be observed via</span>
+    <span class="tok-comment">/// @ptrCast(*[buffer.len]const u8, &amp;x). Byte ordering is determined by `endian`,</span>
+    <span class="tok-comment">/// and any required padding bits are added on the MSB end.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeTwosComplement</span>(x: <a href="std.math.big.int.Const.html">Const</a>, buffer: []<span class="tok-type">u8</span>, endian: <a href="std.builtin.Endian.html">Endian</a>) <span class="tok-type">void</span> {
+        <span class="tok-kw">return</span> <a href="std.math.big.int.Const.html#std.math.big.int.Const.writePackedTwosComplement">writePackedTwosComplement</a>(x, buffer, <span class="tok-number">0</span>, <span class="tok-number">8</span> * buffer.len, endian);
+    }
+
+    <span class="tok-comment">/// Write the value of `x` to a packed memory `buffer`.</span>
+    <span class="tok-comment">/// Asserts that `buffer` is large enough to contain a value of bit-size `bit_count`</span>
+    <span class="tok-comment">/// at offset `bit_offset`.</span>
+    <span class="tok-comment">///</span>
+    <span class="tok-comment">/// This is equivalent to storing the value of an integer with `bit_count` bits as</span>
+    <span class="tok-comment">/// if it were a field in packed memory at the provided bit offset.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writePackedTwosComplement</span>(x: <a href="std.math.big.int.Const.html">Const</a>, buffer: []<span class="tok-type">u8</span>, bit_offset: <span class="tok-type">usize</span>, bit_count: <span class="tok-type">usize</span>, endian: <a href="std.builtin.Endian.html">Endian</a>) <span class="tok-type">void</span> {
+        <a href="std.debug.html#std.debug.assert">assert</a>(x.fitsInTwosComp(<span class="tok-kw">if</span> (x.positive) .unsigned <span class="tok-kw">else</span> .signed, bit_count));<span class="tok-comment">
+
+        // Copy all complete limbs
+        </span><span class="tok-kw">var</span> carry: <span class="tok-type">u1</span> = <span class="tok-number">1</span>;
+        <span class="tok-kw">var</span> limb_index: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">var</span> bit_index: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">while</span> (limb_index &lt; bit_count / <span class="tok-builtin">@bitSizeOf</span>(<a href="std.math.big.html#std.math.big.Limb">Limb</a>)) : (limb_index += <span class="tok-number">1</span>) {
+            <span class="tok-kw">var</span> limb: <a href="std.math.big.html#std.math.big.Limb">Limb</a> = <span class="tok-kw">if</span> (limb_index &lt; x.limbs.len) x.limbs[limb_index] <span class="tok-kw">else</span> <span class="tok-number">0</span>;<span class="tok-comment">
+
+            // 2's complement (bitwise not, then add carry bit)
+            </span><span class="tok-kw">if</span> (!x.positive) {
+                <span class="tok-kw">const</span> ov = <span class="tok-builtin">@addWithOverflow</span>(~limb, carry);
+                limb = ov[<span class="tok-number">0</span>];
+                carry = ov[<span class="tok-number">1</span>];
+            }<span class="tok-comment">
+
+            // Write one Limb of bits
+            </span><a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writePackedInt">writePackedInt</a>(<a href="std.math.big.html#std.math.big.Limb">Limb</a>, buffer, bit_index + bit_offset, limb, endian);
+            bit_index += <span class="tok-builtin">@bitSizeOf</span>(<a href="std.math.big.html#std.math.big.Limb">Limb</a>);
+        }<span class="tok-comment">
+
+        // Copy the remaining bits
+        </span><span class="tok-kw">if</span> (bit_count != bit_index) {
+            <span class="tok-kw">var</span> limb: <a href="std.math.big.html#std.math.big.Limb">Limb</a> = <span class="tok-kw">if</span> (limb_index &lt; x.limbs.len) x.limbs[limb_index] <span class="tok-kw">else</span> <span class="tok-number">0</span>;<span class="tok-comment">
+
+            // 2's complement (bitwise not, then add carry bit)
+            </span><span class="tok-kw">if</span> (!x.positive) limb = ~limb +% carry;<span class="tok-comment">
+
+            // Write all remaining bits
+            </span><a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeVarPackedInt">writeVarPackedInt</a>(buffer, bit_index + bit_offset, bit_count - bit_index, limb, endian);
+        }
+    }
+
+    <span class="tok-comment">/// Returns `math.Order.lt`, `math.Order.eq`, `math.Order.gt` if</span>
+    <span class="tok-comment">/// `|a| &lt; |b|`, `|a| == |b|`, or `|a| &gt; |b|` respectively.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">orderAbs</span>(a: <a href="std.math.big.int.Const.html">Const</a>, b: <a href="std.math.big.int.Const.html">Const</a>) <a href="std.math.html">math</a>.<a href="std.math.Order.html">Order</a> {
+        <span class="tok-kw">if</span> (a.limbs.len &lt; b.limbs.len) {
+            <span class="tok-kw">return</span> .lt;
+        }
+        <span class="tok-kw">if</span> (a.limbs.len &gt; b.limbs.len) {
+            <span class="tok-kw">return</span> .gt;
+        }
+
+        <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = a.limbs.len - <span class="tok-number">1</span>;
+        <span class="tok-kw">while</span> (i != <span class="tok-number">0</span>) : (i -= <span class="tok-number">1</span>) {
+            <span class="tok-kw">if</span> (a.limbs[i] != b.limbs[i]) {
+                <span class="tok-kw">break</span>;
+            }
+        }
+
+        <span class="tok-kw">if</span> (a.limbs[i] &lt; b.limbs[i]) {
+            <span class="tok-kw">return</span> .lt;
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (a.limbs[i] &gt; b.limbs[i]) {
+            <span class="tok-kw">return</span> .gt;
+        } <span class="tok-kw">else</span> {
+            <span class="tok-kw">return</span> .eq;
+        }
+    }
+
+    <span class="tok-comment">/// Returns `math.Order.lt`, `math.Order.eq`, `math.Order.gt` if `a &lt; b`, `a == b` or `a &gt; b` respectively.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">order</span>(a: <a href="std.math.big.int.Const.html">Const</a>, b: <a href="std.math.big.int.Const.html">Const</a>) <a href="std.math.html">math</a>.<a href="std.math.Order.html">Order</a> {
+        <span class="tok-kw">if</span> (a.positive != b.positive) {
+            <span class="tok-kw">if</span> (<a href="std.math.big.int.Const.html#std.math.big.int.Const.eqlZero">eqlZero</a>(a) <span class="tok-kw">and</span> <a href="std.math.big.int.Const.html#std.math.big.int.Const.eqlZero">eqlZero</a>(b)) {
+                <span class="tok-kw">return</span> .eq;
+            } <span class="tok-kw">else</span> {
+                <span class="tok-kw">return</span> <span class="tok-kw">if</span> (a.positive) .gt <span class="tok-kw">else</span> .lt;
+            }
+        } <span class="tok-kw">else</span> {
+            <span class="tok-kw">const</span> r = <a href="std.math.big.int.Const.html#std.math.big.int.Const.orderAbs">orderAbs</a>(a, b);
+            <span class="tok-kw">return</span> <span class="tok-kw">if</span> (a.positive) r <span class="tok-kw">else</span> <span class="tok-kw">switch</span> (r) {
+                .lt =&gt; <a href="std.math.html">math</a>.<a href="std.math.Order.html">Order</a>.<a href="#">gt</a>,
+                .eq =&gt; <a href="std.math.html">math</a>.<a href="std.math.Order.html">Order</a>.<a href="#">eq</a>,
+                .gt =&gt; <a href="std.math.html">math</a>.<a href="std.math.Order.html">Order</a>.<a href="#">lt</a>,
+            };
+        }
+    }
+
+    <span class="tok-comment">/// Same as `order` but the right-hand operand is a primitive integer.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">orderAgainstScalar</span>(lhs: <a href="std.math.big.int.Const.html">Const</a>, scalar: <span class="tok-kw">anytype</span>) <a href="std.math.html">math</a>.<a href="std.math.Order.html">Order</a> {<span class="tok-comment">
+        // Normally we could just determine the number of limbs needed with calcLimbLen,
+        // but that is not comptime-known when scalar is not a comptime_int.  Instead, we
+        // use calcTwosCompLimbCount for a non-comptime_int scalar, which can be pessimistic
+        // in the case that scalar happens to be small in magnitude within its type, but it
+        // is well worth being able to use the stack and not needing an allocator passed in.
+        // Note that Mutable.init still sets len to calcLimbLen(scalar) in any case.
+        </span><span class="tok-kw">const</span> limb_len = <span class="tok-kw">comptime</span> <span class="tok-kw">switch</span> (<span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(scalar))) {
+            .<span class="tok-type">comptime_int</span> =&gt; <a href="std.math.big.int.html#std.math.big.int.calcLimbLen">calcLimbLen</a>(scalar),
+            .int =&gt; |info| <a href="std.math.big.int.html#std.math.big.int.calcTwosCompLimbCount">calcTwosCompLimbCount</a>(info.bits),
+            <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;expected scalar to be an int&quot;</span>),
+        };
+        <span class="tok-kw">var</span> limbs: [limb_len]<a href="std.math.big.html#std.math.big.Limb">Limb</a> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">const</span> rhs = <a href="std.math.big.int.Mutable.html">Mutable</a>.<a href="std.math.big.int.Mutable.html#std.math.big.int.Mutable.init">init</a>(&amp;limbs, scalar);
+        <span class="tok-kw">return</span> <a href="std.math.big.int.Const.html#std.math.big.int.Const.order">order</a>(lhs, rhs.toConst());
+    }
+
+    <span class="tok-comment">/// Returns true if `a == 0`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eqlZero</span>(a: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">var</span> d: <a href="std.math.big.html#std.math.big.Limb">Limb</a> = <span class="tok-number">0</span>;
+        <span class="tok-kw">for</span> (a.limbs) |limb| d |= limb;
+        <span class="tok-kw">return</span> d == <span class="tok-number">0</span>;
+    }
+
+    <span class="tok-comment">/// Returns true if `|a| == |b|`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eqlAbs</span>(a: <a href="std.math.big.int.Const.html">Const</a>, b: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">return</span> <a href="std.math.big.int.Const.html#std.math.big.int.Const.orderAbs">orderAbs</a>(a, b) == .eq;
+    }
+
+    <span class="tok-comment">/// Returns true if `a == b`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eql</span>(a: <a href="std.math.big.int.Const.html">Const</a>, b: <a href="std.math.big.int.Const.html">Const</a>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">return</span> <a href="std.math.big.int.Const.html#std.math.big.int.Const.order">order</a>(a, b) == .eq;
+    }
+
+    <span class="tok-comment">/// Returns the number of leading zeros in twos-complement form.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">clz</span>(a: <a href="std.math.big.int.Const.html">Const</a>, bits: <a href="std.math.big.html#std.math.big.Limb">Limb</a>) <a href="std.math.big.html#std.math.big.Limb">Limb</a> {<span class="tok-comment">
+        // Limbs are stored in little-endian order but we need to iterate big-endian.
+        </span><span class="tok-kw">if</span> (!a.positive <span class="tok-kw">and</span> !a.eqlZero()) <span class="tok-kw">return</span> <span class="tok-number">0</span>;
+        <span class="tok-kw">var</span> total_limb_lz: <a href="std.math.big.html#std.math.big.Limb">Limb</a> = <span class="tok-number">0</span>;
+        <span class="tok-kw">var</span> i: <span class="tok-type">usize</span> = a.limbs.len;
+        <span class="tok-kw">const</span> bits_per_limb = <span class="tok-builtin">@bitSizeOf</span>(<a href="std.math.big.html#std.math.big.Limb">Limb</a>);
+        <span class="tok-kw">while</span> (i != <span class="tok-number">0</span>) {
+            i -= <span class="tok-number">1</span>;
+            <span class="tok-kw">const</span> this_limb_lz = <span class="tok-builtin">@clz</span>(a.limbs[i]);
+            total_limb_lz += this_limb_lz;
+            <span class="tok-kw">if</span> (this_limb_lz != bits_per_limb) <span class="tok-kw">break</span>;
+        }
+        <span class="tok-kw">const</span> total_limb_bits = a.limbs.len * bits_per_limb;
+        <span class="tok-kw">return</span> total_limb_lz + bits - total_limb_bits;
+    }
+
+    <span class="tok-comment">/// Returns the number of trailing zeros in twos-complement form.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">ctz</span>(a: <a href="std.math.big.int.Const.html">Const</a>, bits: <a href="std.math.big.html#std.math.big.Limb">Limb</a>) <a href="std.math.big.html#std.math.big.Limb">Limb</a> {<span class="tok-comment">
+        // Limbs are stored in little-endian order. Converting a negative number to twos-complement
+        // flips all bits above the lowest set bit, which does not affect the trailing zero count.
+        </span><span class="tok-kw">if</span> (a.eqlZero()) <span class="tok-kw">return</span> bits;
+        <span class="tok-kw">var</span> result: <a href="std.math.big.html#std.math.big.Limb">Limb</a> = <span class="tok-number">0</span>;
+        <span class="tok-kw">for</span> (a.limbs) |limb| {
+            <span class="tok-kw">const</span> limb_tz = <span class="tok-builtin">@ctz</span>(limb);
+            result += limb_tz;
+            <span class="tok-kw">if</span> (limb_tz != <span class="tok-builtin">@bitSizeOf</span>(<a href="std.math.big.html#std.math.big.Limb">Limb</a>)) <span class="tok-kw">break</span>;
+        }
+        <span class="tok-kw">return</span> <span class="tok-builtin">@min</span>(result, bits);
+    }
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

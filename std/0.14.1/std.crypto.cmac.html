@@ -1,0 +1,683 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">crypto</a></li><li><a href="std.crypto.cmac.html" class="active">cmac</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.crypto.cmac" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.crypto.cmac</span><a href="#src.zig-std.crypto.cmac">[src]</a></h1><div class="sectTypes"><h2 class="sectionHeader">Types</h2><div class="listTypes"><div class="decl"><h2 id="std.crypto.cmac.CmacAes128" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">CmacAes128</span><a href="#src.zig-std.crypto.cmac.CmacAes128">[src]</a></h2><div class="tldDocs"><p>CMAC with AES-128 - RFC 4493 <a href="https://www.rfc-editor.org/rfc/rfc4493">https://www.rfc-editor.org/rfc/rfc4493</a></p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.cmac.CmacAes128">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> CmacAes128 = <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Cmac</a>(<a href="std.crypto.html">crypto</a>.<a href="std.crypto.core.html">core</a>.<a href="std.crypto.aes.html">aes</a>.<a href="std.crypto.aes.html#std.crypto.aes.Aes128">Aes128</a>)</code></pre></details></div></div><div class="decl"><h2 id="std.crypto.cmac.Cmac" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">Cmac</span><a href="#src.zig-std.crypto.cmac.Cmac">[src]</a></h2><div class="tldDocs"><p>NIST Special Publication 800-38B - The CMAC Mode for Authentication
+<a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-38b.pdf">https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-38b.pdf</a></p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>BlockCipher: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectFields"><h3 class="sectionHeader">Fields</h3><div class="listFields"><div><pre><code>cipher_ctx: BlockCipherCtx</code></pre></div><div><pre><code>k1: Block</code></pre></div><div><pre><code>k2: Block</code></pre></div><div><pre><code>buf: Block = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a></code></pre></div><div><pre><code>pos: <span class="tok-type">usize</span> = <span class="tok-number">0</span></code></pre></div></div></div><div class="sectValues"><h3 class="sectionHeader">Values</h3><div class="listValues"><div class="decl"><h3 id="std.crypto.cmac.Cmac.key_length" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">key_length</span><a href="#src.zig-std.crypto.cmac.Cmac.key_length">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.cmac.Cmac.key_length">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> key_length = BlockCipher.key_bits / <span class="tok-number">8</span></code></pre></details></div></div><div class="decl"><h3 id="std.crypto.cmac.Cmac.block_length" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">block_length</span><a href="#src.zig-std.crypto.cmac.Cmac.block_length">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.cmac.Cmac.block_length">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> block_length = BlockCipher.block.block_length</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.cmac.Cmac.block_length" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">block_length</span><a href="#src.zig-std.crypto.cmac.Cmac.block_length">[src]</a></h3><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.cmac.Cmac.block_length">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> block_length = BlockCipher.block.block_length</code></pre></details></div></div></div></div><div class="sectFns"><h3 class="sectionHeader">Functions</h3><div class="listFns"><div class="decl"><h3 id="std.crypto.cmac.Cmac.create" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">create</span><a href="#src.zig-std.crypto.cmac.Cmac.create">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">create</span>(out: *[<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">mac_length</a>]<span class="tok-type">u8</span>, msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, key: *<span class="tok-kw">const</span> [<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.key_length">key_length</a>]<span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>out: *[<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">mac_length</a>]<span class="tok-type">u8</span></code></pre></div><div><pre><code>msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>key: *<span class="tok-kw">const</span> [<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.key_length">key_length</a>]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.cmac.Cmac.create">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">create</span>(out: *[<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">mac_length</a>]<span class="tok-type">u8</span>, msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, key: *<span class="tok-kw">const</span> [<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.key_length">key_length</a>]<span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> ctx = <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a>.<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.init">init</a>(key);
+    ctx.update(msg);
+    ctx.final(out);
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.cmac.Cmac.init" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">init</span><a href="#src.zig-std.crypto.cmac.Cmac.init">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(key: *<span class="tok-kw">const</span> [<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.key_length">key_length</a>]<span class="tok-type">u8</span>) <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>key: *<span class="tok-kw">const</span> [<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.key_length">key_length</a>]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.cmac.Cmac.init">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(key: *<span class="tok-kw">const</span> [<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.key_length">key_length</a>]<span class="tok-type">u8</span>) <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a> {
+    <span class="tok-kw">const</span> cipher_ctx = BlockCipher.initEnc(key.*);
+    <span class="tok-kw">const</span> zeros = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>;
+    <span class="tok-kw">var</span> k1: Block = <span class="tok-null">undefined</span>;
+    cipher_ctx.encrypt(&amp;k1, &amp;zeros);
+    k1 = <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.double">double</a>(k1);
+    <span class="tok-kw">return</span> <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a>{
+        .cipher_ctx = cipher_ctx,
+        .k1 = k1,
+        .k2 = <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.double">double</a>(k1),
+    };
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.cmac.Cmac.update" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">update</span><a href="#src.zig-std.crypto.cmac.Cmac.update">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">update</span>(self: *<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a>, msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a></code></pre></div><div><pre><code>msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.cmac.Cmac.update">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">update</span>(self: *<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a>, msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> left = <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a> - self.pos;
+    <span class="tok-kw">var</span> m = msg;
+    <span class="tok-kw">if</span> (m.len &gt; left) {
+        <span class="tok-kw">for</span> (self.buf[self.pos..], <span class="tok-number">0</span>..) |*b, i| b.* ^= m[i];
+        m = m[left..];
+        self.cipher_ctx.encrypt(&amp;self.buf, &amp;self.buf);
+        self.pos = <span class="tok-number">0</span>;
+    }
+    <span class="tok-kw">while</span> (m.len &gt; <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>) {
+        <span class="tok-kw">for</span> (self.buf[<span class="tok-number">0</span>..<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>], <span class="tok-number">0</span>..) |*b, i| b.* ^= m[i];
+        m = m[<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>..];
+        self.cipher_ctx.encrypt(&amp;self.buf, &amp;self.buf);
+        self.pos = <span class="tok-number">0</span>;
+    }
+    <span class="tok-kw">if</span> (m.len &gt; <span class="tok-number">0</span>) {
+        <span class="tok-kw">for</span> (self.buf[self.pos..][<span class="tok-number">0</span>..m.len], <span class="tok-number">0</span>..) |*b, i| b.* ^= m[i];
+        self.pos += m.len;
+    }
+}</code></pre></details></div></div><div class="decl"><h3 id="std.crypto.cmac.Cmac.final" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">final</span><a href="#src.zig-std.crypto.cmac.Cmac.final">[src]</a></h3><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">final</span>(self: *<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a>, out: *[<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">mac_length</a>]<span class="tok-type">u8</span>) <span class="tok-type">void</span></code></pre></div><div class="sectParams"><h4 class="sectionHeader">Parameters</h4><div class="listParams"><div><pre><code>self: *<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a></code></pre></div><div><pre><code>out: *[<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">mac_length</a>]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h4 class="sectionHeader" id="src.zig-std.crypto.cmac.Cmac.final">Source Code</h4><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">final</span>(self: *<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a>, out: *[<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">mac_length</a>]<span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> mac = self.k1;
+    <span class="tok-kw">if</span> (self.pos &lt; <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>) {
+        mac = self.k2;
+        mac[self.pos] ^= <span class="tok-number">0x80</span>;
+    }
+    <span class="tok-kw">for</span> (&amp;mac, <span class="tok-number">0</span>..) |*b, i| b.* ^= self.buf[i];
+    self.cipher_ctx.encrypt(out, &amp;mac);
+}</code></pre></details></div></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.crypto.cmac.Cmac">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">Cmac</span>(<span class="tok-kw">comptime</span> BlockCipher: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">const</span> BlockCipherCtx = <span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(BlockCipher.initEnc)).@&quot;fn&quot;.return_type.?;
+    <span class="tok-kw">const</span> Block = [BlockCipher.block.block_length]<span class="tok-type">u8</span>;
+
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> key_length = BlockCipher.key_bits / <span class="tok-number">8</span>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> block_length = BlockCipher.block.block_length;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> mac_length = <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>;
+
+        cipher_ctx: BlockCipherCtx,
+        k1: Block,
+        k2: Block,
+        buf: Block = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>,
+        pos: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">create</span>(out: *[<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">mac_length</a>]<span class="tok-type">u8</span>, msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, key: *<span class="tok-kw">const</span> [<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.key_length">key_length</a>]<span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">var</span> ctx = <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a>.<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.init">init</a>(key);
+            ctx.update(msg);
+            ctx.final(out);
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(key: *<span class="tok-kw">const</span> [<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.key_length">key_length</a>]<span class="tok-type">u8</span>) <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a> {
+            <span class="tok-kw">const</span> cipher_ctx = BlockCipher.initEnc(key.*);
+            <span class="tok-kw">const</span> zeros = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>;
+            <span class="tok-kw">var</span> k1: Block = <span class="tok-null">undefined</span>;
+            cipher_ctx.encrypt(&amp;k1, &amp;zeros);
+            k1 = <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.double">double</a>(k1);
+            <span class="tok-kw">return</span> <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a>{
+                .cipher_ctx = cipher_ctx,
+                .k1 = k1,
+                .k2 = <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.double">double</a>(k1),
+            };
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">update</span>(self: *<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a>, msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">const</span> left = <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a> - self.pos;
+            <span class="tok-kw">var</span> m = msg;
+            <span class="tok-kw">if</span> (m.len &gt; left) {
+                <span class="tok-kw">for</span> (self.buf[self.pos..], <span class="tok-number">0</span>..) |*b, i| b.* ^= m[i];
+                m = m[left..];
+                self.cipher_ctx.encrypt(&amp;self.buf, &amp;self.buf);
+                self.pos = <span class="tok-number">0</span>;
+            }
+            <span class="tok-kw">while</span> (m.len &gt; <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>) {
+                <span class="tok-kw">for</span> (self.buf[<span class="tok-number">0</span>..<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>], <span class="tok-number">0</span>..) |*b, i| b.* ^= m[i];
+                m = m[<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>..];
+                self.cipher_ctx.encrypt(&amp;self.buf, &amp;self.buf);
+                self.pos = <span class="tok-number">0</span>;
+            }
+            <span class="tok-kw">if</span> (m.len &gt; <span class="tok-number">0</span>) {
+                <span class="tok-kw">for</span> (self.buf[self.pos..][<span class="tok-number">0</span>..m.len], <span class="tok-number">0</span>..) |*b, i| b.* ^= m[i];
+                self.pos += m.len;
+            }
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">final</span>(self: *<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a>, out: *[<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">mac_length</a>]<span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">var</span> mac = self.k1;
+            <span class="tok-kw">if</span> (self.pos &lt; <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>) {
+                mac = self.k2;
+                mac[self.pos] ^= <span class="tok-number">0x80</span>;
+            }
+            <span class="tok-kw">for</span> (&amp;mac, <span class="tok-number">0</span>..) |*b, i| b.* ^= self.buf[i];
+            self.cipher_ctx.encrypt(out, &amp;mac);
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">double</span>(l: Block) Block {
+            <span class="tok-kw">const</span> Int = <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.Int">Int</a>(.unsigned, <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a> * <span class="tok-number">8</span>);
+            <span class="tok-kw">const</span> l_ = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(Int, &amp;l, .big);
+            <span class="tok-kw">const</span> l_2 = <span class="tok-kw">switch</span> (<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>) {
+                <span class="tok-number">8</span> =&gt; (l_ &lt;&lt; <span class="tok-number">1</span>) ^ (<span class="tok-number">0x1b</span> &amp; -%(l_ &gt;&gt; <span class="tok-number">63</span>)),<span class="tok-comment"> // mod x^64 + x^4 + x^3 + x + 1
+                </span><span class="tok-number">16</span> =&gt; (l_ &lt;&lt; <span class="tok-number">1</span>) ^ (<span class="tok-number">0x87</span> &amp; -%(l_ &gt;&gt; <span class="tok-number">127</span>)),<span class="tok-comment"> // mod x^128 + x^7 + x^2 + x + 1
+                </span><span class="tok-number">32</span> =&gt; (l_ &lt;&lt; <span class="tok-number">1</span>) ^ (<span class="tok-number">0x0425</span> &amp; -%(l_ &gt;&gt; <span class="tok-number">255</span>)),<span class="tok-comment"> // mod x^256 + x^10 + x^5 + x^2 + 1
+                </span><span class="tok-number">64</span> =&gt; (l_ &lt;&lt; <span class="tok-number">1</span>) ^ (<span class="tok-number">0x0125</span> &amp; -%(l_ &gt;&gt; <span class="tok-number">511</span>)),<span class="tok-comment"> // mod x^512 + x^8 + x^5 + x^2 + 1
+                </span><span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;unsupported block length&quot;</span>),
+            };
+            <span class="tok-kw">var</span> l2: Block = <span class="tok-null">undefined</span>;
+            <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(Int, &amp;l2, l_2, .big);
+            <span class="tok-kw">return</span> l2;
+        }
+    };
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.crypto.cmac">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>);
+<span class="tok-kw">const</span> crypto = <a href="std.html">std</a>.<a href="std.crypto.html">crypto</a>;
+<span class="tok-kw">const</span> mem = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>;
+
+<span class="tok-comment">/// CMAC with AES-128 - RFC 4493 https://www.rfc-editor.org/rfc/rfc4493</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> CmacAes128 = <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Cmac</a>(<a href="std.crypto.html">crypto</a>.<a href="std.crypto.core.html">core</a>.<a href="std.crypto.aes.html">aes</a>.<a href="std.crypto.aes.html#std.crypto.aes.Aes128">Aes128</a>);
+
+<span class="tok-comment">/// NIST Special Publication 800-38B - The CMAC Mode for Authentication</span>
+<span class="tok-comment">/// https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-38b.pdf</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">Cmac</span>(<span class="tok-kw">comptime</span> BlockCipher: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">const</span> BlockCipherCtx = <span class="tok-builtin">@typeInfo</span>(<span class="tok-builtin">@TypeOf</span>(BlockCipher.initEnc)).@&quot;fn&quot;.return_type.?;
+    <span class="tok-kw">const</span> Block = [BlockCipher.block.block_length]<span class="tok-type">u8</span>;
+
+    <span class="tok-kw">return</span> <span class="tok-kw">struct</span> {
+        <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> key_length = BlockCipher.key_bits / <span class="tok-number">8</span>;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> block_length = BlockCipher.block.block_length;
+        <span class="tok-kw">pub</span> <span class="tok-kw">const</span> mac_length = <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>;
+
+        cipher_ctx: BlockCipherCtx,
+        k1: Block,
+        k2: Block,
+        buf: Block = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>,
+        pos: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">create</span>(out: *[<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">mac_length</a>]<span class="tok-type">u8</span>, msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, key: *<span class="tok-kw">const</span> [<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.key_length">key_length</a>]<span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">var</span> ctx = <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a>.<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.init">init</a>(key);
+            ctx.update(msg);
+            ctx.final(out);
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(key: *<span class="tok-kw">const</span> [<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.key_length">key_length</a>]<span class="tok-type">u8</span>) <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a> {
+            <span class="tok-kw">const</span> cipher_ctx = BlockCipher.initEnc(key.*);
+            <span class="tok-kw">const</span> zeros = [_]<span class="tok-type">u8</span>{<span class="tok-number">0</span>} ** <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>;
+            <span class="tok-kw">var</span> k1: Block = <span class="tok-null">undefined</span>;
+            cipher_ctx.encrypt(&amp;k1, &amp;zeros);
+            k1 = <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.double">double</a>(k1);
+            <span class="tok-kw">return</span> <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a>{
+                .cipher_ctx = cipher_ctx,
+                .k1 = k1,
+                .k2 = <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.double">double</a>(k1),
+            };
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">update</span>(self: *<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a>, msg: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">const</span> left = <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a> - self.pos;
+            <span class="tok-kw">var</span> m = msg;
+            <span class="tok-kw">if</span> (m.len &gt; left) {
+                <span class="tok-kw">for</span> (self.buf[self.pos..], <span class="tok-number">0</span>..) |*b, i| b.* ^= m[i];
+                m = m[left..];
+                self.cipher_ctx.encrypt(&amp;self.buf, &amp;self.buf);
+                self.pos = <span class="tok-number">0</span>;
+            }
+            <span class="tok-kw">while</span> (m.len &gt; <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>) {
+                <span class="tok-kw">for</span> (self.buf[<span class="tok-number">0</span>..<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>], <span class="tok-number">0</span>..) |*b, i| b.* ^= m[i];
+                m = m[<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>..];
+                self.cipher_ctx.encrypt(&amp;self.buf, &amp;self.buf);
+                self.pos = <span class="tok-number">0</span>;
+            }
+            <span class="tok-kw">if</span> (m.len &gt; <span class="tok-number">0</span>) {
+                <span class="tok-kw">for</span> (self.buf[self.pos..][<span class="tok-number">0</span>..m.len], <span class="tok-number">0</span>..) |*b, i| b.* ^= m[i];
+                self.pos += m.len;
+            }
+        }
+
+        <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">final</span>(self: *<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac">Self</a>, out: *[<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">mac_length</a>]<span class="tok-type">u8</span>) <span class="tok-type">void</span> {
+            <span class="tok-kw">var</span> mac = self.k1;
+            <span class="tok-kw">if</span> (self.pos &lt; <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>) {
+                mac = self.k2;
+                mac[self.pos] ^= <span class="tok-number">0x80</span>;
+            }
+            <span class="tok-kw">for</span> (&amp;mac, <span class="tok-number">0</span>..) |*b, i| b.* ^= self.buf[i];
+            self.cipher_ctx.encrypt(out, &amp;mac);
+        }
+
+        <span class="tok-kw">fn</span> <span class="tok-fn">double</span>(l: Block) Block {
+            <span class="tok-kw">const</span> Int = <a href="std.html">std</a>.<a href="std.meta.html">meta</a>.<a href="std.meta.html#std.meta.Int">Int</a>(.unsigned, <a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a> * <span class="tok-number">8</span>);
+            <span class="tok-kw">const</span> l_ = <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.readInt">readInt</a>(Int, &amp;l, .big);
+            <span class="tok-kw">const</span> l_2 = <span class="tok-kw">switch</span> (<a href="std.crypto.cmac.html#std.crypto.cmac.Cmac.block_length">block_length</a>) {
+                <span class="tok-number">8</span> =&gt; (l_ &lt;&lt; <span class="tok-number">1</span>) ^ (<span class="tok-number">0x1b</span> &amp; -%(l_ &gt;&gt; <span class="tok-number">63</span>)),<span class="tok-comment"> // mod x^64 + x^4 + x^3 + x + 1
+                </span><span class="tok-number">16</span> =&gt; (l_ &lt;&lt; <span class="tok-number">1</span>) ^ (<span class="tok-number">0x87</span> &amp; -%(l_ &gt;&gt; <span class="tok-number">127</span>)),<span class="tok-comment"> // mod x^128 + x^7 + x^2 + x + 1
+                </span><span class="tok-number">32</span> =&gt; (l_ &lt;&lt; <span class="tok-number">1</span>) ^ (<span class="tok-number">0x0425</span> &amp; -%(l_ &gt;&gt; <span class="tok-number">255</span>)),<span class="tok-comment"> // mod x^256 + x^10 + x^5 + x^2 + 1
+                </span><span class="tok-number">64</span> =&gt; (l_ &lt;&lt; <span class="tok-number">1</span>) ^ (<span class="tok-number">0x0125</span> &amp; -%(l_ &gt;&gt; <span class="tok-number">511</span>)),<span class="tok-comment"> // mod x^512 + x^8 + x^5 + x^2 + 1
+                </span><span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;unsupported block length&quot;</span>),
+            };
+            <span class="tok-kw">var</span> l2: Block = <span class="tok-null">undefined</span>;
+            <a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.writeInt">writeInt</a>(Int, &amp;l2, l_2, .big);
+            <span class="tok-kw">return</span> l2;
+        }
+    };
+}
+
+<span class="tok-kw">const</span> testing = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>;
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;CmacAes128 - Example 1: len = 0&quot;</span> {
+    <span class="tok-kw">const</span> key = [_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0x2b</span>, <span class="tok-number">0x7e</span>, <span class="tok-number">0x15</span>, <span class="tok-number">0x16</span>, <span class="tok-number">0x28</span>, <span class="tok-number">0xae</span>, <span class="tok-number">0xd2</span>, <span class="tok-number">0xa6</span>, <span class="tok-number">0xab</span>, <span class="tok-number">0xf7</span>, <span class="tok-number">0x15</span>, <span class="tok-number">0x88</span>, <span class="tok-number">0x09</span>, <span class="tok-number">0xcf</span>, <span class="tok-number">0x4f</span>, <span class="tok-number">0x3c</span>,
+    };
+    <span class="tok-kw">var</span> msg: [<span class="tok-number">0</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">const</span> exp = [_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0xbb</span>, <span class="tok-number">0x1d</span>, <span class="tok-number">0x69</span>, <span class="tok-number">0x29</span>, <span class="tok-number">0xe9</span>, <span class="tok-number">0x59</span>, <span class="tok-number">0x37</span>, <span class="tok-number">0x28</span>, <span class="tok-number">0x7f</span>, <span class="tok-number">0xa3</span>, <span class="tok-number">0x7d</span>, <span class="tok-number">0x12</span>, <span class="tok-number">0x9b</span>, <span class="tok-number">0x75</span>, <span class="tok-number">0x67</span>, <span class="tok-number">0x46</span>,
+    };
+    <span class="tok-kw">var</span> out: [<a href="std.crypto.cmac.html#std.crypto.cmac.CmacAes128">CmacAes128</a>.<a href="#">mac_length</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <a href="std.crypto.cmac.html#std.crypto.cmac.CmacAes128">CmacAes128</a>.<a href="#">create</a>(&amp;out, &amp;msg, &amp;key);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, &amp;out, &amp;exp);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;CmacAes128 - Example 2: len = 16&quot;</span> {
+    <span class="tok-kw">const</span> key = [_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0x2b</span>, <span class="tok-number">0x7e</span>, <span class="tok-number">0x15</span>, <span class="tok-number">0x16</span>, <span class="tok-number">0x28</span>, <span class="tok-number">0xae</span>, <span class="tok-number">0xd2</span>, <span class="tok-number">0xa6</span>, <span class="tok-number">0xab</span>, <span class="tok-number">0xf7</span>, <span class="tok-number">0x15</span>, <span class="tok-number">0x88</span>, <span class="tok-number">0x09</span>, <span class="tok-number">0xcf</span>, <span class="tok-number">0x4f</span>, <span class="tok-number">0x3c</span>,
+    };
+    <span class="tok-kw">const</span> msg = [_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0x6b</span>, <span class="tok-number">0xc1</span>, <span class="tok-number">0xbe</span>, <span class="tok-number">0xe2</span>, <span class="tok-number">0x2e</span>, <span class="tok-number">0x40</span>, <span class="tok-number">0x9f</span>, <span class="tok-number">0x96</span>, <span class="tok-number">0xe9</span>, <span class="tok-number">0x3d</span>, <span class="tok-number">0x7e</span>, <span class="tok-number">0x11</span>, <span class="tok-number">0x73</span>, <span class="tok-number">0x93</span>, <span class="tok-number">0x17</span>, <span class="tok-number">0x2a</span>,
+    };
+    <span class="tok-kw">const</span> exp = [_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0x07</span>, <span class="tok-number">0x0a</span>, <span class="tok-number">0x16</span>, <span class="tok-number">0xb4</span>, <span class="tok-number">0x6b</span>, <span class="tok-number">0x4d</span>, <span class="tok-number">0x41</span>, <span class="tok-number">0x44</span>, <span class="tok-number">0xf7</span>, <span class="tok-number">0x9b</span>, <span class="tok-number">0xdd</span>, <span class="tok-number">0x9d</span>, <span class="tok-number">0xd0</span>, <span class="tok-number">0x4a</span>, <span class="tok-number">0x28</span>, <span class="tok-number">0x7c</span>,
+    };
+    <span class="tok-kw">var</span> out: [<a href="std.crypto.cmac.html#std.crypto.cmac.CmacAes128">CmacAes128</a>.<a href="#">mac_length</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <a href="std.crypto.cmac.html#std.crypto.cmac.CmacAes128">CmacAes128</a>.<a href="#">create</a>(&amp;out, &amp;msg, &amp;key);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, &amp;out, &amp;exp);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;CmacAes128 - Example 3: len = 40&quot;</span> {
+    <span class="tok-kw">const</span> key = [_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0x2b</span>, <span class="tok-number">0x7e</span>, <span class="tok-number">0x15</span>, <span class="tok-number">0x16</span>, <span class="tok-number">0x28</span>, <span class="tok-number">0xae</span>, <span class="tok-number">0xd2</span>, <span class="tok-number">0xa6</span>, <span class="tok-number">0xab</span>, <span class="tok-number">0xf7</span>, <span class="tok-number">0x15</span>, <span class="tok-number">0x88</span>, <span class="tok-number">0x09</span>, <span class="tok-number">0xcf</span>, <span class="tok-number">0x4f</span>, <span class="tok-number">0x3c</span>,
+    };
+    <span class="tok-kw">const</span> msg = [_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0x6b</span>, <span class="tok-number">0xc1</span>, <span class="tok-number">0xbe</span>, <span class="tok-number">0xe2</span>, <span class="tok-number">0x2e</span>, <span class="tok-number">0x40</span>, <span class="tok-number">0x9f</span>, <span class="tok-number">0x96</span>, <span class="tok-number">0xe9</span>, <span class="tok-number">0x3d</span>, <span class="tok-number">0x7e</span>, <span class="tok-number">0x11</span>, <span class="tok-number">0x73</span>, <span class="tok-number">0x93</span>, <span class="tok-number">0x17</span>, <span class="tok-number">0x2a</span>,
+        <span class="tok-number">0xae</span>, <span class="tok-number">0x2d</span>, <span class="tok-number">0x8a</span>, <span class="tok-number">0x57</span>, <span class="tok-number">0x1e</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0xac</span>, <span class="tok-number">0x9c</span>, <span class="tok-number">0x9e</span>, <span class="tok-number">0xb7</span>, <span class="tok-number">0x6f</span>, <span class="tok-number">0xac</span>, <span class="tok-number">0x45</span>, <span class="tok-number">0xaf</span>, <span class="tok-number">0x8e</span>, <span class="tok-number">0x51</span>,
+        <span class="tok-number">0x30</span>, <span class="tok-number">0xc8</span>, <span class="tok-number">0x1c</span>, <span class="tok-number">0x46</span>, <span class="tok-number">0xa3</span>, <span class="tok-number">0x5c</span>, <span class="tok-number">0xe4</span>, <span class="tok-number">0x11</span>,
+    };
+    <span class="tok-kw">const</span> exp = [_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0xdf</span>, <span class="tok-number">0xa6</span>, <span class="tok-number">0x67</span>, <span class="tok-number">0x47</span>, <span class="tok-number">0xde</span>, <span class="tok-number">0x9a</span>, <span class="tok-number">0xe6</span>, <span class="tok-number">0x30</span>, <span class="tok-number">0x30</span>, <span class="tok-number">0xca</span>, <span class="tok-number">0x32</span>, <span class="tok-number">0x61</span>, <span class="tok-number">0x14</span>, <span class="tok-number">0x97</span>, <span class="tok-number">0xc8</span>, <span class="tok-number">0x27</span>,
+    };
+    <span class="tok-kw">var</span> out: [<a href="std.crypto.cmac.html#std.crypto.cmac.CmacAes128">CmacAes128</a>.<a href="#">mac_length</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <a href="std.crypto.cmac.html#std.crypto.cmac.CmacAes128">CmacAes128</a>.<a href="#">create</a>(&amp;out, &amp;msg, &amp;key);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, &amp;out, &amp;exp);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;CmacAes128 - Example 4: len = 64&quot;</span> {
+    <span class="tok-kw">const</span> key = [_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0x2b</span>, <span class="tok-number">0x7e</span>, <span class="tok-number">0x15</span>, <span class="tok-number">0x16</span>, <span class="tok-number">0x28</span>, <span class="tok-number">0xae</span>, <span class="tok-number">0xd2</span>, <span class="tok-number">0xa6</span>, <span class="tok-number">0xab</span>, <span class="tok-number">0xf7</span>, <span class="tok-number">0x15</span>, <span class="tok-number">0x88</span>, <span class="tok-number">0x09</span>, <span class="tok-number">0xcf</span>, <span class="tok-number">0x4f</span>, <span class="tok-number">0x3c</span>,
+    };
+    <span class="tok-kw">const</span> msg = [_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0x6b</span>, <span class="tok-number">0xc1</span>, <span class="tok-number">0xbe</span>, <span class="tok-number">0xe2</span>, <span class="tok-number">0x2e</span>, <span class="tok-number">0x40</span>, <span class="tok-number">0x9f</span>, <span class="tok-number">0x96</span>, <span class="tok-number">0xe9</span>, <span class="tok-number">0x3d</span>, <span class="tok-number">0x7e</span>, <span class="tok-number">0x11</span>, <span class="tok-number">0x73</span>, <span class="tok-number">0x93</span>, <span class="tok-number">0x17</span>, <span class="tok-number">0x2a</span>,
+        <span class="tok-number">0xae</span>, <span class="tok-number">0x2d</span>, <span class="tok-number">0x8a</span>, <span class="tok-number">0x57</span>, <span class="tok-number">0x1e</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0xac</span>, <span class="tok-number">0x9c</span>, <span class="tok-number">0x9e</span>, <span class="tok-number">0xb7</span>, <span class="tok-number">0x6f</span>, <span class="tok-number">0xac</span>, <span class="tok-number">0x45</span>, <span class="tok-number">0xaf</span>, <span class="tok-number">0x8e</span>, <span class="tok-number">0x51</span>,
+        <span class="tok-number">0x30</span>, <span class="tok-number">0xc8</span>, <span class="tok-number">0x1c</span>, <span class="tok-number">0x46</span>, <span class="tok-number">0xa3</span>, <span class="tok-number">0x5c</span>, <span class="tok-number">0xe4</span>, <span class="tok-number">0x11</span>, <span class="tok-number">0xe5</span>, <span class="tok-number">0xfb</span>, <span class="tok-number">0xc1</span>, <span class="tok-number">0x19</span>, <span class="tok-number">0x1a</span>, <span class="tok-number">0x0a</span>, <span class="tok-number">0x52</span>, <span class="tok-number">0xef</span>,
+        <span class="tok-number">0xf6</span>, <span class="tok-number">0x9f</span>, <span class="tok-number">0x24</span>, <span class="tok-number">0x45</span>, <span class="tok-number">0xdf</span>, <span class="tok-number">0x4f</span>, <span class="tok-number">0x9b</span>, <span class="tok-number">0x17</span>, <span class="tok-number">0xad</span>, <span class="tok-number">0x2b</span>, <span class="tok-number">0x41</span>, <span class="tok-number">0x7b</span>, <span class="tok-number">0xe6</span>, <span class="tok-number">0x6c</span>, <span class="tok-number">0x37</span>, <span class="tok-number">0x10</span>,
+    };
+    <span class="tok-kw">const</span> exp = [_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0x51</span>, <span class="tok-number">0xf0</span>, <span class="tok-number">0xbe</span>, <span class="tok-number">0xbf</span>, <span class="tok-number">0x7e</span>, <span class="tok-number">0x3b</span>, <span class="tok-number">0x9d</span>, <span class="tok-number">0x92</span>, <span class="tok-number">0xfc</span>, <span class="tok-number">0x49</span>, <span class="tok-number">0x74</span>, <span class="tok-number">0x17</span>, <span class="tok-number">0x79</span>, <span class="tok-number">0x36</span>, <span class="tok-number">0x3c</span>, <span class="tok-number">0xfe</span>,
+    };
+    <span class="tok-kw">var</span> out: [<a href="std.crypto.cmac.html#std.crypto.cmac.CmacAes128">CmacAes128</a>.<a href="#">mac_length</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <a href="std.crypto.cmac.html#std.crypto.cmac.CmacAes128">CmacAes128</a>.<a href="#">create</a>(&amp;out, &amp;msg, &amp;key);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, &amp;out, &amp;exp);
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

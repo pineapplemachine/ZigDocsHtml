@@ -1,0 +1,859 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">os</a></li><li><a href="std.os.plan9.html" class="active">plan9</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.os.plan9" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.os.plan9</span><a href="#src.zig-std.os.plan9">[src]</a></h1><div class="sectNamespaces"><h2 class="sectionHeader">Namespaces</h2><ul class="listNamespaces columns"><li><a href="std.os.plan9.SIG.html">std.os.plan9.SIG</a></li><li><a href="std.os.plan9.AT.html">std.os.plan9.AT</a></li><li><a href="std.os.plan9.ExecData.html">std.os.plan9.ExecData</a></li></ul></div><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.os.plan9.E.html">std.os.plan9.E</a></li><li><a href="std.os.plan9.Tos.html">std.os.plan9.Tos</a></li><li><a href="std.os.plan9.Sigaction.html">std.os.plan9.Sigaction</a></li><li><a href="std.os.plan9.SYS.html">std.os.plan9.SYS</a></li><li><a href="std.os.plan9.AccessMode.html">std.os.plan9.AccessMode</a></li><li><a href="std.os.plan9.O.html">std.os.plan9.O</a></li></ul></div><div class="sectTypes"><h2 class="sectionHeader">Types</h2><div class="listTypes"><div class="decl"><h2 id="std.os.plan9.fd_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">fd_t</span><a href="#src.zig-std.os.plan9.fd_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.fd_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> fd_t = <span class="tok-type">i32</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.syscall_bits" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">syscall_bits</span><a href="#src.zig-std.os.plan9.syscall_bits">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.syscall_bits">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> syscall_bits = <span class="tok-kw">switch</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.cpu">cpu</a>.<a href="#">arch</a>) {
+    .x86_64 =&gt; <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;plan9/x86_64.zig&quot;</span>),
+    <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;more plan9 syscall implementations (needs more inline asm in stage2&quot;</span>),
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.Plink" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">Plink</span><a href="#src.zig-std.os.plan9.Plink">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.Plink">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Plink = <span class="tok-type">anyopaque</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.sigset_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">sigset_t</span><a href="#src.zig-std.os.plan9.sigset_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.sigset_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> sigset_t = <span class="tok-type">c_long</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.siginfo_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">siginfo_t</span><a href="#src.zig-std.os.plan9.siginfo_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.siginfo_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> siginfo_t = <span class="tok-type">c_long</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.mode_t" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">mode_t</span><a href="#src.zig-std.os.plan9.mode_t">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.mode_t">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> mode_t = <span class="tok-type">i32</span></code></pre></details></div></div></div></div><div class="sectGlobalVars"><h2 class="sectionHeader">Global Variables</h2><div class="listGlobalVars"><div class="decl"><h2 id="std.os.plan9.tos" class="declHeader"><span class="declHeaderCategory">Global Variable</span><span class="declHeaderIdentifier">tos</span><a href="#src.zig-std.os.plan9.tos">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.tos">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">var</span> tos: *<a href="std.os.plan9.Tos.html">Tos</a> = <span class="tok-null">undefined</span></code></pre></details></div></div></div></div><div class="sectValues"><h2 class="sectionHeader">Values</h2><div class="listValues"><div class="decl"><h2 id="std.os.plan9.STDIN_FILENO" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">STDIN_FILENO</span><a href="#src.zig-std.os.plan9.STDIN_FILENO">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.STDIN_FILENO">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> STDIN_FILENO = <span class="tok-number">0</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.STDOUT_FILENO" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">STDOUT_FILENO</span><a href="#src.zig-std.os.plan9.STDOUT_FILENO">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.STDOUT_FILENO">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> STDOUT_FILENO = <span class="tok-number">1</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.STDERR_FILENO" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">STDERR_FILENO</span><a href="#src.zig-std.os.plan9.STDERR_FILENO">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.STDERR_FILENO">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> STDERR_FILENO = <span class="tok-number">2</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.PATH_MAX" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">PATH_MAX</span><a href="#src.zig-std.os.plan9.PATH_MAX">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.PATH_MAX">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> PATH_MAX = <span class="tok-number">1023</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.ERRMAX" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">ERRMAX</span><a href="#src.zig-std.os.plan9.ERRMAX">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.ERRMAX">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ERRMAX = <span class="tok-number">128</span></code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.empty_sigset" class="declHeader"><span class="declHeaderCategory">Constant</span><span class="declHeaderIdentifier">empty_sigset</span><a href="#src.zig-std.os.plan9.empty_sigset">[src]</a></h2><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.empty_sigset">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> empty_sigset = <span class="tok-number">0</span></code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.os.plan9.errstr" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">errstr</span><a href="#src.zig-std.os.plan9.errstr">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">errstr</span>() []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>Gets whatever the last errstr was</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.errstr">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">errstr</span>() []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    _ = <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall2</a>(.ERRSTR, <span class="tok-builtin">@intFromPtr</span>(&amp;<a href="std.os.plan9.html#std.os.plan9.errstr_buf">errstr_buf</a>), <a href="std.os.plan9.html#std.os.plan9.ERRMAX">ERRMAX</a>);
+    <span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.span">span</a>(<span class="tok-builtin">@as</span>([*:<span class="tok-number">0</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;<a href="std.os.plan9.html#std.os.plan9.errstr_buf">errstr_buf</a>)));
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.getpid" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">getpid</span><a href="#src.zig-std.os.plan9.getpid">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getpid</span>() <span class="tok-type">u32</span></code></pre></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.getpid">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getpid</span>() <span class="tok-type">u32</span> {
+    <span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.tos">tos</a>.<a href="#">pid</a>;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.sigaction" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">sigaction</span><a href="#src.zig-std.os.plan9.sigaction">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">sigaction</span>(sig: <span class="tok-type">u6</span>, <span class="tok-kw">noalias</span> act: ?*<span class="tok-kw">const</span> <a href="std.os.plan9.Sigaction.html">Sigaction</a>, <span class="tok-kw">noalias</span> oact: ?*<a href="std.os.plan9.Sigaction.html">Sigaction</a>) <span class="tok-type">usize</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>sig: <span class="tok-type">u6</span></code></pre></div><div><pre><code>act: ?*<span class="tok-kw">const</span> <a href="std.os.plan9.Sigaction.html">Sigaction</a></code></pre></div><div><pre><code>oact: ?*<a href="std.os.plan9.Sigaction.html">Sigaction</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.sigaction">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">sigaction</span>(sig: <span class="tok-type">u6</span>, <span class="tok-kw">noalias</span> act: ?*<span class="tok-kw">const</span> <a href="std.os.plan9.Sigaction.html">Sigaction</a>, <span class="tok-kw">noalias</span> oact: ?*<a href="std.os.plan9.Sigaction.html">Sigaction</a>) <span class="tok-type">usize</span> {
+    _ = oact;
+    _ = act;
+    _ = sig;
+    <span class="tok-kw">return</span> <span class="tok-number">0</span>;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.write" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">write</span><a href="#src.zig-std.os.plan9.write">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">write</span>(fd: <span class="tok-type">i32</span>, buf: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, count: <span class="tok-type">usize</span>) <span class="tok-type">usize</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <span class="tok-type">i32</span></code></pre></div><div><pre><code>buf: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>count: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.write">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">write</span>(fd: <span class="tok-type">i32</span>, buf: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, count: <span class="tok-type">usize</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall4</a>(.PWRITE, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, fd)), <span class="tok-builtin">@intFromPtr</span>(buf), count, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, -<span class="tok-number">1</span>)));
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.pwrite" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">pwrite</span><a href="#src.zig-std.os.plan9.pwrite">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">pwrite</span>(fd: <span class="tok-type">i32</span>, buf: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, count: <span class="tok-type">usize</span>, offset: <span class="tok-type">isize</span>) <span class="tok-type">usize</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <span class="tok-type">i32</span></code></pre></div><div><pre><code>buf: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>count: <span class="tok-type">usize</span></code></pre></div><div><pre><code>offset: <span class="tok-type">isize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.pwrite">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">pwrite</span>(fd: <span class="tok-type">i32</span>, buf: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, count: <span class="tok-type">usize</span>, offset: <span class="tok-type">isize</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall4</a>(.PWRITE, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, fd)), <span class="tok-builtin">@intFromPtr</span>(buf), count, <span class="tok-builtin">@bitCast</span>(offset));
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.read" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">read</span><a href="#src.zig-std.os.plan9.read">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">read</span>(fd: <span class="tok-type">i32</span>, buf: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, count: <span class="tok-type">usize</span>) <span class="tok-type">usize</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <span class="tok-type">i32</span></code></pre></div><div><pre><code>buf: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>count: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.read">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">read</span>(fd: <span class="tok-type">i32</span>, buf: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, count: <span class="tok-type">usize</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall4</a>(.PREAD, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, fd)), <span class="tok-builtin">@intFromPtr</span>(buf), count, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, -<span class="tok-number">1</span>)));
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.pread" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">pread</span><a href="#src.zig-std.os.plan9.pread">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">pread</span>(fd: <span class="tok-type">i32</span>, buf: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, count: <span class="tok-type">usize</span>, offset: <span class="tok-type">isize</span>) <span class="tok-type">usize</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <span class="tok-type">i32</span></code></pre></div><div><pre><code>buf: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>count: <span class="tok-type">usize</span></code></pre></div><div><pre><code>offset: <span class="tok-type">isize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.pread">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">pread</span>(fd: <span class="tok-type">i32</span>, buf: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, count: <span class="tok-type">usize</span>, offset: <span class="tok-type">isize</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall4</a>(.PREAD, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, fd)), <span class="tok-builtin">@intFromPtr</span>(buf), count, <span class="tok-builtin">@bitCast</span>(offset));
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.open" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">open</span><a href="#src.zig-std.os.plan9.open">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">open</span>(path: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, flags: <span class="tok-type">u32</span>) <span class="tok-type">usize</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>path: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>flags: <span class="tok-type">u32</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.open">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">open</span>(path: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, flags: <span class="tok-type">u32</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall2</a>(.OPEN, <span class="tok-builtin">@intFromPtr</span>(path), <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, flags)));
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.openat" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">openat</span><a href="#src.zig-std.os.plan9.openat">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">openat</span>(dirfd: <span class="tok-type">i32</span>, path: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, flags: <span class="tok-type">u32</span>, _: <a href="std.os.plan9.html#std.os.plan9.mode_t">mode_t</a>) <span class="tok-type">usize</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>dirfd: <span class="tok-type">i32</span></code></pre></div><div><pre><code>path: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>flags: <span class="tok-type">u32</span></code></pre></div><div><pre><code>_: <a href="std.os.plan9.html#std.os.plan9.mode_t">mode_t</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.openat">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">openat</span>(dirfd: <span class="tok-type">i32</span>, path: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, flags: <span class="tok-type">u32</span>, _: <a href="std.os.plan9.html#std.os.plan9.mode_t">mode_t</a>) <span class="tok-type">usize</span> {<span class="tok-comment">
+    // we skip perms because only create supports perms
+    </span><span class="tok-kw">if</span> (dirfd == <a href="std.os.plan9.AT.html">AT</a>.<a href="std.os.plan9.AT.html#std.os.plan9.AT.FDCWD">FDCWD</a>) {<span class="tok-comment"> // openat(AT_FDCWD, ...) == open(...)
+        </span><span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.open">open</a>(path, flags);
+    }
+    <span class="tok-kw">var</span> dir_path_buf: [<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">var</span> total_path_buf: [<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a> + <span class="tok-number">1</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">const</span> rc = <a href="std.os.plan9.html#std.os.plan9.fd2path">fd2path</a>(dirfd, &amp;dir_path_buf, <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>);
+    <span class="tok-kw">if</span> (rc != <span class="tok-number">0</span>) <span class="tok-kw">return</span> rc;
+    <span class="tok-kw">var</span> fba = <a href="std.html">std</a>.<a href="std.heap.html">heap</a>.<a href="std.heap.FixedBufferAllocator.html">FixedBufferAllocator</a>.<a href="std.heap.FixedBufferAllocator.html#std.heap.FixedBufferAllocator.init">init</a>(&amp;total_path_buf);
+    <span class="tok-kw">var</span> alloc = fba.allocator();
+    <span class="tok-kw">const</span> dir_path = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.span">span</a>(<span class="tok-builtin">@as</span>([*:<span class="tok-number">0</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;dir_path_buf)));
+    <span class="tok-kw">const</span> total_path = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.join">join</a>(alloc, &amp;.{ dir_path, <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.span">span</a>(path) }) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;<span class="tok-comment"> // the allocation shouldn't fail because it should not exceed max_path_bytes
+    </span>fba.reset();
+    <span class="tok-kw">const</span> total_path_z = alloc.dupeZ(<span class="tok-type">u8</span>, total_path) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;<span class="tok-comment"> // should not exceed max_path_bytes + 1
+    </span><span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.open">open</a>(total_path_z.ptr, flags);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.fd2path" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">fd2path</span><a href="#src.zig-std.os.plan9.fd2path">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd2path</span>(fd: <span class="tok-type">i32</span>, buf: [*]<span class="tok-type">u8</span>, nbuf: <span class="tok-type">usize</span>) <span class="tok-type">usize</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <span class="tok-type">i32</span></code></pre></div><div><pre><code>buf: [*]<span class="tok-type">u8</span></code></pre></div><div><pre><code>nbuf: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.fd2path">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd2path</span>(fd: <span class="tok-type">i32</span>, buf: [*]<span class="tok-type">u8</span>, nbuf: <span class="tok-type">usize</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall3</a>(.FD2PATH, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, fd)), <span class="tok-builtin">@intFromPtr</span>(buf), nbuf);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.create" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">create</span><a href="#src.zig-std.os.plan9.create">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">create</span>(path: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, omode: <a href="std.os.plan9.html#std.os.plan9.mode_t">mode_t</a>, perms: <span class="tok-type">usize</span>) <span class="tok-type">usize</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>path: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>omode: <a href="std.os.plan9.html#std.os.plan9.mode_t">mode_t</a></code></pre></div><div><pre><code>perms: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.create">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">create</span>(path: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, omode: <a href="std.os.plan9.html#std.os.plan9.mode_t">mode_t</a>, perms: <span class="tok-type">usize</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall3</a>(.CREATE, <span class="tok-builtin">@intFromPtr</span>(path), <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, omode)), perms);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.exit" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">exit</span><a href="#src.zig-std.os.plan9.exit">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">exit</span>(status: <span class="tok-type">u8</span>) <span class="tok-type">noreturn</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>status: <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.exit">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">exit</span>(status: <span class="tok-type">u8</span>) <span class="tok-type">noreturn</span> {
+    <span class="tok-kw">if</span> (status == <span class="tok-number">0</span>) {
+        <a href="std.os.plan9.html#std.os.plan9.exits">exits</a>(<span class="tok-null">null</span>);
+    } <span class="tok-kw">else</span> {<span class="tok-comment">
+        // TODO plan9 does not have exit codes. You either exit with 0 or a string
+        </span><span class="tok-kw">const</span> arr: [<span class="tok-number">1</span>:<span class="tok-number">0</span>]<span class="tok-type">u8</span> = .{status};
+        <a href="std.os.plan9.html#std.os.plan9.exits">exits</a>(&amp;arr);
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.exits" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">exits</span><a href="#src.zig-std.os.plan9.exits">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">exits</span>(status: ?[*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">noreturn</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>status: ?[*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.exits">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">exits</span>(status: ?[*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">noreturn</span> {
+    _ = <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall1</a>(.EXITS, <span class="tok-kw">if</span> (status) |s| <span class="tok-builtin">@intFromPtr</span>(s) <span class="tok-kw">else</span> <span class="tok-number">0</span>);
+    <span class="tok-kw">unreachable</span>;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.close" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">close</span><a href="#src.zig-std.os.plan9.close">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">close</span>(fd: <span class="tok-type">i32</span>) <span class="tok-type">usize</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>fd: <span class="tok-type">i32</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.close">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">close</span>(fd: <span class="tok-type">i32</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall1</a>(.CLOSE, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, fd)));
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.brk_" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">brk_</span><a href="#src.zig-std.os.plan9.brk_">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">brk_</span>(addr: <span class="tok-type">usize</span>) <span class="tok-type">i32</span></code></pre></div><div class="tldDocs"><p>Brk sets the system's idea of the lowest bss location not
+used by the program (called the break) to addr rounded up to
+the next multiple of 8 bytes.  Locations not less than addr
+and below the stack pointer may cause a memory violation if
+accessed. -9front brk(2)</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>addr: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.brk_">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">brk_</span>(addr: <span class="tok-type">usize</span>) <span class="tok-type">i32</span> {
+    <span class="tok-kw">return</span> <span class="tok-builtin">@intCast</span>(<a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall1</a>(.BRK_, addr));
+}</code></pre></details></div></div><div class="decl"><h2 id="std.os.plan9.sbrk" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">sbrk</span><a href="#src.zig-std.os.plan9.sbrk">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">sbrk</span>(n: <span class="tok-type">usize</span>) <span class="tok-type">usize</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>n: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.os.plan9.sbrk">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">sbrk</span>(n: <span class="tok-type">usize</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">if</span> (<a href="std.os.plan9.html#std.os.plan9.bloc">bloc</a> == <span class="tok-number">0</span>) {<span class="tok-comment">
+        // we are at the start
+        </span><a href="std.os.plan9.html#std.os.plan9.bloc">bloc</a> = <span class="tok-builtin">@intFromPtr</span>(&amp;<a href="std.os.plan9.ExecData.html">ExecData</a>.<a href="std.os.plan9.ExecData.html#std.os.plan9.ExecData.end">end</a>);
+        <a href="std.os.plan9.html#std.os.plan9.bloc_max">bloc_max</a> = <span class="tok-builtin">@intFromPtr</span>(&amp;<a href="std.os.plan9.ExecData.html">ExecData</a>.<a href="std.os.plan9.ExecData.html#std.os.plan9.ExecData.end">end</a>);
+    }
+    <span class="tok-kw">const</span> bl = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.alignForward">alignForward</a>(<span class="tok-type">usize</span>, <a href="std.os.plan9.html#std.os.plan9.bloc">bloc</a>, <a href="std.html">std</a>.<a href="std.heap.html">heap</a>.<a href="std.heap.html#std.heap.pageSize">pageSize</a>());
+    <span class="tok-kw">const</span> n_aligned = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.alignForward">alignForward</a>(<span class="tok-type">usize</span>, n, <a href="std.html">std</a>.<a href="std.heap.html">heap</a>.<a href="std.heap.html#std.heap.pageSize">pageSize</a>());
+    <span class="tok-kw">if</span> (bl + n_aligned &gt; <a href="std.os.plan9.html#std.os.plan9.bloc_max">bloc_max</a>) {<span class="tok-comment">
+        // we need to allocate
+        </span><span class="tok-kw">if</span> (<a href="std.os.plan9.html#std.os.plan9.brk_">brk_</a>(bl + n_aligned) &lt; <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-number">0</span>;
+        <a href="std.os.plan9.html#std.os.plan9.bloc_max">bloc_max</a> = bl + n_aligned;
+    }
+    <a href="std.os.plan9.html#std.os.plan9.bloc">bloc</a> = <a href="std.os.plan9.html#std.os.plan9.bloc">bloc</a> + n_aligned;
+    <span class="tok-kw">return</span> bl;
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.os.plan9">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;../std.zig&quot;</span>);
+<span class="tok-kw">const</span> builtin = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;builtin&quot;</span>);
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> fd_t = <span class="tok-type">i32</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> STDIN_FILENO = <span class="tok-number">0</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> STDOUT_FILENO = <span class="tok-number">1</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> STDERR_FILENO = <span class="tok-number">2</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> PATH_MAX = <span class="tok-number">1023</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> syscall_bits = <span class="tok-kw">switch</span> (<a href="builtin.html">builtin</a>.<a href="builtin.html#builtin.cpu">cpu</a>.<a href="#">arch</a>) {
+    .x86_64 =&gt; <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;plan9/x86_64.zig&quot;</span>),
+    <span class="tok-kw">else</span> =&gt; <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;more plan9 syscall implementations (needs more inline asm in stage2&quot;</span>),
+};
+<span class="tok-comment">/// Ported from /sys/include/ape/errno.h</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> E = <span class="tok-kw">enum</span>(<span class="tok-type">u16</span>) {
+    SUCCESS = <span class="tok-number">0</span>,
+    DOM = <span class="tok-number">1000</span>,
+    RANGE = <span class="tok-number">1001</span>,
+    PLAN9 = <span class="tok-number">1002</span>,
+
+    @&quot;2BIG&quot; = <span class="tok-number">1</span>,
+    ACCES = <span class="tok-number">2</span>,
+    AGAIN = <span class="tok-number">3</span>,<span class="tok-comment">
+    // WOULDBLOCK = 3, // TODO errno.h has 2 names for 3
+    </span>BADF = <span class="tok-number">4</span>,
+    BUSY = <span class="tok-number">5</span>,
+    CHILD = <span class="tok-number">6</span>,
+    DEADLK = <span class="tok-number">7</span>,
+    EXIST = <span class="tok-number">8</span>,
+    FAULT = <span class="tok-number">9</span>,
+    FBIG = <span class="tok-number">10</span>,
+    INTR = <span class="tok-number">11</span>,
+    INVAL = <span class="tok-number">12</span>,
+    IO = <span class="tok-number">13</span>,
+    ISDIR = <span class="tok-number">14</span>,
+    MFILE = <span class="tok-number">15</span>,
+    MLINK = <span class="tok-number">16</span>,
+    NAMETOOLONG = <span class="tok-number">17</span>,
+    NFILE = <span class="tok-number">18</span>,
+    NODEV = <span class="tok-number">19</span>,
+    NOENT = <span class="tok-number">20</span>,
+    NOEXEC = <span class="tok-number">21</span>,
+    NOLCK = <span class="tok-number">22</span>,
+    NOMEM = <span class="tok-number">23</span>,
+    NOSPC = <span class="tok-number">24</span>,
+    NOSYS = <span class="tok-number">25</span>,
+    NOTDIR = <span class="tok-number">26</span>,
+    NOTEMPTY = <span class="tok-number">27</span>,
+    NOTTY = <span class="tok-number">28</span>,
+    NXIO = <span class="tok-number">29</span>,
+    PERM = <span class="tok-number">30</span>,
+    PIPE = <span class="tok-number">31</span>,
+    ROFS = <span class="tok-number">32</span>,
+    SPIPE = <span class="tok-number">33</span>,
+    SRCH = <span class="tok-number">34</span>,
+    XDEV = <span class="tok-number">35</span>,<span class="tok-comment">
+
+    // bsd networking software
+    </span>NOTSOCK = <span class="tok-number">36</span>,
+    PROTONOSUPPORT = <span class="tok-number">37</span>,<span class="tok-comment">
+    // PROTOTYPE = 37, // TODO errno.h has two names for 37
+    </span>CONNREFUSED = <span class="tok-number">38</span>,
+    AFNOSUPPORT = <span class="tok-number">39</span>,
+    NOBUFS = <span class="tok-number">40</span>,
+    OPNOTSUPP = <span class="tok-number">41</span>,
+    ADDRINUSE = <span class="tok-number">42</span>,
+    DESTADDRREQ = <span class="tok-number">43</span>,
+    MSGSIZE = <span class="tok-number">44</span>,
+    NOPROTOOPT = <span class="tok-number">45</span>,
+    SOCKTNOSUPPORT = <span class="tok-number">46</span>,
+    PFNOSUPPORT = <span class="tok-number">47</span>,
+    ADDRNOTAVAIL = <span class="tok-number">48</span>,
+    NETDOWN = <span class="tok-number">49</span>,
+    NETUNREACH = <span class="tok-number">50</span>,
+    NETRESET = <span class="tok-number">51</span>,
+    CONNABORTED = <span class="tok-number">52</span>,
+    ISCONN = <span class="tok-number">53</span>,
+    NOTCONN = <span class="tok-number">54</span>,
+    SHUTDOWN = <span class="tok-number">55</span>,
+    TOOMANYREFS = <span class="tok-number">56</span>,
+    TIMEDOUT = <span class="tok-number">57</span>,
+    HOSTDOWN = <span class="tok-number">58</span>,
+    HOSTUNREACH = <span class="tok-number">59</span>,
+    GREG = <span class="tok-number">60</span>,<span class="tok-comment">
+
+    // These added in 1003.1b-1993
+    </span>CANCELED = <span class="tok-number">61</span>,
+    INPROGRESS = <span class="tok-number">62</span>,<span class="tok-comment">
+
+    // We just add these to be compatible with std.os, which uses them,
+    // They should never get used.
+    </span>DQUOT,
+    CONNRESET,
+    OVERFLOW,
+    LOOP,
+    TXTBSY,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(r: <span class="tok-type">usize</span>) <a href="std.os.plan9.E.html">E</a> {
+        <span class="tok-kw">const</span> signed_r: <span class="tok-type">isize</span> = <span class="tok-builtin">@bitCast</span>(r);
+        <span class="tok-kw">const</span> int = <span class="tok-kw">if</span> (signed_r &gt; -<span class="tok-number">4096</span> <span class="tok-kw">and</span> signed_r &lt; <span class="tok-number">0</span>) -signed_r <span class="tok-kw">else</span> <span class="tok-number">0</span>;
+        <span class="tok-kw">return</span> <span class="tok-builtin">@enumFromInt</span>(int);
+    }
+};<span class="tok-comment">
+// The max bytes that can be in the errstr buff
+</span><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ERRMAX = <span class="tok-number">128</span>;
+<span class="tok-kw">var</span> errstr_buf: [<a href="std.os.plan9.html#std.os.plan9.ERRMAX">ERRMAX</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+<span class="tok-comment">/// Gets whatever the last errstr was</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">errstr</span>() []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+    _ = <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall2</a>(.ERRSTR, <span class="tok-builtin">@intFromPtr</span>(&amp;<a href="std.os.plan9.html#std.os.plan9.errstr_buf">errstr_buf</a>), <a href="std.os.plan9.html#std.os.plan9.ERRMAX">ERRMAX</a>);
+    <span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.span">span</a>(<span class="tok-builtin">@as</span>([*:<span class="tok-number">0</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;<a href="std.os.plan9.html#std.os.plan9.errstr_buf">errstr_buf</a>)));
+}
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Plink = <span class="tok-type">anyopaque</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Tos = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// Per process profiling</span>
+    prof: <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+        <span class="tok-comment">/// known to be 0(ptr)</span>
+        pp: *<a href="std.os.plan9.html#std.os.plan9.Plink">Plink</a>,
+        <span class="tok-comment">/// known to be 4(ptr)</span>
+        next: *<a href="std.os.plan9.html#std.os.plan9.Plink">Plink</a>,
+        last: *<a href="std.os.plan9.html#std.os.plan9.Plink">Plink</a>,
+        first: *<a href="std.os.plan9.html#std.os.plan9.Plink">Plink</a>,
+        pid: <span class="tok-type">u32</span>,
+        what: <span class="tok-type">u32</span>,
+    },
+    <span class="tok-comment">/// cycle clock frequency if there is one, 0 otherwise</span>
+    cyclefreq: <span class="tok-type">u64</span>,
+    <span class="tok-comment">/// cycles spent in kernel</span>
+    kcycles: <span class="tok-type">i64</span>,
+    <span class="tok-comment">/// cycles spent in process (kernel + user)</span>
+    pcycles: <span class="tok-type">i64</span>,
+    <span class="tok-comment">/// might as well put the pid here</span>
+    pid: <span class="tok-type">u32</span>,
+    clock: <span class="tok-type">u32</span>,<span class="tok-comment">
+    // top of stack is here
+</span>};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">var</span> tos: *<a href="std.os.plan9.Tos.html">Tos</a> = <span class="tok-null">undefined</span>;<span class="tok-comment"> // set in start.zig
+</span><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">getpid</span>() <span class="tok-type">u32</span> {
+    <span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.tos">tos</a>.<a href="#">pid</a>;
+}
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SIG = <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// hangup</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> HUP = <span class="tok-number">1</span>;
+    <span class="tok-comment">/// interrupt</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> INT = <span class="tok-number">2</span>;
+    <span class="tok-comment">/// quit</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> QUIT = <span class="tok-number">3</span>;
+    <span class="tok-comment">/// illegal instruction (not reset when caught)</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ILL = <span class="tok-number">4</span>;
+    <span class="tok-comment">/// used by abort</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ABRT = <span class="tok-number">5</span>;
+    <span class="tok-comment">/// floating point exception</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> FPE = <span class="tok-number">6</span>;
+    <span class="tok-comment">/// kill (cannot be caught or ignored)</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> KILL = <span class="tok-number">7</span>;
+    <span class="tok-comment">/// segmentation violation</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> SEGV = <span class="tok-number">8</span>;
+    <span class="tok-comment">/// write on a pipe with no one to read it</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> PIPE = <span class="tok-number">9</span>;
+    <span class="tok-comment">/// alarm clock</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ALRM = <span class="tok-number">10</span>;
+    <span class="tok-comment">/// software termination signal from kill</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> TERM = <span class="tok-number">11</span>;
+    <span class="tok-comment">/// user defined signal 1</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> USR1 = <span class="tok-number">12</span>;
+    <span class="tok-comment">/// user defined signal 2</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> USR2 = <span class="tok-number">13</span>;
+    <span class="tok-comment">/// bus error</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> BUS = <span class="tok-number">14</span>;<span class="tok-comment">
+    // The following symbols must be defined, but the signals needn't be supported
+    </span><span class="tok-comment">/// child process terminated or stopped</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> CHLD = <span class="tok-number">15</span>;
+    <span class="tok-comment">/// continue if stopped</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> CONT = <span class="tok-number">16</span>;
+    <span class="tok-comment">/// stop</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> STOP = <span class="tok-number">17</span>;
+    <span class="tok-comment">/// interactive stop</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> TSTP = <span class="tok-number">18</span>;
+    <span class="tok-comment">/// read from ctl tty by member of background</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> TTIN = <span class="tok-number">19</span>;
+    <span class="tok-comment">/// write to ctl tty by member of background</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> TTOU = <span class="tok-number">20</span>;
+};
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> sigset_t = <span class="tok-type">c_long</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> empty_sigset = <span class="tok-number">0</span>;
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> siginfo_t = <span class="tok-type">c_long</span>;<span class="tok-comment">
+// TODO plan9 doesn't have sigaction_fn. Sigaction is not a union, but we include it here to be compatible.
+</span><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Sigaction = <span class="tok-kw">extern</span> <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> handler_fn = *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (<span class="tok-type">i32</span>) <span class="tok-kw">callconv</span>(.c) <span class="tok-type">void</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> sigaction_fn = *<span class="tok-kw">const</span> <span class="tok-kw">fn</span> (<span class="tok-type">i32</span>, *<span class="tok-kw">const</span> <a href="std.os.plan9.html#std.os.plan9.siginfo_t">siginfo_t</a>, ?*<span class="tok-type">anyopaque</span>) <span class="tok-kw">callconv</span>(.c) <span class="tok-type">void</span>;
+
+    handler: <span class="tok-kw">extern</span> <span class="tok-kw">union</span> {
+        handler: ?<a href="std.os.plan9.Sigaction.html#std.os.plan9.Sigaction.handler_fn">handler_fn</a>,
+        sigaction: ?<a href="std.os.plan9.Sigaction.html#std.os.plan9.Sigaction.sigaction_fn">sigaction_fn</a>,
+    },
+    mask: <a href="std.os.plan9.html#std.os.plan9.sigset_t">sigset_t</a>,
+    flags: <span class="tok-type">c_int</span>,
+};
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> AT = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> FDCWD = -<span class="tok-number">100</span>;<span class="tok-comment"> // we just make up a constant; FDCWD and openat don't actually exist in plan9
+</span>};<span class="tok-comment">
+// TODO implement sigaction
+// right now it is just a shim to allow using start.zig code
+</span><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">sigaction</span>(sig: <span class="tok-type">u6</span>, <span class="tok-kw">noalias</span> act: ?*<span class="tok-kw">const</span> <a href="std.os.plan9.Sigaction.html">Sigaction</a>, <span class="tok-kw">noalias</span> oact: ?*<a href="std.os.plan9.Sigaction.html">Sigaction</a>) <span class="tok-type">usize</span> {
+    _ = oact;
+    _ = act;
+    _ = sig;
+    <span class="tok-kw">return</span> <span class="tok-number">0</span>;
+}
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> SYS = <span class="tok-kw">enum</span>(<span class="tok-type">usize</span>) {
+    SYSR1 = <span class="tok-number">0</span>,
+    _ERRSTR = <span class="tok-number">1</span>,
+    BIND = <span class="tok-number">2</span>,
+    CHDIR = <span class="tok-number">3</span>,
+    CLOSE = <span class="tok-number">4</span>,
+    DUP = <span class="tok-number">5</span>,
+    ALARM = <span class="tok-number">6</span>,
+    EXEC = <span class="tok-number">7</span>,
+    EXITS = <span class="tok-number">8</span>,
+    _FSESSION = <span class="tok-number">9</span>,
+    FAUTH = <span class="tok-number">10</span>,
+    _FSTAT = <span class="tok-number">11</span>,
+    SEGBRK = <span class="tok-number">12</span>,
+    _MOUNT = <span class="tok-number">13</span>,
+    OPEN = <span class="tok-number">14</span>,
+    _READ = <span class="tok-number">15</span>,
+    OSEEK = <span class="tok-number">16</span>,
+    SLEEP = <span class="tok-number">17</span>,
+    _STAT = <span class="tok-number">18</span>,
+    RFORK = <span class="tok-number">19</span>,
+    _WRITE = <span class="tok-number">20</span>,
+    PIPE = <span class="tok-number">21</span>,
+    CREATE = <span class="tok-number">22</span>,
+    FD2PATH = <span class="tok-number">23</span>,
+    BRK_ = <span class="tok-number">24</span>,
+    REMOVE = <span class="tok-number">25</span>,
+    _WSTAT = <span class="tok-number">26</span>,
+    _FWSTAT = <span class="tok-number">27</span>,
+    NOTIFY = <span class="tok-number">28</span>,
+    NOTED = <span class="tok-number">29</span>,
+    SEGATTACH = <span class="tok-number">30</span>,
+    SEGDETACH = <span class="tok-number">31</span>,
+    SEGFREE = <span class="tok-number">32</span>,
+    SEGFLUSH = <span class="tok-number">33</span>,
+    RENDEZVOUS = <span class="tok-number">34</span>,
+    UNMOUNT = <span class="tok-number">35</span>,
+    _WAIT = <span class="tok-number">36</span>,
+    SEMACQUIRE = <span class="tok-number">37</span>,
+    SEMRELEASE = <span class="tok-number">38</span>,
+    SEEK = <span class="tok-number">39</span>,
+    FVERSION = <span class="tok-number">40</span>,
+    ERRSTR = <span class="tok-number">41</span>,
+    STAT = <span class="tok-number">42</span>,
+    FSTAT = <span class="tok-number">43</span>,
+    WSTAT = <span class="tok-number">44</span>,
+    FWSTAT = <span class="tok-number">45</span>,
+    MOUNT = <span class="tok-number">46</span>,
+    AWAIT = <span class="tok-number">47</span>,
+    PREAD = <span class="tok-number">50</span>,
+    PWRITE = <span class="tok-number">51</span>,
+    TSEMACQUIRE = <span class="tok-number">52</span>,
+    _NSEC = <span class="tok-number">53</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">write</span>(fd: <span class="tok-type">i32</span>, buf: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, count: <span class="tok-type">usize</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall4</a>(.PWRITE, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, fd)), <span class="tok-builtin">@intFromPtr</span>(buf), count, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, -<span class="tok-number">1</span>)));
+}
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">pwrite</span>(fd: <span class="tok-type">i32</span>, buf: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, count: <span class="tok-type">usize</span>, offset: <span class="tok-type">isize</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall4</a>(.PWRITE, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, fd)), <span class="tok-builtin">@intFromPtr</span>(buf), count, <span class="tok-builtin">@bitCast</span>(offset));
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">read</span>(fd: <span class="tok-type">i32</span>, buf: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, count: <span class="tok-type">usize</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall4</a>(.PREAD, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, fd)), <span class="tok-builtin">@intFromPtr</span>(buf), count, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, -<span class="tok-number">1</span>)));
+}
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">pread</span>(fd: <span class="tok-type">i32</span>, buf: [*]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, count: <span class="tok-type">usize</span>, offset: <span class="tok-type">isize</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall4</a>(.PREAD, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, fd)), <span class="tok-builtin">@intFromPtr</span>(buf), count, <span class="tok-builtin">@bitCast</span>(offset));
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">open</span>(path: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, flags: <span class="tok-type">u32</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall2</a>(.OPEN, <span class="tok-builtin">@intFromPtr</span>(path), <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, flags)));
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">openat</span>(dirfd: <span class="tok-type">i32</span>, path: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, flags: <span class="tok-type">u32</span>, _: <a href="std.os.plan9.html#std.os.plan9.mode_t">mode_t</a>) <span class="tok-type">usize</span> {<span class="tok-comment">
+    // we skip perms because only create supports perms
+    </span><span class="tok-kw">if</span> (dirfd == <a href="std.os.plan9.AT.html">AT</a>.<a href="std.os.plan9.AT.html#std.os.plan9.AT.FDCWD">FDCWD</a>) {<span class="tok-comment"> // openat(AT_FDCWD, ...) == open(...)
+        </span><span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.open">open</a>(path, flags);
+    }
+    <span class="tok-kw">var</span> dir_path_buf: [<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">var</span> total_path_buf: [<a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a> + <span class="tok-number">1</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">const</span> rc = <a href="std.os.plan9.html#std.os.plan9.fd2path">fd2path</a>(dirfd, &amp;dir_path_buf, <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.html#std.fs.max_path_bytes">max_path_bytes</a>);
+    <span class="tok-kw">if</span> (rc != <span class="tok-number">0</span>) <span class="tok-kw">return</span> rc;
+    <span class="tok-kw">var</span> fba = <a href="std.html">std</a>.<a href="std.heap.html">heap</a>.<a href="std.heap.FixedBufferAllocator.html">FixedBufferAllocator</a>.<a href="std.heap.FixedBufferAllocator.html#std.heap.FixedBufferAllocator.init">init</a>(&amp;total_path_buf);
+    <span class="tok-kw">var</span> alloc = fba.allocator();
+    <span class="tok-kw">const</span> dir_path = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.span">span</a>(<span class="tok-builtin">@as</span>([*:<span class="tok-number">0</span>]<span class="tok-type">u8</span>, <span class="tok-builtin">@ptrCast</span>(&amp;dir_path_buf)));
+    <span class="tok-kw">const</span> total_path = <a href="std.html">std</a>.<a href="std.fs.html">fs</a>.<a href="std.fs.path.html">path</a>.<a href="std.fs.path.html#std.fs.path.join">join</a>(alloc, &amp;.{ dir_path, <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.span">span</a>(path) }) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;<span class="tok-comment"> // the allocation shouldn't fail because it should not exceed max_path_bytes
+    </span>fba.reset();
+    <span class="tok-kw">const</span> total_path_z = alloc.dupeZ(<span class="tok-type">u8</span>, total_path) <span class="tok-kw">catch</span> <span class="tok-kw">unreachable</span>;<span class="tok-comment"> // should not exceed max_path_bytes + 1
+    </span><span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.open">open</a>(total_path_z.ptr, flags);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">fd2path</span>(fd: <span class="tok-type">i32</span>, buf: [*]<span class="tok-type">u8</span>, nbuf: <span class="tok-type">usize</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall3</a>(.FD2PATH, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, fd)), <span class="tok-builtin">@intFromPtr</span>(buf), nbuf);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">create</span>(path: [*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span>, omode: <a href="std.os.plan9.html#std.os.plan9.mode_t">mode_t</a>, perms: <span class="tok-type">usize</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall3</a>(.CREATE, <span class="tok-builtin">@intFromPtr</span>(path), <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, omode)), perms);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">exit</span>(status: <span class="tok-type">u8</span>) <span class="tok-type">noreturn</span> {
+    <span class="tok-kw">if</span> (status == <span class="tok-number">0</span>) {
+        <a href="std.os.plan9.html#std.os.plan9.exits">exits</a>(<span class="tok-null">null</span>);
+    } <span class="tok-kw">else</span> {<span class="tok-comment">
+        // TODO plan9 does not have exit codes. You either exit with 0 or a string
+        </span><span class="tok-kw">const</span> arr: [<span class="tok-number">1</span>:<span class="tok-number">0</span>]<span class="tok-type">u8</span> = .{status};
+        <a href="std.os.plan9.html#std.os.plan9.exits">exits</a>(&amp;arr);
+    }
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">exits</span>(status: ?[*:<span class="tok-number">0</span>]<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">noreturn</span> {
+    _ = <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall1</a>(.EXITS, <span class="tok-kw">if</span> (status) |s| <span class="tok-builtin">@intFromPtr</span>(s) <span class="tok-kw">else</span> <span class="tok-number">0</span>);
+    <span class="tok-kw">unreachable</span>;
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">close</span>(fd: <span class="tok-type">i32</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> <a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall1</a>(.CLOSE, <span class="tok-builtin">@bitCast</span>(<span class="tok-builtin">@as</span>(<span class="tok-type">isize</span>, fd)));
+}
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> mode_t = <span class="tok-type">i32</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> AccessMode = <span class="tok-kw">enum</span>(<span class="tok-type">u2</span>) {
+    RDONLY,
+    WRONLY,
+    RDWR,
+    EXEC,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> O = <span class="tok-kw">packed</span> <span class="tok-kw">struct</span>(<span class="tok-type">u32</span>) {
+    access: <a href="std.os.plan9.AccessMode.html">AccessMode</a>,
+    _2: <span class="tok-type">u2</span> = <span class="tok-number">0</span>,
+    TRUNC: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    CEXEC: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    RCLOSE: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    _7: <span class="tok-type">u5</span> = <span class="tok-number">0</span>,
+    EXCL: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+    _: <span class="tok-type">u19</span> = <span class="tok-number">0</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ExecData = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-kw">const</span> etext: <span class="tok-type">anyopaque</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-kw">const</span> edata: <span class="tok-type">anyopaque</span>;
+    <span class="tok-kw">pub</span> <span class="tok-kw">extern</span> <span class="tok-kw">const</span> end: <span class="tok-type">anyopaque</span>;
+};
+
+<span class="tok-comment">/// Brk sets the system's idea of the lowest bss location not</span>
+<span class="tok-comment">/// used by the program (called the break) to addr rounded up to</span>
+<span class="tok-comment">/// the next multiple of 8 bytes.  Locations not less than addr</span>
+<span class="tok-comment">/// and below the stack pointer may cause a memory violation if</span>
+<span class="tok-comment">/// accessed. -9front brk(2)</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">brk_</span>(addr: <span class="tok-type">usize</span>) <span class="tok-type">i32</span> {
+    <span class="tok-kw">return</span> <span class="tok-builtin">@intCast</span>(<a href="std.os.plan9.html#std.os.plan9.syscall_bits">syscall_bits</a>.<a href="#">syscall1</a>(.BRK_, addr));
+}
+<span class="tok-kw">var</span> bloc: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+<span class="tok-kw">var</span> bloc_max: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">sbrk</span>(n: <span class="tok-type">usize</span>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">if</span> (<a href="std.os.plan9.html#std.os.plan9.bloc">bloc</a> == <span class="tok-number">0</span>) {<span class="tok-comment">
+        // we are at the start
+        </span><a href="std.os.plan9.html#std.os.plan9.bloc">bloc</a> = <span class="tok-builtin">@intFromPtr</span>(&amp;<a href="std.os.plan9.ExecData.html">ExecData</a>.<a href="std.os.plan9.ExecData.html#std.os.plan9.ExecData.end">end</a>);
+        <a href="std.os.plan9.html#std.os.plan9.bloc_max">bloc_max</a> = <span class="tok-builtin">@intFromPtr</span>(&amp;<a href="std.os.plan9.ExecData.html">ExecData</a>.<a href="std.os.plan9.ExecData.html#std.os.plan9.ExecData.end">end</a>);
+    }
+    <span class="tok-kw">const</span> bl = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.alignForward">alignForward</a>(<span class="tok-type">usize</span>, <a href="std.os.plan9.html#std.os.plan9.bloc">bloc</a>, <a href="std.html">std</a>.<a href="std.heap.html">heap</a>.<a href="std.heap.html#std.heap.pageSize">pageSize</a>());
+    <span class="tok-kw">const</span> n_aligned = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.alignForward">alignForward</a>(<span class="tok-type">usize</span>, n, <a href="std.html">std</a>.<a href="std.heap.html">heap</a>.<a href="std.heap.html#std.heap.pageSize">pageSize</a>());
+    <span class="tok-kw">if</span> (bl + n_aligned &gt; <a href="std.os.plan9.html#std.os.plan9.bloc_max">bloc_max</a>) {<span class="tok-comment">
+        // we need to allocate
+        </span><span class="tok-kw">if</span> (<a href="std.os.plan9.html#std.os.plan9.brk_">brk_</a>(bl + n_aligned) &lt; <span class="tok-number">0</span>) <span class="tok-kw">return</span> <span class="tok-number">0</span>;
+        <a href="std.os.plan9.html#std.os.plan9.bloc_max">bloc_max</a> = bl + n_aligned;
+    }
+    <a href="std.os.plan9.html#std.os.plan9.bloc">bloc</a> = <a href="std.os.plan9.html#std.os.plan9.bloc">bloc</a> + n_aligned;
+    <span class="tok-kw">return</span> bl;
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

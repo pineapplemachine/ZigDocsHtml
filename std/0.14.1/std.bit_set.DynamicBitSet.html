@@ -1,0 +1,650 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.bit_set.html" class="">bit_set</a></li><li><a href="std.bit_set.DynamicBitSet.html" class="active">DynamicBitSet</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.bit_set.DynamicBitSet" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.bit_set.DynamicBitSet</span><a href="#src.zig-std.bit_set.DynamicBitSet">[src]</a></h1><div class="tldDocs"><p>A bit set with runtime-known size, backed by an allocated slice
+of usize.  Thin wrapper around DynamicBitSetUnmanaged which keeps
+track of the allocator instance.</p>
+</div><div class="sectTypes"><h2 class="sectionHeader">Types</h2><div class="listTypes"><div class="decl"><h2 id="std.bit_set.DynamicBitSet.MaskInt" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">MaskInt</span><a href="#src.zig-std.bit_set.DynamicBitSet.MaskInt">[src]</a></h2><div class="tldDocs"><p>The integer type used to represent a mask in this bit set</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.MaskInt">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> MaskInt = <span class="tok-type">usize</span></code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.ShiftInt" class="declHeader"><span class="declHeaderCategory">Type</span><span class="declHeaderIdentifier">ShiftInt</span><a href="#src.zig-std.bit_set.DynamicBitSet.ShiftInt">[src]</a></h2><div class="tldDocs"><p>The integer type used to shift a mask in this bit set</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.ShiftInt">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ShiftInt = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.Log2Int">Log2Int</a>(<a href="std.bit_set.DynamicBitSet.html#std.bit_set.DynamicBitSet.MaskInt">MaskInt</a>)</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSetUnmanaged.Iterator" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">Iterator</span><a href="#src.zig-std.bit_set.DynamicBitSetUnmanaged.Iterator">[src]</a></h2><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>options: <a href="std.bit_set.IteratorOptions.html">IteratorOptions</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSetUnmanaged.Iterator">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">Iterator</span>(<span class="tok-kw">comptime</span> options: <a href="std.bit_set.IteratorOptions.html">IteratorOptions</a>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <a href="std.bit_set.html#std.bit_set.BitSetIterator">BitSetIterator</a>(<a href="std.bit_set.DynamicBitSetUnmanaged.html#std.bit_set.DynamicBitSetUnmanaged.MaskInt">MaskInt</a>, options);
+}</code></pre></details></div></div></div></div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>allocator: <a href="std.mem.Allocator.html">Allocator</a></code></pre></div><div><pre><code>unmanaged: <a href="std.bit_set.DynamicBitSetUnmanaged.html">DynamicBitSetUnmanaged</a> = .{}</code></pre></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.bit_set.DynamicBitSet.initEmpty" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">initEmpty</span><a href="#src.zig-std.bit_set.DynamicBitSet.initEmpty">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initEmpty</span>(allocator: <a href="std.mem.Allocator.html">Allocator</a>, bit_length: <span class="tok-type">usize</span>) !<a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div><div class="tldDocs"><p>Creates a bit set with no elements present.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>allocator: <a href="std.mem.Allocator.html">Allocator</a></code></pre></div><div><pre><code>bit_length: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.initEmpty">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initEmpty</span>(allocator: <a href="std.mem.Allocator.html">Allocator</a>, bit_length: <span class="tok-type">usize</span>) !<a href="std.bit_set.DynamicBitSet.html">Self</a> {
+    <span class="tok-kw">return</span> <a href="std.bit_set.DynamicBitSet.html">Self</a>{
+        .unmanaged = <span class="tok-kw">try</span> <a href="std.bit_set.DynamicBitSetUnmanaged.html">DynamicBitSetUnmanaged</a>.<a href="std.bit_set.DynamicBitSetUnmanaged.html#std.bit_set.DynamicBitSetUnmanaged.initEmpty">initEmpty</a>(allocator, bit_length),
+        .allocator = allocator,
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.initFull" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">initFull</span><a href="#src.zig-std.bit_set.DynamicBitSet.initFull">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initFull</span>(allocator: <a href="std.mem.Allocator.html">Allocator</a>, bit_length: <span class="tok-type">usize</span>) !<a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div><div class="tldDocs"><p>Creates a bit set with all elements present.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>allocator: <a href="std.mem.Allocator.html">Allocator</a></code></pre></div><div><pre><code>bit_length: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.initFull">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initFull</span>(allocator: <a href="std.mem.Allocator.html">Allocator</a>, bit_length: <span class="tok-type">usize</span>) !<a href="std.bit_set.DynamicBitSet.html">Self</a> {
+    <span class="tok-kw">return</span> <a href="std.bit_set.DynamicBitSet.html">Self</a>{
+        .unmanaged = <span class="tok-kw">try</span> <a href="std.bit_set.DynamicBitSetUnmanaged.html">DynamicBitSetUnmanaged</a>.<a href="std.bit_set.DynamicBitSetUnmanaged.html#std.bit_set.DynamicBitSetUnmanaged.initFull">initFull</a>(allocator, bit_length),
+        .allocator = allocator,
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.resize" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">resize</span><a href="#src.zig-std.bit_set.DynamicBitSet.resize">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">resize</span>(self: *<span class="tok-builtin">@This</span>(), new_len: <span class="tok-type">usize</span>, fill: <span class="tok-type">bool</span>) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Resizes to a new length.  If the new length is larger
+than the old length, fills any added bits with <code>fill</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-builtin">@This</span>()</code></pre></div><div><pre><code>new_len: <span class="tok-type">usize</span></code></pre></div><div><pre><code>fill: <span class="tok-type">bool</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.resize">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">resize</span>(self: *<span class="tok-builtin">@This</span>(), new_len: <span class="tok-type">usize</span>, fill: <span class="tok-type">bool</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">try</span> self.unmanaged.resize(self.allocator, new_len, fill);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.deinit" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">deinit</span><a href="#src.zig-std.bit_set.DynamicBitSet.deinit">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Deinitializes the array and releases its memory.
+The passed allocator must be the same one used for
+init* or resize in the past.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.deinit">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">void</span> {
+    self.unmanaged.deinit(self.allocator);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.clone" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">clone</span><a href="#src.zig-std.bit_set.DynamicBitSet.clone">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">clone</span>(self: *<span class="tok-kw">const</span> <a href="std.bit_set.DynamicBitSet.html">Self</a>, new_allocator: <a href="std.mem.Allocator.html">Allocator</a>) !<a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div><div class="tldDocs"><p>Creates a duplicate of this bit set, using the new allocator.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div><div><pre><code>new_allocator: <a href="std.mem.Allocator.html">Allocator</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.clone">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">clone</span>(self: *<span class="tok-kw">const</span> <a href="std.bit_set.DynamicBitSet.html">Self</a>, new_allocator: <a href="std.mem.Allocator.html">Allocator</a>) !<a href="std.bit_set.DynamicBitSet.html">Self</a> {
+    <span class="tok-kw">return</span> <a href="std.bit_set.DynamicBitSet.html">Self</a>{
+        .unmanaged = <span class="tok-kw">try</span> self.unmanaged.clone(new_allocator),
+        .allocator = new_allocator,
+    };
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.capacity" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">capacity</span><a href="#src.zig-std.bit_set.DynamicBitSet.capacity">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">capacity</span>(self: <a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">usize</span></code></pre></div><div class="tldDocs"><p>Returns the number of bits in this bit set</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.capacity">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">capacity</span>(self: <a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> self.unmanaged.capacity();
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.isSet" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">isSet</span><a href="#src.zig-std.bit_set.DynamicBitSet.isSet">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isSet</span>(self: <a href="std.bit_set.DynamicBitSet.html">Self</a>, index: <span class="tok-type">usize</span>) <span class="tok-type">bool</span></code></pre></div><div class="tldDocs"><p>Returns true if the bit at the specified index
+is present in the set, false otherwise.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div><div><pre><code>index: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.isSet">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isSet</span>(self: <a href="std.bit_set.DynamicBitSet.html">Self</a>, index: <span class="tok-type">usize</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> self.unmanaged.isSet(index);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.count" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">count</span><a href="#src.zig-std.bit_set.DynamicBitSet.count">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">count</span>(self: <a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">usize</span></code></pre></div><div class="tldDocs"><p>Returns the total number of set bits in this bit set.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.count">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">count</span>(self: <a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> self.unmanaged.count();
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.setValue" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">setValue</span><a href="#src.zig-std.bit_set.DynamicBitSet.setValue">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setValue</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, index: <span class="tok-type">usize</span>, value: <span class="tok-type">bool</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Changes the value of the specified bit of the bit
+set to match the passed boolean.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div><div><pre><code>index: <span class="tok-type">usize</span></code></pre></div><div><pre><code>value: <span class="tok-type">bool</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.setValue">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setValue</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, index: <span class="tok-type">usize</span>, value: <span class="tok-type">bool</span>) <span class="tok-type">void</span> {
+    self.unmanaged.setValue(index, value);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.set" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">set</span><a href="#src.zig-std.bit_set.DynamicBitSet.set">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">set</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, index: <span class="tok-type">usize</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Adds a specific bit to the bit set</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div><div><pre><code>index: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.set">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">set</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, index: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+    self.unmanaged.set(index);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.setRangeValue" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">setRangeValue</span><a href="#src.zig-std.bit_set.DynamicBitSet.setRangeValue">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setRangeValue</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, range: <a href="std.bit_set.Range.html">Range</a>, value: <span class="tok-type">bool</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Changes the value of all bits in the specified range to
+match the passed boolean.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div><div><pre><code>range: <a href="std.bit_set.Range.html">Range</a></code></pre></div><div><pre><code>value: <span class="tok-type">bool</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.setRangeValue">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setRangeValue</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, range: <a href="std.bit_set.Range.html">Range</a>, value: <span class="tok-type">bool</span>) <span class="tok-type">void</span> {
+    self.unmanaged.setRangeValue(range, value);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.unset" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">unset</span><a href="#src.zig-std.bit_set.DynamicBitSet.unset">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">unset</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, index: <span class="tok-type">usize</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Removes a specific bit from the bit set</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div><div><pre><code>index: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.unset">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">unset</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, index: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+    self.unmanaged.unset(index);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.toggle" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">toggle</span><a href="#src.zig-std.bit_set.DynamicBitSet.toggle">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toggle</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, index: <span class="tok-type">usize</span>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Flips a specific bit in the bit set</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div><div><pre><code>index: <span class="tok-type">usize</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.toggle">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toggle</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, index: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+    self.unmanaged.toggle(index);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.toggleSet" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">toggleSet</span><a href="#src.zig-std.bit_set.DynamicBitSet.toggleSet">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toggleSet</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, toggles: <a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Flips all bits in this bit set which are present
+in the toggles bit set.  Both sets must have the
+same bit_length.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div><div><pre><code>toggles: <a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.toggleSet">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toggleSet</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, toggles: <a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">void</span> {
+    self.unmanaged.toggleSet(toggles.unmanaged);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.toggleAll" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">toggleAll</span><a href="#src.zig-std.bit_set.DynamicBitSet.toggleAll">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toggleAll</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Flips every bit in the bit set.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.toggleAll">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toggleAll</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">void</span> {
+    self.unmanaged.toggleAll();
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.setUnion" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">setUnion</span><a href="#src.zig-std.bit_set.DynamicBitSet.setUnion">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setUnion</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, other: <a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Performs a union of two bit sets, and stores the
+result in the first one.  Bits in the result are
+set if the corresponding bits were set in either input.
+The two sets must both be the same bit_length.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div><div><pre><code>other: <a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.setUnion">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setUnion</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, other: <a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">void</span> {
+    self.unmanaged.setUnion(other.unmanaged);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.setIntersection" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">setIntersection</span><a href="#src.zig-std.bit_set.DynamicBitSet.setIntersection">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setIntersection</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, other: <a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Performs an intersection of two bit sets, and stores
+the result in the first one.  Bits in the result are
+set if the corresponding bits were set in both inputs.
+The two sets must both be the same bit_length.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div><div><pre><code>other: <a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.setIntersection">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setIntersection</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, other: <a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">void</span> {
+    self.unmanaged.setIntersection(other.unmanaged);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.findFirstSet" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">findFirstSet</span><a href="#src.zig-std.bit_set.DynamicBitSet.findFirstSet">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">findFirstSet</span>(self: <a href="std.bit_set.DynamicBitSet.html">Self</a>) ?<span class="tok-type">usize</span></code></pre></div><div class="tldDocs"><p>Finds the index of the first set bit.
+If no bits are set, returns null.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.findFirstSet">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">findFirstSet</span>(self: <a href="std.bit_set.DynamicBitSet.html">Self</a>) ?<span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> self.unmanaged.findFirstSet();
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.toggleFirstSet" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">toggleFirstSet</span><a href="#src.zig-std.bit_set.DynamicBitSet.toggleFirstSet">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toggleFirstSet</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>) ?<span class="tok-type">usize</span></code></pre></div><div class="tldDocs"><p>Finds the index of the first set bit, and unsets it.
+If no bits are set, returns null.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.toggleFirstSet">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toggleFirstSet</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>) ?<span class="tok-type">usize</span> {
+    <span class="tok-kw">return</span> self.unmanaged.toggleFirstSet();
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.eql" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">eql</span><a href="#src.zig-std.bit_set.DynamicBitSet.eql">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eql</span>(self: <a href="std.bit_set.DynamicBitSet.html">Self</a>, other: <a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">bool</span></code></pre></div><div class="tldDocs"><p>Returns true iff every corresponding bit in both
+bit sets are the same.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: <a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div><div><pre><code>other: <a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.eql">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eql</span>(self: <a href="std.bit_set.DynamicBitSet.html">Self</a>, other: <a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> self.unmanaged.eql(other.unmanaged);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.bit_set.DynamicBitSet.iterator" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">iterator</span><a href="#src.zig-std.bit_set.DynamicBitSet.iterator">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">iterator</span>(self: *<span class="tok-kw">const</span> <a href="std.bit_set.DynamicBitSet.html">Self</a>, <span class="tok-kw">comptime</span> options: <a href="std.bit_set.IteratorOptions.html">IteratorOptions</a>) <a href="std.bit_set.DynamicBitSetUnmanaged.html#std.bit_set.DynamicBitSetUnmanaged.Iterator">Iterator</a>(options)</code></pre></div><div class="tldDocs"><p>Iterates through the items in the set, according to the options.
+The default options (.{}) will iterate indices of set bits in
+ascending order.  Modifications to the underlying bit set may
+or may not be observed by the iterator.  Resizing the underlying
+bit set invalidates the iterator.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>self: *<span class="tok-kw">const</span> <a href="std.bit_set.DynamicBitSet.html">Self</a></code></pre></div><div><pre><code>options: <a href="std.bit_set.IteratorOptions.html">IteratorOptions</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet.iterator">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">iterator</span>(self: *<span class="tok-kw">const</span> <a href="std.bit_set.DynamicBitSet.html">Self</a>, <span class="tok-kw">comptime</span> options: <a href="std.bit_set.IteratorOptions.html">IteratorOptions</a>) <a href="std.bit_set.DynamicBitSetUnmanaged.html#std.bit_set.DynamicBitSetUnmanaged.Iterator">Iterator</a>(options) {
+    <span class="tok-kw">return</span> self.unmanaged.iterator(options);
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.bit_set.DynamicBitSet">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> DynamicBitSet = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+
+    <span class="tok-comment">/// The integer type used to represent a mask in this bit set</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> MaskInt = <span class="tok-type">usize</span>;
+
+    <span class="tok-comment">/// The integer type used to shift a mask in this bit set</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> ShiftInt = <a href="std.html">std</a>.<a href="std.math.html">math</a>.<a href="std.math.html#std.math.Log2Int">Log2Int</a>(<a href="std.bit_set.DynamicBitSet.html#std.bit_set.DynamicBitSet.MaskInt">MaskInt</a>);
+
+    allocator: <a href="std.mem.Allocator.html">Allocator</a>,
+    unmanaged: <a href="std.bit_set.DynamicBitSetUnmanaged.html">DynamicBitSetUnmanaged</a> = .{},
+
+    <span class="tok-comment">/// Creates a bit set with no elements present.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initEmpty</span>(allocator: <a href="std.mem.Allocator.html">Allocator</a>, bit_length: <span class="tok-type">usize</span>) !<a href="std.bit_set.DynamicBitSet.html">Self</a> {
+        <span class="tok-kw">return</span> <a href="std.bit_set.DynamicBitSet.html">Self</a>{
+            .unmanaged = <span class="tok-kw">try</span> <a href="std.bit_set.DynamicBitSetUnmanaged.html">DynamicBitSetUnmanaged</a>.<a href="std.bit_set.DynamicBitSetUnmanaged.html#std.bit_set.DynamicBitSetUnmanaged.initEmpty">initEmpty</a>(allocator, bit_length),
+            .allocator = allocator,
+        };
+    }
+
+    <span class="tok-comment">/// Creates a bit set with all elements present.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">initFull</span>(allocator: <a href="std.mem.Allocator.html">Allocator</a>, bit_length: <span class="tok-type">usize</span>) !<a href="std.bit_set.DynamicBitSet.html">Self</a> {
+        <span class="tok-kw">return</span> <a href="std.bit_set.DynamicBitSet.html">Self</a>{
+            .unmanaged = <span class="tok-kw">try</span> <a href="std.bit_set.DynamicBitSetUnmanaged.html">DynamicBitSetUnmanaged</a>.<a href="std.bit_set.DynamicBitSetUnmanaged.html#std.bit_set.DynamicBitSetUnmanaged.initFull">initFull</a>(allocator, bit_length),
+            .allocator = allocator,
+        };
+    }
+
+    <span class="tok-comment">/// Resizes to a new length.  If the new length is larger</span>
+    <span class="tok-comment">/// than the old length, fills any added bits with `fill`.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">resize</span>(self: *<span class="tok-builtin">@This</span>(), new_len: <span class="tok-type">usize</span>, fill: <span class="tok-type">bool</span>) !<span class="tok-type">void</span> {
+        <span class="tok-kw">try</span> self.unmanaged.resize(self.allocator, new_len, fill);
+    }
+
+    <span class="tok-comment">/// Deinitializes the array and releases its memory.</span>
+    <span class="tok-comment">/// The passed allocator must be the same one used for</span>
+    <span class="tok-comment">/// init* or resize in the past.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">deinit</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">void</span> {
+        self.unmanaged.deinit(self.allocator);
+    }
+
+    <span class="tok-comment">/// Creates a duplicate of this bit set, using the new allocator.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">clone</span>(self: *<span class="tok-kw">const</span> <a href="std.bit_set.DynamicBitSet.html">Self</a>, new_allocator: <a href="std.mem.Allocator.html">Allocator</a>) !<a href="std.bit_set.DynamicBitSet.html">Self</a> {
+        <span class="tok-kw">return</span> <a href="std.bit_set.DynamicBitSet.html">Self</a>{
+            .unmanaged = <span class="tok-kw">try</span> self.unmanaged.clone(new_allocator),
+            .allocator = new_allocator,
+        };
+    }
+
+    <span class="tok-comment">/// Returns the number of bits in this bit set</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">inline</span> <span class="tok-kw">fn</span> <span class="tok-fn">capacity</span>(self: <a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">usize</span> {
+        <span class="tok-kw">return</span> self.unmanaged.capacity();
+    }
+
+    <span class="tok-comment">/// Returns true if the bit at the specified index</span>
+    <span class="tok-comment">/// is present in the set, false otherwise.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isSet</span>(self: <a href="std.bit_set.DynamicBitSet.html">Self</a>, index: <span class="tok-type">usize</span>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">return</span> self.unmanaged.isSet(index);
+    }
+
+    <span class="tok-comment">/// Returns the total number of set bits in this bit set.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">count</span>(self: <a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">usize</span> {
+        <span class="tok-kw">return</span> self.unmanaged.count();
+    }
+
+    <span class="tok-comment">/// Changes the value of the specified bit of the bit</span>
+    <span class="tok-comment">/// set to match the passed boolean.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setValue</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, index: <span class="tok-type">usize</span>, value: <span class="tok-type">bool</span>) <span class="tok-type">void</span> {
+        self.unmanaged.setValue(index, value);
+    }
+
+    <span class="tok-comment">/// Adds a specific bit to the bit set</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">set</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, index: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+        self.unmanaged.set(index);
+    }
+
+    <span class="tok-comment">/// Changes the value of all bits in the specified range to</span>
+    <span class="tok-comment">/// match the passed boolean.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setRangeValue</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, range: <a href="std.bit_set.Range.html">Range</a>, value: <span class="tok-type">bool</span>) <span class="tok-type">void</span> {
+        self.unmanaged.setRangeValue(range, value);
+    }
+
+    <span class="tok-comment">/// Removes a specific bit from the bit set</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">unset</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, index: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+        self.unmanaged.unset(index);
+    }
+
+    <span class="tok-comment">/// Flips a specific bit in the bit set</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toggle</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, index: <span class="tok-type">usize</span>) <span class="tok-type">void</span> {
+        self.unmanaged.toggle(index);
+    }
+
+    <span class="tok-comment">/// Flips all bits in this bit set which are present</span>
+    <span class="tok-comment">/// in the toggles bit set.  Both sets must have the</span>
+    <span class="tok-comment">/// same bit_length.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toggleSet</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, toggles: <a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">void</span> {
+        self.unmanaged.toggleSet(toggles.unmanaged);
+    }
+
+    <span class="tok-comment">/// Flips every bit in the bit set.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toggleAll</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">void</span> {
+        self.unmanaged.toggleAll();
+    }
+
+    <span class="tok-comment">/// Performs a union of two bit sets, and stores the</span>
+    <span class="tok-comment">/// result in the first one.  Bits in the result are</span>
+    <span class="tok-comment">/// set if the corresponding bits were set in either input.</span>
+    <span class="tok-comment">/// The two sets must both be the same bit_length.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setUnion</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, other: <a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">void</span> {
+        self.unmanaged.setUnion(other.unmanaged);
+    }
+
+    <span class="tok-comment">/// Performs an intersection of two bit sets, and stores</span>
+    <span class="tok-comment">/// the result in the first one.  Bits in the result are</span>
+    <span class="tok-comment">/// set if the corresponding bits were set in both inputs.</span>
+    <span class="tok-comment">/// The two sets must both be the same bit_length.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">setIntersection</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>, other: <a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">void</span> {
+        self.unmanaged.setIntersection(other.unmanaged);
+    }
+
+    <span class="tok-comment">/// Finds the index of the first set bit.</span>
+    <span class="tok-comment">/// If no bits are set, returns null.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">findFirstSet</span>(self: <a href="std.bit_set.DynamicBitSet.html">Self</a>) ?<span class="tok-type">usize</span> {
+        <span class="tok-kw">return</span> self.unmanaged.findFirstSet();
+    }
+
+    <span class="tok-comment">/// Finds the index of the first set bit, and unsets it.</span>
+    <span class="tok-comment">/// If no bits are set, returns null.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toggleFirstSet</span>(self: *<a href="std.bit_set.DynamicBitSet.html">Self</a>) ?<span class="tok-type">usize</span> {
+        <span class="tok-kw">return</span> self.unmanaged.toggleFirstSet();
+    }
+
+    <span class="tok-comment">/// Returns true iff every corresponding bit in both</span>
+    <span class="tok-comment">/// bit sets are the same.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">eql</span>(self: <a href="std.bit_set.DynamicBitSet.html">Self</a>, other: <a href="std.bit_set.DynamicBitSet.html">Self</a>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">return</span> self.unmanaged.eql(other.unmanaged);
+    }
+
+    <span class="tok-comment">/// Iterates through the items in the set, according to the options.</span>
+    <span class="tok-comment">/// The default options (.{}) will iterate indices of set bits in</span>
+    <span class="tok-comment">/// ascending order.  Modifications to the underlying bit set may</span>
+    <span class="tok-comment">/// or may not be observed by the iterator.  Resizing the underlying</span>
+    <span class="tok-comment">/// bit set invalidates the iterator.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">iterator</span>(self: *<span class="tok-kw">const</span> <a href="std.bit_set.DynamicBitSet.html">Self</a>, <span class="tok-kw">comptime</span> options: <a href="std.bit_set.IteratorOptions.html">IteratorOptions</a>) <a href="std.bit_set.DynamicBitSetUnmanaged.html#std.bit_set.DynamicBitSetUnmanaged.Iterator">Iterator</a>(options) {
+        <span class="tok-kw">return</span> self.unmanaged.iterator(options);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> Iterator = <a href="std.bit_set.DynamicBitSetUnmanaged.html">DynamicBitSetUnmanaged</a>.<a href="std.bit_set.DynamicBitSetUnmanaged.html#std.bit_set.DynamicBitSetUnmanaged.Iterator">Iterator</a>;
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

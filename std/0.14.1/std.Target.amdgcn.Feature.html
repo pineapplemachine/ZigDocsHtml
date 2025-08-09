@@ -1,0 +1,589 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">Target</a></li><li><a href="std.Target.amdgcn.html" class="">amdgcn</a></li><li><a href="std.Target.amdgcn.Feature.html" class="active">Feature</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.Target.amdgcn.Feature" class="declHeader"><span class="declHeaderCategory">enum</span><span class="declHeaderIdentifier">std.Target.amdgcn.Feature</span><a href="#src.zig-std.Target.amdgcn.Feature">[src]</a></h1><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>@&quot;16_bit_insts&quot;</code></pre></div><div><pre><code>a16</code></pre></div><div><pre><code>add_no_carry_insts</code></pre></div><div><pre><code>agent_scope_fine_grained_remote_memory_atomics</code></pre></div><div><pre><code>allocate1_5xvgprs</code></pre></div><div><pre><code>aperture_regs</code></pre></div><div><pre><code>architected_flat_scratch</code></pre></div><div><pre><code>architected_sgprs</code></pre></div><div><pre><code>atomic_buffer_global_pk_add_f16_insts</code></pre></div><div><pre><code>atomic_buffer_global_pk_add_f16_no_rtn_insts</code></pre></div><div><pre><code>atomic_buffer_pk_add_bf16_inst</code></pre></div><div><pre><code>atomic_csub_no_rtn_insts</code></pre></div><div><pre><code>atomic_ds_pk_add_16_insts</code></pre></div><div><pre><code>atomic_fadd_no_rtn_insts</code></pre></div><div><pre><code>atomic_fadd_rtn_insts</code></pre></div><div><pre><code>atomic_flat_pk_add_16_insts</code></pre></div><div><pre><code>atomic_fmin_fmax_flat_f32</code></pre></div><div><pre><code>atomic_fmin_fmax_flat_f64</code></pre></div><div><pre><code>atomic_fmin_fmax_global_f32</code></pre></div><div><pre><code>atomic_fmin_fmax_global_f64</code></pre></div><div><pre><code>atomic_global_pk_add_bf16_inst</code></pre></div><div><pre><code>auto_waitcnt_before_barrier</code></pre></div><div><pre><code>back_off_barrier</code></pre></div><div><pre><code>ci_insts</code></pre></div><div><pre><code>cumode</code></pre></div><div><pre><code>default_component_broadcast</code></pre></div><div><pre><code>default_component_zero</code></pre></div><div><pre><code>dl_insts</code></pre></div><div><pre><code>dot10_insts</code></pre></div><div><pre><code>dot11_insts</code></pre></div><div><pre><code>dot1_insts</code></pre></div><div><pre><code>dot2_insts</code></pre></div><div><pre><code>dot3_insts</code></pre></div><div><pre><code>dot4_insts</code></pre></div><div><pre><code>dot5_insts</code></pre></div><div><pre><code>dot6_insts</code></pre></div><div><pre><code>dot7_insts</code></pre></div><div><pre><code>dot8_insts</code></pre></div><div><pre><code>dot9_insts</code></pre></div><div><pre><code>dpp</code></pre></div><div><pre><code>dpp8</code></pre></div><div><pre><code>dpp_64bit</code></pre></div><div><pre><code>dpp_src1_sgpr</code></pre></div><div><pre><code>ds128</code></pre></div><div><pre><code>ds_src2_insts</code></pre></div><div><pre><code>extended_image_insts</code></pre></div><div><pre><code>fast_denormal_f32</code></pre></div><div><pre><code>fast_fmaf</code></pre></div><div><pre><code>flat_address_space</code></pre></div><div><pre><code>flat_atomic_fadd_f32_inst</code></pre></div><div><pre><code>flat_buffer_global_fadd_f64_inst</code></pre></div><div><pre><code>flat_for_global</code></pre></div><div><pre><code>flat_global_insts</code></pre></div><div><pre><code>flat_inst_offsets</code></pre></div><div><pre><code>flat_scratch</code></pre></div><div><pre><code>flat_scratch_insts</code></pre></div><div><pre><code>flat_segment_offset_bug</code></pre></div><div><pre><code>fma_mix_insts</code></pre></div><div><pre><code>fmacf64_inst</code></pre></div><div><pre><code>fmaf</code></pre></div><div><pre><code>force_store_sc0_sc1</code></pre></div><div><pre><code>fp64</code></pre></div><div><pre><code>fp8_conversion_insts</code></pre></div><div><pre><code>fp8_insts</code></pre></div><div><pre><code>full_rate_64_ops</code></pre></div><div><pre><code>g16</code></pre></div><div><pre><code>gcn3_encoding</code></pre></div><div><pre><code>gds</code></pre></div><div><pre><code>get_wave_id_inst</code></pre></div><div><pre><code>gfx10</code></pre></div><div><pre><code>gfx10_3_insts</code></pre></div><div><pre><code>gfx10_a_encoding</code></pre></div><div><pre><code>gfx10_b_encoding</code></pre></div><div><pre><code>gfx10_insts</code></pre></div><div><pre><code>gfx11</code></pre></div><div><pre><code>gfx11_insts</code></pre></div><div><pre><code>gfx12</code></pre></div><div><pre><code>gfx12_insts</code></pre></div><div><pre><code>gfx7_gfx8_gfx9_insts</code></pre></div><div><pre><code>gfx8_insts</code></pre></div><div><pre><code>gfx9</code></pre></div><div><pre><code>gfx90a_insts</code></pre></div><div><pre><code>gfx940_insts</code></pre></div><div><pre><code>gfx9_insts</code></pre></div><div><pre><code>gws</code></pre></div><div><pre><code>half_rate_64_ops</code></pre></div><div><pre><code>image_gather4_d16_bug</code></pre></div><div><pre><code>image_insts</code></pre></div><div><pre><code>image_store_d16_bug</code></pre></div><div><pre><code>inst_fwd_prefetch_bug</code></pre></div><div><pre><code>int_clamp_insts</code></pre></div><div><pre><code>inv_2pi_inline_imm</code></pre></div><div><pre><code>kernarg_preload</code></pre></div><div><pre><code>lds_branch_vmem_war_hazard</code></pre></div><div><pre><code>lds_misaligned_bug</code></pre></div><div><pre><code>ldsbankcount16</code></pre></div><div><pre><code>ldsbankcount32</code></pre></div><div><pre><code>load_store_opt</code></pre></div><div><pre><code>localmemorysize32768</code></pre></div><div><pre><code>localmemorysize65536</code></pre></div><div><pre><code>mad_intra_fwd_bug</code></pre></div><div><pre><code>mad_mac_f32_insts</code></pre></div><div><pre><code>mad_mix_insts</code></pre></div><div><pre><code>mai_insts</code></pre></div><div><pre><code>max_hard_clause_length_32</code></pre></div><div><pre><code>max_hard_clause_length_63</code></pre></div><div><pre><code>max_private_element_size_16</code></pre></div><div><pre><code>max_private_element_size_4</code></pre></div><div><pre><code>max_private_element_size_8</code></pre></div><div><pre><code>memory_atomic_fadd_f32_denormal_support</code></pre></div><div><pre><code>mfma_inline_literal_bug</code></pre></div><div><pre><code>mimg_r128</code></pre></div><div><pre><code>movrel</code></pre></div><div><pre><code>msaa_load_dst_sel_bug</code></pre></div><div><pre><code>negative_scratch_offset_bug</code></pre></div><div><pre><code>negative_unaligned_scratch_offset_bug</code></pre></div><div><pre><code>no_data_dep_hazard</code></pre></div><div><pre><code>no_sdst_cmpx</code></pre></div><div><pre><code>nsa_clause_bug</code></pre></div><div><pre><code>nsa_encoding</code></pre></div><div><pre><code>nsa_to_vmem_bug</code></pre></div><div><pre><code>offset_3f_bug</code></pre></div><div><pre><code>packed_fp32_ops</code></pre></div><div><pre><code>packed_tid</code></pre></div><div><pre><code>partial_nsa_encoding</code></pre></div><div><pre><code>pk_fmac_f16_inst</code></pre></div><div><pre><code>precise_memory</code></pre></div><div><pre><code>priv_enabled_trap2_nop_bug</code></pre></div><div><pre><code>promote_alloca</code></pre></div><div><pre><code>prt_strict_null</code></pre></div><div><pre><code>pseudo_scalar_trans</code></pre></div><div><pre><code>r128_a16</code></pre></div><div><pre><code>real_true16</code></pre></div><div><pre><code>required_export_priority</code></pre></div><div><pre><code>requires_cov6</code></pre></div><div><pre><code>restricted_soffset</code></pre></div><div><pre><code>s_memrealtime</code></pre></div><div><pre><code>s_memtime_inst</code></pre></div><div><pre><code>salu_float</code></pre></div><div><pre><code>scalar_atomics</code></pre></div><div><pre><code>scalar_dwordx3_loads</code></pre></div><div><pre><code>scalar_flat_scratch_insts</code></pre></div><div><pre><code>scalar_stores</code></pre></div><div><pre><code>sdwa</code></pre></div><div><pre><code>sdwa_mav</code></pre></div><div><pre><code>sdwa_omod</code></pre></div><div><pre><code>sdwa_out_mods_vopc</code></pre></div><div><pre><code>sdwa_scalar</code></pre></div><div><pre><code>sdwa_sdst</code></pre></div><div><pre><code>sea_islands</code></pre></div><div><pre><code>sgpr_init_bug</code></pre></div><div><pre><code>shader_cycles_hi_lo_registers</code></pre></div><div><pre><code>shader_cycles_register</code></pre></div><div><pre><code>si_scheduler</code></pre></div><div><pre><code>smem_to_vector_write_hazard</code></pre></div><div><pre><code>southern_islands</code></pre></div><div><pre><code>sramecc</code></pre></div><div><pre><code>sramecc_support</code></pre></div><div><pre><code>tgsplit</code></pre></div><div><pre><code>trap_handler</code></pre></div><div><pre><code>trig_reduced_range</code></pre></div><div><pre><code>true16</code></pre></div><div><pre><code>unaligned_access_mode</code></pre></div><div><pre><code>unaligned_buffer_access</code></pre></div><div><pre><code>unaligned_ds_access</code></pre></div><div><pre><code>unaligned_scratch_access</code></pre></div><div><pre><code>unpacked_d16_vmem</code></pre></div><div><pre><code>unsafe_ds_offset_folding</code></pre></div><div><pre><code>user_sgpr_init16_bug</code></pre></div><div><pre><code>valu_trans_use_hazard</code></pre></div><div><pre><code>vcmpx_exec_war_hazard</code></pre></div><div><pre><code>vcmpx_permlane_hazard</code></pre></div><div><pre><code>vgpr_index_mode</code></pre></div><div><pre><code>vgpr_singleuse_hint</code></pre></div><div><pre><code>vmem_to_scalar_write_hazard</code></pre></div><div><pre><code>vmem_write_vgpr_in_order</code></pre></div><div><pre><code>volcanic_islands</code></pre></div><div><pre><code>vop3_literal</code></pre></div><div><pre><code>vop3p</code></pre></div><div><pre><code>vopd</code></pre></div><div><pre><code>vscnt</code></pre></div><div><pre><code>wavefrontsize16</code></pre></div><div><pre><code>wavefrontsize32</code></pre></div><div><pre><code>wavefrontsize64</code></pre></div><div><pre><code>xnack</code></pre></div><div><pre><code>xnack_support</code></pre></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.Target.amdgcn.Feature">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> Feature = <span class="tok-kw">enum</span> {
+    @&quot;16_bit_insts&quot;,
+    a16,
+    add_no_carry_insts,
+    agent_scope_fine_grained_remote_memory_atomics,
+    allocate1_5xvgprs,
+    aperture_regs,
+    architected_flat_scratch,
+    architected_sgprs,
+    atomic_buffer_global_pk_add_f16_insts,
+    atomic_buffer_global_pk_add_f16_no_rtn_insts,
+    atomic_buffer_pk_add_bf16_inst,
+    atomic_csub_no_rtn_insts,
+    atomic_ds_pk_add_16_insts,
+    atomic_fadd_no_rtn_insts,
+    atomic_fadd_rtn_insts,
+    atomic_flat_pk_add_16_insts,
+    atomic_fmin_fmax_flat_f32,
+    atomic_fmin_fmax_flat_f64,
+    atomic_fmin_fmax_global_f32,
+    atomic_fmin_fmax_global_f64,
+    atomic_global_pk_add_bf16_inst,
+    auto_waitcnt_before_barrier,
+    back_off_barrier,
+    ci_insts,
+    cumode,
+    default_component_broadcast,
+    default_component_zero,
+    dl_insts,
+    dot10_insts,
+    dot11_insts,
+    dot1_insts,
+    dot2_insts,
+    dot3_insts,
+    dot4_insts,
+    dot5_insts,
+    dot6_insts,
+    dot7_insts,
+    dot8_insts,
+    dot9_insts,
+    dpp,
+    dpp8,
+    dpp_64bit,
+    dpp_src1_sgpr,
+    ds128,
+    ds_src2_insts,
+    extended_image_insts,
+    fast_denormal_f32,
+    fast_fmaf,
+    flat_address_space,
+    flat_atomic_fadd_f32_inst,
+    flat_buffer_global_fadd_f64_inst,
+    flat_for_global,
+    flat_global_insts,
+    flat_inst_offsets,
+    flat_scratch,
+    flat_scratch_insts,
+    flat_segment_offset_bug,
+    fma_mix_insts,
+    fmacf64_inst,
+    fmaf,
+    force_store_sc0_sc1,
+    fp64,
+    fp8_conversion_insts,
+    fp8_insts,
+    full_rate_64_ops,
+    g16,
+    gcn3_encoding,
+    gds,
+    get_wave_id_inst,
+    gfx10,
+    gfx10_3_insts,
+    gfx10_a_encoding,
+    gfx10_b_encoding,
+    gfx10_insts,
+    gfx11,
+    gfx11_insts,
+    gfx12,
+    gfx12_insts,
+    gfx7_gfx8_gfx9_insts,
+    gfx8_insts,
+    gfx9,
+    gfx90a_insts,
+    gfx940_insts,
+    gfx9_insts,
+    gws,
+    half_rate_64_ops,
+    image_gather4_d16_bug,
+    image_insts,
+    image_store_d16_bug,
+    inst_fwd_prefetch_bug,
+    int_clamp_insts,
+    inv_2pi_inline_imm,
+    kernarg_preload,
+    lds_branch_vmem_war_hazard,
+    lds_misaligned_bug,
+    ldsbankcount16,
+    ldsbankcount32,
+    load_store_opt,
+    localmemorysize32768,
+    localmemorysize65536,
+    mad_intra_fwd_bug,
+    mad_mac_f32_insts,
+    mad_mix_insts,
+    mai_insts,
+    max_hard_clause_length_32,
+    max_hard_clause_length_63,
+    max_private_element_size_16,
+    max_private_element_size_4,
+    max_private_element_size_8,
+    memory_atomic_fadd_f32_denormal_support,
+    mfma_inline_literal_bug,
+    mimg_r128,
+    movrel,
+    msaa_load_dst_sel_bug,
+    negative_scratch_offset_bug,
+    negative_unaligned_scratch_offset_bug,
+    no_data_dep_hazard,
+    no_sdst_cmpx,
+    nsa_clause_bug,
+    nsa_encoding,
+    nsa_to_vmem_bug,
+    offset_3f_bug,
+    packed_fp32_ops,
+    packed_tid,
+    partial_nsa_encoding,
+    pk_fmac_f16_inst,
+    precise_memory,
+    priv_enabled_trap2_nop_bug,
+    promote_alloca,
+    prt_strict_null,
+    pseudo_scalar_trans,
+    r128_a16,
+    real_true16,
+    required_export_priority,
+    requires_cov6,
+    restricted_soffset,
+    s_memrealtime,
+    s_memtime_inst,
+    salu_float,
+    scalar_atomics,
+    scalar_dwordx3_loads,
+    scalar_flat_scratch_insts,
+    scalar_stores,
+    sdwa,
+    sdwa_mav,
+    sdwa_omod,
+    sdwa_out_mods_vopc,
+    sdwa_scalar,
+    sdwa_sdst,
+    sea_islands,
+    sgpr_init_bug,
+    shader_cycles_hi_lo_registers,
+    shader_cycles_register,
+    si_scheduler,
+    smem_to_vector_write_hazard,
+    southern_islands,
+    sramecc,
+    sramecc_support,
+    tgsplit,
+    trap_handler,
+    trig_reduced_range,
+    true16,
+    unaligned_access_mode,
+    unaligned_buffer_access,
+    unaligned_ds_access,
+    unaligned_scratch_access,
+    unpacked_d16_vmem,
+    unsafe_ds_offset_folding,
+    user_sgpr_init16_bug,
+    valu_trans_use_hazard,
+    vcmpx_exec_war_hazard,
+    vcmpx_permlane_hazard,
+    vgpr_index_mode,
+    vgpr_singleuse_hint,
+    vmem_to_scalar_write_hazard,
+    vmem_write_vgpr_in_order,
+    volcanic_islands,
+    vop3_literal,
+    vop3p,
+    vopd,
+    vscnt,
+    wavefrontsize16,
+    wavefrontsize32,
+    wavefrontsize64,
+    xnack,
+    xnack_support,
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

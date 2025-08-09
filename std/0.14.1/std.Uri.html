@@ -1,0 +1,1520 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.Uri.html" class="active">Uri</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.Uri" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.Uri</span><a href="#src.zig-std.Uri">[src]</a></h1><div class="tldDocs"><p>Uniform Resource Identifier (URI) parsing roughly adhering to <a href="https://tools.ietf.org/html/rfc3986">https://tools.ietf.org/html/rfc3986</a>.
+Does not do perfect grammar and character class checking, but should be robust against URIs in the wild.</p>
+</div><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.Uri.Component.html">std.Uri.Component</a></li><li><a href="std.Uri.WriteToStreamOptions.html">std.Uri.WriteToStreamOptions</a></li></ul></div><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>scheme: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>user: ?<a href="std.Uri.Component.html">Component</a> = <span class="tok-null">null</span></code></pre></div><div><pre><code>password: ?<a href="std.Uri.Component.html">Component</a> = <span class="tok-null">null</span></code></pre></div><div><pre><code>host: ?<a href="std.Uri.Component.html">Component</a> = <span class="tok-null">null</span></code></pre></div><div><pre><code>port: ?<span class="tok-type">u16</span> = <span class="tok-null">null</span></code></pre></div><div><pre><code>path: <a href="std.Uri.Component.html">Component</a> = <a href="std.Uri.Component.html">Component</a>.<a href="std.Uri.Component.html#std.Uri.Component.empty">empty</a></code></pre></div><div><pre><code>query: ?<a href="std.Uri.Component.html">Component</a> = <span class="tok-null">null</span></code></pre></div><div><pre><code>fragment: ?<a href="std.Uri.Component.html">Component</a> = <span class="tok-null">null</span></code></pre></div></div></div><div class="sectErrSets"><h2 class="sectionHeader">Error Sets</h2><div class="listErrSets"><div class="decl"><h2 id="std.Uri.ParseError" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">ParseError</span><a href="#src.zig-std.Uri.ParseError">[src]</a></h2><div class="sectFnErrors"><h3 class="sectionHeader">Errors</h3><div class="fnErrorsAnyError"><p><span class="tok-type">anyerror</span> means the error set is known only at runtime.</p></div><div class="tableFnErrors"><dl class="listFnErrors"><div><dt>InvalidFormat</dt></div><div><dt>InvalidPort</dt></div><div><dt>UnexpectedCharacter</dt></div></dl></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Uri.ParseError">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ParseError = <span class="tok-kw">error</span>{ UnexpectedCharacter, InvalidFormat, InvalidPort }</code></pre></details></div></div><div class="decl"><h2 id="std.Uri.ResolveInPlaceError" class="declHeader"><span class="declHeaderCategory">Error Set</span><span class="declHeaderIdentifier">ResolveInPlaceError</span><a href="#src.zig-std.Uri.ResolveInPlaceError">[src]</a></h2><div class="sectFnErrors"><h3 class="sectionHeader">Errors</h3><div class="fnErrorsAnyError"><p><span class="tok-type">anyerror</span> means the error set is known only at runtime.</p></div><div class="tableFnErrors"><dl class="listFnErrors"><div><dt>InvalidFormat <a href="std.Uri.html#std.Uri.ParseError">ParseError</a></dt></div><div><dt>InvalidPort <a href="std.Uri.html#std.Uri.ParseError">ParseError</a></dt></div><div><dt>NoSpaceLeft</dt></div><div><dt>UnexpectedCharacter <a href="std.Uri.html#std.Uri.ParseError">ParseError</a></dt></div></dl></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Uri.ResolveInPlaceError">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> ResolveInPlaceError = <a href="std.Uri.html#std.Uri.ParseError">ParseError</a> || <span class="tok-kw">error</span>{NoSpaceLeft}</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.Uri.percentDecodeBackwards" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">percentDecodeBackwards</span><a href="#src.zig-std.Uri.percentDecodeBackwards">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">percentDecodeBackwards</span>(output: []<span class="tok-type">u8</span>, input: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) []<span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>Percent decodes all %XX where XX is a valid hex number.
+<code>output</code> may alias <code>input</code> if <code>output.ptr &lt;= input.ptr</code>.
+Mutates and returns a subslice of <code>output</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>output: []<span class="tok-type">u8</span></code></pre></div><div><pre><code>input: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Uri.percentDecodeBackwards">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">percentDecodeBackwards</span>(output: []<span class="tok-type">u8</span>, input: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) []<span class="tok-type">u8</span> {
+    <span class="tok-kw">var</span> input_index = input.len;
+    <span class="tok-kw">var</span> output_index = output.len;
+    <span class="tok-kw">while</span> (input_index &gt; <span class="tok-number">0</span>) {
+        <span class="tok-kw">if</span> (input_index &gt;= <span class="tok-number">3</span>) {
+            <span class="tok-kw">const</span> maybe_percent_encoded = input[input_index - <span class="tok-number">3</span> ..][<span class="tok-number">0</span>..<span class="tok-number">3</span>];
+            <span class="tok-kw">if</span> (maybe_percent_encoded[<span class="tok-number">0</span>] == <span class="tok-str">'%'</span>) {
+                <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseInt">parseInt</a>(<span class="tok-type">u8</span>, maybe_percent_encoded[<span class="tok-number">1</span>..], <span class="tok-number">16</span>)) |percent_encoded_char| {
+                    input_index -= maybe_percent_encoded.len;
+                    output_index -= <span class="tok-number">1</span>;
+                    output[output_index] = percent_encoded_char;
+                    <span class="tok-kw">continue</span>;
+                } <span class="tok-kw">else</span> |_| {}
+            }
+        }
+        input_index -= <span class="tok-number">1</span>;
+        output_index -= <span class="tok-number">1</span>;
+        output[output_index] = input[input_index];
+    }
+    <span class="tok-kw">return</span> output[output_index..];
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Uri.percentDecodeInPlace" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">percentDecodeInPlace</span><a href="#src.zig-std.Uri.percentDecodeInPlace">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">percentDecodeInPlace</span>(buffer: []<span class="tok-type">u8</span>) []<span class="tok-type">u8</span></code></pre></div><div class="tldDocs"><p>Percent decodes all %XX where XX is a valid hex number.
+Mutates and returns a subslice of <code>buffer</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>buffer: []<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Uri.percentDecodeInPlace">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">percentDecodeInPlace</span>(buffer: []<span class="tok-type">u8</span>) []<span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> <a href="std.Uri.html#std.Uri.percentDecodeBackwards">percentDecodeBackwards</a>(buffer, buffer);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Uri.parseAfterScheme" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">parseAfterScheme</span><a href="#src.zig-std.Uri.parseAfterScheme">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseAfterScheme</span>(scheme: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, text: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.Uri.html#std.Uri.ParseError">ParseError</a>!<a href="std.Uri.html">Uri</a></code></pre></div><div class="tldDocs"><p>Parses the URI or returns an error. This function is not compliant, but is required to parse
+some forms of URIs in the wild, such as HTTP Location headers.
+The return value will contain strings pointing into the original <code>text</code>.
+Each component that is provided, will be non-<code>null</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>scheme: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>text: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Uri.parseAfterScheme">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseAfterScheme</span>(scheme: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, text: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.Uri.html#std.Uri.ParseError">ParseError</a>!<a href="std.Uri.html">Uri</a> {
+    <span class="tok-kw">var</span> reader = <a href="std.Uri.SliceReader.html">SliceReader</a>{ .slice = text };
+
+    <span class="tok-kw">var</span> uri: <a href="std.Uri.html">Uri</a> = .{ .scheme = scheme, .path = <span class="tok-null">undefined</span> };
+
+    <span class="tok-kw">if</span> (reader.peekPrefix(<span class="tok-str">&quot;//&quot;</span>)) a: {<span class="tok-comment"> // authority part
+        </span><a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(reader.get().? == <span class="tok-str">'/'</span>);
+        <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(reader.get().? == <span class="tok-str">'/'</span>);
+
+        <span class="tok-kw">const</span> authority = reader.readUntil(<a href="std.Uri.html#std.Uri.isAuthoritySeparator">isAuthoritySeparator</a>);
+        <span class="tok-kw">if</span> (authority.len == <span class="tok-number">0</span>) {
+            <span class="tok-kw">if</span> (reader.peekPrefix(<span class="tok-str">&quot;/&quot;</span>)) <span class="tok-kw">break</span> :a <span class="tok-kw">else</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidFormat;
+        }
+
+        <span class="tok-kw">var</span> start_of_host: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOf">indexOf</a>(<span class="tok-type">u8</span>, authority, <span class="tok-str">&quot;@&quot;</span>)) |index| {
+            start_of_host = index + <span class="tok-number">1</span>;
+            <span class="tok-kw">const</span> user_info = authority[<span class="tok-number">0</span>..index];
+
+            <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOf">indexOf</a>(<span class="tok-type">u8</span>, user_info, <span class="tok-str">&quot;:&quot;</span>)) |idx| {
+                uri.user = .{ .percent_encoded = user_info[<span class="tok-number">0</span>..idx] };
+                <span class="tok-kw">if</span> (idx &lt; user_info.len - <span class="tok-number">1</span>) {<span class="tok-comment"> // empty password is also &quot;no password&quot;
+                    </span>uri.password = .{ .percent_encoded = user_info[idx + <span class="tok-number">1</span> ..] };
+                }
+            } <span class="tok-kw">else</span> {
+                uri.user = .{ .percent_encoded = user_info };
+                uri.password = <span class="tok-null">null</span>;
+            }
+        }<span class="tok-comment">
+
+        // only possible if uri consists of only `userinfo@`
+        </span><span class="tok-kw">if</span> (start_of_host &gt;= authority.len) <span class="tok-kw">break</span> :a;
+
+        <span class="tok-kw">var</span> end_of_host: <span class="tok-type">usize</span> = authority.len;<span class="tok-comment">
+
+        // if  we see `]` first without `@`
+        </span><span class="tok-kw">if</span> (authority[start_of_host] == <span class="tok-str">']'</span>) {
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidFormat;
+        }
+
+        <span class="tok-kw">if</span> (authority.len &gt; start_of_host <span class="tok-kw">and</span> authority[start_of_host] == <span class="tok-str">'['</span>) {<span class="tok-comment"> // IPv6
+            </span>end_of_host = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.lastIndexOf">lastIndexOf</a>(<span class="tok-type">u8</span>, authority, <span class="tok-str">&quot;]&quot;</span>) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidFormat;
+            end_of_host += <span class="tok-number">1</span>;
+
+            <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.lastIndexOf">lastIndexOf</a>(<span class="tok-type">u8</span>, authority, <span class="tok-str">&quot;:&quot;</span>)) |index| {
+                <span class="tok-kw">if</span> (index &gt;= end_of_host) {<span class="tok-comment"> // if not part of the V6 address field
+                    </span>end_of_host = <span class="tok-builtin">@min</span>(end_of_host, index);
+                    uri.port = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseInt">parseInt</a>(<span class="tok-type">u16</span>, authority[index + <span class="tok-number">1</span> ..], <span class="tok-number">10</span>) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidPort;
+                }
+            }
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.lastIndexOf">lastIndexOf</a>(<span class="tok-type">u8</span>, authority, <span class="tok-str">&quot;:&quot;</span>)) |index| {
+            <span class="tok-kw">if</span> (index &gt;= start_of_host) {<span class="tok-comment"> // if not part of the userinfo field
+                </span>end_of_host = <span class="tok-builtin">@min</span>(end_of_host, index);
+                uri.port = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseInt">parseInt</a>(<span class="tok-type">u16</span>, authority[index + <span class="tok-number">1</span> ..], <span class="tok-number">10</span>) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidPort;
+            }
+        }
+
+        <span class="tok-kw">if</span> (start_of_host &gt;= end_of_host) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidFormat;
+        uri.host = .{ .percent_encoded = authority[start_of_host..end_of_host] };
+    }
+
+    uri.path = .{ .percent_encoded = reader.readUntil(<a href="std.Uri.html#std.Uri.isPathSeparator">isPathSeparator</a>) };
+
+    <span class="tok-kw">if</span> ((reader.peek() <span class="tok-kw">orelse</span> <span class="tok-number">0</span>) == <span class="tok-str">'?'</span>) {<span class="tok-comment"> // query part
+        </span><a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(reader.get().? == <span class="tok-str">'?'</span>);
+        uri.query = .{ .percent_encoded = reader.readUntil(<a href="std.Uri.html#std.Uri.isQuerySeparator">isQuerySeparator</a>) };
+    }
+
+    <span class="tok-kw">if</span> ((reader.peek() <span class="tok-kw">orelse</span> <span class="tok-number">0</span>) == <span class="tok-str">'#'</span>) {<span class="tok-comment"> // fragment part
+        </span><a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(reader.get().? == <span class="tok-str">'#'</span>);
+        uri.fragment = .{ .percent_encoded = reader.readUntilEof() };
+    }
+
+    <span class="tok-kw">return</span> uri;
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Uri.writeToStream" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">writeToStream</span><a href="#src.zig-std.Uri.writeToStream">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeToStream</span>( uri: <a href="std.Uri.html">Uri</a>, options: <a href="std.Uri.WriteToStreamOptions.html">WriteToStreamOptions</a>, writer: <span class="tok-kw">anytype</span>, ) <span class="tok-builtin">@TypeOf</span>(writer).Error!<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>uri: <a href="std.Uri.html">Uri</a></code></pre></div><div><pre><code>options: <a href="std.Uri.WriteToStreamOptions.html">WriteToStreamOptions</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Uri.writeToStream">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeToStream</span>(
+    uri: <a href="std.Uri.html">Uri</a>,
+    options: <a href="std.Uri.WriteToStreamOptions.html">WriteToStreamOptions</a>,
+    writer: <span class="tok-kw">anytype</span>,
+) <span class="tok-builtin">@TypeOf</span>(writer).Error!<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (options.scheme) {
+        <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;{s}:&quot;</span>, .{uri.scheme});
+        <span class="tok-kw">if</span> (options.authority <span class="tok-kw">and</span> uri.host != <span class="tok-null">null</span>) {
+            <span class="tok-kw">try</span> writer.writeAll(<span class="tok-str">&quot;//&quot;</span>);
+        }
+    }
+    <span class="tok-kw">if</span> (options.authority) {
+        <span class="tok-kw">if</span> (options.authentication <span class="tok-kw">and</span> uri.host != <span class="tok-null">null</span>) {
+            <span class="tok-kw">if</span> (uri.user) |user| {
+                <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;{user}&quot;</span>, .{user});
+                <span class="tok-kw">if</span> (uri.password) |password| {
+                    <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;:{password}&quot;</span>, .{password});
+                }
+                <span class="tok-kw">try</span> writer.writeByte(<span class="tok-str">'@'</span>);
+            }
+        }
+        <span class="tok-kw">if</span> (uri.host) |host| {
+            <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;{host}&quot;</span>, .{host});
+            <span class="tok-kw">if</span> (options.port) {
+                <span class="tok-kw">if</span> (uri.port) |port| <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;:{d}&quot;</span>, .{port});
+            }
+        }
+    }
+    <span class="tok-kw">if</span> (options.path) {
+        <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;{path}&quot;</span>, .{
+            <span class="tok-kw">if</span> (uri.path.isEmpty()) <a href="std.Uri.html">Uri</a>.<a href="std.Uri.Component.html">Component</a>{ .percent_encoded = <span class="tok-str">&quot;/&quot;</span> } <span class="tok-kw">else</span> uri.path,
+        });
+        <span class="tok-kw">if</span> (options.query) {
+            <span class="tok-kw">if</span> (uri.query) |query| <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;?{query}&quot;</span>, .{query});
+        }
+        <span class="tok-kw">if</span> (options.fragment) {
+            <span class="tok-kw">if</span> (uri.fragment) |fragment| <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;#{fragment}&quot;</span>, .{fragment});
+        }
+    }
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Uri.format" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">format</span><a href="#src.zig-std.Uri.format">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">format</span>( uri: <a href="std.Uri.html">Uri</a>, <span class="tok-kw">comptime</span> fmt_str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, _: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.FormatOptions.html">FormatOptions</a>, writer: <span class="tok-kw">anytype</span>, ) <span class="tok-builtin">@TypeOf</span>(writer).Error!<span class="tok-type">void</span></code></pre></div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>uri: <a href="std.Uri.html">Uri</a></code></pre></div><div><pre><code>fmt_str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>_: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.FormatOptions.html">FormatOptions</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Uri.format">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">format</span>(
+    uri: <a href="std.Uri.html">Uri</a>,
+    <span class="tok-kw">comptime</span> fmt_str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    _: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.FormatOptions.html">FormatOptions</a>,
+    writer: <span class="tok-kw">anytype</span>,
+) <span class="tok-builtin">@TypeOf</span>(writer).Error!<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> scheme = <span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">';'</span>) != <span class="tok-null">null</span> <span class="tok-kw">or</span> fmt_str.len == <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> authentication = <span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">'@'</span>) != <span class="tok-null">null</span> <span class="tok-kw">or</span> fmt_str.len == <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> authority = <span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">'+'</span>) != <span class="tok-null">null</span> <span class="tok-kw">or</span> fmt_str.len == <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> path = <span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">'/'</span>) != <span class="tok-null">null</span> <span class="tok-kw">or</span> fmt_str.len == <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> query = <span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">'?'</span>) != <span class="tok-null">null</span> <span class="tok-kw">or</span> fmt_str.len == <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> fragment = <span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">'#'</span>) != <span class="tok-null">null</span> <span class="tok-kw">or</span> fmt_str.len == <span class="tok-number">0</span>;
+
+    <span class="tok-kw">return</span> <a href="std.Uri.html#std.Uri.writeToStream">writeToStream</a>(uri, .{
+        .scheme = scheme,
+        .authentication = authentication,
+        .authority = authority,
+        .path = path,
+        .query = query,
+        .fragment = fragment,
+    }, writer);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Uri.parse" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">parse</span><a href="#src.zig-std.Uri.parse">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parse</span>(text: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.Uri.html#std.Uri.ParseError">ParseError</a>!<a href="std.Uri.html">Uri</a></code></pre></div><div class="tldDocs"><p>Parses the URI or returns an error.
+The return value will contain strings pointing into the
+original <code>text</code>. Each component that is provided, will be non-<code>null</code>.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>text: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Uri.parse">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parse</span>(text: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.Uri.html#std.Uri.ParseError">ParseError</a>!<a href="std.Uri.html">Uri</a> {
+    <span class="tok-kw">var</span> reader: <a href="std.Uri.SliceReader.html">SliceReader</a> = .{ .slice = text };
+    <span class="tok-kw">const</span> scheme = reader.readWhile(<a href="std.Uri.html#std.Uri.isSchemeChar">isSchemeChar</a>);<span class="tok-comment">
+
+    // after the scheme, a ':' must appear
+    </span><span class="tok-kw">if</span> (reader.get()) |c| {
+        <span class="tok-kw">if</span> (c != <span class="tok-str">':'</span>)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnexpectedCharacter;
+    } <span class="tok-kw">else</span> {
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidFormat;
+    }
+
+    <span class="tok-kw">return</span> <a href="std.Uri.html#std.Uri.parseAfterScheme">parseAfterScheme</a>(scheme, reader.readUntilEof());
+}</code></pre></details></div></div><div class="decl"><h2 id="std.Uri.resolve_inplace" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">resolve_inplace</span><a href="#src.zig-std.Uri.resolve_inplace">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">resolve_inplace</span>(base: <a href="std.Uri.html">Uri</a>, new: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, aux_buf: *[]<span class="tok-type">u8</span>) <a href="std.Uri.html#std.Uri.ResolveInPlaceError">ResolveInPlaceError</a>!<a href="std.Uri.html">Uri</a></code></pre></div><div class="tldDocs"><p>Resolves a URI against a base URI, conforming to RFC 3986, Section 5.
+Copies <code>new</code> to the beginning of <code>aux_buf.*</code>, allowing the slices to overlap,
+then parses <code>new</code> as a URI, and then resolves the path in place.
+If a merge needs to take place, the newly constructed path will be stored
+in <code>aux_buf.*</code> just after the copied <code>new</code>, and <code>aux_buf.*</code> will be modified
+to only contain the remaining unused space.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>base: <a href="std.Uri.html">Uri</a></code></pre></div><div><pre><code>new: []<span class="tok-kw">const</span> <span class="tok-type">u8</span></code></pre></div><div><pre><code>aux_buf: *[]<span class="tok-type">u8</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.Uri.resolve_inplace">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">resolve_inplace</span>(base: <a href="std.Uri.html">Uri</a>, new: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, aux_buf: *[]<span class="tok-type">u8</span>) <a href="std.Uri.html#std.Uri.ResolveInPlaceError">ResolveInPlaceError</a>!<a href="std.Uri.html">Uri</a> {
+    <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.copyForwards">copyForwards</a>(<span class="tok-type">u8</span>, aux_buf.*, new);<span class="tok-comment">
+    // At this point, new is an invalid pointer.
+    </span><span class="tok-kw">const</span> new_mut = aux_buf.*[<span class="tok-number">0</span>..new.len];
+    aux_buf.* = aux_buf.*[new.len..];
+
+    <span class="tok-kw">const</span> new_parsed = <a href="std.Uri.html#std.Uri.parse">parse</a>(new_mut) <span class="tok-kw">catch</span> |err|
+        (<a href="std.Uri.html#std.Uri.parseAfterScheme">parseAfterScheme</a>(<span class="tok-str">&quot;&quot;</span>, new_mut) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> err);<span class="tok-comment">
+    // As you can see above, `new_mut` is not a const pointer.
+    </span><span class="tok-kw">const</span> new_path: []<span class="tok-type">u8</span> = <span class="tok-builtin">@constCast</span>(new_parsed.path.percent_encoded);
+
+    <span class="tok-kw">if</span> (new_parsed.scheme.len &gt; <span class="tok-number">0</span>) <span class="tok-kw">return</span> .{
+        .scheme = new_parsed.scheme,
+        .user = new_parsed.user,
+        .password = new_parsed.password,
+        .host = new_parsed.host,
+        .port = new_parsed.port,
+        .path = <a href="std.Uri.html#std.Uri.remove_dot_segments">remove_dot_segments</a>(new_path),
+        .query = new_parsed.query,
+        .fragment = new_parsed.fragment,
+    };
+
+    <span class="tok-kw">if</span> (new_parsed.host) |host| <span class="tok-kw">return</span> .{
+        .scheme = base.scheme,
+        .user = new_parsed.user,
+        .password = new_parsed.password,
+        .host = host,
+        .port = new_parsed.port,
+        .path = <a href="std.Uri.html#std.Uri.remove_dot_segments">remove_dot_segments</a>(new_path),
+        .query = new_parsed.query,
+        .fragment = new_parsed.fragment,
+    };
+
+    <span class="tok-kw">const</span> path, <span class="tok-kw">const</span> query = <span class="tok-kw">if</span> (new_path.len == <span class="tok-number">0</span>) .{
+        base.path,
+        new_parsed.query <span class="tok-kw">orelse</span> base.query,
+    } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (new_path[<span class="tok-number">0</span>] == <span class="tok-str">'/'</span>) .{
+        remove_dot_segments(new_path),
+        new_parsed.query,
+    } <span class="tok-kw">else</span> .{
+        <span class="tok-kw">try</span> merge_paths(base.path, new_path, aux_buf),
+        new_parsed.query,
+    };
+
+    <span class="tok-kw">return</span> .{
+        .scheme = base.scheme,
+        .user = base.user,
+        .password = base.password,
+        .host = base.host,
+        .port = base.port,
+        .path = path,
+        .query = query,
+        .fragment = new_parsed.fragment,
+    };
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.Uri">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-comment">//! Uniform Resource Identifier (URI) parsing roughly adhering to &lt;https://tools.ietf.org/html/rfc3986&gt;.</span>
+<span class="tok-comment">//! Does not do perfect grammar and character class checking, but should be robust against URIs in the wild.</span>
+
+scheme: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+user: ?<a href="std.Uri.Component.html">Component</a> = <span class="tok-null">null</span>,
+password: ?<a href="std.Uri.Component.html">Component</a> = <span class="tok-null">null</span>,
+host: ?<a href="std.Uri.Component.html">Component</a> = <span class="tok-null">null</span>,
+port: ?<span class="tok-type">u16</span> = <span class="tok-null">null</span>,
+path: <a href="std.Uri.Component.html">Component</a> = <a href="std.Uri.Component.html">Component</a>.<a href="std.Uri.Component.html#std.Uri.Component.empty">empty</a>,
+query: ?<a href="std.Uri.Component.html">Component</a> = <span class="tok-null">null</span>,
+fragment: ?<a href="std.Uri.Component.html">Component</a> = <span class="tok-null">null</span>,
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Component = <span class="tok-kw">union</span>(<span class="tok-kw">enum</span>) {
+    <span class="tok-comment">/// Invalid characters in this component must be percent encoded</span>
+    <span class="tok-comment">/// before being printed as part of a URI.</span>
+    raw: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    <span class="tok-comment">/// This component is already percent-encoded, it can be printed</span>
+    <span class="tok-comment">/// directly as part of a URI.</span>
+    percent_encoded: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">const</span> empty: <a href="std.Uri.Component.html">Component</a> = .{ .percent_encoded = <span class="tok-str">&quot;&quot;</span> };
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">isEmpty</span>(component: <a href="std.Uri.Component.html">Component</a>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (component) {
+            .raw, .percent_encoded =&gt; |string| string.len == <span class="tok-number">0</span>,
+        };
+    }
+
+    <span class="tok-comment">/// Allocates the result with `arena` only if needed, so the result should not be freed.</span>
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">toRawMaybeAlloc</span>(
+        component: <a href="std.Uri.Component.html">Component</a>,
+        arena: <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>,
+    ) <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.Allocator.html">Allocator</a>.<a href="std.mem.Allocator.html#std.mem.Allocator.Error">Error</a>![]<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (component) {
+            .raw =&gt; |raw| raw,
+            .percent_encoded =&gt; |percent_encoded| <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, percent_encoded, <span class="tok-str">'%'</span>)) |_|
+                <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.allocPrint">allocPrint</a>(arena, <span class="tok-str">&quot;{raw}&quot;</span>, .{component})
+            <span class="tok-kw">else</span>
+                percent_encoded,
+        };
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">format</span>(
+        component: <a href="std.Uri.Component.html">Component</a>,
+        <span class="tok-kw">comptime</span> fmt_str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+        _: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.FormatOptions.html">FormatOptions</a>,
+        writer: <span class="tok-kw">anytype</span>,
+    ) <span class="tok-builtin">@TypeOf</span>(writer).Error!<span class="tok-type">void</span> {
+        <span class="tok-kw">if</span> (fmt_str.len == <span class="tok-number">0</span>) {
+            <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;std.Uri.Component{{ .{s} = \&quot;{}\&quot; }}&quot;</span>, .{
+                <span class="tok-builtin">@tagName</span>(component),
+                <a href="std.html">std</a>.<a href="std.zig.html">zig</a>.<a href="std.zig.html#std.zig.fmtEscapes">fmtEscapes</a>(<span class="tok-kw">switch</span> (component) {
+                    .raw, .percent_encoded =&gt; |string| string,
+                }),
+            });
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">&quot;raw&quot;</span>)) <span class="tok-kw">switch</span> (component) {
+            .raw =&gt; |raw| <span class="tok-kw">try</span> writer.writeAll(raw),
+            .percent_encoded =&gt; |percent_encoded| {
+                <span class="tok-kw">var</span> start: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+                <span class="tok-kw">var</span> index: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+                <span class="tok-kw">while</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalarPos">indexOfScalarPos</a>(<span class="tok-type">u8</span>, percent_encoded, index, <span class="tok-str">'%'</span>)) |percent| {
+                    index = percent + <span class="tok-number">1</span>;
+                    <span class="tok-kw">if</span> (percent_encoded.len - index &lt; <span class="tok-number">2</span>) <span class="tok-kw">continue</span>;
+                    <span class="tok-kw">const</span> percent_encoded_char =
+                        <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseInt">parseInt</a>(<span class="tok-type">u8</span>, percent_encoded[index..][<span class="tok-number">0</span>..<span class="tok-number">2</span>], <span class="tok-number">16</span>) <span class="tok-kw">catch</span> <span class="tok-kw">continue</span>;
+                    <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;{s}{c}&quot;</span>, .{
+                        percent_encoded[start..percent],
+                        percent_encoded_char,
+                    });
+                    start = percent + <span class="tok-number">3</span>;
+                    index = percent + <span class="tok-number">3</span>;
+                }
+                <span class="tok-kw">try</span> writer.writeAll(percent_encoded[start..]);
+            },
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">&quot;%&quot;</span>)) <span class="tok-kw">switch</span> (component) {
+            .raw =&gt; |raw| <span class="tok-kw">try</span> <a href="std.Uri.Component.html#std.Uri.Component.percentEncode">percentEncode</a>(writer, raw, <a href="std.Uri.html#std.Uri.isUnreserved">isUnreserved</a>),
+            .percent_encoded =&gt; |percent_encoded| <span class="tok-kw">try</span> writer.writeAll(percent_encoded),
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">&quot;user&quot;</span>)) <span class="tok-kw">switch</span> (component) {
+            .raw =&gt; |raw| <span class="tok-kw">try</span> <a href="std.Uri.Component.html#std.Uri.Component.percentEncode">percentEncode</a>(writer, raw, <a href="std.Uri.html#std.Uri.isUserChar">isUserChar</a>),
+            .percent_encoded =&gt; |percent_encoded| <span class="tok-kw">try</span> writer.writeAll(percent_encoded),
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">&quot;password&quot;</span>)) <span class="tok-kw">switch</span> (component) {
+            .raw =&gt; |raw| <span class="tok-kw">try</span> <a href="std.Uri.Component.html#std.Uri.Component.percentEncode">percentEncode</a>(writer, raw, <a href="std.Uri.html#std.Uri.isPasswordChar">isPasswordChar</a>),
+            .percent_encoded =&gt; |percent_encoded| <span class="tok-kw">try</span> writer.writeAll(percent_encoded),
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">&quot;host&quot;</span>)) <span class="tok-kw">switch</span> (component) {
+            .raw =&gt; |raw| <span class="tok-kw">try</span> <a href="std.Uri.Component.html#std.Uri.Component.percentEncode">percentEncode</a>(writer, raw, <a href="std.Uri.html#std.Uri.isHostChar">isHostChar</a>),
+            .percent_encoded =&gt; |percent_encoded| <span class="tok-kw">try</span> writer.writeAll(percent_encoded),
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">&quot;path&quot;</span>)) <span class="tok-kw">switch</span> (component) {
+            .raw =&gt; |raw| <span class="tok-kw">try</span> <a href="std.Uri.Component.html#std.Uri.Component.percentEncode">percentEncode</a>(writer, raw, <a href="std.Uri.html#std.Uri.isPathChar">isPathChar</a>),
+            .percent_encoded =&gt; |percent_encoded| <span class="tok-kw">try</span> writer.writeAll(percent_encoded),
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">&quot;query&quot;</span>)) <span class="tok-kw">switch</span> (component) {
+            .raw =&gt; |raw| <span class="tok-kw">try</span> <a href="std.Uri.Component.html#std.Uri.Component.percentEncode">percentEncode</a>(writer, raw, <a href="std.Uri.html#std.Uri.isQueryChar">isQueryChar</a>),
+            .percent_encoded =&gt; |percent_encoded| <span class="tok-kw">try</span> writer.writeAll(percent_encoded),
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">&quot;fragment&quot;</span>)) <span class="tok-kw">switch</span> (component) {
+            .raw =&gt; |raw| <span class="tok-kw">try</span> <a href="std.Uri.Component.html#std.Uri.Component.percentEncode">percentEncode</a>(writer, raw, <a href="std.Uri.html#std.Uri.isQueryChar">isFragmentChar</a>),
+            .percent_encoded =&gt; |percent_encoded| <span class="tok-kw">try</span> writer.writeAll(percent_encoded),
+        } <span class="tok-kw">else</span> <span class="tok-builtin">@compileError</span>(<span class="tok-str">&quot;invalid format string '&quot;</span> ++ fmt_str ++ <span class="tok-str">&quot;'&quot;</span>);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">percentEncode</span>(
+        writer: <span class="tok-kw">anytype</span>,
+        raw: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+        <span class="tok-kw">comptime</span> isValidChar: <span class="tok-kw">fn</span> (<span class="tok-type">u8</span>) <span class="tok-type">bool</span>,
+    ) <span class="tok-builtin">@TypeOf</span>(writer).Error!<span class="tok-type">void</span> {
+        <span class="tok-kw">var</span> start: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">for</span> (raw, <span class="tok-number">0</span>..) |char, index| {
+            <span class="tok-kw">if</span> (isValidChar(char)) <span class="tok-kw">continue</span>;
+            <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;{s}%{X:0&gt;2}&quot;</span>, .{ raw[start..index], char });
+            start = index + <span class="tok-number">1</span>;
+        }
+        <span class="tok-kw">try</span> writer.writeAll(raw[start..]);
+    }
+};
+
+<span class="tok-comment">/// Percent decodes all %XX where XX is a valid hex number.</span>
+<span class="tok-comment">/// `output` may alias `input` if `output.ptr &lt;= input.ptr`.</span>
+<span class="tok-comment">/// Mutates and returns a subslice of `output`.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">percentDecodeBackwards</span>(output: []<span class="tok-type">u8</span>, input: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) []<span class="tok-type">u8</span> {
+    <span class="tok-kw">var</span> input_index = input.len;
+    <span class="tok-kw">var</span> output_index = output.len;
+    <span class="tok-kw">while</span> (input_index &gt; <span class="tok-number">0</span>) {
+        <span class="tok-kw">if</span> (input_index &gt;= <span class="tok-number">3</span>) {
+            <span class="tok-kw">const</span> maybe_percent_encoded = input[input_index - <span class="tok-number">3</span> ..][<span class="tok-number">0</span>..<span class="tok-number">3</span>];
+            <span class="tok-kw">if</span> (maybe_percent_encoded[<span class="tok-number">0</span>] == <span class="tok-str">'%'</span>) {
+                <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseInt">parseInt</a>(<span class="tok-type">u8</span>, maybe_percent_encoded[<span class="tok-number">1</span>..], <span class="tok-number">16</span>)) |percent_encoded_char| {
+                    input_index -= maybe_percent_encoded.len;
+                    output_index -= <span class="tok-number">1</span>;
+                    output[output_index] = percent_encoded_char;
+                    <span class="tok-kw">continue</span>;
+                } <span class="tok-kw">else</span> |_| {}
+            }
+        }
+        input_index -= <span class="tok-number">1</span>;
+        output_index -= <span class="tok-number">1</span>;
+        output[output_index] = input[input_index];
+    }
+    <span class="tok-kw">return</span> output[output_index..];
+}
+
+<span class="tok-comment">/// Percent decodes all %XX where XX is a valid hex number.</span>
+<span class="tok-comment">/// Mutates and returns a subslice of `buffer`.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">percentDecodeInPlace</span>(buffer: []<span class="tok-type">u8</span>) []<span class="tok-type">u8</span> {
+    <span class="tok-kw">return</span> <a href="std.Uri.html#std.Uri.percentDecodeBackwards">percentDecodeBackwards</a>(buffer, buffer);
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ParseError = <span class="tok-kw">error</span>{ UnexpectedCharacter, InvalidFormat, InvalidPort };
+
+<span class="tok-comment">/// Parses the URI or returns an error. This function is not compliant, but is required to parse</span>
+<span class="tok-comment">/// some forms of URIs in the wild, such as HTTP Location headers.</span>
+<span class="tok-comment">/// The return value will contain strings pointing into the original `text`.</span>
+<span class="tok-comment">/// Each component that is provided, will be non-`null`.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parseAfterScheme</span>(scheme: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, text: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.Uri.html#std.Uri.ParseError">ParseError</a>!<a href="std.Uri.html">Uri</a> {
+    <span class="tok-kw">var</span> reader = <a href="std.Uri.SliceReader.html">SliceReader</a>{ .slice = text };
+
+    <span class="tok-kw">var</span> uri: <a href="std.Uri.html">Uri</a> = .{ .scheme = scheme, .path = <span class="tok-null">undefined</span> };
+
+    <span class="tok-kw">if</span> (reader.peekPrefix(<span class="tok-str">&quot;//&quot;</span>)) a: {<span class="tok-comment"> // authority part
+        </span><a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(reader.get().? == <span class="tok-str">'/'</span>);
+        <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(reader.get().? == <span class="tok-str">'/'</span>);
+
+        <span class="tok-kw">const</span> authority = reader.readUntil(<a href="std.Uri.html#std.Uri.isAuthoritySeparator">isAuthoritySeparator</a>);
+        <span class="tok-kw">if</span> (authority.len == <span class="tok-number">0</span>) {
+            <span class="tok-kw">if</span> (reader.peekPrefix(<span class="tok-str">&quot;/&quot;</span>)) <span class="tok-kw">break</span> :a <span class="tok-kw">else</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidFormat;
+        }
+
+        <span class="tok-kw">var</span> start_of_host: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+        <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOf">indexOf</a>(<span class="tok-type">u8</span>, authority, <span class="tok-str">&quot;@&quot;</span>)) |index| {
+            start_of_host = index + <span class="tok-number">1</span>;
+            <span class="tok-kw">const</span> user_info = authority[<span class="tok-number">0</span>..index];
+
+            <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOf">indexOf</a>(<span class="tok-type">u8</span>, user_info, <span class="tok-str">&quot;:&quot;</span>)) |idx| {
+                uri.user = .{ .percent_encoded = user_info[<span class="tok-number">0</span>..idx] };
+                <span class="tok-kw">if</span> (idx &lt; user_info.len - <span class="tok-number">1</span>) {<span class="tok-comment"> // empty password is also &quot;no password&quot;
+                    </span>uri.password = .{ .percent_encoded = user_info[idx + <span class="tok-number">1</span> ..] };
+                }
+            } <span class="tok-kw">else</span> {
+                uri.user = .{ .percent_encoded = user_info };
+                uri.password = <span class="tok-null">null</span>;
+            }
+        }<span class="tok-comment">
+
+        // only possible if uri consists of only `userinfo@`
+        </span><span class="tok-kw">if</span> (start_of_host &gt;= authority.len) <span class="tok-kw">break</span> :a;
+
+        <span class="tok-kw">var</span> end_of_host: <span class="tok-type">usize</span> = authority.len;<span class="tok-comment">
+
+        // if  we see `]` first without `@`
+        </span><span class="tok-kw">if</span> (authority[start_of_host] == <span class="tok-str">']'</span>) {
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidFormat;
+        }
+
+        <span class="tok-kw">if</span> (authority.len &gt; start_of_host <span class="tok-kw">and</span> authority[start_of_host] == <span class="tok-str">'['</span>) {<span class="tok-comment"> // IPv6
+            </span>end_of_host = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.lastIndexOf">lastIndexOf</a>(<span class="tok-type">u8</span>, authority, <span class="tok-str">&quot;]&quot;</span>) <span class="tok-kw">orelse</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidFormat;
+            end_of_host += <span class="tok-number">1</span>;
+
+            <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.lastIndexOf">lastIndexOf</a>(<span class="tok-type">u8</span>, authority, <span class="tok-str">&quot;:&quot;</span>)) |index| {
+                <span class="tok-kw">if</span> (index &gt;= end_of_host) {<span class="tok-comment"> // if not part of the V6 address field
+                    </span>end_of_host = <span class="tok-builtin">@min</span>(end_of_host, index);
+                    uri.port = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseInt">parseInt</a>(<span class="tok-type">u16</span>, authority[index + <span class="tok-number">1</span> ..], <span class="tok-number">10</span>) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidPort;
+                }
+            }
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.lastIndexOf">lastIndexOf</a>(<span class="tok-type">u8</span>, authority, <span class="tok-str">&quot;:&quot;</span>)) |index| {
+            <span class="tok-kw">if</span> (index &gt;= start_of_host) {<span class="tok-comment"> // if not part of the userinfo field
+                </span>end_of_host = <span class="tok-builtin">@min</span>(end_of_host, index);
+                uri.port = <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.html#std.fmt.parseInt">parseInt</a>(<span class="tok-type">u16</span>, authority[index + <span class="tok-number">1</span> ..], <span class="tok-number">10</span>) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidPort;
+            }
+        }
+
+        <span class="tok-kw">if</span> (start_of_host &gt;= end_of_host) <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidFormat;
+        uri.host = .{ .percent_encoded = authority[start_of_host..end_of_host] };
+    }
+
+    uri.path = .{ .percent_encoded = reader.readUntil(<a href="std.Uri.html#std.Uri.isPathSeparator">isPathSeparator</a>) };
+
+    <span class="tok-kw">if</span> ((reader.peek() <span class="tok-kw">orelse</span> <span class="tok-number">0</span>) == <span class="tok-str">'?'</span>) {<span class="tok-comment"> // query part
+        </span><a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(reader.get().? == <span class="tok-str">'?'</span>);
+        uri.query = .{ .percent_encoded = reader.readUntil(<a href="std.Uri.html#std.Uri.isQuerySeparator">isQuerySeparator</a>) };
+    }
+
+    <span class="tok-kw">if</span> ((reader.peek() <span class="tok-kw">orelse</span> <span class="tok-number">0</span>) == <span class="tok-str">'#'</span>) {<span class="tok-comment"> // fragment part
+        </span><a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.assert">assert</a>(reader.get().? == <span class="tok-str">'#'</span>);
+        uri.fragment = .{ .percent_encoded = reader.readUntilEof() };
+    }
+
+    <span class="tok-kw">return</span> uri;
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> WriteToStreamOptions = <span class="tok-kw">struct</span> {
+    <span class="tok-comment">/// When true, include the scheme part of the URI.</span>
+    scheme: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+
+    <span class="tok-comment">/// When true, include the user and password part of the URI. Ignored if `authority` is false.</span>
+    authentication: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+
+    <span class="tok-comment">/// When true, include the authority part of the URI.</span>
+    authority: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+
+    <span class="tok-comment">/// When true, include the path part of the URI.</span>
+    path: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+
+    <span class="tok-comment">/// When true, include the query part of the URI. Ignored when `path` is false.</span>
+    query: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+
+    <span class="tok-comment">/// When true, include the fragment part of the URI. Ignored when `path` is false.</span>
+    fragment: <span class="tok-type">bool</span> = <span class="tok-null">false</span>,
+
+    <span class="tok-comment">/// When true, include the port part of the URI. Ignored when `port` is null.</span>
+    port: <span class="tok-type">bool</span> = <span class="tok-null">true</span>,
+};
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">writeToStream</span>(
+    uri: <a href="std.Uri.html">Uri</a>,
+    options: <a href="std.Uri.WriteToStreamOptions.html">WriteToStreamOptions</a>,
+    writer: <span class="tok-kw">anytype</span>,
+) <span class="tok-builtin">@TypeOf</span>(writer).Error!<span class="tok-type">void</span> {
+    <span class="tok-kw">if</span> (options.scheme) {
+        <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;{s}:&quot;</span>, .{uri.scheme});
+        <span class="tok-kw">if</span> (options.authority <span class="tok-kw">and</span> uri.host != <span class="tok-null">null</span>) {
+            <span class="tok-kw">try</span> writer.writeAll(<span class="tok-str">&quot;//&quot;</span>);
+        }
+    }
+    <span class="tok-kw">if</span> (options.authority) {
+        <span class="tok-kw">if</span> (options.authentication <span class="tok-kw">and</span> uri.host != <span class="tok-null">null</span>) {
+            <span class="tok-kw">if</span> (uri.user) |user| {
+                <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;{user}&quot;</span>, .{user});
+                <span class="tok-kw">if</span> (uri.password) |password| {
+                    <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;:{password}&quot;</span>, .{password});
+                }
+                <span class="tok-kw">try</span> writer.writeByte(<span class="tok-str">'@'</span>);
+            }
+        }
+        <span class="tok-kw">if</span> (uri.host) |host| {
+            <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;{host}&quot;</span>, .{host});
+            <span class="tok-kw">if</span> (options.port) {
+                <span class="tok-kw">if</span> (uri.port) |port| <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;:{d}&quot;</span>, .{port});
+            }
+        }
+    }
+    <span class="tok-kw">if</span> (options.path) {
+        <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;{path}&quot;</span>, .{
+            <span class="tok-kw">if</span> (uri.path.isEmpty()) <a href="std.Uri.html">Uri</a>.<a href="std.Uri.Component.html">Component</a>{ .percent_encoded = <span class="tok-str">&quot;/&quot;</span> } <span class="tok-kw">else</span> uri.path,
+        });
+        <span class="tok-kw">if</span> (options.query) {
+            <span class="tok-kw">if</span> (uri.query) |query| <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;?{query}&quot;</span>, .{query});
+        }
+        <span class="tok-kw">if</span> (options.fragment) {
+            <span class="tok-kw">if</span> (uri.fragment) |fragment| <span class="tok-kw">try</span> writer.print(<span class="tok-str">&quot;#{fragment}&quot;</span>, .{fragment});
+        }
+    }
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">format</span>(
+    uri: <a href="std.Uri.html">Uri</a>,
+    <span class="tok-kw">comptime</span> fmt_str: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    _: <a href="std.html">std</a>.<a href="std.fmt.html">fmt</a>.<a href="std.fmt.FormatOptions.html">FormatOptions</a>,
+    writer: <span class="tok-kw">anytype</span>,
+) <span class="tok-builtin">@TypeOf</span>(writer).Error!<span class="tok-type">void</span> {
+    <span class="tok-kw">const</span> scheme = <span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">';'</span>) != <span class="tok-null">null</span> <span class="tok-kw">or</span> fmt_str.len == <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> authentication = <span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">'@'</span>) != <span class="tok-null">null</span> <span class="tok-kw">or</span> fmt_str.len == <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> authority = <span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">'+'</span>) != <span class="tok-null">null</span> <span class="tok-kw">or</span> fmt_str.len == <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> path = <span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">'/'</span>) != <span class="tok-null">null</span> <span class="tok-kw">or</span> fmt_str.len == <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> query = <span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">'?'</span>) != <span class="tok-null">null</span> <span class="tok-kw">or</span> fmt_str.len == <span class="tok-number">0</span>;
+    <span class="tok-kw">const</span> fragment = <span class="tok-kw">comptime</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.indexOfScalar">indexOfScalar</a>(<span class="tok-type">u8</span>, fmt_str, <span class="tok-str">'#'</span>) != <span class="tok-null">null</span> <span class="tok-kw">or</span> fmt_str.len == <span class="tok-number">0</span>;
+
+    <span class="tok-kw">return</span> <a href="std.Uri.html#std.Uri.writeToStream">writeToStream</a>(uri, .{
+        .scheme = scheme,
+        .authentication = authentication,
+        .authority = authority,
+        .path = path,
+        .query = query,
+        .fragment = fragment,
+    }, writer);
+}
+
+<span class="tok-comment">/// Parses the URI or returns an error.</span>
+<span class="tok-comment">/// The return value will contain strings pointing into the</span>
+<span class="tok-comment">/// original `text`. Each component that is provided, will be non-`null`.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">parse</span>(text: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <a href="std.Uri.html#std.Uri.ParseError">ParseError</a>!<a href="std.Uri.html">Uri</a> {
+    <span class="tok-kw">var</span> reader: <a href="std.Uri.SliceReader.html">SliceReader</a> = .{ .slice = text };
+    <span class="tok-kw">const</span> scheme = reader.readWhile(<a href="std.Uri.html#std.Uri.isSchemeChar">isSchemeChar</a>);<span class="tok-comment">
+
+    // after the scheme, a ':' must appear
+    </span><span class="tok-kw">if</span> (reader.get()) |c| {
+        <span class="tok-kw">if</span> (c != <span class="tok-str">':'</span>)
+            <span class="tok-kw">return</span> <span class="tok-kw">error</span>.UnexpectedCharacter;
+    } <span class="tok-kw">else</span> {
+        <span class="tok-kw">return</span> <span class="tok-kw">error</span>.InvalidFormat;
+    }
+
+    <span class="tok-kw">return</span> <a href="std.Uri.html#std.Uri.parseAfterScheme">parseAfterScheme</a>(scheme, reader.readUntilEof());
+}
+
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> ResolveInPlaceError = <a href="std.Uri.html#std.Uri.ParseError">ParseError</a> || <span class="tok-kw">error</span>{NoSpaceLeft};
+
+<span class="tok-comment">/// Resolves a URI against a base URI, conforming to RFC 3986, Section 5.</span>
+<span class="tok-comment">/// Copies `new` to the beginning of `aux_buf.*`, allowing the slices to overlap,</span>
+<span class="tok-comment">/// then parses `new` as a URI, and then resolves the path in place.</span>
+<span class="tok-comment">/// If a merge needs to take place, the newly constructed path will be stored</span>
+<span class="tok-comment">/// in `aux_buf.*` just after the copied `new`, and `aux_buf.*` will be modified</span>
+<span class="tok-comment">/// to only contain the remaining unused space.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">resolve_inplace</span>(base: <a href="std.Uri.html">Uri</a>, new: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, aux_buf: *[]<span class="tok-type">u8</span>) <a href="std.Uri.html#std.Uri.ResolveInPlaceError">ResolveInPlaceError</a>!<a href="std.Uri.html">Uri</a> {
+    <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.copyForwards">copyForwards</a>(<span class="tok-type">u8</span>, aux_buf.*, new);<span class="tok-comment">
+    // At this point, new is an invalid pointer.
+    </span><span class="tok-kw">const</span> new_mut = aux_buf.*[<span class="tok-number">0</span>..new.len];
+    aux_buf.* = aux_buf.*[new.len..];
+
+    <span class="tok-kw">const</span> new_parsed = <a href="std.Uri.html#std.Uri.parse">parse</a>(new_mut) <span class="tok-kw">catch</span> |err|
+        (<a href="std.Uri.html#std.Uri.parseAfterScheme">parseAfterScheme</a>(<span class="tok-str">&quot;&quot;</span>, new_mut) <span class="tok-kw">catch</span> <span class="tok-kw">return</span> err);<span class="tok-comment">
+    // As you can see above, `new_mut` is not a const pointer.
+    </span><span class="tok-kw">const</span> new_path: []<span class="tok-type">u8</span> = <span class="tok-builtin">@constCast</span>(new_parsed.path.percent_encoded);
+
+    <span class="tok-kw">if</span> (new_parsed.scheme.len &gt; <span class="tok-number">0</span>) <span class="tok-kw">return</span> .{
+        .scheme = new_parsed.scheme,
+        .user = new_parsed.user,
+        .password = new_parsed.password,
+        .host = new_parsed.host,
+        .port = new_parsed.port,
+        .path = <a href="std.Uri.html#std.Uri.remove_dot_segments">remove_dot_segments</a>(new_path),
+        .query = new_parsed.query,
+        .fragment = new_parsed.fragment,
+    };
+
+    <span class="tok-kw">if</span> (new_parsed.host) |host| <span class="tok-kw">return</span> .{
+        .scheme = base.scheme,
+        .user = new_parsed.user,
+        .password = new_parsed.password,
+        .host = host,
+        .port = new_parsed.port,
+        .path = <a href="std.Uri.html#std.Uri.remove_dot_segments">remove_dot_segments</a>(new_path),
+        .query = new_parsed.query,
+        .fragment = new_parsed.fragment,
+    };
+
+    <span class="tok-kw">const</span> path, <span class="tok-kw">const</span> query = <span class="tok-kw">if</span> (new_path.len == <span class="tok-number">0</span>) .{
+        base.path,
+        new_parsed.query <span class="tok-kw">orelse</span> base.query,
+    } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (new_path[<span class="tok-number">0</span>] == <span class="tok-str">'/'</span>) .{
+        remove_dot_segments(new_path),
+        new_parsed.query,
+    } <span class="tok-kw">else</span> .{
+        <span class="tok-kw">try</span> merge_paths(base.path, new_path, aux_buf),
+        new_parsed.query,
+    };
+
+    <span class="tok-kw">return</span> .{
+        .scheme = base.scheme,
+        .user = base.user,
+        .password = base.password,
+        .host = base.host,
+        .port = base.port,
+        .path = path,
+        .query = query,
+        .fragment = new_parsed.fragment,
+    };
+}
+
+<span class="tok-comment">/// In-place implementation of RFC 3986, Section 5.2.4.</span>
+<span class="tok-kw">fn</span> <span class="tok-fn">remove_dot_segments</span>(path: []<span class="tok-type">u8</span>) <a href="std.Uri.Component.html">Component</a> {
+    <span class="tok-kw">var</span> in_i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">var</span> out_i: <span class="tok-type">usize</span> = <span class="tok-number">0</span>;
+    <span class="tok-kw">while</span> (in_i &lt; path.len) {
+        <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.startsWith">startsWith</a>(<span class="tok-type">u8</span>, path[in_i..], <span class="tok-str">&quot;./&quot;</span>)) {
+            in_i += <span class="tok-number">2</span>;
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.startsWith">startsWith</a>(<span class="tok-type">u8</span>, path[in_i..], <span class="tok-str">&quot;../&quot;</span>)) {
+            in_i += <span class="tok-number">3</span>;
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.startsWith">startsWith</a>(<span class="tok-type">u8</span>, path[in_i..], <span class="tok-str">&quot;/./&quot;</span>)) {
+            in_i += <span class="tok-number">2</span>;
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, path[in_i..], <span class="tok-str">&quot;/.&quot;</span>)) {
+            in_i += <span class="tok-number">1</span>;
+            path[in_i] = <span class="tok-str">'/'</span>;
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.startsWith">startsWith</a>(<span class="tok-type">u8</span>, path[in_i..], <span class="tok-str">&quot;/../&quot;</span>)) {
+            in_i += <span class="tok-number">3</span>;
+            <span class="tok-kw">while</span> (out_i &gt; <span class="tok-number">0</span>) {
+                out_i -= <span class="tok-number">1</span>;
+                <span class="tok-kw">if</span> (path[out_i] == <span class="tok-str">'/'</span>) <span class="tok-kw">break</span>;
+            }
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, path[in_i..], <span class="tok-str">&quot;/..&quot;</span>)) {
+            in_i += <span class="tok-number">2</span>;
+            path[in_i] = <span class="tok-str">'/'</span>;
+            <span class="tok-kw">while</span> (out_i &gt; <span class="tok-number">0</span>) {
+                out_i -= <span class="tok-number">1</span>;
+                <span class="tok-kw">if</span> (path[out_i] == <span class="tok-str">'/'</span>) <span class="tok-kw">break</span>;
+            }
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, path[in_i..], <span class="tok-str">&quot;.&quot;</span>)) {
+            in_i += <span class="tok-number">1</span>;
+        } <span class="tok-kw">else</span> <span class="tok-kw">if</span> (<a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, path[in_i..], <span class="tok-str">&quot;..&quot;</span>)) {
+            in_i += <span class="tok-number">2</span>;
+        } <span class="tok-kw">else</span> {
+            <span class="tok-kw">while</span> (<span class="tok-null">true</span>) {
+                path[out_i] = path[in_i];
+                out_i += <span class="tok-number">1</span>;
+                in_i += <span class="tok-number">1</span>;
+                <span class="tok-kw">if</span> (in_i &gt;= path.len <span class="tok-kw">or</span> path[in_i] == <span class="tok-str">'/'</span>) <span class="tok-kw">break</span>;
+            }
+        }
+    }
+    <span class="tok-kw">return</span> .{ .percent_encoded = path[<span class="tok-number">0</span>..out_i] };
+}
+
+<span class="tok-kw">test</span> remove_dot_segments {
+    {
+        <span class="tok-kw">var</span> buffer = <span class="tok-str">&quot;/a/b/c/./../../g&quot;</span>.*;
+        <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;/a/g&quot;</span>, <a href="std.Uri.html#std.Uri.remove_dot_segments">remove_dot_segments</a>(&amp;buffer).percent_encoded);
+    }
+}
+
+<span class="tok-comment">/// 5.2.3. Merge Paths</span>
+<span class="tok-kw">fn</span> <span class="tok-fn">merge_paths</span>(base: <a href="std.Uri.Component.html">Component</a>, new: []<span class="tok-type">u8</span>, aux_buf: *[]<span class="tok-type">u8</span>) <span class="tok-kw">error</span>{NoSpaceLeft}!<a href="std.Uri.Component.html">Component</a> {
+    <span class="tok-kw">var</span> aux = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(aux_buf.*);
+    <span class="tok-kw">if</span> (!base.isEmpty()) {
+        <span class="tok-kw">try</span> aux.writer().print(<span class="tok-str">&quot;{path}&quot;</span>, .{base});
+        aux.pos = <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.lastIndexOfScalar">lastIndexOfScalar</a>(<span class="tok-type">u8</span>, aux.getWritten(), <span class="tok-str">'/'</span>) <span class="tok-kw">orelse</span>
+            <span class="tok-kw">return</span> <a href="std.Uri.html#std.Uri.remove_dot_segments">remove_dot_segments</a>(new);
+    }
+    <span class="tok-kw">try</span> aux.writer().print(<span class="tok-str">&quot;/{s}&quot;</span>, .{new});
+    <span class="tok-kw">const</span> merged_path = <a href="std.Uri.html#std.Uri.remove_dot_segments">remove_dot_segments</a>(aux.getWritten());
+    aux_buf.* = aux_buf.*[merged_path.percent_encoded.len..];
+    <span class="tok-kw">return</span> merged_path;
+}
+
+<span class="tok-kw">const</span> SliceReader = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">const</span> Self = <span class="tok-builtin">@This</span>();
+
+    slice: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,
+    offset: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">get</span>(self: *<a href="std.Uri.SliceReader.html">Self</a>) ?<span class="tok-type">u8</span> {
+        <span class="tok-kw">if</span> (self.offset &gt;= self.slice.len)
+            <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+        <span class="tok-kw">const</span> c = self.slice[self.offset];
+        self.offset += <span class="tok-number">1</span>;
+        <span class="tok-kw">return</span> c;
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">peek</span>(self: <a href="std.Uri.SliceReader.html">Self</a>) ?<span class="tok-type">u8</span> {
+        <span class="tok-kw">if</span> (self.offset &gt;= self.slice.len)
+            <span class="tok-kw">return</span> <span class="tok-null">null</span>;
+        <span class="tok-kw">return</span> self.slice[self.offset];
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">readWhile</span>(self: *<a href="std.Uri.SliceReader.html">Self</a>, <span class="tok-kw">comptime</span> predicate: <span class="tok-kw">fn</span> (<span class="tok-type">u8</span>) <span class="tok-type">bool</span>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">const</span> start = self.offset;
+        <span class="tok-kw">var</span> end = start;
+        <span class="tok-kw">while</span> (end &lt; self.slice.len <span class="tok-kw">and</span> predicate(self.slice[end])) {
+            end += <span class="tok-number">1</span>;
+        }
+        self.offset = end;
+        <span class="tok-kw">return</span> self.slice[start..end];
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">readUntil</span>(self: *<a href="std.Uri.SliceReader.html">Self</a>, <span class="tok-kw">comptime</span> predicate: <span class="tok-kw">fn</span> (<span class="tok-type">u8</span>) <span class="tok-type">bool</span>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">const</span> start = self.offset;
+        <span class="tok-kw">var</span> end = start;
+        <span class="tok-kw">while</span> (end &lt; self.slice.len <span class="tok-kw">and</span> !predicate(self.slice[end])) {
+            end += <span class="tok-number">1</span>;
+        }
+        self.offset = end;
+        <span class="tok-kw">return</span> self.slice[start..end];
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">readUntilEof</span>(self: *<a href="std.Uri.SliceReader.html">Self</a>) []<span class="tok-kw">const</span> <span class="tok-type">u8</span> {
+        <span class="tok-kw">const</span> start = self.offset;
+        self.offset = self.slice.len;
+        <span class="tok-kw">return</span> self.slice[start..];
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">peekPrefix</span>(self: <a href="std.Uri.SliceReader.html">Self</a>, prefix: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+        <span class="tok-kw">if</span> (self.offset + prefix.len &gt; self.slice.len)
+            <span class="tok-kw">return</span> <span class="tok-null">false</span>;
+        <span class="tok-kw">return</span> <a href="std.html">std</a>.<a href="std.mem.html">mem</a>.<a href="std.mem.html#std.mem.eql">eql</a>(<span class="tok-type">u8</span>, self.slice[self.offset..][<span class="tok-number">0</span>..prefix.len], prefix);
+    }
+};
+
+<span class="tok-comment">/// scheme      = ALPHA *( ALPHA / DIGIT / &quot;+&quot; / &quot;-&quot; / &quot;.&quot; )</span>
+<span class="tok-kw">fn</span> <span class="tok-fn">isSchemeChar</span>(c: <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (c) {
+        <span class="tok-str">'A'</span>...<span class="tok-str">'Z'</span>, <span class="tok-str">'a'</span>...<span class="tok-str">'z'</span>, <span class="tok-str">'0'</span>...<span class="tok-str">'9'</span>, <span class="tok-str">'+'</span>, <span class="tok-str">'-'</span>, <span class="tok-str">'.'</span> =&gt; <span class="tok-null">true</span>,
+        <span class="tok-kw">else</span> =&gt; <span class="tok-null">false</span>,
+    };
+}
+
+<span class="tok-comment">/// reserved    = gen-delims / sub-delims</span>
+<span class="tok-kw">fn</span> <span class="tok-fn">isReserved</span>(c: <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <a href="std.Uri.html#std.Uri.isGenLimit">isGenLimit</a>(c) <span class="tok-kw">or</span> <a href="std.Uri.html#std.Uri.isSubLimit">isSubLimit</a>(c);
+}
+
+<span class="tok-comment">/// gen-delims  = &quot;:&quot; / &quot;/&quot; / &quot;?&quot; / &quot;#&quot; / &quot;[&quot; / &quot;]&quot; / &quot;@&quot;</span>
+<span class="tok-kw">fn</span> <span class="tok-fn">isGenLimit</span>(c: <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (c) {
+        <span class="tok-str">':'</span>, <span class="tok-str">','</span>, <span class="tok-str">'?'</span>, <span class="tok-str">'#'</span>, <span class="tok-str">'['</span>, <span class="tok-str">']'</span>, <span class="tok-str">'@'</span> =&gt; <span class="tok-null">true</span>,
+        <span class="tok-kw">else</span> =&gt; <span class="tok-null">false</span>,
+    };
+}
+
+<span class="tok-comment">/// sub-delims  = &quot;!&quot; / &quot;{{CONTENT}}quot; / &quot;&amp;&quot; / &quot;'&quot; / &quot;(&quot; / &quot;)&quot;</span>
+<span class="tok-comment">///             / &quot;*&quot; / &quot;+&quot; / &quot;,&quot; / &quot;;&quot; / &quot;=&quot;</span>
+<span class="tok-kw">fn</span> <span class="tok-fn">isSubLimit</span>(c: <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (c) {
+        <span class="tok-str">'!'</span>, <span class="tok-str">'</code></pre></details></div></span>, <span class="tok-str">'&amp;'</span>, <span class="tok-str">'\''</span>, <span class="tok-str">'('</span>, <span class="tok-str">')'</span>, <span class="tok-str">'*'</span>, <span class="tok-str">'+'</span>, <span class="tok-str">','</span>, <span class="tok-str">';'</span>, <span class="tok-str">'='</span> =&gt; <span class="tok-null">true</span>,
+        <span class="tok-kw">else</span> =&gt; <span class="tok-null">false</span>,
+    };
+}
+
+<span class="tok-comment">/// unreserved  = ALPHA / DIGIT / &quot;-&quot; / &quot;.&quot; / &quot;_&quot; / &quot;~&quot;</span>
+<span class="tok-kw">fn</span> <span class="tok-fn">isUnreserved</span>(c: <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (c) {
+        <span class="tok-str">'A'</span>...<span class="tok-str">'Z'</span>, <span class="tok-str">'a'</span>...<span class="tok-str">'z'</span>, <span class="tok-str">'0'</span>...<span class="tok-str">'9'</span>, <span class="tok-str">'-'</span>, <span class="tok-str">'.'</span>, <span class="tok-str">'_'</span>, <span class="tok-str">'~'</span> =&gt; <span class="tok-null">true</span>,
+        <span class="tok-kw">else</span> =&gt; <span class="tok-null">false</span>,
+    };
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">isUserChar</span>(c: <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <a href="std.Uri.html#std.Uri.isUnreserved">isUnreserved</a>(c) <span class="tok-kw">or</span> <a href="std.Uri.html#std.Uri.isSubLimit">isSubLimit</a>(c);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">isPasswordChar</span>(c: <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <a href="std.Uri.html#std.Uri.isUserChar">isUserChar</a>(c) <span class="tok-kw">or</span> c == <span class="tok-str">':'</span>;
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">isHostChar</span>(c: <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <a href="std.Uri.html#std.Uri.isPasswordChar">isPasswordChar</a>(c) <span class="tok-kw">or</span> c == <span class="tok-str">'['</span> <span class="tok-kw">or</span> c == <span class="tok-str">']'</span>;
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">isPathChar</span>(c: <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <a href="std.Uri.html#std.Uri.isUserChar">isUserChar</a>(c) <span class="tok-kw">or</span> c == <span class="tok-str">'/'</span> <span class="tok-kw">or</span> c == <span class="tok-str">':'</span> <span class="tok-kw">or</span> c == <span class="tok-str">'@'</span>;
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">isQueryChar</span>(c: <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <a href="std.Uri.html#std.Uri.isPathChar">isPathChar</a>(c) <span class="tok-kw">or</span> c == <span class="tok-str">'?'</span>;
+}
+
+<span class="tok-kw">const</span> isFragmentChar = <a href="std.Uri.html#std.Uri.isQueryChar">isQueryChar</a>;
+
+<span class="tok-kw">fn</span> <span class="tok-fn">isAuthoritySeparator</span>(c: <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (c) {
+        <span class="tok-str">'/'</span>, <span class="tok-str">'?'</span>, <span class="tok-str">'#'</span> =&gt; <span class="tok-null">true</span>,
+        <span class="tok-kw">else</span> =&gt; <span class="tok-null">false</span>,
+    };
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">isPathSeparator</span>(c: <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (c) {
+        <span class="tok-str">'?'</span>, <span class="tok-str">'#'</span> =&gt; <span class="tok-null">true</span>,
+        <span class="tok-kw">else</span> =&gt; <span class="tok-null">false</span>,
+    };
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">isQuerySeparator</span>(c: <span class="tok-type">u8</span>) <span class="tok-type">bool</span> {
+    <span class="tok-kw">return</span> <span class="tok-kw">switch</span> (c) {
+        <span class="tok-str">'#'</span> =&gt; <span class="tok-null">true</span>,
+        <span class="tok-kw">else</span> =&gt; <span class="tok-null">false</span>,
+    };
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;basic&quot;</span> {
+    <span class="tok-kw">const</span> parsed = <span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;https://ziglang.org/download&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;https&quot;</span>, parsed.scheme);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;ziglang.org&quot;</span>, parsed.host.?.percent_encoded);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;/download&quot;</span>, parsed.path.percent_encoded);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@as</span>(?<span class="tok-type">u16</span>, <span class="tok-null">null</span>), parsed.port);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;with port&quot;</span> {
+    <span class="tok-kw">const</span> parsed = <span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;http://example:1337/&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;http&quot;</span>, parsed.scheme);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;example&quot;</span>, parsed.host.?.percent_encoded);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;/&quot;</span>, parsed.path.percent_encoded);
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@as</span>(?<span class="tok-type">u16</span>, <span class="tok-number">1337</span>), parsed.port);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;should fail gracefully&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.InvalidFormat, <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;foobar://&quot;</span>));
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;file&quot;</span> {
+    <span class="tok-kw">const</span> parsed = <span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;file:///&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;file&quot;</span>, parsed.scheme);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@as</span>(?<a href="std.Uri.Component.html">Component</a>, <span class="tok-null">null</span>), parsed.host);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;/&quot;</span>, parsed.path.percent_encoded);
+
+    <span class="tok-kw">const</span> parsed2 = <span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;file:///an/absolute/path/to/something&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;file&quot;</span>, parsed2.scheme);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@as</span>(?<a href="std.Uri.Component.html">Component</a>, <span class="tok-null">null</span>), parsed2.host);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;/an/absolute/path/to/something&quot;</span>, parsed2.path.percent_encoded);
+
+    <span class="tok-kw">const</span> parsed3 = <span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;file://localhost/an/absolute/path/to/another/thing/&quot;</span>);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;file&quot;</span>, parsed3.scheme);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;localhost&quot;</span>, parsed3.host.?.percent_encoded);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;/an/absolute/path/to/another/thing/&quot;</span>, parsed3.path.percent_encoded);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;scheme&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;http&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;http:_&quot;</span>)).scheme);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;scheme-mee&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme-mee:_&quot;</span>)).scheme);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;a.b.c&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;a.b.c:_&quot;</span>)).scheme);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;ab+&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;ab+:_&quot;</span>)).scheme);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;X+++&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;X+++:_&quot;</span>)).scheme);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;Y+-.&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;Y+-.:_&quot;</span>)).scheme);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;authority&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;hostname&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://hostname&quot;</span>)).host.?.percent_encoded);
+
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;hostname&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://userinfo@hostname&quot;</span>)).host.?.percent_encoded);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;userinfo&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://userinfo@hostname&quot;</span>)).user.?.percent_encoded);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@as</span>(?<a href="std.Uri.Component.html">Component</a>, <span class="tok-null">null</span>), (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://userinfo@hostname&quot;</span>)).password);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@as</span>(?<a href="std.Uri.Component.html">Component</a>, <span class="tok-null">null</span>), (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://userinfo@&quot;</span>)).host);
+
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;hostname&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://user:password@hostname&quot;</span>)).host.?.percent_encoded);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;user&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://user:password@hostname&quot;</span>)).user.?.percent_encoded);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;password&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://user:password@hostname&quot;</span>)).password.?.percent_encoded);
+
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;hostname&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://hostname:0&quot;</span>)).host.?.percent_encoded);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u16</span>, <span class="tok-number">1234</span>), (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://hostname:1234&quot;</span>)).port.?);
+
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;hostname&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://userinfo@hostname:1234&quot;</span>)).host.?.percent_encoded);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u16</span>, <span class="tok-number">1234</span>), (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://userinfo@hostname:1234&quot;</span>)).port.?);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;userinfo&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://userinfo@hostname:1234&quot;</span>)).user.?.percent_encoded);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@as</span>(?<a href="std.Uri.Component.html">Component</a>, <span class="tok-null">null</span>), (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://userinfo@hostname:1234&quot;</span>)).password);
+
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;hostname&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://user:password@hostname:1234&quot;</span>)).host.?.percent_encoded);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@as</span>(<span class="tok-type">u16</span>, <span class="tok-number">1234</span>), (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://user:password@hostname:1234&quot;</span>)).port.?);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;user&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://user:password@hostname:1234&quot;</span>)).user.?.percent_encoded);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;password&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://user:password@hostname:1234&quot;</span>)).password.?.percent_encoded);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;authority.password&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;username&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://username@a&quot;</span>)).user.?.percent_encoded);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@as</span>(?<a href="std.Uri.Component.html">Component</a>, <span class="tok-null">null</span>), (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://username@a&quot;</span>)).password);
+
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;username&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://username:@a&quot;</span>)).user.?.percent_encoded);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<span class="tok-builtin">@as</span>(?<a href="std.Uri.Component.html">Component</a>, <span class="tok-null">null</span>), (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://username:@a&quot;</span>)).password);
+
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;username&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://username:password@a&quot;</span>)).user.?.percent_encoded);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;password&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://username:password@a&quot;</span>)).password.?.percent_encoded);
+
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;username&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://username::@a&quot;</span>)).user.?.percent_encoded);
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<span class="tok-str">&quot;:&quot;</span>, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://username::@a&quot;</span>)).password.?.percent_encoded);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">testAuthorityHost</span>(<span class="tok-kw">comptime</span> hostlist: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (hostlist) |hostname| {
+        <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(hostname, (<span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;scheme://&quot;</span> ++ hostname)).host.?.percent_encoded);
+    }
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;authority.dns-names&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.testAuthorityHost">testAuthorityHost</a>(.{
+        <span class="tok-str">&quot;a&quot;</span>,
+        <span class="tok-str">&quot;a.b&quot;</span>,
+        <span class="tok-str">&quot;example.com&quot;</span>,
+        <span class="tok-str">&quot;www.example.com&quot;</span>,
+        <span class="tok-str">&quot;example.org.&quot;</span>,
+        <span class="tok-str">&quot;www.example.org.&quot;</span>,
+        <span class="tok-str">&quot;xn--nw2a.xn--j6w193g&quot;</span>,<span class="tok-comment"> // internationalized URI: 見.香港
+        </span><span class="tok-str">&quot;fe80--1ff-fe23-4567-890as3.ipv6-literal.net&quot;</span>,
+    });
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;authority.IPv4&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.testAuthorityHost">testAuthorityHost</a>(.{
+        <span class="tok-str">&quot;127.0.0.1&quot;</span>,
+        <span class="tok-str">&quot;255.255.255.255&quot;</span>,
+        <span class="tok-str">&quot;0.0.0.0&quot;</span>,
+        <span class="tok-str">&quot;8.8.8.8&quot;</span>,
+        <span class="tok-str">&quot;1.2.3.4&quot;</span>,
+        <span class="tok-str">&quot;192.168.0.1&quot;</span>,
+        <span class="tok-str">&quot;10.42.0.0&quot;</span>,
+    });
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;authority.IPv6&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.testAuthorityHost">testAuthorityHost</a>(.{
+        <span class="tok-str">&quot;[2001:db8:0:0:0:0:2:1]&quot;</span>,
+        <span class="tok-str">&quot;[2001:db8::2:1]&quot;</span>,
+        <span class="tok-str">&quot;[2001:db8:0000:1:1:1:1:1]&quot;</span>,
+        <span class="tok-str">&quot;[2001:db8:0:1:1:1:1:1]&quot;</span>,
+        <span class="tok-str">&quot;[0:0:0:0:0:0:0:0]&quot;</span>,
+        <span class="tok-str">&quot;[0:0:0:0:0:0:0:1]&quot;</span>,
+        <span class="tok-str">&quot;[::1]&quot;</span>,
+        <span class="tok-str">&quot;[::]&quot;</span>,
+        <span class="tok-str">&quot;[2001:db8:85a3:8d3:1319:8a2e:370:7348]&quot;</span>,
+        <span class="tok-str">&quot;[fe80::1ff:fe23:4567:890a%25eth2]&quot;</span>,
+        <span class="tok-str">&quot;[fe80::1ff:fe23:4567:890a]&quot;</span>,
+        <span class="tok-str">&quot;[fe80::1ff:fe23:4567:890a%253]&quot;</span>,
+        <span class="tok-str">&quot;[fe80:3::1ff:fe23:4567:890a]&quot;</span>,
+    });
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;RFC example 1&quot;</span> {
+    <span class="tok-kw">const</span> uri = <span class="tok-str">&quot;foo://example.com:8042/over/there?name=ferret#nose&quot;</span>;
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<a href="std.Uri.html">Uri</a>{
+        .scheme = uri[<span class="tok-number">0</span>..<span class="tok-number">3</span>],
+        .user = <span class="tok-null">null</span>,
+        .password = <span class="tok-null">null</span>,
+        .host = .{ .percent_encoded = uri[<span class="tok-number">6</span>..<span class="tok-number">17</span>] },
+        .port = <span class="tok-number">8042</span>,
+        .path = .{ .percent_encoded = uri[<span class="tok-number">22</span>..<span class="tok-number">33</span>] },
+        .query = .{ .percent_encoded = uri[<span class="tok-number">34</span>..<span class="tok-number">45</span>] },
+        .fragment = .{ .percent_encoded = uri[<span class="tok-number">46</span>..<span class="tok-number">50</span>] },
+    }, <span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(uri));
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;RFC example 2&quot;</span> {
+    <span class="tok-kw">const</span> uri = <span class="tok-str">&quot;urn:example:animal:ferret:nose&quot;</span>;
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(<a href="std.Uri.html">Uri</a>{
+        .scheme = uri[<span class="tok-number">0</span>..<span class="tok-number">3</span>],
+        .user = <span class="tok-null">null</span>,
+        .password = <span class="tok-null">null</span>,
+        .host = <span class="tok-null">null</span>,
+        .port = <span class="tok-null">null</span>,
+        .path = .{ .percent_encoded = uri[<span class="tok-number">4</span>..] },
+        .query = <span class="tok-null">null</span>,
+        .fragment = <span class="tok-null">null</span>,
+    }, <span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(uri));
+}<span class="tok-comment">
+
+// source:
+// https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#Examples
+</span><span class="tok-kw">test</span> <span class="tok-str">&quot;Examples from wikipedia&quot;</span> {
+    <span class="tok-kw">const</span> list = [_][]<span class="tok-kw">const</span> <span class="tok-type">u8</span>{
+        <span class="tok-str">&quot;https://john.doe@www.example.com:123/forum/questions/?tag=networking&amp;order=newest#top&quot;</span>,
+        <span class="tok-str">&quot;ldap://[2001:db8::7]/c=GB?objectClass?one&quot;</span>,
+        <span class="tok-str">&quot;mailto:John.Doe@example.com&quot;</span>,
+        <span class="tok-str">&quot;news:comp.infosystems.www.servers.unix&quot;</span>,
+        <span class="tok-str">&quot;tel:+1-816-555-1212&quot;</span>,
+        <span class="tok-str">&quot;telnet://192.0.2.16:80/&quot;</span>,
+        <span class="tok-str">&quot;urn:oasis:names:specification:docbook:dtd:xml:4.1.2&quot;</span>,
+        <span class="tok-str">&quot;http://a/b/c/d;p?q&quot;</span>,
+    };
+    <span class="tok-kw">for</span> (list) |uri| {
+        _ = <span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(uri);
+    }
+}<span class="tok-comment">
+
+// source:
+// https://tools.ietf.org/html/rfc3986#section-5.4.1
+</span><span class="tok-kw">test</span> <span class="tok-str">&quot;Examples from RFC3986&quot;</span> {
+    <span class="tok-kw">const</span> list = [_][]<span class="tok-kw">const</span> <span class="tok-type">u8</span>{
+        <span class="tok-str">&quot;http://a/b/c/g&quot;</span>,
+        <span class="tok-str">&quot;http://a/b/c/g&quot;</span>,
+        <span class="tok-str">&quot;http://a/b/c/g/&quot;</span>,
+        <span class="tok-str">&quot;http://a/g&quot;</span>,
+        <span class="tok-str">&quot;http://g&quot;</span>,
+        <span class="tok-str">&quot;http://a/b/c/d;p?y&quot;</span>,
+        <span class="tok-str">&quot;http://a/b/c/g?y&quot;</span>,
+        <span class="tok-str">&quot;http://a/b/c/d;p?q#s&quot;</span>,
+        <span class="tok-str">&quot;http://a/b/c/g#s&quot;</span>,
+        <span class="tok-str">&quot;http://a/b/c/g?y#s&quot;</span>,
+        <span class="tok-str">&quot;http://a/b/c/;x&quot;</span>,
+        <span class="tok-str">&quot;http://a/b/c/g;x&quot;</span>,
+        <span class="tok-str">&quot;http://a/b/c/g;x?y#s&quot;</span>,
+        <span class="tok-str">&quot;http://a/b/c/d;p?q&quot;</span>,
+        <span class="tok-str">&quot;http://a/b/c/&quot;</span>,
+        <span class="tok-str">&quot;http://a/b/c/&quot;</span>,
+        <span class="tok-str">&quot;http://a/b/&quot;</span>,
+        <span class="tok-str">&quot;http://a/b/&quot;</span>,
+        <span class="tok-str">&quot;http://a/b/g&quot;</span>,
+        <span class="tok-str">&quot;http://a/&quot;</span>,
+        <span class="tok-str">&quot;http://a/&quot;</span>,
+        <span class="tok-str">&quot;http://a/g&quot;</span>,
+    };
+    <span class="tok-kw">for</span> (list) |uri| {
+        _ = <span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(uri);
+    }
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;Special test&quot;</span> {<span class="tok-comment">
+    // This is for all of you code readers ♥
+    </span>_ = <span class="tok-kw">try</span> <a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;https://www.youtube.com/watch?v=dQw4w9WgXcQ&amp;feature=youtu.be&amp;t=0&quot;</span>);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;URI percent encoding&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectFmt">expectFmt</a>(
+        <span class="tok-str">&quot;%5C%C3%B6%2F%20%C3%A4%C3%B6%C3%9F%20~~.adas-https%3A%2F%2Fcanvas%3A123%2F%23ads%26%26sad&quot;</span>,
+        <span class="tok-str">&quot;{%}&quot;</span>,
+        .{<a href="std.Uri.Component.html">Component</a>{ .raw = <span class="tok-str">&quot;\\ö/ äöß ~~.adas-https://canvas:123/#ads&amp;&amp;sad&quot;</span> }},
+    );
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;URI percent decoding&quot;</span> {
+    {
+        <span class="tok-kw">const</span> expected = <span class="tok-str">&quot;\\ö/ äöß ~~.adas-https://canvas:123/#ads&amp;&amp;sad&quot;</span>;
+        <span class="tok-kw">var</span> input = <span class="tok-str">&quot;%5C%C3%B6%2F%20%C3%A4%C3%B6%C3%9F%20~~.adas-https%3A%2F%2Fcanvas%3A123%2F%23ads%26%26sad&quot;</span>.*;
+
+        <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectFmt">expectFmt</a>(expected, <span class="tok-str">&quot;{raw}&quot;</span>, .{<a href="std.Uri.Component.html">Component</a>{ .percent_encoded = &amp;input }});
+
+        <span class="tok-kw">var</span> output: [expected.len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<a href="std.Uri.html#std.Uri.percentDecodeBackwards">percentDecodeBackwards</a>(&amp;output, &amp;input), expected);
+
+        <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(expected, <a href="std.Uri.html#std.Uri.percentDecodeInPlace">percentDecodeInPlace</a>(&amp;input));
+    }
+
+    {
+        <span class="tok-kw">const</span> expected = <span class="tok-str">&quot;/abc%&quot;</span>;
+        <span class="tok-kw">var</span> input = expected.*;
+
+        <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectFmt">expectFmt</a>(expected, <span class="tok-str">&quot;{raw}&quot;</span>, .{<a href="std.Uri.Component.html">Component</a>{ .percent_encoded = &amp;input }});
+
+        <span class="tok-kw">var</span> output: [expected.len]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+        <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(<a href="std.Uri.html#std.Uri.percentDecodeBackwards">percentDecodeBackwards</a>(&amp;output, &amp;input), expected);
+
+        <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualStrings">expectEqualStrings</a>(expected, <a href="std.Uri.html#std.Uri.percentDecodeInPlace">percentDecodeInPlace</a>(&amp;input));
+    }
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;URI query encoding&quot;</span> {
+    <span class="tok-kw">const</span> address = <span class="tok-str">&quot;https://objects.githubusercontent.com/?response-content-type=application%2Foctet-stream&quot;</span>;
+    <span class="tok-kw">const</span> parsed = <span class="tok-kw">try</span> <a href="std.Uri.html">Uri</a>.<a href="std.Uri.html#std.Uri.parse">parse</a>(address);<span class="tok-comment">
+
+    // format the URI to percent encode it
+    </span><span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectFmt">expectFmt</a>(<span class="tok-str">&quot;/?response-content-type=application%2Foctet-stream&quot;</span>, <span class="tok-str">&quot;{/?}&quot;</span>, .{parsed});
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;format&quot;</span> {
+    <span class="tok-kw">const</span> uri: <a href="std.Uri.html">Uri</a> = .{
+        .scheme = <span class="tok-str">&quot;file&quot;</span>,
+        .user = <span class="tok-null">null</span>,
+        .password = <span class="tok-null">null</span>,
+        .host = <span class="tok-null">null</span>,
+        .port = <span class="tok-null">null</span>,
+        .path = .{ .raw = <span class="tok-str">&quot;/foo/bar/baz&quot;</span> },
+        .query = <span class="tok-null">null</span>,
+        .fragment = <span class="tok-null">null</span>,
+    };
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectFmt">expectFmt</a>(<span class="tok-str">&quot;file:/foo/bar/baz&quot;</span>, <span class="tok-str">&quot;{;/?#}&quot;</span>, .{uri});
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;URI malformed input&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.InvalidFormat, <a href="std.html">std</a>.<a href="std.Uri.html">Uri</a>.<a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;http://][&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.InvalidFormat, <a href="std.html">std</a>.<a href="std.Uri.html">Uri</a>.<a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;http://]@[&quot;</span>));
+    <span class="tok-kw">try</span> <a href="std.html">std</a>.<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(<span class="tok-kw">error</span>.InvalidFormat, <a href="std.html">std</a>.<a href="std.Uri.html">Uri</a>.<a href="std.Uri.html#std.Uri.parse">parse</a>(<span class="tok-str">&quot;http://lo]s\x85hc@[/8\x10?0Q&quot;</span>));
+}
+
+<span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std.zig&quot;</span>);
+<span class="tok-kw">const</span> testing = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>;
+<span class="tok-kw">const</span> Uri = <span class="tok-builtin">@This</span>();</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

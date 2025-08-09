@@ -1,0 +1,837 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">os</a></li><li><a href="std.os.html" class="">linux</a></li><li><a href="std.os.linux.syscalls.html" class="">syscalls</a></li><li><a href="std.os.linux.syscalls.M68k.html" class="active">M68k</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.os.linux.syscalls.M68k" class="declHeader"><span class="declHeaderCategory">enum</span><span class="declHeaderIdentifier">std.os.linux.syscalls.M68k</span><a href="#src.zig-std.os.linux.syscalls.M68k">[src]</a></h1><div class="sectFields"><h2 class="sectionHeader">Fields</h2><div class="listFields"><div><pre><code>restart_syscall = <span class="tok-number">0</span></code></pre></div><div><pre><code>exit = <span class="tok-number">1</span></code></pre></div><div><pre><code>fork = <span class="tok-number">2</span></code></pre></div><div><pre><code>read = <span class="tok-number">3</span></code></pre></div><div><pre><code>write = <span class="tok-number">4</span></code></pre></div><div><pre><code>open = <span class="tok-number">5</span></code></pre></div><div><pre><code>close = <span class="tok-number">6</span></code></pre></div><div><pre><code>waitpid = <span class="tok-number">7</span></code></pre></div><div><pre><code>creat = <span class="tok-number">8</span></code></pre></div><div><pre><code>link = <span class="tok-number">9</span></code></pre></div><div><pre><code>unlink = <span class="tok-number">10</span></code></pre></div><div><pre><code>execve = <span class="tok-number">11</span></code></pre></div><div><pre><code>chdir = <span class="tok-number">12</span></code></pre></div><div><pre><code>time = <span class="tok-number">13</span></code></pre></div><div><pre><code>mknod = <span class="tok-number">14</span></code></pre></div><div><pre><code>chmod = <span class="tok-number">15</span></code></pre></div><div><pre><code>chown = <span class="tok-number">16</span></code></pre></div><div><pre><code>oldstat = <span class="tok-number">18</span></code></pre></div><div><pre><code>lseek = <span class="tok-number">19</span></code></pre></div><div><pre><code>getpid = <span class="tok-number">20</span></code></pre></div><div><pre><code>mount = <span class="tok-number">21</span></code></pre></div><div><pre><code>umount = <span class="tok-number">22</span></code></pre></div><div><pre><code>setuid = <span class="tok-number">23</span></code></pre></div><div><pre><code>getuid = <span class="tok-number">24</span></code></pre></div><div><pre><code>stime = <span class="tok-number">25</span></code></pre></div><div><pre><code>ptrace = <span class="tok-number">26</span></code></pre></div><div><pre><code>alarm = <span class="tok-number">27</span></code></pre></div><div><pre><code>oldfstat = <span class="tok-number">28</span></code></pre></div><div><pre><code>pause = <span class="tok-number">29</span></code></pre></div><div><pre><code>utime = <span class="tok-number">30</span></code></pre></div><div><pre><code>access = <span class="tok-number">33</span></code></pre></div><div><pre><code>nice = <span class="tok-number">34</span></code></pre></div><div><pre><code>sync = <span class="tok-number">36</span></code></pre></div><div><pre><code>kill = <span class="tok-number">37</span></code></pre></div><div><pre><code>rename = <span class="tok-number">38</span></code></pre></div><div><pre><code>mkdir = <span class="tok-number">39</span></code></pre></div><div><pre><code>rmdir = <span class="tok-number">40</span></code></pre></div><div><pre><code>dup = <span class="tok-number">41</span></code></pre></div><div><pre><code>pipe = <span class="tok-number">42</span></code></pre></div><div><pre><code>times = <span class="tok-number">43</span></code></pre></div><div><pre><code>brk = <span class="tok-number">45</span></code></pre></div><div><pre><code>setgid = <span class="tok-number">46</span></code></pre></div><div><pre><code>getgid = <span class="tok-number">47</span></code></pre></div><div><pre><code>signal = <span class="tok-number">48</span></code></pre></div><div><pre><code>geteuid = <span class="tok-number">49</span></code></pre></div><div><pre><code>getegid = <span class="tok-number">50</span></code></pre></div><div><pre><code>acct = <span class="tok-number">51</span></code></pre></div><div><pre><code>umount2 = <span class="tok-number">52</span></code></pre></div><div><pre><code>ioctl = <span class="tok-number">54</span></code></pre></div><div><pre><code>fcntl = <span class="tok-number">55</span></code></pre></div><div><pre><code>setpgid = <span class="tok-number">57</span></code></pre></div><div><pre><code>umask = <span class="tok-number">60</span></code></pre></div><div><pre><code>chroot = <span class="tok-number">61</span></code></pre></div><div><pre><code>ustat = <span class="tok-number">62</span></code></pre></div><div><pre><code>dup2 = <span class="tok-number">63</span></code></pre></div><div><pre><code>getppid = <span class="tok-number">64</span></code></pre></div><div><pre><code>getpgrp = <span class="tok-number">65</span></code></pre></div><div><pre><code>setsid = <span class="tok-number">66</span></code></pre></div><div><pre><code>sigaction = <span class="tok-number">67</span></code></pre></div><div><pre><code>sgetmask = <span class="tok-number">68</span></code></pre></div><div><pre><code>ssetmask = <span class="tok-number">69</span></code></pre></div><div><pre><code>setreuid = <span class="tok-number">70</span></code></pre></div><div><pre><code>setregid = <span class="tok-number">71</span></code></pre></div><div><pre><code>sigsuspend = <span class="tok-number">72</span></code></pre></div><div><pre><code>sigpending = <span class="tok-number">73</span></code></pre></div><div><pre><code>sethostname = <span class="tok-number">74</span></code></pre></div><div><pre><code>setrlimit = <span class="tok-number">75</span></code></pre></div><div><pre><code>getrlimit = <span class="tok-number">76</span></code></pre></div><div><pre><code>getrusage = <span class="tok-number">77</span></code></pre></div><div><pre><code>gettimeofday = <span class="tok-number">78</span></code></pre></div><div><pre><code>settimeofday = <span class="tok-number">79</span></code></pre></div><div><pre><code>getgroups = <span class="tok-number">80</span></code></pre></div><div><pre><code>setgroups = <span class="tok-number">81</span></code></pre></div><div><pre><code>select = <span class="tok-number">82</span></code></pre></div><div><pre><code>symlink = <span class="tok-number">83</span></code></pre></div><div><pre><code>oldlstat = <span class="tok-number">84</span></code></pre></div><div><pre><code>readlink = <span class="tok-number">85</span></code></pre></div><div><pre><code>uselib = <span class="tok-number">86</span></code></pre></div><div><pre><code>swapon = <span class="tok-number">87</span></code></pre></div><div><pre><code>reboot = <span class="tok-number">88</span></code></pre></div><div><pre><code>readdir = <span class="tok-number">89</span></code></pre></div><div><pre><code>mmap = <span class="tok-number">90</span></code></pre></div><div><pre><code>munmap = <span class="tok-number">91</span></code></pre></div><div><pre><code>truncate = <span class="tok-number">92</span></code></pre></div><div><pre><code>ftruncate = <span class="tok-number">93</span></code></pre></div><div><pre><code>fchmod = <span class="tok-number">94</span></code></pre></div><div><pre><code>fchown = <span class="tok-number">95</span></code></pre></div><div><pre><code>getpriority = <span class="tok-number">96</span></code></pre></div><div><pre><code>setpriority = <span class="tok-number">97</span></code></pre></div><div><pre><code>statfs = <span class="tok-number">99</span></code></pre></div><div><pre><code>fstatfs = <span class="tok-number">100</span></code></pre></div><div><pre><code>socketcall = <span class="tok-number">102</span></code></pre></div><div><pre><code>syslog = <span class="tok-number">103</span></code></pre></div><div><pre><code>setitimer = <span class="tok-number">104</span></code></pre></div><div><pre><code>getitimer = <span class="tok-number">105</span></code></pre></div><div><pre><code>stat = <span class="tok-number">106</span></code></pre></div><div><pre><code>lstat = <span class="tok-number">107</span></code></pre></div><div><pre><code>fstat = <span class="tok-number">108</span></code></pre></div><div><pre><code>vhangup = <span class="tok-number">111</span></code></pre></div><div><pre><code>wait4 = <span class="tok-number">114</span></code></pre></div><div><pre><code>swapoff = <span class="tok-number">115</span></code></pre></div><div><pre><code>sysinfo = <span class="tok-number">116</span></code></pre></div><div><pre><code>ipc = <span class="tok-number">117</span></code></pre></div><div><pre><code>fsync = <span class="tok-number">118</span></code></pre></div><div><pre><code>sigreturn = <span class="tok-number">119</span></code></pre></div><div><pre><code>clone = <span class="tok-number">120</span></code></pre></div><div><pre><code>setdomainname = <span class="tok-number">121</span></code></pre></div><div><pre><code>uname = <span class="tok-number">122</span></code></pre></div><div><pre><code>cacheflush = <span class="tok-number">123</span></code></pre></div><div><pre><code>adjtimex = <span class="tok-number">124</span></code></pre></div><div><pre><code>mprotect = <span class="tok-number">125</span></code></pre></div><div><pre><code>sigprocmask = <span class="tok-number">126</span></code></pre></div><div><pre><code>create_module = <span class="tok-number">127</span></code></pre></div><div><pre><code>init_module = <span class="tok-number">128</span></code></pre></div><div><pre><code>delete_module = <span class="tok-number">129</span></code></pre></div><div><pre><code>get_kernel_syms = <span class="tok-number">130</span></code></pre></div><div><pre><code>quotactl = <span class="tok-number">131</span></code></pre></div><div><pre><code>getpgid = <span class="tok-number">132</span></code></pre></div><div><pre><code>fchdir = <span class="tok-number">133</span></code></pre></div><div><pre><code>bdflush = <span class="tok-number">134</span></code></pre></div><div><pre><code>sysfs = <span class="tok-number">135</span></code></pre></div><div><pre><code>personality = <span class="tok-number">136</span></code></pre></div><div><pre><code>setfsuid = <span class="tok-number">138</span></code></pre></div><div><pre><code>setfsgid = <span class="tok-number">139</span></code></pre></div><div><pre><code>llseek = <span class="tok-number">140</span></code></pre></div><div><pre><code>getdents = <span class="tok-number">141</span></code></pre></div><div><pre><code>newselect = <span class="tok-number">142</span></code></pre></div><div><pre><code>flock = <span class="tok-number">143</span></code></pre></div><div><pre><code>msync = <span class="tok-number">144</span></code></pre></div><div><pre><code>readv = <span class="tok-number">145</span></code></pre></div><div><pre><code>writev = <span class="tok-number">146</span></code></pre></div><div><pre><code>getsid = <span class="tok-number">147</span></code></pre></div><div><pre><code>fdatasync = <span class="tok-number">148</span></code></pre></div><div><pre><code>sysctl = <span class="tok-number">149</span></code></pre></div><div><pre><code>mlock = <span class="tok-number">150</span></code></pre></div><div><pre><code>munlock = <span class="tok-number">151</span></code></pre></div><div><pre><code>mlockall = <span class="tok-number">152</span></code></pre></div><div><pre><code>munlockall = <span class="tok-number">153</span></code></pre></div><div><pre><code>sched_setparam = <span class="tok-number">154</span></code></pre></div><div><pre><code>sched_getparam = <span class="tok-number">155</span></code></pre></div><div><pre><code>sched_setscheduler = <span class="tok-number">156</span></code></pre></div><div><pre><code>sched_getscheduler = <span class="tok-number">157</span></code></pre></div><div><pre><code>sched_yield = <span class="tok-number">158</span></code></pre></div><div><pre><code>sched_get_priority_max = <span class="tok-number">159</span></code></pre></div><div><pre><code>sched_get_priority_min = <span class="tok-number">160</span></code></pre></div><div><pre><code>sched_rr_get_interval = <span class="tok-number">161</span></code></pre></div><div><pre><code>nanosleep = <span class="tok-number">162</span></code></pre></div><div><pre><code>mremap = <span class="tok-number">163</span></code></pre></div><div><pre><code>setresuid = <span class="tok-number">164</span></code></pre></div><div><pre><code>getresuid = <span class="tok-number">165</span></code></pre></div><div><pre><code>getpagesize = <span class="tok-number">166</span></code></pre></div><div><pre><code>query_module = <span class="tok-number">167</span></code></pre></div><div><pre><code>poll = <span class="tok-number">168</span></code></pre></div><div><pre><code>nfsservctl = <span class="tok-number">169</span></code></pre></div><div><pre><code>setresgid = <span class="tok-number">170</span></code></pre></div><div><pre><code>getresgid = <span class="tok-number">171</span></code></pre></div><div><pre><code>prctl = <span class="tok-number">172</span></code></pre></div><div><pre><code>rt_sigreturn = <span class="tok-number">173</span></code></pre></div><div><pre><code>rt_sigaction = <span class="tok-number">174</span></code></pre></div><div><pre><code>rt_sigprocmask = <span class="tok-number">175</span></code></pre></div><div><pre><code>rt_sigpending = <span class="tok-number">176</span></code></pre></div><div><pre><code>rt_sigtimedwait = <span class="tok-number">177</span></code></pre></div><div><pre><code>rt_sigqueueinfo = <span class="tok-number">178</span></code></pre></div><div><pre><code>rt_sigsuspend = <span class="tok-number">179</span></code></pre></div><div><pre><code>pread64 = <span class="tok-number">180</span></code></pre></div><div><pre><code>pwrite64 = <span class="tok-number">181</span></code></pre></div><div><pre><code>lchown = <span class="tok-number">182</span></code></pre></div><div><pre><code>getcwd = <span class="tok-number">183</span></code></pre></div><div><pre><code>capget = <span class="tok-number">184</span></code></pre></div><div><pre><code>capset = <span class="tok-number">185</span></code></pre></div><div><pre><code>sigaltstack = <span class="tok-number">186</span></code></pre></div><div><pre><code>sendfile = <span class="tok-number">187</span></code></pre></div><div><pre><code>getpmsg = <span class="tok-number">188</span></code></pre></div><div><pre><code>putpmsg = <span class="tok-number">189</span></code></pre></div><div><pre><code>vfork = <span class="tok-number">190</span></code></pre></div><div><pre><code>ugetrlimit = <span class="tok-number">191</span></code></pre></div><div><pre><code>mmap2 = <span class="tok-number">192</span></code></pre></div><div><pre><code>truncate64 = <span class="tok-number">193</span></code></pre></div><div><pre><code>ftruncate64 = <span class="tok-number">194</span></code></pre></div><div><pre><code>stat64 = <span class="tok-number">195</span></code></pre></div><div><pre><code>lstat64 = <span class="tok-number">196</span></code></pre></div><div><pre><code>fstat64 = <span class="tok-number">197</span></code></pre></div><div><pre><code>chown32 = <span class="tok-number">198</span></code></pre></div><div><pre><code>getuid32 = <span class="tok-number">199</span></code></pre></div><div><pre><code>getgid32 = <span class="tok-number">200</span></code></pre></div><div><pre><code>geteuid32 = <span class="tok-number">201</span></code></pre></div><div><pre><code>getegid32 = <span class="tok-number">202</span></code></pre></div><div><pre><code>setreuid32 = <span class="tok-number">203</span></code></pre></div><div><pre><code>setregid32 = <span class="tok-number">204</span></code></pre></div><div><pre><code>getgroups32 = <span class="tok-number">205</span></code></pre></div><div><pre><code>setgroups32 = <span class="tok-number">206</span></code></pre></div><div><pre><code>fchown32 = <span class="tok-number">207</span></code></pre></div><div><pre><code>setresuid32 = <span class="tok-number">208</span></code></pre></div><div><pre><code>getresuid32 = <span class="tok-number">209</span></code></pre></div><div><pre><code>setresgid32 = <span class="tok-number">210</span></code></pre></div><div><pre><code>getresgid32 = <span class="tok-number">211</span></code></pre></div><div><pre><code>lchown32 = <span class="tok-number">212</span></code></pre></div><div><pre><code>setuid32 = <span class="tok-number">213</span></code></pre></div><div><pre><code>setgid32 = <span class="tok-number">214</span></code></pre></div><div><pre><code>setfsuid32 = <span class="tok-number">215</span></code></pre></div><div><pre><code>setfsgid32 = <span class="tok-number">216</span></code></pre></div><div><pre><code>pivot_root = <span class="tok-number">217</span></code></pre></div><div><pre><code>getdents64 = <span class="tok-number">220</span></code></pre></div><div><pre><code>gettid = <span class="tok-number">221</span></code></pre></div><div><pre><code>tkill = <span class="tok-number">222</span></code></pre></div><div><pre><code>setxattr = <span class="tok-number">223</span></code></pre></div><div><pre><code>lsetxattr = <span class="tok-number">224</span></code></pre></div><div><pre><code>fsetxattr = <span class="tok-number">225</span></code></pre></div><div><pre><code>getxattr = <span class="tok-number">226</span></code></pre></div><div><pre><code>lgetxattr = <span class="tok-number">227</span></code></pre></div><div><pre><code>fgetxattr = <span class="tok-number">228</span></code></pre></div><div><pre><code>listxattr = <span class="tok-number">229</span></code></pre></div><div><pre><code>llistxattr = <span class="tok-number">230</span></code></pre></div><div><pre><code>flistxattr = <span class="tok-number">231</span></code></pre></div><div><pre><code>removexattr = <span class="tok-number">232</span></code></pre></div><div><pre><code>lremovexattr = <span class="tok-number">233</span></code></pre></div><div><pre><code>fremovexattr = <span class="tok-number">234</span></code></pre></div><div><pre><code>futex = <span class="tok-number">235</span></code></pre></div><div><pre><code>sendfile64 = <span class="tok-number">236</span></code></pre></div><div><pre><code>mincore = <span class="tok-number">237</span></code></pre></div><div><pre><code>madvise = <span class="tok-number">238</span></code></pre></div><div><pre><code>fcntl64 = <span class="tok-number">239</span></code></pre></div><div><pre><code>readahead = <span class="tok-number">240</span></code></pre></div><div><pre><code>io_setup = <span class="tok-number">241</span></code></pre></div><div><pre><code>io_destroy = <span class="tok-number">242</span></code></pre></div><div><pre><code>io_getevents = <span class="tok-number">243</span></code></pre></div><div><pre><code>io_submit = <span class="tok-number">244</span></code></pre></div><div><pre><code>io_cancel = <span class="tok-number">245</span></code></pre></div><div><pre><code>fadvise64 = <span class="tok-number">246</span></code></pre></div><div><pre><code>exit_group = <span class="tok-number">247</span></code></pre></div><div><pre><code>lookup_dcookie = <span class="tok-number">248</span></code></pre></div><div><pre><code>epoll_create = <span class="tok-number">249</span></code></pre></div><div><pre><code>epoll_ctl = <span class="tok-number">250</span></code></pre></div><div><pre><code>epoll_wait = <span class="tok-number">251</span></code></pre></div><div><pre><code>remap_file_pages = <span class="tok-number">252</span></code></pre></div><div><pre><code>set_tid_address = <span class="tok-number">253</span></code></pre></div><div><pre><code>timer_create = <span class="tok-number">254</span></code></pre></div><div><pre><code>timer_settime = <span class="tok-number">255</span></code></pre></div><div><pre><code>timer_gettime = <span class="tok-number">256</span></code></pre></div><div><pre><code>timer_getoverrun = <span class="tok-number">257</span></code></pre></div><div><pre><code>timer_delete = <span class="tok-number">258</span></code></pre></div><div><pre><code>clock_settime = <span class="tok-number">259</span></code></pre></div><div><pre><code>clock_gettime = <span class="tok-number">260</span></code></pre></div><div><pre><code>clock_getres = <span class="tok-number">261</span></code></pre></div><div><pre><code>clock_nanosleep = <span class="tok-number">262</span></code></pre></div><div><pre><code>statfs64 = <span class="tok-number">263</span></code></pre></div><div><pre><code>fstatfs64 = <span class="tok-number">264</span></code></pre></div><div><pre><code>tgkill = <span class="tok-number">265</span></code></pre></div><div><pre><code>utimes = <span class="tok-number">266</span></code></pre></div><div><pre><code>fadvise64_64 = <span class="tok-number">267</span></code></pre></div><div><pre><code>mbind = <span class="tok-number">268</span></code></pre></div><div><pre><code>get_mempolicy = <span class="tok-number">269</span></code></pre></div><div><pre><code>set_mempolicy = <span class="tok-number">270</span></code></pre></div><div><pre><code>mq_open = <span class="tok-number">271</span></code></pre></div><div><pre><code>mq_unlink = <span class="tok-number">272</span></code></pre></div><div><pre><code>mq_timedsend = <span class="tok-number">273</span></code></pre></div><div><pre><code>mq_timedreceive = <span class="tok-number">274</span></code></pre></div><div><pre><code>mq_notify = <span class="tok-number">275</span></code></pre></div><div><pre><code>mq_getsetattr = <span class="tok-number">276</span></code></pre></div><div><pre><code>waitid = <span class="tok-number">277</span></code></pre></div><div><pre><code>add_key = <span class="tok-number">279</span></code></pre></div><div><pre><code>request_key = <span class="tok-number">280</span></code></pre></div><div><pre><code>keyctl = <span class="tok-number">281</span></code></pre></div><div><pre><code>ioprio_set = <span class="tok-number">282</span></code></pre></div><div><pre><code>ioprio_get = <span class="tok-number">283</span></code></pre></div><div><pre><code>inotify_init = <span class="tok-number">284</span></code></pre></div><div><pre><code>inotify_add_watch = <span class="tok-number">285</span></code></pre></div><div><pre><code>inotify_rm_watch = <span class="tok-number">286</span></code></pre></div><div><pre><code>migrate_pages = <span class="tok-number">287</span></code></pre></div><div><pre><code>openat = <span class="tok-number">288</span></code></pre></div><div><pre><code>mkdirat = <span class="tok-number">289</span></code></pre></div><div><pre><code>mknodat = <span class="tok-number">290</span></code></pre></div><div><pre><code>fchownat = <span class="tok-number">291</span></code></pre></div><div><pre><code>futimesat = <span class="tok-number">292</span></code></pre></div><div><pre><code>fstatat64 = <span class="tok-number">293</span></code></pre></div><div><pre><code>unlinkat = <span class="tok-number">294</span></code></pre></div><div><pre><code>renameat = <span class="tok-number">295</span></code></pre></div><div><pre><code>linkat = <span class="tok-number">296</span></code></pre></div><div><pre><code>symlinkat = <span class="tok-number">297</span></code></pre></div><div><pre><code>readlinkat = <span class="tok-number">298</span></code></pre></div><div><pre><code>fchmodat = <span class="tok-number">299</span></code></pre></div><div><pre><code>faccessat = <span class="tok-number">300</span></code></pre></div><div><pre><code>pselect6 = <span class="tok-number">301</span></code></pre></div><div><pre><code>ppoll = <span class="tok-number">302</span></code></pre></div><div><pre><code>unshare = <span class="tok-number">303</span></code></pre></div><div><pre><code>set_robust_list = <span class="tok-number">304</span></code></pre></div><div><pre><code>get_robust_list = <span class="tok-number">305</span></code></pre></div><div><pre><code>splice = <span class="tok-number">306</span></code></pre></div><div><pre><code>sync_file_range = <span class="tok-number">307</span></code></pre></div><div><pre><code>tee = <span class="tok-number">308</span></code></pre></div><div><pre><code>vmsplice = <span class="tok-number">309</span></code></pre></div><div><pre><code>move_pages = <span class="tok-number">310</span></code></pre></div><div><pre><code>sched_setaffinity = <span class="tok-number">311</span></code></pre></div><div><pre><code>sched_getaffinity = <span class="tok-number">312</span></code></pre></div><div><pre><code>kexec_load = <span class="tok-number">313</span></code></pre></div><div><pre><code>getcpu = <span class="tok-number">314</span></code></pre></div><div><pre><code>epoll_pwait = <span class="tok-number">315</span></code></pre></div><div><pre><code>utimensat = <span class="tok-number">316</span></code></pre></div><div><pre><code>signalfd = <span class="tok-number">317</span></code></pre></div><div><pre><code>timerfd_create = <span class="tok-number">318</span></code></pre></div><div><pre><code>eventfd = <span class="tok-number">319</span></code></pre></div><div><pre><code>fallocate = <span class="tok-number">320</span></code></pre></div><div><pre><code>timerfd_settime = <span class="tok-number">321</span></code></pre></div><div><pre><code>timerfd_gettime = <span class="tok-number">322</span></code></pre></div><div><pre><code>signalfd4 = <span class="tok-number">323</span></code></pre></div><div><pre><code>eventfd2 = <span class="tok-number">324</span></code></pre></div><div><pre><code>epoll_create1 = <span class="tok-number">325</span></code></pre></div><div><pre><code>dup3 = <span class="tok-number">326</span></code></pre></div><div><pre><code>pipe2 = <span class="tok-number">327</span></code></pre></div><div><pre><code>inotify_init1 = <span class="tok-number">328</span></code></pre></div><div><pre><code>preadv = <span class="tok-number">329</span></code></pre></div><div><pre><code>pwritev = <span class="tok-number">330</span></code></pre></div><div><pre><code>rt_tgsigqueueinfo = <span class="tok-number">331</span></code></pre></div><div><pre><code>perf_event_open = <span class="tok-number">332</span></code></pre></div><div><pre><code>get_thread_area = <span class="tok-number">333</span></code></pre></div><div><pre><code>set_thread_area = <span class="tok-number">334</span></code></pre></div><div><pre><code>atomic_cmpxchg_32 = <span class="tok-number">335</span></code></pre></div><div><pre><code>atomic_barrier = <span class="tok-number">336</span></code></pre></div><div><pre><code>fanotify_init = <span class="tok-number">337</span></code></pre></div><div><pre><code>fanotify_mark = <span class="tok-number">338</span></code></pre></div><div><pre><code>prlimit64 = <span class="tok-number">339</span></code></pre></div><div><pre><code>name_to_handle_at = <span class="tok-number">340</span></code></pre></div><div><pre><code>open_by_handle_at = <span class="tok-number">341</span></code></pre></div><div><pre><code>clock_adjtime = <span class="tok-number">342</span></code></pre></div><div><pre><code>syncfs = <span class="tok-number">343</span></code></pre></div><div><pre><code>setns = <span class="tok-number">344</span></code></pre></div><div><pre><code>process_vm_readv = <span class="tok-number">345</span></code></pre></div><div><pre><code>process_vm_writev = <span class="tok-number">346</span></code></pre></div><div><pre><code>kcmp = <span class="tok-number">347</span></code></pre></div><div><pre><code>finit_module = <span class="tok-number">348</span></code></pre></div><div><pre><code>sched_setattr = <span class="tok-number">349</span></code></pre></div><div><pre><code>sched_getattr = <span class="tok-number">350</span></code></pre></div><div><pre><code>renameat2 = <span class="tok-number">351</span></code></pre></div><div><pre><code>getrandom = <span class="tok-number">352</span></code></pre></div><div><pre><code>memfd_create = <span class="tok-number">353</span></code></pre></div><div><pre><code>bpf = <span class="tok-number">354</span></code></pre></div><div><pre><code>execveat = <span class="tok-number">355</span></code></pre></div><div><pre><code>socket = <span class="tok-number">356</span></code></pre></div><div><pre><code>socketpair = <span class="tok-number">357</span></code></pre></div><div><pre><code>bind = <span class="tok-number">358</span></code></pre></div><div><pre><code>connect = <span class="tok-number">359</span></code></pre></div><div><pre><code>listen = <span class="tok-number">360</span></code></pre></div><div><pre><code>accept4 = <span class="tok-number">361</span></code></pre></div><div><pre><code>getsockopt = <span class="tok-number">362</span></code></pre></div><div><pre><code>setsockopt = <span class="tok-number">363</span></code></pre></div><div><pre><code>getsockname = <span class="tok-number">364</span></code></pre></div><div><pre><code>getpeername = <span class="tok-number">365</span></code></pre></div><div><pre><code>sendto = <span class="tok-number">366</span></code></pre></div><div><pre><code>sendmsg = <span class="tok-number">367</span></code></pre></div><div><pre><code>recvfrom = <span class="tok-number">368</span></code></pre></div><div><pre><code>recvmsg = <span class="tok-number">369</span></code></pre></div><div><pre><code>shutdown = <span class="tok-number">370</span></code></pre></div><div><pre><code>recvmmsg = <span class="tok-number">371</span></code></pre></div><div><pre><code>sendmmsg = <span class="tok-number">372</span></code></pre></div><div><pre><code>userfaultfd = <span class="tok-number">373</span></code></pre></div><div><pre><code>membarrier = <span class="tok-number">374</span></code></pre></div><div><pre><code>mlock2 = <span class="tok-number">375</span></code></pre></div><div><pre><code>copy_file_range = <span class="tok-number">376</span></code></pre></div><div><pre><code>preadv2 = <span class="tok-number">377</span></code></pre></div><div><pre><code>pwritev2 = <span class="tok-number">378</span></code></pre></div><div><pre><code>statx = <span class="tok-number">379</span></code></pre></div><div><pre><code>seccomp = <span class="tok-number">380</span></code></pre></div><div><pre><code>pkey_mprotect = <span class="tok-number">381</span></code></pre></div><div><pre><code>pkey_alloc = <span class="tok-number">382</span></code></pre></div><div><pre><code>pkey_free = <span class="tok-number">383</span></code></pre></div><div><pre><code>rseq = <span class="tok-number">384</span></code></pre></div><div><pre><code>semget = <span class="tok-number">393</span></code></pre></div><div><pre><code>semctl = <span class="tok-number">394</span></code></pre></div><div><pre><code>shmget = <span class="tok-number">395</span></code></pre></div><div><pre><code>shmctl = <span class="tok-number">396</span></code></pre></div><div><pre><code>shmat = <span class="tok-number">397</span></code></pre></div><div><pre><code>shmdt = <span class="tok-number">398</span></code></pre></div><div><pre><code>msgget = <span class="tok-number">399</span></code></pre></div><div><pre><code>msgsnd = <span class="tok-number">400</span></code></pre></div><div><pre><code>msgrcv = <span class="tok-number">401</span></code></pre></div><div><pre><code>msgctl = <span class="tok-number">402</span></code></pre></div><div><pre><code>clock_gettime64 = <span class="tok-number">403</span></code></pre></div><div><pre><code>clock_settime64 = <span class="tok-number">404</span></code></pre></div><div><pre><code>clock_adjtime64 = <span class="tok-number">405</span></code></pre></div><div><pre><code>clock_getres_time64 = <span class="tok-number">406</span></code></pre></div><div><pre><code>clock_nanosleep_time64 = <span class="tok-number">407</span></code></pre></div><div><pre><code>timer_gettime64 = <span class="tok-number">408</span></code></pre></div><div><pre><code>timer_settime64 = <span class="tok-number">409</span></code></pre></div><div><pre><code>timerfd_gettime64 = <span class="tok-number">410</span></code></pre></div><div><pre><code>timerfd_settime64 = <span class="tok-number">411</span></code></pre></div><div><pre><code>utimensat_time64 = <span class="tok-number">412</span></code></pre></div><div><pre><code>pselect6_time64 = <span class="tok-number">413</span></code></pre></div><div><pre><code>ppoll_time64 = <span class="tok-number">414</span></code></pre></div><div><pre><code>io_pgetevents_time64 = <span class="tok-number">416</span></code></pre></div><div><pre><code>recvmmsg_time64 = <span class="tok-number">417</span></code></pre></div><div><pre><code>mq_timedsend_time64 = <span class="tok-number">418</span></code></pre></div><div><pre><code>mq_timedreceive_time64 = <span class="tok-number">419</span></code></pre></div><div><pre><code>semtimedop_time64 = <span class="tok-number">420</span></code></pre></div><div><pre><code>rt_sigtimedwait_time64 = <span class="tok-number">421</span></code></pre></div><div><pre><code>futex_time64 = <span class="tok-number">422</span></code></pre></div><div><pre><code>sched_rr_get_interval_time64 = <span class="tok-number">423</span></code></pre></div><div><pre><code>pidfd_send_signal = <span class="tok-number">424</span></code></pre></div><div><pre><code>io_uring_setup = <span class="tok-number">425</span></code></pre></div><div><pre><code>io_uring_enter = <span class="tok-number">426</span></code></pre></div><div><pre><code>io_uring_register = <span class="tok-number">427</span></code></pre></div><div><pre><code>open_tree = <span class="tok-number">428</span></code></pre></div><div><pre><code>move_mount = <span class="tok-number">429</span></code></pre></div><div><pre><code>fsopen = <span class="tok-number">430</span></code></pre></div><div><pre><code>fsconfig = <span class="tok-number">431</span></code></pre></div><div><pre><code>fsmount = <span class="tok-number">432</span></code></pre></div><div><pre><code>fspick = <span class="tok-number">433</span></code></pre></div><div><pre><code>pidfd_open = <span class="tok-number">434</span></code></pre></div><div><pre><code>clone3 = <span class="tok-number">435</span></code></pre></div><div><pre><code>close_range = <span class="tok-number">436</span></code></pre></div><div><pre><code>openat2 = <span class="tok-number">437</span></code></pre></div><div><pre><code>pidfd_getfd = <span class="tok-number">438</span></code></pre></div><div><pre><code>faccessat2 = <span class="tok-number">439</span></code></pre></div><div><pre><code>process_madvise = <span class="tok-number">440</span></code></pre></div><div><pre><code>epoll_pwait2 = <span class="tok-number">441</span></code></pre></div><div><pre><code>mount_setattr = <span class="tok-number">442</span></code></pre></div><div><pre><code>quotactl_fd = <span class="tok-number">443</span></code></pre></div><div><pre><code>landlock_create_ruleset = <span class="tok-number">444</span></code></pre></div><div><pre><code>landlock_add_rule = <span class="tok-number">445</span></code></pre></div><div><pre><code>landlock_restrict_self = <span class="tok-number">446</span></code></pre></div><div><pre><code>process_mrelease = <span class="tok-number">448</span></code></pre></div><div><pre><code>futex_waitv = <span class="tok-number">449</span></code></pre></div><div><pre><code>set_mempolicy_home_node = <span class="tok-number">450</span></code></pre></div><div><pre><code>cachestat = <span class="tok-number">451</span></code></pre></div><div><pre><code>fchmodat2 = <span class="tok-number">452</span></code></pre></div><div><pre><code>map_shadow_stack = <span class="tok-number">453</span></code></pre></div><div><pre><code>futex_wake = <span class="tok-number">454</span></code></pre></div><div><pre><code>futex_wait = <span class="tok-number">455</span></code></pre></div><div><pre><code>futex_requeue = <span class="tok-number">456</span></code></pre></div><div><pre><code>statmount = <span class="tok-number">457</span></code></pre></div><div><pre><code>listmount = <span class="tok-number">458</span></code></pre></div><div><pre><code>lsm_get_self_attr = <span class="tok-number">459</span></code></pre></div><div><pre><code>lsm_set_self_attr = <span class="tok-number">460</span></code></pre></div><div><pre><code>lsm_list_modules = <span class="tok-number">461</span></code></pre></div><div><pre><code>mseal = <span class="tok-number">462</span></code></pre></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.os.linux.syscalls.M68k">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">const</span> M68k = <span class="tok-kw">enum</span>(<span class="tok-type">usize</span>) {
+    restart_syscall = <span class="tok-number">0</span>,
+    exit = <span class="tok-number">1</span>,
+    fork = <span class="tok-number">2</span>,
+    read = <span class="tok-number">3</span>,
+    write = <span class="tok-number">4</span>,
+    open = <span class="tok-number">5</span>,
+    close = <span class="tok-number">6</span>,
+    waitpid = <span class="tok-number">7</span>,
+    creat = <span class="tok-number">8</span>,
+    link = <span class="tok-number">9</span>,
+    unlink = <span class="tok-number">10</span>,
+    execve = <span class="tok-number">11</span>,
+    chdir = <span class="tok-number">12</span>,
+    time = <span class="tok-number">13</span>,
+    mknod = <span class="tok-number">14</span>,
+    chmod = <span class="tok-number">15</span>,
+    chown = <span class="tok-number">16</span>,
+    oldstat = <span class="tok-number">18</span>,
+    lseek = <span class="tok-number">19</span>,
+    getpid = <span class="tok-number">20</span>,
+    mount = <span class="tok-number">21</span>,
+    umount = <span class="tok-number">22</span>,
+    setuid = <span class="tok-number">23</span>,
+    getuid = <span class="tok-number">24</span>,
+    stime = <span class="tok-number">25</span>,
+    ptrace = <span class="tok-number">26</span>,
+    alarm = <span class="tok-number">27</span>,
+    oldfstat = <span class="tok-number">28</span>,
+    pause = <span class="tok-number">29</span>,
+    utime = <span class="tok-number">30</span>,
+    access = <span class="tok-number">33</span>,
+    nice = <span class="tok-number">34</span>,
+    sync = <span class="tok-number">36</span>,
+    kill = <span class="tok-number">37</span>,
+    rename = <span class="tok-number">38</span>,
+    mkdir = <span class="tok-number">39</span>,
+    rmdir = <span class="tok-number">40</span>,
+    dup = <span class="tok-number">41</span>,
+    pipe = <span class="tok-number">42</span>,
+    times = <span class="tok-number">43</span>,
+    brk = <span class="tok-number">45</span>,
+    setgid = <span class="tok-number">46</span>,
+    getgid = <span class="tok-number">47</span>,
+    signal = <span class="tok-number">48</span>,
+    geteuid = <span class="tok-number">49</span>,
+    getegid = <span class="tok-number">50</span>,
+    acct = <span class="tok-number">51</span>,
+    umount2 = <span class="tok-number">52</span>,
+    ioctl = <span class="tok-number">54</span>,
+    fcntl = <span class="tok-number">55</span>,
+    setpgid = <span class="tok-number">57</span>,
+    umask = <span class="tok-number">60</span>,
+    chroot = <span class="tok-number">61</span>,
+    ustat = <span class="tok-number">62</span>,
+    dup2 = <span class="tok-number">63</span>,
+    getppid = <span class="tok-number">64</span>,
+    getpgrp = <span class="tok-number">65</span>,
+    setsid = <span class="tok-number">66</span>,
+    sigaction = <span class="tok-number">67</span>,
+    sgetmask = <span class="tok-number">68</span>,
+    ssetmask = <span class="tok-number">69</span>,
+    setreuid = <span class="tok-number">70</span>,
+    setregid = <span class="tok-number">71</span>,
+    sigsuspend = <span class="tok-number">72</span>,
+    sigpending = <span class="tok-number">73</span>,
+    sethostname = <span class="tok-number">74</span>,
+    setrlimit = <span class="tok-number">75</span>,
+    getrlimit = <span class="tok-number">76</span>,
+    getrusage = <span class="tok-number">77</span>,
+    gettimeofday = <span class="tok-number">78</span>,
+    settimeofday = <span class="tok-number">79</span>,
+    getgroups = <span class="tok-number">80</span>,
+    setgroups = <span class="tok-number">81</span>,
+    select = <span class="tok-number">82</span>,
+    symlink = <span class="tok-number">83</span>,
+    oldlstat = <span class="tok-number">84</span>,
+    readlink = <span class="tok-number">85</span>,
+    uselib = <span class="tok-number">86</span>,
+    swapon = <span class="tok-number">87</span>,
+    reboot = <span class="tok-number">88</span>,
+    readdir = <span class="tok-number">89</span>,
+    mmap = <span class="tok-number">90</span>,
+    munmap = <span class="tok-number">91</span>,
+    truncate = <span class="tok-number">92</span>,
+    ftruncate = <span class="tok-number">93</span>,
+    fchmod = <span class="tok-number">94</span>,
+    fchown = <span class="tok-number">95</span>,
+    getpriority = <span class="tok-number">96</span>,
+    setpriority = <span class="tok-number">97</span>,
+    statfs = <span class="tok-number">99</span>,
+    fstatfs = <span class="tok-number">100</span>,
+    socketcall = <span class="tok-number">102</span>,
+    syslog = <span class="tok-number">103</span>,
+    setitimer = <span class="tok-number">104</span>,
+    getitimer = <span class="tok-number">105</span>,
+    stat = <span class="tok-number">106</span>,
+    lstat = <span class="tok-number">107</span>,
+    fstat = <span class="tok-number">108</span>,
+    vhangup = <span class="tok-number">111</span>,
+    wait4 = <span class="tok-number">114</span>,
+    swapoff = <span class="tok-number">115</span>,
+    sysinfo = <span class="tok-number">116</span>,
+    ipc = <span class="tok-number">117</span>,
+    fsync = <span class="tok-number">118</span>,
+    sigreturn = <span class="tok-number">119</span>,
+    clone = <span class="tok-number">120</span>,
+    setdomainname = <span class="tok-number">121</span>,
+    uname = <span class="tok-number">122</span>,
+    cacheflush = <span class="tok-number">123</span>,
+    adjtimex = <span class="tok-number">124</span>,
+    mprotect = <span class="tok-number">125</span>,
+    sigprocmask = <span class="tok-number">126</span>,
+    create_module = <span class="tok-number">127</span>,
+    init_module = <span class="tok-number">128</span>,
+    delete_module = <span class="tok-number">129</span>,
+    get_kernel_syms = <span class="tok-number">130</span>,
+    quotactl = <span class="tok-number">131</span>,
+    getpgid = <span class="tok-number">132</span>,
+    fchdir = <span class="tok-number">133</span>,
+    bdflush = <span class="tok-number">134</span>,
+    sysfs = <span class="tok-number">135</span>,
+    personality = <span class="tok-number">136</span>,
+    setfsuid = <span class="tok-number">138</span>,
+    setfsgid = <span class="tok-number">139</span>,
+    llseek = <span class="tok-number">140</span>,
+    getdents = <span class="tok-number">141</span>,
+    newselect = <span class="tok-number">142</span>,
+    flock = <span class="tok-number">143</span>,
+    msync = <span class="tok-number">144</span>,
+    readv = <span class="tok-number">145</span>,
+    writev = <span class="tok-number">146</span>,
+    getsid = <span class="tok-number">147</span>,
+    fdatasync = <span class="tok-number">148</span>,
+    sysctl = <span class="tok-number">149</span>,
+    mlock = <span class="tok-number">150</span>,
+    munlock = <span class="tok-number">151</span>,
+    mlockall = <span class="tok-number">152</span>,
+    munlockall = <span class="tok-number">153</span>,
+    sched_setparam = <span class="tok-number">154</span>,
+    sched_getparam = <span class="tok-number">155</span>,
+    sched_setscheduler = <span class="tok-number">156</span>,
+    sched_getscheduler = <span class="tok-number">157</span>,
+    sched_yield = <span class="tok-number">158</span>,
+    sched_get_priority_max = <span class="tok-number">159</span>,
+    sched_get_priority_min = <span class="tok-number">160</span>,
+    sched_rr_get_interval = <span class="tok-number">161</span>,
+    nanosleep = <span class="tok-number">162</span>,
+    mremap = <span class="tok-number">163</span>,
+    setresuid = <span class="tok-number">164</span>,
+    getresuid = <span class="tok-number">165</span>,
+    getpagesize = <span class="tok-number">166</span>,
+    query_module = <span class="tok-number">167</span>,
+    poll = <span class="tok-number">168</span>,
+    nfsservctl = <span class="tok-number">169</span>,
+    setresgid = <span class="tok-number">170</span>,
+    getresgid = <span class="tok-number">171</span>,
+    prctl = <span class="tok-number">172</span>,
+    rt_sigreturn = <span class="tok-number">173</span>,
+    rt_sigaction = <span class="tok-number">174</span>,
+    rt_sigprocmask = <span class="tok-number">175</span>,
+    rt_sigpending = <span class="tok-number">176</span>,
+    rt_sigtimedwait = <span class="tok-number">177</span>,
+    rt_sigqueueinfo = <span class="tok-number">178</span>,
+    rt_sigsuspend = <span class="tok-number">179</span>,
+    pread64 = <span class="tok-number">180</span>,
+    pwrite64 = <span class="tok-number">181</span>,
+    lchown = <span class="tok-number">182</span>,
+    getcwd = <span class="tok-number">183</span>,
+    capget = <span class="tok-number">184</span>,
+    capset = <span class="tok-number">185</span>,
+    sigaltstack = <span class="tok-number">186</span>,
+    sendfile = <span class="tok-number">187</span>,
+    getpmsg = <span class="tok-number">188</span>,
+    putpmsg = <span class="tok-number">189</span>,
+    vfork = <span class="tok-number">190</span>,
+    ugetrlimit = <span class="tok-number">191</span>,
+    mmap2 = <span class="tok-number">192</span>,
+    truncate64 = <span class="tok-number">193</span>,
+    ftruncate64 = <span class="tok-number">194</span>,
+    stat64 = <span class="tok-number">195</span>,
+    lstat64 = <span class="tok-number">196</span>,
+    fstat64 = <span class="tok-number">197</span>,
+    chown32 = <span class="tok-number">198</span>,
+    getuid32 = <span class="tok-number">199</span>,
+    getgid32 = <span class="tok-number">200</span>,
+    geteuid32 = <span class="tok-number">201</span>,
+    getegid32 = <span class="tok-number">202</span>,
+    setreuid32 = <span class="tok-number">203</span>,
+    setregid32 = <span class="tok-number">204</span>,
+    getgroups32 = <span class="tok-number">205</span>,
+    setgroups32 = <span class="tok-number">206</span>,
+    fchown32 = <span class="tok-number">207</span>,
+    setresuid32 = <span class="tok-number">208</span>,
+    getresuid32 = <span class="tok-number">209</span>,
+    setresgid32 = <span class="tok-number">210</span>,
+    getresgid32 = <span class="tok-number">211</span>,
+    lchown32 = <span class="tok-number">212</span>,
+    setuid32 = <span class="tok-number">213</span>,
+    setgid32 = <span class="tok-number">214</span>,
+    setfsuid32 = <span class="tok-number">215</span>,
+    setfsgid32 = <span class="tok-number">216</span>,
+    pivot_root = <span class="tok-number">217</span>,
+    getdents64 = <span class="tok-number">220</span>,
+    gettid = <span class="tok-number">221</span>,
+    tkill = <span class="tok-number">222</span>,
+    setxattr = <span class="tok-number">223</span>,
+    lsetxattr = <span class="tok-number">224</span>,
+    fsetxattr = <span class="tok-number">225</span>,
+    getxattr = <span class="tok-number">226</span>,
+    lgetxattr = <span class="tok-number">227</span>,
+    fgetxattr = <span class="tok-number">228</span>,
+    listxattr = <span class="tok-number">229</span>,
+    llistxattr = <span class="tok-number">230</span>,
+    flistxattr = <span class="tok-number">231</span>,
+    removexattr = <span class="tok-number">232</span>,
+    lremovexattr = <span class="tok-number">233</span>,
+    fremovexattr = <span class="tok-number">234</span>,
+    futex = <span class="tok-number">235</span>,
+    sendfile64 = <span class="tok-number">236</span>,
+    mincore = <span class="tok-number">237</span>,
+    madvise = <span class="tok-number">238</span>,
+    fcntl64 = <span class="tok-number">239</span>,
+    readahead = <span class="tok-number">240</span>,
+    io_setup = <span class="tok-number">241</span>,
+    io_destroy = <span class="tok-number">242</span>,
+    io_getevents = <span class="tok-number">243</span>,
+    io_submit = <span class="tok-number">244</span>,
+    io_cancel = <span class="tok-number">245</span>,
+    fadvise64 = <span class="tok-number">246</span>,
+    exit_group = <span class="tok-number">247</span>,
+    lookup_dcookie = <span class="tok-number">248</span>,
+    epoll_create = <span class="tok-number">249</span>,
+    epoll_ctl = <span class="tok-number">250</span>,
+    epoll_wait = <span class="tok-number">251</span>,
+    remap_file_pages = <span class="tok-number">252</span>,
+    set_tid_address = <span class="tok-number">253</span>,
+    timer_create = <span class="tok-number">254</span>,
+    timer_settime = <span class="tok-number">255</span>,
+    timer_gettime = <span class="tok-number">256</span>,
+    timer_getoverrun = <span class="tok-number">257</span>,
+    timer_delete = <span class="tok-number">258</span>,
+    clock_settime = <span class="tok-number">259</span>,
+    clock_gettime = <span class="tok-number">260</span>,
+    clock_getres = <span class="tok-number">261</span>,
+    clock_nanosleep = <span class="tok-number">262</span>,
+    statfs64 = <span class="tok-number">263</span>,
+    fstatfs64 = <span class="tok-number">264</span>,
+    tgkill = <span class="tok-number">265</span>,
+    utimes = <span class="tok-number">266</span>,
+    fadvise64_64 = <span class="tok-number">267</span>,
+    mbind = <span class="tok-number">268</span>,
+    get_mempolicy = <span class="tok-number">269</span>,
+    set_mempolicy = <span class="tok-number">270</span>,
+    mq_open = <span class="tok-number">271</span>,
+    mq_unlink = <span class="tok-number">272</span>,
+    mq_timedsend = <span class="tok-number">273</span>,
+    mq_timedreceive = <span class="tok-number">274</span>,
+    mq_notify = <span class="tok-number">275</span>,
+    mq_getsetattr = <span class="tok-number">276</span>,
+    waitid = <span class="tok-number">277</span>,
+    add_key = <span class="tok-number">279</span>,
+    request_key = <span class="tok-number">280</span>,
+    keyctl = <span class="tok-number">281</span>,
+    ioprio_set = <span class="tok-number">282</span>,
+    ioprio_get = <span class="tok-number">283</span>,
+    inotify_init = <span class="tok-number">284</span>,
+    inotify_add_watch = <span class="tok-number">285</span>,
+    inotify_rm_watch = <span class="tok-number">286</span>,
+    migrate_pages = <span class="tok-number">287</span>,
+    openat = <span class="tok-number">288</span>,
+    mkdirat = <span class="tok-number">289</span>,
+    mknodat = <span class="tok-number">290</span>,
+    fchownat = <span class="tok-number">291</span>,
+    futimesat = <span class="tok-number">292</span>,
+    fstatat64 = <span class="tok-number">293</span>,
+    unlinkat = <span class="tok-number">294</span>,
+    renameat = <span class="tok-number">295</span>,
+    linkat = <span class="tok-number">296</span>,
+    symlinkat = <span class="tok-number">297</span>,
+    readlinkat = <span class="tok-number">298</span>,
+    fchmodat = <span class="tok-number">299</span>,
+    faccessat = <span class="tok-number">300</span>,
+    pselect6 = <span class="tok-number">301</span>,
+    ppoll = <span class="tok-number">302</span>,
+    unshare = <span class="tok-number">303</span>,
+    set_robust_list = <span class="tok-number">304</span>,
+    get_robust_list = <span class="tok-number">305</span>,
+    splice = <span class="tok-number">306</span>,
+    sync_file_range = <span class="tok-number">307</span>,
+    tee = <span class="tok-number">308</span>,
+    vmsplice = <span class="tok-number">309</span>,
+    move_pages = <span class="tok-number">310</span>,
+    sched_setaffinity = <span class="tok-number">311</span>,
+    sched_getaffinity = <span class="tok-number">312</span>,
+    kexec_load = <span class="tok-number">313</span>,
+    getcpu = <span class="tok-number">314</span>,
+    epoll_pwait = <span class="tok-number">315</span>,
+    utimensat = <span class="tok-number">316</span>,
+    signalfd = <span class="tok-number">317</span>,
+    timerfd_create = <span class="tok-number">318</span>,
+    eventfd = <span class="tok-number">319</span>,
+    fallocate = <span class="tok-number">320</span>,
+    timerfd_settime = <span class="tok-number">321</span>,
+    timerfd_gettime = <span class="tok-number">322</span>,
+    signalfd4 = <span class="tok-number">323</span>,
+    eventfd2 = <span class="tok-number">324</span>,
+    epoll_create1 = <span class="tok-number">325</span>,
+    dup3 = <span class="tok-number">326</span>,
+    pipe2 = <span class="tok-number">327</span>,
+    inotify_init1 = <span class="tok-number">328</span>,
+    preadv = <span class="tok-number">329</span>,
+    pwritev = <span class="tok-number">330</span>,
+    rt_tgsigqueueinfo = <span class="tok-number">331</span>,
+    perf_event_open = <span class="tok-number">332</span>,
+    get_thread_area = <span class="tok-number">333</span>,
+    set_thread_area = <span class="tok-number">334</span>,
+    atomic_cmpxchg_32 = <span class="tok-number">335</span>,
+    atomic_barrier = <span class="tok-number">336</span>,
+    fanotify_init = <span class="tok-number">337</span>,
+    fanotify_mark = <span class="tok-number">338</span>,
+    prlimit64 = <span class="tok-number">339</span>,
+    name_to_handle_at = <span class="tok-number">340</span>,
+    open_by_handle_at = <span class="tok-number">341</span>,
+    clock_adjtime = <span class="tok-number">342</span>,
+    syncfs = <span class="tok-number">343</span>,
+    setns = <span class="tok-number">344</span>,
+    process_vm_readv = <span class="tok-number">345</span>,
+    process_vm_writev = <span class="tok-number">346</span>,
+    kcmp = <span class="tok-number">347</span>,
+    finit_module = <span class="tok-number">348</span>,
+    sched_setattr = <span class="tok-number">349</span>,
+    sched_getattr = <span class="tok-number">350</span>,
+    renameat2 = <span class="tok-number">351</span>,
+    getrandom = <span class="tok-number">352</span>,
+    memfd_create = <span class="tok-number">353</span>,
+    bpf = <span class="tok-number">354</span>,
+    execveat = <span class="tok-number">355</span>,
+    socket = <span class="tok-number">356</span>,
+    socketpair = <span class="tok-number">357</span>,
+    bind = <span class="tok-number">358</span>,
+    connect = <span class="tok-number">359</span>,
+    listen = <span class="tok-number">360</span>,
+    accept4 = <span class="tok-number">361</span>,
+    getsockopt = <span class="tok-number">362</span>,
+    setsockopt = <span class="tok-number">363</span>,
+    getsockname = <span class="tok-number">364</span>,
+    getpeername = <span class="tok-number">365</span>,
+    sendto = <span class="tok-number">366</span>,
+    sendmsg = <span class="tok-number">367</span>,
+    recvfrom = <span class="tok-number">368</span>,
+    recvmsg = <span class="tok-number">369</span>,
+    shutdown = <span class="tok-number">370</span>,
+    recvmmsg = <span class="tok-number">371</span>,
+    sendmmsg = <span class="tok-number">372</span>,
+    userfaultfd = <span class="tok-number">373</span>,
+    membarrier = <span class="tok-number">374</span>,
+    mlock2 = <span class="tok-number">375</span>,
+    copy_file_range = <span class="tok-number">376</span>,
+    preadv2 = <span class="tok-number">377</span>,
+    pwritev2 = <span class="tok-number">378</span>,
+    statx = <span class="tok-number">379</span>,
+    seccomp = <span class="tok-number">380</span>,
+    pkey_mprotect = <span class="tok-number">381</span>,
+    pkey_alloc = <span class="tok-number">382</span>,
+    pkey_free = <span class="tok-number">383</span>,
+    rseq = <span class="tok-number">384</span>,
+    semget = <span class="tok-number">393</span>,
+    semctl = <span class="tok-number">394</span>,
+    shmget = <span class="tok-number">395</span>,
+    shmctl = <span class="tok-number">396</span>,
+    shmat = <span class="tok-number">397</span>,
+    shmdt = <span class="tok-number">398</span>,
+    msgget = <span class="tok-number">399</span>,
+    msgsnd = <span class="tok-number">400</span>,
+    msgrcv = <span class="tok-number">401</span>,
+    msgctl = <span class="tok-number">402</span>,
+    clock_gettime64 = <span class="tok-number">403</span>,
+    clock_settime64 = <span class="tok-number">404</span>,
+    clock_adjtime64 = <span class="tok-number">405</span>,
+    clock_getres_time64 = <span class="tok-number">406</span>,
+    clock_nanosleep_time64 = <span class="tok-number">407</span>,
+    timer_gettime64 = <span class="tok-number">408</span>,
+    timer_settime64 = <span class="tok-number">409</span>,
+    timerfd_gettime64 = <span class="tok-number">410</span>,
+    timerfd_settime64 = <span class="tok-number">411</span>,
+    utimensat_time64 = <span class="tok-number">412</span>,
+    pselect6_time64 = <span class="tok-number">413</span>,
+    ppoll_time64 = <span class="tok-number">414</span>,
+    io_pgetevents_time64 = <span class="tok-number">416</span>,
+    recvmmsg_time64 = <span class="tok-number">417</span>,
+    mq_timedsend_time64 = <span class="tok-number">418</span>,
+    mq_timedreceive_time64 = <span class="tok-number">419</span>,
+    semtimedop_time64 = <span class="tok-number">420</span>,
+    rt_sigtimedwait_time64 = <span class="tok-number">421</span>,
+    futex_time64 = <span class="tok-number">422</span>,
+    sched_rr_get_interval_time64 = <span class="tok-number">423</span>,
+    pidfd_send_signal = <span class="tok-number">424</span>,
+    io_uring_setup = <span class="tok-number">425</span>,
+    io_uring_enter = <span class="tok-number">426</span>,
+    io_uring_register = <span class="tok-number">427</span>,
+    open_tree = <span class="tok-number">428</span>,
+    move_mount = <span class="tok-number">429</span>,
+    fsopen = <span class="tok-number">430</span>,
+    fsconfig = <span class="tok-number">431</span>,
+    fsmount = <span class="tok-number">432</span>,
+    fspick = <span class="tok-number">433</span>,
+    pidfd_open = <span class="tok-number">434</span>,
+    clone3 = <span class="tok-number">435</span>,
+    close_range = <span class="tok-number">436</span>,
+    openat2 = <span class="tok-number">437</span>,
+    pidfd_getfd = <span class="tok-number">438</span>,
+    faccessat2 = <span class="tok-number">439</span>,
+    process_madvise = <span class="tok-number">440</span>,
+    epoll_pwait2 = <span class="tok-number">441</span>,
+    mount_setattr = <span class="tok-number">442</span>,
+    quotactl_fd = <span class="tok-number">443</span>,
+    landlock_create_ruleset = <span class="tok-number">444</span>,
+    landlock_add_rule = <span class="tok-number">445</span>,
+    landlock_restrict_self = <span class="tok-number">446</span>,
+    process_mrelease = <span class="tok-number">448</span>,
+    futex_waitv = <span class="tok-number">449</span>,
+    set_mempolicy_home_node = <span class="tok-number">450</span>,
+    cachestat = <span class="tok-number">451</span>,
+    fchmodat2 = <span class="tok-number">452</span>,
+    map_shadow_stack = <span class="tok-number">453</span>,
+    futex_wake = <span class="tok-number">454</span>,
+    futex_wait = <span class="tok-number">455</span>,
+    futex_requeue = <span class="tok-number">456</span>,
+    statmount = <span class="tok-number">457</span>,
+    listmount = <span class="tok-number">458</span>,
+    lsm_get_self_attr = <span class="tok-number">459</span>,
+    lsm_set_self_attr = <span class="tok-number">460</span>,
+    lsm_list_modules = <span class="tok-number">461</span>,
+    mseal = <span class="tok-number">462</span>,
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

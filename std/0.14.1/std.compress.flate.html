@@ -1,0 +1,896 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zig Documentation</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTMgMTQwIj48ZyBmaWxsPSIjRjdBNDFEIj48Zz48cG9seWdvbiBwb2ludHM9IjQ2LDIyIDI4LDQ0IDE5LDMwIi8+PHBvbHlnb24gcG9pbnRzPSI0NiwyMiAzMywzMyAyOCw0NCAyMiw0NCAyMiw5NSAzMSw5NSAyMCwxMDAgMTIsMTE3IDAsMTE3IDAsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMzEsOTUgMTIsMTE3IDQsMTA2Ii8+PC9nPjxnPjxwb2x5Z29uIHBvaW50cz0iNTYsMjIgNjIsMzYgMzcsNDQiLz48cG9seWdvbiBwb2ludHM9IjU2LDIyIDExMSwyMiAxMTEsNDQgMzcsNDQgNTYsMzIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTE2LDk1IDk3LDExNyA5MCwxMDQiLz48cG9seWdvbiBwb2ludHM9IjExNiw5NSAxMDAsMTA0IDk3LDExNyA0MiwxMTcgNDIsOTUiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTUwLDAgNTIsMTE3IDMsMTQwIDEwMSwyMiIvPjwvZz48Zz48cG9seWdvbiBwb2ludHM9IjE0MSwyMiAxNDAsNDAgMTIyLDQ1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsMjIgMTUzLDExNyAxMDYsMTE3IDEyMCwxMDUgMTI1LDk1IDEzMSw5NSAxMzEsNDUgMTIyLDQ1IDEzMiwzNiAxNDEsMjIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyIvPjxwb2x5Z29uIHBvaW50cz0iMTI1LDk1IDEzMCwxMTAgMTA2LDExNyIvPjwvZz48L2c+PC9zdmc+">
+    <style type="text/css">
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Roboto, "Segoe UI", sans-serif;
+        font-size: 16px;
+        color: #000000;
+      }
+      .hidden {
+        display: none;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        color: #2A6286;
+      }
+      details summary {
+        cursor: pointer;
+      }
+      pre {
+        font-family: "Source Code Pro",monospace;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        margin: 0;
+        overflow-x: auto;
+      }
+      :not(pre) > code {
+        white-space: break-spaces;
+      }
+      code, code a {
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+      }
+      code a {
+        color: #000000;
+      }
+      .listFields > div, .listParams > div {
+        margin-bottom: 1rem;
+      }
+      .declHeader a {
+        font-size: 0.7rem;
+        padding-left: 1rem;
+      }
+      .declHeader .declHeaderIdentifier {
+        padding-left: 0.75rem;
+      }
+      .fieldDocs {
+        border: 1px solid #F5F5F5;
+        border-top: 0px;
+        padding: 1px 1rem;
+      }
+
+      #logo {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #navWrap {
+        width: -moz-available;
+        width: -webkit-fill-available;
+        width: stretch;
+        margin-left: 11rem;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      nav {
+        width: 10rem;
+        float: left;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        margin: 0;
+        padding: 0.5rem 0;
+        text-align: center;
+      }
+      nav p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      section {
+        clear: both;
+        padding-top: 1rem;
+      }
+      section .declHeader {
+        font-size: 1.3rem;
+        border-bottom: 1px dashed;
+        margin: 0 0;
+      }
+      section .sectionHeader {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        padding: 0;
+        border-bottom: 1px solid;
+      }
+      #listNav {
+        list-style-type: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #listNav li {
+        float:left;
+      }
+      #listNav li a {
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: .5rem .8rem;
+        text-decoration: none;
+      }
+      #listNav li a:hover {
+        background-color: #555;
+        color: #fff;
+      }
+      #listNav li a.active {
+        background-color: #FFBB4D;
+        color: #000;
+      }
+      .sectSource {
+        margin-bottom: 2rem;
+      }
+
+      #helpDialog {
+        width: 21rem;
+        height: 21rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+      #helpDialog h1 {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      #helpDialog dt, #helpDialog dd {
+        display: inline;
+        margin: 0 0.2rem;
+      }
+      kbd {
+        color: #000;
+        background-color: #fafbfc;
+        border-color: #d1d5da;
+        border-bottom-color: #c6cbd1;
+        box-shadow-color: #c6cbd1;
+        display: inline-block;
+        padding: 0.3rem 0.2rem;
+        font: 1.2rem monospace;
+        line-height: 0.8rem;
+        vertical-align: middle;
+        border: solid 1px;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0;
+        cursor: default;
+      }
+
+      #errors {
+        background-color: #faa;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: min(20rem, 50vh);
+        padding: 0.5rem;
+        overflow: auto;
+      }
+      #errors h1 {
+        font-size: 1.5rem;
+      }
+      #errors pre {
+        background-color: #fcc;
+      }
+      
+      .decl .decl {
+        padding-left: 1rem;
+        border-left: 4px solid;
+        border-color: #555;
+      }
+
+      .listSearchResults li.selected {
+        background-color: #93e196;
+      }
+
+      .tableFnErrors dt {
+        font-weight: bold;
+      }
+
+      dl > div {
+          padding: 0.5rem;
+          border: 1px solid #c0c0c0;
+          margin-top: 0.5rem;
+      }
+
+      td, th {
+        text-align: unset;
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5rem;
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+
+      ul.columns {
+        column-width: 20rem;
+      }
+
+      .tok-kw {
+          color: #333;
+          font-weight: bold;
+      }
+      .tok-str {
+          color: #d14;
+      }
+      .tok-builtin {
+          color: #0086b3;
+      }
+      .tok-comment {
+          color: #777;
+          font-style: italic;
+      }
+      .tok-fn {
+          color: #900;
+          font-weight: bold;
+      }
+      .tok-null {
+          color: #008080;
+      }
+      .tok-number {
+          color: #008080;
+      }
+      .tok-type {
+          color: #458;
+          font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #bbb;
+        }
+        pre {
+          background-color: #222;
+          color: #ccc;
+        }
+        a {
+          color: #88f;
+        }
+        code a {
+          color: #ccc;
+        }
+        .fieldDocs {
+          border-color:#2A2A2A;
+        }
+        #listNav {
+          background-color: #333;
+        }
+        #listNav li a {
+          color: #fff;
+        }
+        #listNav li a:hover {
+          background-color: #555;
+          color: #fff;
+        }
+        #listNav li a.active {
+          background-color: #FFBB4D;
+          color: #000;
+        }
+        .listSearchResults li.selected {
+          background-color: #000;
+        }
+        .listSearchResults li.selected a {
+          color: #fff;
+        }
+        #errors {
+          background-color: #800;
+          color: #fff;
+        }
+        #errors pre {
+          background-color: #a00;
+          color: #fff;
+        }
+        dl > div {
+          border-color: #373737;
+        }
+        .tok-kw {
+            color: #eee;
+        }
+        .tok-str {
+            color: #2e5;
+        }
+        .tok-builtin {
+            color: #ff894c;
+        }
+        .tok-comment {
+            color: #aa7;
+        }
+        .tok-fn {
+            color: #B1A0F8;
+        }
+        .tok-null {
+            color: #ff8080;
+        }
+        .tok-number {
+            color: #ff8080;
+        }
+        .tok-type {
+            color: #68f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+        <g fill="#F7A41D">
+          <g>
+            <polygon points="46,22 28,44 19,30"/>
+            <polygon points="46,22 33,33 28,44 22,44 22,95 31,95 20,100 12,117 0,117 0,22" shape-rendering="crispEdges"/>
+            <polygon points="31,95 12,117 4,106"/>
+          </g>
+          <g>
+            <polygon points="56,22 62,36 37,44"/>
+            <polygon points="56,22 111,22 111,44 37,44 56,32" shape-rendering="crispEdges"/>
+            <polygon points="116,95 97,117 90,104"/>
+            <polygon points="116,95 100,104 97,117 42,117 42,95" shape-rendering="crispEdges"/>
+            <polygon points="150,0 52,117 3,140 101,22"/>
+          </g>
+          <g>
+            <polygon points="141,22 140,40 122,45"/>
+            <polygon points="153,22 153,117 106,117 120,105 125,95 131,95 131,45 122,45 132,36 141,22" shape-rendering="crispEdges"/>
+            <polygon points="125,95 130,110 106,117"/>
+          </g>
+        </g>
+        <style>
+        #text { fill: #121212 }
+        @media (prefers-color-scheme: dark) { #text { fill: #f2f2f2 } }
+        </style>
+        <g id="text">
+          <g>
+            <polygon points="260,22 260,37 229,40 177,40 177,22" shape-rendering="crispEdges"/>
+            <polygon points="260,37 207,99 207,103 176,103 229,40 229,37"/>
+            <polygon points="261,99 261,117 176,117 176,103 206,99" shape-rendering="crispEdges"/>
+          </g>
+          <rect x="272" y="22" shape-rendering="crispEdges" width="22" height="95"/>
+          <g>
+            <polygon points="394,67 394,106 376,106 376,81 360,70 346,67" shape-rendering="crispEdges"/>
+            <polygon points="360,68 376,81 346,67"/>
+            <path d="M394,106c-10.2,7.3-24,12-37.7,12c-29,0-51.1-20.8-51.1-48.3c0-27.3,22.5-48.1,52-48.1    c14.3,0,29.2,5.5,38.9,14l-13,15c-7.1-6.3-16.8-10-25.9-10c-17,0-30.2,12.9-30.2,29.5c0,16.8,13.3,29.6,30.3,29.6    c5.7,0,12.8-2.3,19-5.5L394,106z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </nav>
+    <div id="navWrap">
+      <input disabled type="search" id="search" autocomplete="off" spellcheck="false" placeholder="`s` to search, `?` to see more options">
+      <div id="sectNav"><ul id="listNav"><li><a href="#" class="">std</a></li><li><a href="std.html" class="">compress</a></li><li><a href="std.compress.flate.html" class="active">flate</a></li></ul></div>
+    </div>
+    <section><div class="decl"><h1 id="std.compress.flate" class="declHeader"><span class="declHeaderCategory">struct</span><span class="declHeaderIdentifier">std.compress.flate</span><a href="#src.zig-std.compress.flate">[src]</a></h1><div class="sectNamespaces"><h2 class="sectionHeader">Namespaces</h2><ul class="listNamespaces columns"><li><a href="std.compress.flate.deflate.html">std.compress.flate.deflate</a></li><li><a href="std.compress.flate.inflate.html">std.compress.flate.inflate</a></li><li><a href="std.compress.flate.huffman.html">std.compress.flate.huffman</a></li><li><a href="std.compress.flate.store.html">std.compress.flate.store</a></li></ul></div><div class="sectContainers"><h2 class="sectionHeader">Container Types</h2><ul class="listContainers columns"><li><a href="std.compress.flate.deflate.Options.html">std.compress.flate.deflate.Options</a></li></ul></div><div class="sectTypes"><h2 class="sectionHeader">Types</h2><div class="listTypes"><div class="decl"><h2 id="std.compress.flate.Decompressor" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">Decompressor</span><a href="#src.zig-std.compress.flate.Decompressor">[src]</a></h2><div class="tldDocs"><p>Decompressor type</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>ReaderType: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.flate.Decompressor">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">Decompressor</span>(<span class="tok-kw">comptime</span> ReaderType: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <a href="std.compress.flate.inflate.html">inflate</a>.<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Decompressor">Decompressor</a>(.raw, ReaderType);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.compress.flate.Compressor" class="declHeader"><span class="declHeaderCategory">Type Function</span><span class="declHeaderIdentifier">Compressor</span><a href="#src.zig-std.compress.flate.Compressor">[src]</a></h2><div class="tldDocs"><p>Compressor type</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>WriterType: <span class="tok-type">type</span></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.flate.Compressor">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">Compressor</span>(<span class="tok-kw">comptime</span> WriterType: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <a href="std.compress.flate.deflate.html">deflate</a>.<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Compressor">Compressor</a>(.raw, WriterType);
+}</code></pre></details></div></div></div></div><div class="sectFns"><h2 class="sectionHeader">Functions</h2><div class="listFns"><div class="decl"><h2 id="std.compress.flate.decompress" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">decompress</span><a href="#src.zig-std.compress.flate.decompress">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompress</span>(reader: <span class="tok-kw">anytype</span>, writer: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Decompress compressed data from reader and write plain data to the writer.</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.flate.decompress">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompress</span>(reader: <span class="tok-kw">anytype</span>, writer: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">try</span> <a href="std.compress.flate.inflate.html">inflate</a>.<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.decompress">decompress</a>(.raw, reader, writer);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.compress.flate.decompressor" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">decompressor</span><a href="#src.zig-std.compress.flate.decompressor">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompressor</span>(reader: <span class="tok-kw">anytype</span>) <a href="std.compress.flate.html#std.compress.flate.Decompressor">Decompressor</a>(<span class="tok-builtin">@TypeOf</span>(reader))</code></pre></div><div class="tldDocs"><p>Create Decompressor which will read compressed data from reader.</p>
+</div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.flate.decompressor">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompressor</span>(reader: <span class="tok-kw">anytype</span>) <a href="std.compress.flate.html#std.compress.flate.Decompressor">Decompressor</a>(<span class="tok-builtin">@TypeOf</span>(reader)) {
+    <span class="tok-kw">return</span> <a href="std.compress.flate.inflate.html">inflate</a>.<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.decompressor">decompressor</a>(.raw, reader);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.compress.flate.compress" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">compress</span><a href="#src.zig-std.compress.flate.compress">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compress</span>(reader: <span class="tok-kw">anytype</span>, writer: <span class="tok-kw">anytype</span>, options: <a href="std.compress.flate.deflate.Options.html">Options</a>) !<span class="tok-type">void</span></code></pre></div><div class="tldDocs"><p>Compress plain data from reader and write compressed data to the writer.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>options: <a href="std.compress.flate.deflate.Options.html">Options</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.flate.compress">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compress</span>(reader: <span class="tok-kw">anytype</span>, writer: <span class="tok-kw">anytype</span>, options: <a href="std.compress.flate.deflate.Options.html">Options</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.html">deflate</a>.<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.compress">compress</a>(.raw, reader, writer, options);
+}</code></pre></details></div></div><div class="decl"><h2 id="std.compress.flate.compressor" class="declHeader"><span class="declHeaderCategory">Function</span><span class="declHeaderIdentifier">compressor</span><a href="#src.zig-std.compress.flate.compressor">[src]</a></h2><div class="fnProto"><pre><code class="fnProtoCode"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compressor</span>(writer: <span class="tok-kw">anytype</span>, options: <a href="std.compress.flate.deflate.Options.html">Options</a>) !<a href="std.compress.flate.html#std.compress.flate.Compressor">Compressor</a>(<span class="tok-builtin">@TypeOf</span>(writer))</code></pre></div><div class="tldDocs"><p>Create Compressor which outputs compressed data to the writer.</p>
+</div><div class="sectParams"><h3 class="sectionHeader">Parameters</h3><div class="listParams"><div><pre><code>options: <a href="std.compress.flate.deflate.Options.html">Options</a></code></pre></div></div></div><div class="sectSource"><h3 class="sectionHeader" id="src.zig-std.compress.flate.compressor">Source Code</h3><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compressor</span>(writer: <span class="tok-kw">anytype</span>, options: <a href="std.compress.flate.deflate.Options.html">Options</a>) !<a href="std.compress.flate.html#std.compress.flate.Compressor">Compressor</a>(<span class="tok-builtin">@TypeOf</span>(writer)) {
+    <span class="tok-kw">return</span> <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.html">deflate</a>.<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.compressor">compressor</a>(.raw, writer, options);
+}</code></pre></details></div></div></div></div><div class="sectSource"><h2 class="sectionHeader" id="src.zig-std.compress.flate">Source Code</h2><details><summary>Source code</summary><pre><code class="sourceText"><span class="tok-comment">/// Deflate is a lossless data compression file format that uses a combination</span>
+<span class="tok-comment">/// of LZ77 and Huffman coding.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> deflate = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;flate/deflate.zig&quot;</span>);
+
+<span class="tok-comment">/// Inflate is the decoding process that takes a Deflate bitstream for</span>
+<span class="tok-comment">/// decompression and correctly produces the original full-size data or file.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> inflate = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;flate/inflate.zig&quot;</span>);
+
+<span class="tok-comment">/// Decompress compressed data from reader and write plain data to the writer.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompress</span>(reader: <span class="tok-kw">anytype</span>, writer: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">try</span> <a href="std.compress.flate.inflate.html">inflate</a>.<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.decompress">decompress</a>(.raw, reader, writer);
+}
+
+<span class="tok-comment">/// Decompressor type</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">Decompressor</span>(<span class="tok-kw">comptime</span> ReaderType: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <a href="std.compress.flate.inflate.html">inflate</a>.<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.Decompressor">Decompressor</a>(.raw, ReaderType);
+}
+
+<span class="tok-comment">/// Create Decompressor which will read compressed data from reader.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">decompressor</span>(reader: <span class="tok-kw">anytype</span>) <a href="std.compress.flate.html#std.compress.flate.Decompressor">Decompressor</a>(<span class="tok-builtin">@TypeOf</span>(reader)) {
+    <span class="tok-kw">return</span> <a href="std.compress.flate.inflate.html">inflate</a>.<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.decompressor">decompressor</a>(.raw, reader);
+}
+
+<span class="tok-comment">/// Compression level, trades between speed and compression size.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> Options = <a href="std.compress.flate.deflate.html">deflate</a>.<a href="std.compress.flate.deflate.Options.html">Options</a>;
+
+<span class="tok-comment">/// Compress plain data from reader and write compressed data to the writer.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compress</span>(reader: <span class="tok-kw">anytype</span>, writer: <span class="tok-kw">anytype</span>, options: <a href="std.compress.flate.deflate.Options.html">Options</a>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.html">deflate</a>.<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.compress">compress</a>(.raw, reader, writer, options);
+}
+
+<span class="tok-comment">/// Compressor type</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">Compressor</span>(<span class="tok-kw">comptime</span> WriterType: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+    <span class="tok-kw">return</span> <a href="std.compress.flate.deflate.html">deflate</a>.<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.Compressor">Compressor</a>(.raw, WriterType);
+}
+
+<span class="tok-comment">/// Create Compressor which outputs compressed data to the writer.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compressor</span>(writer: <span class="tok-kw">anytype</span>, options: <a href="std.compress.flate.deflate.Options.html">Options</a>) !<a href="std.compress.flate.html#std.compress.flate.Compressor">Compressor</a>(<span class="tok-builtin">@TypeOf</span>(writer)) {
+    <span class="tok-kw">return</span> <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.html">deflate</a>.<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.compressor">compressor</a>(.raw, writer, options);
+}
+
+<span class="tok-comment">/// Huffman only compression. Without Lempel-Ziv match searching. Faster</span>
+<span class="tok-comment">/// compression, less memory requirements but bigger compressed sizes.</span>
+<span class="tok-kw">pub</span> <span class="tok-kw">const</span> huffman = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compress</span>(reader: <span class="tok-kw">anytype</span>, writer: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+        <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.html">deflate</a>.<a href="std.compress.flate.deflate.huffman.html">huffman</a>.<a href="std.compress.flate.deflate.huffman.html#std.compress.flate.deflate.huffman.compress">compress</a>(.raw, reader, writer);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">Compressor</span>(<span class="tok-kw">comptime</span> WriterType: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+        <span class="tok-kw">return</span> <a href="std.compress.flate.deflate.html">deflate</a>.<a href="std.compress.flate.deflate.huffman.html">huffman</a>.<a href="std.compress.flate.deflate.huffman.html#std.compress.flate.deflate.huffman.Compressor">Compressor</a>(.raw, WriterType);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compressor</span>(writer: <span class="tok-kw">anytype</span>) !<a href="std.compress.flate.huffman.html">huffman</a>.<a href="std.compress.flate.huffman.html#std.compress.flate.huffman.Compressor">Compressor</a>(<span class="tok-builtin">@TypeOf</span>(writer)) {
+        <span class="tok-kw">return</span> <a href="std.compress.flate.deflate.html">deflate</a>.<a href="std.compress.flate.deflate.huffman.html">huffman</a>.<a href="std.compress.flate.deflate.huffman.html#std.compress.flate.deflate.huffman.compressor">compressor</a>(.raw, writer);
+    }
+};<span class="tok-comment">
+
+// No compression store only. Compressed size is slightly bigger than plain.
+</span><span class="tok-kw">pub</span> <span class="tok-kw">const</span> store = <span class="tok-kw">struct</span> {
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compress</span>(reader: <span class="tok-kw">anytype</span>, writer: <span class="tok-kw">anytype</span>) !<span class="tok-type">void</span> {
+        <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.html">deflate</a>.<a href="std.compress.flate.deflate.store.html">store</a>.<a href="std.compress.flate.deflate.store.html#std.compress.flate.deflate.store.compress">compress</a>(.raw, reader, writer);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">Compressor</span>(<span class="tok-kw">comptime</span> WriterType: <span class="tok-type">type</span>) <span class="tok-type">type</span> {
+        <span class="tok-kw">return</span> <a href="std.compress.flate.deflate.html">deflate</a>.<a href="std.compress.flate.deflate.store.html">store</a>.<a href="std.compress.flate.deflate.store.html#std.compress.flate.deflate.store.Compressor">Compressor</a>(.raw, WriterType);
+    }
+
+    <span class="tok-kw">pub</span> <span class="tok-kw">fn</span> <span class="tok-fn">compressor</span>(writer: <span class="tok-kw">anytype</span>) !<a href="std.compress.flate.store.html">store</a>.<a href="std.compress.flate.store.html#std.compress.flate.store.Compressor">Compressor</a>(<span class="tok-builtin">@TypeOf</span>(writer)) {
+        <span class="tok-kw">return</span> <a href="std.compress.flate.deflate.html">deflate</a>.<a href="std.compress.flate.deflate.store.html">store</a>.<a href="std.compress.flate.deflate.store.html#std.compress.flate.deflate.store.compressor">compressor</a>(.raw, writer);
+    }
+};
+
+<span class="tok-comment">/// Container defines header/footer around deflate bit stream. Gzip and zlib</span>
+<span class="tok-comment">/// compression algorithms are containers around deflate bit stream body.</span>
+<span class="tok-kw">const</span> Container = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;flate/container.zig&quot;</span>).Container;
+<span class="tok-kw">const</span> std = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;std&quot;</span>);
+<span class="tok-kw">const</span> testing = <a href="std.html">std</a>.<a href="std.testing.html">testing</a>;
+<span class="tok-kw">const</span> fixedBufferStream = <a href="std.html">std</a>.<a href="std.io.html">io</a>.<a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>;
+<span class="tok-kw">const</span> print = <a href="std.html">std</a>.<a href="std.debug.html">debug</a>.<a href="std.debug.html#std.debug.print">print</a>;
+<span class="tok-kw">const</span> builtin = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;builtin&quot;</span>);
+
+<span class="tok-kw">test</span> {
+    _ = <a href="std.compress.flate.deflate.html">deflate</a>;
+    _ = <a href="std.compress.flate.inflate.html">inflate</a>;
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;compress/decompress&quot;</span> {
+    <span class="tok-kw">var</span> cmp_buf: [<span class="tok-number">64</span> * <span class="tok-number">1024</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;<span class="tok-comment"> // compressed data buffer
+    </span><span class="tok-kw">var</span> dcm_buf: [<span class="tok-number">64</span> * <span class="tok-number">1024</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;<span class="tok-comment"> // decompressed data buffer
+
+    </span><span class="tok-kw">const</span> levels = [_]<a href="std.compress.flate.deflate.html">deflate</a>.<a href="std.compress.flate.deflate.Level.html">Level</a>{ .level_4, .level_5, .level_6, .level_7, .level_8, .level_9 };
+    <span class="tok-kw">const</span> cases = [_]<span class="tok-kw">struct</span> {
+        data: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>,<span class="tok-comment"> // uncompressed content
+        // compressed data sizes per level 4-9
+        </span>gzip_sizes: [levels.len]<span class="tok-type">usize</span> = [_]<span class="tok-type">usize</span>{<span class="tok-number">0</span>} ** levels.len,
+        huffman_only_size: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+        store_size: <span class="tok-type">usize</span> = <span class="tok-number">0</span>,
+    }{
+        .{
+            .data = <span class="tok-builtin">@embedFile</span>(<span class="tok-str">&quot;flate/testdata/rfc1951.txt&quot;</span>),
+            .gzip_sizes = [_]<span class="tok-type">usize</span>{ <span class="tok-number">11513</span>, <span class="tok-number">11217</span>, <span class="tok-number">11139</span>, <span class="tok-number">11126</span>, <span class="tok-number">11122</span>, <span class="tok-number">11119</span> },
+            .huffman_only_size = <span class="tok-number">20287</span>,
+            .store_size = <span class="tok-number">36967</span>,
+        },
+        .{
+            .data = <span class="tok-builtin">@embedFile</span>(<span class="tok-str">&quot;flate/testdata/fuzz/roundtrip1.input&quot;</span>),
+            .gzip_sizes = [_]<span class="tok-type">usize</span>{ <span class="tok-number">373</span>, <span class="tok-number">370</span>, <span class="tok-number">370</span>, <span class="tok-number">370</span>, <span class="tok-number">370</span>, <span class="tok-number">370</span> },
+            .huffman_only_size = <span class="tok-number">393</span>,
+            .store_size = <span class="tok-number">393</span>,
+        },
+        .{
+            .data = <span class="tok-builtin">@embedFile</span>(<span class="tok-str">&quot;flate/testdata/fuzz/roundtrip2.input&quot;</span>),
+            .gzip_sizes = [_]<span class="tok-type">usize</span>{ <span class="tok-number">373</span>, <span class="tok-number">373</span>, <span class="tok-number">373</span>, <span class="tok-number">373</span>, <span class="tok-number">373</span>, <span class="tok-number">373</span> },
+            .huffman_only_size = <span class="tok-number">394</span>,
+            .store_size = <span class="tok-number">394</span>,
+        },
+        .{
+            .data = <span class="tok-builtin">@embedFile</span>(<span class="tok-str">&quot;flate/testdata/fuzz/deflate-stream.expect&quot;</span>),
+            .gzip_sizes = [_]<span class="tok-type">usize</span>{ <span class="tok-number">351</span>, <span class="tok-number">347</span>, <span class="tok-number">347</span>, <span class="tok-number">347</span>, <span class="tok-number">347</span>, <span class="tok-number">347</span> },
+            .huffman_only_size = <span class="tok-number">498</span>,
+            .store_size = <span class="tok-number">747</span>,
+        },
+    };
+
+    <span class="tok-kw">for</span> (cases, <span class="tok-number">0</span>..) |case, case_no| {<span class="tok-comment"> // for each case
+        </span><span class="tok-kw">const</span> data = case.data;
+
+        <span class="tok-kw">for</span> (levels, <span class="tok-number">0</span>..) |level, i| {<span class="tok-comment"> // for each compression level
+
+            </span><span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<a href="std.compress.flate.container.Container.html">Container</a>.<a href="std.compress.flate.container.Container.html#std.compress.flate.container.Container.list">list</a>) |container| {<span class="tok-comment"> // for each wrapping
+                </span><span class="tok-kw">var</span> compressed_size: <span class="tok-type">usize</span> = <span class="tok-kw">if</span> (case.gzip_sizes[i] &gt; <span class="tok-number">0</span>)
+                    case.gzip_sizes[i] - <a href="std.compress.flate.container.Container.html">Container</a>.<a href="#">gzip</a>.<a href="#">size</a>() + container.size()
+                <span class="tok-kw">else</span>
+                    <span class="tok-number">0</span>;<span class="tok-comment">
+
+                // compress original stream to compressed stream
+                </span>{
+                    <span class="tok-kw">var</span> original = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(data);
+                    <span class="tok-kw">var</span> compressed = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(&amp;cmp_buf);
+                    <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.html">deflate</a>.<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.compress">compress</a>(container, original.reader(), compressed.writer(), .{ .level = level });
+                    <span class="tok-kw">if</span> (compressed_size == <span class="tok-number">0</span>) {
+                        <span class="tok-kw">if</span> (container == .gzip)
+                            <a href="std.debug.html#std.debug.print">print</a>(<span class="tok-str">&quot;case {d} gzip level {} compressed size: {d}\n&quot;</span>, .{ case_no, level, compressed.pos });
+                        compressed_size = compressed.pos;
+                    }
+                    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(compressed_size, compressed.pos);
+                }<span class="tok-comment">
+                // decompress compressed stream to decompressed stream
+                </span>{
+                    <span class="tok-kw">var</span> compressed = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(cmp_buf[<span class="tok-number">0</span>..compressed_size]);
+                    <span class="tok-kw">var</span> decompressed = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(&amp;dcm_buf);
+                    <span class="tok-kw">try</span> <a href="std.compress.flate.inflate.html">inflate</a>.<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.decompress">decompress</a>(container, compressed.reader(), decompressed.writer());
+                    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, data, decompressed.getWritten());
+                }<span class="tok-comment">
+
+                // compressor writer interface
+                </span>{
+                    <span class="tok-kw">var</span> compressed = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(&amp;cmp_buf);
+                    <span class="tok-kw">var</span> cmp = <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.html">deflate</a>.<a href="std.compress.flate.deflate.html#std.compress.flate.deflate.compressor">compressor</a>(container, compressed.writer(), .{ .level = level });
+                    <span class="tok-kw">var</span> cmp_wrt = cmp.writer();
+                    <span class="tok-kw">try</span> cmp_wrt.writeAll(data);
+                    <span class="tok-kw">try</span> cmp.finish();
+
+                    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(compressed_size, compressed.pos);
+                }<span class="tok-comment">
+                // decompressor reader interface
+                </span>{
+                    <span class="tok-kw">var</span> compressed = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(cmp_buf[<span class="tok-number">0</span>..compressed_size]);
+                    <span class="tok-kw">var</span> dcm = <a href="std.compress.flate.inflate.html">inflate</a>.<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.decompressor">decompressor</a>(container, compressed.reader());
+                    <span class="tok-kw">var</span> dcm_rdr = dcm.reader();
+                    <span class="tok-kw">const</span> n = <span class="tok-kw">try</span> dcm_rdr.readAll(&amp;dcm_buf);
+                    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(data.len, n);
+                    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, data, dcm_buf[<span class="tok-number">0</span>..n]);
+                }
+            }
+        }<span class="tok-comment">
+        // huffman only compression
+        </span>{
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<a href="std.compress.flate.container.Container.html">Container</a>.<a href="std.compress.flate.container.Container.html#std.compress.flate.container.Container.list">list</a>) |container| {<span class="tok-comment"> // for each wrapping
+                </span><span class="tok-kw">var</span> compressed_size: <span class="tok-type">usize</span> = <span class="tok-kw">if</span> (case.huffman_only_size &gt; <span class="tok-number">0</span>)
+                    case.huffman_only_size - <a href="std.compress.flate.container.Container.html">Container</a>.<a href="#">gzip</a>.<a href="#">size</a>() + container.size()
+                <span class="tok-kw">else</span>
+                    <span class="tok-number">0</span>;<span class="tok-comment">
+
+                // compress original stream to compressed stream
+                </span>{
+                    <span class="tok-kw">var</span> original = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(data);
+                    <span class="tok-kw">var</span> compressed = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(&amp;cmp_buf);
+                    <span class="tok-kw">var</span> cmp = <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.html">deflate</a>.<a href="std.compress.flate.deflate.huffman.html">huffman</a>.<a href="std.compress.flate.deflate.huffman.html#std.compress.flate.deflate.huffman.compressor">compressor</a>(container, compressed.writer());
+                    <span class="tok-kw">try</span> cmp.compress(original.reader());
+                    <span class="tok-kw">try</span> cmp.finish();
+                    <span class="tok-kw">if</span> (compressed_size == <span class="tok-number">0</span>) {
+                        <span class="tok-kw">if</span> (container == .gzip)
+                            <a href="std.debug.html#std.debug.print">print</a>(<span class="tok-str">&quot;case {d} huffman only compressed size: {d}\n&quot;</span>, .{ case_no, compressed.pos });
+                        compressed_size = compressed.pos;
+                    }
+                    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(compressed_size, compressed.pos);
+                }<span class="tok-comment">
+                // decompress compressed stream to decompressed stream
+                </span>{
+                    <span class="tok-kw">var</span> compressed = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(cmp_buf[<span class="tok-number">0</span>..compressed_size]);
+                    <span class="tok-kw">var</span> decompressed = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(&amp;dcm_buf);
+                    <span class="tok-kw">try</span> <a href="std.compress.flate.inflate.html">inflate</a>.<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.decompress">decompress</a>(container, compressed.reader(), decompressed.writer());
+                    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, data, decompressed.getWritten());
+                }
+            }
+        }<span class="tok-comment">
+
+        // store only
+        </span>{
+            <span class="tok-kw">inline</span> <span class="tok-kw">for</span> (<a href="std.compress.flate.container.Container.html">Container</a>.<a href="std.compress.flate.container.Container.html#std.compress.flate.container.Container.list">list</a>) |container| {<span class="tok-comment"> // for each wrapping
+                </span><span class="tok-kw">var</span> compressed_size: <span class="tok-type">usize</span> = <span class="tok-kw">if</span> (case.store_size &gt; <span class="tok-number">0</span>)
+                    case.store_size - <a href="std.compress.flate.container.Container.html">Container</a>.<a href="#">gzip</a>.<a href="#">size</a>() + container.size()
+                <span class="tok-kw">else</span>
+                    <span class="tok-number">0</span>;<span class="tok-comment">
+
+                // compress original stream to compressed stream
+                </span>{
+                    <span class="tok-kw">var</span> original = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(data);
+                    <span class="tok-kw">var</span> compressed = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(&amp;cmp_buf);
+                    <span class="tok-kw">var</span> cmp = <span class="tok-kw">try</span> <a href="std.compress.flate.deflate.html">deflate</a>.<a href="std.compress.flate.deflate.store.html">store</a>.<a href="std.compress.flate.deflate.store.html#std.compress.flate.deflate.store.compressor">compressor</a>(container, compressed.writer());
+                    <span class="tok-kw">try</span> cmp.compress(original.reader());
+                    <span class="tok-kw">try</span> cmp.finish();
+                    <span class="tok-kw">if</span> (compressed_size == <span class="tok-number">0</span>) {
+                        <span class="tok-kw">if</span> (container == .gzip)
+                            <a href="std.debug.html#std.debug.print">print</a>(<span class="tok-str">&quot;case {d} store only compressed size: {d}\n&quot;</span>, .{ case_no, compressed.pos });
+                        compressed_size = compressed.pos;
+                    }
+
+                    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqual">expectEqual</a>(compressed_size, compressed.pos);
+                }<span class="tok-comment">
+                // decompress compressed stream to decompressed stream
+                </span>{
+                    <span class="tok-kw">var</span> compressed = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(cmp_buf[<span class="tok-number">0</span>..compressed_size]);
+                    <span class="tok-kw">var</span> decompressed = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(&amp;dcm_buf);
+                    <span class="tok-kw">try</span> <a href="std.compress.flate.inflate.html">inflate</a>.<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.decompress">decompress</a>(container, compressed.reader(), decompressed.writer());
+                    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, data, decompressed.getWritten());
+                }
+            }
+        }
+    }
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">testDecompress</span>(<span class="tok-kw">comptime</span> container: <a href="std.compress.flate.container.Container.html">Container</a>, compressed: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, expected_plain: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> in = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(compressed);
+    <span class="tok-kw">var</span> out = <a href="std.html">std</a>.<a href="std.array_list.html#std.array_list.ArrayList">ArrayList</a>(<span class="tok-type">u8</span>).init(<a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.allocator">allocator</a>);
+    <span class="tok-kw">defer</span> out.deinit();
+
+    <span class="tok-kw">try</span> <a href="std.compress.flate.inflate.html">inflate</a>.<a href="std.compress.flate.inflate.html#std.compress.flate.inflate.decompress">decompress</a>(container, in.reader(), out.writer());
+    <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, expected_plain, out.items);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;don't read past deflate stream's end&quot;</span> {
+    <span class="tok-kw">try</span> <a href="std.compress.flate.html#std.compress.flate.testDecompress">testDecompress</a>(.zlib, &amp;[_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0x08</span>, <span class="tok-number">0xd7</span>, <span class="tok-number">0x63</span>, <span class="tok-number">0xf8</span>, <span class="tok-number">0xcf</span>, <span class="tok-number">0xc0</span>, <span class="tok-number">0xc0</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0xc1</span>, <span class="tok-number">0xff</span>,
+        <span class="tok-number">0xff</span>, <span class="tok-number">0x43</span>, <span class="tok-number">0x30</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0xc3</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0x01</span>,
+        <span class="tok-number">0x83</span>, <span class="tok-number">0x95</span>, <span class="tok-number">0x0b</span>, <span class="tok-number">0xf5</span>,
+    }, &amp;[_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0x00</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0xff</span>,
+        <span class="tok-number">0x00</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>,
+        <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0xff</span>,
+    });
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;zlib header&quot;</span> {<span class="tok-comment">
+    // Truncated header
+    </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(
+        <span class="tok-kw">error</span>.EndOfStream,
+        <a href="std.compress.flate.html#std.compress.flate.testDecompress">testDecompress</a>(.zlib, &amp;[_]<span class="tok-type">u8</span>{<span class="tok-number">0x78</span>}, <span class="tok-str">&quot;&quot;</span>),
+    );<span class="tok-comment">
+    // Wrong CM
+    </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(
+        <span class="tok-kw">error</span>.BadZlibHeader,
+        <a href="std.compress.flate.html#std.compress.flate.testDecompress">testDecompress</a>(.zlib, &amp;[_]<span class="tok-type">u8</span>{ <span class="tok-number">0x79</span>, <span class="tok-number">0x94</span> }, <span class="tok-str">&quot;&quot;</span>),
+    );<span class="tok-comment">
+    // Wrong CINFO
+    </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(
+        <span class="tok-kw">error</span>.BadZlibHeader,
+        <a href="std.compress.flate.html#std.compress.flate.testDecompress">testDecompress</a>(.zlib, &amp;[_]<span class="tok-type">u8</span>{ <span class="tok-number">0x88</span>, <span class="tok-number">0x98</span> }, <span class="tok-str">&quot;&quot;</span>),
+    );<span class="tok-comment">
+    // Wrong checksum
+    </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(
+        <span class="tok-kw">error</span>.WrongZlibChecksum,
+        <a href="std.compress.flate.html#std.compress.flate.testDecompress">testDecompress</a>(.zlib, &amp;[_]<span class="tok-type">u8</span>{ <span class="tok-number">0x78</span>, <span class="tok-number">0xda</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span> }, <span class="tok-str">&quot;&quot;</span>),
+    );<span class="tok-comment">
+    // Truncated checksum
+    </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(
+        <span class="tok-kw">error</span>.EndOfStream,
+        <a href="std.compress.flate.html#std.compress.flate.testDecompress">testDecompress</a>(.zlib, &amp;[_]<span class="tok-type">u8</span>{ <span class="tok-number">0x78</span>, <span class="tok-number">0xda</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span> }, <span class="tok-str">&quot;&quot;</span>),
+    );
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;gzip header&quot;</span> {<span class="tok-comment">
+    // Truncated header
+    </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(
+        <span class="tok-kw">error</span>.EndOfStream,
+        <a href="std.compress.flate.html#std.compress.flate.testDecompress">testDecompress</a>(.gzip, &amp;[_]<span class="tok-type">u8</span>{ <span class="tok-number">0x1f</span>, <span class="tok-number">0x8B</span> }, <span class="tok-null">undefined</span>),
+    );<span class="tok-comment">
+    // Wrong CM
+    </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(
+        <span class="tok-kw">error</span>.BadGzipHeader,
+        <a href="std.compress.flate.html#std.compress.flate.testDecompress">testDecompress</a>(.gzip, &amp;[_]<span class="tok-type">u8</span>{
+            <span class="tok-number">0x1f</span>, <span class="tok-number">0x8b</span>, <span class="tok-number">0x09</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>,
+            <span class="tok-number">0x00</span>, <span class="tok-number">0x03</span>,
+        }, <span class="tok-null">undefined</span>),
+    );<span class="tok-comment">
+
+    // Wrong checksum
+    </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(
+        <span class="tok-kw">error</span>.WrongGzipChecksum,
+        <a href="std.compress.flate.html#std.compress.flate.testDecompress">testDecompress</a>(.gzip, &amp;[_]<span class="tok-type">u8</span>{
+            <span class="tok-number">0x1f</span>, <span class="tok-number">0x8b</span>, <span class="tok-number">0x08</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>,
+            <span class="tok-number">0x00</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x01</span>,
+            <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>,
+        }, <span class="tok-null">undefined</span>),
+    );<span class="tok-comment">
+    // Truncated checksum
+    </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(
+        <span class="tok-kw">error</span>.EndOfStream,
+        <a href="std.compress.flate.html#std.compress.flate.testDecompress">testDecompress</a>(.gzip, &amp;[_]<span class="tok-type">u8</span>{
+            <span class="tok-number">0x1f</span>, <span class="tok-number">0x8b</span>, <span class="tok-number">0x08</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>,
+            <span class="tok-number">0x00</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>,
+        }, <span class="tok-null">undefined</span>),
+    );<span class="tok-comment">
+    // Wrong initial size
+    </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(
+        <span class="tok-kw">error</span>.WrongGzipSize,
+        <a href="std.compress.flate.html#std.compress.flate.testDecompress">testDecompress</a>(.gzip, &amp;[_]<span class="tok-type">u8</span>{
+            <span class="tok-number">0x1f</span>, <span class="tok-number">0x8b</span>, <span class="tok-number">0x08</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>,
+            <span class="tok-number">0x00</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>,
+            <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x01</span>,
+        }, <span class="tok-null">undefined</span>),
+    );<span class="tok-comment">
+    // Truncated initial size field
+    </span><span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectError">expectError</a>(
+        <span class="tok-kw">error</span>.EndOfStream,
+        <a href="std.compress.flate.html#std.compress.flate.testDecompress">testDecompress</a>(.gzip, &amp;[_]<span class="tok-type">u8</span>{
+            <span class="tok-number">0x1f</span>, <span class="tok-number">0x8b</span>, <span class="tok-number">0x08</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>,
+            <span class="tok-number">0x00</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0x03</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>,
+            <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>,
+        }, <span class="tok-null">undefined</span>),
+    );
+
+    <span class="tok-kw">try</span> <a href="std.compress.flate.html#std.compress.flate.testDecompress">testDecompress</a>(.gzip, &amp;[_]<span class="tok-type">u8</span>{<span class="tok-comment">
+        // GZIP header
+        </span><span class="tok-number">0x1f</span>, <span class="tok-number">0x8b</span>, <span class="tok-number">0x08</span>, <span class="tok-number">0x12</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x09</span>, <span class="tok-number">0x6e</span>, <span class="tok-number">0x88</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0x48</span>, <span class="tok-number">0x65</span>, <span class="tok-number">0x6c</span>, <span class="tok-number">0x6c</span>, <span class="tok-number">0x6f</span>, <span class="tok-number">0x00</span>,<span class="tok-comment">
+        // header.FHCRC (should cover entire header)
+        </span><span class="tok-number">0x99</span>, <span class="tok-number">0xd6</span>,<span class="tok-comment">
+        // GZIP data
+        </span><span class="tok-number">0x01</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0xff</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>,
+    }, <span class="tok-str">&quot;&quot;</span>);
+}
+
+<span class="tok-kw">test</span> <span class="tok-str">&quot;public interface&quot;</span> {
+    <span class="tok-kw">const</span> plain_data = [_]<span class="tok-type">u8</span>{ <span class="tok-str">'H'</span>, <span class="tok-str">'e'</span>, <span class="tok-str">'l'</span>, <span class="tok-str">'l'</span>, <span class="tok-str">'o'</span>, <span class="tok-str">' '</span>, <span class="tok-str">'w'</span>, <span class="tok-str">'o'</span>, <span class="tok-str">'r'</span>, <span class="tok-str">'l'</span>, <span class="tok-str">'d'</span>, <span class="tok-number">0x0a</span> };<span class="tok-comment">
+
+    // deflate final stored block, header + plain (stored) data
+    </span><span class="tok-kw">const</span> deflate_block = [_]<span class="tok-type">u8</span>{
+        <span class="tok-number">0b0000_0001</span>, <span class="tok-number">0b0000_1100</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0b1111_0011</span>, <span class="tok-number">0xff</span>,<span class="tok-comment"> // deflate fixed buffer header len, nlen
+    </span>} ++ plain_data;<span class="tok-comment">
+
+    // gzip header/footer + deflate block
+    </span><span class="tok-kw">const</span> gzip_data =
+        [_]<span class="tok-type">u8</span>{ <span class="tok-number">0x1f</span>, <span class="tok-number">0x8b</span>, <span class="tok-number">0x08</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x03</span> } ++<span class="tok-comment"> // gzip header (10 bytes)
+        </span>deflate_block ++
+        [_]<span class="tok-type">u8</span>{ <span class="tok-number">0xd5</span>, <span class="tok-number">0xe0</span>, <span class="tok-number">0x39</span>, <span class="tok-number">0xb7</span>, <span class="tok-number">0x0c</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span>, <span class="tok-number">0x00</span> };<span class="tok-comment"> // gzip footer checksum (4 byte), size (4 bytes)
+
+    // zlib header/footer + deflate block
+    </span><span class="tok-kw">const</span> zlib_data = [_]<span class="tok-type">u8</span>{ <span class="tok-number">0x78</span>, <span class="tok-number">0b10_0_11100</span> } ++<span class="tok-comment"> // zlib header (2 bytes)}
+        </span>deflate_block ++
+        [_]<span class="tok-type">u8</span>{ <span class="tok-number">0x1c</span>, <span class="tok-number">0xf2</span>, <span class="tok-number">0x04</span>, <span class="tok-number">0x47</span> };<span class="tok-comment"> // zlib footer: checksum
+
+    </span><span class="tok-kw">const</span> gzip = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;gzip.zig&quot;</span>);
+    <span class="tok-kw">const</span> zlib = <span class="tok-builtin">@import</span>(<span class="tok-str">&quot;zlib.zig&quot;</span>);
+    <span class="tok-kw">const</span> flate = <span class="tok-builtin">@This</span>();
+
+    <span class="tok-kw">try</span> <a href="std.compress.flate.html#std.compress.flate.testInterface">testInterface</a>(gzip, &amp;gzip_data, &amp;plain_data);
+    <span class="tok-kw">try</span> <a href="std.compress.flate.html#std.compress.flate.testInterface">testInterface</a>(zlib, &amp;zlib_data, &amp;plain_data);
+    <span class="tok-kw">try</span> <a href="std.compress.flate.html#std.compress.flate.testInterface">testInterface</a>(flate, &amp;deflate_block, &amp;plain_data);
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">testInterface</span>(<span class="tok-kw">comptime</span> pkg: <span class="tok-type">type</span>, gzip_data: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>, plain_data: []<span class="tok-kw">const</span> <span class="tok-type">u8</span>) !<span class="tok-type">void</span> {
+    <span class="tok-kw">var</span> buffer1: [<span class="tok-number">64</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+    <span class="tok-kw">var</span> buffer2: [<span class="tok-number">64</span>]<span class="tok-type">u8</span> = <span class="tok-null">undefined</span>;
+
+    <span class="tok-kw">var</span> compressed = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(&amp;buffer1);
+    <span class="tok-kw">var</span> plain = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(&amp;buffer2);<span class="tok-comment">
+
+    // decompress
+    </span>{
+        <span class="tok-kw">var</span> in = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(gzip_data);
+        <span class="tok-kw">try</span> pkg.decompress(in.reader(), plain.writer());
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, plain_data, plain.getWritten());
+    }
+    plain.reset();
+    compressed.reset();<span class="tok-comment">
+
+    // compress/decompress
+    </span>{
+        <span class="tok-kw">var</span> in = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(plain_data);
+        <span class="tok-kw">try</span> pkg.compress(in.reader(), compressed.writer(), .{});
+        compressed.reset();
+        <span class="tok-kw">try</span> pkg.decompress(compressed.reader(), plain.writer());
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, plain_data, plain.getWritten());
+    }
+    plain.reset();
+    compressed.reset();<span class="tok-comment">
+
+    // compressor/decompressor
+    </span>{
+        <span class="tok-kw">var</span> in = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(plain_data);
+        <span class="tok-kw">var</span> cmp = <span class="tok-kw">try</span> pkg.compressor(compressed.writer(), .{});
+        <span class="tok-kw">try</span> cmp.compress(in.reader());
+        <span class="tok-kw">try</span> cmp.finish();
+
+        compressed.reset();
+        <span class="tok-kw">var</span> dcp = pkg.decompressor(compressed.reader());
+        <span class="tok-kw">try</span> dcp.decompress(plain.writer());
+        <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, plain_data, plain.getWritten());
+    }
+    plain.reset();
+    compressed.reset();<span class="tok-comment">
+
+    // huffman
+    </span>{<span class="tok-comment">
+        // huffman compress/decompress
+        </span>{
+            <span class="tok-kw">var</span> in = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(plain_data);
+            <span class="tok-kw">try</span> pkg.huffman.compress(in.reader(), compressed.writer());
+            compressed.reset();
+            <span class="tok-kw">try</span> pkg.decompress(compressed.reader(), plain.writer());
+            <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, plain_data, plain.getWritten());
+        }
+        plain.reset();
+        compressed.reset();<span class="tok-comment">
+
+        // huffman compressor/decompressor
+        </span>{
+            <span class="tok-kw">var</span> in = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(plain_data);
+            <span class="tok-kw">var</span> cmp = <span class="tok-kw">try</span> pkg.huffman.compressor(compressed.writer());
+            <span class="tok-kw">try</span> cmp.compress(in.reader());
+            <span class="tok-kw">try</span> cmp.finish();
+
+            compressed.reset();
+            <span class="tok-kw">try</span> pkg.decompress(compressed.reader(), plain.writer());
+            <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, plain_data, plain.getWritten());
+        }
+    }
+    plain.reset();
+    compressed.reset();<span class="tok-comment">
+
+    // store
+    </span>{<span class="tok-comment">
+        // store compress/decompress
+        </span>{
+            <span class="tok-kw">var</span> in = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(plain_data);
+            <span class="tok-kw">try</span> pkg.store.compress(in.reader(), compressed.writer());
+            compressed.reset();
+            <span class="tok-kw">try</span> pkg.decompress(compressed.reader(), plain.writer());
+            <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, plain_data, plain.getWritten());
+        }
+        plain.reset();
+        compressed.reset();<span class="tok-comment">
+
+        // store compressor/decompressor
+        </span>{
+            <span class="tok-kw">var</span> in = <a href="std.io.fixed_buffer_stream.html#std.io.fixed_buffer_stream.fixedBufferStream">fixedBufferStream</a>(plain_data);
+            <span class="tok-kw">var</span> cmp = <span class="tok-kw">try</span> pkg.store.compressor(compressed.writer());
+            <span class="tok-kw">try</span> cmp.compress(in.reader());
+            <span class="tok-kw">try</span> cmp.finish();
+
+            compressed.reset();
+            <span class="tok-kw">try</span> pkg.decompress(compressed.reader(), plain.writer());
+            <span class="tok-kw">try</span> <a href="std.testing.html">testing</a>.<a href="std.testing.html#std.testing.expectEqualSlices">expectEqualSlices</a>(<span class="tok-type">u8</span>, plain_data, plain.getWritten());
+        }
+    }
+}</code></pre></details></div></div></section>
+    <div class="sectSearchResults hidden">
+      <h2>Search Results</h2>
+      <ul class="listSearchResults"></ul>
+    </div>
+    <div class="sectSearchNoResults hidden">
+      <h2>No Results Found</h2>
+      <p>Press escape to exit search and then '?' to see more options.</p>
+    </div>
+    <div id="helpDialog" class="hidden">
+      <h1>Keyboard Shortcuts</h1>
+      <dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd></dl>
+      <dl><dt><kbd>Esc</kbd></dt><dd>Clear focus; close this dialog</dd></dl>
+      <dl><dt><kbd>s</kbd></dt><dd>Focus the search field</dd></dl>
+      <dl><dt><kbd>u</kbd></dt><dd>Go to source code</dd></dl>
+      <dl><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd></dl>
+      <dl><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd></dl>
+      <dl><dt><kbd>⏎</kbd></dt><dd>Go to active search result</dd></dl>
+    </div>
+    <div id="errors" class="hidden">
+      <h1>Errors</h1>
+      <pre id="errorsText"></pre>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
